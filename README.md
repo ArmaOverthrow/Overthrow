@@ -1,2 +1,2 @@
 # Overthrow.Tanoa
-A dynamic and persistent revolution simulator for Arma 3 APEX
+A dynamic and persistent RPG for Arma 3 APEX
