@@ -36,7 +36,7 @@ if(_cls in AIT_allVehicles) then {
 			if(!isNil "_owner") then {
 				if(_owner == player) exitWith {_box = _x};				
 			};
-		}foreach(nearestObjects [getpos player, AIT_items_Storage,1000]);
+		}foreach(nearestObjects [getpos player, AIT_items_Storage,2000]);
 		if(typename _box == "OBJECT") then {
 			_box addWeaponCargo [_cls,1];
 			"Delivered to your closest ammobox" call notify_minor;
@@ -54,12 +54,12 @@ if(_cls in AIT_allVehicles) then {
 				if(!isNil "_owner") then {
 					if(_owner == player) exitWith {_box = _x};				
 				};
-			}foreach(nearestObjects [getpos player, AIT_items_Storage,1000]);
+			}foreach(nearestObjects [getpos player, AIT_items_Storage,2000]);
 			if(typename _box == "OBJECT") then {
 				_box addMagazineCargo [_cls,1];
 				"Delivered to your closest ammobox" call notify_minor;
 			}else{
-				player addMagazineCargo _cls;
+				player addMagazine _cls;
 			};		
 		}else{					
 			_b = nearestBuilding getPos player;
