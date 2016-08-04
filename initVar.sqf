@@ -1,6 +1,16 @@
 //Here is where you can change stuff to suit your liking or support mods/another map
 
-AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani"]; //dont spawn in these towns
+AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani","Saint-Julien"]; //dont spawn in these towns
+
+
+AIT_spawnDistance = 1200;
+AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
+AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan","C_man_p_beggar_F_afro","C_Man_casual_1_F_afro","C_Man_casual_3_F_afro","C_man_sport_1_F_afro","C_man_sport_3_F_afro","C_Man_casual_4_F_afro","C_Man_casual_5_F_afro","C_Man_casual_6_F_afro","C_man_polo_1_F_afro","C_man_polo_2_F_afro","C_man_polo_3_F_afro","C_man_polo_4_F_afro","C_man_polo_5_F_afro","C_man_polo_6_F_afro","C_man_shorts_1_F_afro"];
+AIT_civTypes_expats = ["CUP_C_C_Citizen_02","CUP_C_C_Citizen_01","CUP_C_C_Citizen_04","CUP_C_C_Citizen_03","CUP_C_C_Rocker_01","CUP_C_C_Rocker_03","CUP_C_C_Rocker_02","CUP_C_C_Rocker_04","C_man_p_beggar_F","C_man_1","C_Man_casual_1_F","C_Man_casual_2_F","C_Man_casual_3_F","C_man_sport_1_F","C_man_sport_2_F","C_man_sport_3_F","C_Man_casual_4_F","C_Man_casual_5_F","C_Man_casual_6_F","C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_man_shorts_1_F","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_p_beggar_F_asia","C_Man_casual_1_F_asia","C_Man_casual_2_F_asia","C_Man_casual_3_F_asia","C_man_sport_1_F_asia","C_man_sport_2_F_asia","C_man_sport_3_F_asia","C_Man_casual_4_F_asia","C_Man_casual_5_F_asia","C_Man_casual_6_F_asia","C_man_polo_1_F_asia","C_man_polo_2_F_asia","C_man_polo_3_F_asia","C_man_polo_4_F_asia","C_man_polo_5_F_asia","C_man_polo_6_F_asia","C_man_shorts_1_F_asia"];
+AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F","C_man_shorts_2_F_afro","C_man_shorts_3_F_afro","C_man_shorts_4_F_afro","C_man_shorts_2_F_asia","C_man_shorts_3_F_asia","C_man_shorts_4_F_asia","C_man_shorts_2_F_euro","C_man_shorts_3_F_euro","C_man_shorts_4_F_euro"];
+AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK","C_man_hunter_1_F"];
+
+
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
 AIT_item_BasicGun = "hgun_Pistol_heavy_01_F";//All dealers will stock this close to cost price to ensure starting players can afford a weapon
@@ -29,12 +39,15 @@ AIT_NATO_Unit_Police = "B_Gen_Soldier_F";
 AIT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F"; //Used to transport the above two into towns
 AIT_NATO_Unit_PoliceHeliPilot = "B_T_HeliPilot_F";
 AIT_NATO_Unit_PoliceHeliCoPilot = "B_T_Helicrew_F";
+AIT_NATO_Unit_PoliceMedic = "B_T_Medic_F";
+AIT_NATO_Units_PoliceSupport = ["B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
+
+AIT_NATO_weapons_Police = ["SMG_01_F","SMG_02_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_MX_Black_F","arifle_Katiba_F","srifle_EBR_F","srifle_DMR_01_F"];
 
 //Criminal stuff
-AIT_CRIM_Unit_Leader = "I_C_Soldier_Camo_F";
 AIT_CRIM_Units_Bandit = ["I_C_Soldier_Bandit_1_F","I_C_Soldier_Bandit_2_F","I_C_Soldier_Bandit_3_F","I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_5_F","I_C_Soldier_Bandit_6_F","I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_8_F"];
 AIT_CRIM_Units_Para = ["I_C_Soldier_Para_1_F","I_C_Soldier_Para_2_F","I_C_Soldier_Para_3_F","I_C_Soldier_Para_4_F","I_C_Soldier_Para_5_F","I_C_Soldier_Para_6_F","I_C_Soldier_Para_7_F","I_C_Soldier_Para_8_F"];
-AIT_CRIM_Vehicle_Offroad = "I_C_Offroad_02_unarmed_F";
+AIT_vehTypes_crim = ["I_G_Offroad_01_F","I_C_Offroad_02_unarmed_F","C_Offroad_02_unarmed_F","C_Offroad_01_F","I_C_Offroad_02_unarmed_F","I_C_Offroad_02_unarmed_F","I_C_Offroad_02_unarmed_F"];
 
 //ECONOMY
 
@@ -57,22 +70,48 @@ AIT_items = [
 	["Rangefinder",280,0,0,1],
 	["Laserdesignator",500,1,0,0],
 	["NVGoggles",700,1,0,0],
-	["ItemRadio",60,0,0,1]	
+	["ItemRadio",60,0,0,1],
+	["G_Aviator",20,0,0,1],
+	["G_Spectacles",20,0,0,1],
+	["G_Squares_Tinted",20,0,0,1]
 ];
 
+AIT_backpacks = [
+	["B_AssaultPack_cbr",50,0,0,1],
+	["B_AssaultPack_blk",50,0,0,1],
+	["B_AssaultPack_khk",50,0,0,1],
+	["B_AssaultPack_sgg",50,0,0,1],
+	["B_FieldPack_cbr",70,0,0,1],
+	["B_FieldPack_blk",70,0,0,1],
+	["B_FieldPack_khk",70,0,0,1],
+	["B_FieldPack_oli",70,0,0,1],
+	["B_Kitbag_cbr",85,0,0,1],
+	["B_Kitbag_sgg",85,0,0,1],
+	["B_Carryall_cbr",100,0,0,1],
+	["B_Carryall_khk",100,0,0,1],
+	["B_Carryall_oli",100,0,0,1],
+	["B_Bergen_dgtl_F",150,0,0,1],
+	["B_Bergen_hex_F",150,0,0,1]
+];
 AIT_weapons = [
-	["hgun_Pistol_heavy_01_F",80,1,0,0],
-	["hgun_ACPC2_F",100,1,0,0],
-	["hgun_P07_F",120,1,0,0],
+	["hgun_Pistol_heavy_01_F",40,1,0,0],
+	["hgun_ACPC2_F",60,1,0,0],
+	["hgun_P07_F",100,1,0,0],
 	["hgun_Rook40_F",110,1,0,0],
-	["hgun_PDW2000_F",410,1,0,0],
-	["SMG_02_F",450,1,0,0],
-	["SMG_01_F",390,1,0,0],
-	["arifle_Mk20_plain_F",800,1,0,0],
-	["arifle_Mk20_GL_plain_F",1520,1,0,0],
-	["arifle_Mk20C_plain_F",730,1,0,0]
+	["hgun_PDW2000_F",210,1,0,0],
+	["SMG_02_F",250,1,0,0],
+	["SMG_01_F",290,1,0,0],
+	["arifle_Mk20_plain_F",400,1,0,0],
+	["arifle_Mk20_GL_plain_F",520,1,0,0],
+	["arifle_Mk20C_plain_F",560,1,0,0],
+	["arifle_MX_Black_F",760,1,0,0],
+	["arifle_Katiba_F",780,1,0,0],
+	["arifle_Katiba_GL_F",980,1,0,0],
+	["srifle_EBR_F",900,1,0,0],
+	["srifle_DMR_01_F",1000,1,0,0],
+	["LMG_Mk200_F",1100,1,0,0],
+	["srifle_GM6_F",1300,1,0,0]
 ];
-
 AIT_vehicles = [
 	["CUP_C_Skoda_Blue_CIV",50,1,1,1],
 	["CUP_C_Skoda_Green_CIV",60,1,1,1],
@@ -102,13 +141,19 @@ AIT_allVehicles = [];
 AIT_allItems = [];
 AIT_allWeapons = [];
 AIT_allMagazines = [];
+AIT_allBackpacks = [];
+
+cost setVariable ["CIV",[50,0,0,0],true];
 
 //populate the cost gamelogic with the above data so it can be accessed quickly
 {
 	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
 	AIT_allItems pushBack (_x select 0);
 }foreach(AIT_items);
-
+{
+	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	AIT_allBackpacks pushBack (_x select 0);
+}foreach(AIT_backpacks);
 {
 	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
 	AIT_allVehicles pushBack (_x select 0);
@@ -129,6 +174,7 @@ publicVariable "AIT_allVehicles";
 publicVariable "AIT_allItems";
 publicVariable "AIT_allWeapons";
 publicVariable "AIT_allMagazines";
+publicVariable "AIT_allBackpacks";
 
 AIT_regions = ["island_1","island_2","island_3","island_4","island_5","island_6","island_7"]; //for both economic and travel purposes. define rectangles in eden
 AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu","Ipota"]; //region capitals
@@ -151,6 +197,9 @@ AIT_shops = ["Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Shop_City_02_F","
 AIT_warehouses = ["Land_Warehouse_03_F"]; //buildings that will spawn local distribution centers
 AIT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F"]; //buildings that will spawn car salesmen (must have a template with a cash register)
 AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"]; 
+
+AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses;
+publicVariable "AIT_allBuyableBuildings";
 
 AIT_activeShops = [];
 AIT_activeCarShops = [];

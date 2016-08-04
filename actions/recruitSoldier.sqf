@@ -1,0 +1,1 @@
+if !(captive player) exitWith {hint "You cannot recruit while wanted"};

@@ -8,6 +8,7 @@ titleText ["You died", "BLACK FADED", 0];
 
 waitUntil {alive player};
 player setCaptive true;
+player allowDamage false;
 
 removeHeadgear player;
 removeAllWeapons player;
@@ -34,11 +35,15 @@ _mrk = createMarkerLocal ["home",_housepos];
 _mrk setMarkerShape "ICON";
 _mrk setMarkerType "loc_Tourism";
 _mrk setMarkerColor "ColorWhite";
-_mrk setMarkerText "Home";
-
+_mrk setMarkerAlpha 0;
+_mrk setMarkerAlphaLocal 1;
 
 player setPos _pos;
 
 titleText ["", "BLACK IN", 5];
 
 [] execVM "setupPlayer.sqf";
+
+sleep 5;
+player allowDamage true;
+

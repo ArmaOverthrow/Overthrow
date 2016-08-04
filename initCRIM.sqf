@@ -34,7 +34,8 @@ AIT_CRIMInitDone = true;
 publicVariable "AIT_CRIMInitDone";
 
 while {true} do {
-	{	
+	sleep 100;
+	{			
 		_town = _x;
 		_posTown = server getVariable _town;
 		_mSize = 300;
@@ -52,17 +53,14 @@ while {true} do {
 				if((random 100) > 80) then {
 					server setVariable [format ["numcrims%1",_x],_num + 1,true];
 				};
-			};
-			if((_stability < 10) and (isNil "_leaderpos") and (random 100) > 80) then {
-				_building = (nearestObjects [_posTown, AIT_crimHouses, _mSize]) call BIS_Fnc_selectRandom;
-				_leaderpos = [getpos _building, 0, 6, 0, 0, 40, 0] call BIS_fnc_findSafePos;
-				server setVariable [format["crimleader%1",_town],_leaderpos,true];
-				server setVariable [format ["timecrims%1",_x],0,true];
-			};
-			
+			}else{
+				if((random 20) > _stability) then {
+					_town spawn spawnGang;
+				}
+			};			
 		};
-		sleep 0.1;
+		sleep 1;
 	}foreach (AIT_allTowns);
-	sleep 600;
+	sleep 500;
 };
 

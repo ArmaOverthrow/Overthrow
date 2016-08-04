@@ -28,7 +28,7 @@ spawner setVariable [_town,true,true];
 _numVeh = 0;
 
 if(_pop > 15) then {
-	_numCiv = round(_pop * 0.08);
+	_numCiv = round(_pop * 0.05);
 	_numVeh = 2 + round(_pop * 0.01);
 }else {
 	_numCiv = _pop;
@@ -59,15 +59,17 @@ _buildings = [];
 
 _gundealerpos = server getVariable format["gundealer%1",_town];
 if(isNil "_gundealerpos") then {
-	_building = (nearestObjects [_posTown, AIT_gunDealerHouses, _mSize]) call BIS_Fnc_selectRandom;
+	_building = (nearestObjects [_posTown, AIT_gunDealerHouses, _mSize+100]) call BIS_Fnc_selectRandom;
 	_gundealerpos = [getpos _building, 0, 6, 0, 0, 40, 0] call BIS_fnc_findSafePos;
 	server setVariable [format["gundealer%1",_town],_gundealerpos,true];
+	_building setVariable ["owner",true,true];
 };
 
 _group = createGroup civilian;		
 _group setBehaviour "CARELESS";
 _groups pushBack _group;
 _type = AIT_civTypes_gunDealers call BIS_Fnc_selectRandom;
+_pos = [_gundealerpos, 0, 20, 3, 0, 20, 0] call BIS_fnc_findSafePos;
 _dealer = _group createUnit [_type, _gundealerpos, [],0, "NONE"];
 _civs pushBack _dealer;
 
@@ -231,18 +233,14 @@ if(_stability > 10) then {
 	while {(spawner getVariable _town) and (_count < _numNATO)} do {
 		_left = _numNATO - _count;
 		_group = createGroup blufor;
-		_group setBehaviour "SAFE";
-		
+				
 		_groups pushBack _group;
-		_roadselect = _posTown nearRoads _range;
-		_start = [_posTown, 0, _range, 4, 0, 20, 0] call BIS_fnc_findSafePos;
 		
-		_roadselect = _start nearRoads _mSize;
-		_end = getPos (_roadselect call BIS_Fnc_selectRandom);					
+		_start = [_posTown, _range-150, _range, 4, 0, 20, 0] call BIS_fnc_findSafePos;
+				
 		if(_left < 2) then {
 			_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 			_civs pushBack _civ;
-			_civ setSkill 1.0 - (_stability / 100);
 			_civ setBehaviour "SAFE";
 			[_civ] call initPolice;
 			_count = _count + 1;
@@ -251,35 +249,16 @@ if(_stability > 10) then {
 			_civs pushBack _civ;
 			[_civ] call initPolice;
 			_civ setBehaviour "SAFE";
-			_civ setSkill 1.0 - (_stability / 100);
 			sleep 0.01;
 			_start = [_start, 0, 15, 4, 0, 20, 0] call BIS_fnc_findSafePos;
 			_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
 			_civs pushBack _civ;
-			_civ setSkill 1.0 - (_stability / 100);
 			[_civ] call initPolice;
 			_civ setBehaviour "SAFE";
 			_count = _count + 2;
 		};
-		
-		deleteWaypoint ((waypoints _group) select 0);
-		_wp = _group addWaypoint [_end,0];
-		_wp setWaypointType "MOVE";
-		_wp setWaypointBehaviour "SAFE";
-		_wp setWaypointSpeed "LIMITED";
-		_wp setWaypointTimeout [0, 5, 10];
-		
-		_wp = _group addWaypoint [_start,0];
-		_wp setWaypointType "MOVE";
-		_wp setWaypointBehaviour "SAFE";
-		_wp setWaypointSpeed "LIMITED";
-		_wp setWaypointTimeout [0, 5, 10];
-		
-		_wp1 = _group addWaypoint [_start,0];
-		_wp1 setWaypointType "CYCLE";
-		_wp setWaypointBehaviour "SAFE";
-		_wp1 synchronizeWaypoint [_wp];
-		_range = _range + 100;
+		_group call initPolicePatrol;
+		_range = _range + 150;
 		
 		sleep 0.01;
 	};
@@ -293,11 +272,11 @@ _time = server getVariable format ["timecrims%1",_town];
 _leaderpos = server getVariable format["crimleader%1",_town];
 _group = objNULL;
 
-_skill = 0.4;
+_skill = 0.7;
 if(_time > 0) then {
-	_skill = 0.4 + (0.5 * (_time / 7200));
-	if(_skill > 0.9) then {
-		_skill = 0.9;
+	_skill = 0.7 + (0.3 * (_time / 7200));
+	if(_skill > 0.95) then {
+		_skill = 0.95;
 	};
 };
 
@@ -319,6 +298,7 @@ if ((typeName _leaderpos) == "ARRAY") then {
 	
 	_wp = _group addWaypoint [_leaderpos,0];
 	_wp setWaypointType "GUARD";
+	_wp setWaypointFormation "LINE";
 }else{	
 	if(_numcrims > 0) then {
 		_leaderpos = [(_shops + _houses) call BIS_Fnc_selectRandom, 0, 50, 1, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -375,7 +355,7 @@ while {(spawner getVariable _town) and (_count < _numVeh)} do {
 					
 		_veh addEventHandler ["GetIn",{
 			_unit = _this select 2;
-			if({(side _x== west) and (((_x knowsAbout player > 1) and (_x distance player < 1000)))} count allUnits > 0) then {
+			if(blufor knowsAbout _unit > 1.4) then {
 				_unit setCaptive false;			
 			};
 		}];
@@ -391,7 +371,12 @@ sleep 1;
 waitUntil {sleep 1;not (spawner getVariable _town)};
 
 {deleteGroup _x} forEach _groups;
-{deleteVehicle _x} forEach _civs;
+{
+	_owner = _x getVariable "owner";
+	if(isNil "_owner") then {
+		deleteVehicle _x;
+	};	
+} forEach _civs;
 {
 	_x setVariable ["spawned",false,true];
 }foreach _buildings;

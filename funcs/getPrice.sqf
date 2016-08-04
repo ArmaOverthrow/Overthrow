@@ -19,7 +19,9 @@ if(_cls in (AIT_allWeapons + AIT_allMagazines)) then {
 
 	if(_standing < -100) then {_standing = -100};
 	if(_standing > 100) then {_standing = 100};
-	_standing = ((_standing/100) * -1)+1;
+	if(_standing != 0) then {
+		_standing = ((_standing/100) * -1)+1;
+	};	
 
 	_price = _baseprice + (_stability * _baseprice * _standing);
 };

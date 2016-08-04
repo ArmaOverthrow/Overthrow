@@ -1,6 +1,6 @@
 private ["_b","_s","_town","_standing","_cls","_num","_price","_idx","_done"];
 
-playSound "3DEN_notificationDefault";
+playSound "ClickSoft";
 _b = nearestBuilding getPos player;
 _s = _b getVariable "stock";
 _town = (getpos player) call nearestTown;

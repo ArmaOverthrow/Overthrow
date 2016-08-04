@@ -1,12 +1,96 @@
 _unit = _this select 0;
+
+_town = (getpos _unit) call nearestTown;
+_unit setVariable ["garrison",_town];
+
+_stability = server getVariable format["stability%1",_town];
+
+_skill = 0.5;
+if(_stability < 60) then {
+	_skill = 0.6;
+};
+if(_stability < 50) then {
+	_skill = 0.7;
+};
+if(_stability < 40) then {
+	_skill = 0.8;
+};
+if(_stability < 30) then {
+	_skill = 0.9;
+};
+_unit setSkill _skill;
+
+removeAllWeapons _unit;
+removeAllAssignedItems _unit;
+removeGoggles _unit;
+removeBackpack _unit;
+
+_unit linkItem "ItemMap";
+_unit linkItem "ItemCompass";
+_unit linkItem "ItemRadio";
+
+_numweap = (count AIT_NATO_weapons_Police)-1;
+_idx = _numweap - 4;
+
+if(_skill > 0.85) then {
+	_idx = _numweap;
+};
+
+if(_skill > 0.8) then {
+	_unit linkItem "NVGoggles_OPFOR";
+	_unit addGoggles "G_Bandanna_aviator";
+	_unit addWeapon "Rangefinder";
+	_idx = _numweap - 1;
+}else{
+	_unit addWeapon "Binoculars";
+	if(_skill > 0.7) then {
+		_idx = _numweap - 2;
+		_unit addItemToVest "HandGrenade";
+		_unit linkItem "ItemWatch";
+		_unit addGoggles "G_Aviator";
+	}else{
+		if(_skill > 0.6) then {
+			_idx = _numweap - 3;
+			_unit linkItem "ItemGPS";
+		};
+	};
+};
+
+_weapon = AIT_NATO_weapons_Police select round(random(_idx));
+_unit addWeapon _weapon;
+_base = [_weapon] call BIS_fnc_baseWeapon;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_selectRandom;
+_unit addMagazine [_magazine,3];
+
+_unit addPrimaryWeaponItem "acc_flashlight";
+
+if(_skill > 0.8) then {
+	_unit addPrimaryWeaponItem "optic_Dms";
+}else{	
+	if(_skill > 0.7) then {
+		_unit addPrimaryWeaponItem "optic_Mrco";
+	}else{
+		if(_skill > 0.6) then {
+			_unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+		}else{
+			_unit addPrimaryWeaponItem "optic_Aco";
+		};
+	};
+};
+
 _onCivKilled = _unit addEventHandler ["killed",{
 	_me = _this select 0;
 	_killer = _this select 1;
-	_town = (getpos _me) call nearestTown;
+	_town = _me getvariable "garrison";
 	_pop = server getVariable format["garrison%1",_town];
-	server setVariable [format["garrison%1",_town],_pop - 1,true];
+	if(_pop > 0) then {
+		server setVariable [format["garrison%1",_town],_pop - 1,true];
+	};
 	
 	_stability = server getVariable format["stability%1",_town];
+	if(_stability < 2) then {
+		_stability = 2;
+	};
 	server setVariable [format["stability%1",_town],_stability - 2,true];
 
 	if(_killer == _me) then {
@@ -34,7 +118,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 				}foreach(allUnits);
 			};
 			
-			format["Standing (%1) -1",_town] remoteExec ["notify",_killer,true];
+			format["Stability: %1%2\nYour Standing: %2",_stability-2,"%",_standing - 1] remoteExec ["notify_minor",_killer,true];
 		};
 	};
 }];
@@ -55,7 +139,7 @@ _onCivFiredNear = _unit addEventHandler["FiredNear",{
 	};	
 	
 	if(isPlayer _firer) then {		
-		if((blufor knowsAbout _firer) > 1) then {
+		if((blufor knowsAbout _firer) > 0) then {
 			_firer setCaptive false;
 			
 			//reveal you to all cops/military within 1km
@@ -71,5 +155,5 @@ _onCivFiredNear = _unit addEventHandler["FiredNear",{
 				};
 			}foreach(allUnits);
 		}
-	}
+	};
 }];

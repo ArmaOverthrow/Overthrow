@@ -25,82 +25,19 @@ player addEventHandler ["InventoryOpened", {
 	};
 }];
 
+player spawn wantedSystem;
+_closestcount = 0;
+
 while {true} do {
 	sleep 2;
-	
-	_closest = (getPos player) call nearestTown;
-	if(_closest != _town) then {
-		_closest call townChange;
-	};
-	
-	//check wanted status
-	if !(captive player) then {
-		_rep = player getVariable format["rep%1",_town];
 		
-		if({(side _x== west) and (((_x knowsAbout player > 0) and (_x distance player < 1000)) or (_x distance player < 50))} count allUnits == 0) then {
-			_timer = 0;
-		};
-		if(_timer >= 0) then {
-			_timer = _timer + 2;				
-			if(_timer == 30) then {
-				_timer = -1;
-				player setCaptive true;
-			};
-		};
-	}else{
-		if({(side _x== west) and (((_x knowsAbout player > 1) and (_x distance player < 1000)))} count allUnits > 0) then {
-			//Police can see you, don't do anything bad ok
-			if ((primaryWeapon player != "") or (secondaryWeapon player != "") or (handgunWeapon player != "")) then {
-				hint "The police have seen your weapon!";
-				player setCaptive false;
-				//reveal you to all cops/military within 3km
-				{
-					if((side _x == west) and (_x distance player < 2000)) then {
-						_x reveal player;
-						_x setBehaviour "COMBAT";
-						_x setCombatMode "RED";
-						_group = group _x;
-						while {(count(waypoints _group))>0} do {
-							deletewaypoint ((waypoints _group) select 0);									
-						};	
-						_wp = _group addWaypoint [getpos player,0];
-						_wp setWaypointType "SAD";
-						_wp setWaypointBehaviour "COMBAT";
-						_wp setWaypointSpeed "NORMAL";
-						_group setCombatMode "RED";
-						_group setBehaviour "COMBAT";
-					};
-				}foreach(allUnits);
-				
-			};
-		};
-		if({(side _x== east) and (((_x knowsAbout player > 1) and (_x distance player < 800)))} count allUnits > 0) then {
-			//Criminals can see you
-			if ((primaryWeapon player != "") or (secondaryWeapon player != "") or (handgunWeapon player != "")) then {
-				hint "The gang has seen your weapon!";
-				player setCaptive false;
-				//reveal you to all gang members
-				{
-					if((side _x == east) and (_x distance player < 800)) then {
-						_x reveal player;
-						_x setCombatMode "RED";
-						_x setBehaviour "COMBAT";
-						
-						_group = group _x;
-						while {(count(waypoints _group))>0} do {
-							deletewaypoint ((waypoints _group) select 0);									
-						};	
-						_wp = _group addWaypoint [getpos player,0];
-						_wp setWaypointType "SAD";
-						_wp setWaypointBehaviour "COMBAT";
-						_wp setWaypointSpeed "NORMAL";
-						_group setCombatMode "RED";
-						_group setBehaviour "COMBAT";
-					};
-				}foreach(allUnits);
-				
-			};
-		};
-	};
+	if(_closestcount <= 0) then {
+		_closest = (getPos player) call nearestTown;
+		if(_closest != _town) then {
+			_closest call townChange;	
+			_closestcount = 20;		
+		};		
+	};	
+	_closestcount = _closestcount - 2;	
 };
 

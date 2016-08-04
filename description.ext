@@ -1,11 +1,17 @@
 #include "dialogs\defines.hpp"
 #include "dialogs\stats.hpp"
 #include "dialogs\shop.hpp"
+#include "dialogs\main.hpp"
 
 author="ARMAzac";
 OnLoadName = "Overthrow.Tanoa";
 OnLoadMission = "v0.1";
 loadScreen = "pic.jpg";
+
+class Header
+{
+	gameType = Coop; // MP mission type
+};
 
 overviewText = "";
 overviewPicture = "pic.jpg";

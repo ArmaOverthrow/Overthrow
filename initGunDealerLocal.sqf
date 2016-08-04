@@ -29,9 +29,7 @@ _civ addAction ["Buy Weapon", {
 				
 				_base = [_type] call BIS_fnc_baseWeapon;
 				_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
-				{
-					_stock pushBack [_x,2];
-				}foreach(_magazines);
+				_stock pushBack [_magazines select 0,2];				
 			};
 		};
 		server setVariable [format["gunstock%1",_town],_stock,true];
@@ -51,4 +49,4 @@ _civ addAction ["Buy Weapon", {
 		lbSetData [1500,_idx,_cls];
 	}foreach(_stock);
 	
-}];
+},nil,1.5,false,true,"","",5];

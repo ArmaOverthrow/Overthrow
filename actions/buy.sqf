@@ -8,12 +8,12 @@ _standing = player getVariable format['rep%1',_town];
 _price = [_town,_cls,_standing] call getPrice;
 
 _money = player getVariable "money";
-if(_money < _price) exitWith {hint "You cannot afford that!"};
+if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
 
-playSound "3DEN_notificationDefault";
+playSound "ClickSoft";
 if(_cls in AIT_allVehicles) then {	
 	_pos = (getpos player) findEmptyPosition [5,100,_cls];
-	if (count _pos == 0) exitWith {hint "Not enough space, please clear an area nearby"};
+	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 	
 	player setVariable ["money",_money-_price,true];
 	_veh = _cls createVehicle _pos;
@@ -28,33 +28,44 @@ if(_cls in AIT_allVehicles) then {
 	
 }else{
 	if(_cls in AIT_allWeapons) then {
-		_stock = server getVariable format["gunstock%1",_town];
-		_idx = 0;
-		{
-			if((_x select 0) == _cls) exitWith {}; 
-			_idx = _idx + 1;
-		}foreach(_stock);
-		_stock deleteAt _idx;
-		server setVariable [format["gunstock%1",_town],_stock,true];
 		player setVariable ["money",_money-_price,true];
-		
-		_house = player getVariable "home";
-		_box =  (nearestObjects [getpos _house, AIT_items_Storage,50]) select 0;
-		_box addWeaponCargo [_cls,1];
-		hint "All weapons and ammo are delivered to your ammobox";
+
+		_box = false;
+		{
+			_owner = _x getVariable "owner";
+			if(!isNil "_owner") then {
+				if(_owner == player) exitWith {_box = _x};				
+			};
+		}foreach(nearestObjects [getpos player, AIT_items_Storage,1000]);
+		if(typename _box == "OBJECT") then {
+			_box addWeaponCargo [_cls,1];
+			"Delivered to your closest ammobox" call notify_minor;
+		}else{
+			player addWeapon _cls;
+		};		
 	}else{
 		if(_cls in AIT_allMagazines) then {	
 			player setVariable ["money",_money-_price,true];
 			
 			_house = player getVariable "home";
-			_box =  (nearestObjects [getpos _house, AIT_items_Storage,50]) select 0;
-			_box addMagazineCargo [_cls,1];
-			hint "All weapons and ammo are delivered to your ammobox";
+			_box = false;
+			{
+				_owner = _x getVariable "owner";
+				if(!isNil "_owner") then {
+					if(_owner == player) exitWith {_box = _x};				
+				};
+			}foreach(nearestObjects [getpos player, AIT_items_Storage,1000]);
+			if(typename _box == "OBJECT") then {
+				_box addMagazineCargo [_cls,1];
+				"Delivered to your closest ammobox" call notify_minor;
+			}else{
+				player addMagazineCargo _cls;
+			};		
 		}else{
 			_b = nearestBuilding getPos player;
 			_s = _b getVariable "stock";
 			
-			if!([player,_cls] call canFit) exitWith {hint "There is not enough room in your inventory"};
+			if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor};
 
 			_done = false;
 			_soldout = false;

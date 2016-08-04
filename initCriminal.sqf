@@ -4,7 +4,12 @@ _onCivKilled = _unit addEventHandler ["killed",{
 	_killer = _this select 1;
 	_town = (getpos _me) call nearestTown;
 	_pop = server getVariable format["numcrims%1",_town];
+	if(_pop < 1) then {_pop = 1};
 	server setVariable [format["numcrims%1",_town],_pop - 1,true];
+	
+	_stability = server getVariable format["stability%1",_town];
+	if(_stability > 99) then {_stability = 99};
+	server setVariable [format["stability%1",_town],_stability + 1,true];
 	
 	if(_killer == _me) then {
 		//was probably hit by a vehicle so we need to find the nearest player driver and blame him
@@ -31,7 +36,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 				}foreach(allUnits);
 			};
 			
-			format["Standing (%1) +1",_town] remoteExec ["notify",_killer,true];
+			format["Stability: %1%2\nYour Standing: %2",_stability+1,"%",_standing + 1] remoteExec ["notify_minor",_killer,true];
 		};
 	};
 }];

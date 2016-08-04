@@ -65,13 +65,13 @@ _spawntowns = [];
 	_hugepop = round(count(_huge) * (count(_allshops))); 
 	
 	_pop = _lopop + _medpop + _highpop + _hugepop;
-	_base = 60 + count(_allshops);
+	_base = 70 + count(_allshops);
 	if(_base > 90) then {
 		_base = 90;
 	};
 	_stability = round(_base + random(10));
 	if(_pop < 80)then {
-		_stability = floor(5 + random(30));
+		_stability = floor(15 + random(50));
 	};
 	server setVariable [format["stability%1",_name],_stability,true];
 
@@ -85,7 +85,7 @@ _spawntowns = [];
 	{
 		if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
 	}foreach(AIT_regions);
-	if((_stability > 60) and (_pop < 400) and !(_name in AIT_spawnBlacklist)) then {
+	if((_stability > 70) and (count _shops > 0) and !(_name in AIT_spawnBlacklist)) then {
 		_spawntowns pushBack _name;
 	};
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);

@@ -8,6 +8,10 @@ _onCivKilled = _unit addEventHandler ["killed",{
 	//Reset the criminal element in this town
 	server setVariable [format["crimleader%1",_town],false,true];
 	server setVariable [format["timecrims%1",_town],0,true];
+	
+	_stability = server getVariable format["stability%1",_town];
+	if(_stability > 95) then {_stability = 95};
+	server setVariable [format["stability%1",_town],_stability + 5,true];
 		
 	if(_killer == _me) then {
 		//was probably hit by a vehicle so we need to find the nearest player driver and blame him
@@ -23,7 +27,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 				//reveal you to all crims nearby
 				{
 					if((side _x == east) and (_x distance _killer < 800)) then {
-						_x reveal _killer;
+						_x reveal [_killer,1.5];
 						_x setCombatMode "RED";
 						_x setBehaviour "COMBAT";
 						_group = group _x;
@@ -34,7 +38,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 				}foreach(allUnits);
 			};
 			
-			format["Standing (%1) +10\nGang leader killed",_town] remoteExec ["notify",_killer,true];
+			format["Stability: %1%2\nYour Standing: %2",_stability+1,"%",_standing + 1] remoteExec ["notify_good",_killer,true];
 		};
 	};
 }];
@@ -60,7 +64,7 @@ _onCivFiredNear = _unit addEventHandler["FiredNear",{
 			//reveal you to all nearby crims
 			{
 				if((side _x == east) and (_x distance _firer < 600)) then {
-					_x reveal _firer;
+					_x reveal [_firer,1.5];
 					_x setCombatMode "RED";
 					_x setBehaviour "COMBAT";
 					_group = group _x;

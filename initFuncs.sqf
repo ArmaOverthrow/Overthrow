@@ -1,32 +1,55 @@
+
+//Helper functions
 getPublicVar = compileFinal preProcessFileLineNumbers "addons\scripts\getPublicVar.sqf";
-LSdeleter = compileFinal preProcessFileLineNumbers "addons\Lootspawner\LSdeleter.sqf";
-agentDeleter = compileFinal preProcessFileLineNumbers "agentDeleter.sqf";
 townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
-fn_getBuildingstospawnLoot = compileFinal preProcessFileLineNumbers "addons\Lootspawner\fn_LSgetBuildingstospawnLoot.sqf";
-pushbackPlane =  compileFinal preProcessFileLineNumbers "addons\scripts\pushback.sqf";
-spawnCiv = compileFinal preProcessFileLineNumbers "spawners\civ.sqf";
 randomPosition = compileFinal preProcessFileLineNumbers "funcs\randomPosition.sqf";
 spawnTemplate = compileFinal preProcessFileLineNumbers "funcs\spawnTemplate.sqf";
 inSpawnDistance = compileFinal preProcessFileLineNumbers "funcs\inSpawnDistance.sqf";
-initCivilian = compileFinal preProcessFileLineNumbers "initCivilian.sqf";
-initPolice = compileFinal preProcessFileLineNumbers "initPolice.sqf";
-initCriminal = compileFinal preProcessFileLineNumbers "initCriminal.sqf";
-initCrimLeader = compileFinal preProcessFileLineNumbers "initCrimLeader.sqf";
-initShopLocal = compileFinal preProcessFileLineNumbers "initShopLocal.sqf";
-initCarShopLocal = compileFinal preProcessFileLineNumbers "initCarShopLocal.sqf";
-initGunDealerLocal = compileFinal preProcessFileLineNumbers "initGunDealerLocal.sqf";
 nearestTown = compileFinal preProcessFileLineNumbers "funcs\nearestTown.sqf";
 getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
 canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
-buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
-sell = compileFinal preProcessFileLineNumbers "actions\sell.sqf";
+
+//AI spawn
+spawnCiv = compileFinal preProcessFileLineNumbers "spawners\civ.sqf";
+spawnGang = compileFinal preProcessFileLineNumbers "spawners\gang.sqf";
+
+//AI init
+initCivilian = compileFinal preProcessFileLineNumbers "initCivilian.sqf";
+initPolice = compileFinal preProcessFileLineNumbers "initPolice.sqf";
+initPolicePatrol = compileFinal preProcessFileLineNumbers "initPolicePatrol.sqf";
+initCriminal = compileFinal preProcessFileLineNumbers "initCriminal.sqf";
+initCrimLeader = compileFinal preProcessFileLineNumbers "initCrimLeader.sqf";
+initShopLocal = compileFinal preProcessFileLineNumbers "initShopLocal.sqf";
+initCarShopLocal = compileFinal preProcessFileLineNumbers "initCarShopLocal.sqf";
+initGunDealerLocal = compileFinal preProcessFileLineNumbers "initGunDealerLocal.sqf";
+
+//Economy agents
 run_shop = compileFinal preProcessFileLineNumbers "economy\shop.sqf";
 
+//Math
 rotationMatrix = compileFinal preProcessFileLineNumbers "funcs\rotationMatrix.sqf";
 matrixMultiply = compileFinal preProcessFileLineNumbers "funcs\matrixMultiply.sqf";
 matrixRotate = compileFinal preProcessFileLineNumbers "funcs\matrixRotate.sqf";
+
+//Actions
+buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
+sell = compileFinal preProcessFileLineNumbers "actions\sell.sqf";
+buyBuilding = compileFinal preProcessFileLineNumbers "actions\buyBuilding.sqf";
+recruitCiv = compileFinal preProcessFileLineNumbers "actions\recruitCiv.sqf";
+rearmGroup = compileFinal preProcessFileLineNumbers "actions\rearmGroup.sqf";
+recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
+fastTravel = compileFinal preProcessFileLineNumbers "actions\fastTravel.sqf";
+setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
+buyAmmobox = compileFinal preProcessFileLineNumbers "actions\buyAmmobox.sqf";
+giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
+
+//Wanted System
+wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
+
+//Key handler
+keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 
 KK_fnc_fileExists = {
     private ["_ctrl", "_fileExists"];
@@ -39,9 +62,25 @@ KK_fnc_fileExists = {
 };
 
 notify = {
-	_txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
+	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
+	[_txt, 1, 0.5, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+};
 
-	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+notify_good = {
+	playSound "3DEN_notificationDefault";
+	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
+	[_txt, 1, 0.1, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+};
+
+notify_minor = {
+	playSound "ClickSoft";
+	_txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
+	[_txt, 1, 0.5, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+};
+
+notify_talk = {
+	_txt = format ["<t size='0.6' color='#dddddd'>%1</t>",_this];
+	[_txt, -1, 1, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 AI_richGuy = compileFinal preProcessFileLineNumbers "AI\AI_richGuy.sqf";
