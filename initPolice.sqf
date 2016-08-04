@@ -29,6 +29,13 @@ _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
 _unit linkItem "ItemRadio";
 
+if(AIT_hasAce) then {
+	_unit addItemToVest "ACE_fieldDressing";
+	_unit addItemToVest "ACE_fieldDressing";
+}else{
+	_unit addItemToVest "FirstAidKit";
+};
+
 _numweap = (count AIT_NATO_weapons_Police)-1;
 _idx = _numweap - 4;
 
@@ -41,6 +48,9 @@ if(_skill > 0.8) then {
 	_unit addGoggles "G_Bandanna_aviator";
 	_unit addWeapon "Rangefinder";
 	_idx = _numweap - 1;
+	if(AIT_hasAce) then {
+		_unit addItemToUniform "ACE_rangeCard";
+	};
 }else{
 	_unit addWeapon "Binoculars";
 	if(_skill > 0.7) then {
@@ -57,12 +67,22 @@ if(_skill > 0.8) then {
 };
 
 _weapon = AIT_NATO_weapons_Police select round(random(_idx));
-_unit addWeapon _weapon;
 _base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_selectRandom;
-_unit addMagazine [_magazine,3];
-
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addWeapon _weapon;
 _unit addPrimaryWeaponItem "acc_flashlight";
+
+_weapon = AIT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
+_base = [_weapon] call BIS_fnc_baseWeapon;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addWeapon _weapon;
 
 if(_skill > 0.8) then {
 	_unit addPrimaryWeaponItem "optic_Dms";
@@ -118,7 +138,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 				}foreach(allUnits);
 			};
 			
-			format["Stability: %1%2\nYour Standing: %2",_stability-2,"%",_standing - 1] remoteExec ["notify_minor",_killer,true];
+			format["Stability: %1%2<br/>Your Standing: %2",_stability-2,"%",_standing - 1] remoteExec ["notify_minor",_killer,true];
 		};
 	};
 }];

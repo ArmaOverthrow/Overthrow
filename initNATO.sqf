@@ -123,7 +123,7 @@ while {true} do {
 					_police pushBack _civ;
 					_civ setBehaviour "SAFE";
 					
-					if((_stability < 40) and (random 100) > 0) then {
+					if((_stability < 40) and (random 100) > 75) then {
 						//Send some military dudes
 						_start = [_start, 0, 15, 4, 0, 20, 0] call BIS_fnc_findSafePos;
 						_civ = _group createUnit [AIT_NATO_Unit_PoliceMedic, _start, [],0, "NONE"];

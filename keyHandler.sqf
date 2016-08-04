@@ -1,7 +1,7 @@
 _handled = false;
 
 _key = _this select 1;
-if (_key == 24) then
+if (_key == 21) then
 {
 	closedialog 0;			
 	_nul = createDialog "AIT_dialog_main";
@@ -9,7 +9,7 @@ if (_key == 24) then
 }
 else
 {
-	if (_key == 207) then
+	if (_key == 207 and !AIT_hasAce) then
 	{		
 		if (soundVolume <= 0.5) then
 		{

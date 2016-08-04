@@ -36,7 +36,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 				}foreach(allUnits);
 			};
 			
-			format["Stability: %1%2\nYour Standing: %2",_stability+1,"%",_standing + 1] remoteExec ["notify_minor",_killer,true];
+			format["Stability: %1%2<br/>Your Standing: %2",_stability+1,"%",_standing+1] remoteExec ["notify_minor",_killer,true];
 		};
 	};
 }];

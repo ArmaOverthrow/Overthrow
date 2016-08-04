@@ -26,12 +26,12 @@ _building = objNULL;
 			
 			_cosa enableSimulationGlobal false;
 			_cosa attachTo [player,[0,2,1]];
-			player addAction ["Drop Here", {{detach _x} forEach attachedObjects player; removeAllActions player},nil,0,false,true,"",""];
+			_idx = player addAction ["Drop Here", {{detach _x} forEach attachedObjects player; removeAllActions player},nil,0,false,true,"",""];
 
 			waitUntil {sleep 0.05; (count attachedObjects player == 0) or (vehicle player != player) or (!alive player) or (!isPlayer player)};
 
 			{detach _x} forEach attachedObjects player;
-			removeAllActions player;
+			player removeAction _idx;
 
 			_cosa setPosATL [getPosATL _cosa select 0,getPosATL _cosa select 1,getPosATL player select 2];
 			_cosa setVariable ["owner",player,true];

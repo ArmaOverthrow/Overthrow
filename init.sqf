@@ -3,11 +3,12 @@ inGameUISetEventHandler ["PrevAction", ""];
 inGameUISetEventHandler ["Action", ""];
 inGameUISetEventHandler ["NextAction", ""];
 
-AIT_debug = true;
+AIT_debug = false;
 
 if(!isMultiplayer) then {		
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
 	call compile preprocessFileLineNumbers "initVar.sqf";
+
 	//SINGLE PLAYER init
 	call compile preprocessFileLineNumbers "initEconomy.sqf";
 	[] execVM "initNATO.sqf";

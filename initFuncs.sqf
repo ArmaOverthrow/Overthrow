@@ -51,6 +51,12 @@ wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 
+setupKeyHandler = {
+	waitUntil {!(isnull (findDisplay 46))};
+	sleep 1;
+	(findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
+};
+
 KK_fnc_fileExists = {
     private ["_ctrl", "_fileExists"];
     disableSerialization;

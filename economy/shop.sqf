@@ -23,15 +23,7 @@ while {true} do {
 		_vehs = _tracked select 0;
 		
 		_cashdesk = _pos nearestObject AIT_item_ShopRegister;
-		_dir = getDir _cashdesk;
-		_relPos = [0,1,0.1];//where the dude needs to stand
-		//rotate standing position around Z axis to the current direction of cash desk (MATH!)
-		_xx = _relPos select 0;
-		_yy = _relPos select 1;
-		
-		_relPos = [(_xx * cos _dir) - (_yy * sin _dir), (_xx * sin _dir) + (_yy * cos _dir),_relPos select 2];
-		_cashpos = getpos _cashdesk;
-		_spawnpos = [(_cashpos select 0) + (_relPos select 0),(_cashpos select 1) + (_relPos select 1),(_cashpos select 2) + (_relPos select 2)];
+		_spawnpos = _building buildingPos 0;
 		
 		_group = createGroup civilian;	
 		_group setBehaviour "CARELESS";
@@ -61,11 +53,11 @@ while {true} do {
 	if (!_seeded) then {
 		//choose some random legal items
 		_seeded = true;
-		_numitems = floor(random 5) + 2;
+		_numitems = floor(random 10) + 2;
 		_count = 0;
 		
 		while {_count < _numitems} do {
-			_item = AIT_legalItems call BIS_Fnc_selectRandom;
+			_item = (AIT_allItems + AIT_allBackpacks) call BIS_Fnc_selectRandom;
 			if!(_item in _itemsToStock) then {
 				_itemsToStock pushback _item;
 				_count = _count + 1;

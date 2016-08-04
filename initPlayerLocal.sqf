@@ -1,4 +1,6 @@
 private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture"];
+waitUntil {!isNull player};
+waitUntil {player == player};
 
 if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
@@ -25,8 +27,6 @@ _pop = server getVariable format["population%1",_town];
 _stability = server getVariable format["stability%1",_town];
 _rep = player getVariable format["rep%1",_town];
 _money = player getVariable "money";
-
-mainMenu = (findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
 
 //JIP interactions
 _shops = server getVariable "activeshops";
@@ -90,5 +90,12 @@ player addEventHandler ["GetInMan", {
 		_veh setVariable ["owner",player,true];
 	};
 }];
+
+if (isMultiplayer) then {
+	["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
+	["InitializeGroup", [player,playerSide,true]] call BIS_fnc_dynamicGroups;
+};
+
+[] spawn setupKeyHandler;
 
 [] execVM "setupPlayer.sqf";

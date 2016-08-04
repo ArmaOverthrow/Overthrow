@@ -10,7 +10,13 @@ _shopkeeper addAction ["Buy", {
 		_cls = _x select 0;
 		_num = _x select 1;
 		_price = [_town,_cls,_standing] call getPrice;
-		_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_cls call ISSE_Cfg_Weapons_GetName,_price]];
+		_name = "";
+		if(_cls in AIT_allBackpacks) then {
+			_name = _cls call ISSE_Cfg_Vehicle_GetName;
+		}else{
+			_name = _cls call ISSE_Cfg_Weapons_GetName;
+		};
+		_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
 		lbSetData [1500,_idx,_cls];
 	}foreach(_s);
 	
@@ -24,10 +30,18 @@ _shopkeeper addAction ["Sell", {
 	createDialog "AIT_dialog_sell";
 	{			
 		_cls = _x select 0;
-		_num = _x select 1;
-		_price = [_town,_cls,_standing+40] call getPrice;
-		_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_cls call ISSE_Cfg_Weapons_GetName,_price]];
-		lbSetData [1500,_idx,_cls];
+		if(_cls in AIT_allItems) then {
+			_num = _x select 1;
+			_price = [_town,_cls,_standing+40] call getPrice;
+			_name = "";
+			if(_cls in AIT_allBackpacks) then {
+				_name = _cls call ISSE_Cfg_Vehicle_GetName;
+			}else{
+				_name = _cls call ISSE_Cfg_Weapons_GetName;
+			};
+			_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
+			lbSetData [1500,_idx,_cls];
+		};
 	}foreach(_s);
 	
 },_shopkeeper,1.5,false,true,"","",5];

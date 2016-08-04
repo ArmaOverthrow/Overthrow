@@ -110,18 +110,9 @@ _count = 0;
 		
 		_pos = getpos _x;
 		_cashdesk = _pos nearestObject AIT_item_ShopRegister;
-		_dir = getDir _cashdesk;
-		_relPos = [0,1,0.1];//where the dude needs to stand
-		//rotate standing position around Z axis to the current direction of cash desk (MATH!)
-		_xx = _relPos select 0;
-		_yy = _relPos select 1;
 		
-		_relPos = [(_xx * cos _dir) - (_yy * sin _dir), (_xx * sin _dir) + (_yy * cos _dir),_relPos select 2];
-		_cashpos = getpos _cashdesk;
-		_spawnpos = [(_cashpos select 0) + (_relPos select 0),(_cashpos select 1) + (_relPos select 1),(_cashpos select 2) + (_relPos select 2)];
-		
-		//_spawnpos = [_spawnpos, 0, 50, 0.5, 0, 20, 0] call BIS_fnc_findSafePos;
-		
+		_spawnpos = [getpos _x, 0, 30, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+				
 		_group = createGroup civilian;		
 		_group setBehaviour "CARELESS";
 		_groups pushBack _group;

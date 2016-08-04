@@ -2,6 +2,10 @@
 
 AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani","Saint-Julien"]; //dont spawn in these towns
 
+AIT_hasAce = false;
+if (!isNil "ace_common_settingFeedbackIcons") then {
+	AIT_hasAce = true;
+};
 
 AIT_spawnDistance = 1200;
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
@@ -43,6 +47,7 @@ AIT_NATO_Unit_PoliceMedic = "B_T_Medic_F";
 AIT_NATO_Units_PoliceSupport = ["B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 
 AIT_NATO_weapons_Police = ["SMG_01_F","SMG_02_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_MX_Black_F","arifle_Katiba_F","srifle_EBR_F","srifle_DMR_01_F"];
+AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 
 //Criminal stuff
 AIT_CRIM_Units_Bandit = ["I_C_Soldier_Bandit_1_F","I_C_Soldier_Bandit_2_F","I_C_Soldier_Bandit_3_F","I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_5_F","I_C_Soldier_Bandit_6_F","I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_8_F"];
@@ -58,9 +63,31 @@ AIT_vehTypes_crim = ["I_G_Offroad_01_F","I_C_Offroad_02_unarmed_F","C_Offroad_02
 //The cost to produce an item will be the Base price - player/factory bonuses + raw materials
 //The wholesale sell price of an item will be the base price - local markup
 //NB: the local markup can be negative, making buy prices lower and sell prices higher, in certain situations (high stability and/or player rep)
-AIT_items = [
-	["FirstAidKit",10,0,0,0.1],
-	["Medikit",40,0,0,0.5],
+
+AIT_items = [];
+if(AIT_hasAce) then {
+	[AIT_items,[
+		["ACE_fieldDressing",10,0,0,0.1],
+		["ACE_elasticBandage",15,0,0,0.2],
+		["ACE_SpraypaintBlue",10,0,0,0.2],
+		["ACE_SpraypaintRed",10,0,0,0.2],
+		["ACE_SpraypaintBlack",10,0,0,0.2],
+		["ACE_EarPlugs",5,0,0,0.2],
+		["ACE_epinephrine",20,0,0,0.2],
+		["ACE_MapTools",2,0,0,0.2],
+		["ACE_adenosine",20,0,0,0.2],
+		["ACE_Flashlight_MX991",40,0,0,0.2],
+		["ACE_Sandbag_empty",1,0,0,0],
+		["ACE_Altimeter",110,0,0,1]		
+	]] call BIS_fnc_arrayPushStack;
+}else{
+	[AIT_items,[
+		["FirstAidKit",10,0,0,0.1],
+		["Medikit",40,0,0,0.5]
+	]] call BIS_fnc_arrayPushStack;
+};
+
+[AIT_items,[
 	["ToolKit",25,1,0,0],
 	["ItemGPS",90,0,0,1],
 	["ItemCompass",5,0.1,0,0],
@@ -70,11 +97,8 @@ AIT_items = [
 	["Rangefinder",280,0,0,1],
 	["Laserdesignator",500,1,0,0],
 	["NVGoggles",700,1,0,0],
-	["ItemRadio",60,0,0,1],
-	["G_Aviator",20,0,0,1],
-	["G_Spectacles",20,0,0,1],
-	["G_Squares_Tinted",20,0,0,1]
-];
+	["ItemRadio",60,0,0,1]
+]] call BIS_fnc_arrayPushStack;
 
 AIT_backpacks = [
 	["B_AssaultPack_cbr",50,0,0,1],

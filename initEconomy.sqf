@@ -47,7 +47,7 @@ _spawntowns = [];
 	
 	//spawn any main shops
 	{
-		if((random 100) > 40) then {
+		if((random 100) > 30) then {
 			_shops pushback (getpos _x);
 			[_x] spawn run_shop;
 			

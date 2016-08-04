@@ -61,12 +61,16 @@ if(_cls in AIT_allVehicles) then {
 			}else{
 				player addMagazineCargo _cls;
 			};		
-		}else{
+		}else{					
 			_b = nearestBuilding getPos player;
 			_s = _b getVariable "stock";
 			
-			if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor};
-
+			if(_cls in AIT_allBackpacks) then {	
+				if(backpack player != "") exitWith {"You already have a backpack" call notify_minor};
+			}else{
+				if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor};
+			};
+			
 			_done = false;
 			_soldout = false;
 			_stockidx = 0;
@@ -88,17 +92,28 @@ if(_cls in AIT_allVehicles) then {
 				};
 				player setVariable ["money",_money-_price,true];
 				_b setVariable ["stock",_s,true];	
-				player addItem _cls;
+				if(_cls in AIT_allBackpacks) then {	
+					player addBackpack _cls;
+				}else{
+					player addItem _cls;
+				};
+				
 				lbClear 1500;
 				{			
 					_cls = _x select 0;
 					_num = _x select 1;
+					_name = "";
+					if(_cls in AIT_allBackpacks) then {
+						_name = _cls call ISSE_Cfg_Vehicle_GetName;
+					}else{
+						_name = _cls call ISSE_Cfg_Weapons_GetName;
+					};
 					_price = [_town,_cls,_standing] call getPrice;
-					_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_cls call ISSE_Cfg_Weapons_GetName,_price]];
+					_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
 					lbSetData [1500,_idx,_cls];
 				}foreach(_s);
 			};
-		}
+		}		
 	}
 }
 
