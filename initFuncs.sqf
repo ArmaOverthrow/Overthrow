@@ -16,14 +16,16 @@ spawnCiv = compileFinal preProcessFileLineNumbers "spawners\civ.sqf";
 spawnGang = compileFinal preProcessFileLineNumbers "spawners\gang.sqf";
 
 //AI init
-initCivilian = compileFinal preProcessFileLineNumbers "initCivilian.sqf";
-initPolice = compileFinal preProcessFileLineNumbers "initPolice.sqf";
-initPolicePatrol = compileFinal preProcessFileLineNumbers "initPolicePatrol.sqf";
-initCriminal = compileFinal preProcessFileLineNumbers "initCriminal.sqf";
-initCrimLeader = compileFinal preProcessFileLineNumbers "initCrimLeader.sqf";
-initShopLocal = compileFinal preProcessFileLineNumbers "initShopLocal.sqf";
-initCarShopLocal = compileFinal preProcessFileLineNumbers "initCarShopLocal.sqf";
-initGunDealerLocal = compileFinal preProcessFileLineNumbers "initGunDealerLocal.sqf";
+initCivilian = compileFinal preProcessFileLineNumbers "AI\initCivilian.sqf";
+initPolice = compileFinal preProcessFileLineNumbers "AI\initPolice.sqf";
+initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\initPolicePatrol.sqf";
+initCriminal = compileFinal preProcessFileLineNumbers "AI\initCriminal.sqf";
+initCrimLeader = compileFinal preProcessFileLineNumbers "AI\initCrimLeader.sqf";
+
+//AI interactions
+initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
+initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarShopLocal.sqf";
+initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
 
 //Economy agents
 run_shop = compileFinal preProcessFileLineNumbers "economy\shop.sqf";
@@ -57,6 +59,14 @@ setupKeyHandler = {
 	(findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
 };
 
+standing = {
+	_town = _this select 0;
+	_rep = (player getVariable format["rep%1",_town])+_this select 1;
+	player setVariable [format["rep%1",_town],_rep,true];
+	playSound "3DEN_notificationDefault";
+	format["Standing: %1",_rep] call notify_minor;
+};
+
 KK_fnc_fileExists = {
     private ["_ctrl", "_fileExists"];
     disableSerialization;
@@ -88,8 +98,6 @@ notify_talk = {
 	_txt = format ["<t size='0.6' color='#dddddd'>%1</t>",_this];
 	[_txt, -1, 1, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
-
-AI_richGuy = compileFinal preProcessFileLineNumbers "AI\AI_richGuy.sqf";
 
 [] execVM "funcs\info.sqf";
 

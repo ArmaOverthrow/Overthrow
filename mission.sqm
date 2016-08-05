@@ -8,7 +8,7 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=921;
+		nextID=961;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={12234.418,105.91317,12157.059};
-		dir[]={-0.35067007,-0.039130017,0.93575293};
-		up[]={-0.013744803,0.99922752,0.036676243};
-		aside[]={0.93647444,1.652239e-006,0.35094649};
+		pos[]={6934.7593,5.7455978,7455.2559};
+		dir[]={0.87612939,-0.36586103,0.31392258};
+		up[]={0.34441224,0.93067306,0.12339985};
+		aside[]={0.33730635,-4.7072972e-006,-0.94139779};
 	};
 };
 binarizationWanted=0;
@@ -356,13 +356,14 @@ class Mission
 		briefingName="Overthrow.Tanoa";
 		resistanceWest=0;
 		timeOfChanges=1800.0002;
-		startWeather=0.17927346;
+		startWeather=0;
 		startWind=0.1;
 		startWaves=0.1;
 		forecastWeather=0;
 		forecastWind=0.1;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
+		rainForced=1;
 		year=2015;
 		month=6;
 		day=1;
@@ -585,15 +586,15 @@ class Mission
 		class Item4
 		{
 			dataType="Marker";
-			position[]={4497.875,-9.8751883e-008,3470.207};
+			position[]={4227.0801,-4.0669048e-016,3495.281};
 			name="island_3";
 			markerType="RECTANGLE";
 			type="rectangle";
 			colorName="ColorOrange";
-			a=2898.604;
+			a=3098.604;
 			b=1876.465;
 			id=394;
-			atlOffset=-35.834488;
+			atlOffset=-38.245327;
 		};
 		class Item5
 		{

@@ -17,7 +17,13 @@ _currentTxt = "";
 while {showStatistics} do {
 	_wanted = "";
 	if !(captive player) then {
-		_wanted = "<br/>WANTED";
+		_hiding = player getVariable "hiding";
+		if(_hiding > 0) then {
+			_wanted = format["<br/>WANTED (%1)",_hiding];
+		}else{
+			_wanted = "<br/>WANTED";
+		};
+		
 	};
 	_txt = format ["<t size='0.6'>$%1 %2</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_wanted];
 	if (_txt != _currentTxt) then {			

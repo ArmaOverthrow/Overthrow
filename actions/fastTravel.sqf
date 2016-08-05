@@ -24,6 +24,12 @@ _possible = [];
 		if(_owner == player and (typeof _x) in AIT_allBuyableBuildings) exitWith {
 			_handled = true;
 			player allowDamage false;
+			disableUserInput true;
+			
+			
+			cutText ["Fast traveling, please wait","BLACK",2];			
+			sleep 2;
+			openMap false;
 			if((vehicle player) != player) then {
 				if (driver vehicle player == player) then {
 					_tam = 10;
@@ -40,8 +46,10 @@ _possible = [];
 				};				
 			}else{
 				player setpos ([getpos _x, 0, 25, 1, 0, 0, 0] call BIS_fnc_findSafePos);
-			};			
-			openMap false;			
+			};				
+
+			disableUserInput false;
+			cutText ["","BLACK IN",3]
 		};
 	}
 }foreach(_buildings);

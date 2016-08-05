@@ -75,7 +75,6 @@ sleep 10;
 
 while {true} do {	
 	{	
-		if(_NATObusy) exitWith {};
 		_town = _x;
 		_townPos = server getVariable _town;
 		_current = server getVariable format ["garrison%1",_town];;	
@@ -169,13 +168,6 @@ while {true} do {
 		};
 		sleep 0.1;
 	}foreach (AIT_allTowns);
-	
-	if(_NATObusy) then {
-		//20 mins between reinforcments
-		sleep 1200;
-		_NATObusy = false;
-	}else{
-		sleep 200 + round(random 600);
-	};
+	sleep 200 + round(random 600);	
 };
 

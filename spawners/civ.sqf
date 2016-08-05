@@ -336,12 +336,19 @@ if !(isNull _group) then {
 _count = 0;
 while {(spawner getVariable _town) and (_count < _numVeh)} do {	
 	_roadselect = _posTown nearRoads _mSize;
-	_pos = getPos (_roadselect call BIS_Fnc_selectRandom);
+	_road = (_roadselect call BIS_Fnc_selectRandom);
+	_pos = getPos _road;
 	_vehtype = AIT_vehTypes_civ call BIS_Fnc_selectRandom;
 	_pos = _pos findEmptyPosition [5,25,_vehtype];
 	if (count _pos > 0) then {
+		_roadscon = roadsConnectedto (_roads select 0);
+		_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
+		_posVeh = [_pos, 3, _dirveh + 90] call BIS_Fnc_relPos;
+	
 		_veh = _vehtype createVehicle _pos;
-		_veh setDir (random 359);
+		clearItemCargoGlobal _veh;
+				
+		_veh setDir _dirveh;
 		_civs pushBack _veh;
 					
 		_veh addEventHandler ["GetIn",{

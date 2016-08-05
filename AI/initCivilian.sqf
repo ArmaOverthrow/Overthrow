@@ -19,11 +19,8 @@ _onCivKilled = _unit addEventHandler ["killed",{
 		
 	}else{
 		if(isPlayer _killer) then {
-			_standing = player getVariable format["rep%1",_town];
-			_killer setVariable [format["rep%1",_town],_standing - 10,true];
-			_killer setCaptive false;
-			
-			format["Stability: %1%2<br/>Your Standing: %2",_stability-1,"%",_standing - 10] remoteExec ["notify_minor",_killer,true];
+			_killer setCaptive false;			
+			[_town,-10] remoteExec ["standing",_killer,true];
 			
 			//reveal you to the local garrison
 			{

@@ -57,7 +57,7 @@ if(_posTown call inSpawnDistance) then {
 	//_civ moveInDriver _veh;
 	_group addVehicle _veh;
 	
-	_wp = _group addWaypoint [_leaderpos,75];
+	_wp = _group addWaypoint [_leaderpos,200];
 	_wp setWaypointType "GETOUT";
 	
 	_wp = _group addWaypoint [_leaderpos,0];

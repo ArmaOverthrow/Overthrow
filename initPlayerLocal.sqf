@@ -80,6 +80,7 @@ _furniture = (_house call spawnTemplate) select 0;
 
 {
 	_x addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
+	_x setVariable ["owner",player,true];
 }foreach(_furniture);
 
 

@@ -97,6 +97,8 @@ if(AIT_hasAce) then {
 	["Rangefinder",280,0,0,1],
 	["Laserdesignator",500,1,0,0],
 	["NVGoggles",700,1,0,0],
+	["NVGoggles_OPFOR",700,1,0,0],
+	["NVGoggles_BLUFOR",700,1,0,0],
 	["ItemRadio",60,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 

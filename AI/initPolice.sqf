@@ -118,9 +118,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 		
 	}else{
 		if(isPlayer _killer) then {
-			_standing = player getVariable format["rep%1",_town];
-			_killer setVariable [format["rep%1",_town],_standing - 1,true];
-			
+			[_town,-1] remoteExec ["standing",_killer,true];			
 			if(((blufor knowsAbout _killer) > 0) || ((vehicle _killer) != _killer)) then {
 				_killer setCaptive false;
 				
@@ -136,9 +134,7 @@ _onCivKilled = _unit addEventHandler ["killed",{
 						_group setBehaviour "COMBAT";
 					};
 				}foreach(allUnits);
-			};
-			
-			format["Stability: %1%2<br/>Your Standing: %2",_stability-2,"%",_standing - 1] remoteExec ["notify_minor",_killer,true];
+			};			
 		};
 	};
 }];
