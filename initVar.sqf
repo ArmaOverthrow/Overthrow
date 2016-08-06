@@ -8,7 +8,7 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 };
 
 AIT_spawnDistance = 1200;
-AIT_spawnCivPercentage = 0.1;
+AIT_spawnCivPercentage = 0.12;
 AIT_spawnVehiclePercentage = 0.01;
 AIT_NATOwait = 500; //Half the Average time between NATO orders
 AIT_CRIMwait = 300; //Half the Average time between crim changes

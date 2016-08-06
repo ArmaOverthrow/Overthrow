@@ -25,8 +25,7 @@ while{true} do {
 			_stability = server getVariable format ["stability%1",_town];
 			
 			if(_pop > 15) then {
-				_numCiv = round(_pop * AIT_spawnCivPercentage);
-				_numVeh = 2 + round(_pop * 0.01);
+				_numCiv = 5 + round(_pop * AIT_spawnCivPercentage);
 			}else {
 				_numCiv = _pop;
 			};

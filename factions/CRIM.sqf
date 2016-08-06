@@ -46,7 +46,7 @@ while {true} do {
 			_mSize = 800;
 		};
 		_stability = server getVariable format ["stability%1",_town];
-		if(_stability < 20) then {
+		if((_stability < 30) || (_town in (server getvariable "NATOabandoned"))) then {
 			_time = server getVariable format ["timecrims%1",_town];
 			_num = server getVariable format ["numcrims%1",_town];
 			
