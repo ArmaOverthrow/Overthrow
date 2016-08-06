@@ -2,7 +2,7 @@ if !(captive player) exitWith {hint "You cannot buy buildings while wanted"};
 
 
 
-_buildings =  (getpos player) nearObjects 10;
+_buildings =  (getpos player) nearObjects 15;
 _handled = false;
 _building = objNULL;
 _price = 0;
@@ -48,6 +48,10 @@ if(_handled) then {
 	_mrk setMarkerColor "ColorWhite";
 	_mrk setMarkerAlpha 0;
 	_mrk setMarkerAlphaLocal 1;
+	
+	_owned = player getVariable "owned";
+	_owned pushback _building;
+	player setVariable ["owned",_owned,true];
 	
 	format["You purchased this building for $%1",_price] call notify_minor;
 	

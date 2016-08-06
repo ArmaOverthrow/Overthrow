@@ -28,7 +28,7 @@ _dist = 8000;
 if(!isNil "_close") then {
 	_close = [_close, 100, 800, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_start = getpos((_close nearRoads 500) select 0);
-	hint format["%1",_start];
+
 	_group = creategroup opfor;
 	
 	_type = AIT_vehTypes_crim call BIS_fnc_selectRandom;

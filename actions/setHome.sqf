@@ -1,6 +1,6 @@
 if !(captive player) exitWith {hint "You cannot set home while wanted"};
 
-_buildings =  (getpos player) nearObjects 50;
+_buildings =  (getpos player) nearObjects 15;
 _handled = false;
 _building = objNULL;
 {

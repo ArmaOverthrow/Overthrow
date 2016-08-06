@@ -1,4 +1,4 @@
-private ["_uniqueCounter","_allspawners"];
+private ["_uniqueCounter","_allspawners","_id","_start","_end"];
 
 AIT_spawnUniqueCounter = -1;
 publicVariable "AIT_spawnUniqueCounter";
@@ -27,6 +27,7 @@ AIT_fnc_registerSpawner = {
 	AIT_spawnUniqueCounter = AIT_spawnUniqueCounter + 1;
 	publicVariable "AIT_spawnUniqueCounter";
 	_id = format["spawn%1",AIT_spawnUniqueCounter];
+	publicVariable "AIT_spawnUniqueCounter";
 	
 	spawner setvariable [_id,false,true];
 	AIT_allspawners pushBack [_id,_start,_end];
@@ -37,25 +38,22 @@ AIT_fnc_registerSpawner = {
 publicVariable "AIT_fnc_registerSpawner";
 
 while{true} do {
-	sleep 1;	
+	sleep 0.1;	
 	{
-		
 		_id = _x select 0;
 		_start = _x select 1;
 		_end = _x select 1;
 		if((_start distance _end) > 1) then {
 			if((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
-				spawner setvariable [_id,true,true];
-				sleep 0.1;
+				spawner setvariable [_id,true,false];
 			}else{
-				spawner setvariable [_id,false,true];
+				spawner setvariable [_id,false,false];
 			}
 		}else{
 			if(_start call inSpawnDistance) then {
-				spawner setvariable [_id,true,true];
-				sleep 0.1;
+				spawner setvariable [_id,true,false];
 			}else{
-				spawner setvariable [_id,false,true];
+				spawner setvariable [_id,false,false];
 			}
 		};
 	}foreach(AIT_allspawners);

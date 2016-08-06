@@ -1,4 +1,4 @@
-private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper"];
+private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_groups","_all","_shopkeeper"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -9,6 +9,7 @@ _posTown = _this select 1;
 _town = _this select 3;
 
 _civs = []; //Stores all civs for tear down
+_groups = [];
 
 waitUntil{spawner getVariable _id};
 
@@ -36,7 +37,7 @@ while{true} do {
 					
 					_cashdesk = _pos nearestObject AIT_item_ShopRegister;
 					_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
-					_pos = [_cashpos, 0, 50, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+					_pos = [[[_cashpos,50]]] call BIS_fnc_randomPos;
 					
 					_group = createGroup civilian;	
 					_group setBehaviour "CARELESS";
@@ -57,9 +58,6 @@ while{true} do {
 					_shopkeeper remoteExec ["initCarShopLocal",0,true];
 					[_shopkeeper] call initCarDealer;	
 
-					{
-						_x addCuratorEditableObjects [_civs,true];
-					} forEach allCurators;
 				}
 			}foreach(nearestObjects [_posTown, AIT_carShops, 600]);
 			publicVariable "AIT_activeCarShops";
@@ -73,10 +71,13 @@ while{true} do {
 			//Tear it all down
 			{
 				if !(_x call hasOwner) then {
-					deleteGroup group _x;
 					deleteVehicle _x;
 				};				
 			}foreach(_civs);
+			{
+				deleteGroup _x;
+			}foreach(_groups);
+			_groups = [];
 			_civs = [];
 		};
 	};

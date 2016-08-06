@@ -15,11 +15,13 @@ waitUntil {!isNil "AIT_fnc_registerSpawner"};
 [] execVM "virtualization\towns.sqf";
 [] execVM "virtualization\shops.sqf";
 [] execVM "virtualization\military.sqf";
+[] execVM "virtualization\distribution.sqf";
 
 //Addons
 [] execVM "VCOMAI\init.sqf";
 
 addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "entityKilled.sqf"];
+addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "playerDisconnect.sqf"];
 
 AIT_serverInitDone = true;
 publicVariable "AIT_serverInitDone";

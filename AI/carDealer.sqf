@@ -9,7 +9,7 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
-_unit setVariable ["NOAI",1,false];
+_unit setVariable ["NOAI",true,false];
 
 (group _unit) allowFleeing 0;
 

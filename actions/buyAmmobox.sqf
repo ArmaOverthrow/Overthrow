@@ -38,6 +38,10 @@ _building = objNULL;
 			sleep 1;
 			_cosa addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
 			_cosa enableSimulationGlobal true;
+			
+			_owned = player getVariable "owned";
+			_owned pushback _cosa;
+			player setVariable ["owned",_owned,true];
 		};
 	};
 	

@@ -9,6 +9,7 @@ _pos = _this select 1;
 _building = _this select 3;
 
 _civs = []; //Stores all civs for tear down
+_groups = [];
 
 waitUntil{spawner getVariable _id};
 
@@ -28,9 +29,10 @@ while{true} do {
 			_cashdesk = _pos nearestObject AIT_item_ShopRegister;
 			_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
 			
-			_pos = [_cashpos, 0, 50, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+			_pos = [[[_cashpos,50]]] call BIS_fnc_randomPos;
 			
 			_group = createGroup civilian;	
+			_groups pushback _group;
 			_group setBehaviour "CARELESS";
 			_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
 			_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];
@@ -47,10 +49,6 @@ while{true} do {
 			
 			_shopkeeper remoteExec ["initShopLocal",0,true];
 			[_shopkeeper] call initShopkeeper;	
-
-			{
-				_x addCuratorEditableObjects [_civs,true];
-			} forEach allCurators;
 			
 		};
 	}else{
@@ -62,12 +60,15 @@ while{true} do {
 			//Tear it all down
 			{
 				if !(_x call hasOwner) then {
-					deleteGroup group _x;
 					deleteVehicle _x;
 				};				
 			}foreach(_civs);
+			{
+				deleteGroup _x;
+			}foreach(_groups);
+			_groups = [];
 			_civs = [];
 		};
 	};
-	sleep 1;
+	sleep 0.5;
 };

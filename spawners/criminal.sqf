@@ -1,4 +1,4 @@
-private ["_town","_posTown","_active","_groups","_soldiers","_numNATO","_pop","_count","_range"];
+private ["_id","_town","_posTown","_active","_groups","_soldiers","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -41,7 +41,7 @@ while{true} do {
 				_groups pushBack _group;					
 				
 				if ((typeName _leaderpos) == "ARRAY") then {
-					_start = [_leaderpos, 0, 40, 0, 0, 0, 0] call BIS_fnc_findSafePos;
+					_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 					
 					_civ = _group createUnit [AIT_CRIM_Units_Para call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					[_civ] joinSilent _group;
@@ -51,19 +51,14 @@ while{true} do {
 					[_civ,_name] call initCrimLeader;
 					_civ setBehaviour "SAFE";
 					
-					_count = _count + 1;
+					_count = _count + 1;					
 					
 					_wp = _group addWaypoint [_leaderpos,0];
-					_wp setWaypointType "MOVE";
-					_wp setWaypointSpeed "LIMITED";
-					
-					_wp = _group addWaypoint [_leaderpos,0];
-					_wp setWaypointType "GUARD";
-					_wp setWaypointFormation "LINE";					
+					_wp setWaypointType "GUARD";				
 					
 					sleep 0.1;
 				}else{
-					_start = [_posTown, 0, 150, 0, 0, 0, 0] call BIS_fnc_findSafePos;
+					_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
 					_group setBehaviour "CARELESS";	
 		
 					_wp = _group addWaypoint [_leaderpos,0];
@@ -71,7 +66,7 @@ while{true} do {
 					_wp setWaypointSpeed "LIMITED";					
 					_wp setWaypointTimeout [0, 5, 10];
 					
-					_end = [_posTown, 0, 150, 0, 0, 0, 0] call BIS_fnc_findSafePos;
+					_end = [[[_posTown,150]]] call BIS_fnc_randomPos;
 					
 					_wp = _group addWaypoint [_end,0];
 					_wp setWaypointType "MOVE";
@@ -84,7 +79,7 @@ while{true} do {
 				};
 				
 				while {(spawner getVariable _id) and (_count < _numCRIM)} do {
-					_start = [_start,0,40, 1, 0, 0, 0] call BIS_fnc_findSafePos;		
+					_start = [[[_start,40]]] call BIS_fnc_randomPos;
 					
 					_civ = _group createUnit [AIT_CRIM_Units_Bandit call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					_civ setRank "SERGEANT";
@@ -124,10 +119,14 @@ while{true} do {
 			_addnum = server getVariable format["crimadd%1",_town];
 			if((typename _newpos) == "ARRAY") then {				
 				server setVariable [format["crimleader%1",_town],_newpos,true];
-				[_soldiers,[_newpos,_addnum,_town] call newleader] call BIS_fnc_arrayPushStack;
+				_new = [_newpos,_addnum,_town] call newleader;
+				[_soldiers,_new] call BIS_fnc_arrayPushStack;
+				_groups pushback group(_new select 0);
 			}else{
 				if(_addnum > 0) then {
-					[_soldiers,[_addnum,_town] call sendCrims] call BIS_fnc_arrayPushStack;
+					_new = [_addnum,_town] call sendCrims;
+					[_soldiers,_new] call BIS_fnc_arrayPushStack;
+					_groups pushback group(_new select 0);
 				};
 			};
 			server setVariable [format["crimnew%1",_town],false,true];

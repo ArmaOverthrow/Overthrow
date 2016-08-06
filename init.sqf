@@ -21,7 +21,8 @@ if(!isMultiplayer) then {
 	waitUntil {!isNil "AIT_fnc_registerSpawner"};
 	[] execVM "virtualization\towns.sqf";
 	[] execVM "virtualization\shops.sqf";
-	[] execVM "virtualization\military.sqf";
+	[] execVM "virtualization\military.sqf";	
+	[] execVM "virtualization\distribution.sqf";
 	
 	//Addons
 	[] execVM "VCOMAI\init.sqf";

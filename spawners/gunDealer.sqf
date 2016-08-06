@@ -9,6 +9,7 @@ _posTown = _this select 1;
 _town = _this select 3;
 
 _civs = []; //Stores all civs for tear down
+_groups = [];
 
 waitUntil{spawner getVariable _id};
 
@@ -27,10 +28,12 @@ while{true} do {
 				server setVariable [format["gundealer%1",_town],_gundealerpos,true];
 				_building setVariable ["owner",true,true];
 			};
-			_group = createGroup civilian;		
+			_group = createGroup civilian;	
+			_groups	pushback _group;
+			
 			_group setBehaviour "CARELESS";
 			_type = AIT_civTypes_gunDealers call BIS_Fnc_selectRandom;
-			_pos = [_gundealerpos, 0, 50, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+			_pos = [[[_gundealerpos,50]]] call BIS_fnc_randomPos;
 			_dealer = _group createUnit [_type, _pos, [],0, "NONE"];
 			_civs pushBack _dealer;
 			
@@ -44,10 +47,7 @@ while{true} do {
 
 			_dealer remoteExec ["initGunDealerLocal",0,true];
 			[_dealer] call initGunDealer;
-			
-			{
-				_x addCuratorEditableObjects [_civs,true];
-			} forEach allCurators;			
+	
 		};
 	}else{
 		if (spawner getVariable _id) then {
@@ -58,10 +58,13 @@ while{true} do {
 			//Tear it all down
 			{
 				if !(_x call hasOwner) then {
-					deleteGroup group _x;
 					deleteVehicle _x;
 				};				
 			}foreach(_civs);
+			{
+				deleteGroup _x;
+			}foreach(_groups);
+			_groups = [];
 			_civs = [];
 		};
 	};

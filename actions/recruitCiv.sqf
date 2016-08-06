@@ -18,7 +18,7 @@ _possible = [];
 	};
 }foreach(_civs);
 
-if(count _possible == 0) exitWith {"No civilians within 10 meters" call notify_minor};
+if(count _possible == 0) exitWith {"No eligible civilians within 10 meters" call notify_minor};
 
 playSound "ClickSoft";
 player setVariable ["money",_money-_price,true];

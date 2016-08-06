@@ -19,9 +19,9 @@ waitUntil{not isNil "AIT_economyInitDone"};
 		_garrison = 2+round((1-(_stability / 10)) * 6);				
 		_building = (nearestObjects [_posTown, AIT_crimHouses, _mSize]) call BIS_Fnc_selectRandom;
 		if(isNil "_building") then {
-			_leaderpos = [_posTown, 0, 6, 0, 0, 40, 0] call BIS_fnc_findSafePos;
+			_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
 		}else{
-			_leaderpos = [getpos _building, 0, 6, 0, 0, 40, 0] call BIS_fnc_findSafePos;
+			_leaderpos = getpos _building;
 		};
 		
 		server setVariable [format["crimleader%1",_town],_leaderpos,true];
@@ -60,9 +60,9 @@ while {true} do {
 				if((random (30-_stability)) > 10) then {
 					_building = (nearestObjects [_posTown, AIT_crimHouses, _mSize]) call BIS_Fnc_selectRandom;
 					if(isNil "_building") then {
-						_leaderpos = [_posTown, 0, 6, 0, 0, 40, 0] call BIS_fnc_findSafePos;
+						_leaderpos = [[[_posTown,50]]] call BIS_fnc_randomPos;
 					}else{
-						_leaderpos = [getpos _building, 0, 6, 0, 0, 40, 0] call BIS_fnc_findSafePos;
+						_leaderpos = getpos _building;
 					};	
 					server setVariable [format["crimnew%1",_town],_leaderpos,true];
 					server setVariable [format ["crimadd%1",_x],4,true];

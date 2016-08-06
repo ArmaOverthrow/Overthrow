@@ -57,11 +57,11 @@ _spawntowns = [];
 	
 	{
 		_allshops pushback (getpos _x);
-	}foreach(nearestObjects [_pos, AIT_allShops + AIT_offices + AIT_warehouses + AIT_carShops, _mSize]);
+	}foreach(nearestObjects [_pos, AIT_allShops + AIT_offices + AIT_warehouses + AIT_carShops + AIT_portBuildings, _mSize]);
 	
 	_lopop = round(count(_low) * (random(2) + 1));
 	_medpop = round(count(_med) * (random(4) + 2)); 
-	_highpop = round(count(_hi) * (count(_allshops))); 
+	_highpop = round(count(_hi) * (count(_allshops)) * 0.2); 
 	_hugepop = round(count(_huge) * (count(_allshops))); 
 	
 	_pop = _lopop + _medpop + _highpop + _hugepop;
@@ -88,7 +88,6 @@ _spawntowns = [];
 	_popVar=format["population%1",_name];
 	server setVariable [_popVar,_pop,true];
 	server setVariable [format["activeshops%1",_name],_shops,true];
-	spawner setVariable [_name,false,true];
 	
 	{
 		if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
@@ -108,6 +107,25 @@ publicVariable "AIT_activeShops";
 	
 	
 }foreach(AIT_regions);
+
+AIT_activeDistribution = [];
+
+_count = 0;
+{
+	if((random 100) > 50) then {
+		_pos = getpos _x;
+		
+		_mrk = createMarker [format["%1",_pos],_pos];
+		_mrk setMarkerShape "ICON";
+		_mrk setMarkerType "hd_dot";
+		_mrk setMarkerColor "ColorGreen";
+		
+		[_x] spawn run_distribution;
+		AIT_activeDistribution pushBack _x;
+	};
+	
+}foreach(nearestObjects [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), AIT_warehouses, 50000]);
+publicVariable "AIT_activeDistribution";
 
 _towns = [];
 //spawn player in a random town with pop > 200 and stability > 20, not in the blacklist

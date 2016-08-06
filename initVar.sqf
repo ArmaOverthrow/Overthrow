@@ -8,8 +8,10 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 };
 
 AIT_spawnDistance = 1200;
-AIT_spawnCivPercentage = 0.12;
-AIT_spawnVehiclePercentage = 0.01;
+AIT_spawnCivPercentage = 0.15;
+AIT_spawnVehiclePercentage = 0.02;
+AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
+
 AIT_NATOwait = 500; //Half the Average time between NATO orders
 AIT_CRIMwait = 300; //Half the Average time between crim changes
 
@@ -22,7 +24,12 @@ AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
 AIT_item_BasicGun = "hgun_Pistol_heavy_01_F";//All dealers will stock this close to cost price to ensure starting players can afford a weapon
-AIT_consumableItems = ["FirstAidKit","Medikit","Toolkit"]; //Shops will try to stock more of these
+
+if(AIT_hasAce) then {
+	AIT_consumableItems = ["ACE_fieldDressing","Toolkit","ACE_Sandbag_empty"]; //Shops will try to stock more of these
+}else{
+	AIT_consumableItems = ["FirstAidKit","Medikit","Toolkit"];
+};
 AIT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F"];
 AIT_illegalVests = ["V_TacVest_gen_F"];
 
@@ -38,6 +45,7 @@ AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_
 AIT_clothes_locals = ["CUP_U_I_GUE_Anorak_01","CUP_U_I_GUE_Anorak_02","CUP_U_I_GUE_Anorak_03","U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
 AIT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
 AIT_clothes_tourists = [];
+AIT_clothes_port = "U_Marshal";
 AIT_clothes_shops = ["U_C_Man_casual_2_F","U_C_Man_casual_3_F","U_C_Man_casual_1_F"];
 AIT_clothes_carDealers = ["CUP_U_C_Mechanic_01","CUP_U_C_Mechanic_02","CUP_U_C_Mechanic_03"];
 AIT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
@@ -48,7 +56,7 @@ AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port","fuel de
 AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
 AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6"]; //NATO checkpoints, create markers in editor
 AIT_NATO_HQ = "Tuvanaka Airbase";
-AIT_NATO_HQPos = [0,0,0];
+AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
 AIT_NATO_Unit_Police = "B_Gen_Soldier_F";
@@ -93,7 +101,6 @@ if(AIT_hasAce) then {
 		["ACE_morphine",50,0,0,0.2],
 		["ACE_EarPlugs",5,0,0,0.2],
 		["ACE_epinephrine",50,0,0,0.2],
-		["ACE_MapTools",2,0,0,0.2],
 		["ACE_adenosine",50,0,0,0.2],
 		["ACE_Sandbag_empty",1,0,0,0],
 		["ACE_Altimeter",110,0,0,1]		
@@ -116,7 +123,6 @@ if(AIT_hasAce) then {
 	["Laserdesignator",500,1,0,0],
 	["NVGoggles",700,1,0,0],
 	["NVGoggles_OPFOR",700,1,0,0],
-	["NVGoggles_BLUFOR",700,1,0,0],
 	["ItemRadio",60,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 
@@ -233,7 +239,7 @@ AIT_crimHouses = AIT_spawnHouses + AIT_gunDealerHouses + AIT_mansions;
 
 AIT_lowPopHouses = ["Land_House_Native_02_F","Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F","Land_Slum_04_F"]; //buildings with just 1-4 people living in them (also player start houses)
 AIT_medPopHouses = ["Land_House_Native_01_F","Land_House_Big_01_F","Land_Slum_05_F","Land_House_Small_01_F","Land_Slum_03_F","Land_Slum_04_F","Land_House_Small_05_F","Land_Addon_04_F"]; //buildings with 5-10 people living in them
-AIT_highPopHouses = ["Land_House_Big_04_F"]; //buildings with up to 20
+AIT_highPopHouses = ["Land_House_Big_04_F","Land_Warehouse_01_F","Land_Warehouse_02_F"]; //buildings with up to 20 (the warehouses are because ports end up with low pop)
 AIT_hugePopHouses = ["Land_MultistoryBuilding_03_F"]; //buildings with potentially lots of people living in them
 AIT_touristHouses = ["Land_House_Big_05_F"]; //hostels and the like
 AIT_allShops = ["Land_Shop_Town_01_F","Land_Shop_Town_02_F","Land_Shop_Town_03_F","Land_Shop_Town_04_F","Land_Shop_Town_05_F","Land_Shop_City_01_F","Land_Shop_City_02_F","Land_Shop_City_03_F","Land_Shop_City_04_F","Land_Shop_City_05_F","Land_Shop_City_06_F","Land_Shop_City_07_F"]; //used to calculate civ spawn positions and initial stability
@@ -242,6 +248,7 @@ AIT_shops = ["Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Shop_City_02_F","
 AIT_warehouses = ["Land_Warehouse_03_F"]; //buildings that will spawn local distribution centers
 AIT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F"]; //buildings that will spawn car salesmen (must have a template with a cash register)
 AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"]; 
+AIT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 
 AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses;
 publicVariable "AIT_allBuyableBuildings";

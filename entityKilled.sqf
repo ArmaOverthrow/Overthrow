@@ -4,7 +4,11 @@ _me = _this select 0;
 _killer = _this select 1;
 _town = (getpos _me) call nearestTown;
 
-if(isPlayer _me) exitWith {};
+if(isPlayer _me) exitWith {
+	[-10] remoteExec ["money",_me,true];
+};
+
+_me remoteExec ["removeAllActions",0,true];
 
 _garrison = _me getvariable "garrison";
 _criminal = _me getvariable "criminal";
@@ -40,9 +44,11 @@ if(!isNil "_criminal") then {
 				_killer setCaptive false;
 			};
 		}else{
-			[_town,-1] call stability;
-			_standingChange = -10;
-			_killer setCaptive false;
+			if(side _killer == east or isPlayer _killer) then {
+				[_town,-1] call stability;
+				_standingChange = -10;
+				_killer setCaptive false;
+			}
 		};
 	};
 };

@@ -37,6 +37,7 @@ initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGun
 
 //Economy agents
 run_shop = compileFinal preProcessFileLineNumbers "economy\shop.sqf";
+run_distribution = compileFinal preProcessFileLineNumbers "economy\distribution.sqf";
 
 //Math
 rotationMatrix = compileFinal preProcessFileLineNumbers "funcs\rotationMatrix.sqf";
@@ -80,6 +81,22 @@ standing = {
 	
 };
 
+money = {
+	_amount = _this select 0;
+	_rep = (player getVariable "money")+_amount;
+	if(_rep < 0) then {		
+		_rep = 0;		
+	};
+	player setVariable ["money",_rep,true];
+	playSound "3DEN_notificationDefault";
+	_plusmin = "";
+	if(_amount > 0) then {
+		_plusmin = "+";
+	};
+	format["Money: %1%2",_plusmin,_amount] call notify_minor;
+	
+};
+
 stability = {
 	_town = _this select 0;
 	_stability = (server getVariable format["stability%1",_town])+(_this select 1);
@@ -112,18 +129,18 @@ notify = {
 notify_good = {
 	playSound "3DEN_notificationDefault";
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, 0, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_minor = {
 	playSound "ClickSoft";
 	_txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, 0, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {
-	_txt = format ["<t size='0.6' color='#dddddd'>%1</t>",_this];
-	[_txt, -1, 1, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+	_txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
+	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 [] execVM "funcs\info.sqf";

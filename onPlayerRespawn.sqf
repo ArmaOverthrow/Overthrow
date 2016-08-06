@@ -25,7 +25,7 @@ _house = _old getVariable "home";
 _town = (getpos _house) call nearestTown;
 _housepos = getpos _house;
 
-_pos = [_housepos, 0, 30, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+_pos = [[[_housepos,75]]] call BIS_fnc_randomPos;
 
 _house setVariable ["owner",player,true];
 player setVariable ["home",_house,true];

@@ -45,7 +45,7 @@ _possible = [];
 					vehicle player setPos _pos;
 				};				
 			}else{
-				player setpos ([getpos _x, 0, 25, 1, 0, 0, 0] call BIS_fnc_findSafePos);
+				player setpos ([[[getpos _x,20]]] call BIS_fnc_randomPos);
 			};				
 
 			disableUserInput false;

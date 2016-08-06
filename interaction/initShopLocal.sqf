@@ -59,7 +59,7 @@ _shopkeeper addAction ["Ask about weapons", {
 	};
 	
 	if(_ok) then {
-		hint "I have heard about a guy that sells guns, I'll mark it on your map";
+		"I have heard about a guy that sells guns, I'll mark it on your map" call notify_talk;
 		_pos = server getVariable format["gundealer%1",_town];
 		_mrk = createMarkerLocal [format["gundealer%1",_town],_pos];
 		_mrk setMarkerType "hd_objective";
@@ -69,12 +69,12 @@ _shopkeeper addAction ["Ask about weapons", {
 		_mrk setMarkerShape "ICON";
 	}else{
 		if(_standing < -19) then {
-			hint "I don't think I should be telling someone like you that";
+			"I don't think I should be telling someone like you that" call notify_talk;
 		}else{
 			if(_standing < 20) then {
-				hint "I'm sorry, who are you?";
+				"I'm sorry, who are you?" call notify_talk;
 			}else{
-				hint "With all due respect, I must decline";
+				"With all due respect, I must decline" call notify_talk;
 			}
 		};		
 	};

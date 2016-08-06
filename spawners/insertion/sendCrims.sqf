@@ -6,7 +6,7 @@ _townPos = server getVariable _town;
 
 _leaderpos = server getVariable format["crimleader%1",_town];
 if ((typeName _leaderpos) != "ARRAY") then {
-	_leaderpos = [_townPos, 100, 500, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+	_leaderpos = [[[_townPos,400]]] call BIS_fnc_randomPos;
 };
 
 _stability = server getVariable format["stability%1",_town];

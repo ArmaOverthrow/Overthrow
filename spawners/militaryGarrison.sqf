@@ -1,4 +1,4 @@
-private ["_town","_posTown","_active","_groups","_soldiers","_numNATO","_pop","_count","_range"];
+private ["_id","_town","_posTown","_active","_groups","_soldiers","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -28,7 +28,7 @@ while{true} do {
 			_range = 100;
 			_groupcount = 0;
 			while {(spawner getVariable _id) and (_count < _numNATO)} do {			
-				_start = [_posTown,_range-100,_range, 1, 0, 0, 0] call BIS_fnc_findSafePos;		
+				_start = [[[_posTown,75]]] call BIS_fnc_randomPos;
 				_group = createGroup blufor;							
 				_groups pushBack _group;	
 				_groupcount = 1;
