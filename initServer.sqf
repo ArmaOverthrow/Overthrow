@@ -19,5 +19,7 @@ waitUntil {!isNil "AIT_fnc_registerSpawner"};
 //Addons
 [] execVM "VCOMAI\init.sqf";
 
+addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "entityKilled.sqf"];
+
 AIT_serverInitDone = true;
 publicVariable "AIT_serverInitDone";

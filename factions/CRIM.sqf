@@ -72,7 +72,7 @@ while {true} do {
 		};
 		sleep 0.1;
 	}foreach (AIT_allTowns);
-	_sleeptime = 100 + round(random 300);
+	_sleeptime = AIT_CRIMwait + round(random AIT_CRIMwait);
 	sleep _sleeptime;
 };
 

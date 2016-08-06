@@ -35,12 +35,14 @@ while{true} do {
 				_start = [_posTown,_range-100,_range, 1, 0, 0, 0] call BIS_fnc_findSafePos;						
 				if(_left < 2) then {
 					_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+					_civ setVariable ["garrison",_town,true];
 					_police pushBack _civ;
 					_civ setBehaviour "SAFE";
 					[_civ,_town] call initPolice;
 					_count = _count + 1;
 				}else {
 					_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+					_civ setVariable ["garrison",_town,true];
 					_police pushBack _civ;
 					[_civ,_town] call initPolice;
 					_civ setBehaviour "SAFE";

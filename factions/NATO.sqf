@@ -115,6 +115,6 @@ while {true} do {
 		};
 		sleep 0.1;
 	}foreach (AIT_allTowns);
-	sleep 100 + round(random 600);	
+	sleep AIT_NATOwait + round(random AIT_NATOwait);	
 };
 

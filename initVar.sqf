@@ -9,6 +9,8 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 
 AIT_spawnDistance = 1200;
 AIT_spawnCivPercentage = 0.1;
+AIT_NATOwait = 15; //Half the Average time between NATO orders
+AIT_CRIMwait = 300; //Half the Average time between crim changes
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
 AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan","C_man_p_beggar_F_afro","C_Man_casual_1_F_afro","C_Man_casual_3_F_afro","C_man_sport_1_F_afro","C_man_sport_3_F_afro","C_Man_casual_4_F_afro","C_Man_casual_5_F_afro","C_Man_casual_6_F_afro","C_man_polo_1_F_afro","C_man_polo_2_F_afro","C_man_polo_3_F_afro","C_man_polo_4_F_afro","C_man_polo_5_F_afro","C_man_polo_6_F_afro","C_man_shorts_1_F_afro"];
@@ -50,12 +52,16 @@ AIT_NATO_HQPos = [0,0,0];
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
 AIT_NATO_Unit_Police = "B_Gen_Soldier_F";
 AIT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F";
-AIT_NATO_Vehicle_Police = "B_Quadbike_01_F";
+AIT_NATO_Vehicle_Quad = "B_Quadbike_01_F";
+AIT_NATO_Vehicle_Police = "B_GEN_Offroad_01_gen_F";
+AIT_NATO_Vehicle_Transport = "B_T_Truck_01_transport_F";
+AIT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
 
 AIT_NATO_Unit_PoliceHeliPilot = "B_T_HeliPilot_F";
 AIT_NATO_Unit_PoliceHeliCoPilot = "B_T_Helicrew_F";
 AIT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
-AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
+AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
+AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F","B_T_Sniper_F","B_T_Spotter_F"];
 
 AIT_NATO_weapons_Police = ["SMG_01_F","SMG_02_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_MX_Black_F","arifle_Katiba_F","srifle_EBR_F","srifle_DMR_01_F"];
 AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
