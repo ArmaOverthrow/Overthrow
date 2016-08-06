@@ -16,6 +16,7 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * APEX
 
 # Required Addons
+* VCOM AI (included)
 * CUP Weapons
 * CUP Terrains - Core
 * CUP Units
