@@ -93,7 +93,7 @@ _spawntowns = [];
 	{
 		if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
 	}foreach(AIT_regions);
-	if((_stability > 70) and (count _shops > 0) and !(_name in AIT_spawnBlacklist)) then {
+	if((_stability > 70) and !(_name in AIT_spawnBlacklist)) then {
 		_spawntowns pushBack _name;
 	};
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);

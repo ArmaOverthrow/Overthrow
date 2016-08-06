@@ -4,6 +4,8 @@ _me = _this select 0;
 _killer = _this select 1;
 _town = (getpos _me) call nearestTown;
 
+if(isPlayer _me) exitWith {};
+
 _garrison = _me getvariable "garrison";
 _criminal = _me getvariable "criminal";
 _crimleader = _me getvariable "crimleader";

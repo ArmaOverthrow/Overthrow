@@ -30,7 +30,7 @@ while{true} do {
 			_stability = server getVariable format ["stability%1",_town];
 			_numVeh = 2;
 			if(_pop > 15) then {
-				_numVeh = 2 + round(_pop * 0.02);
+				_numVeh = 2 + round(_pop * AIT_spawnVehiclePercentage);
 			};
 			while {(spawner getVariable _id) and (_count < _numVeh)} do {	
 				_roadselect = _posTown nearRoads _mSize;

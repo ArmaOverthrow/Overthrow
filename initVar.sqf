@@ -8,7 +8,8 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 };
 
 AIT_spawnDistance = 1200;
-AIT_spawnCivPercentage = 0.07;
+AIT_spawnCivPercentage = 0.1;
+AIT_spawnVehiclePercentage = 0.01;
 AIT_NATOwait = 500; //Half the Average time between NATO orders
 AIT_CRIMwait = 300; //Half the Average time between crim changes
 
@@ -89,11 +90,11 @@ if(AIT_hasAce) then {
 		["ACE_SpraypaintBlue",10,0,0,0.2],
 		["ACE_SpraypaintRed",10,0,0,0.2],
 		["ACE_SpraypaintBlack",10,0,0,0.2],
+		["ACE_morphine",50,0,0,0.2],
 		["ACE_EarPlugs",5,0,0,0.2],
-		["ACE_epinephrine",20,0,0,0.2],
+		["ACE_epinephrine",50,0,0,0.2],
 		["ACE_MapTools",2,0,0,0.2],
-		["ACE_adenosine",20,0,0,0.2],
-		["ACE_Flashlight_MX991",40,0,0,0.2],
+		["ACE_adenosine",50,0,0,0.2],
 		["ACE_Sandbag_empty",1,0,0,0],
 		["ACE_Altimeter",110,0,0,1]		
 	]] call BIS_fnc_arrayPushStack;

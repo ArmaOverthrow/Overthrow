@@ -30,15 +30,15 @@ while{true} do {
 			_group = createGroup civilian;		
 			_group setBehaviour "CARELESS";
 			_type = AIT_civTypes_gunDealers call BIS_Fnc_selectRandom;
-			_pos = [_gundealerpos, 0, 20, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-			_dealer = _group createUnit [_type, _gundealerpos, [],0, "NONE"];
+			_pos = [_gundealerpos, 0, 50, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+			_dealer = _group createUnit [_type, _pos, [],0, "NONE"];
 			_civs pushBack _dealer;
 			
 			_all = server getVariable "activedealers";
 			_all pushback _dealer;
 			server setVariable ["activedealers",_all,true];
 			
-			_wp = _group addWaypoint [_gundealerpos,0];
+			_wp = _group addWaypoint [_gundealerpos,5];
 			_wp setWaypointType "MOVE";
 			_wp setWaypointSpeed "LIMITED";
 

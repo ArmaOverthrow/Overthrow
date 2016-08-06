@@ -26,27 +26,32 @@ while{true} do {
 			[_civs,_vehs] call BIS_fnc_arrayPushStack;
 			
 			_cashdesk = _pos nearestObject AIT_item_ShopRegister;
-			_spawnpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
-			if((_spawnpos select 0) != 0) then {
-				_group = createGroup civilian;	
-				_group setBehaviour "CARELESS";
-				_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
-				_shopkeeper = _group createUnit [_type, _spawnpos, [],0, "NONE"];
-				_shopkeeper setDir ([_spawnpos, getpos _cashdesk] call BIS_fnc_DirTo);
-				
-				_civs pushback _shopkeeper;
-											
-				_all = server getVariable "activeshops";
-				_all pushback _shopkeeper;
-				server setVariable ["activeshops",_all,true];
-				
-				_shopkeeper remoteExec ["initShopLocal",0,true];
-				[_shopkeeper] call initShopkeeper;	
+			_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
+			
+			_pos = [_cashpos, 0, 50, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+			
+			_group = createGroup civilian;	
+			_group setBehaviour "CARELESS";
+			_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
+			_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];
+			
+			_civs pushback _shopkeeper;
+										
+			_all = server getVariable "activeshops";
+			_all pushback _shopkeeper;
+			server setVariable ["activeshops",_all,true];
+			
+			_wp = _group addWaypoint [_cashpos,2];
+			_wp setWaypointType "MOVE";
+			_wp setWaypointSpeed "LIMITED";
+			
+			_shopkeeper remoteExec ["initShopLocal",0,true];
+			[_shopkeeper] call initShopkeeper;	
 
-				{
-					_x addCuratorEditableObjects [_civs,true];
-				} forEach allCurators;
-			}
+			{
+				_x addCuratorEditableObjects [_civs,true];
+			} forEach allCurators;
+			
 		};
 	}else{
 		if (spawner getVariable _id) then {
