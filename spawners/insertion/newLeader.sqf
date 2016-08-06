@@ -41,7 +41,7 @@ if(!isNil "_close") then {
 	_crims pushBack _veh;
 	
 	_civ = _group createUnit [AIT_CRIM_Units_Para call BIS_fnc_selectRandom, _start, [],0, "NONE"];
-	_civ setRank "CORPORAL";
+	_civ setRank "MAJOR";
 	[_civ] joinSilent _group;
 	_crims pushBack _civ;
 	[_civ,_town] call initCrimLeader;
@@ -54,6 +54,7 @@ if(!isNil "_close") then {
 		
 		_civ = _group createUnit [AIT_CRIM_Units_Bandit call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		[_civ] joinSilent _group;
+		_civ setRank "CORPORAL";
 		
 		_crims pushBack _civ;
 		[_civ,_town] call initCriminal;

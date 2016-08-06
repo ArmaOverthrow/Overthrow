@@ -9,6 +9,8 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
+(group _unit) allowFleeing 1;
+
 _clothes = AIT_clothes_locals;
 if((typeof _unit) in AIT_civTypes_expats) then {
 	_clothes = AIT_clothes_expats;

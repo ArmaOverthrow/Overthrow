@@ -69,9 +69,9 @@ server setVariable ["NATOabandoned",_abandoned,true];
 	_stability = server getVariable format ["stability%1",_town];
 	_population = server getVariable format ["population%1",_town];
 	if(_stability > 10) then {
-		_max = round(_population / 40);
+		_max = round(_population / 30);
 		if(_max < 4) then {_max = 4};
-		_garrison = 4+round((1-(_stability / 100)) * _max);
+		_garrison = 6+round((1-(_stability / 100)) * _max);
 		if(_town in AIT_NATO_priority) then {
 			_garrison = round(_garrison * 2);
 		};

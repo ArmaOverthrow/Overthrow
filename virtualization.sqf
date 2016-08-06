@@ -46,12 +46,14 @@ while{true} do {
 		if((_start distance _end) > 1) then {
 			if((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
 				spawner setvariable [_id,true,true];
+				sleep 0.1;
 			}else{
 				spawner setvariable [_id,false,true];
 			}
 		}else{
 			if(_start call inSpawnDistance) then {
 				spawner setvariable [_id,true,true];
+				sleep 0.1;
 			}else{
 				spawner setvariable [_id,false,true];
 			}

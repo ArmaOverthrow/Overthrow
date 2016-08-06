@@ -8,7 +8,7 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=1053;
+		nextID=1063;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={6825.7285,33.15353,7384.3872};
-		dir[]={0.39078328,-0.91904634,-0.053100787};
-		up[]={0.91062832,0.39423949,-0.12373629};
-		aside[]={-0.13465805,-1.1557604e-006,-0.99098468};
+		pos[]={7213.6147,4.637094,7373.397};
+		dir[]={0.29892522,-0.36646414,-0.88122028};
+		up[]={0.11774852,0.93038976,-0.34710914};
+		aside[]={-0.94710094,-1.1616357e-006,-0.32127395};
 	};
 };
 binarizationWanted=0;
@@ -31,14 +31,13 @@ addons[]=
 {
 	"A3_Modules_F",
 	"A3_Ui_F",
-	"CUP_Creatures_Military_NAPA",
-	"A3_Modules_F_Curator_Curator"
+	"CUP_Creatures_Military_NAPA"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=3;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -57,13 +56,6 @@ class AddonsMetaData
 		{
 			className="CUP_Creatures_Military_NAPA";
 			name="CUP_Creatures_Military_NAPA";
-		};
-		class Item3
-		{
-			className="A3_Modules_F_Curator";
-			name="Arma 3 Zeus Update - Scripted Modules";
-			author="Bohemia Interactive";
-			url="http://www.arma3.com";
 		};
 	};
 };
@@ -526,7 +518,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=26;
+		items=25;
 		class Item0
 		{
 			dataType="Logic";
@@ -2161,115 +2153,6 @@ class Mission
 			name="cost";
 			id=596;
 			type="Logic";
-		};
-		class Item25
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={6836.4922,2.6600001,7414.7012};
-			};
-			id=982;
-			type="ModuleCurator_F";
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="ModuleCurator_F_Owner";
-					expression="_this setVariable ['Owner',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="bigboss";
-						};
-					};
-				};
-				class Attribute1
-				{
-					property="ModuleCurator_F_Forced";
-					expression="_this setVariable ['Forced',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute2
-				{
-					property="ModuleCurator_F_Name";
-					expression="_this setVariable ['Name',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="";
-						};
-					};
-				};
-				class Attribute3
-				{
-					property="ModuleInfo";
-					expression="false";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute4
-				{
-					property="ModuleCurator_F_Addons";
-					expression="_this setVariable ['Addons',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=2;
-						};
-					};
-				};
-				nAttributes=5;
-			};
 		};
 	};
 };

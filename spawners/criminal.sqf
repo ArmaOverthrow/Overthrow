@@ -46,7 +46,7 @@ while{true} do {
 					_civ = _group createUnit [AIT_CRIM_Units_Para call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					[_civ] joinSilent _group;
 					_civ setskill _skill;
-					_civ setRank "CORPORAL";
+					_civ setRank "MAJOR";
 					_soldiers pushBack _civ;
 					[_civ,_name] call initCrimLeader;
 					_civ setBehaviour "SAFE";
@@ -68,7 +68,7 @@ while{true} do {
 		
 					_wp = _group addWaypoint [_leaderpos,0];
 					_wp setWaypointType "MOVE";
-					_wp setWaypointSpeed "LIMITED";
+					_wp setWaypointSpeed "LIMITED";					
 					_wp setWaypointTimeout [0, 5, 10];
 					
 					_end = [_posTown, 0, 150, 0, 0, 0, 0] call BIS_fnc_findSafePos;
@@ -87,6 +87,7 @@ while{true} do {
 					_start = [_start,0,40, 1, 0, 0, 0] call BIS_fnc_findSafePos;		
 					
 					_civ = _group createUnit [AIT_CRIM_Units_Bandit call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+					_civ setRank "SERGEANT";
 					_soldiers pushBack _civ;
 					[_civ,_name] call initCriminal;
 					_civ setBehaviour "SAFE";

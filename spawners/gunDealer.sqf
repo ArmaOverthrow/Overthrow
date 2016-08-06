@@ -22,7 +22,7 @@ while{true} do {
 			//Spawn stuff in
 			_gundealerpos = server getVariable format["gundealer%1",_town];
 			if(isNil "_gundealerpos") then {
-				_building = (nearestObjects [_posTown, AIT_gunDealerHouses, 400]) call BIS_Fnc_selectRandom;
+				_building = (nearestObjects [_posTown, AIT_allHouses, 400]) call BIS_Fnc_selectRandom;
 				_gundealerpos = _building buildingPos 0;
 				server setVariable [format["gundealer%1",_town],_gundealerpos,true];
 				_building setVariable ["owner",true,true];

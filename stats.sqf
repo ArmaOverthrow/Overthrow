@@ -18,7 +18,7 @@ while {showStatistics} do {
 	_wanted = "";
 	if !(captive player) then {
 		_hiding = player getVariable "hiding";
-		if(_hiding > 0) then {
+		if((_hiding > 0) and (_hiding < 30)) then {
 			_wanted = format["<br/>WANTED (%1)",_hiding];
 		}else{
 			_wanted = "<br/>WANTED";

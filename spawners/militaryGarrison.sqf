@@ -35,7 +35,7 @@ while{true} do {
 				
 				_civ = _group createUnit [AIT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 				_civ setVariable ["garrison",_name,true];
-				_civ setRank "CORPORAL";
+				_civ setRank "CAPTAIN";
 				_soldiers pushBack _civ;
 				[_civ,_name] call initMilitary;
 				_civ setBehaviour "SAFE";
@@ -48,6 +48,7 @@ while{true} do {
 					_civ = _group createUnit [AIT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,true];
 					_soldiers pushBack _civ;
+					_civ setRank "LIEUTENANT";
 					[_civ,_name] call initMilitary;
 					_civ setBehaviour "SAFE";
 					

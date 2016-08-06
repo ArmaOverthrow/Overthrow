@@ -1,7 +1,7 @@
 _handled = false;
 
 _key = _this select 1;
-if (false and _key == 21) then
+if (_key == 21) then
 {
 	closedialog 0;			
 	_nul = createDialog "AIT_dialog_main";

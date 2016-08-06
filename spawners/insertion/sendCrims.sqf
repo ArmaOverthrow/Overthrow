@@ -1,6 +1,6 @@
 
 _numcrim = _this select 0;
-_town = _this select 1;\
+_town = _this select 1;
 
 _townPos = server getVariable _town;
 
@@ -48,6 +48,7 @@ if(!isNil "_close") then {
 	while{_count < _numcrim} do {
 		_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 		_civ = _group createUnit [AIT_CRIM_Units_Bandit call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		_civ setRank "CORPORAL";
 		[_civ] joinSilent _group;
 		
 		_crims pushBack _civ;

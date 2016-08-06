@@ -50,7 +50,7 @@ while{true} do {
 				_pos = [_posTown,"House"] call getRandomBuildingPosition;
 				_group = createGroup civilian;
 				_civ = _group createUnit [_civTypes call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
-				_civs pushBack _civ;
+				_civs pushBack _civ;				
 				[_civ] call initCivilian;			
 				_count = _count + 1;
 				sleep 0.1;

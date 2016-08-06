@@ -42,7 +42,7 @@ if(!isNil "_close") then {
 		while {_count < _num} do {
 			_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 			_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
-			
+			_civ setRank "CAPTAIN";
 			_police pushBack _civ;
 			[_civ,_town] call initPolice;
 			_count = _count + 1;
@@ -56,6 +56,7 @@ if(!isNil "_close") then {
 			while {_count < _num} do {
 				_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 				_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
+				_civ setRank "SERGEANT";
 				
 				_police pushBack _civ;
 				[_civ,_town] call initPolice;
@@ -76,6 +77,10 @@ if(!isNil "_close") then {
 			_move = _g addWaypoint [_drop,100];
 			_move setWaypointType "GUARD";	
 			
+			{
+				_x setRank "CAPTAIN";
+			}forEach(_crew);
+			
 			[_police,_crew] call BIS_fnc_arrayPushStack;
 			_police pushback _supportVeh;
 		}
@@ -90,6 +95,7 @@ if(!isNil "_close") then {
 	
 	_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_town,true];
+	_civ setRank "CAPTAIN";
 	_police pushBack _civ;
 	[_civ,_town] call initPolice;
 	
@@ -99,6 +105,7 @@ if(!isNil "_close") then {
 	sleep 0.01;
 	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
+	_civ setRank "SERGEANT";
 	_civ setVariable ["garrison",_town,true];
 	
 	_police pushBack _civ;

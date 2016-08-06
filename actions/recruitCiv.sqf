@@ -30,5 +30,6 @@ _civ setVariable ["owner",player,true];
 [_civ] joinSilent (group player);
 removeAllActions _civ;
 _civ spawn wantedSystem;
+_civ setVariable ["NOAI",1,true];
 
 format["%1 has joined your crew",name _civ] call notify_minor;

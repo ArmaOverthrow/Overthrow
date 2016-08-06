@@ -9,6 +9,8 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
+_unit setVariable ["NOAI",1,false];
+
 _unit forceAddUniform (AIT_clothes_guerilla call BIS_fnc_selectRandom);
 
 _group = group _unit;
@@ -19,3 +21,5 @@ _hometown = (getpos _unit) call nearestTown;
 _group setBehaviour "CARELESS";
 
 _unit setvariable ["owner","self"];
+
+(group _unit) allowFleeing 0;

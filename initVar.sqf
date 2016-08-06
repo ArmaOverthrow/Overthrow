@@ -8,8 +8,8 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 };
 
 AIT_spawnDistance = 1200;
-AIT_spawnCivPercentage = 0.1;
-AIT_NATOwait = 15; //Half the Average time between NATO orders
+AIT_spawnCivPercentage = 0.07;
+AIT_NATOwait = 500; //Half the Average time between NATO orders
 AIT_CRIMwait = 300; //Half the Average time between crim changes
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
@@ -18,12 +18,12 @@ AIT_civTypes_expats = ["CUP_C_C_Citizen_02","CUP_C_C_Citizen_01","CUP_C_C_Citize
 AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F","C_man_shorts_2_F_afro","C_man_shorts_3_F_afro","C_man_shorts_4_F_afro","C_man_shorts_2_F_asia","C_man_shorts_3_F_asia","C_man_shorts_4_F_asia","C_man_shorts_2_F_euro","C_man_shorts_3_F_euro","C_man_shorts_4_F_euro"];
 AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK"];
 
-
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
 AIT_item_BasicGun = "hgun_Pistol_heavy_01_F";//All dealers will stock this close to cost price to ensure starting players can afford a weapon
-AIT_legalItems = ["FirstAidKit","Medikit","Toolkit","ItemGPS","ItemCompass","ItemMap","ItemWatch","Binocular","Rangefinder","ItemRadio"]; //Anyone can create/buy/sell/carry these without NATO getting pissed off, all other items including mod items are considered illegal
 AIT_consumableItems = ["FirstAidKit","Medikit","Toolkit"]; //Shops will try to stock more of these
+AIT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F"];
+AIT_illegalVests = ["V_TacVest_gen_F"];
 
 //Player items
 AIT_item_Main = "Land_Laptop_unfolded_F"; //object for main interactions at owned houses

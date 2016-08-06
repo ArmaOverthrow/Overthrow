@@ -100,10 +100,3 @@ if(_skill > 0.8) then {
 		};
 	};
 };
-
-_handleDmg =  _unit addEventHandler ["HandleDamage",{
-	_source = _this select 3;
-	_dmg = _this select 2;
-	if((vehicle _source) != _source) exitWith {_dmg * 0.05};
-	_dmg
-}];

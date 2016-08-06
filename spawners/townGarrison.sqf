@@ -37,6 +37,7 @@ while{true} do {
 					_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_town,true];
 					_police pushBack _civ;
+					_civ setRank "LIEUTENANT";
 					_civ setBehaviour "SAFE";
 					[_civ,_town] call initPolice;
 					_count = _count + 1;
@@ -44,6 +45,7 @@ while{true} do {
 					_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_town,true];
 					_police pushBack _civ;
+					_civ setRank "LIEUTENANT";
 					[_civ,_town] call initPolice;
 					_civ setBehaviour "SAFE";
 					sleep 0.01;
@@ -51,6 +53,7 @@ while{true} do {
 					_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
 					_police pushBack _civ;
 					[_civ,_town] call initPolice;
+					_civ setRank "SERGEANT";
 					_civ setBehaviour "SAFE";
 					_count = _count + 2;
 				};
