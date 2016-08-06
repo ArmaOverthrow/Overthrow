@@ -11,6 +11,8 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * Buy real estate
 * Fast travel to any owned real estate
 * Recruit and arm civilians
+* Designed to work in both single player and multiplayer
+* Committed to creating a living and breathing Tanoa where anything can happen
 
 # Required DLC
 * APEX
