@@ -15,8 +15,8 @@ _spawntowns = [];
 	server setVariable [_name,getpos _x,true];
 	
 	_mSize = 350;
-	if(_name in AIT_capitals) then {//larger search radius
-		_mSize = 700;
+	if(_name in AIT_capitals + AIT_sprawling) then {//larger search radius
+		_mSize = 1000;
 	};
 	_pos=getpos _x;
 	
@@ -57,7 +57,7 @@ _spawntowns = [];
 	
 	{
 		_allshops pushback (getpos _x);
-	}foreach(nearestObjects [_pos, AIT_allShops + AIT_offices, _mSize]);
+	}foreach(nearestObjects [_pos, AIT_allShops + AIT_offices + AIT_warehouses + AIT_carShops, _mSize]);
 	
 	_lopop = round(count(_low) * (random(2) + 1));
 	_medpop = round(count(_med) * (random(4) + 2)); 
@@ -66,20 +66,28 @@ _spawntowns = [];
 	
 	_pop = _lopop + _medpop + _highpop + _hugepop;
 	_base = 70 + count(_allshops);
-	if(_base > 90) then {
-		_base = 90;
+	if(_base > 80) then {
+		_base = 80;
 	};
-	_stability = round(_base + random(10));
-	if(_pop < 80)then {
-		_stability = floor(15 + random(50));
+	_stability = round(_base + random(20));
+	if((_pop < 40) and !(_name in AIT_NATO_priority)) then {
+		_stability = floor(10 + random(60));
 	};
 	server setVariable [format["stability%1",_name],_stability,true];
+	_mrk = createMarker [_name,_pos];
+	_mrk setMarkerShape "ELLIPSE";
+	_mrk setMarkerSize[_mSize,_mSize];
+	_mrk setMarkerColor "ColorRed";
+		
+	if(_stability < 50) then {		
+		_mrk setMarkerAlpha 1.0 - (_stability / 50);
+	}else{
+		_mrk setMarkerAlpha 0;
+	};
 
 	_popVar=format["population%1",_name];
 	server setVariable [_popVar,_pop,true];
-	server setVariable [format["shops%1",_name],_allshops,true];
 	server setVariable [format["activeshops%1",_name],_shops,true];
-	server setVariable [format["houses%1",_name],(_low + _med + _hi),true];
 	spawner setVariable [_name,false,true];
 	
 	{
@@ -91,20 +99,14 @@ _spawntowns = [];
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);
 
 server setVariable ["spawntown",_spawntowns call BIS_fnc_selectrandom,true];
-
+publicVariable "AIT_activeShops";
 {
 	_region = _x;
 		
 	_towns = [_x] call townsInRegion;
 	server setVariable [format ["towns_%1",_x],_towns,true];
 	
-	_numRichGuys = 1 + floor(random(2));
 	
-	_count = 0;
-	while{_count < _numRichGuys} do {
-		[_region] spawn AI_richGuy;
-		_count = _count + 1;
-	};
 }foreach(AIT_regions);
 
 _towns = [];

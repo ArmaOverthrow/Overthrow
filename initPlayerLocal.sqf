@@ -2,6 +2,17 @@ private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture
 waitUntil {!isNull player};
 waitUntil {player == player};
 
+removeAllWeapons player;
+removeAllAssignedItems player;
+removeGoggles player;
+removeBackpack player;
+removeHeadgear player;
+removeVest player;
+
+player linkItem "ItemMap";
+
+player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
+
 if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
 	call compile preprocessFileLineNumbers "initVar.sqf";

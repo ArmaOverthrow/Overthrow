@@ -3,7 +3,11 @@ townChange = {
 	_pop = server getVariable format["population%1",_town];
 	_stability = server getVariable format["stability%1",_town];
 	_rep = player getVariable format["rep%1",_town];
-	_txt = format ["<t size='1.5' color='#eeeeee'>%1</t><br/><t size='0.5' color='#bbbbbb'>Population: %2</t><br/><t size='0.5' color='#bbbbbb'>Stability: %3%4</t><br/><t size='0.5' color='#bbbbbb'>Your Standing: %5</t>",_town,[_pop, 1, 0, true] call CBA_fnc_formatNumber,_stability,"%",_rep];
+	_plusmin = "";
+	if(_rep > -1) then {
+		_plusmin = "+";
+	};
+	_txt = format ["<t size='1.5' color='#eeeeee'>%1</t><br/><t size='0.5' color='#bbbbbb'>Population: %2</t><br/><t size='0.5' color='#bbbbbb'>Stability: %3%4</t><br/><t size='0.5' color='#bbbbbb'>Your Standing: %5%6</t>",_town,[_pop, 1, 0, true] call CBA_fnc_formatNumber,_stability,"%",_plusmin,_rep];
 	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 _town = (getPos player) call nearestTown;

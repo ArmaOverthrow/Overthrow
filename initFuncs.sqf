@@ -1,6 +1,5 @@
 
 //Helper functions
-getPublicVar = compileFinal preProcessFileLineNumbers "addons\scripts\getPublicVar.sqf";
 townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
 randomPosition = compileFinal preProcessFileLineNumbers "funcs\randomPosition.sqf";
 spawnTemplate = compileFinal preProcessFileLineNumbers "funcs\spawnTemplate.sqf";
@@ -10,17 +9,26 @@ getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
 canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
-
-//AI spawn
-spawnCiv = compileFinal preProcessFileLineNumbers "spawners\civ.sqf";
-spawnGang = compileFinal preProcessFileLineNumbers "spawners\gang.sqf";
+hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
+getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
+getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
 
 //AI init
-initCivilian = compileFinal preProcessFileLineNumbers "AI\initCivilian.sqf";
-initPolice = compileFinal preProcessFileLineNumbers "AI\initPolice.sqf";
-initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\initPolicePatrol.sqf";
-initCriminal = compileFinal preProcessFileLineNumbers "AI\initCriminal.sqf";
-initCrimLeader = compileFinal preProcessFileLineNumbers "AI\initCrimLeader.sqf";
+initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
+initPolice = compileFinal preProcessFileLineNumbers "AI\police.sqf";
+initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
+initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
+initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
+initCriminal = compileFinal preProcessFileLineNumbers "AI\criminal.sqf";
+initCrimLeader = compileFinal preProcessFileLineNumbers "AI\crimLeader.sqf";
+initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
+initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
+initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
+
+//Insertion
+reGarrisonTown = compileFinal preProcessFileLineNumbers "spawners\insertion\reGarrisonTown.sqf";
+sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims.sqf";
+newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
 
 //AI interactions
 initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
@@ -61,10 +69,29 @@ setupKeyHandler = {
 
 standing = {
 	_town = _this select 0;
-	_rep = (player getVariable format["rep%1",_town])+_this select 1;
+	_rep = (player getVariable format["rep%1",_town])+(_this select 1);
 	player setVariable [format["rep%1",_town],_rep,true];
 	playSound "3DEN_notificationDefault";
-	format["Standing: %1",_rep] call notify_minor;
+	_plusmin = "";
+	if(_rep > -1) then {
+		_plusmin = "+";
+	};
+	format["Standing (%3): %1%2",_plusmin,_rep,_town] call notify_minor;
+	
+};
+
+stability = {
+	_town = _this select 0;
+	_stability = (server getVariable format["stability%1",_town])+(_this select 1);
+	if(_stability < 0) then {_stability = 0};
+	server setVariable [format["stability%1",_town],_stability,true];
+	
+	//update the marker
+	if(_stability < 50) then {
+		_town setMarkerAlpha 1.0 - (_stability / 50);
+	}else{
+		_town setMarkerAlpha 0;
+	}
 };
 
 KK_fnc_fileExists = {
@@ -79,19 +106,19 @@ KK_fnc_fileExists = {
 
 notify = {
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 1, 0.5, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0.8, 0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_good = {
 	playSound "3DEN_notificationDefault";
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 1, 0.1, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, 0, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_minor = {
 	playSound "ClickSoft";
 	_txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 1, 0.5, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, 0, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {

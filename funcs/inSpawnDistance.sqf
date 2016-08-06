@@ -2,6 +2,10 @@ private ["_pos","_players","_posPlayer","_playersalive"];
 
 _pos = _this;
 
+//So zeus spawns, a'la ALiVE
+if(!isNull(curatorCamera)) then {
+	if(((getpos curatorCamera) distance _pos) < AIT_spawnDistance) exitWith {true};
+};
 
 _players = playableUnits;
 	
