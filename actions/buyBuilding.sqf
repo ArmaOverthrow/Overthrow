@@ -49,7 +49,11 @@ if(_handled) then {
 	_mrk setMarkerAlpha 0;
 	_mrk setMarkerAlphaLocal 1;
 	
-	format["You purchased this building for $%1",_price] call notify_minor
+	format["You purchased this building for $%1",_price] call notify_minor;
+	
+	if(_price > 2000) then {
+		[_town,round(_price / 1000)] call standing;		
+	};
 }else{
 	"There are no buildings for sale nearby" call notify_minor;
 };

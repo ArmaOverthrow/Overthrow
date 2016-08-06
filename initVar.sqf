@@ -8,11 +8,13 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 };
 
 AIT_spawnDistance = 1200;
+AIT_spawnCivPercentage = 0.1;
+
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
 AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan","C_man_p_beggar_F_afro","C_Man_casual_1_F_afro","C_Man_casual_3_F_afro","C_man_sport_1_F_afro","C_man_sport_3_F_afro","C_Man_casual_4_F_afro","C_Man_casual_5_F_afro","C_Man_casual_6_F_afro","C_man_polo_1_F_afro","C_man_polo_2_F_afro","C_man_polo_3_F_afro","C_man_polo_4_F_afro","C_man_polo_5_F_afro","C_man_polo_6_F_afro","C_man_shorts_1_F_afro"];
 AIT_civTypes_expats = ["CUP_C_C_Citizen_02","CUP_C_C_Citizen_01","CUP_C_C_Citizen_04","CUP_C_C_Citizen_03","CUP_C_C_Rocker_01","CUP_C_C_Rocker_03","CUP_C_C_Rocker_02","CUP_C_C_Rocker_04","C_man_p_beggar_F","C_man_1","C_Man_casual_1_F","C_Man_casual_2_F","C_Man_casual_3_F","C_man_sport_1_F","C_man_sport_2_F","C_man_sport_3_F","C_Man_casual_4_F","C_Man_casual_5_F","C_Man_casual_6_F","C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_man_shorts_1_F","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_p_beggar_F_asia","C_Man_casual_1_F_asia","C_Man_casual_2_F_asia","C_Man_casual_3_F_asia","C_man_sport_1_F_asia","C_man_sport_2_F_asia","C_man_sport_3_F_asia","C_Man_casual_4_F_asia","C_Man_casual_5_F_asia","C_Man_casual_6_F_asia","C_man_polo_1_F_asia","C_man_polo_2_F_asia","C_man_polo_3_F_asia","C_man_polo_4_F_asia","C_man_polo_5_F_asia","C_man_polo_6_F_asia","C_man_shorts_1_F_asia"];
 AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F","C_man_shorts_2_F_afro","C_man_shorts_3_F_afro","C_man_shorts_4_F_afro","C_man_shorts_2_F_asia","C_man_shorts_3_F_asia","C_man_shorts_4_F_asia","C_man_shorts_2_F_euro","C_man_shorts_3_F_euro","C_man_shorts_4_F_euro"];
-AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK","C_man_hunter_1_F"];
+AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK"];
 
 
 //Shop items
@@ -30,21 +32,30 @@ AIT_items_Repair = ["Toolkit"]; //Inventory items that can be used to repair veh
 AIT_items_Storage = ["B_CargoNet_01_ammo_F"]; //Where gun dealers will deliver your shit
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
 
+AIT_clothes_locals = ["CUP_U_I_GUE_Anorak_01","CUP_U_I_GUE_Anorak_02","CUP_U_I_GUE_Anorak_03","U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
+AIT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
+AIT_clothes_tourists = [];
+AIT_clothes_shops = ["U_C_Man_casual_2_F","U_C_Man_casual_3_F","U_C_Man_casual_1_F"];
+AIT_clothes_carDealers = ["CUP_U_C_Mechanic_01","CUP_U_C_Mechanic_02","CUP_U_C_Mechanic_03"];
+AIT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
+
 //NATO stuff
 AIT_NATOregion = "island_5"; //where NATO lives
-AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port"]; //NameLocal/Airport place names to definitely occupy with military personnel
-AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha"];
+AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port","fuel depot","railway depot"]; //NameLocal/Airport place names to definitely occupy with military personnel
+AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
 AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6"]; //NATO checkpoints, create markers in editor
 AIT_NATO_HQ = "Tuvanaka Airbase";
 AIT_NATO_HQPos = [0,0,0];
 
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
 AIT_NATO_Unit_Police = "B_Gen_Soldier_F";
-AIT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F"; //Used to transport the above two into towns
+AIT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F";
+AIT_NATO_Vehicle_Police = "B_Quadbike_01_F";
+
 AIT_NATO_Unit_PoliceHeliPilot = "B_T_HeliPilot_F";
 AIT_NATO_Unit_PoliceHeliCoPilot = "B_T_Helicrew_F";
-AIT_NATO_Unit_PoliceMedic = "B_T_Medic_F";
-AIT_NATO_Units_PoliceSupport = ["B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
+AIT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
+AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 
 AIT_NATO_weapons_Police = ["SMG_01_F","SMG_02_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_MX_Black_F","arifle_Katiba_F","srifle_EBR_F","srifle_DMR_01_F"];
 AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
@@ -97,6 +108,8 @@ if(AIT_hasAce) then {
 	["Rangefinder",280,0,0,1],
 	["Laserdesignator",500,1,0,0],
 	["NVGoggles",700,1,0,0],
+	["NVGoggles_OPFOR",700,1,0,0],
+	["NVGoggles_BLUFOR",700,1,0,0],
 	["ItemRadio",60,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 
@@ -202,6 +215,7 @@ publicVariable "AIT_allBackpacks";
 
 AIT_regions = ["island_1","island_2","island_3","island_4","island_5","island_6","island_7"]; //for both economic and travel purposes. define rectangles in eden
 AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu","Ipota"]; //region capitals
+AIT_sprawling = ["Blue Pearl industrial port"];
 
 AIT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_House_Small_04_F"]; //buildings that rich guys like to live in
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F"]; //houses where players will spawn ,"Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F"
@@ -224,6 +238,8 @@ AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 
 AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses;
 publicVariable "AIT_allBuyableBuildings";
+
+AIT_allHouses = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_touristHouses;
 
 AIT_activeShops = [];
 AIT_activeCarShops = [];

@@ -4,6 +4,7 @@ private ["_unit","_timer"];
 _timer = -1;
 
 _unit setCaptive true;
+player setVariable ["hiding",false,true];
 
 while {true and alive _unit} do {
 	sleep 2;	
@@ -11,20 +12,27 @@ while {true and alive _unit} do {
 	//check wanted status
 	if !(captive _unit) then {
 		//CURRENTLY WANTED
-		if({(side _x == west or side _x == east) and (((_x knowsAbout _unit > 1.4) and (_x distance _unit < 1000)) or (_x distance _unit < 50))} count allUnits == 0) then {
-			_timer = 0;
-		};
 		if(_timer >= 0) then {
-			_timer = _timer + 2;				
+			_timer = _timer + 2;	
+			player setVariable ["hiding",30 - _timer,true];
 			if(_timer >= 30) then {
 				_unit setCaptive true;
+			};
+			if({(side _x == west or side _x == east) and (((_x knowsAbout _unit > 1.5) and (_x distance _unit < 1000)) or (_x distance _unit < 50))} count allUnits > 0) then {
+				player setVariable ["hiding",30,true];
+				_timer = 0;
+			}
+		}else{
+			if({(side _x == west or side _x == east) and (((_x knowsAbout _unit > 1.5) and (_x distance _unit < 1000)) or (_x distance _unit < 50))} count allUnits == 0) then {
+				player setVariable ["hiding",30,true];
+				_timer = 0;
 			};
 		};
 	}else{
 		//CURRENTLY NOT WANTED
-		
 		_timer = -1;
-		if({(side _x== west) and (((_x knowsAbout _unit > 1) and (_x distance _unit < 1000)))} count allUnits > 0) then {
+		player setVariable ["hiding",0,true];
+		if({(side _x== west) and (((_x knowsAbout _unit > 1.5) and (_x distance _unit < 1000)))} count allUnits > 0) then {
 			//Police can see you, don't do anything bad ok
 			
 			if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) then {				

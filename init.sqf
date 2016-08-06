@@ -11,10 +11,21 @@ if(!isMultiplayer) then {
 
 	//SINGLE PLAYER init
 	call compile preprocessFileLineNumbers "initEconomy.sqf";
-	[] execVM "initNATO.sqf";
-	[] execVM "initCRIM.sqf";
-	[] execVM "agentSpawner.sqf";
-	[] execVM "addons\real_weather.sqf";
+	[] execVM "factions\NATO.sqf";
+	[] execVM "factions\CRIM.sqf";	
+	waitUntil {!isNil "AIT_NATOInitDone"};
+	waitUntil {!isNil "AIT_CRIMInitDone"};	
+	
+	//Init virtualization
+	[] execVM "virtualization.sqf";	
+	waitUntil {!isNil "AIT_fnc_registerSpawner"};
+	[] execVM "virtualization\towns.sqf";
+	[] execVM "virtualization\shops.sqf";
+	[] execVM "virtualization\military.sqf";
+	
+	//Addons
+	[] execVM "VCOMAI\init.sqf";
+	
 	AIT_serverInitDone = true;
 	publicVariable "AIT_serverInitDone";
 };

@@ -13,41 +13,8 @@ _itemsToStock = [];
 _stock = [];
 
 while {true} do {
-	if (time - _tiempo >= 0.5) then {sleep 0.1} else {sleep 0.5 - (time - _tiempo)};
+	
 	_tiempo = time;
-	
-	_indist = (_pos call inSpawnDistance);
-	
-	if(!_spawned && _indist) then {
-		_tracked = _building call spawnTemplate;
-		_vehs = _tracked select 0;
-		
-		_cashdesk = _pos nearestObject AIT_item_ShopRegister;
-		_spawnpos = _building buildingPos 0;
-		
-		_group = createGroup civilian;	
-		_group setBehaviour "CARELESS";
-		_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
-		_shopkeeper = _group createUnit [_type, _spawnpos, [],0, "NONE"];
-		_vehs pushback _shopkeeper;
-		
-		_all = server getVariable "activeshops";
-		_all pushback _shopkeeper;
-		server setVariable ["activeshops",_all,true];
-		
-		_shopkeeper remoteExec ["initShopLocal",0,true];
-		[_shopkeeper] call initCivilian;
-		
-		_spawned = true;
-	}else{
-		if(!_indist) then {
-			_spawned = false;
-			{deleteVehicle _x} forEach _vehs;
-			{deleteGroup _x} forEach _groups;			
-			_vehs = [];
-			_groups = [];
-		}
-	};
 	
 	//check my stock levels
 	if (!_seeded) then {
@@ -73,6 +40,7 @@ while {true} do {
 		}foreach(_itemsToStock);
 		_building setVariable ["stock",_stock,true];
 	}else{
-	};
 	
+	};
+	sleep 200 + random(400); //stagger the updates
 };

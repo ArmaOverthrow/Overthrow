@@ -23,9 +23,12 @@ if(count _possible == 0) exitWith {"No civilians within 10 meters" call notify_m
 playSound "ClickSoft";
 player setVariable ["money",_money-_price,true];
 
+[_town,1] call standing;
+
 _civ = _possible select 0;
 _civ setVariable ["owner",player,true];
 [_civ] joinSilent (group player);
+removeAllActions _civ;
 _civ spawn wantedSystem;
 
-"Civilian hired" call notify_minor
+format["%1 has joined your crew",name _civ] call notify_minor;
