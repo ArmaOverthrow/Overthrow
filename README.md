@@ -25,7 +25,7 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 
 # Supported Addons
 * ACE3 (100% everything works)
-* 
+
 # To install
 Overthrow is currently in a pre-alpha state, but you are free to try it out, just expect bugs. To install dump this folder in your Documents/Arma 3/missions or mpmissions.
 
