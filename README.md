@@ -29,5 +29,5 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * ACE3 (100% everything works)
 
 # To install
-Overthrow is currently in a pre-alpha state, but you are free to try it out, just expect bugs. To install dump this folder in your Documents/Arma 3/missions or mpmissions.
+Overthrow is currently in a pre-alpha state, but you are free to try it out, just expect bugs. The latest stable release PBO can be found on the Releases page: https://github.com/armazac/Overthrow.Tanoa/releases
 
