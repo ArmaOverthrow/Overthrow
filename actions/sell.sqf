@@ -11,6 +11,23 @@ _cls = lbData [1500,_idx];
 _price = [_town,_cls,_standing+40] call getPrice;
 _done = false;
 
+_s = _b getVariable "stock";
+{
+	_c = _x select 0;
+	if(_c == _cls) exitWith {_mynum = _x select 1};				
+}foreach(_s);
+			
+if(_mynum > 10) then {
+	_price = ceil(_price * 0.75);
+};
+if(_mynum > 20) then {
+	_price = ceil(_price * 0.5);
+};
+if(_mynum > 50) then {
+	_price = 1;
+};
+if(_price <= 0) then {_price = 1};
+
 _stockidx = 0;
 {	
 	if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
@@ -36,6 +53,24 @@ _mystock = player call unitStock;
 	_cls = _x select 0;
 	_num = _x select 1;
 	_price = [_town,_cls,_standing+40] call getPrice;
+	
+	_s = _b getVariable "stock";
+	{
+		_c = _x select 0;
+		if(_c == _cls) exitWith {_mynum = _x select 1};				
+	}foreach(_s);
+				
+	if(_mynum > 10) then {
+		_price = ceil(_price * 0.75);
+	};
+	if(_mynum > 20) then {
+		_price = ceil(_price * 0.5);
+	};
+	if(_mynum > 50) then {
+		_price = 1;
+	};
+	if(_price <= 0) then {_price = 1};
+	
 	_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_cls call ISSE_Cfg_Weapons_GetName,_price]];
 	lbSetData [1500,_idx,_cls];
 }foreach(_mystock);

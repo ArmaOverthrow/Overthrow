@@ -56,11 +56,12 @@ while{true} do {
 								_unit = _this select 2;						
 								_v = _this select 0;
 								_v setVariable ["owner",_unit,true];
+								_v setVariable ["stolen",true,true];
 								if(blufor knowsAbout _unit > 1.4) then {
 									_unit setCaptive false;
 								};
 							}];
-							sleep 0.1;
+							sleep 0.05;
 						};
 					};
 				};

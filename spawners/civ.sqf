@@ -76,9 +76,6 @@ while{true} do {
 				};		
 				sleep 0.01;
 			};
-			{
-				_x addCuratorEditableObjects [_civs,true];
-			} forEach allCurators;
 			
 			sleep 1;
 			{

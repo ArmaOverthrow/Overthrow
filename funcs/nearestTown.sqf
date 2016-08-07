@@ -1,1 +1,1 @@
-text ((nearestLocations [ _this, ["NameCityCapital","NameCity","NameVillage","CityCenter"],1000]) select 0)
+text ((nearestLocations [ _this, ["NameCityCapital","NameCity","NameVillage","CityCenter"],3500]) select 0)

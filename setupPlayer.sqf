@@ -15,6 +15,8 @@ _town call townChange;
 
 _timer = -1;
 
+player setVariable ["player_uid",getPlayerUID player];
+
 player spawn wantedSystem;
 _closestcount = 0;
 

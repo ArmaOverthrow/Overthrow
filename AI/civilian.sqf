@@ -24,8 +24,6 @@ if((typeof _home) in AIT_portBuildings) then {
 	_buildings = AIT_portBuildings;
 };
 
-_unit setVariable ["NOAI",true,false];
-
 _unit forceAddUniform (_clothes call BIS_fnc_selectRandom);
 
 _group = group _unit;
@@ -33,7 +31,7 @@ _hour = date select 3;
 
 if !(leader _group == _unit) exitWith {};
 
-_group setBehaviour "CARELESS";
+_group setBehaviour "SAFE";
 
 if(_hour > 6 and _hour < 19) then {
 	//Walk to a shop and back again

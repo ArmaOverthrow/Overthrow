@@ -4,8 +4,15 @@ _me = _this select 0;
 _killer = _this select 1;
 _town = (getpos _me) call nearestTown;
 
-if(isPlayer _me) exitWith {
+if(isPlayer _me) exitWith {	
+	_myuid = getPlayerUID _me;
 	[-10] remoteExec ["money",_me,true];
+	{
+		_uid = _x getVariable "player_uid";
+		if(_uid == _myuid and _x != _me) then {
+			deleteVehicle _x;
+		};
+	}foreach(allDeadMen);
 };
 
 _me remoteExec ["removeAllActions",0,true];

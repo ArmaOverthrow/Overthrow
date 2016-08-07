@@ -11,6 +11,7 @@ AIT_spawnDistance = 1200;
 AIT_spawnCivPercentage = 0.15;
 AIT_spawnVehiclePercentage = 0.02;
 AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
+AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 
 AIT_NATOwait = 500; //Half the Average time between NATO orders
 AIT_CRIMwait = 300; //Half the Average time between crim changes
@@ -19,16 +20,18 @@ AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_
 AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan","C_man_p_beggar_F_afro","C_Man_casual_1_F_afro","C_Man_casual_3_F_afro","C_man_sport_1_F_afro","C_man_sport_3_F_afro","C_Man_casual_4_F_afro","C_Man_casual_5_F_afro","C_Man_casual_6_F_afro","C_man_polo_1_F_afro","C_man_polo_2_F_afro","C_man_polo_3_F_afro","C_man_polo_4_F_afro","C_man_polo_5_F_afro","C_man_polo_6_F_afro","C_man_shorts_1_F_afro"];
 AIT_civTypes_expats = ["CUP_C_C_Citizen_02","CUP_C_C_Citizen_01","CUP_C_C_Citizen_04","CUP_C_C_Citizen_03","CUP_C_C_Rocker_01","CUP_C_C_Rocker_03","CUP_C_C_Rocker_02","CUP_C_C_Rocker_04","C_man_p_beggar_F","C_man_1","C_Man_casual_1_F","C_Man_casual_2_F","C_Man_casual_3_F","C_man_sport_1_F","C_man_sport_2_F","C_man_sport_3_F","C_Man_casual_4_F","C_Man_casual_5_F","C_Man_casual_6_F","C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_man_shorts_1_F","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_p_beggar_F_asia","C_Man_casual_1_F_asia","C_Man_casual_2_F_asia","C_Man_casual_3_F_asia","C_man_sport_1_F_asia","C_man_sport_2_F_asia","C_man_sport_3_F_asia","C_Man_casual_4_F_asia","C_Man_casual_5_F_asia","C_Man_casual_6_F_asia","C_man_polo_1_F_asia","C_man_polo_2_F_asia","C_man_polo_3_F_asia","C_man_polo_4_F_asia","C_man_polo_5_F_asia","C_man_polo_6_F_asia","C_man_shorts_1_F_asia"];
 AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F","C_man_shorts_2_F_afro","C_man_shorts_3_F_afro","C_man_shorts_4_F_afro","C_man_shorts_2_F_asia","C_man_shorts_3_F_asia","C_man_shorts_4_F_asia","C_man_shorts_2_F_euro","C_man_shorts_3_F_euro","C_man_shorts_4_F_euro"];
+AIT_civType_worker = "C_man_w_worker_F";
 AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK"];
+AIT_vehType_distro = "C_Van_01_box_F";
 
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
 AIT_item_BasicGun = "hgun_Pistol_heavy_01_F";//All dealers will stock this close to cost price to ensure starting players can afford a weapon
 
 if(AIT_hasAce) then {
-	AIT_consumableItems = ["ACE_fieldDressing","Toolkit","ACE_Sandbag_empty"]; //Shops will try to stock more of these
+	AIT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty"]; //Shops will try to stock more of these
 }else{
-	AIT_consumableItems = ["FirstAidKit","Medikit","Toolkit"];
+	AIT_consumableItems = ["FirstAidKit","Medikit"];
 };
 AIT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F"];
 AIT_illegalVests = ["V_TacVest_gen_F"];
@@ -40,6 +43,7 @@ AIT_items_Sleep = ["CUP_vojenska_palanda"]; //Items with the "sleep" interaction
 AIT_items_Heal = ["Land_WaterCooler_01_old_F"]; //Where the player can heal themselves
 AIT_items_Repair = ["Toolkit"]; //Inventory items that can be used to repair vehicles
 AIT_items_Storage = ["B_CargoNet_01_ammo_F"]; //Where gun dealers will deliver your shit
+AIT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
 
 AIT_clothes_locals = ["CUP_U_I_GUE_Anorak_01","CUP_U_I_GUE_Anorak_02","CUP_U_I_GUE_Anorak_03","U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];

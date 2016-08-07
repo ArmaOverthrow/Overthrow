@@ -34,13 +34,14 @@ while {true and alive _unit} do {
 			_unit setVariable ["hiding",30 - _timer,true];
 			if(_timer >= 30) then {
 				_unit setCaptive true;
+			}else{
+				if((blufor knowsabout _unit) > 1) then {
+					_unit setVariable ["hiding",30,true];
+					_timer = 0;
+				};
 			};
-			if((blufor knowsabout _unit) > 1) then {
-				_unit setVariable ["hiding",30,true];
-				_timer = 0;
-			}
-		}else{
-			if((blufor knowsabout _unit) > 1) then {
+		}else{		
+			if((blufor knowsabout _unit) < 1) then {
 				_unit setVariable ["hiding",30,true];
 				_timer = 0;
 			};

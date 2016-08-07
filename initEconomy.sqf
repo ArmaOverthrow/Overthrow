@@ -47,7 +47,7 @@ _spawntowns = [];
 	
 	//spawn any main shops
 	{
-		if((random 100) > 30) then {
+		if((random 100) > 20) then {
 			_shops pushback (getpos _x);
 			[_x] spawn run_shop;
 			
@@ -112,7 +112,7 @@ AIT_activeDistribution = [];
 
 _count = 0;
 {
-	if((random 100) > 50) then {
+	if((random 100) > 40) then {
 		_pos = getpos _x;
 		
 		_mrk = createMarker [format["%1",_pos],_pos];

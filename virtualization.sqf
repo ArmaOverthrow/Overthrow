@@ -16,7 +16,7 @@ AIT_fnc_registerSpawner = {
 	_start = [];
 	_end = [];
 	
-	if(count _pos == 2) then {
+	if((count _pos) == 2) then {
 		_start = _pos select 0;
 		_end = _pos select 1;
 	}else{
@@ -36,6 +36,33 @@ AIT_fnc_registerSpawner = {
 	AIT_spawnUniqueCounter
 };
 publicVariable "AIT_fnc_registerSpawner";
+
+AIT_fnc_deregisterSpawner = {	
+	_found = false;
+	_idx = -1;
+	{
+		_idx = _idx + 1;
+		_id = _x select 0;
+		if(_id == _this) exitWith{_found = true};		
+	}foreach(AIT_allspawners);
+	if(_found) then {
+		AIT_allspawners deleteAt _idx;
+	};
+};
+
+AIT_fnc_updateSpawnerPosition = {	
+	_changeid = _this select 0;
+	_start = _this select 1;
+	_end = _this select 2;
+
+	{
+		_id = _x select 0;
+		if(_id == _changeid) exitWith{
+			_x set[1,_start];
+			_x set[2,_end];
+		};		
+	}foreach(AIT_allspawners);
+};
 
 while{true} do {
 	sleep 0.1;	

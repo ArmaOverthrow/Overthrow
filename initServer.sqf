@@ -20,8 +20,13 @@ waitUntil {!isNil "AIT_fnc_registerSpawner"};
 //Addons
 [] execVM "VCOMAI\init.sqf";
 
-addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "entityKilled.sqf"];
-addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "playerDisconnect.sqf"];
+addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
+if(AIT_hasAce) then {
+	//ACE events
+	["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
+};
+
+addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];
 
 AIT_serverInitDone = true;
 publicVariable "AIT_serverInitDone";

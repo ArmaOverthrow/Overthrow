@@ -12,10 +12,13 @@ unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
 hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
 getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
 getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
+nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
+logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
 initPolice = compileFinal preProcessFileLineNumbers "AI\police.sqf";
+initSecurity = compileFinal preProcessFileLineNumbers "AI\security.sqf";
 initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
 initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
 initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
@@ -25,10 +28,16 @@ initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 
+[] call compileFinal preProcessFileLineNumbers "funcs\dict.sqf";
+
+//Events
+illegalContainerOpened = compileFinal preProcessFileLineNumbers "events\illegalContainerOpened.sqf";
+
 //Insertion
 reGarrisonTown = compileFinal preProcessFileLineNumbers "spawners\insertion\reGarrisonTown.sqf";
 sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims.sqf";
 newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
+logistics = compileFinal preProcessFileLineNumbers "spawners\insertion\logistics.sqf";
 
 //AI interactions
 initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";

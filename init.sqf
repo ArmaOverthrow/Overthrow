@@ -27,7 +27,11 @@ if(!isMultiplayer) then {
 	//Addons
 	[] execVM "VCOMAI\init.sqf";
 	
-	addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "entityKilled.sqf"];
+	addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
+	if(AIT_hasAce) then {
+		//ACE events
+		["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
+	};
 	
 	AIT_serverInitDone = true;
 	publicVariable "AIT_serverInitDone";

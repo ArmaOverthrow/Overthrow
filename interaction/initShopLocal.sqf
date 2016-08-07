@@ -31,8 +31,26 @@ _shopkeeper addAction ["Sell", {
 	{			
 		_cls = _x select 0;
 		if(_cls in AIT_allItems) then {
-			_num = _x select 1;
+			_num = _x select 1;			
 			_price = [_town,_cls,_standing+40] call getPrice;
+			_mynum = 0;
+			_s = _b getVariable "stock";
+			{
+				_c = _x select 0;
+				if(_c == _cls) exitWith {_mynum = _x select 1};				
+			}foreach(_s);
+						
+			if(_mynum > 10) then {
+				_price = ceil(_price * 0.75);
+			};
+			if(_mynum > 20) then {
+				_price = ceil(_price * 0.5);
+			};
+			if(_mynum > 50) then {
+				_price = 1;
+			};
+			if(_price <= 0) then {_price = 1};
+			
 			_name = "";
 			if(_cls in AIT_allBackpacks) then {
 				_name = _cls call ISSE_Cfg_Vehicle_GetName;

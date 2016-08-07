@@ -26,40 +26,38 @@ while{true} do {
 			_numNATO = server getVariable format["garrison%1",_town];
 			_count = 0;
 			_range = 300;
-			while {(spawner getVariable _id) and (_count < _numNATO)} do {
-				_left = _numNATO - _count;
-				_group = createGroup blufor;
+			_pergroup = 4;
 						
+			while {(spawner getVariable _id) and (_count < _numNATO)} do {
+				_groupcount = 0;
+				_group = createGroup blufor;				
 				_groups pushBack _group;
-				_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
-				if(_left < 2) then {
-					_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
-					_civ setVariable ["garrison",_town,true];
-					_police pushBack _civ;
-					_civ setRank "LIEUTENANT";
-					_civ setBehaviour "SAFE";
-					[_civ,_town] call initPolice;
-					_count = _count + 1;
-				}else {
-					_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
-					_civ setVariable ["garrison",_town,true];
-					_police pushBack _civ;
-					_civ setRank "LIEUTENANT";
-					[_civ,_town] call initPolice;
-					_civ setBehaviour "SAFE";
-					sleep 0.01;
-					_start = [[[_start,25]]] call BIS_fnc_randomPos;
-					_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
-					_police pushBack _civ;
-					[_civ,_town] call initPolice;
-					_civ setRank "SERGEANT";
-					_civ setBehaviour "SAFE";
-					_count = _count + 2;
-				};
-				_group call initPolicePatrol;
-				_range = _range + 50;
 				
-				sleep 0.1;
+				_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
+				_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+				_civ setVariable ["garrison",_town,true];
+				_police pushBack _civ;
+				_civ setRank "CORPORAL";
+				_civ setBehaviour "SAFE";
+				[_civ,_town] call initPolice;
+				_count = _count + 1;
+				_groupcount = _groupcount + 1;
+				
+				while {(spawner getVariable _id) and (_groupcount < _pergroup) and (_count < _numNATO)} do {							
+					_pos = [[[_start,50]]] call BIS_fnc_randomPos;
+					
+					_civ = _group createUnit [AIT_NATO_Unit_Police, _pos, [],0, "NONE"];
+					_civ setVariable ["garrison",_town,true];
+					_police pushBack _civ;
+					_civ setRank "PRIVATE";
+					[_civ,_town] call initPolice;
+					_civ setBehaviour "SAFE";
+					
+					_groupcount = _groupcount + 1;
+					_count = _count + 1;
+				};				
+				_group call initPolicePatrol;				
+				_range = _range + 50;
 			};
 			{
 				_x addCuratorEditableObjects [_police,true];

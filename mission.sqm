@@ -8,7 +8,7 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=1069;
+		nextID=1101;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={13528.388,9.6551781,12082.909};
-		dir[]={-0.31590232,-0.26184839,-0.91197401};
-		up[]={-0.085709795,0.96509808,-0.24743822};
-		aside[]={-0.94494212,6.3256448e-007,0.32732287};
+		pos[]={9662.5586,5.1122723,13579.158};
+		dir[]={-0.66014993,-0.39148295,0.64122528};
+		up[]={-0.28087121,0.92011899,0.27281848};
+		aside[]={0.69684958,-1.1120719e-006,0.71740729};
 	};
 };
 binarizationWanted=0;
@@ -350,7 +350,7 @@ class Mission
 		briefingName="Overthrow.Tanoa";
 		resistanceWest=0;
 		timeOfChanges=1800.0002;
-		startWeather=0;
+		startWeather=0.65828067;
 		startWind=0;
 		startWaves=0.070976265;
 		forecastWeather=0;
@@ -363,7 +363,8 @@ class Mission
 		year=2015;
 		month=6;
 		day=1;
-		hour=8;
+		hour=10;
+		minute=-30;
 		startFogBase=250;
 		forecastFogBase=250;
 		startFogDecay=0.014;
