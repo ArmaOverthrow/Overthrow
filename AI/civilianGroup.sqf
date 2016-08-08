@@ -1,5 +1,6 @@
 _group = _this select 0;
 _home = _this select 1;
+_pos = getpos _home;
 
 _start = getpos ((units _group) select 0);
 
@@ -10,7 +11,7 @@ _hour = date select 3;
 if(_hour > 6 and _hour < 19) then {
 	//Walk to a shop and back again
 	_buildings = AIT_allHouses + AIT_allShops + AIT_offices + AIT_portBuildings;
-	_dest = getpos([getpos _unit,_buildings] call getRandomBuilding);
+	_dest = getpos([_home,_buildings] call getRandomBuilding);
 		
 	_wp = _group addWaypoint [_dest,0];
 	_wp setWaypointType "MOVE";
@@ -18,13 +19,13 @@ if(_hour > 6 and _hour < 19) then {
 	_wp setWaypointCompletionRadius 40;
 	_wp setWaypointTimeout [0, 4, 8];
 	
-	_wp = _group addWaypoint [getpos _home,0];	
+	_wp = _group addWaypoint [_pos,0];	
 	_wp setWaypointType "MOVE";
 	_wp setWaypointSpeed "LIMITED";
 	_wp setWaypointCompletionRadius 10;	
 	_wp setWaypointTimeout [20, 40, 80];
 	
-	_wp = _group addWaypoint [getpos _unit,0];
+	_wp = _group addWaypoint [_pos,0];
 	_wp setWaypointType "CYCLE";
 }else{
 	//Lull around home

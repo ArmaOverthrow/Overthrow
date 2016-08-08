@@ -10,7 +10,6 @@ _groups = [];
 
 _civs = []; //Stores all civs for tear down
 _lights = [];
-
 waitUntil{spawner getVariable _id};
 
 while{true} do {
