@@ -58,6 +58,16 @@ while{true} do {
 				}];
 			};
 			
+			if(_hour > 18 or _hour < 8) then {
+				//Put a light on
+				_lightpos = getpos _building;
+				_light = "#lightpoint" createVehicle [_lightpos select 0,_lightpos select 1,(_lightpos select 2)+4];
+				_light setLightBrightness 0.2;
+				_light setLightAmbient[.9, .9, .6];
+				_light setLightColor[.5, .5, .4];
+				_vehs pushback _light;
+			};
+			
 			_group = createGroup blufor;
 			_groups pushback _group;		
 
@@ -92,7 +102,7 @@ while{true} do {
 				_veh setVariable ["ace_illegalCargo",true,true];				
 			};
 			sleep 0.2;
-			_civs pushBack _veh;
+			_vehs pushBack _veh;
 			{		
 				if((random 100) > 97) then {
 					_pos = [_pos,2.5,(getDir _building)-90] call BIS_fnc_relPos;
@@ -116,13 +126,13 @@ while{true} do {
 			}foreach(_stock);
 			
 			{
-				_x addCuratorEditableObjects [_civs+_vehs,true];
+				_x addCuratorEditableObjects [_civs,true];
 			} forEach allCurators;
 			
 			sleep 1;
 			{
 				_x setDamage 0;				
-			}foreach(_civs + _vehs);				
+			}foreach(_civs);				
 		};
 	}else{
 		if (spawner getVariable _id) then {

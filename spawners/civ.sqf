@@ -9,6 +9,7 @@ _town = _this select 3;
 _groups = [];
 
 _civs = []; //Stores all civs for tear down
+_lights = [];
 
 waitUntil{spawner getVariable _id};
 
@@ -44,11 +45,7 @@ while{true} do {
 			if(_pop > 600) then {
 				_civTypes = _civTypes + AIT_civTypes_expats + AIT_civTypes_tourists;
 			};
-
-			if(_hour > 17 || _hour < 9) then {
-				//spawn less people outside 9-5 hours
-				_numCiv = round(_numCiv * 0.5);
-			};			
+	
 			_count = 0;
 			
 			_pergroup = 2;
@@ -64,17 +61,30 @@ while{true} do {
 				_groups pushback _group;
 				_group setGroupId [format["%1 %2-1",_town,_idd],""];
 				_idd = _idd + 1;
+				
+				//Give this group a "home"
+				_home = [_posTown,AIT_allEnterableHouses] call getRandomBuilding;				
 				while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
-					_pos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;				
+					_pos = [[[getpos _home,50]]] call BIS_fnc_randomPos;				
 					
 					_civ = _group createUnit [_civTypes call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
-					[_civ] spawn initCivilian;
+					[_civ] call initCivilian;
 					_civs pushBack _civ;				
 					_count = _count + 1;
 					_groupcount = _groupcount + 1;
-				};		
+				};
+				[_group,_home] call civilianGroup;
 				sleep 0.01;
+				if((_hour > 18 and _hour < 23) or (_hour < 9 and _hour > 5)) then {
+					//Put a light on at home
+					_pos = getpos _home;
+					_light = "#lightpoint" createVehicle [_pos select 0,_pos select 1,(_pos select 2)+2.2];
+					_light setLightBrightness 0.09;
+					_light setLightAmbient[.9, .9, .6];
+					_light setLightColor[.5, .5, .4];
+					_lights pushback _light;
+				};
 			};
 			
 			sleep 1;
@@ -97,6 +107,9 @@ while{true} do {
 			{				
 				deleteGroup _x;								
 			}foreach(_groups);
+			{
+				deleteVehicle _x;						
+			}foreach(_lights);
 			_civs = [];
 			_groups = [];
 		};

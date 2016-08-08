@@ -1,6 +1,6 @@
 //Here is where you can change stuff to suit your liking or support mods/another map
 
-AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani","Saint-Julien"]; //dont spawn in these towns
+AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani","Saint-Julien","Ipota"]; //dont spawn in these towns
 
 AIT_hasAce = false;
 if (!isNil "ace_common_settingFeedbackIcons") then {
@@ -243,7 +243,7 @@ AIT_crimHouses = AIT_spawnHouses + AIT_gunDealerHouses + AIT_mansions;
 
 AIT_lowPopHouses = ["Land_House_Native_02_F","Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F","Land_Slum_04_F"]; //buildings with just 1-4 people living in them (also player start houses)
 AIT_medPopHouses = ["Land_House_Native_01_F","Land_House_Big_01_F","Land_Slum_05_F","Land_House_Small_01_F","Land_Slum_03_F","Land_Slum_04_F","Land_House_Small_05_F","Land_Addon_04_F"]; //buildings with 5-10 people living in them
-AIT_highPopHouses = ["Land_House_Big_04_F","Land_Warehouse_01_F","Land_Warehouse_02_F"]; //buildings with up to 20 (the warehouses are because ports end up with low pop)
+AIT_highPopHouses = ["Land_House_Big_04_F","Land_Warehouse_01_F"]; //buildings with up to 20 (the warehouses are because ports end up with low pop)
 AIT_hugePopHouses = ["Land_MultistoryBuilding_03_F"]; //buildings with potentially lots of people living in them
 AIT_touristHouses = ["Land_House_Big_05_F"]; //hostels and the like
 AIT_allShops = ["Land_Shop_Town_01_F","Land_Shop_Town_02_F","Land_Shop_Town_03_F","Land_Shop_Town_04_F","Land_Shop_Town_05_F","Land_Shop_City_01_F","Land_Shop_City_02_F","Land_Shop_City_03_F","Land_Shop_City_04_F","Land_Shop_City_05_F","Land_Shop_City_06_F","Land_Shop_City_07_F"]; //used to calculate civ spawn positions and initial stability
@@ -258,6 +258,7 @@ AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses;
 publicVariable "AIT_allBuyableBuildings";
 
 AIT_allHouses = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_touristHouses;
+AIT_allEnterableHouses = ["Land_House_Small_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_House_Big_01_F","Land_Slum_05_F","Land_Slum_01_F","Land_GarageShelter_01_F","Land_House_Small_01_F","Land_Slum_03_F","Land_House_Big_04_F","Land_House_Small_04_F","Land_House_Small_05_F"];
 
 AIT_activeShops = [];
 AIT_activeCarShops = [];

@@ -113,13 +113,7 @@ AIT_activeDistribution = [];
 _count = 0;
 {
 	if((random 100) > 40) then {
-		_pos = getpos _x;
-		
-		_mrk = createMarker [format["%1",_pos],_pos];
-		_mrk setMarkerShape "ICON";
-		_mrk setMarkerType "hd_dot";
-		_mrk setMarkerColor "ColorGreen";
-		
+		_pos = getpos _x;	
 		[_x] spawn run_distribution;
 		AIT_activeDistribution pushBack _x;
 	};

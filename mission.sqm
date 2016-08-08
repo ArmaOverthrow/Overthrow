@@ -8,7 +8,7 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=1101;
+		nextID=1123;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={9662.5586,5.1122723,13579.158};
-		dir[]={-0.66014993,-0.39148295,0.64122528};
-		up[]={-0.28087121,0.92011899,0.27281848};
-		aside[]={0.69684958,-1.1120719e-006,0.71740729};
+		pos[]={6598.3647,34.961025,12746.186};
+		dir[]={-0.97987902,-0.1271445,0.15438603};
+		up[]={-0.12563324,0.9918623,0.019795114};
+		aside[]={0.15564835,-1.5910191e-006,0.98789275};
 	};
 };
 binarizationWanted=0;
@@ -32,13 +32,14 @@ addons[]=
 	"A3_Modules_F",
 	"A3_Ui_F",
 	"CUP_Creatures_Military_NAPA",
-	"A3_Modules_F_Curator_Curator"
+	"A3_Modules_F_Curator_Curator",
+	"A3_Boat_F_Boat_Transport_01"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=5;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -62,6 +63,13 @@ class AddonsMetaData
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item4
+		{
+			className="A3_Boat_F";
+			name="Arma 3 Alpha - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="http://www.arma3.com";
 		};
@@ -349,11 +357,11 @@ class Mission
 	{
 		briefingName="Overthrow.Tanoa";
 		resistanceWest=0;
-		timeOfChanges=1800.0002;
-		startWeather=0.65828067;
+		timeOfChanges=28800;
+		startWeather=0.46667755;
 		startWind=0;
-		startWaves=0.070976265;
-		forecastWeather=0;
+		startWaves=0.16261242;
+		forecastWeather=0.33755392;
 		forecastWind=0;
 		forecastWaves=0;
 		rainForced=1;
@@ -363,8 +371,8 @@ class Mission
 		year=2015;
 		month=6;
 		day=1;
-		hour=10;
-		minute=-30;
+		hour=9;
+		minute=0;
 		startFogBase=250;
 		forecastFogBase=250;
 		startFogDecay=0.014;
@@ -529,7 +537,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=26;
+		items=28;
 		class Item0
 		{
 			dataType="Logic";
@@ -2273,6 +2281,40 @@ class Mission
 				};
 				nAttributes=5;
 			};
+		};
+		class Item26
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={1308.7429,1.2446525,3062.2075};
+				angles[]={0,3.8859301,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=1105;
+			type="C_Rubberboat";
+			atlOffset=0.10072573;
+		};
+		class Item27
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5905.1206,1.2446525,13001.596};
+				angles[]={0,5.1089082,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=1106;
+			type="C_Rubberboat";
+			atlOffset=0.12588868;
 		};
 	};
 };

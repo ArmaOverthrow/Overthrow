@@ -15,15 +15,15 @@ AIT_fnc_registerSpawner = {
 	};
 	_start = [];
 	_end = [];
-	
+	_same = true;
 	if((count _pos) == 2) then {
 		_start = _pos select 0;
-		_end = _pos select 1;
+		_end = _pos select 1;		
 	}else{
 		_start = _pos;
 		_end = _pos;
 	};
-	
+		
 	AIT_spawnUniqueCounter = AIT_spawnUniqueCounter + 1;
 	publicVariable "AIT_spawnUniqueCounter";
 	_id = format["spawn%1",AIT_spawnUniqueCounter];
@@ -32,7 +32,13 @@ AIT_fnc_registerSpawner = {
 	spawner setvariable [_id,false,true];
 	AIT_allspawners pushBack [_id,_start,_end];
 	
-	[_id,_start,_end,_params] spawn _code;
+	if(typename _code == "ARRAY")then {
+		{
+			[_id,_start,_end,_params] spawn _x;
+		}foreach(_code);
+	}else{
+		[_id,_start,_end,_params] spawn _code;
+	};
 	AIT_spawnUniqueCounter
 };
 publicVariable "AIT_fnc_registerSpawner";
@@ -64,24 +70,24 @@ AIT_fnc_updateSpawnerPosition = {
 	}foreach(AIT_allspawners);
 };
 
+_last = time;
 while{true} do {
-	sleep 0.1;	
+	if (time - _last >= 0.2) then {sleep 0.1} else {sleep 0.2 - (time - _last)};
+	_last = time;	
 	{
 		_id = _x select 0;
 		_start = _x select 1;
-		_end = _x select 1;
-		if((_start distance _end) > 1) then {
-			if((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
-				spawner setvariable [_id,true,false];
-			}else{
+		_end = _x select 2;
+		_val = spawner getvariable [_id,false];
+		
+		if(_val) then {
+			if !((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
 				spawner setvariable [_id,false,false];
-			}
+			};
 		}else{
-			if(_start call inSpawnDistance) then {
+			if ((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
 				spawner setvariable [_id,true,false];
-			}else{
-				spawner setvariable [_id,false,false];
-			}
+			};
 		};
 	}foreach(AIT_allspawners);
 }

@@ -111,6 +111,12 @@ if (_newplayer) then {
 	_house = _houses call BIS_Fnc_arrayShuffle;
 	_house = _houses call BIS_Fnc_selectRandom;
 	_housepos = getpos _house;
+	
+	//Put a light on at home
+	_light = "#lightpoint" createVehicle [_housepos select 0,_housepos select 1,(_housepos select 2)+2.2];
+	_light setLightBrightness 0.09;
+	_light setLightAmbient[.9, .9, .6];
+	_light setLightColor[.5, .5, .4];
 
 	_house setVariable ["owner",player,true];
 	player setVariable ["home",_house,true];
