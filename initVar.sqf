@@ -9,7 +9,7 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 
 AIT_spawnDistance = 1200;
 AIT_spawnCivPercentage = 0.15;
-AIT_spawnVehiclePercentage = 0.02;
+AIT_spawnVehiclePercentage = 0.03;
 AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 

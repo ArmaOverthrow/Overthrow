@@ -55,10 +55,13 @@ while{true} do {
 							_veh addEventHandler ["GetIn",{						
 								_unit = _this select 2;						
 								_v = _this select 0;
-								_v setVariable ["owner",_unit,true];
-								_v setVariable ["stolen",true,true];
-								if(blufor knowsAbout _unit > 1.3) then {
-									_unit setCaptive false;
+								if !(_v call hasOwner) then {
+									_v setVariable ["owner",_unit,true];
+									_v setVariable ["stolen",true,true];
+									
+									if(_unit call unitSeen) then {
+										_unit setCaptive false;
+									};
 								};
 							}];
 							sleep 0.05;
