@@ -21,9 +21,9 @@ class EditorData
 	class Camera
 	{
 		pos[]={11320.424,3.6577566,5374.4033};
-		dir[]={0.7083891,-0.68239594,0.18101773};
-		up[]={0.66116923,0.73091751,0.16895175};
-		aside[]={0.24761614,-1.241584e-006,-0.96899903};
+		dir[]={0.93572283,0.0040793684,0.35305601};
+		up[]={-0.0036540935,0.99995893,-0.001378344};
+		aside[]={0.35306779,1.5480764e-006,-0.93574482};
 	};
 };
 binarizationWanted=0;
@@ -105,10 +105,10 @@ class ScenarioData
 {
 	author="ARMAzac";
 	overViewPicture="pic.jpg";
+	overViewPictureLocked="pic.jpg";
 	loadScreen="pic.jpg";
 	respawnDialog=0;
 	disabledAI=1;
-	joinUnassigned=0;
 	respawn=3;
 	respawnDelay=10;
 	respawnVehicleDelay=10;
@@ -116,6 +116,8 @@ class ScenarioData
 	{
 		gameType="RPG";
 	};
+	wreckManagerMode="AddAllButRespawned";
+	wreckRemovalMinTime=1800.0009;
 };
 class CustomAttributes
 {

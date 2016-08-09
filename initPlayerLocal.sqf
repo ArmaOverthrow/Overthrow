@@ -21,12 +21,19 @@ if(isMultiplayer and (!isServer)) then {
 player setVariable ["money",100,true];
 player setVariable ["owner",player,true];
 
-titleText ["", "BLACK FADED", 0];
+if(isMultiplayer) then {
+	titleText ["Waiting for server...", "BLACK FADED", 0];
+}else{
+	titleText ["Please wait...", "BLACK FADED", 0];
+};
 
-waitUntil {!isNil "AIT_economyInitDone"};
+waitUntil {!isNil "AIT_serverInitDone"};
 
 _newplayer = true;
 _furniture = [];
+_town = "";
+_pos = [];
+_housepos = [];
 
 if(isMultiplayer) then {
 	_data = server getvariable (getplayeruid player);
@@ -40,13 +47,14 @@ if(isMultiplayer) then {
 		
 		_house = player getVariable "home";
 		_town = (getpos _house) call nearestTown;
+		_pos = server getVariable _town;
 		_housepos = getpos _house;
 		_furniture = _home getVariable "furniture";
 		
 		_owned = player getVariable "owned";
 		{
 			_x setVariable ["owner",player,true];
-		}foreach(_owned);
+		}foreach(_owned + _furniture);		
 	};
 
 	//JIP interactions
@@ -126,7 +134,7 @@ if (_newplayer) then {
 	};
 }foreach(_furniture);
 
-_pos = [[[_housepos,25]]] call BIS_fnc_randomPos;
+_pos = [[[_housepos,50]]] call BIS_fnc_randomPos;
 player setCaptive true;
 player setPos _pos;
 titleText ["", "BLACK IN", 5];
