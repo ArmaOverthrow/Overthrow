@@ -19,14 +19,15 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 
 # Required Addons
 * VCOM AI (included)
+* Advanced Towing (included)
 * CUP Weapons
 * CUP Terrains - Core
 * CUP Units
 * CUP Vehicles
 * Community Based Addons (CBA)
 
-# Supported Addons
-* ACE3 (100% everything works)
+# Recommended Addons
+* ACE3 (Fully integrated)
 
 # To install
 Overthrow is currently in a pre-alpha state, but you are free to try it out, just expect bugs. The latest stable release PBO can be found on the Releases page: https://github.com/armazac/Overthrow.Tanoa/releases
