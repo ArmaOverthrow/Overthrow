@@ -73,7 +73,11 @@ if (_newplayer) then {
 
 	AIT_stats = [] execVM "stats.sqf";
 
+	
 	_town = server getVariable "spawntown";
+	if(AIT_randomSpawnTown) then {
+		_town = AIT_spawnTowns call BIS_fnc_selectRandom;
+	};
 	_pos = server getVariable _town;
 
 	_house = [_pos,AIT_spawnHouses] call getRandomBuilding;

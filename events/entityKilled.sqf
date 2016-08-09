@@ -48,6 +48,17 @@ if(!isNil "_criminal") then {
 		if(_bounty > 0) then {
 			if(isPlayer _killer) then {
 				[_bounty] remoteExec ["money",_killer,true];
+				if(isMultiplayer) then {
+					format["%1 has killed the gang leader in %2",name _killer,_town] remoteExec ["notify_minor",0,true];
+				}else{
+					format["You killed the gang leader in %2",_town] call notify_minor;
+				};
+			}else{
+				if(side _killer == west) then {
+					format["NATO has removed the gang leader in %2",_town] remoteExec ["notify_minor",0,true];
+				}else{
+					format["The gang leader in %2 is dead",_town] remoteExec ["notify_minor",0,true];
+				};
 			};
 			server setVariable [format["CRIMbounty%1",_town],0,true];
 		};		

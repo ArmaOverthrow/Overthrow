@@ -8,7 +8,7 @@ server setVariable ["activedealers",[],true];
 
 //automatically determining the population of each town/city on the map
 //For each city and/or town
-_spawntowns = [];
+
 {
 	_name = text _x;// Get name
 	
@@ -92,12 +92,9 @@ _spawntowns = [];
 	{
 		if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
 	}foreach(AIT_regions);
-	if((_stability > 70) and !(_name in AIT_spawnBlacklist)) then {
-		_spawntowns pushBack _name;
-	};
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);
 
-server setVariable ["spawntown",_spawntowns call BIS_fnc_selectrandom,true];
+server setVariable ["spawntown",AIT_spawnTowns call BIS_fnc_selectrandom,true];
 publicVariable "AIT_activeShops";
 {
 	_region = _x;
