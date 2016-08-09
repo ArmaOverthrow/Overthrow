@@ -13,6 +13,9 @@ call compile preprocessFileLineNumbers "initEconomy.sqf";
 waitUntil {!isNil "AIT_NATOInitDone"};
 waitUntil {!isNil "AIT_CRIMInitDone"};	
 
+//Bounty system
+[] execVM "bountySystem.sqf";
+
 //Init virtualization
 [] execVM "virtualization.sqf";	
 waitUntil {!isNil "AIT_fnc_registerSpawner"};
