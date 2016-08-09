@@ -70,8 +70,8 @@ _spawntowns = [];
 		_base = 80;
 	};
 	_stability = round(_base + random(20));
-	if((_pop < 40) and !(_name in AIT_NATO_priority)) then {
-		_stability = floor(10 + random(60));
+	if((_pop < 40) and !(_name in AIT_NATO_priority) and !(_name in AIT_Capitals)) then {
+		_stability = floor(4 + random(50));
 	};
 	server setVariable [format["stability%1",_name],_stability,true];
 	_mrk = createMarker [_name,_pos];

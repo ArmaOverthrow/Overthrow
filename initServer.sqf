@@ -4,6 +4,10 @@ call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
 
 call compile preprocessFileLineNumbers "initEconomy.sqf";
+
+//Advanced towing script, massive credits to Duda http://www.armaholic.com/page.php?id=30575
+[] execVM "funcs\fn_advancedTowingInit.sqf";
+
 [] execVM "factions\NATO.sqf";
 [] execVM "factions\CRIM.sqf";	
 waitUntil {!isNil "AIT_NATOInitDone"};
@@ -27,6 +31,8 @@ if(AIT_hasAce) then {
 };
 
 addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];
+
+["Initialize"] call BIS_fnc_dynamicGroups;
 
 AIT_serverInitDone = true;
 publicVariable "AIT_serverInitDone";

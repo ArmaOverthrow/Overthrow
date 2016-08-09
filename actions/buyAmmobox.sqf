@@ -17,7 +17,7 @@ _building = objNULL;
 			playSound "ClickSoft";
 			player setVariable ["money",_money-_price,true];			
 			
-			_cosa = (AIT_items_Storage select 0) createVehicle (getpos player);
+			_cosa = AIT_item_Storage createVehicle (getpos player);
 			
 			clearWeaponCargoGlobal _cosa;
 			clearMagazineCargoGlobal _cosa;

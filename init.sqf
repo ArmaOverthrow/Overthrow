@@ -1,4 +1,11 @@
-// block script injection exploit
+/*
+ * Overthrow 
+ * By ARMAzac
+ * 
+ * https://github.com/armazac/Overthrow.Tanoa
+ */
+
+
 inGameUISetEventHandler ["PrevAction", ""];
 inGameUISetEventHandler ["Action", ""];
 inGameUISetEventHandler ["NextAction", ""];
@@ -11,10 +18,18 @@ if(!isMultiplayer) then {
 
 	//SINGLE PLAYER init
 	call compile preprocessFileLineNumbers "initEconomy.sqf";
+	
+	//Advanced towing script, massive credits to Duda http://www.armaholic.com/page.php?id=30575
+	[] execVM "funcs\fn_advancedTowingInit.sqf";
+	
+	//Init factions
 	[] execVM "factions\NATO.sqf";
 	[] execVM "factions\CRIM.sqf";	
 	waitUntil {!isNil "AIT_NATOInitDone"};
 	waitUntil {!isNil "AIT_CRIMInitDone"};	
+	
+	//Bounty system
+	[] execVM "bountySystem.sqf";
 	
 	//Init virtualization
 	[] execVM "virtualization.sqf";	

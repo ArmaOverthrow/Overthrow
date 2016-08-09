@@ -57,7 +57,7 @@ while{true} do {
 								_v = _this select 0;
 								_v setVariable ["owner",_unit,true];
 								_v setVariable ["stolen",true,true];
-								if(blufor knowsAbout _unit > 1.4) then {
+								if(blufor knowsAbout _unit > 1.3) then {
 									_unit setCaptive false;
 								};
 							}];

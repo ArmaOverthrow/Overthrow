@@ -31,7 +31,6 @@ if(_distance < 450) exitWith {
 
 _towndest = _dest call nearestTown;
 _townstart = _pos call nearestTown;
-hint format["Sending a delivery from %1 to %2",_townstart,_towndest];
 
 _triplength = round((_distance / 40000) * 3600);
 

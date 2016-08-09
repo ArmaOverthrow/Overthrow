@@ -46,7 +46,16 @@ while{true} do {
 					_civ = _group createUnit [AIT_CRIM_Units_Para call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					[_civ] joinSilent _group;
 					_civ setskill _skill;
-					_civ setRank "MAJOR";
+					if(_time > 1200) then {
+						_civ setRank "MAJOR";
+					}else{
+						if(_time > 600) then {
+							_civ setRank "CAPTAIN";
+						}else{
+							_civ setRank "LIEUTENANT";
+						};
+					};
+					
 					_soldiers pushBack _civ;
 					[_civ,_name] call initCrimLeader;
 					_civ setBehaviour "SAFE";
@@ -79,12 +88,21 @@ while{true} do {
 				};
 				
 				while {(spawner getVariable _id) and (_count < _numCRIM)} do {
-					_start = [[[_start,40]]] call BIS_fnc_randomPos;
+					_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 					
 					_civ = _group createUnit [AIT_CRIM_Units_Bandit call BIS_fnc_selectRandom, _start, [],0, "NONE"];
-					_civ setRank "SERGEANT";
+					[_civ] joinSilent _group;
+					if(_time > 1200) then {
+						_civ setRank "LIEUTENANT";
+					}else{
+						if(_time > 600) then {
+							_civ setRank "SERGEANT";
+						}else{
+							_civ setRank "CORPORAL";
+						};
+					};
 					_soldiers pushBack _civ;
-					[_civ,_name] call initCriminal;
+					[_civ,_town] call initCriminal;
 					_civ setBehaviour "SAFE";
 					
 					sleep 0.1;

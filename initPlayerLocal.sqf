@@ -26,6 +26,7 @@ titleText ["", "BLACK FADED", 0];
 waitUntil {!isNil "AIT_economyInitDone"};
 
 _newplayer = true;
+_furniture = [];
 
 if(isMultiplayer) then {
 	_data = server getvariable (getplayeruid player);
@@ -75,41 +76,19 @@ if (_newplayer) then {
 	_town = server getVariable "spawntown";
 	_pos = server getVariable _town;
 
-	_mSize = 350;
-	if(_town in AIT_capitals) then {//larger search radius
-		_mSize = 700;
-	};
-	_houses = [];
-	{
-		if !(_x call hasOwner) then {
-			_houses pushback _x;
-		}
-	}foreach(nearestObjects [_pos, AIT_spawnHouses, _mSize+250]);
-
-	if(count _houses == 0 || AIT_randomSpawnTown) then {
-		//town is full, has no possible houses or has been bought out, pick another
-		_towns = [];
-		{
-			_stability = server getvariable format["stability%1",_town];
-			if((_stability > 70) and !(_name in AIT_spawnBlacklist)) then {
-				_towns pushBack _x;
-			};
-		}foreach(AIT_allTowns);
-		_town = _towns call BIS_fnc_selectRandom;
-		_mSize = 350;
-		if(_town in AIT_capitals) then {//larger search radius
-			_mSize = 700;
+	_house = [_pos,AIT_spawnHouses] call getRandomBuilding;
+	if(isNil "_house") then {
+		_spawntowns = [];
+		_stability = server getvariable format["stability%1",_x];
+		//spawntown is full or has no houses left, move it
+		if((_stability > 70) and !(_x in AIT_spawnBlacklist) and _x != _town) then {
+			_spawntowns pushBack _name;
 		};
+		_town = _spawntowns call BIS_fnc_selectrandom;
+		server setVariable ["spawntown",_town,true];
 		_pos = server getvariable _town;
-		{
-			if !(_x call hasOwner) then {
-				_houses pushback _x;
-			}
-		}foreach(nearestObjects [_pos, AIT_spawnHouses, _mSize+250]);
+		_house = [_pos,AIT_spawnHouses] call getRandomBuilding;
 	};
-
-	_house = _houses call BIS_Fnc_arrayShuffle;
-	_house = _houses call BIS_Fnc_selectRandom;
 	_housepos = getpos _house;
 	
 	//Put a light on at home
@@ -126,8 +105,22 @@ if (_newplayer) then {
 	_furniture = (_house call spawnTemplate) select 0;
 	_house setVariable ["furniture",_furniture];
 	
-	player setVariable ["owned",[_house],true];
+	{
+		if(typeof _x == AIT_item_Desk) then {
+			_deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
+		};
+	}foreach(_furniture);	
 };
+
+{	
+	if(typeof _x == AIT_item_Map) then {
+		_x addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
+		_x addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
+	};
+	if(typeof _x == AIT_item_Repair) then {
+		_x addAction ["Repair Nearby Vehicles", "actions\repairAll.sqf",nil,0,false,true,"",""];
+	};
+}foreach(_furniture);
 
 _pos = [[[_housepos,25]]] call BIS_fnc_randomPos;
 player setCaptive true;

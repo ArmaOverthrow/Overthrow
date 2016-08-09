@@ -26,16 +26,31 @@ _standingChange = 0;
 if(!isNil "_criminal") then {
 	[_town,1] call stability;
 	_standingChange = 1;
-	if(((east knowsAbout _killer) > 1.5) || ((vehicle _killer) != _killer)) then {		
+	if(_killer call unitSeen) then {		
 		_killer setCaptive false;
 	};
 }else{
 	if(!isNil "_crimleader") then {
 		[_town,5] call stability;
-		_standingChange = 10;
-		if(((east knowsAbout _killer) > 1.5) || ((vehicle _killer) != _killer)) then {		
+		if((_killer call unitSeen) || ((vehicle _killer) != _killer)) then {		
 			_killer setCaptive false;
 		};
+		
+		if(_killer call hasOwner) then {
+			_owner = _killer getVariable "owner";
+			if(isPlayer _owner) then {
+				_killer = _owner;
+			};
+		};
+		
+		_standingChange = 10;
+		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
+		if(_bounty > 0) then {
+			if(isPlayer _killer) then {
+				[_bounty] remoteExec ["money",_killer,true];
+			};
+			server setVariable [format["CRIMbounty%1",_town],0,true];
+		};		
 	}else{
 		if(!isNil "_garrison") then {
 			_pop = server getVariable format["garrison%1",_garrison];
@@ -47,15 +62,36 @@ if(!isNil "_criminal") then {
 			};
 			[_town,-2] call stability;
 			_standingChange = -1;
-			if(((west knowsAbout _killer) > 0) || ((vehicle _killer) != _killer)) then {		
-				_killer setCaptive false;
+			if((_killer call unitSeen) || ((vehicle _killer) != _killer)) then {		
+				if(_killer call hasOwner) then {
+					_killer setCaptive false;
+					_owner = _killer getVariable "owner";
+					if(isPlayer _owner) then {							
+						if((_killer distance _owner) < 100) then {					
+							_killer = _owner;	
+							_owner setCaptive false;
+						};							
+					};				
+				};
+				if(isPlayer _killer) then {
+					_standingChange = -1;
+				};
 			};
 		}else{
-			if(side _killer == east or isPlayer _killer) then {
-				[_town,-1] call stability;
-				_standingChange = -10;
+			[_town,-1] call stability;
+			if(_killer call hasOwner) then {
 				_killer setCaptive false;
-			}
+				_owner = _killer getVariable "owner";
+				if(isPlayer _owner) then {							
+					if((_killer distance _owner) < 100) then {					
+						_killer = _owner;	
+						_owner setCaptive false;
+					};							
+				};				
+			};
+			if(isPlayer _killer) then {
+				_standingChange = -10;
+			};
 		};
 	};
 };

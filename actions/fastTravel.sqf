@@ -5,7 +5,7 @@ if((vehicle player) != player) then {
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
 };
 posTravel = [];
-"Where would you like to go?" call notify_minor;
+hint "Click near a building you own";
 openMap true;
 
 onMapSingleClick "posTravel = _pos;";

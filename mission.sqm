@@ -8,11 +8,11 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=1123;
+		nextID=1139;
 	};
 	class MarkerIDProvider
 	{
-		nextID=18;
+		nextID=19;
 	};
 	class LayerIndexProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={6598.3647,34.961025,12746.186};
-		dir[]={-0.97987902,-0.1271445,0.15438603};
-		up[]={-0.12563324,0.9918623,0.019795114};
-		aside[]={0.15564835,-1.5910191e-006,0.98789275};
+		pos[]={11320.424,3.6577566,5374.4033};
+		dir[]={0.7083891,-0.68239594,0.18101773};
+		up[]={0.66116923,0.73091751,0.16895175};
+		aside[]={0.24761614,-1.241584e-006,-0.96899903};
 	};
 };
 binarizationWanted=0;
@@ -32,6 +32,10 @@ addons[]=
 	"A3_Modules_F",
 	"A3_Ui_F",
 	"CUP_Creatures_Military_NAPA",
+	"A3_Weapons_F",
+	"A3_Characters_F",
+	"A3_Weapons_F_Items",
+	"ace_medical",
 	"A3_Modules_F_Curator_Curator",
 	"A3_Boat_F_Boat_Transport_01"
 };
@@ -39,7 +43,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=5;
+		items=8;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -61,12 +65,33 @@ class AddonsMetaData
 		};
 		class Item3
 		{
+			className="A3_Weapons_F";
+			name="Arma 3 Alpha - Weapons and Accessories";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item4
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item5
+		{
+			className="ace_medical";
+			name="ACE3 - Medical";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item6
+		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="http://www.arma3.com";
 		};
-		class Item4
+		class Item7
 		{
 			className="A3_Boat_F";
 			name="Arma 3 Alpha - Boats and Submersibles";
@@ -537,7 +562,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=28;
+		items=29;
 		class Item0
 		{
 			dataType="Logic";
@@ -652,8 +677,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6834.0942,2.6614389,7415.229};
-						angles[]={0,4.4832449,0};
+						position[]={6828.9033,2.9063637,7284.3096};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -662,9 +687,37 @@ class Mission
 						init="this setCaptive true;";
 						name="bigboss";
 						isPlayer=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=974;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -808,6 +861,7 @@ class Mission
 			{
 			};
 			id=49;
+			atlOffset=0.24492478;
 		};
 		class Item9
 		{
@@ -904,8 +958,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6833.979,2.6614389,7413.4458};
-						angles[]={0,4.4832449,0};
+						position[]={6827.5532,2.9063637,7283.1387};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -914,9 +968,37 @@ class Mission
 						init="this setCaptive true;";
 						name="secondPlayer";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=975;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1060,6 +1142,7 @@ class Mission
 			{
 			};
 			id=582;
+			atlOffset=0.24492478;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -1096,8 +1179,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6836.7559,2.6614389,7411.875};
-						angles[]={0,4.4832449,0};
+						position[]={6828.3862,2.9063637,7280.0591};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -1106,9 +1189,37 @@ class Mission
 						init="this setCaptive true;";
 						name="thirdPlayer";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=976;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1252,6 +1363,7 @@ class Mission
 			{
 			};
 			id=584;
+			atlOffset=0.24492478;
 		};
 		class Item19
 		{
@@ -1265,8 +1377,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6834.8418,2.6614389,7412.0356};
-						angles[]={0,4.4832449,0};
+						position[]={6827.1558,2.9063637,7281.5342};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -1274,9 +1386,37 @@ class Mission
 					{
 						init="this setCaptive true;";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=977;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1420,6 +1560,7 @@ class Mission
 			{
 			};
 			id=586;
+			atlOffset=0.24492478;
 		};
 		class Item20
 		{
@@ -1433,8 +1574,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6837.2041,2.6614389,7410.502};
-						angles[]={0,4.4832449,0};
+						position[]={6827.7236,2.9063637,7278.7754};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -1442,9 +1583,37 @@ class Mission
 					{
 						init="this setCaptive true;";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=978;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1588,6 +1757,7 @@ class Mission
 			{
 			};
 			id=588;
+			atlOffset=0.24492478;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -1624,8 +1794,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6835.1689,2.6614389,7410.7749};
-						angles[]={0,4.4832449,0};
+						position[]={6826.4883,2.9063637,7280.4155};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -1633,9 +1803,37 @@ class Mission
 					{
 						init="this setCaptive true;";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=980;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1779,6 +1977,7 @@ class Mission
 			{
 			};
 			id=590;
+			atlOffset=0.24492478;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -1815,8 +2014,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6837.271,2.6614389,7408.8989};
-						angles[]={0,4.4832449,0};
+						position[]={6826.6299,2.9063637,7277.6016};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -1824,9 +2023,37 @@ class Mission
 					{
 						init="this setCaptive true;";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=979;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1970,6 +2197,7 @@ class Mission
 			{
 			};
 			id=592;
+			atlOffset=0.24492478;
 		};
 		class Item23
 		{
@@ -1983,8 +2211,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6835.2368,2.6614389,7409.1719};
-						angles[]={0,4.4832449,0};
+						position[]={6825.395,2.9063637,7279.2412};
+						angles[]={0,5.2751122,0};
 					};
 					side="Independent";
 					flags=6;
@@ -1992,9 +2220,37 @@ class Mission
 					{
 						init="this setCaptive true;";
 						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="CUP_U_I_Leader_01";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="CUP_V_I_Guerilla_Jacket";
+								isBackpack=0;
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							goggles="G_Bandanna_blk";
+							headgear="CUP_H_NAPA_Fedora";
+						};
 					};
 					id=981;
 					type="CUP_I_GUE_Commander";
+					atlOffset=0.24492478;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2138,6 +2394,7 @@ class Mission
 			{
 			};
 			id=594;
+			atlOffset=0.24492478;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -2178,10 +2435,11 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={7325.1069,2.7,7939.3662};
+				position[]={6962.4829,2.6987,7345.3823};
 			};
 			id=1065;
 			type="ModuleCurator_F";
+			atlOffset=0.038699865;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -2315,6 +2573,19 @@ class Mission
 			id=1106;
 			type="C_Rubberboat";
 			atlOffset=0.12588868;
+		};
+		class Item28
+		{
+			dataType="Marker";
+			position[]={1047.865,-2.3575253e-021,2888.092};
+			name="blacklist_1";
+			markerType="RECTANGLE";
+			type="rectangle";
+			alpha=0;
+			a=290.35101;
+			b=271.086;
+			id=1129;
+			atlOffset=-67.583504;
 		};
 	};
 };

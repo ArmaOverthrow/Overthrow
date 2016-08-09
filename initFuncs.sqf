@@ -3,6 +3,7 @@
 townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
 randomPosition = compileFinal preProcessFileLineNumbers "funcs\randomPosition.sqf";
 spawnTemplate = compileFinal preProcessFileLineNumbers "funcs\spawnTemplate.sqf";
+spawnTemplateAttached = compileFinal preProcessFileLineNumbers "funcs\spawnTemplateAttached.sqf";
 inSpawnDistance = compileFinal preProcessFileLineNumbers "funcs\inSpawnDistance.sqf";
 nearestTown = compileFinal preProcessFileLineNumbers "funcs\nearestTown.sqf";
 getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
@@ -28,6 +29,8 @@ initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
+
+template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 
 [] call compileFinal preProcessFileLineNumbers "funcs\dict.sqf";
 
@@ -67,6 +70,7 @@ buyAmmobox = compileFinal preProcessFileLineNumbers "actions\buyAmmobox.sqf";
 giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
 
 //Wanted System
+unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 
 //Key handler

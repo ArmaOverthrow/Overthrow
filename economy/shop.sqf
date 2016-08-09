@@ -99,14 +99,16 @@ while {true} do {
 				_stock = _building getVariable "stock";
 				_idx = floor random((count _stock) - 1);
 				_item = _stock call BIS_fnc_selectRandom;
-				_cls = _item select 0;
-				_num = _item select 1;
-				if(_num <= 1) then {
-					_stock deleteAt _idx;
-				}else{
-					_item set[1,_num-1];
+				if !(isNil "_item") then {
+					_cls = _item select 0;
+					_num = _item select 1;
+					if(_num <= 1) then {
+						_stock deleteAt _idx;
+					}else{
+						_item set[1,_num-1];
+					};
+					_building setVariable ["stock",_stock,true];
 				};
-				_building setVariable ["stock",_stock,true];
 			};
 		};
 	};

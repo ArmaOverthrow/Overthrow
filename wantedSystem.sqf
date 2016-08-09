@@ -35,13 +35,12 @@ while {true and alive _unit} do {
 			if(_timer >= 30) then {
 				_unit setCaptive true;
 			}else{
-				if((blufor knowsabout _unit) > 1) then {
-					_unit setVariable ["hiding",30,true];
-					_timer = 0;
+				if (_unit call unitSeen) then {
+					_unit setCaptive false;
 				};
 			};
 		}else{		
-			if((blufor knowsabout _unit) < 1) then {
+			if !(_unit call unitSeen) then {
 				_unit setVariable ["hiding",30,true];
 				_timer = 0;
 			};
@@ -50,19 +49,12 @@ while {true and alive _unit} do {
 		//CURRENTLY NOT WANTED
 		_timer = -1;
 		_unit setVariable ["hiding",0,true];
-		if((blufor knowsabout _unit) > 1) then {
-			//Police can see you, don't do anything bad ok
+		if(_unit call unitSeen) then {
+			//Police/Criminals can see you, don't do anything bad ok
 			
 			//LAW 1: You may not show a weapon (in front of the cops)
 			if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) then {				
-				_unit setCaptive false;
-				//reveal you to all cops/military within 2km
-				{
-					if((side _x == west) and (_x distance _unit < 2000)) then {
-						_x reveal [_unit,1.5];					
-					};
-				}foreach(allUnits);
-				
+				_unit setCaptive false;				
 			}else{
 				//Chance they will recognize you
 				if(isPlayer _unit) then {
@@ -72,19 +64,14 @@ while {true and alive _unit} do {
 					if(_rep < 0) then {
 						_chance = abs _rep;
 						if((random 100) < _chance) then {
-							_unit setCaptive false;
-							//reveal you to all cops/military within 800m
-							{
-								if((side _x == west) and (_x distance _unit < 800)) then {
-									_x reveal [_unit,1.5];						
-								};
-							}foreach(allUnits);
+							_unit setCaptive false;							
 						};					
 					};
 				}
 			};
 			
 			//LAW 2: You can't wear the shit you steal off the cops, dude, not in front of them, I mean come on
+			//Same with the crims, they will just think you are a cop
 			if ((headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {	
 				_unit setCaptive false;				
 				{
@@ -92,19 +79,6 @@ while {true and alive _unit} do {
 						_x reveal [_unit,1.5];					
 					};
 				}foreach(allUnits);
-			};
-		};
-		if((opfor knowsabout _unit) > 1) then {
-			//Criminals can see you
-			if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) then {
-				_unit setCaptive false;
-				//reveal you to all gang members
-				{
-					if((side _x == east) and (_x distance _unit < 800)) then {
-						_x reveal [_unit,1.5];
-					};
-				}foreach(allUnits);
-				
 			};
 		};
 	};

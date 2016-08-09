@@ -42,7 +42,14 @@ AIT_item_Secondary = "Land_PortableLongRangeRadio_F"; //object for secondary int
 AIT_items_Sleep = ["CUP_vojenska_palanda"]; //Items with the "sleep" interaction (Single player only)
 AIT_items_Heal = ["Land_WaterCooler_01_old_F"]; //Where the player can heal themselves
 AIT_items_Repair = ["Toolkit"]; //Inventory items that can be used to repair vehicles
-AIT_items_Storage = ["B_CargoNet_01_ammo_F"]; //Where gun dealers will deliver your shit
+
+//Interactable items that spawn in your house
+AIT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
+AIT_item_Desk = "OfficeTable_01_new_F"; //Your spawn desk
+AIT_item_Radio = "Land_PortableLongRangeRadio_F";
+AIT_item_Map = "Land_MapBoard_F";
+AIT_item_Repair = "Land_ToolTrolley_02_F";
+
 AIT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
 
@@ -235,7 +242,7 @@ AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu"
 AIT_sprawling = ["Blue Pearl industrial port"];
 
 AIT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_House_Small_04_F"]; //buildings that rich guys like to live in
-AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F"]; //houses where players will spawn ,"Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F"
+AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F"]; //houses where players will spawn ,"Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F"
 
 AIT_gunDealerHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_GarageShelter_01_F","Land_House_Small_05_F"];//houses where gun dealers will spawn
 
