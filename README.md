@@ -18,16 +18,16 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * APEX
 
 # Required Addons
-* VCOM AI (included)
-* Advanced Towing (included)
-* CUP Weapons
-* CUP Terrains - Core
-* CUP Units
-* CUP Vehicles
-* Community Based Addons (CBA)
+* VCOM AI by genesis92x (included) https://forums.bistudio.com/topic/166374-vcom-ai-v20-ai-overhaul/
+* Advanced Towing by Duda (included) http://www.armaholic.com/page.php?id=30575
+* CUP Weapons (Steam Workshop)
+* CUP Terrains - Core (Steam Workshop)
+* CUP Units (Steam Workshop)
+* CUP Vehicles (Steam Workshop)
+* Community Based Addons (CBA) (Steam Workshop)
 
 # Recommended Addons
-* ACE3 (Fully integrated)
+* ACE3 (Fully integrated) (Steam Workshop) http://ace3mod.com/
 
 # To install
 Overthrow is currently in a pre-alpha state, but you are free to try it out, just expect bugs. The latest stable release PBO can be found on the Releases page: https://github.com/armazac/Overthrow.Tanoa/releases
