@@ -36,14 +36,13 @@ addons[]=
 	"A3_Characters_F",
 	"A3_Weapons_F_Items",
 	"ace_medical",
-	"A3_Modules_F_Curator_Curator",
 	"A3_Boat_F_Boat_Transport_01"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=8;
+		items=7;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -85,13 +84,6 @@ class AddonsMetaData
 			url="http://ace3mod.com/";
 		};
 		class Item6
-		{
-			className="A3_Modules_F_Curator";
-			name="Arma 3 Zeus Update - Scripted Modules";
-			author="Bohemia Interactive";
-			url="http://www.arma3.com";
-		};
-		class Item7
 		{
 			className="A3_Boat_F";
 			name="Arma 3 Alpha - Boats and Submersibles";
@@ -564,7 +556,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=29;
+		items=28;
 		class Item0
 		{
 			dataType="Logic";
@@ -2434,116 +2426,6 @@ class Mission
 		};
 		class Item25
 		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={6962.4829,2.6987,7345.3823};
-			};
-			id=1065;
-			type="ModuleCurator_F";
-			atlOffset=0.038699865;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="ModuleCurator_F_Owner";
-					expression="_this setVariable ['Owner',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="bigboss";
-						};
-					};
-				};
-				class Attribute1
-				{
-					property="ModuleCurator_F_Forced";
-					expression="_this setVariable ['Forced',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute2
-				{
-					property="ModuleCurator_F_Name";
-					expression="_this setVariable ['Name',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="";
-						};
-					};
-				};
-				class Attribute3
-				{
-					property="ModuleInfo";
-					expression="false";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute4
-				{
-					property="ModuleCurator_F_Addons";
-					expression="_this setVariable ['Addons',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=2;
-						};
-					};
-				};
-				nAttributes=5;
-			};
-		};
-		class Item26
-		{
 			dataType="Object";
 			class PositionInfo
 			{
@@ -2559,7 +2441,7 @@ class Mission
 			type="C_Rubberboat";
 			atlOffset=0.10072573;
 		};
-		class Item27
+		class Item26
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2576,7 +2458,7 @@ class Mission
 			type="C_Rubberboat";
 			atlOffset=0.12588868;
 		};
-		class Item28
+		class Item27
 		{
 			dataType="Marker";
 			position[]={1047.865,-2.3575253e-021,2888.092};

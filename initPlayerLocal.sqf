@@ -11,7 +11,6 @@ removeVest player;
 
 player linkItem "ItemMap";
 
-player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
 
 if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
@@ -27,7 +26,13 @@ if(isMultiplayer) then {
 	titleText ["Please wait...", "BLACK FADED", 0];
 };
 
-waitUntil {!isNil "AIT_serverInitDone"};
+if !(isMultiplayer) then {
+	waitUntil {!isNil "AIT_serverInitDone"};
+}else{
+	waitUntil {server getVariable ["spawntown",""] != ""};
+};
+
+player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
 
 _newplayer = true;
 _furniture = [];
@@ -49,7 +54,7 @@ if(isMultiplayer) then {
 		_town = (getpos _house) call nearestTown;
 		_pos = server getVariable _town;
 		_housepos = getpos _house;
-		_furniture = _home getVariable "furniture";
+		_furniture = _house getVariable "furniture";
 		
 		_owned = player getVariable "owned";
 		{
@@ -140,7 +145,7 @@ player setPos _pos;
 titleText ["", "BLACK IN", 5];
 
 //put a marker on home
-_mrk = createMarkerLocal [format["home-%1",getPlayerUID player],_housepos];
+_mrk = createMarker [format["home-%1",getPlayerUID player],_housepos];
 _mrk setMarkerShape "ICON";
 _mrk setMarkerType "loc_Tourism";
 _mrk setMarkerColor "ColorWhite";
