@@ -8,12 +8,14 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 };
 
 AIT_spawnDistance = 1200;
-AIT_spawnCivPercentage = 0.15;
-AIT_spawnVehiclePercentage = 0.03;
+AIT_spawnCivPercentage = 0.08;
+AIT_spawnVehiclePercentage = 0.04;
+AIT_standardMarkup = 0.2; //Markup in shops is calculated from this
 AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 
-AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt"];
+AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
+AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
 AIT_NATOwait = 500; //Half the Average time between NATO orders
 AIT_CRIMwait = 300; //Half the Average time between crim changes
@@ -108,9 +110,9 @@ if(AIT_hasAce) then {
 	[AIT_items,[
 		["ACE_fieldDressing",10,0,0,0.1],
 		["ACE_elasticBandage",15,0,0,0.2],
-		["ACE_SpraypaintBlue",10,0,0,0.2],
-		["ACE_SpraypaintRed",10,0,0,0.2],
-		["ACE_SpraypaintBlack",10,0,0,0.2],
+		["ACE_SpraypaintBlue",20,0,0,0.2],
+		["ACE_SpraypaintRed",20,0,0,0.2],
+		["ACE_SpraypaintBlack",20,0,0,0.2],
 		["ACE_morphine",50,0,0,0.2],
 		["ACE_EarPlugs",5,0,0,0.2],
 		["ACE_epinephrine",50,0,0,0.2],
@@ -244,7 +246,6 @@ AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu"
 AIT_sprawling = ["Blue Pearl industrial port"];
 
 AIT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_House_Small_04_F"]; //buildings that rich guys like to live in
-AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F"]; //houses where players will spawn ,"Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F"
 
 AIT_gunDealerHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_GarageShelter_01_F","Land_House_Small_05_F"];//houses where gun dealers will spawn
 

@@ -13,8 +13,8 @@ waitUntil{not isNil "AIT_economyInitDone"};
 	};
 	_garrison = 0;	
 	_stability = server getVariable format ["stability%1",_town];
-	server setVariable [format["crimnew%1",_town],false,true];
-	server setVariable [format["crimadd%1",_town],0,true];
+	server setVariable [format["crimnew%1",_town],false,false];
+	server setVariable [format["crimadd%1",_town],0,false];
 	if(_stability < 17) then {
 		_garrison = 2+round((1-(_stability / 10)) * 6);				
 		_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
@@ -24,12 +24,12 @@ waitUntil{not isNil "AIT_economyInitDone"};
 			_leaderpos = getpos _building;
 		};
 		
-		server setVariable [format["crimleader%1",_town],_leaderpos,true];
+		server setVariable [format["crimleader%1",_town],_leaderpos,false];
 	}else{
-		server setVariable [format["crimleader%1",_town],false,true];
+		server setVariable [format["crimleader%1",_town],false,false];
 	};
-	server setVariable [format ["numcrims%1",_x],_garrison,true];
-	server setVariable [format ["timecrims%1",_x],0,true];
+	server setVariable [format ["numcrims%1",_x],_garrison,false];
+	server setVariable [format ["timecrims%1",_x],0,false];
 }foreach (AIT_allTowns);
 
 AIT_CRIMInitDone = true;
@@ -54,9 +54,9 @@ while {true} do {
 				
 				_leaderpos = server getVariable format["crimleader%1",_town];
 				if ((typeName _leaderpos) == "ARRAY") then {
-					server setVariable [format ["timecrims%1",_x],_time+_sleeptime,true];
+					server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
 					if(((random 100) > 80) and _num < 20) then {
-						server setVariable [format ["numcrims%1",_x],_num + 1,true];
+						server setVariable [format ["numcrims%1",_x],_num + 1,false];
 					};
 				}else{
 					if((random 100) > 90) then {
@@ -67,9 +67,9 @@ while {true} do {
 						}else{
 							_leaderpos = getpos _building;
 						};	
-						server setVariable [format["crimnew%1",_town],_leaderpos,true];
-						server setVariable [format ["crimadd%1",_x],4,true];
-						server setVariable [format ["timecrims%1",_x],0,true];
+						server setVariable [format["crimnew%1",_town],_leaderpos,false];
+						server setVariable [format ["crimadd%1",_x],4,false];
+						server setVariable [format ["timecrims%1",_x],0,false];
 					}
 				};			
 			};

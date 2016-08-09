@@ -32,7 +32,7 @@ _shopkeeper addAction ["Sell", {
 		_cls = _x select 0;
 		if(_cls in AIT_allItems) then {
 			_num = _x select 1;			
-			_price = [_town,_cls,_standing+40] call getPrice;
+			_price = [_town,_cls,_standing] call getSellPrice;
 			_mynum = 0;
 			_s = _b getVariable "stock";
 			{

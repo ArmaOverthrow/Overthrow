@@ -1,5 +1,8 @@
 private ["_uniqueCounter","_allspawners","_id","_start","_end"];
 
+diag_virt = 0;
+publicVariable "diag_virt";
+
 AIT_spawnUniqueCounter = -1;
 publicVariable "AIT_spawnUniqueCounter";
 
@@ -72,7 +75,9 @@ AIT_fnc_updateSpawnerPosition = {
 
 _last = time;
 while{true} do {
-	if (time - _last >= 0.2) then {sleep 0.1} else {sleep 0.2 - (time - _last)};
+	if (time - _last >= 0.5) then {sleep 0.1} else {sleep 0.5 - (time - _last)};
+	diag_virt = time - _last;
+	publicVariable "diag_virt";
 	_last = time;	
 	{
 		_id = _x select 0;

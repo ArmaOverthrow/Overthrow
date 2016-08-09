@@ -23,7 +23,7 @@ player setVariable ["owner",player,true];
 if(isMultiplayer) then {
 	titleText ["Waiting for server...", "BLACK FADED", 0];
 }else{
-	titleText ["Please wait...", "BLACK FADED", 0];
+	titleText ["Please wait... generating economy", "BLACK FADED", 0];
 };
 
 if !(isMultiplayer) then {
@@ -80,13 +80,11 @@ if(isMultiplayer) then {
 };
 
 if (_newplayer) then {
+	player setVariable ["rep",0,true];
 	{
 		player setVariable [format["rep%1",_x],0,true];
 	}foreach(AIT_allTowns);
 
-	AIT_stats = [] execVM "stats.sqf";
-
-	
 	_town = server getVariable "spawntown";
 	if(AIT_randomSpawnTown) then {
 		_town = AIT_spawnTowns call BIS_fnc_selectRandom;
@@ -117,8 +115,6 @@ if (_newplayer) then {
 	_house setVariable ["owner",player,true];
 	player setVariable ["home",_house,true];
 
-	hint "Welcome to Overthrow!\n\nOpen the map to find out where your house is, press the Y key to fast travel there or perform other actions.";
-
 	_furniture = (_house call spawnTemplate) select 0;
 	_house setVariable ["furniture",_furniture];
 	
@@ -139,32 +135,27 @@ if (_newplayer) then {
 	};
 }foreach(_furniture);
 
-_pos = [[[_housepos,50]]] call BIS_fnc_randomPos;
-player setCaptive true;
-player setPos _pos;
-titleText ["", "BLACK IN", 5];
-
-//put a marker on home
-_mrk = createMarker [format["home-%1",getPlayerUID player],_housepos];
-_mrk setMarkerShape "ICON";
-_mrk setMarkerType "loc_Tourism";
-_mrk setMarkerColor "ColorWhite";
-_mrk setMarkerAlpha 0;
-_mrk setMarkerAlphaLocal 1;
-
+_pos = _housepos;
 {
 	_x addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
 	_x setVariable ["owner",player,true];
 }foreach(_furniture);
 
+player setCaptive true;
+player setPos _pos;
+titleText ["", "BLACK IN", 5];
 
-player addEventHandler ["GetInMan", {
-	_veh = _this select 2;
-	_owner = _veh getvariable "owner";
-	if(isNil "_owner") then {
-		_veh setVariable ["owner",player,true];
-	};
-}];
+//put a marker on home
+_mrkName = format["home-%1",getPlayerUID player];
+if((markerpos _mrkName) select 0 == 0) then {
+	_mrkName = createMarker [_mrkName,_housepos];
+	_mrkName setMarkerShape "ICON";
+	_mrkName setMarkerType "loc_Tourism";
+	_mrkName setMarkerColor "ColorWhite";
+	_mrkName setMarkerAlpha 0;
+};
+_mrkName setMarkerAlphaLocal 1;
+
 
 if (isMultiplayer) then {
 	["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client

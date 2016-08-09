@@ -45,10 +45,6 @@ while{true} do {
 				_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];
 				
 				_civs pushback _shopkeeper;
-											
-				_all = server getVariable "activeshops";
-				_all pushback _shopkeeper;
-				server setVariable ["activeshops",_all,true];
 				
 				_wp = _group addWaypoint [_cashpos,2];
 				_wp setWaypointType "MOVE";

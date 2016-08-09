@@ -123,11 +123,11 @@ while{true} do {
 			_addnum = server getVariable format["crimadd%1",_town];
 			_current = server getVariable format["numcrims%1",_town];
 			if((typename "_newpos") == "ARRAY") then {
-				server setVariable [format["crimleader%1",_town],_newpos,true];	
-				server setVariable [format["crimnew%1",_town],false,true];
+				server setVariable [format["crimleader%1",_town],_newpos,false];	
+				server setVariable [format["crimnew%1",_town],false,false];
 			};
-			server setVariable [format["numcrims%1",_town],_current+_addnum,true];	
-			server setVariable [format["crimadd%1",_town],0,true];					
+			server setVariable [format["numcrims%1",_town],_current+_addnum,false];	
+			server setVariable [format["crimadd%1",_town],0,false];					
 		}
 	}else{
 		if (spawner getVariable _id) then {
@@ -147,10 +147,10 @@ while{true} do {
 					_groups pushback group(_new select 0);
 				};
 			};
-			server setVariable [format["crimnew%1",_town],false,true];
+			server setVariable [format["crimnew%1",_town],false,false];
 			_current = server getVariable format["numcrims%1",_town];
-			server setVariable [format["numcrims%1",_town],_current+_addnum,true];	
-			server setVariable [format["crimadd%1",_town],0,true];
+			server setVariable [format["numcrims%1",_town],_current+_addnum,false];	
+			server setVariable [format["crimadd%1",_town],0,false];
 		}else{			
 			_active = false;
 			//Tear it all down

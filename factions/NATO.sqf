@@ -15,7 +15,7 @@ _abandoned = [];
 		_abandoned pushback _x;
 	};
 }foreach (AIT_allTowns);
-server setVariable ["NATOabandoned",_abandoned,true];
+server setVariable ["NATOabandoned",_abandoned,false];
 
 {
 	_airports pushBack text _x;
@@ -41,7 +41,7 @@ server setVariable ["NATOabandoned",_abandoned,true];
 		if(_name in AIT_NATO_priority) then {
 			_garrison = floor(16 + random(8));
 		};
-		server setVariable [format ["garrison%1",_name],_garrison,true];
+		server setVariable [format ["garrison%1",_name],_garrison,false];
 		
 	};
 	if(_name == AIT_NATO_HQ) then {
@@ -59,7 +59,7 @@ server setVariable ["NATOabandoned",_abandoned,true];
 		
 	//_x setMarkerText format ["%1",_garrison];
 	_x setMarkerAlpha 0;
-	server setVariable [format ["garrison%1",_x],_garrison,true];
+	server setVariable [format ["garrison%1",_x],_garrison,false];
 	
 }foreach (AIT_NATO_control);
 
@@ -95,22 +95,22 @@ while {true} do {
 		if(_stability > 10 and !(_town in _abandoned)) then {
 			_max = round(_population / 40);
 			if(_max < 4) then {_max = 4};
-			_garrison = 4+round((1-(_stability / 100)) * _max);
+			_garrison = 2+round((1-(_stability / 100)) * _max);
 			if(_town in AIT_NATO_priority) then {
 				_garrison = round(_garrison * 2);
 			};
 			_need = _garrison - _current;
 			if(_need < 0) then {_need = 0};
 			if(_need > 1) then {				
-				server setVariable [format ["garrisonadd%1",_x], 2,true];
-				server setVariable [format ["garrison%1",_x],_current+2,true];
+				server setVariable [format ["garrisonadd%1",_x], 2,false];
+				server setVariable [format ["garrison%1",_x],_current+2,false];
 			};			
 		}else{
-			server setVariable [format ["garrison%1",_town],0,true];
+			server setVariable [format ["garrison%1",_town],0,false];
 			if(!(_town in _abandoned)) then {
 				format["NATO has abandoned %1",_town] remoteExec ["notify",0,true];
 				_abandoned pushback _town;
-				server setVariable ["NATOabandoned",_abandoned,true];
+				server setVariable ["NATOabandoned",_abandoned,false];
 			}
 		};
 		sleep 0.1;

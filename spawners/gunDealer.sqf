@@ -25,7 +25,7 @@ while{true} do {
 			if(isNil "_gundealerpos") then {
 				_building = (nearestObjects [_posTown, AIT_allHouses, 400]) call BIS_Fnc_selectRandom;
 				_gundealerpos = _building buildingPos 0;
-				server setVariable [format["gundealer%1",_town],_gundealerpos,true];
+				server setVariable [format["gundealer%1",_town],_gundealerpos,false];
 				_building setVariable ["owner",true,true];
 			};
 			_group = createGroup civilian;	

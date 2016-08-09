@@ -7,6 +7,7 @@ spawnTemplateAttached = compileFinal preProcessFileLineNumbers "funcs\spawnTempl
 inSpawnDistance = compileFinal preProcessFileLineNumbers "funcs\inSpawnDistance.sqf";
 nearestTown = compileFinal preProcessFileLineNumbers "funcs\nearestTown.sqf";
 getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
+getSellPrice = compileFinal preProcessFileLineNumbers "funcs\getSellPrice.sqf";
 canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
@@ -71,6 +72,8 @@ giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
 
 //Wanted System
 unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
+unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
+unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 
 //Key handler
@@ -91,7 +94,13 @@ standing = {
 	if(_rep > -1) then {
 		_plusmin = "+";
 	};
-	format["Standing (%3): %1%2",_plusmin,_rep,_town] call notify_minor;
+	_totalrep = (player getVariable "rep")+(_this select 1);
+	player setVariable ["rep",_totalrep,true];
+	_plusmintotal = "";
+	if(_totalrep > -1) then {
+		_plusmintotal = "+";
+	};
+	format["Standing (%3): %1%2<br/>Standing (Tanoa): %4%5",_plusmin,_rep,_town,_plusmintotal,_totalrep] call notify_minor;
 	
 };
 

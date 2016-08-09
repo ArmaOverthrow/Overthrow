@@ -25,7 +25,7 @@ while{true} do {
 		if (spawner getVariable _id) then {
 			_active = true;
 			//Spawn stuff in
-			
+			_count = 0;
 			_pop = server getVariable format["population%1",_town];
 			_stability = server getVariable format ["stability%1",_town];
 			_numVeh = 2;

@@ -26,7 +26,7 @@ while {true} do {
 	if (!_seeded) then {
 		//choose some random legal items
 		_seeded = true;
-		_numitems = floor(random 10) + 2;
+		_numitems = floor(random 6) + 4;
 		_count = 0;
 		
 		while {_count < _numitems} do {

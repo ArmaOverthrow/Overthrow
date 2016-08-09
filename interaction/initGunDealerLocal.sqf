@@ -32,7 +32,7 @@ _civ addAction ["Buy Weapon", {
 				_stock pushBack [_magazines select 0,2];				
 			};
 		};
-		server setVariable [format["gunstock%1",_town],_stock,true];
+		server setVariable [format["gunstock%1",_town],_stock,false];
 	};
 	
 	createDialog "AIT_dialog_buy";

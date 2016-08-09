@@ -8,6 +8,8 @@ _id = _this select 0;
 _posTown = _this select 1;
 _town = _this select 3;
 
+_shopkeeper = objNULL;
+
 _civs = []; //Stores all civs for tear down
 _groups = [];
 
@@ -22,45 +24,30 @@ while{true} do {
 			_active = true;
 			//Spawn stuff in
 			{
-				_s = _x getVariable "spawned";
-				if (isNil "_s") then {
-					_s = false;
-				};
-				if !(_s) then {
-					_building = _x;
-					_pos = getpos _building;
-					_x setVariable ["spawned",true,true];
-					_tracked = _building call spawnTemplate;
-					sleep 1;
-					_vehs = _tracked select 0;
-					[_civs,_vehs] call BIS_fnc_arrayPushStack;
-					
-					_cashdesk = _pos nearestObject AIT_item_ShopRegister;
-					_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
-					_pos = [[[_cashpos,50]]] call BIS_fnc_randomPos;
-					
-					_group = createGroup civilian;	
-					_group setBehaviour "CARELESS";
-					_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
-					_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];					
-					_civs pushback _shopkeeper;				
+				_building = _x;
+				_pos = getpos _building;
+				_tracked = _building call spawnTemplate;
+				sleep 1;
+				_vehs = _tracked select 0;
+				[_civs,_vehs] call BIS_fnc_arrayPushStack;
+				
+				_cashdesk = _pos nearestObject AIT_item_ShopRegister;
+				_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
+				_pos = [[[_cashpos,50]]] call BIS_fnc_randomPos;
+				
+				_group = createGroup civilian;	
+				_group setBehaviour "CARELESS";
+				_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
+				_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];					
+				_civs pushback _shopkeeper;				
 
-					_wp = _group addWaypoint [_cashpos,2];
-					_wp setWaypointType "MOVE";
-					_wp setWaypointSpeed "LIMITED";					
-					
-					_all = server getVariable "activecarshops";
-					_all pushback _shopkeeper;
-					server setVariable ["activecarshops",_all,true];
-					
-					AIT_activeCarShops pushBack _shopkeeper;
-	
-					_shopkeeper remoteExec ["initCarShopLocal",0,true];
-					[_shopkeeper] call initCarDealer;	
+				_wp = _group addWaypoint [_cashpos,2];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointSpeed "LIMITED";				
 
-				}
+				_shopkeeper remoteExec ["initCarShopLocal",0,true];
+				[_shopkeeper] call initCarDealer;	
 			}foreach(nearestObjects [_posTown, AIT_carShops, 600]);
-			publicVariable "AIT_activeCarShops";
 		};
 	}else{
 		if (spawner getVariable _id) then {
@@ -79,6 +66,7 @@ while{true} do {
 			}foreach(_groups);
 			_groups = [];
 			_civs = [];
+			
 		};
 	};
 	sleep 1;

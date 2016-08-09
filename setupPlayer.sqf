@@ -18,6 +18,7 @@ _timer = -1;
 player setVariable ["player_uid",getPlayerUID player];
 
 player spawn wantedSystem;
+[] execVM "stats.sqf";
 _closestcount = 0;
 
 while {true} do {

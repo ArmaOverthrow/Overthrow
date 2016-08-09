@@ -80,7 +80,7 @@ while{true} do {
 						_groups pushback (group _x);
 					};
 				}foreach(_new);
-				server setVariable[format ["garrisonadd%1",_town],_need-2,true];
+				server setVariable[format ["garrisonadd%1",_town],_need-2,false];
 			}			
 		}else{			
 			_active = false;

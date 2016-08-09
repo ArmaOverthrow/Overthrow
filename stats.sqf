@@ -14,7 +14,7 @@ _setText ctrlSetBackgroundColor [0,0,0,0];
 
 _currentTxt = "";
 
-while {showStatistics} do {
+while {alive player} do {
 	_wanted = "<br/>";
 	if !(captive player) then {
 		_hiding = player getVariable "hiding";

@@ -8,7 +8,7 @@ _standing = (player getVariable format['rep%1',_town]) * -1;
 _idx = lbCurSel 1500;
 _cls = lbData [1500,_idx];
 
-_price = [_town,_cls,_standing+40] call getPrice;
+_price = [_town,_cls,_standing] call getSellPrice;
 _done = false;
 
 _s = _b getVariable "stock";
@@ -52,7 +52,7 @@ _mystock = player call unitStock;
 {			
 	_cls = _x select 0;
 	_num = _x select 1;
-	_price = [_town,_cls,_standing+40] call getPrice;
+	_price = [_town,_cls,_standing] call getSellPrice;
 	
 	_s = _b getVariable "stock";
 	{

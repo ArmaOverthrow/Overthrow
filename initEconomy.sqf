@@ -2,9 +2,6 @@ if (!isServer) exitwith {};
 
 
 {_x setMarkerAlpha 0} foreach AIT_regions;
-server setVariable ["activeshops",[],true];
-server setVariable ["activecarshops",[],true];
-server setVariable ["activedealers",[],true];
 
 //automatically determining the population of each town/city on the map
 //For each city and/or town
@@ -47,12 +44,8 @@ server setVariable ["activedealers",[],true];
 	
 	//spawn any main shops
 	{
-		if((random 100) > 20) then {
-			_shops pushback (getpos _x);
-			[_x] spawn run_shop;
-			
-			AIT_activeShops pushBack _x;
-		}
+		_shops pushback _x;
+		[_x] spawn run_shop;	
 	}foreach(nearestObjects [_pos, AIT_shops, _mSize]);
 	
 	{
@@ -65,13 +58,13 @@ server setVariable ["activedealers",[],true];
 	_hugepop = round(count(_huge) * (count(_allshops))); 
 	
 	_pop = _lopop + _medpop + _highpop + _hugepop;
-	_base = 70 + count(_allshops);
+	_base = 60 + count(_allshops);
 	if(_base > 80) then {
 		_base = 80;
 	};
 	_stability = round(_base + random(20));
-	if((_pop < 40) and !(_name in AIT_NATO_priority) and !(_name in AIT_Capitals)) then {
-		_stability = floor(4 + random(50));
+	if((_pop < 40) and !(_name in AIT_NATO_priority) and !(_name in AIT_Capitals) and (_pos select 1 < 7000)) then {
+		_stability = floor(4 + random(30));
 	};
 	server setVariable [format["stability%1",_name],_stability,true];
 	_mrk = createMarker [_name,_pos];
@@ -84,10 +77,11 @@ server setVariable ["activedealers",[],true];
 	}else{
 		_mrk setMarkerAlpha 0;
 	};
+	
+	server setVariable [format["shopsin%1",_name],_shops,true];
 
 	_popVar=format["population%1",_name];
 	server setVariable [_popVar,_pop,true];
-	server setVariable [format["activeshops%1",_name],_shops,true];
 	
 	{
 		if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};

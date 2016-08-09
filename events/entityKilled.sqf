@@ -2,11 +2,11 @@
 
 _me = _this select 0;
 _killer = _this select 1;
+_killer setVariable ["lastkill",time,true];
 _town = (getpos _me) call nearestTown;
 
 if(isPlayer _me) exitWith {	
 	_myuid = getPlayerUID _me;
-	[-10] remoteExec ["money",_me,true];
 	{
 		_uid = _x getVariable "player_uid";
 		if(_uid == _myuid and _x != _me) then {
@@ -106,7 +106,6 @@ if(!isNil "_criminal") then {
 		};
 	};
 };
-
 if((isPlayer _killer) and (_standingChange != 0)) then {
 	[_town,_standingChange] remoteExec ["standing",_killer,true];
 };
