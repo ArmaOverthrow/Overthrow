@@ -24,6 +24,7 @@ initSecurity = compileFinal preProcessFileLineNumbers "AI\security.sqf";
 initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
 initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
 initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
+initCheckpoint = compileFinal preProcessFileLineNumbers "AI\checkpoint.sqf";
 initCriminal = compileFinal preProcessFileLineNumbers "AI\criminal.sqf";
 initCrimLeader = compileFinal preProcessFileLineNumbers "AI\crimLeader.sqf";
 initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
@@ -32,6 +33,7 @@ initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
+template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
 
 [] call compileFinal preProcessFileLineNumbers "funcs\dict.sqf";
 

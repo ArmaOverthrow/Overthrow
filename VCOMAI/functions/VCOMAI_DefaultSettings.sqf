@@ -23,7 +23,7 @@ VCOM_USESMOKE = true;
 //Chance of AI using grenades
 VCOM_GRENADECHANCE = 20;
 //Should the AI lay mines?
-VCOM_MineLaying = true;
+VCOM_MineLaying = false;
 //Chance of AI to lay a mine.
 VCOM_MineLayChance = 40;
 

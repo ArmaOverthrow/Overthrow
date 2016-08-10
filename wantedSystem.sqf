@@ -65,8 +65,9 @@ while {alive _unit} do {
 				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {				
 					_unit setCaptive false;	
 					{
-						if((side _x == east) and (_x distance _unit < 200)) then {
-							_x reveal [_unit,1.5];					
+						if(side _x == east) then {
+							_x reveal [_unit,1.5];		
+							sleep 0.4;
 						};
 					}foreach(player nearentities ["Man",200]);
 				};
@@ -80,15 +81,16 @@ while {alive _unit} do {
 				if(random 250 < _totalrep) then {
 					_unit setCaptive false;
 					"NATO has recognized you" call notify_minor;
-				};
-			}else{
-				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {				
-					_unit setCaptive false;	
-					{
-						if((side _x == west) and (_x distance _unit < 800)) then {
-							_x reveal [_unit,1.5];					
-						};
-					}foreach(player nearentities ["Man",800]);
+				}else{			
+					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {				
+						_unit setCaptive false;	
+						{
+							if(side _x == west) then {
+								_x reveal [_unit,1.5];
+								sleep 0.2;								
+							};
+						}foreach(player nearentities ["Man",800]);
+					};
 				};
 			};
 		};

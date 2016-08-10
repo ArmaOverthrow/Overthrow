@@ -52,9 +52,9 @@ server setVariable ["NATOabandoned",_abandoned,false];
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameLocal","Airport"], 50000]);
 
 {
-	_garrison = floor(4 + random(4));
+	_garrison = floor(8 + random(6));
 	if(_x in AIT_NATO_priority) then {
-		_garrison = floor(16 + random(8));
+		_garrison = floor(12 + random(6));
 	};
 		
 	//_x setMarkerText format ["%1",_garrison];

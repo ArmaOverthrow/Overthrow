@@ -40,6 +40,12 @@ if(AIT_hasAce) then {
 AIT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F"];
 AIT_illegalVests = ["V_TacVest_gen_F"];
 
+if(AIT_hasAce) then {
+	AIT_illegalItems = ["ACE_morphine","ACE_epinephrine","ACE_adenosine"];
+}else{
+	AIT_illegalItems = [];
+};
+
 //Player items
 AIT_item_Main = "Land_Laptop_unfolded_F"; //object for main interactions at owned houses
 AIT_item_Secondary = "Land_PortableLongRangeRadio_F"; //object for secondary interactions at owned houses (not used yet, may be a mid game thing)
@@ -57,6 +63,8 @@ AIT_item_Repair = "Land_ToolTrolley_02_F";
 AIT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
 
+AIT_staticMachineGuns = ["B_HMG_01_high_F"];
+
 AIT_clothes_locals = ["CUP_U_I_GUE_Anorak_01","CUP_U_I_GUE_Anorak_02","CUP_U_I_GUE_Anorak_03","U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
 AIT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
 AIT_clothes_tourists = [];
@@ -69,7 +77,7 @@ AIT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C
 AIT_NATOregion = "island_5"; //where NATO lives
 AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port","fuel depot","railway depot"]; //NameLocal/Airport place names to definitely occupy with military personnel
 AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
-AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6"]; //NATO checkpoints, create markers in editor
+AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6","control_7","control_8","control_9","control_10","control_11","control_12","control_13","control_14","control_15","control_16","control_17"]; //NATO checkpoints, create markers in editor
 AIT_NATO_HQ = "Tuvanaka Airbase";
 AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
