@@ -30,7 +30,7 @@ while {true} do {
 		_count = 0;
 		
 		while {_count < _numitems} do {
-			_item = (AIT_allItems) call BIS_Fnc_selectRandom;
+			_item = (AIT_allItems - AIT_illegalItems) call BIS_Fnc_selectRandom;
 			if!(_item in _itemsToStock) then {
 				_itemsToStock pushback _item;
 				_count = _count + 1;

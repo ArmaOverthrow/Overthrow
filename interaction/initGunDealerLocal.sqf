@@ -1,13 +1,13 @@
 _civ = _this;
 
-_civ addAction ["Buy Weapon", {	
+_civ addAction ["Buy", {	
 	_town = (getpos player) call nearestTown; 
 
 	_stock = server getVariable format["gunstock%1",_town];
 	if(isNil "_stock") then {
 		_basic = cost getVariable AIT_item_BasicGun;
 		_stock = [[AIT_item_BasicGun,(_basic select 0) + round(random 12)]];
-		_numguns = round(random 5)+1;
+		_numguns = round(random 5)+3;
 		_count = 0;
 		_tostock = [AIT_item_BasicGun];
 		
@@ -33,6 +33,12 @@ _civ addAction ["Buy Weapon", {
 			};
 		};
 		server setVariable [format["gunstock%1",_town],_stock,false];
+		
+		{
+			_cost = cost getVariable _x;
+			_price = round((_cost select 0) * ((random 1) + 1));
+			_stock pushBack [_x,_price];
+		}foreach(AIT_illegalItems);
 	};
 	
 	createDialog "AIT_dialog_buy";

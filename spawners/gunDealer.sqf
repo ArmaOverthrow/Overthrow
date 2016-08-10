@@ -23,8 +23,8 @@ while{true} do {
 			//Spawn stuff in
 			_gundealerpos = server getVariable format["gundealer%1",_town];
 			if(isNil "_gundealerpos") then {
-				_building = (nearestObjects [_posTown, AIT_allHouses, 400]) call BIS_Fnc_selectRandom;
-				_gundealerpos = _building buildingPos 0;
+				_building = [_posTown,AIT_gunDealerHouses] call getRandomBuilding;
+				_gundealerpos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
 				server setVariable [format["gundealer%1",_town],_gundealerpos,false];
 				_building setVariable ["owner",true,true];
 			};
@@ -36,12 +36,8 @@ while{true} do {
 			_pos = [[[_gundealerpos,50]]] call BIS_fnc_randomPos;
 			_dealer = _group createUnit [_type, _pos, [],0, "NONE"];
 			_civs pushBack _dealer;
-			
-			_all = server getVariable "activedealers";
-			_all pushback _dealer;
-			server setVariable ["activedealers",_all,true];
-			
-			_wp = _group addWaypoint [_gundealerpos,5];
+						
+			_wp = _group addWaypoint [_gundealerpos,0];
 			_wp setWaypointType "MOVE";
 			_wp setWaypointSpeed "LIMITED";
 

@@ -255,7 +255,7 @@ AIT_sprawling = ["Blue Pearl industrial port"];
 
 AIT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_House_Small_04_F"]; //buildings that rich guys like to live in
 
-AIT_gunDealerHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_GarageShelter_01_F","Land_House_Small_05_F"];//houses where gun dealers will spawn
+AIT_gunDealerHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_GarageShelter_01_F","Land_House_Small_05_F","Land_House_Native_02_F"];//houses where gun dealers will spawn
 
 AIT_crimHouses = AIT_spawnHouses + AIT_gunDealerHouses + AIT_mansions;
 

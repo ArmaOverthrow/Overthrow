@@ -30,7 +30,7 @@ _shopkeeper addAction ["Sell", {
 	createDialog "AIT_dialog_sell";
 	{			
 		_cls = _x select 0;
-		if(_cls in AIT_allItems) then {
+		if!(_cls in AIT_allMagazines + AIT_illegalItems + AIT_illegalHeadgear + AIT_illegalVests + AIT_allWeapons) then {
 			_num = _x select 1;			
 			_price = [_town,_cls,_standing] call getSellPrice;
 			_mynum = 0;
@@ -69,16 +69,22 @@ _shopkeeper addAction ["Ask about weapons", {
 	_me removeAction 2;
 	
 	_town = (getpos player) call nearestTown;	
-	_standing = (player getVariable format['rep%1',_town]);
+	_pos = server getVariable [format["gundealer%1",_town],false];
+	
+	if(typename _pos != "ARRAY") exitWith {
+		"Not in this town, I'm sorry" call notify_talk;
+	};
+	
+	_standing = player getVariable 'rep';
 	_ok = false;
 	
 	if(_standing > -20) then {
-		_ok = (random 100) > (80 - _standing);		
+		_ok = (random 100) > (60 - _standing);		
 	};
 	
 	if(_ok) then {
-		"I have heard about a guy that sells guns, I'll mark it on your map" call notify_talk;
-		_pos = server getVariable format["gundealer%1",_town];
+		"Sure, I can hook you up with a guy. I'll mark him on your map." call notify_talk;
+
 		_mrk = createMarkerLocal [format["gundealer%1",_town],_pos];
 		_mrk setMarkerType "hd_objective";
 		_mrk setMarkerColor "ColorWhite";
@@ -90,7 +96,7 @@ _shopkeeper addAction ["Ask about weapons", {
 			"I don't think I should be telling someone like you that" call notify_talk;
 		}else{
 			if(_standing < 20) then {
-				"I'm sorry, who are you?" call notify_talk;
+				"No idea what you're talking about" call notify_talk;
 			}else{
 				"With all due respect, I must decline" call notify_talk;
 			}

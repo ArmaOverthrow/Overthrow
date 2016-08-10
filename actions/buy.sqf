@@ -70,9 +70,12 @@ if(_cls in AIT_allVehicles) then {
 			}else{
 				if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor};
 			};
-			
+			if (_cls in AIT_illegalItems) exitWith {
+				player setVariable ["money",_money-_price,true];
+				player addItem _cls;
+			};
 			_done = false;
-			_soldout = false;
+			_soldout = false;			
 			_stockidx = 0;
 			{	
 				if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
@@ -84,7 +87,7 @@ if(_cls in AIT_allVehicles) then {
 					_done = true;
 				};
 				_stockidx = _stockidx + 1;
-			}foreach(_s);
+			}foreach(_s);	
 
 			if(_done) then {	
 				if(_soldout) then {

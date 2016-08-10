@@ -5,7 +5,7 @@ if (!isServer) exitwith {};
 
 //automatically determining the population of each town/city on the map
 //For each city and/or town
-
+AIT_activeShops = [];
 {
 	_name = text _x;// Get name
 	
@@ -45,7 +45,8 @@ if (!isServer) exitwith {};
 	//spawn any main shops
 	{
 		_shops pushback _x;
-		[_x] spawn run_shop;	
+		[_x] spawn run_shop;
+		AIT_activeShops pushback _x;
 	}foreach(nearestObjects [_pos, AIT_shops, _mSize]);
 	
 	{

@@ -4,6 +4,7 @@ _unit = _this select 0;
 _cls = _this select 1;
 
 _mass = getNumber(configfile >> "CfgWeapons" >> _cls >> "ItemInfo" >> "Mass");
+
 _totalfit = 0;
 _uniform = uniform _unit;
 _vest = vest _unit;
