@@ -14,14 +14,15 @@ AIT_standardMarkup = 0.2; //Markup in shops is calculated from this
 AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 
-AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
+//AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
+AIT_spawnTowns = ["Balavu"];
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-AIT_NATOwait = 500; //Half the Average time between NATO orders
-AIT_CRIMwait = 300; //Half the Average time between crim changes
+AIT_NATOwait = 20; //Half the Average time between NATO orders
+AIT_CRIMwait = 200; //Half the Average time between crim changes
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
-AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan","C_man_p_beggar_F_afro","C_Man_casual_1_F_afro","C_Man_casual_3_F_afro","C_man_sport_1_F_afro","C_man_sport_3_F_afro","C_Man_casual_4_F_afro","C_Man_casual_5_F_afro","C_Man_casual_6_F_afro","C_man_polo_1_F_afro","C_man_polo_2_F_afro","C_man_polo_3_F_afro","C_man_polo_4_F_afro","C_man_polo_5_F_afro","C_man_polo_6_F_afro","C_man_shorts_1_F_afro"];
+AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan"];
 AIT_civTypes_expats = ["CUP_C_C_Citizen_02","CUP_C_C_Citizen_01","CUP_C_C_Citizen_04","CUP_C_C_Citizen_03","CUP_C_C_Rocker_01","CUP_C_C_Rocker_03","CUP_C_C_Rocker_02","CUP_C_C_Rocker_04","C_man_p_beggar_F","C_man_1","C_Man_casual_1_F","C_Man_casual_2_F","C_Man_casual_3_F","C_man_sport_1_F","C_man_sport_2_F","C_man_sport_3_F","C_Man_casual_4_F","C_Man_casual_5_F","C_Man_casual_6_F","C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_man_shorts_1_F","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_p_beggar_F_asia","C_Man_casual_1_F_asia","C_Man_casual_2_F_asia","C_Man_casual_3_F_asia","C_man_sport_1_F_asia","C_man_sport_2_F_asia","C_man_sport_3_F_asia","C_Man_casual_4_F_asia","C_Man_casual_5_F_asia","C_Man_casual_6_F_asia","C_man_polo_1_F_asia","C_man_polo_2_F_asia","C_man_polo_3_F_asia","C_man_polo_4_F_asia","C_man_polo_5_F_asia","C_man_polo_6_F_asia","C_man_shorts_1_F_asia"];
 AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F","C_man_shorts_2_F_afro","C_man_shorts_3_F_afro","C_man_shorts_4_F_afro","C_man_shorts_2_F_asia","C_man_shorts_3_F_asia","C_man_shorts_4_F_asia","C_man_shorts_2_F_euro","C_man_shorts_3_F_euro","C_man_shorts_4_F_euro"];
 AIT_civType_worker = "C_man_w_worker_F";
@@ -80,6 +81,7 @@ AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port","fuel de
 AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
 AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6","control_7","control_8","control_9","control_10","control_11","control_12","control_13","control_14","control_15","control_16","control_17"]; //NATO checkpoints, create markers in editor
 AIT_NATO_HQ = "Tuvanaka Airbase";
+AIT_NATO_AirSpawn = "NATO_airspawn";
 AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
@@ -89,6 +91,10 @@ AIT_NATO_Vehicle_Quad = "B_Quadbike_01_F";
 AIT_NATO_Vehicle_Police = "B_GEN_Offroad_01_gen_F";
 AIT_NATO_Vehicle_Transport = "B_T_Truck_01_transport_F";
 AIT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
+AIT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
+AIT_NATO_Vehicles_AirSupport = ["B_Heli_Light_01_armed_F","B_Heli_Light_01_armed_F"];
+AIT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
+AIT_NATO_Vehicle_AirTransport = "B_Heli_Transport_03_F";
 
 AIT_NATO_Unit_PoliceHeliPilot = "B_T_HeliPilot_F";
 AIT_NATO_Unit_PoliceHeliCoPilot = "B_T_Helicrew_F";
@@ -98,6 +104,8 @@ AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Sol
 
 AIT_NATO_weapons_Police = ["SMG_01_F","SMG_02_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_MX_Black_F","arifle_Katiba_F","srifle_EBR_F","srifle_DMR_01_F"];
 AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
+
+
 
 //Criminal stuff
 AIT_CRIM_Units_Bandit = ["I_C_Soldier_Bandit_1_F","I_C_Soldier_Bandit_2_F","I_C_Soldier_Bandit_3_F","I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_5_F","I_C_Soldier_Bandit_6_F","I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_8_F"];

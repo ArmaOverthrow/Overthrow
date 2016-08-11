@@ -20,7 +20,7 @@ _price = 0;
 			_standing = ((_standing/100) * -1)+1;
 		};		
 				
-		_baseprice = 100;
+		_baseprice = 400;
 		_type = typeof _x;
 		if !(_type in AIT_spawnHouses) then {
 			if(_type in AIT_mansions) then {_baseprice = 25000}else{

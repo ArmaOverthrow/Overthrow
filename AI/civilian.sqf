@@ -1,4 +1,4 @@
-private ["_unit","_group","_hour","_home","_onCivKilled","_onCivFiredNear","_hometown"];
+private ["_unit","_group","_clothes"];
 
 _unit = _this select 0;
 
@@ -8,8 +8,6 @@ removeGoggles _unit;
 removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
-
-(group _unit) allowFleeing 1;
 
 _clothes = AIT_clothes_locals;
 

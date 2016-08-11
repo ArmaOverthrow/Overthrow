@@ -43,7 +43,7 @@ if(!isNil "_criminal") then {
 			};
 		};
 		
-		_standingChange = 10;
+		_standingChange = 5;
 		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
 		if(_bounty > 0) then {
 			if(isPlayer _killer) then {
@@ -71,7 +71,9 @@ if(!isNil "_criminal") then {
 			if(_garrison in AIT_allTowns) then {
 				_town = _garrison;
 			};
-			[_town,-2] call stability;
+			if((random 100) > 50) then {
+				[_town,-2] call stability;
+			};
 			_standingChange = -1;
 			if((_killer call unitSeen) || ((vehicle _killer) != _killer)) then {		
 				if(_killer call hasOwner) then {
@@ -89,7 +91,11 @@ if(!isNil "_criminal") then {
 				};
 			};
 		}else{
-			[_town,-1] call stability;
+			if(!isPlayer _me) then {
+				if((random 100) > 80) then {
+					[_town,-1] call stability;
+				};
+			};
 			if(_killer call hasOwner) then {
 				_killer setCaptive false;
 				_owner = _killer getVariable "owner";

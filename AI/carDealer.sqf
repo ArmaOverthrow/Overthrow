@@ -1,4 +1,4 @@
-private ["_unit","_group","_hour","_home","_onCivKilled","_onCivFiredNear","_hometown"];
+private ["_unit","_group","_home"];
 
 _unit = _this select 0;
 
@@ -16,10 +16,7 @@ _unit setVariable ["NOAI",true,false];
 _unit forceAddUniform (AIT_clothes_carDealers call BIS_fnc_selectRandom);
 
 _group = group _unit;
-_hour = date select 3;
 _home = nearestBuilding _unit;
-_hometown = (getpos _unit) call nearestTown;
-
 _group setBehaviour "CARELESS";
 
 _unit setvariable ["owner","self"];

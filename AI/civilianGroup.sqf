@@ -1,3 +1,5 @@
+private ["_group","_home","_pos","_start","_wp","_buildings","_idx","_end"];
+
 _group = _this select 0;
 _home = _this select 1;
 _pos = getpos _home;

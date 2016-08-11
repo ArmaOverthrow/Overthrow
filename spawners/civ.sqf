@@ -1,4 +1,4 @@
-private ["_id","_params","_town","_posTown","_active","_groups","_civs","_numCiv","_shops","_houses","_stability","_pop","_count","_mSize","_civTypes","_hour","_range","_found"];
+private ["_id","_params","_town","_posTown","_active","_groups","_numCiv","_shops","_houses","_stability","_pop","_count","_mSize","_civTypes","_hour","_range","_found","_lights"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -7,8 +7,6 @@ _count = 0;
 _id = _this select 0;
 _town = _this select 3;
 _groups = [];
-
-_civs = []; //Stores all civs for tear down
 _lights = [];
 waitUntil{spawner getVariable _id};
 
@@ -68,8 +66,7 @@ while{true} do {
 					
 					_civ = _group createUnit [_civTypes call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
-					[_civ] call initCivilian;
-					_civs pushBack _civ;				
+					[_civ] call initCivilian;		
 					_count = _count + 1;
 					_groupcount = _groupcount + 1;
 				};
@@ -87,9 +84,11 @@ while{true} do {
 			};
 			
 			sleep 1;
-			{
-				_x setDamage 0;				
-			}foreach(_civs);			
+			{	
+				{					
+					_x setDamage 0;							
+				}foreach(units _x);							
+			}foreach(_groups);		
 		};
 	}else{
 		if (spawner getVariable _id) then {
@@ -98,19 +97,17 @@ while{true} do {
 		}else{		
 			_active = false;
 			//Tear it all down
-			{
-				if !(_x call hasOwner) then {
-					deleteVehicle _x;
-				};				
-			}foreach(_civs);
-			{				
+			{	
+				{					
+					deleteVehicle _x;							
+				}foreach(units _x);
 				deleteGroup _x;								
 			}foreach(_groups);
 			{
 				deleteVehicle _x;						
 			}foreach(_lights);
-			_civs = [];
 			_groups = [];
+			_lights = [];
 		};
 	};
 	sleep 1;

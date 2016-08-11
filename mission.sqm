@@ -5,25 +5,25 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=10;
+	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=1155;
+		nextID=1208;
 	};
 	class MarkerIDProvider
 	{
-		nextID=19;
+		nextID=20;
 	};
 	class LayerIndexProvider
 	{
-		nextID=27;
+		nextID=35;
 	};
 	class Camera
 	{
-		pos[]={7074.999,3.6370528,7852.1489};
-		dir[]={0.91494393,-0.2274608,0.33348534};
-		up[]={0.2137378,0.9737739,0.077905409};
-		aside[]={0.34245875,-9.2849223e-007,-0.93957019};
+		pos[]={1844.5958,15.455083,13006.605};
+		dir[]={0.17118716,-0.23514293,-0.9568848};
+		up[]={0.041432921,0.97189021,-0.23159163};
+		aside[]={-0.98449594,7.1051909e-007,-0.17612219};
 	};
 };
 binarizationWanted=0;
@@ -36,14 +36,13 @@ addons[]=
 	"A3_Characters_F",
 	"A3_Weapons_F_Items",
 	"ace_medical",
-	"A3_Boat_F_Boat_Transport_01",
 	"A3_Modules_F_Curator_Curator"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=8;
+		items=7;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -85,13 +84,6 @@ class AddonsMetaData
 			url="http://ace3mod.com/";
 		};
 		class Item6
-		{
-			className="A3_Boat_F";
-			name="Arma 3 Alpha - Boats and Submersibles";
-			author="Bohemia Interactive";
-			url="http://www.arma3.com";
-		};
-		class Item7
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
@@ -382,10 +374,10 @@ class Mission
 		briefingName="Overthrow.Tanoa";
 		resistanceWest=0;
 		timeOfChanges=28800;
-		startWeather=0.46667755;
+		startWeather=0.32089308;
 		startWind=0;
 		startWaves=0.16261242;
-		forecastWeather=0.33755392;
+		forecastWeather=0.15844722;
 		forecastWind=0;
 		forecastWaves=0;
 		rainForced=1;
@@ -395,7 +387,7 @@ class Mission
 		year=2015;
 		month=6;
 		day=1;
-		hour=9;
+		hour=15;
 		minute=0;
 		startFogBase=250;
 		forecastFogBase=250;
@@ -561,7 +553,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=24;
+		items=23;
 		class Item0
 		{
 			dataType="Logic";
@@ -2378,40 +2370,6 @@ class Mission
 		};
 		class Item19
 		{
-			dataType="Object";
-			class PositionInfo
-			{
-				position[]={1308.7429,1.2446525,3062.2075};
-				angles[]={0,3.8859301,0};
-			};
-			side="Empty";
-			flags=4;
-			class Attributes
-			{
-			};
-			id=1105;
-			type="C_Rubberboat";
-			atlOffset=0.10072573;
-		};
-		class Item20
-		{
-			dataType="Object";
-			class PositionInfo
-			{
-				position[]={5905.1206,1.2446525,13001.596};
-				angles[]={0,5.1089082,0};
-			};
-			side="Empty";
-			flags=4;
-			class Attributes
-			{
-			};
-			id=1106;
-			type="C_Rubberboat";
-			atlOffset=0.12588868;
-		};
-		class Item21
-		{
 			dataType="Marker";
 			position[]={1047.865,-2.3575253e-021,2888.092};
 			name="blacklist_1";
@@ -2423,7 +2381,7 @@ class Mission
 			id=1129;
 			atlOffset=-67.583504;
 		};
-		class Item22
+		class Item20
 		{
 			dataType="Layer";
 			name="NATO Checkpoints";
@@ -2601,7 +2559,7 @@ class Mission
 			id=1139;
 			atlOffset=-48.982059;
 		};
-		class Item23
+		class Item21
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -2709,6 +2667,16 @@ class Mission
 				};
 				nAttributes=5;
 			};
+		};
+		class Item22
+		{
+			dataType="Marker";
+			position[]={1839.431,-2.1247401e-014,12996.61};
+			name="NATO_airspawn";
+			type="mil_box";
+			alpha=0;
+			id=1196;
+			atlOffset=-13.45;
 		};
 	};
 };

@@ -1,3 +1,5 @@
+private ["_unit","_town"];
+
 _unit = _this select 0;
 _town = _this select 1;
 

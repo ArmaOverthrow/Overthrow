@@ -1,4 +1,4 @@
-private ["_id","_town","_posTown","_active","_groups","_police","_numNATO","_pop","_count","_range"];
+private ["_id","_town","_posTown","_active","_groups","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -9,7 +9,6 @@ _posTown = _this select 1;
 _town = _this select 3;
 
 _groups = [];
-_police = []; //Stores all civs for tear down
 
 waitUntil{spawner getVariable _id};
 
@@ -36,7 +35,7 @@ while{true} do {
 				_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
 				_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 				_civ setVariable ["garrison",_town,true];
-				_police pushBack _civ;
+
 				_civ setRank "CORPORAL";
 				_civ setBehaviour "SAFE";
 				[_civ,_town] call initPolice;
@@ -48,7 +47,7 @@ while{true} do {
 					
 					_civ = _group createUnit [AIT_NATO_Unit_Police, _pos, [],0, "NONE"];
 					_civ setVariable ["garrison",_town,true];
-					_police pushBack _civ;
+
 					_civ setRank "PRIVATE";
 					[_civ,_town] call initPolice;
 					_civ setBehaviour "SAFE";
@@ -59,13 +58,20 @@ while{true} do {
 				_group call initPolicePatrol;				
 				_range = _range + 50;
 			};
+			
 			{
-				_x addCuratorEditableObjects [_police,true];
+				_cur = _x;
+				{	
+					_cur addCuratorEditableObjects [(units _x),true];				
+				}foreach(_groups);				
 			} forEach allCurators;
+			
 			sleep 1;
-			{
-				_x setDamage 0;
-			}foreach(_police);			
+			{	
+				{					
+					_x setDamage 0;							
+				}foreach(units _x);							
+			}foreach(_groups);		
 		};
 	}else{
 		if (spawner getVariable _id) then {
@@ -74,7 +80,6 @@ while{true} do {
 			_need = server getVariable format ["garrisonadd%1",_town];			
 			if(_need > 1) then {
 				_new = _town call reGarrisonTown;
-				[_police,_new] call BIS_fnc_arrayPushStack;
 				{
 					if !(group _x in _groups) then {
 						_groups pushback (group _x);
@@ -85,13 +90,13 @@ while{true} do {
 		}else{			
 			_active = false;
 			//Tear it all down
-			{				
-				deleteVehicle _x;			
-			}foreach(_police);
-			{				
-				deleteGroup _x;			
+			{	
+				{					
+					deleteVehicle _x;							
+				}foreach(units _x);
+				deleteGroup _x;								
 			}foreach(_groups);
-			_police = [];
+			_groups = [];
 		};
 	};
 	sleep 1;

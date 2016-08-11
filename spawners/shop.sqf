@@ -1,4 +1,4 @@
-private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper"];
+private ["_id","_pos","_building","_tracked","_vehs","_group","_all","_shopkeeper","_groups"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -11,8 +11,8 @@ _building = _this select 3;
 
 _hour = date select 3;
 
-_civs = []; //Stores all civs for tear down
 _groups = [];
+_vehs = [];
 
 waitUntil{spawner getVariable _id};
 
@@ -28,7 +28,6 @@ while{true} do {
 			_tracked = _building call spawnTemplate;
 			sleep 1;
 			_vehs = _tracked select 0;
-			[_civs,_vehs] call BIS_fnc_arrayPushStack;
 			
 			_cashdesk = _pos nearestObject AIT_item_ShopRegister;
 			_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
@@ -44,7 +43,6 @@ while{true} do {
 				_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
 				_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];
 				_shopkeeper setVariable ["shop",_building,true];
-				_civs pushback _shopkeeper;
 				
 				_wp = _group addWaypoint [_cashpos,2];
 				_wp setWaypointType "MOVE";
@@ -60,7 +58,7 @@ while{true} do {
 					_light setLightBrightness 0.11;
 					_light setLightAmbient[.9, .9, .6];
 					_light setLightColor[.5, .5, .4];
-					_civs pushback _light;				
+					_vehs pushback _light;				
 				};
 			};
 		};
@@ -74,12 +72,15 @@ while{true} do {
 			//Tear it all down
 			{
 				deleteVehicle _x;		
-			}foreach(_civs);
-			{
-				deleteGroup _x;
+			}foreach(_vehs);
+			{	
+				{					
+					deleteVehicle _x;							
+				}foreach(units _x);
+				deleteGroup _x;								
 			}foreach(_groups);
 			_groups = [];
-			_civs = [];
+			_vehs = [];
 		};
 	};
 	sleep 0.5;

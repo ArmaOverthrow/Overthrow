@@ -16,6 +16,7 @@ getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRan
 getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
+eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
@@ -31,6 +32,9 @@ initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
+
+//QRF
+NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -80,6 +84,9 @@ wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
+
+//Addons
+[] execVM "SHK_pos\shk_pos_init.sqf";
 
 setupKeyHandler = {
 	waitUntil {!(isnull (findDisplay 46))};

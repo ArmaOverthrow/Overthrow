@@ -1,4 +1,4 @@
-private ["_town","_unit","_numweap","_skill","_unit","_magazine","_weapon","_onCivKilled","_onCivFiredNear","_handleDmg"];
+private ["_town","_unit","_numweap","_skill","_unit","_magazine","_weapon","_stability","_idx"];
 
 _unit = _this select 0;
 
@@ -21,23 +21,8 @@ if(_stability < 40) then {
 if(_stability < 30) then {
 	_skill = 0.9;
 };
-_unit setSkill _skill;
 
 removeAllWeapons _unit;
-removeAllAssignedItems _unit;
-removeGoggles _unit;
-removeBackpack _unit;
-
-_unit linkItem "ItemMap";
-_unit linkItem "ItemCompass";
-_unit linkItem "ItemRadio";
-
-if(AIT_hasAce) then {
-	_unit addItemToVest "ACE_fieldDressing";
-	_unit addItemToVest "ACE_fieldDressing";
-}else{
-	_unit addItemToVest "FirstAidKit";
-};
 
 _numweap = (count AIT_NATO_weapons_Police)-1;
 _idx = _numweap - 4;
@@ -54,13 +39,9 @@ if(_skill > 0.8) then {
 	if(AIT_hasAce) then {
 		_unit addItemToUniform "ACE_rangeCard";
 	};
-}else{
-	_unit addWeapon "Binoculars";
+}else{	
 	if(_skill > 0.7) then {
 		_idx = _numweap - 2;
-		_unit addItemToVest "HandGrenade";
-		_unit linkItem "ItemWatch";
-		_unit addGoggles "G_Aviator";
 	}else{
 		if(_skill > 0.6) then {
 			_idx = _numweap - 3;

@@ -4,12 +4,11 @@ diag_virt = 0;
 publicVariable "diag_virt";
 
 AIT_spawnUniqueCounter = -1;
-publicVariable "AIT_spawnUniqueCounter";
 
 AIT_allspawners = [];
-publicVariable "AIT_allspawners";
 
 AIT_fnc_registerSpawner = {
+	private ["_pos","_code","_params","_start","_end","_id"];
 	_pos = _this select 0;
 	_code = _this select 1;
 	_params = [];
@@ -18,7 +17,6 @@ AIT_fnc_registerSpawner = {
 	};
 	_start = [];
 	_end = [];
-	_same = true;
 	if((count _pos) == 2) then {
 		_start = _pos select 0;
 		_end = _pos select 1;		
@@ -28,9 +26,8 @@ AIT_fnc_registerSpawner = {
 	};
 		
 	AIT_spawnUniqueCounter = AIT_spawnUniqueCounter + 1;
-	publicVariable "AIT_spawnUniqueCounter";
+
 	_id = format["spawn%1",AIT_spawnUniqueCounter];
-	publicVariable "AIT_spawnUniqueCounter";
 	
 	spawner setvariable [_id,false,true];
 	AIT_allspawners pushBack [_id,_start,_end];

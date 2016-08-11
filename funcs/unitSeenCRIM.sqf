@@ -3,7 +3,7 @@ _unit = _this;
 _ret = false;
 {
 	if(side _x == east) then {
-		if((_x distance _unit) < 35) then {
+		if((_x distance _unit) < 5) then {
 			_ret = true;
 		}else{
 			_know = _x targetKnowledge _unit;

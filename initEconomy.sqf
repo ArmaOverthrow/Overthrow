@@ -1,5 +1,5 @@
 if (!isServer) exitwith {};
-
+private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos","_lopop","_medpop","_hipop","_hugepop","_pop","_base","_stability","_mrk","_region","_popVar","_towns"];
 
 {_x setMarkerAlpha 0} foreach AIT_regions;
 

@@ -71,7 +71,7 @@ server setVariable ["NATOabandoned",_abandoned,false];
 	if(_stability > 10) then {
 		_max = round(_population / 30);
 		if(_max < 4) then {_max = 4};
-		_garrison = 6+round((1-(_stability / 100)) * _max);
+		_garrison = 2+round((1-(_stability / 100)) * _max);
 		if(_town in AIT_NATO_priority) then {
 			_garrison = round(_garrison * 2);
 		};
@@ -86,7 +86,8 @@ publicVariable "AIT_NATOInitDone";
 sleep 10;
 
 while {true} do {	
-	{	
+	_abandoned = server getVariable "NATOabandoned";
+	{		
 		_town = _x;
 		_townPos = server getVariable _town;
 		_current = server getVariable format ["garrison%1",_town];;	
@@ -108,7 +109,7 @@ while {true} do {
 		}else{
 			server setVariable [format ["garrison%1",_town],0,false];
 			if(!(_town in _abandoned)) then {
-				format["NATO has abandoned %1",_town] remoteExec ["notify",0,true];
+				_town spawn NATOattack;				
 				_abandoned pushback _town;
 				server setVariable ["NATOabandoned",_abandoned,false];
 			}

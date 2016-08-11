@@ -1,13 +1,11 @@
+private ["_leader","_bounty","_time","_stability","_newbounty","_current"];
+
 if !(isServer) exitWith {};
-private ["_current"];
-server setVariable ["bounties",[],true];
 
 {
 	server setVariable [format["CRIMbounty%1",_x],0,true];	
 	server setVariable [format["NATObounty%1",_x],0,true];
 }foreach(AIT_allTowns);
-
-_current = [];
 
 while {true} do {
 	{
