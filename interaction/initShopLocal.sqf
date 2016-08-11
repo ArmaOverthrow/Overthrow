@@ -1,7 +1,8 @@
 _shopkeeper = _this;
 
 _shopkeeper addAction ["Buy", {
-	_b = nearestBuilding getPos player;
+	_civ = _this select 0;	
+	_b = _civ getVariable "shop";
 	_s = _b getVariable "stock";
 	_town = (getpos player) call nearestTown;
 	_standing = player getVariable format['rep%1',_town];
@@ -23,10 +24,12 @@ _shopkeeper addAction ["Buy", {
 },_shopkeeper,1.5,false,true,"","",5];
 
 _shopkeeper addAction ["Sell", {
-	_b = nearestBuilding getPos player;
+	_civ = _this select 0;	
+	_b = _civ getVariable "shop";
 	_s = player call unitStock;
 	_town = (getpos player) call nearestTown;
 	_standing = (player getVariable format['rep%1',_town]) * -1;
+	player setVariable ["shopping",_b,false];
 	createDialog "AIT_dialog_sell";
 	{			
 		_cls = _x select 0;

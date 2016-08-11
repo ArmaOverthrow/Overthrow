@@ -30,7 +30,7 @@ while {true} do {
 		_count = 0;
 		
 		while {_count < _numitems} do {
-			_item = (AIT_allItems - AIT_illegalItems) call BIS_Fnc_selectRandom;
+			_item = (AIT_allItems - AIT_illegalItems - AIT_consumableItems) call BIS_Fnc_selectRandom;
 			if!(_item in _itemsToStock) then {
 				_itemsToStock pushback _item;
 				_count = _count + 1;
@@ -42,12 +42,14 @@ while {true} do {
 		_itemsToStock pushback _item;		
 		
 		{
-			_num = floor(random 5) + 1;
-			if(_x in AIT_consumableItems) then {
-				_num = floor(_num * 4);
-			};
+			_num = floor(random 5) + 1;			
 			_stock pushBack [_x,_num];
 		}foreach(_itemsToStock);
+		{
+			_num = floor(random 20) + 10;			
+			_stock pushBack [_x,_num];
+		}foreach(AIT_consumableItems);
+		
 		_building setVariable ["stock",_stock,true];
 	}else{		
 		_currentitems = [];

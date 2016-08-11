@@ -58,11 +58,12 @@ while {alive _unit} do {
 		if(_unit call unitSeenCRIM) then {
 			//chance they will just notice you if your global rep is very high or low
 			_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
-			if(random 1000 < _totalrep) then {
+			if(random 10000 < _totalrep) then {
 				_unit setCaptive false;
-				"A gang has recognized you" call notify_minor;
+				hint "A gang has recognized you";
 			}else{
-				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {				
+				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {		
+					hint "A gang spotted your weapon";
 					_unit setCaptive false;	
 					{
 						if(side _x == east) then {
@@ -78,11 +79,11 @@ while {alive _unit} do {
 			if(_unit call unitSeenNATO) then {
 				_town = (getpos _unit) call nearestTown;
 				_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable format["rep%1",_town]) * -1);
-				if(random 250 < _totalrep) then {
+				if(random 1500 < _totalrep) then {
 					_unit setCaptive false;
-					"NATO has recognized you" call notify_minor;
+					hint "NATO has recognized you";
 				}else{			
-					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {				
+					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {					
 						_unit setCaptive false;	
 						{
 							if(side _x == west) then {
@@ -90,6 +91,17 @@ while {alive _unit} do {
 								sleep 0.2;								
 							};
 						}foreach(player nearentities ["Man",800]);
+					}else{
+						if ((headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {
+							hint "You are wearing Gendarmerie gear";
+							_unit setCaptive false;	
+							{
+								if(side _x == west) then {
+									_x reveal [_unit,1.5];
+									sleep 0.2;								
+								};
+							}foreach(player nearentities ["Man",200]);
+						};
 					};
 				};
 			};

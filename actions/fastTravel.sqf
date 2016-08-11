@@ -19,13 +19,12 @@ _buildings =  posTravel nearObjects 50;
 _handled = false;
 _possible = [];
 {
-	_owner = _x getVariable "owner";
-	if !(isNil "_owner") then {
+	_owner = _x getVariable ["owner",false];
+	if (typename "_owner" == "OBJECT") then {
 		if(_owner == player and (typeof _x) in AIT_allBuyableBuildings) exitWith {
 			_handled = true;
 			player allowDamage false;
 			disableUserInput true;
-			
 			
 			cutText ["Fast traveling, please wait","BLACK",2];			
 			sleep 2;

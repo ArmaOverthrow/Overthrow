@@ -30,7 +30,8 @@ AIT_vehType_distro = "C_Van_01_box_F";
 
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
-AIT_item_BasicGun = "hgun_Pistol_heavy_01_F";//All dealers will stock this close to cost price to ensure starting players can afford a weapon
+AIT_item_BasicGun = "hgun_P07_F";//Player starts with this weapon in their ammobox
+AIT_item_BasicAmmo = "16Rnd_9x21_Mag";
 
 if(AIT_hasAce) then {
 	AIT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty"]; //Shops will try to stock more of these

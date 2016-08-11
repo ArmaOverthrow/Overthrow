@@ -62,7 +62,7 @@ if(_cls in AIT_allVehicles) then {
 				player addMagazine _cls;
 			};		
 		}else{					
-			_b = nearestBuilding getPos player;
+			_b = player getVariable "shopping";
 			_s = _b getVariable "stock";
 			
 			if(_cls in AIT_allBackpacks) then {	

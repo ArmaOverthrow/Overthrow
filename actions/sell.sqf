@@ -1,7 +1,7 @@
 private ["_b","_s","_town","_standing","_cls","_num","_price","_idx","_done"];
 
 playSound "ClickSoft";
-_b = nearestBuilding getPos player;
+_b = player getVariable "shopping";
 _s = _b getVariable "stock";
 _town = (getpos player) call nearestTown;
 _standing = (player getVariable format['rep%1',_town]) * -1;

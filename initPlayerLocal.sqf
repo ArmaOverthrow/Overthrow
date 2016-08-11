@@ -132,6 +132,14 @@ if (_newplayer) then {
 	_house setVariable ["furniture",_furniture];
 	
 	{
+		if(typeof _x == AIT_item_Storage) then {
+			_x addWeaponCargo [AIT_item_BasicGun,1];
+			_x addMagazineCargo [AIT_item_BasicAmmo,5];
+			_box = _x;
+			{
+				_box addItemCargo [_x,5];
+			}foreach(AIT_consumableItems);
+		};
 		if(typeof _x == AIT_item_Desk) then {
 			_deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
 		};
