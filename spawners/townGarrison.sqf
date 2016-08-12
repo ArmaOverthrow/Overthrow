@@ -91,7 +91,8 @@ while{true} do {
 			_active = false;
 			//Tear it all down
 			{	
-				{					
+				{		
+					sleep 0.1;
 					deleteVehicle _x;							
 				}foreach(units _x);
 				deleteGroup _x;								
@@ -99,7 +100,7 @@ while{true} do {
 			_groups = [];
 		};
 	};
-	sleep 1;
+	sleep 2;
 	
 	_numNATO = server getVariable format["garrison%1",_town];
 };

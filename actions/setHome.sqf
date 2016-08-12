@@ -6,7 +6,7 @@ _building = objNULL;
 {
 	_owner = _x getVariable "owner";
 	if(!isNil "_owner") then {
-		if ((typeof _x) in AIT_allBuyableBuildings and _owner == player) exitWith {
+		if ((typeof _x) in AIT_allBuyableBuildings and _owner == getplayerUID player) exitWith {
 			_handled = true;
 			player setVariable ["home",_x,true];
 			"This is now your home" call notify_minor;

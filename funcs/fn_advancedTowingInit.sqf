@@ -471,7 +471,7 @@ SA_Attach_Tow_Ropes_Action = {
 		_canBeTowed = true;
 		_owner = _vehicle getVariable "owner";
 		if !(isNil "_owner") then {
-			if(isPlayer _owner and _owner != player) then {
+			if(isPlayer _owner and _owner != getplayerUID player) then {
 				["You are not the owner of this vehicle",false] call SA_Hint;
 				_canBeTowed = false;
 			}else{

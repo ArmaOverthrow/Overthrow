@@ -30,9 +30,11 @@ _idx = _numweap - 4;
 if(_skill > 0.85) then {
 	_idx = _numweap;
 };
-
+_hour = date select 3;
 if(_skill > 0.8) then {
-	_unit linkItem "NVGoggles_OPFOR";
+	if(_hour > 17 or _hour < 6) then {
+		_unit linkItem "NVGoggles_OPFOR";
+	};
 	_unit addGoggles "G_Bandanna_aviator";
 	_unit addWeapon "Rangefinder";
 	_idx = _numweap - 1;
@@ -59,7 +61,10 @@ _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addWeapon _weapon;
-_unit addPrimaryWeaponItem "acc_flashlight";
+
+if(_hour > 17 or _hour < 6) then {
+	_unit addPrimaryWeaponItem "acc_flashlight";
+};
 
 _weapon = AIT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
@@ -69,15 +74,7 @@ _unit addMagazine _magazine;
 _unit addWeapon _weapon;
 
 if(_skill > 0.8) then {
-	_unit addPrimaryWeaponItem "optic_Dms";
+	_unit addPrimaryWeaponItem "optic_Holosight_blk_F";
 }else{	
-	if(_skill > 0.7) then {
-		_unit addPrimaryWeaponItem "optic_Mrco";
-	}else{
-		if(_skill > 0.6) then {
-			_unit addPrimaryWeaponItem "optic_Holosight_blk_F";
-		}else{
-			_unit addPrimaryWeaponItem "optic_Aco";
-		};
-	};
+	_unit addPrimaryWeaponItem "optic_Aco";
 };

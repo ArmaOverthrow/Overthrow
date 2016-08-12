@@ -14,6 +14,7 @@ _groups = [];
 sleep 2;
 
 waitUntil{spawner getVariable _id};
+[_building] spawn run_distribution;
 
 while{true} do {
 	//Do any updates here that should happen whether spawned or not
@@ -46,10 +47,12 @@ while{true} do {
 				_veh addEventHandler ["GetIn",{						
 					_unit = _this select 2;						
 					_v = _this select 0;
-					if(_unit call hasOwner) then {
-						_v setVariable ["owner",_unit,true];
+					if(isPlayer _unit) then {
+						_v setVariable ["owner",getPlayerUID _unit,true];
 						_v setVariable ["stolen",true,true];
-						_unit setCaptive false;
+						if(_unit call unitSeen) then {
+							_unit setCaptive false;
+						};
 					};
 				}];
 				
@@ -144,10 +147,12 @@ while{true} do {
 			{
 				_delivery = _x getVariable "delivery";
 				if (!(_x call hasOwner) and !isNil "_delivery") then {
+					sleep 0.1;
 					deleteVehicle _x;
 				};				
 			}foreach(_vehs);
-			{				
+			{
+				sleep 0.1;
 				deleteVehicle _x;						
 			}foreach(_civs);
 			{				
@@ -159,5 +164,5 @@ while{true} do {
 			_building setVariable ["truck",false,true];
 		};
 	};
-	sleep 1;
+	sleep 2;
 };

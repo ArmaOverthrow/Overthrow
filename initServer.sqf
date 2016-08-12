@@ -1,12 +1,16 @@
 if (!isMultiplayer) exitWith {};
 
+//VCOM AI, huge credits to Genesis, without VCOM this mission would be so much less
+[] execVM "VCOMAI\init.sqf";
+
+//Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
+[] execVM "funcs\fn_advancedTowingInit.sqf";
+
 call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
 
-call compile preprocessFileLineNumbers "initEconomy.sqf";
-
-//Advanced towing script, massive credits to Duda http://www.armaholic.com/page.php?id=30575
-[] execVM "funcs\fn_advancedTowingInit.sqf";
+waitUntil {!isNil "AIT_StartupType"};
+[] execVM "initEconomyLoad.sqf";
 
 [] execVM "factions\NATO.sqf";
 [] execVM "factions\CRIM.sqf";	
@@ -23,9 +27,6 @@ waitUntil {!isNil "AIT_fnc_registerSpawner"};
 [] execVM "virtualization\shops.sqf";
 [] execVM "virtualization\military.sqf";
 [] execVM "virtualization\distribution.sqf";
-
-//Addons
-[] execVM "VCOMAI\init.sqf";
 
 addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
 if(AIT_hasAce) then {

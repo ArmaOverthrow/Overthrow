@@ -2,8 +2,6 @@ if (!isServer) exitwith {};
 
 _leaderpos = objNULL;
 
-waitUntil{not isNil "AIT_economyInitDone"};
-
 {
 	_town = _x;
 	_posTown = server getVariable _town;

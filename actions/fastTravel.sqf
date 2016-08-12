@@ -19,9 +19,9 @@ _buildings =  posTravel nearObjects 50;
 _handled = false;
 _possible = [];
 {
-	_owner = _x getVariable ["owner",false];
-	if (typename "_owner" == "OBJECT") then {
-		if(_owner == player and (typeof _x) in AIT_allBuyableBuildings) exitWith {
+	if (_x call hasOwner) then {
+		_owner = _x getVariable "owner";
+		if((_owner == getplayerUID player) and (typeof _x) in AIT_allBuyableBuildings) exitWith {
 			_handled = true;
 			player allowDamage false;
 			disableUserInput true;
@@ -44,7 +44,7 @@ _possible = [];
 					vehicle player setPos _pos;
 				};				
 			}else{
-				player setpos ([[[getpos _x,20]]] call BIS_fnc_randomPos);
+				player setpos (getpos _x);
 			};				
 
 			disableUserInput false;

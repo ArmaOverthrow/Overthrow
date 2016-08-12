@@ -5,18 +5,11 @@ _civ addAction ["Buy", {
 
 	_stock = server getVariable format["gunstock%1",_town];
 	if(isNil "_stock") then {
-		_basic = cost getVariable AIT_item_BasicGun;
-		_stock = [[AIT_item_BasicGun,(_basic select 0) + round(random 12)]];
+		_basic = cost getVariable AIT_item_BasicGun;		
 		_numguns = round(random 5)+3;
 		_count = 0;
-		_tostock = [AIT_item_BasicGun];
-		
-		_base = [AIT_item_BasicGun] call BIS_fnc_baseWeapon;
-		_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
-		{
-			_stock pushBack [_x,2];
-		}foreach(_magazines);
-		
+		_stock = [];
+		_tostock = [];
 		while {_count < _numguns} do {
 			_type = AIT_allWeapons call BIS_fnc_selectRandom;
 			if !(_type in _tostock) then {
@@ -29,7 +22,23 @@ _civ addAction ["Buy", {
 				
 				_base = [_type] call BIS_fnc_baseWeapon;
 				_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
-				_stock pushBack [_magazines select 0,2];				
+				_cost = 2;
+				if(_type in AIT_allAssaultRifles) then {
+					_cost = 5;
+				};
+				if(_type in AIT_allMachineGuns) then {
+					_cost = 8;
+				};
+				if(_type in AIT_allSniperRifles) then {
+					_cost = 10;
+				};
+				if(_type in AIT_allRocketLaunchers) then {
+					_cost = 20;
+				};
+				if(_type in AIT_allMissileLaunchers) then {
+					_cost = 40;
+				};				
+				_stock pushBack [_magazines call BIS_fnc_selectRandom,_cost];				
 			};
 		};
 		server setVariable [format["gunstock%1",_town],_stock,true];

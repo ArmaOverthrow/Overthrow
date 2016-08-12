@@ -26,7 +26,7 @@ player setVariable ["money",_money-_price,true];
 [_town,1] call standing;
 
 _civ = _possible select 0;
-_civ setVariable ["owner",player,true];
+_civ setVariable ["owner",getPlayerUID player,true];
 [_civ] joinSilent (group player);
 removeAllActions _civ;
 _civ spawn wantedSystem;

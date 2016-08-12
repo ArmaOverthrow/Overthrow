@@ -67,8 +67,8 @@ while{_status != "done"} do {
 				_veh addEventHandler ["GetIn",{						
 					_unit = _this select 2;						
 					_v = _this select 0;
-					if(_unit call hasOwner) then {
-						_v setVariable ["owner",_unit,true];
+					if(isPlayer _unit) then {
+						_v setVariable ["owner",getPlayerUID _unit,true];
 						_v setVariable ["stolen",true,true];
 						_unit setCaptive false;
 					};

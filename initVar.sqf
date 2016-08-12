@@ -1,4 +1,5 @@
 //Here is where you can change stuff to suit your liking or support mods/another map
+private ["_allPrimaryWeapons","_allHandGuns","__allLaunchers"];
 
 AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani","Saint-Julien","Ipota"]; //dont spawn in these towns
 
@@ -13,6 +14,7 @@ AIT_spawnVehiclePercentage = 0.04;
 AIT_standardMarkup = 0.2; //Markup in shops is calculated from this
 AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
+AIT_saving = false;
 
 AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
@@ -27,6 +29,9 @@ AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F
 AIT_civType_worker = "C_man_w_worker_F";
 AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK"];
 AIT_vehType_distro = "C_Van_01_box_F";
+
+AIT_activeDistribution = [];
+AIT_activeShops = [];
 
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
@@ -101,10 +106,8 @@ AIT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F","B_T_Sniper_F","B_T_Spotter_F"];
 
-AIT_NATO_weapons_Police = ["SMG_01_F","SMG_02_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_MX_Black_F","arifle_Katiba_F","srifle_EBR_F","srifle_DMR_01_F"];
+AIT_NATO_weapons_Police = ["hgun_PDW2000_F","SMG_05_F","SMG_01_F","SMG_02_F","arifle_SPAR_01_blk_F","CUP_arifle_M4A1_black","arifle_MXC_Black_F"];
 AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
-
-
 
 //Criminal stuff
 AIT_CRIM_Units_Bandit = ["I_C_Soldier_Bandit_1_F","I_C_Soldier_Bandit_2_F","I_C_Soldier_Bandit_3_F","I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_5_F","I_C_Soldier_Bandit_6_F","I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_8_F"];
@@ -174,25 +177,6 @@ AIT_backpacks = [
 	["B_Bergen_dgtl_F",150,0,0,1],
 	["B_Bergen_hex_F",150,0,0,1]
 ];
-AIT_weapons = [
-	["hgun_Pistol_heavy_01_F",40,1,0,0],
-	["hgun_ACPC2_F",60,1,0,0],
-	["hgun_P07_F",100,1,0,0],
-	["hgun_Rook40_F",110,1,0,0],
-	["hgun_PDW2000_F",210,1,0,0],
-	["SMG_02_F",250,1,0,0],
-	["SMG_01_F",290,1,0,0],
-	["arifle_Mk20_plain_F",400,1,0,0],
-	["arifle_Mk20_GL_plain_F",520,1,0,0],
-	["arifle_Mk20C_plain_F",560,1,0,0],
-	["arifle_MX_Black_F",760,1,0,0],
-	["arifle_Katiba_F",780,1,0,0],
-	["arifle_Katiba_GL_F",980,1,0,0],
-	["srifle_EBR_F",900,1,0,0],
-	["srifle_DMR_01_F",1000,1,0,0],
-	["LMG_Mk200_F",1100,1,0,0],
-	["srifle_GM6_F",1300,1,0,0]
-];
 AIT_vehicles = [
 	["CUP_C_Skoda_Blue_CIV",50,1,1,1],
 	["CUP_C_Skoda_Green_CIV",60,1,1,1],
@@ -224,6 +208,64 @@ AIT_allWeapons = [];
 AIT_allMagazines = [];
 AIT_allBackpacks = [];
 
+_allPrimaryWeapons = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""
+    &&
+    { getNumber ( _x >> ""type"" ) isEqualTo 1 } } )
+" configClasses ( configFile >> "cfgWeapons" );
+
+_allHandGuns = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""
+    &&
+    { getNumber ( _x >> ""type"" ) isEqualTo 2 } } )
+" configClasses ( configFile >> "cfgWeapons" );
+
+_allLaunchers = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""
+    &&
+    { getNumber ( _x >> ""type"" ) isEqualTo 4 } } )
+" configClasses ( configFile >> "cfgWeapons" );
+
+AIT_allAssaultRifles = [];
+AIT_allMachineGuns = [];
+AIT_allSniperRifles = [];
+AIT_allHandGuns = [];
+AIT_allMissileLaunchers = [];
+AIT_allRocketLaunchers = [];
+
+{
+	_name = configName _x;
+	_name = [_name] call BIS_fnc_baseWeapon;
+
+	_magazines = getArray (configFile / "CfgWeapons" / _name / "magazines");
+	{
+		if !(_x in AIT_allMagazines) then {
+			AIT_allMagazines pushback _x;
+		};
+	}foreach(_magazines);
+	
+	_weapon = [_name] call BIS_fnc_itemType;
+	_weaponType = _weapon select 1;
+	_cost = 500;
+	switch (_weaponType) do	{
+		case "AssaultRifle": {_cost = 500;AIT_allAssaultRifles pushBack _name};
+		case "MachineGun": {_cost = 1000;AIT_allMachineGuns pushBack _name};
+		case "SniperRifle": {_cost = 1500;AIT_allSniperRifles pushBack _name};
+		case "Handgun": {_cost = 100;AIT_allHandGuns pushBack _name};
+		case "MissileLauncher": {_cost=2000;AIT_allMissileLaunchers pushBack _name};
+		case "RocketLauncher": {_cost = 1000;AIT_allRocketLaunchers pushBack _name};
+	};		
+	cost setVariable [_name,[_cost,1,0,1],true];
+} foreach (_allPrimaryWeapons + _allHandGuns + _allLaunchers);
+
+AIT_allWeapons = AIT_allAssaultRifles + AIT_allMachineGuns + AIT_allSniperRifles + AIT_allHandGuns + AIT_allMissileLaunchers + AIT_allRocketLaunchers;
+
 cost setVariable ["CIV",[50,0,0,0],true];
 
 //populate the cost gamelogic with the above data so it can be accessed quickly
@@ -239,23 +281,6 @@ cost setVariable ["CIV",[50,0,0,0],true];
 	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
 	AIT_allVehicles pushBack (_x select 0);
 }foreach(AIT_vehicles);
-
-{
-	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
-	AIT_allWeapons pushBack (_x select 0);
-	
-	_base = [_x select 0] call BIS_fnc_baseWeapon;
-	_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
-	{
-		AIT_allMagazines pushBack _x;
-	}foreach(_magazines);
-}foreach(AIT_weapons);
-
-publicVariable "AIT_allVehicles";
-publicVariable "AIT_allItems";
-publicVariable "AIT_allWeapons";
-publicVariable "AIT_allMagazines";
-publicVariable "AIT_allBackpacks";
 
 AIT_regions = ["island_1","island_2","island_3","island_4","island_5","island_6","island_7"]; //for both economic and travel purposes. define rectangles in eden
 AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu","Ipota"]; //region capitals
@@ -281,13 +306,10 @@ AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 AIT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 
 AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses;
-publicVariable "AIT_allBuyableBuildings";
 
 AIT_allHouses = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_touristHouses;
 AIT_allEnterableHouses = ["Land_House_Small_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_House_Big_01_F","Land_Slum_05_F","Land_Slum_01_F","Land_GarageShelter_01_F","Land_House_Small_01_F","Land_Slum_03_F","Land_House_Big_04_F","Land_House_Small_04_F","Land_House_Small_05_F"];
 
-AIT_activeShops = [];
-AIT_activeCarShops = [];
 AIT_allTowns = [];
 
 //get all the templates we need
@@ -311,6 +333,3 @@ AIT_allTowns = [];
 {
 	AIT_allTowns pushBack (text _x);
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);
-
-AIT_varInitDone = true;
-publicVariable "AIT_varInitDone";

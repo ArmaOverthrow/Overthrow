@@ -2,8 +2,6 @@ if (!isServer) exitwith {};
 
 private ["_name","_pos","_garrison","_airports","_need","_townPos","_current","_stability","_police","_civ","_units","_move","_NATObusy","_abandoned"];
 
-waitUntil{not isNil "AIT_economyInitDone"};
-
 AIT_NATOobjectives = [];
 _airports = [];
 

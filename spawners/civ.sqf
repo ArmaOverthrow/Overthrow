@@ -84,14 +84,7 @@ while{true} do {
 					_light setLightColor[.5, .5, .4];
 					_lights pushback _light;
 				};
-			};
-			
-			{
-				_cur = _x;
-				{	
-					_cur addCuratorEditableObjects [(units _x),true];				
-				}foreach(_groups);				
-			} forEach allCurators;
+			};			
 			
 			sleep 1;
 			{	
@@ -108,8 +101,11 @@ while{true} do {
 			_active = false;
 			//Tear it all down
 			{	
-				{					
-					deleteVehicle _x;							
+				{
+					sleep 0.1;				
+					if !(_x call hasOwner) then {
+						deleteVehicle _x;
+					};	
 				}foreach(units _x);
 				deleteGroup _x;								
 			}foreach(_groups);
@@ -120,5 +116,5 @@ while{true} do {
 			_lights = [];
 		};
 	};
-	sleep 1;
+	sleep 2;
 };

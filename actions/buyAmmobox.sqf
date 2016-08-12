@@ -5,13 +5,13 @@ _price = 150;
 _money = player getVariable "money";
 if(_money < _price) exitWith {format["You need $%1",_price] call notify_minor};
 
-_buildings =  (getpos player) nearObjects 10;
+_buildings =  (getpos player) nearObjects 20;
 _handled = false;
 _building = objNULL;
 {
 	_owner = _x getVariable "owner";
 	if(!isNil "_owner") then {
-		if ((typeof _x) in AIT_allBuyableBuildings and _owner == player) exitWith {
+		if ((typeof _x) in AIT_allBuyableBuildings and _owner == getplayerUID player) exitWith {
 			_handled = true;
 			
 			playSound "ClickSoft";
@@ -34,14 +34,10 @@ _building = objNULL;
 			player removeAction _idx;
 
 			_cosa setPosATL [getPosATL _cosa select 0,getPosATL _cosa select 1,getPosATL player select 2];
-			_cosa setVariable ["owner",player,true];
+			_cosa setVariable ["owner",getPlayerUID player,true];
 			sleep 1;
 			_cosa addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
 			_cosa enableSimulationGlobal true;
-			
-			_owned = player getVariable "owned";
-			_owned pushback _cosa;
-			player setVariable ["owned",_owned,true];
 		};
 	};
 	

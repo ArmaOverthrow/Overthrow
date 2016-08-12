@@ -20,10 +20,11 @@ if(!isMultiplayer) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
 	call compile preprocessFileLineNumbers "initVar.sqf";
 
-	//SINGLE PLAYER init
-	[] execVM "initEconomy.sqf";
+	//SINGLE PLAYER init	
+	waitUntil {!isNil "AIT_StartupType"};
+	[] execVM "initEconomyLoad.sqf";
 		
-	//Init factions
+	//Init factions	
 	[] execVM "factions\NATO.sqf";
 	[] execVM "factions\CRIM.sqf";	
 	waitUntil {!isNil "AIT_NATOInitDone"};

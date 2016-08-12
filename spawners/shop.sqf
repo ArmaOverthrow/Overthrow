@@ -15,6 +15,7 @@ _groups = [];
 _vehs = [];
 
 waitUntil{spawner getVariable _id};
+[_building] spawn run_shop;
 
 while{true} do {
 	//Do any updates here that should happen whether spawned or not
@@ -60,6 +61,9 @@ while{true} do {
 					_light setLightColor[.5, .5, .4];
 					_vehs pushback _light;				
 				};
+				_allactive = spawner getVariable ["activeshops",[]];
+				_allactive pushback _shopkeeper;
+				spawner setVariable ["activeshops",_allactive,true];
 			};
 		};
 	}else{
@@ -73,15 +77,23 @@ while{true} do {
 			{
 				deleteVehicle _x;		
 			}foreach(_vehs);
-			{	
-				{					
-					deleteVehicle _x;							
+			_allactive = spawner getVariable ["activeshops",[]];
+			{
+				{
+					sleep 0.1;
+					if(_x in _allactive) then {
+						_allactive deleteAt (_allactive find _x);
+					};
+					if !(_x call hasOwner) then {
+						deleteVehicle _x;
+					};	
 				}foreach(units _x);
-				deleteGroup _x;								
+				deleteGroup _x;
 			}foreach(_groups);
+			spawner setVariable ["activeshops",_allactive,true];
 			_groups = [];
 			_vehs = [];
 		};
 	};
-	sleep 0.5;
+	sleep 2;
 };

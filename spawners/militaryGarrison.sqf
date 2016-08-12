@@ -75,7 +75,8 @@ while{true} do {
 		}else{			
 			_active = false;
 			//Tear it all down
-			{				
+			{
+				sleep 0.1;
 				deleteVehicle _x;			
 			}foreach(_soldiers);
 			{				
@@ -84,5 +85,5 @@ while{true} do {
 			_soldiers = [];
 		};
 	};
-	sleep 1;
+	sleep 2;
 };

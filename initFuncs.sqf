@@ -75,6 +75,8 @@ fastTravel = compileFinal preProcessFileLineNumbers "actions\fastTravel.sqf";
 setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
 buyAmmobox = compileFinal preProcessFileLineNumbers "actions\buyAmmobox.sqf";
 giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
+saveGamePersistent = compileFinal preProcessFileLineNumbers "actions\saveGame.sqf";
+loadGamePersistent = compileFinal preProcessFileLineNumbers "actions\loadGame.sqf";
 
 //Wanted System
 unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
@@ -87,6 +89,18 @@ keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 
 //Addons
 [] execVM "SHK_pos\shk_pos_init.sqf";
+
+blackFaded = {
+	titleText [_this, "BLACK FADED", 0];
+};
+
+newGame = {
+	"Please wait.. generating economy" remoteExec['blackFaded',0];
+	[] execVM "initEconomy.sqf";
+	waitUntil {!isNil "AIT_economyInitDone"};
+	AIT_StartupType = "NEW";
+	publicVariable "AIT_StartupType";
+};
 
 setupKeyHandler = {
 	waitUntil {!(isnull (findDisplay 46))};

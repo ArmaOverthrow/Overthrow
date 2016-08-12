@@ -17,7 +17,7 @@ if(_cls in AIT_allVehicles) then {
 	
 	player setVariable ["money",_money-_price,true];
 	_veh = _cls createVehicle _pos;
-	_veh setVariable ["owner",player,true];
+	_veh setVariable ["owner",getPlayerUID player,true];
 	clearWeaponCargoGlobal _veh;
 	clearMagazineCargoGlobal _veh;
 	clearBackpackCargoGlobal _veh;
@@ -34,7 +34,7 @@ if(_cls in AIT_allVehicles) then {
 		{
 			_owner = _x getVariable "owner";
 			if(!isNil "_owner") then {
-				if(_owner == player) exitWith {_box = _x};				
+				if(_owner == getplayerUID player) exitWith {_box = _x};				
 			};
 		}foreach(nearestObjects [getpos player, [AIT_item_Storage],1200]);
 		if(typename _box == "OBJECT") then {

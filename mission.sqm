@@ -8,7 +8,7 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=1245;
+		nextID=1247;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=36;
+		nextID=39;
 	};
 	class Camera
 	{
-		pos[]={9419.1045,297.39844,4090.2168};
-		dir[]={-0.24169204,-0.4619199,0.85344291};
-		up[]={-0.1258707,0.88690114,0.44447216};
-		aside[]={0.96224123,-1.2627352e-006,0.27250224};
+		pos[]={12437.256,149.0921,1917.4745};
+		dir[]={-0.45143864,-0.32362941,0.83155823};
+		up[]={-0.15440685,0.94617897,0.28442553};
+		aside[]={0.87885845,-3.0354859e-006,0.4771176};
 	};
 };
 binarizationWanted=0;
@@ -684,8 +684,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={6819.4224,59.442234,4263.2393};
-						angles[]={0,5.2751122,0};
+						position[]={12433.778,143.218,1923.8456};
+						angles[]={0,5.6556692,0};
 					};
 					side="Independent";
 					flags=6;
@@ -724,7 +724,7 @@ class Mission
 					};
 					id=974;
 					type="CUP_I_GUE_Commander";
-					atlOffset=0.1211853;
+					atlOffset=-0.0032806396;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -868,7 +868,7 @@ class Mission
 			{
 			};
 			id=49;
-			atlOffset=0.1211853;
+			atlOffset=-0.0032806396;
 		};
 		class Item9
 		{

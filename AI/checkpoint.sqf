@@ -24,13 +24,7 @@ while {!(isNull _group) and count (units _group) > 0} do {
 		_unit = _x;
 		_iscar = false;
 		if(_unit isKindOf "LandVehicle") then {
-			_unit = driver _unit;			
-			if(_unit call hasOwner) then {
-				_owner = _unit getVariable "owner";
-				if(vehicle _owner == _x) then {
-					_unit = _owner;
-				};
-			};
+			_unit = driver _unit;
 			_iscar = true;
 			_vehs pushBack [_unit,_x];
 		};

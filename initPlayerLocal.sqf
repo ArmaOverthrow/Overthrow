@@ -17,19 +17,14 @@ if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
-player setVariable ["money",100,true];
-player setVariable ["owner",player,true];
-
-if(isMultiplayer) then {
-	titleText ["Waiting for server...", "BLACK FADED", 0];
+if(player == bigboss) then {
+	waitUntil {!(isnull (findDisplay 46))};
+	sleep 1;
+	_nul = createDialog "AIT_dialog_start";
+	waitUntil {!isNil "AIT_StartupType"};
 }else{
-	titleText ["Please wait... generating economy", "BLACK FADED", 0];
-};
-
-if !(isMultiplayer) then {
-	waitUntil {!isNil "AIT_serverInitDone"};
-}else{
-	waitUntil {server getVariable ["spawntown",""] != ""};
+	titleText ["Waiting for host...", "BLACK FADED", 0];
+	waitUntil {sleep 2;server getVariable ["spawntown",""] != ""};
 };
 
 player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
@@ -40,13 +35,23 @@ _town = "";
 _pos = [];
 _housepos = [];
 
-if(isMultiplayer) then {
+if(isMultiplayer || AIT_StartupType == "LOAD") then {
 	_data = server getvariable (getplayeruid player);
 	if !(isNil "_data") then {
 		_newplayer = false;
 		{
 			_key = _x select 0;
 			_val = _x select 1;
+			if(_key == "home") then {
+				_val = nearestBuilding _val;
+			};
+			if(_key == "owned") then {
+				_d = [];
+				{
+					_d pushback nearestBuilding _x;
+				}foreach(_val);
+				_val = _d;
+			};
 			player setVariable [_key,_val,true];
 		}foreach(_data);		
 		
@@ -54,32 +59,50 @@ if(isMultiplayer) then {
 		_town = (getpos _house) call nearestTown;
 		_pos = server getVariable _town;
 		_housepos = getpos _house;
-		_furniture = _house getVariable "furniture";
 		
 		_owned = player getVariable "owned";
 		{
-			_x setVariable ["owner",player,true];
-		}foreach(_owned + _furniture);		
+			_x setVariable ["owner",getPlayerUID player,true];
+			_mrkName = format["%1",_x];
+			if((markerpos _mrkName) select 0 == 0) then {
+				_mrkName = createMarkerLocal [_mrkName,getpos _x];
+				_mrkName setMarkerShape "ICON";
+				_mrkName setMarkerType "loc_Tourism";
+				_mrkName setMarkerColor "ColorWhite";
+				_mrkName setMarkerAlpha 0;
+			};
+			_mrkName setMarkerAlphaLocal 1;
+		}foreach(_owned);		
+		
+		{
+			if(_x call hasOwner) then {
+				if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
+					_furniture pushback _x					
+				};
+			};	
+		}foreach(_housepos nearObjects 50);
 	};
 
 	//JIP interactions
-	_shops = server getVariable "activeshops";
+	_shops = spawner getVariable ["activeshops",[]];
 	{
 		_x call initShopLocal;
 	}foreach(_shops);
 
-	_shops = server getVariable "activecarshops";
+	_shops = spawner getVariable ["activecarshops",[]];
 	{
 		_x call initCarShopLocal;
 	}foreach(_shops);
 
-	_shops = server getVariable "activedealers";
+	_shops = spawner getVariable ["activedealers",[]];
 	{
 		_x call initGunDealerLocal;
 	}foreach(_shops);
 };
 
 if (_newplayer) then {
+	player setVariable ["money",100,true];
+	player setVariable ["owner",getplayerUID player,true];
 	if(!isMultiplayer) then	{
 		{
 			if(! (isPlayer _x) ) then {
@@ -125,12 +148,11 @@ if (_newplayer) then {
 	_light setLightAmbient[.9, .9, .6];
 	_light setLightColor[.5, .5, .4];
 
-	_house setVariable ["owner",player,true];
+	_house setVariable ["owner",getPlayerUID player,true];
 	player setVariable ["home",_house,true];
 
 	_furniture = (_house call spawnTemplate) select 0;
-	_house setVariable ["furniture",_furniture];
-	
+
 	{
 		if(typeof _x == AIT_item_Storage) then {
 			_x addWeaponCargo [AIT_item_BasicGun,1];
@@ -143,40 +165,42 @@ if (_newplayer) then {
 		if(typeof _x == AIT_item_Desk) then {
 			_deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
 		};
+		_x setVariable ["owner",getplayerUID player,true];
 	}foreach(_furniture);	
+	player setVariable ["owned",[_house],true];
+	
+	_mrkName = format["home-%1",getPlayerUID player];
+	if((markerpos _mrkName) select 0 == 0) then {
+		_mrkName = createMarker [_mrkName,_housepos];
+		_mrkName setMarkerShape "ICON";
+		_mrkName setMarkerType "loc_Tourism";
+		_mrkName setMarkerColor "ColorWhite";
+		_mrkName setMarkerAlpha 0;
+	};
+	_mrkName setMarkerAlphaLocal 1;
+
 };
 
 {	
 	if(typeof _x == AIT_item_Map) then {
 		_x addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
 		_x addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
+		if(player == bigboss) then {
+			_x addAction ["Options", {
+				closedialog 0;			
+				_nul = createDialog "AIT_dialog_options";
+			},nil,0,false,true,"",""];			
+		};
 	};
 	if(typeof _x == AIT_item_Repair) then {
 		_x addAction ["Repair Nearby Vehicles", "actions\repairAll.sqf",nil,0,false,true,"",""];
 	};
-}foreach(_furniture);
-
-_pos = _housepos;
-{
 	_x addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
-	_x setVariable ["owner",player,true];
 }foreach(_furniture);
 
 player setCaptive true;
-player setPos _pos;
+player setPos _housepos;
 titleText ["", "BLACK IN", 5];
-
-//put a marker on home
-_mrkName = format["home-%1",getPlayerUID player];
-if((markerpos _mrkName) select 0 == 0) then {
-	_mrkName = createMarker [_mrkName,_housepos];
-	_mrkName setMarkerShape "ICON";
-	_mrkName setMarkerType "loc_Tourism";
-	_mrkName setMarkerColor "ColorWhite";
-	_mrkName setMarkerAlpha 0;
-};
-_mrkName setMarkerAlphaLocal 1;
-
 
 if (isMultiplayer) then {
 	["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client

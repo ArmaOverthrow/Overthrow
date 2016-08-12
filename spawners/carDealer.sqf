@@ -10,8 +10,8 @@ _town = _this select 3;
 
 _shopkeeper = objNULL;
 
-_civs = []; //Stores all civs for tear down
 _groups = [];
+_vehs = [];
 
 waitUntil{spawner getVariable _id};
 
@@ -29,7 +29,6 @@ while{true} do {
 				_tracked = _building call spawnTemplate;
 				sleep 1;
 				_vehs = _tracked select 0;
-				[_civs,_vehs] call BIS_fnc_arrayPushStack;
 				
 				_cashdesk = _pos nearestObject AIT_item_ShopRegister;
 				_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
@@ -39,14 +38,19 @@ while{true} do {
 				_group setBehaviour "CARELESS";
 				_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
 				_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];					
-				_civs pushback _shopkeeper;				
+		
 
 				_wp = _group addWaypoint [_cashpos,2];
 				_wp setWaypointType "MOVE";
 				_wp setWaypointSpeed "LIMITED";				
 
 				_shopkeeper remoteExec ["initCarShopLocal",0,true];
-				[_shopkeeper] call initCarDealer;	
+				[_shopkeeper] call initCarDealer;
+				
+				_allactive = spawner getVariable ["activecarshops",[]];
+				_allactive pushback _shopkeeper;
+				spawner setVariable ["activecarshops",_allactive,true];
+				
 			}foreach(nearestObjects [_posTown, AIT_carShops, 600]);
 		};
 	}else{
@@ -57,17 +61,24 @@ while{true} do {
 			_active = false;
 			//Tear it all down
 			{
-				if !(_x call hasOwner) then {
-					deleteVehicle _x;
-				};				
-			}foreach(_civs);
+				deleteVehicle _x;		
+			}foreach(_vehs);
+			_allactive = spawner getVariable ["activecarshops",[]];
 			{
+				{
+					sleep 0.1;
+					if(_x in _allactive) then {
+						_allactive deleteAt (_allactive find _x);
+					};
+					if !(_x call hasOwner) then {
+						deleteVehicle _x;
+					};	
+				}foreach(units _x);
 				deleteGroup _x;
 			}foreach(_groups);
 			_groups = [];
-			_civs = [];
-			
+			spawner setVariable ["activecarshops",_allactive,true];
 		};
 	};
-	sleep 1;
+	sleep 2;
 };

@@ -1,11 +1,9 @@
 if (!isServer) exitwith {};
 private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos","_lopop","_medpop","_hipop","_hugepop","_pop","_base","_stability","_mrk","_region","_popVar","_towns"];
 
-{_x setMarkerAlpha 0} foreach AIT_regions;
-
 //automatically determining the population of each town/city on the map
 //For each city and/or town
-AIT_activeShops = [];
+
 {
 	_name = text _x;// Get name
 	
@@ -41,14 +39,7 @@ AIT_activeShops = [];
 	{
 		_huge pushback (getpos _x);
 	}foreach(nearestObjects [_pos, AIT_hugePopHouses, _mSize]);
-	
-	//spawn any main shops
-	{
-		_shops pushback _x;
-		[_x] spawn run_shop;
-		AIT_activeShops pushback _x;
-	}foreach(nearestObjects [_pos, AIT_shops, _mSize]);
-	
+		
 	{
 		_allshops pushback (getpos _x);
 	}foreach(nearestObjects [_pos, AIT_allShops + AIT_offices + AIT_warehouses + AIT_carShops + AIT_portBuildings, _mSize]);
@@ -68,18 +59,8 @@ AIT_activeShops = [];
 		_stability = floor(4 + random(30));
 	};
 	server setVariable [format["stability%1",_name],_stability,true];
-	_mrk = createMarker [_name,_pos];
-	_mrk setMarkerShape "ELLIPSE";
-	_mrk setMarkerSize[_mSize,_mSize];
-	_mrk setMarkerColor "ColorRed";
-		
-	if(_stability < 50) then {		
-		_mrk setMarkerAlpha 1.0 - (_stability / 50);
-	}else{
-		_mrk setMarkerAlpha 0;
-	};
 	
-	server setVariable [format["shopsin%1",_name],count _shops,true];
+	server setVariable [format["shopsin%1",_name],0,true];
 
 	_popVar=format["population%1",_name];
 	server setVariable [_popVar,_pop,true];
@@ -90,7 +71,6 @@ AIT_activeShops = [];
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);
 
 server setVariable ["spawntown",AIT_spawnTowns call BIS_fnc_selectrandom,true];
-publicVariable "AIT_activeShops";
 {
 	_region = _x;
 		
@@ -99,19 +79,6 @@ publicVariable "AIT_activeShops";
 	
 	
 }foreach(AIT_regions);
-
-AIT_activeDistribution = [];
-
-_count = 0;
-{
-	if((random 100) > 40) then {
-		_pos = getpos _x;	
-		[_x] spawn run_distribution;
-		AIT_activeDistribution pushBack _x;
-	};
-	
-}foreach(nearestObjects [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), AIT_warehouses, 50000]);
-publicVariable "AIT_activeDistribution";
 
 _towns = [];
 //spawn player in a random town with pop > 200 and stability > 20, not in the blacklist
