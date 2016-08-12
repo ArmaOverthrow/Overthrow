@@ -4,7 +4,7 @@ private ["_unit","_timer"];
 _timer = -1;
 
 _unit setCaptive true;
-_unit setVariable ["hiding",false,true];
+_unit setVariable ["hiding",false,false];
 
 _unit addEventHandler ["take", {
 	_me = _this select 0;
@@ -46,21 +46,21 @@ while {alive _unit} do {
 		//CURRENTLY WANTED
 		if(_timer >= 0) then {
 			_timer = _timer + 2;	
-			_unit setVariable ["hiding",30 - _timer,true];
+			_unit setVariable ["hiding",30 - _timer,false];
 			if(_timer >= 30) then {
 				_unit setCaptive true;
 			}else{
 				if (_unit call unitSeen) then {
 					_unit setCaptive false;
 					_timer = 0;
-					_unit setVariable ["hiding",30,true];
+					_unit setVariable ["hiding",30,false];
 				};
 			};
 		}else{				
 			if !(_unit call unitSeen) then {
 				_lastkill = _unit getVariable ["lastkill",0];
 				if((time - _lastkill) > 120) then {
-					_unit setVariable ["hiding",30,true];	
+					_unit setVariable ["hiding",30,false];	
 					_timer = 0;	
 				};
 			};
@@ -68,7 +68,7 @@ while {alive _unit} do {
 	}else{
 		//CURRENTLY NOT WANTED
 		_timer = -1;
-		_unit setVariable ["hiding",0,true];
+		_unit setVariable ["hiding",0,false];
 		
 		if(_unit call unitSeenCRIM) then {
 			//chance they will just notice you if your global rep is very high or low
@@ -77,7 +77,7 @@ while {alive _unit} do {
 				_unit setCaptive false;
 				hint "A gang has recognized you";
 			}else{
-				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {		
+				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) then {		
 					hint "A gang spotted your weapon";
 					_unit setCaptive false;	
 					{
@@ -98,7 +98,8 @@ while {alive _unit} do {
 					_unit setCaptive false;
 					hint "NATO has recognized you";
 				}else{			
-					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or (headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {					
+					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) then {	
+						hint "NATO has seen your weapon";
 						_unit setCaptive false;	
 						{
 							if(side _x == west) then {
