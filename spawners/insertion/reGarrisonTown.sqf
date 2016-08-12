@@ -1,4 +1,4 @@
-private ["_drop","_group","_start","_stability","_vehtype","_num","_count"];
+private ["_drop","_group","_start","_stability","_vehtype","_num","_count","_police","_group","_tgroup","_wp","_attackdir","_vehtype","_civ"];
 
 _town = _this;
 _townPos = server getVariable _town;
@@ -8,6 +8,7 @@ _region = server getVariable format["region_%1",_town];
 
 _police = [];
 _support = [];
+_opendoor = false;
 
 _close = nil;
 _dist = 8000;
@@ -25,118 +26,158 @@ _dist = 8000;
 	};
 }foreach(AIT_NATOobjectives);
 
-if(!isNil "_close") then {
-	_start = [_close,0,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-	_group = creategroup blufor;
-	
-	_vehtype = AIT_NATO_Vehicle_Quad;
-	
-	_drop = (([_townPos, 100, 600, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 200) select 0;
-			
-	if(_stability < 20) then {
-		//last ditch efforts to save this town
-		//send in the big guns
-		_vehtype = AIT_NATO_Vehicle_Transport;
-		_num = 5 + round(random 6);
+
+_attackdir = random 360;
+if(surfaceIsWater ([_townPos,150,_attackDir] call BIS_fnc_relPos)) then {
+	_attackdir = _attackdir + 180;
+	if(_attackdir > 359) then {_attackdir = _attackdir - 359};
+	if(surfaceIsWater ([_townPos,150,_attackDir] call BIS_fnc_relPos)) then {
+		_attackdir = _attackdir + 90;
+		if(_attackdir > 359) then {_attackdir = _attackdir - 359};
+		if(surfaceIsWater ([_townPos,150,_attackDir] call BIS_fnc_relPos)) then {
+			_attackdir = _attackdir + 180;
+			if(_attackdir > 359) then {_attackdir = _attackdir - 359};
+		};
+	};
+};
+_attackdir = _attackdir - 45;
+sleep 0.1;
+_group = creategroup blufor;
+_tgroup = creategroup blufor;
+
+_vehtype = AIT_NATO_Vehicle_PoliceHeli;
+
+_drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
+_spawnpos = AIT_NATO_HQPos;	
+
+if(_stability < 20) then {
+	//last ditch efforts to save this town
+	//send in the big guns
+	_vehtype = AIT_NATO_Vehicle_AirTransport;
+	_opendoor = true;
+	_num = 5 + round(random 6);
+	_count = 0;
+	while {_count < _num} do {
+		_start = [_spawnpos,[10,29],random 360] call SHK_pos;
+		_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		_civ setRank "CAPTAIN";
+		_police pushBack _civ;
+		[_civ,_town] call initPolice;
+		_count = _count + 1;
+		sleep 0.1;
+	};
+}else{
+	if(_stability < 40 and (random 100) > 50) then {
+		//Shit's getting real, send more dudes
+		_num = 2;
 		_count = 0;
 		while {_count < _num} do {
-			_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-			_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
-			_civ setRank "CAPTAIN";
+			_start = [_spawnpos,[10,29],random 360] call SHK_pos;
+			_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
+			_civ setRank "SERGEANT";
+			
 			_police pushBack _civ;
 			[_civ,_town] call initPolice;
 			_count = _count + 1;
+			sleep 0.1;
 		};
-	}else{
-		if(_stability < 40 and (random 100) > 50) then {
-			//Shit's getting real, send more dudes
-			_vehtype = AIT_NATO_Vehicle_Police;
-			_num = 2;
-			_count = 0;
-			while {_count < _num} do {
-				_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-				_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
-				_civ setRank "SERGEANT";
-				
-				_police pushBack _civ;
-				[_civ,_town] call initPolice;
-				_count = _count + 1;
-			};
-		};
-		if(_stability < 40 and (random 100) > 90) then {
-			//Random MRAP or heli support
-			_vt = (AIT_NATO_Vehicles_PoliceSupport call BIS_fnc_selectRandom);
-			_pos = _start findEmptyPosition [0,100,_vt];
-			_supportCreated =  [_pos, 180, _vt, WEST] call bis_fnc_spawnvehicle;
-			
-			_supportVeh = _supportCreated select 0;
-			_crew = _supportCreated select 1;
-			_g = _supportCreated select 2;
-			
-			//Guard the dropzone
-			_move = _g addWaypoint [_drop,100];
-			_move setWaypointType "GUARD";	
-			
-			{
-				_x setRank "CAPTAIN";
-			}forEach(_crew);
-			
-			[_police,_crew] call BIS_fnc_arrayPushStack;
-			_police pushback _supportVeh;
-		}
 	};
-	
-	_spawnpos = _start findEmptyPosition [0,100,_vehtype];
-	_veh =  _vehtype createVehicle _spawnpos;
-	_veh setDir 180;
-	_group addVehicle _veh;	
-	
-	_police pushBack _veh;
-	
-	_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
-	_civ setVariable ["garrison",_town,false];
-	_civ setRank "CAPTAIN";
-	_police pushBack _civ;
-	[_civ,_town] call initPolice;
-	
-	if(_stability > 50) then {
-		_civ setBehaviour "SAFE";
-	};
-	sleep 0.01;
-	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-	_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
-	_civ setRank "SERGEANT";
-	_civ setVariable ["garrison",_town,false];
-	
-	_police pushBack _civ;
-	[_civ,_town] call initPolice;
-	if(_stability > 50) then {
-		_civ setBehaviour "SAFE";
-	};
-	_count = _count + 2;
-	
-	_group setVariable ["veh",_veh,false];
-	_group setVariable ["transport",_police,false];	
-	
-	if(isNil "_drop") then {
-		_drop = (([_townPos, 100, 800, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 200) select 0;
-	};
-	
-	_move = _group addWaypoint [_spawnpos,0];
-	_move setWaypointType "GETIN";
-	_move setWaypointSpeed "FULL";	
-	
-	_move = _group addWaypoint [_drop,0];
-	_move setWaypointType "MOVE";
-	_move setWaypointSpeed "FULL";	
-	
-	_move = _group addWaypoint [_drop,0];
-	_move setWaypointType "GETOUT";					
-	_move setWaypointStatements ["true","(group this) call initPolicePatrol;"];		
-	
-	{
-		_x addCuratorEditableObjects [_police+_support,true];
-	} forEach allCurators;
 };
+
+_veh =  _vehtype createVehicle _spawnpos;
+_dir = [_spawnpos,_townPos] call BIS_fnc_dirTo;
+_veh setDir _dir;
+_tgroup addVehicle _veh;
+
+{
+	_x moveInCargo _veh;
+}foreach(_police);
+	
+
+createVehicleCrew _veh;
+sleep 0.1;
+{
+	[_x] joinSilent _tgroup;
+	_x setVariable ["NOAI",true,false];
+	_x setVariable ["garrison","HQ",false];
+}foreach(crew _veh);	
+
+_police pushBack _veh;
+
+_start = [_spawnpos,[10,29],random 360] call SHK_pos;
+_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+_civ setVariable ["garrison",_town,false];
+_civ setRank "CAPTAIN";
+_civ moveInCargo _veh;
+_police pushBack _civ;
+[_civ,_town] call initPolice;
+
+if(_stability > 50) then {
+	_civ setBehaviour "SAFE";
+};
+sleep 0.1;
+_start = [_spawnpos,[10,29],random 360] call SHK_pos;
+_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
+_civ setRank "SERGEANT";
+_civ moveInCargo _veh;
+_civ setVariable ["garrison",_town,false];
+
+_police pushBack _civ;
+[_civ,_town] call initPolice;
+if(_stability > 50) then {
+	_civ setBehaviour "SAFE";
+};
+
+_moveto = [AIT_NATO_HQPos,500,_dir] call SHK_pos;
+_wp = _tgroup addWaypoint [_moveto,0];
+_wp setWaypointType "MOVE";
+_wp setWaypointBehaviour "COMBAT";
+_wp setWaypointSpeed "FULL";
+_wp setWaypointCompletionRadius 150;
+_wp setWaypointStatements ["true","(vehicle this) flyInHeight 150;"];
+
+_wp = _tgroup addWaypoint [_drop,0];
+_wp setWaypointType "MOVE";
+_wp setWaypointBehaviour "COMBAT";
+if(_opendoor) then {
+	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
+};
+wp setWaypointCompletionRadius 50;
+_wp setWaypointSpeed "FULL";
+
+_wp = _tgroup addWaypoint [_drop,0];
+_wp setWaypointType "SCRIPTED";
+_wp setWaypointStatements ["true","[vehicle this,75] execVM 'funcs\addons\eject.sqf'"];	
+_wp setWaypointTimeout [10,10,10];
+
+_wp = _tgroup addWaypoint [_drop,0];
+_wp setWaypointType "SCRIPTED";
+if(_opendoor) then {
+	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];	
+};
+_wp setWaypointTimeout [15,15,15];
+
+_moveto = [AIT_NATO_HQPos,200,_dir] call SHK_pos;
+
+_wp = _tgroup addWaypoint [_moveto,0];
+_wp setWaypointType "LOITER";
+_wp setWaypointBehaviour "SAFE";
+_wp setWaypointSpeed "FULL";	
+_wp setWaypointCompletionRadius 100;
+
+_wp = _tgroup addWaypoint [_moveto,0];
+_wp setWaypointType "SCRIPTED";
+_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
+
+_attackpos = [_townPos,[0,150]] call SHK_pos;
+
+_wp = _group addWaypoint [_attackpos,0];
+_wp setWaypointType "MOVE";
+
+
+{
+	_x addCuratorEditableObjects [_police+_support,true];
+} forEach allCurators;
+
 
 _police+_support;

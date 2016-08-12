@@ -92,6 +92,10 @@
 #define MB_BUTTON_CANCEL  2
 #define MB_BUTTON_USER    4
 
+// 3d object
+#define CT_OBJECT 80
+
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// Base Classes
@@ -132,7 +136,7 @@ class RscText
 		0,
 		0.5
 	};
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	linespacing = 1;
 	tooltipColorText[] = 
@@ -157,6 +161,7 @@ class RscText
 		0.65
 	};
 };
+
 class RscStructuredText
 {
 	deletable = 0;
@@ -174,9 +179,8 @@ class RscStructuredText
 	};
 	class Attributes
 	{
-		font = "RobotoCondensed";
+		font = "PuristaMedium";
 		color = "#ffffff";
-		colorLink = "#D09B43";
 		align = "left";
 		shadow = 1;
 	};
@@ -195,7 +199,7 @@ class RscPicture
 	access = 0;
 	type = 0;
 	idc = -1;
-	style = 48;
+	style = 2096;
 	colorBackground[] = 
 	{
 		0,
@@ -257,7 +261,7 @@ class RscEdit
 		0,
 		0,
 		0,
-		0
+		1
 	};
 	colorText[] = 
 	{
@@ -283,10 +287,10 @@ class RscEdit
 	autocomplete = "";
 	text = "";
 	size = 0.2;
-	style = "0x00 + 0x40";
-	font = "RobotoCondensed";
+	style = "00x02";
+	font = "PuristaMedium";
 	shadow = 2;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = 0.045;
 	canModify = 1;
 	tooltipColorText[] = 
 	{
@@ -344,13 +348,6 @@ class RscCombo
 		0,
 		1
 	};
-	colorDisabled[] = 
-	{
-		1,
-		1,
-		1,
-		0.25
-	};
 	colorPicture[] = 
 	{
 		1,
@@ -392,27 +389,6 @@ class RscCombo
 		1,
 		1,
 		0.25
-	};
-	colorTextRight[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorSelectRight[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
-	colorSelect2Right[] = 
-	{
-		0,
-		0,
-		0,
-		1
 	};
 	tooltipColorText[] = 
 	{
@@ -458,14 +434,11 @@ class RscCombo
 	{
 		color[] = 
 		{
-			1,
-			1,
-			1,
-			1
+		1,1,1,1
 		};
 	};
 	style = "0x10 + 0x200";
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	shadow = 0;
 	x = 0;
@@ -479,12 +452,37 @@ class RscCombo
 		1,
 		0.7
 	};
-	arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_ca.paa";
+	arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_active_ca.paa";
 	arrowFull = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_active_ca.paa";
 	wholeHeight = 0.45;
 	colorActive[] = 
 	{
+0.761,0.357,0.337,1
+	};
+	colorDisabled[] = 
+	{
 		1,
+		1,
+		1,
+		0.25
+	};
+	colorTextRight[] = 
+	{
+		1,
+		1,
+		1,
+		1
+	};
+	colorSelectRight[] = 
+	{
+		0,
+		0,
+		0,
+		1
+	};
+	colorSelect2Right[] = 
+	{
+		0,
 		0,
 		0,
 		1
@@ -496,7 +494,8 @@ class RscListBox
 	fade = 0;
 	access = 0;
 	type = 5;
-	rowHeight = 0;
+	rowHeight = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.6)";
+	onLBSelChanged  = "";
 	colorText[] = 
 	{
 		1,
@@ -606,27 +605,6 @@ class RscListBox
 		1,
 		0.25
 	};
-	colorTextRight[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorSelectRight[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
-	colorSelect2Right[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
 	tooltipColorText[] = 
 	{
 		1,
@@ -664,7 +642,7 @@ class RscListBox
 	w = 0.3;
 	h = 0.3;
 	style = 16;
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	shadow = 0;
 	colorShadow[] = 
@@ -676,6 +654,57 @@ class RscListBox
 	};
 	period = 1.2;
 	maxHistoryDelay = 1;
+	colorTextRight[] = 
+	{
+		1,
+		1,
+		1,
+		1
+	};
+	colorSelectRight[] = 
+	{
+		0,
+		0,
+		0,
+		1
+	};
+	colorSelect2Right[] = 
+	{
+		0,
+		0,
+		0,
+		1
+	};
+};
+
+class RscXListBox
+{
+	access = 0;
+	idc = CT_XLISTBOX;
+	type = CT_XLISTBOX;
+	style = SL_HORZ + ST_CENTER + LB_TEXTURES;
+	default = 0;
+	blinkingPeriod = 0;
+	x = 12 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X;
+	y = 17 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y;
+	w = 10 * GUI_GRID_CENTER_W;
+	h = 1 * GUI_GRID_CENTER_H;
+	color[] = {1,1,1,1};
+	colorActive[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	font = "PuristaMedium";
+	shadow = 0;
+	colorText[] = {1,1,1,1}; // Text color
+	colorSelect[] = {1,1,1,1}; // Selected text color
+	colorDisabled[] = {1,1,1,0.5}; // Disabled text color
+	tooltip = ""; // Tooltip text
+	tooltipColorShade[] = {0,0,0,0}; // Tooltip background color
+	tooltipColorText[] = {1,1,1,0}; // Tooltip text color
+	tooltipColorBox[] = {1,1,1,0}; // Tooltip frame color
+	arrowEmpty = "\A3\ui_f\data\gui\cfg\slider\arrowEmpty_ca.paa"; // Arrow
+	arrowFull = "\A3\ui_f\data\gui\cfg\slider\arrowFull_ca.paa"; // Arrow when clicked on
+	border = "\A3\ui_f\data\gui\cfg\slider\border_ca.paa"; // Fill texture
+	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1};
 };
 class RscButton
 {
@@ -764,14 +793,13 @@ class RscButton
 		0.09,
 		1
 	};
-	idc = -1;
 	style = 2;
 	x = 0;
 	y = 0;
 	w = 0.095589;
 	h = 0.039216;
 	shadow = 2;
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	offsetX = 0;
 	offsetY = 0;
@@ -802,9 +830,9 @@ class RscShortcutButton
 	};
 	class TextPos
 	{
-		left = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1) * (3/4)";
-		top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 20) - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)) / 2";
-		right = 0.005;
+		left = 0;
+		top = 0;
+		right = 0;
 		bottom = 0;
 	};
 	shortcuts[] = 
@@ -886,9 +914,9 @@ class RscShortcutButton
 	};
 	class Attributes
 	{
-		font = "RobotoCondensed";
+		font = "PuristaMedium";
 		color = "#E5E5E5";
-		align = "left";
+		align = "center";
 		shadow = "true";
 	};
 	idc = -1;
@@ -927,7 +955,7 @@ class RscShortcutButton
 		0.25
 	};
 	sizeExSecondary = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	fontSecondary = "RobotoCondensed";
+	fontSecondary = "PuristaMedium";
 	animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
 	animTextureNormal = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
 	animTextureDisabled = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
@@ -937,16 +965,16 @@ class RscShortcutButton
 	periodFocus = 1.2;
 	periodOver = 0.8;
 	period = 0.4;
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	text = "";
 	action = "";
 	class AttributesImage
 	{
-		font = "RobotoCondensed";
+		font = "PuristaMedium";
 		color = "#E5E5E5";
-		align = "left";
+		align = "center";
 	};
 };
 class RscShortcutButtonMain
@@ -998,21 +1026,21 @@ class RscShortcutButtonMain
 	animTexturePressed = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\down_ca.paa";
 	animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\normal_ca.paa";
 	period = 0.5;
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
 	text = "";
 	action = "";
 	class Attributes
 	{
-		font = "RobotoCondensed";
+		font = "PuristaMedium";
 		color = "#E5E5E5";
 		align = "left";
 		shadow = "false";
 	};
 	class AttributesImage
 	{
-		font = "RobotoCondensed";
+		font = "PuristaMedium";
 		color = "#E5E5E5";
 		align = "false";
 	};
@@ -1037,13 +1065,9 @@ class RscFrame
 		1,
 		1
 	};
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	sizeEx = 0.02;
 	text = "";
-	x = 0;
-	y = 0;
-	w = 0.3;
-	h = 0.3;
 };
 class RscSlider
 {
@@ -1052,6 +1076,7 @@ class RscSlider
 	access = 0;
 	type = 3;
 	style = 1024;
+	w = 0.3;
 	color[] = 
 	{
 		1,
@@ -1067,9 +1092,6 @@ class RscSlider
 		1
 	};
 	shadow = 0;
-	x = 0;
-	y = 0;
-	w = 0.3;
 	h = 0.025;
 };
 class IGUIBack
@@ -1085,13 +1107,14 @@ class IGUIBack
 		0,
 		0
 	};
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	sizeEx = 0;
 	shadow = 0;
 	x = 0.1;
 	y = 0.1;
 	w = 0.1;
 	h = 0.1;
+
 	colorbackground[] = 
 	{
 		"(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])",
@@ -1263,8 +1286,8 @@ class RscTextCheckBox
 	{
 		0,
 		0,
-		0,
-		0
+		1,
+		1
 	};
 	colorTextSelect[] = 
 	{
@@ -1322,7 +1345,7 @@ class RscTextCheckBox
 		0,
 		0.65
 	};
-	font = "RobotoCondensed";
+	font = "PuristaMedium";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	rows = 1;
 	columns = 1;
@@ -1481,10 +1504,10 @@ class RscButtonMenu
 	};
 	class ShortcutPos
 	{
-		left = "5.25 * (((safezoneW / safezoneH) min 1.2) / 40)";
-		top = 0;
-		w = "1 * (((safezoneW / safezoneH) min 1.2) / 40)";
-		h = "1 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+		left = "(6.25 * (((safezoneW / safezoneH) min 1.2) / 40)) - 0.0225 - 0.005";
+		top = 0.005;
+		w = 0.0225;
+		h = 0.03;
 	};
 	soundEnter[] = 
 	{
@@ -1539,6 +1562,50 @@ class RscButtonMenuCancel
 	};
 	text = "Cancel";
 };
+class RscObject
+{
+		access = 0; 
+		idc = -1;
+		type = 81;
+		style = 0x00;
+		blinkingPeriod = 0;
+		model = "\a3\Ui_f\objects\Compass.p3d";
+		scale = 0.5;
+		x = 0;
+		y = 0;
+		z = 1;
+		w = 1;
+		h = 1;
+		
+		xBack = 0;
+		yBack = 0;
+		zBack = 1;
+		enableZoom = 0;
+		zoomDuration = 0;
+		inBack = 0;
+		direction[] = {0,0,1};
+		up[] = {0,1,0};
+		tooltip = "";
+		tooltipColorShade[] = {0,0,0,1};
+		tooltipColorText[] = {1,1,1,1};
+		tooltipColorBox[] = {1,1,1,1};
+		onMouseMoving = "";
+		onMouseHolding = "";
+		onMouseDown = "";
+	
+};
+class RscProgress
+{
+	type = 8;
+	style = 0;
+	colorFrame[] = {0,0,0,1};
+	colorBar[] = {1,1,1,1};
+	texture = "#(argb,8,8,3)color(1,1,1,1)";
+	x = 0;
+	y = 0;
+	w = 1;
+	h = 0.03;
+};
 class RscControlsGroup
 {
 	deletable = 0;
@@ -1577,4 +1644,28 @@ class RscControlsGroup
 	h = 1;
 	shadow = 0;
 	style = 16;
+
+};
+class RscActiveText
+{
+	idc = -1;
+	type = CT_ACTIVETEXT;
+	style = ST_PICTURE;
+	x = 0.75; 
+	y = 0.5;
+	w = 0.2; 
+	h = 0.035;
+	font = PuristaMedium;
+	sizeEx = 0.024;
+	color[] = { 1, 1, 1, 1 };
+	colorActive[] = { 1, 0.2, 0.2, 1 };
+	colorDisabled[] = {1,1,1,1};
+	soundEnter[] = { "", 0, 1 };   // no sound
+	soundPush[] = { "", 0, 1 };
+	soundClick[] = { "", 0, 1 };
+	soundEscape[] = { "", 0, 1 };
+	action = "hint ""Good choice!""";
+	tooltip = "";
+	text = "";
+	default = true;
 };

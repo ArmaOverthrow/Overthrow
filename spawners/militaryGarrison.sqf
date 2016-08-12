@@ -60,6 +60,92 @@ while{true} do {
 				_group call initMilitaryPatrol;
 				_range = _range + 50;
 			};
+			
+			_vehgarrison = server getVariable format["vehgarrison%1",_name];
+			{
+				_vgroup = creategroup blufor;
+				_vehtype = _x;
+				_pos = [_posTown,[10,50]] call SHK_pos;
+				_pos = [_pos,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
+				_veh =  _vehtype createVehicle _pos;
+				_veh setVariable ["vehgarrison",_name,false];
+				
+				_veh addEventHandler ["GetIn",{						
+					_unit = _this select 2;						
+					_v = _this select 0;
+					if(isPlayer _unit) then {
+						_v setVariable ["owner",getPlayerUID _unit,true];
+						_v setVariable ["stolen",true,true];
+						_g = _v getVariable "vehgarrison";
+						_vg = server getVariable format["vehgarrison%1",_g];
+						_vg deleteAt (_vg find (typeof _veh));
+						server setVariable [format["vehgarrison%1",_g],_vg,false];
+						
+						if(_unit call unitSeen) then {
+							_unit setCaptive false;
+							{
+								if(side _x == west) then {
+									_x reveal [_unit,1.5];		
+									sleep 0.4;
+								};
+							}foreach(_unit nearentities ["Man",800]);
+						};
+					};
+				}];
+				
+				_dir = random 360;
+				_veh setDir _dir;
+				if(random 100 < 99) then {
+					createVehicleCrew _veh;
+				};
+				_soldiers pushback _veh;
+				sleep 0.1;
+				{
+					[_x] joinSilent _vgroup;
+					_x setVariable ["garrison","HQ",false];
+					_soldiers pushback _x;
+				}foreach(crew _veh);
+				_vgroup call initMilitaryPatrol;
+			}foreach(_vehgarrison);
+			
+			_airgarrison = server getVariable format["airgarrison%1",_name];			
+			{				
+				_vehtype = _x;
+				_pos = [_posTown,[10,50]] call SHK_pos;
+				_pos = [_pos,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
+				_veh =  _vehtype createVehicle _pos;
+				_veh setVariable ["airgarrison",_name,false];
+				
+				_veh addEventHandler ["GetIn",{						
+					_unit = _this select 2;						
+					_v = _this select 0;
+					if(isPlayer _unit) then {
+						_v setVariable ["owner",getPlayerUID _unit,true];
+						_v setVariable ["stolen",true,true];
+						_g = _v getVariable "airgarrison";
+						_vg = server getVariable format["airgarrison%1",_g];
+						_vg deleteAt (_vg find (typeof _veh));
+						server setVariable [format["airgarrison%1",_g],_vg,false];
+						
+						if(_unit call unitSeen) then {
+							_unit setCaptive false;
+							{
+								if(side _x == west) then {
+									_x reveal [_unit,1.5];		
+									sleep 0.4;
+								};
+							}foreach(_unit nearentities ["Man",800]);
+						};
+					};
+				}];
+				
+				_dir = random 360;
+				_veh setDir _dir;
+				
+				_soldiers pushback _veh;
+				sleep 0.1;				
+			}foreach(_airgarrison);
+			
 			{
 				_x addCuratorEditableObjects [_soldiers,true];
 			} forEach allCurators;

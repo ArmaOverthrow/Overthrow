@@ -6,18 +6,24 @@ _shopkeeper addAction ["Buy", {
 	_s = _b getVariable "stock";
 	_town = (getpos player) call nearestTown;
 	_standing = player getVariable format['rep%1',_town];
+	player setVariable ["shopping",_b,false];
 	createDialog "AIT_dialog_buy";
 	{			
 		_cls = _x select 0;
 		_num = _x select 1;
 		_price = [_town,_cls,_standing] call getPrice;
 		_name = "";
+		_pic = "";
 		if(_cls in AIT_allBackpacks) then {
 			_name = _cls call ISSE_Cfg_Vehicle_GetName;
+			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 		}else{
 			_name = _cls call ISSE_Cfg_Weapons_GetName;
+			_pic = _cls call ISSE_Cfg_Weapons_GetPic;
 		};
-		_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
+		_idx = lbAdd [1500,format["%1 x %2",_num,_name]];
+		lbSetPicture [1500,_idx,_pic];
+		lbSetValue [1500,_idx,_price];
 		lbSetData [1500,_idx,_cls];
 	}foreach(_s);
 	
@@ -55,12 +61,17 @@ _shopkeeper addAction ["Sell", {
 			if(_price <= 0) then {_price = 1};
 			
 			_name = "";
+			_pic = "";
 			if(_cls in AIT_allBackpacks) then {
 				_name = _cls call ISSE_Cfg_Vehicle_GetName;
+				_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 			}else{
 				_name = _cls call ISSE_Cfg_Weapons_GetName;
+				_pic = _cls call ISSE_Cfg_Weapons_GetPic;
 			};
 			_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
+			lbSetPicture [1500,_idx,_pic];
+			lbSetValue [1500,_idx,_price];
 			lbSetData [1500,_idx,_cls];
 		};
 	}foreach(_s);

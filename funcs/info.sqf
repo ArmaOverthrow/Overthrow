@@ -7,21 +7,21 @@ ISSE_Cfg_WeaponInfo = {
         getText(_cfg >> "displayName")
     }
     else {
-        "/"
+        ""
     };
 	
     _DescLong  = if (isText(_cfg >> "Library" >> "libTextDesc")) then {
         getText(_cfg >> "Library" >> "libTextDesc")
     }
     else {
-        "/"
+        ""
     };
 	
     _Pic = if (isText(_cfg >> "picture")) then {
         getText(_cfg >> "picture")
     }
     else {
-        "/"
+        ""
     };
 	
     _Type = if (isText(_cfg >> "type")) then {
@@ -43,21 +43,21 @@ ISSE_Cfg_MagazineInfo = {
         getText(_cfg >>"displayName")
     }
     else {
-        "/"
+        ""
     };
 	
     _DescLong  = if (isText(_cfg >> "Library" >> "libTextDesc")) then {
         getText(_cfg >> "Library" >>"libTextDesc")
     }
     else {
-        "/"
+        ""
     };
 	
     _Pic = if (isText(_cfg >> "picture")) then {
         getText(_cfg >> "picture")
     }
     else {
-        "/"
+        ""
     };
 	
     _Type = if (isText(_cfg >> "type")) then {
@@ -86,21 +86,21 @@ ISSE_Cfg_VehicleInfo = {
         getText(_cfg >> "displayName")
     }
     else {
-        "/"
+        ""
     };
 	
     _DescLong = if (isText(_cfg >> "Library" >> "libTextDesc")) then {
         getText(_cfg >> "Library" >> "libTextDesc")
     }
     else {
-        "/"
+        ""
     };
 	
     _Pic = if (isText(_cfg >> "picture")) then {
         getText(_cfg >> "picture")
     }
     else {
-        "/"
+        ""
     };
 	
     _Type = if (isText(_cfg >> "type")) then {

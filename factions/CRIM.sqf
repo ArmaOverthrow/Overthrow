@@ -1,35 +1,35 @@
 if (!isServer) exitwith {};
 
 _leaderpos = objNULL;
-
-{
-	_town = _x;
-	_posTown = server getVariable _town;
-	_mSize = 300;
-	if(_town in AIT_capitals) then {
-		_mSize = 800;
-	};
-	_garrison = 0;	
-	_stability = server getVariable format ["stability%1",_town];
-	server setVariable [format["crimnew%1",_town],false,false];
-	server setVariable [format["crimadd%1",_town],0,false];
-	if(_stability < 17) then {
-		_garrison = 2+round((1-(_stability / 10)) * 6);				
-		_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
-		if(isNil "_building") then {
-			_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
-		}else{
-			_leaderpos = getpos _building;
+if(AIT_StartupType == "NEW") then {
+	{
+		_town = _x;
+		_posTown = server getVariable _town;
+		_mSize = 300;
+		if(_town in AIT_capitals) then {
+			_mSize = 800;
 		};
-		
-		server setVariable [format["crimleader%1",_town],_leaderpos,false];
-	}else{
-		server setVariable [format["crimleader%1",_town],false,false];
-	};
-	server setVariable [format ["numcrims%1",_x],_garrison,false];
-	server setVariable [format ["timecrims%1",_x],0,false];
-}foreach (AIT_allTowns);
-
+		_garrison = 0;	
+		_stability = server getVariable format ["stability%1",_town];
+		server setVariable [format["crimnew%1",_town],false,false];
+		server setVariable [format["crimadd%1",_town],0,false];
+		if(_stability < 17) then {
+			_garrison = 2+round((1-(_stability / 10)) * 6);				
+			_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
+			if(isNil "_building") then {
+				_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
+			}else{
+				_leaderpos = getpos _building;
+			};
+			
+			server setVariable [format["crimleader%1",_town],_leaderpos,false];
+		}else{
+			server setVariable [format["crimleader%1",_town],false,false];
+		};
+		server setVariable [format ["numcrims%1",_x],_garrison,false];
+		server setVariable [format ["timecrims%1",_x],0,false];
+	}foreach (AIT_allTowns);
+};
 AIT_CRIMInitDone = true;
 publicVariable "AIT_CRIMInitDone";
 

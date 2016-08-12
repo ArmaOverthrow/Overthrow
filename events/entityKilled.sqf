@@ -18,6 +18,8 @@ if(isPlayer _me) exitWith {
 _me remoteExec ["removeAllActions",0,true];
 
 _garrison = _me getvariable "garrison";
+_vehgarrison = _me getvariable "vehgarrison";
+_airgarrison = _me getvariable "airgarrison";
 _criminal = _me getvariable "criminal";
 _crimleader = _me getvariable "crimleader";
 
@@ -63,31 +65,38 @@ if(!isNil "_criminal") then {
 			server setVariable [format["CRIMbounty%1",_town],0,true];
 		};		
 	}else{
-		if(!isNil "_garrison") then {
-			_pop = server getVariable format["garrison%1",_garrison];
-			if(_pop > 0) then {
-				server setVariable [format["garrison%1",_garrison],_pop - 1,true];
-			};
-			if(_garrison in AIT_allTowns) then {
-				_town = _garrison;
-			};
-			if((random 100) > 50) then {
-				[_town,-2] call stability;
-			};
-			_standingChange = -1;
-			if((_killer call unitSeen) || ((vehicle _killer) != _killer)) then {		
-				if(_killer call hasOwner) then {
-					_killer setCaptive false;
-					_owner = _killer getVariable "owner";
-					if(isPlayer _owner) then {							
-						if((_killer distance _owner) < 100) then {					
-							_killer = _owner;	
-							_owner setCaptive false;
-						};							
-					};				
+		if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") then {
+			if(!isNil "_garrison") then {
+				_pop = server getVariable format["garrison%1",_garrison];
+				if(_pop > 0) then {
+					server setVariable [format["garrison%1",_garrison],_pop - 1,true];
+				};
+				if(_garrison in AIT_allTowns) then {
+					_town = _garrison;
+				};
+				if((random 100) > 50) then {
+					[_town,-2] call stability;
 				};
 				if(isPlayer _killer) then {
 					_standingChange = -1;
+				}
+			};
+			
+			if(!isNil "_vehgarrison") then {
+				_vg = server getVariable format["vehgarrison%1",_vehgarrison];
+				_vg deleteAt (_vg find (typeof _me));
+				server setVariable [format["vehgarrison%1",_vehgarrison],_vg,false];
+			};
+			
+			if(!isNil "_airgarrison") then {
+				_vg = server getVariable format["airgarrison%1",_airgarrison];
+				_vg deleteAt (_vg find (typeof _me));
+				server setVariable [format["airgarrison%1",_airgarrison],_vg,false];
+			};
+			
+			if((_killer call unitSeen) || ((vehicle _killer) != _killer)) then {	
+				if(isPlayer _killer) then {
+					_killer setCaptive false;
 				};
 			};
 		}else{

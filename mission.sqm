@@ -5,10 +5,10 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=10;
+	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=1247;
+		nextID=1294;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=39;
+		nextID=43;
 	};
 	class Camera
 	{
-		pos[]={12437.256,149.0921,1917.4745};
-		dir[]={-0.45143864,-0.32362941,0.83155823};
-		up[]={-0.15440685,0.94617897,0.28442553};
-		aside[]={0.87885845,-3.0354859e-006,0.4771176};
+		pos[]={11507.595,43.542778,3276.5371};
+		dir[]={0.11697119,-0.55990064,-0.82031977};
+		up[]={0.079038985,0.82854897,-0.5543021};
+		aside[]={-0.99004006,5.181646e-007,-0.14117198};
 	};
 };
 binarizationWanted=0;
@@ -596,38 +596,41 @@ class Mission
 		class Item2
 		{
 			dataType="Marker";
-			position[]={9456.0127,-0.76369739,10045.463};
+			position[]={9456.0127,-1.6063939e-014,10045.463};
 			name="island_1";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			colorName="ColorPink";
+			alpha=0;
 			a=5186.9771;
 			b=3900;
 			angle=5.2220001;
 			id=392;
-			atlOffset=-38.340511;
+			atlOffset=-37.576813;
 		};
 		class Item3
 		{
 			dataType="Marker";
-			position[]={10653.594,97.483643,3599.8816};
+			position[]={10653.594,-7.4653022e-013,3599.8821};
 			name="island_2";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			colorName="ColorBlue";
+			alpha=0;
 			a=2601.116;
 			b=1945.116;
 			id=393;
-			atlOffset=-25.900803;
+			atlOffset=-123.38461;
 		};
 		class Item4
 		{
 			dataType="Marker";
-			position[]={4227.0801,-4.0669048e-016,3495.281};
+			position[]={4227.0801,-1.6063939e-014,3495.281};
 			name="island_3";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			colorName="ColorOrange";
+			alpha=0;
 			a=3098.604;
 			b=1876.465;
 			id=394;
@@ -636,11 +639,12 @@ class Mission
 		class Item5
 		{
 			dataType="Marker";
-			position[]={2362.061,-1.2188676e-036,7032.438};
+			position[]={2362.061,-7.3046528e-025,7032.438};
 			name="island_4";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			colorName="ColorBrown";
+			alpha=0;
 			a=1693.395;
 			b=1670.512;
 			id=395;
@@ -652,8 +656,9 @@ class Mission
 			position[]={2990.5691,1.2723444e+038,12211.5};
 			name="island_5";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			colorName="ColorWEST";
+			alpha=0;
 			a=1517.953;
 			b=2059.5359;
 			id=396;
@@ -662,15 +667,16 @@ class Mission
 		class Item7
 		{
 			dataType="Marker";
-			position[]={2831.7351,-0.46216714,9153.3379};
+			position[]={2831.7351,-7.3066407e-025,9153.3379};
 			name="island_6";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			colorName="ColorKhaki";
+			alpha=0;
 			a=481.065;
 			b=470.57001;
 			id=397;
-			atlOffset=-21.411148;
+			atlOffset=-20.94898;
 		};
 		class Item8
 		{
@@ -876,7 +882,8 @@ class Mission
 			position[]={12661.745,-0.55836368,14108.499};
 			name="island_7";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
+			alpha=0;
 			a=779.711;
 			b=484.405;
 			id=437;
@@ -2390,7 +2397,7 @@ class Mission
 			position[]={1047.865,-2.3575253e-021,2888.092};
 			name="blacklist_1";
 			markerType="RECTANGLE";
-			type="rectangle";
+			type="mil_box";
 			alpha=0;
 			a=290.35101;
 			b=271.086;
@@ -2411,6 +2418,7 @@ class Mission
 					name="control_2";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=401;
 					atlOffset=-13.015783;
 				};
@@ -2421,6 +2429,7 @@ class Mission
 					name="control_3";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=402;
 					atlOffset=-12.213486;
 				};
@@ -2431,6 +2440,7 @@ class Mission
 					name="control_4";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=404;
 					atlOffset=240.11781;
 				};
@@ -2441,6 +2451,7 @@ class Mission
 					name="control_5";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=405;
 					atlOffset=5.3583593;
 				};
@@ -2451,48 +2462,53 @@ class Mission
 					name="control_6";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=406;
 					atlOffset=22.641939;
 				};
 				class Item5
 				{
 					dataType="Marker";
-					position[]={11047.011,118.6535,3785.605};
+					position[]={11047.011,-1.6091695e-014,3785.605};
 					name="control_7";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1140;
-					atlOffset=36.413773;
+					atlOffset=-82.239731;
 				};
 				class Item6
 				{
 					dataType="Marker";
-					position[]={4196.5679,29.653259,3228.6904};
+					position[]={4196.5679,-4.819768e-018,3228.6899};
 					name="control_8";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1141;
-					atlOffset=0.022008896;
+					atlOffset=-29.631226;
 				};
 				class Item7
 				{
 					dataType="Marker";
-					position[]={3913.2815,14.37207,5815.5024};
+					position[]={3913.281,-1.6063939e-014,5815.502};
 					name="control_9";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1142;
-					atlOffset=-19.571568;
+					atlOffset=-33.943634;
 				};
 				class Item8
 				{
 					dataType="Marker";
-					position[]={9815.7168,111.52979,9720.9639};
+					position[]={9815.7168,-1.6071203e-014,9720.9639};
 					name="control_10";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1143;
-					atlOffset=37.700745;
+					atlOffset=-73.829048;
 				};
 				class Item9
 				{
@@ -2501,6 +2517,7 @@ class Mission
 					name="control_11";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1144;
 					atlOffset=9.5367432e-007;
 				};
@@ -2511,6 +2528,7 @@ class Mission
 					name="control_12";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1145;
 				};
 				class Item11
@@ -2520,6 +2538,7 @@ class Mission
 					name="control_13";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1146;
 					atlOffset=2.2799623;
 				};
@@ -2530,6 +2549,7 @@ class Mission
 					name="control_14";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1147;
 					atlOffset=2.2813101;
 				};
@@ -2540,6 +2560,7 @@ class Mission
 					name="control_15";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1148;
 					atlOffset=0.0056715012;
 				};
@@ -2550,6 +2571,7 @@ class Mission
 					name="control_16";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1149;
 				};
 				class Item15
@@ -2559,21 +2581,23 @@ class Mission
 					name="control_17";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1150;
 				};
 				class Item16
 				{
 					dataType="Marker";
-					position[]={7090.4087,-28.313316,7866.2607};
+					position[]={7090.4092,-1.6063939e-014,7866.2612};
 					name="control_1";
 					type="mil_triangle";
 					colorName="ColorWEST";
+					alpha=0;
 					id=1153;
-					atlOffset=-31.169832;
+					atlOffset=-2.8565161;
 				};
 			};
 			id=1139;
-			atlOffset=-48.982059;
+			atlOffset=-35.100716;
 		};
 		class Item21
 		{
@@ -2706,17 +2730,79 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={9494.9453,0.0014388561,4433.9463};
-						angles[]={0,3.3020861,0};
+						position[]={9494.9453,0.0013263226,4433.9458};
+						angles[]={0,3.302093,0};
 					};
 					side="Civilian";
 					flags=2;
 					class Attributes
 					{
+						init="this allowFleeing 0;" \n "this setSkill [""courage"",1];" \n "(group this) setBehaviour ""SAFE"";";
 					};
 					id=1211;
 					type="C_man_sport_1_F_tanoan";
-					atlOffset=19.463106;
+					atlOffset=19.462999;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ace_isHandcuffed";
+							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=1.02;
+								};
+							};
+						};
+						class Attribute2
+						{
+							property="ace_isSurrendered";
+							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						nAttributes=3;
+					};
 				};
 				class Item1
 				{
@@ -2947,24 +3033,48 @@ class Mission
 				};
 			};
 			id=1209;
-			atlOffset=19.463106;
+			atlOffset=19.462999;
 		};
 		class Item24
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={9494.9453,1.3162899,4433.8965};
-				angles[]={0,3.3020861,0};
+				position[]={9494.9453,1.3161774,4433.896};
+				angles[]={0,3.302093,0};
 			};
 			side="Civilian";
 			flags=2;
 			class Attributes
 			{
+				init="this allowDamage false;";
 			};
 			id=1210;
 			type="C_Boat_Transport_02_F";
-			atlOffset=19.463106;
+			atlOffset=19.462999;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ammoBox";
+					expression="[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"STRING"
+								};
+							};
+							value="[[[[""FirstAidKit""],[2]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item25
 		{
@@ -2978,17 +3088,79 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={2765.3987,0.0014388561,7776.375};
-						angles[]={0,3.2437665,0};
+						position[]={2765.3989,0.0017859936,7776.375};
+						angles[]={0,3.2437642,0};
 					};
 					side="Civilian";
 					flags=2;
 					class Attributes
 					{
+						init="this allowFleeing 0;" \n "this setSkill [""courage"",1];" \n "(group this) setBehaviour ""SAFE"";";
 					};
 					id=1230;
 					type="C_man_sport_1_F_tanoan";
-					atlOffset=10.867647;
+					atlOffset=10.867999;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ace_isHandcuffed";
+							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=0.98000002;
+								};
+							};
+						};
+						class Attribute2
+						{
+							property="ace_isSurrendered";
+							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						nAttributes=3;
+					};
 				};
 				class Item1
 				{
@@ -3155,14 +3327,14 @@ class Mission
 				class Item14
 				{
 					dataType="Waypoint";
-					position[]={2765.3987,0.5,7776.3252};
+					position[]={2765.3989,0.50034714,7776.3252};
 					type="Cycle";
 					class Effects
 					{
 					};
 					showWP="NEVER";
 					id=1244;
-					atlOffset=11.367647;
+					atlOffset=11.367999;
 					class AttachedTo
 					{
 						id=1229;
@@ -3195,24 +3367,48 @@ class Mission
 				};
 			};
 			id=1228;
-			atlOffset=10.867647;
+			atlOffset=10.867999;
 		};
 		class Item26
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2765.3987,1.3162899,7776.3252};
-				angles[]={0,3.2437665,0};
+				position[]={2765.3989,1.316637,7776.3252};
+				angles[]={0,3.2437642,0};
 			};
 			side="Civilian";
 			flags=2;
 			class Attributes
 			{
+				init="this allowDamage false;";
 			};
 			id=1229;
 			type="C_Boat_Transport_02_F";
-			atlOffset=10.867647;
+			atlOffset=10.867999;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ammoBox";
+					expression="[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"STRING"
+								};
+							};
+							value="[[[[""FirstAidKit""],[2]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 	};
 };

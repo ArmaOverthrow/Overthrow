@@ -55,13 +55,19 @@ _civ addAction ["Buy", {
 		_cls = _x select 0;
 		_price = _x select 1;
 		_txt = _cls;
+		_pic = "";
+		
 		if(_cls in AIT_allMagazines) then {	
-			_txt = format["--- %1",_cls call ISSE_Cfg_Magazine_GetName];
+			_txt = format["--- %1",_cls call ISSE_Cfg_Magazine_GetName];			
+			_pic = _cls call ISSE_Cfg_Magazine_GetPic;
 		}else{
-			_txt = _cls call ISSE_Cfg_Weapons_GetName;
+			_txt = _cls call ISSE_Cfg_Weapons_GetName;	
+			_pic = _cls call ISSE_Cfg_Weapons_GetPic;
 		};
-		_idx = lbAdd [1500,format["%1 ($%2)",_txt,_price]];
+		_idx = lbAdd [1500,format["%1",_txt]];
 		lbSetData [1500,_idx,_cls];
+		lbSetValue [1500,_idx,_price];
+		lbSetPicture [1500,_idx,_pic];
 	}foreach(_stock);
 	
 },nil,1.5,false,true,"","",5];

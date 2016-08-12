@@ -19,7 +19,7 @@ AIT_saving = false;
 AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-AIT_NATOwait = 300; //Half the Average time between NATO orders
+AIT_NATOwait = 20; //Half the Average time between NATO orders
 AIT_CRIMwait = 200; //Half the Average time between crim changes
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
@@ -88,6 +88,25 @@ AIT_NATO_HQ = "Tuvanaka Airbase";
 AIT_NATO_AirSpawn = "NATO_airspawn";
 AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
+AIT_NATO_Vehicles_Garrison = [
+	["B_T_MBT_01_TUSK_F", 6],
+	["B_T_MBT_01_cannon_F",6],
+	["B_T_LSV_01_armed_F",12],
+	["B_T_MRAP_01_hmg_F",20],
+	["B_T_MRAP_01_gmg_F",20],
+	["B_T_APC_Tracked_01_AA_F",10]
+];
+
+AIT_NATO_Vehicles_AirGarrison = [
+	["B_T_VTOL_01_vehicle_F",1],
+	["B_T_VTOL_01_infantry_F",1],
+	["B_Heli_Light_01_armed_F",1],
+	["B_Heli_Transport_03_unarmed_F",2],
+	["B_Heli_Light_01_F",4],
+	["B_Heli_Attack_01_F",1],
+	["B_Heli_Transport_01_F",2]
+];
+
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
 AIT_NATO_Unit_Police = "B_Gen_Soldier_F";
 AIT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F";
@@ -96,12 +115,10 @@ AIT_NATO_Vehicle_Police = "B_GEN_Offroad_01_gen_F";
 AIT_NATO_Vehicle_Transport = "B_T_Truck_01_transport_F";
 AIT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
 AIT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
-AIT_NATO_Vehicles_AirSupport = ["B_Heli_Light_01_armed_F","B_Heli_Light_01_armed_F"];
+AIT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
 AIT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 AIT_NATO_Vehicle_AirTransport = "B_Heli_Transport_03_F";
 
-AIT_NATO_Unit_PoliceHeliPilot = "B_T_HeliPilot_F";
-AIT_NATO_Unit_PoliceHeliCoPilot = "B_T_Helicrew_F";
 AIT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F","B_T_Sniper_F","B_T_Spotter_F"];
@@ -127,15 +144,12 @@ AIT_vehTypes_crim = ["I_G_Offroad_01_F","I_C_Offroad_02_unarmed_F","C_Offroad_02
 AIT_items = [];
 if(AIT_hasAce) then {
 	[AIT_items,[
-		["ACE_fieldDressing",10,0,0,0.1],
-		["ACE_elasticBandage",15,0,0,0.2],
+		["ACE_fieldDressing",1,0,0,0.1],
+		["ACE_elasticBandage",2,0,0,0.2],
 		["ACE_SpraypaintBlue",20,0,0,0.2],
 		["ACE_SpraypaintRed",20,0,0,0.2],
 		["ACE_SpraypaintBlack",20,0,0,0.2],
-		["ACE_morphine",50,0,0,0.2],
-		["ACE_EarPlugs",5,0,0,0.2],
-		["ACE_epinephrine",50,0,0,0.2],
-		["ACE_adenosine",50,0,0,0.2],
+		["ACE_EarPlugs",5,0,0,0.2],		
 		["ACE_Sandbag_empty",1,0,0,0],
 		["ACE_Altimeter",110,0,0,1]		
 	]] call BIS_fnc_arrayPushStack;
@@ -148,51 +162,48 @@ if(AIT_hasAce) then {
 
 [AIT_items,[
 	["ToolKit",25,1,0,0],
-	["ItemGPS",90,0,0,1],
+	["ItemGPS",60,0,0,1],
 	["ItemCompass",5,0.1,0,0],
 	["ItemMap",1,0,0,0],
-	["ItemWatch",50,0,0,1],
-	["Binocular",120,0,0,1],
-	["Rangefinder",280,0,0,1],
-	["Laserdesignator",500,1,0,0],
-	["NVGoggles",700,1,0,0],
-	["NVGoggles_OPFOR",700,1,0,0],
-	["ItemRadio",60,0,0,1]
+	["ItemWatch",30,0,0,1],
+	["Binocular",70,0,0,1],
+	["Rangefinder",130,0,0,1],
+	["ItemRadio",20,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 
 AIT_backpacks = [
-	["B_AssaultPack_cbr",50,0,0,1],
-	["B_AssaultPack_blk",50,0,0,1],
-	["B_AssaultPack_khk",50,0,0,1],
-	["B_AssaultPack_sgg",50,0,0,1],
-	["B_FieldPack_cbr",70,0,0,1],
-	["B_FieldPack_blk",70,0,0,1],
-	["B_FieldPack_khk",70,0,0,1],
-	["B_FieldPack_oli",70,0,0,1],
-	["B_Kitbag_cbr",85,0,0,1],
-	["B_Kitbag_sgg",85,0,0,1],
-	["B_Carryall_cbr",100,0,0,1],
-	["B_Carryall_khk",100,0,0,1],
-	["B_Carryall_oli",100,0,0,1],
-	["B_Bergen_dgtl_F",150,0,0,1],
-	["B_Bergen_hex_F",150,0,0,1]
+	["B_AssaultPack_cbr",30,0,0,1],
+	["B_AssaultPack_blk",30,0,0,1],
+	["B_AssaultPack_khk",30,0,0,1],
+	["B_AssaultPack_sgg",30,0,0,1],
+	["B_FieldPack_cbr",50,0,0,1],
+	["B_FieldPack_blk",50,0,0,1],
+	["B_FieldPack_khk",50,0,0,1],
+	["B_FieldPack_oli",50,0,0,1],
+	["B_Kitbag_cbr",65,0,0,1],
+	["B_Kitbag_sgg",65,0,0,1],
+	["B_Carryall_cbr",80,0,0,1],
+	["B_Carryall_khk",80,0,0,1],
+	["B_Carryall_oli",80,0,0,1],
+	["B_Bergen_dgtl_F",100,0,0,1],
+	["B_Bergen_hex_F",100,0,0,1]
 ];
 AIT_vehicles = [
-	["CUP_C_Skoda_Blue_CIV",50,1,1,1],
-	["CUP_C_Skoda_Green_CIV",60,1,1,1],
-	["CUP_C_Skoda_Red_CIV",60,1,1,1],
-	["CUP_C_Skoda_White_CIV",60,1,1,1],
-	["CUP_C_Datsun",100,1,1,1],
-	["CUP_C_Datsun_Covered",100,1,1,1],
-	["C_Quadbike_01_F",200,1,1,1],
-	["CUP_C_Golf4_black_Civ",400,1,1,1],
-	["CUP_C_Golf4_blue_Civ",400,1,1,1],
-	["CUP_C_Golf4_green_Civ",400,1,1,1],
-	["CUP_C_Golf4_white_Civ",400,1,1,1],
-	["CUP_C_Golf4_yellow_Civ",400,1,1,1],
-	["CUP_C_Octavia_CIV",500,1,1,1],
-	["C_SUV_01_F",600,1,1,1],
-	["C_Offroad_01_F",700,1,1,1],
+	["CUP_C_Skoda_Blue_CIV",30,1,1,1],
+	["CUP_C_Skoda_Green_CIV",30,1,1,1],
+	["CUP_C_Skoda_Red_CIV",30,1,1,1],
+	["CUP_C_Skoda_White_CIV",30,1,1,1],
+	["CUP_C_Datsun",60,1,1,1],
+	["CUP_C_Datsun_Covered",60,1,1,1],
+	["C_Quadbike_01_F",80,1,1,1],
+	["CUP_C_Golf4_black_Civ",200,1,1,1],
+	["CUP_C_Golf4_blue_Civ",200,1,1,1],
+	["CUP_C_Golf4_green_Civ",200,1,1,1],
+	["CUP_C_Golf4_white_Civ",200,1,1,1],
+	["CUP_C_Golf4_yellow_Civ",200,1,1,1],
+	["CUP_C_Octavia_CIV",300,1,1,1],
+	["C_SUV_01_F",500,1,1,1],
+	["C_Offroad_01_F",600,1,1,1],
 	["C_Offroad_02_unarmed_F",800,1,1,1],
 	["C_Van_01_transport_F",1000,1,1,1],
 	["C_Van_01_box_F",1000,1,1,1],

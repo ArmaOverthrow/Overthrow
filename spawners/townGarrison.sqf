@@ -72,6 +72,12 @@ while{true} do {
 					_x setDamage 0;							
 				}foreach(units _x);							
 			}foreach(_groups);		
+		}else{
+			_need = server getVariable format ["garrisonadd%1",_town];			
+			if(_need > 1) then {		
+				server setVariable[format ["garrisonadd%1",_town],_need-2,false];
+				server setVariable[format ["garrison%1",_town],_numNATO+2,false];
+			}			
 		};
 	}else{
 		if (spawner getVariable _id) then {
@@ -79,12 +85,7 @@ while{true} do {
 			//...
 			_need = server getVariable format ["garrisonadd%1",_town];			
 			if(_need > 1) then {
-				_new = _town call reGarrisonTown;
-				{
-					if !(group _x in _groups) then {
-						_groups pushback (group _x);
-					};
-				}foreach(_new);
+				_town spawn reGarrisonTown;				
 				server setVariable[format ["garrisonadd%1",_town],_need-2,false];
 			}			
 		}else{			

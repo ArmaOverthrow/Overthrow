@@ -57,13 +57,13 @@ _attackpos = [_posTown,[0,150]] call SHK_pos;
 
 //Determine direction to attack from (preferrably away from water)
 _attackdir = random 360;
-if(surfaceIsWater ([_posTown,350,_attackDir] call BIS_fnc_relPos)) then {
+if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
 	_attackdir = _attackdir + 180;
 	if(_attackdir > 359) then {_attackdir = _attackdir - 359};
-	if(surfaceIsWater ([_posTown,350,_attackDir] call BIS_fnc_relPos)) then {
+	if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
 		_attackdir = _attackdir + 90;
 		if(_attackdir > 359) then {_attackdir = _attackdir - 359};
-		if(surfaceIsWater ([_posTown,350,_attackDir] call BIS_fnc_relPos)) then {
+		if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
 			_attackdir = _attackdir + 180;
 			if(_attackdir > 359) then {_attackdir = _attackdir - 359};
 		};

@@ -2,7 +2,7 @@ private ["_b","_s","_town","_standing","_cls","_num","_price","_idx"];
 _idx = lbCurSel 1500;
 _cls = lbData [1500,_idx];
 
-_town = text ((nearestLocations [ getPos player, ["NameCityCapital","NameCity","NameVillage","CityCenter"],1000]) select 0); 
+_town = (getPos player) call nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
 _price = [_town,_cls,_standing] call getPrice;
@@ -52,7 +52,7 @@ if(_cls in AIT_allVehicles) then {
 			{
 				_owner = _x getVariable "owner";
 				if(!isNil "_owner") then {
-					if(_owner == player) exitWith {_box = _x};				
+					if(_owner == getplayerUID player) exitWith {_box = _x};				
 				};
 			}foreach(nearestObjects [getpos player, [AIT_item_Storage],1200]);
 			if(typename _box == "OBJECT") then {
@@ -64,60 +64,67 @@ if(_cls in AIT_allVehicles) then {
 		}else{					
 			_b = player getVariable "shopping";
 			_s = _b getVariable "stock";
-			
+			_handled = true;
 			if(_cls in AIT_allBackpacks) then {	
-				if(backpack player != "") exitWith {"You already have a backpack" call notify_minor};
+				if(backpack player != "") exitWith {"You already have a backpack" call notify_minor;_handled = false};
 			}else{
-				if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor};
+				if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
 			};
-			if (_cls in AIT_illegalItems) exitWith {
-				player setVariable ["money",_money-_price,true];
-				player addItem _cls;
-			};
-			_done = false;
-			_soldout = false;			
-			_stockidx = 0;
-			{	
-				if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
-					_num = (_x select 1)-1;		
-					if(_num == 0) then {
-						_soldout = true;
-					};
-					_x set [1,_num];
-					_done = true;
-				};
-				_stockidx = _stockidx + 1;
-			}foreach(_s);	
-
-			if(_done) then {	
-				if(_soldout) then {
-					_s deleteAt _stockidx;
-				};
-				player setVariable ["money",_money-_price,true];
-				_b setVariable ["stock",_s,true];	
-				if(_cls in AIT_allBackpacks) then {	
-					player addBackpack _cls;
-				}else{
+			if(_handled) then {
+				if (_cls in AIT_illegalItems) exitWith {
+					player setVariable ["money",_money-_price,true];
 					player addItem _cls;
 				};
-				
-				lbClear 1500;
-				{			
-					_cls = _x select 0;
-					_num = _x select 1;
-					_name = "";
-					if(_cls in AIT_allBackpacks) then {
-						_name = _cls call ISSE_Cfg_Vehicle_GetName;
-					}else{
-						_name = _cls call ISSE_Cfg_Weapons_GetName;
+				_done = false;
+				_soldout = false;			
+				_stockidx = 0;
+				{	
+					if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
+						_num = (_x select 1)-1;		
+						if(_num == 0) then {
+							_soldout = true;
+						};
+						_x set [1,_num];
+						_done = true;
 					};
-					_price = [_town,_cls,_standing] call getPrice;
-					_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
-					lbSetData [1500,_idx,_cls];
-				}foreach(_s);
+					_stockidx = _stockidx + 1;
+				}foreach(_s);	
+
+				if(_done) then {	
+					if(_soldout) then {
+						_s deleteAt _stockidx;
+					};
+					player setVariable ["money",_money-_price,true];
+					_b setVariable ["stock",_s,true];	
+					if(_cls in AIT_allBackpacks) then {	
+						player addBackpack _cls;
+					}else{
+						player addItem _cls;
+					};
+					
+					lbClear 1500;
+					{			
+						_cls = _x select 0;
+						_num = _x select 1;
+						_price = [_town,_cls,_standing] call getPrice;
+						_name = "";
+						_pic = "";
+						if(_cls in AIT_allBackpacks) then {
+							_name = _cls call ISSE_Cfg_Vehicle_GetName;
+							_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+						}else{
+							_name = _cls call ISSE_Cfg_Weapons_GetName;
+							_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+						};
+						_idx = lbAdd [1500,format["%1 x %2",_num,_name]];
+						lbSetPicture [1500,_idx,_pic];
+						lbSetValue [1500,_idx,_price];
+						lbSetData [1500,_idx,_cls];
+					}foreach(_s);
+				};
 			};
-		}		
-	}
-}
+		};
+	};
+};
 
 

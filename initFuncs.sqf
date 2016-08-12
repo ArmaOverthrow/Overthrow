@@ -17,6 +17,7 @@ getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuild
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
+displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";

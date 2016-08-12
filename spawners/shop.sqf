@@ -16,7 +16,7 @@ _vehs = [];
 
 waitUntil{spawner getVariable _id};
 [_building] spawn run_shop;
-
+sleep 4;
 while{true} do {
 	//Do any updates here that should happen whether spawned or not
 	
