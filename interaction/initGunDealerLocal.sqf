@@ -32,7 +32,7 @@ _civ addAction ["Buy", {
 				_stock pushBack [_magazines select 0,2];				
 			};
 		};
-		server setVariable [format["gunstock%1",_town],_stock,false];
+		server setVariable [format["gunstock%1",_town],_stock,true];
 		
 		{
 			_cost = cost getVariable _x;

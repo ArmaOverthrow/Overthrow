@@ -46,6 +46,6 @@ _objects = [];
 	_objects pushBack _o;
 }foreach(_template);
 
-_building setVariable ["furniture",_objects,true];
+_building setVariable ["furniture",_objects,false];
 
 [_objects];

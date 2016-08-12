@@ -10,7 +10,7 @@ _cls = lbData [1500,_idx];
 
 _price = [_town,_cls,_standing] call getSellPrice;
 _done = false;
-
+_mynum = 0;
 _s = _b getVariable "stock";
 {
 	_c = _x select 0;

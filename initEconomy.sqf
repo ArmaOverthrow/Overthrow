@@ -79,7 +79,7 @@ AIT_activeShops = [];
 		_mrk setMarkerAlpha 0;
 	};
 	
-	server setVariable [format["shopsin%1",_name],_shops,true];
+	server setVariable [format["shopsin%1",_name],count _shops,true];
 
 	_popVar=format["population%1",_name];
 	server setVariable [_popVar,_pop,true];

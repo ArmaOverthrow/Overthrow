@@ -48,7 +48,7 @@ _intruck = _veh call unitStock;
 
 }foreach(_items);
 
-_building setVariable ["stock",_stock];
+_building setVariable ["stock",_stock,true];
 
 clearItemCargoGlobal _veh;
 {				

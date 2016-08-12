@@ -22,6 +22,6 @@ _group setBehaviour "CARELESS";
 
 _unit setSkill 0.5;
 
-_unit setvariable ["owner","self"];
+_unit setvariable ["owner","self",true];
 
 (group _unit) allowFleeing 0;

@@ -80,8 +80,8 @@ while {_count < _numgroups} do {
 	//Transport
 	_tgroup = creategroup blufor;
 	_pos = [_pos,60,80,false,[0,0],[100,AIT_NATO_Vehicle_AirTransport]] call SHK_pos;
-	_veh = createVehicle [AIT_NATO_Vehicle_AirTransport, _pos, [], 0,""];  	
 	sleep 0.1;
+	_veh = createVehicle [AIT_NATO_Vehicle_AirTransport, _pos, [], 0,""];  		
 	_vehs pushback _veh;
 	
 	
@@ -91,11 +91,13 @@ while {_count < _numgroups} do {
 	{
 		[_x] joinSilent _tgroup;
 		_x setVariable ["NOAI",true,false];
+		_x setVariable ["garrison","HQ",false];
 	}foreach(crew _veh);	
 	
 	{
 		_x moveInCargo _veh;
 		_soldiers pushback _x;
+		_x setVariable ["garrison","HQ",false];
 	}foreach(units _group);	
 	
 	sleep 1;
@@ -105,13 +107,14 @@ while {_count < _numgroups} do {
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
 	_wp setWaypointSpeed "FULL";
-	_wp setWaypointCompletionRadius 50;
+	_wp setWaypointCompletionRadius 150;
 	_wp setWaypointStatements ["true","(vehicle this) flyInHeight 150;"];
 	
 	_wp = _tgroup addWaypoint [_ao,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
+	wp setWaypointCompletionRadius 50;
 	_wp setWaypointSpeed "FULL";
 	
 	_wp = _tgroup addWaypoint [_ao,0];
@@ -213,6 +216,7 @@ _pos = AIT_NATO_HQPos;
 	createVehicleCrew _veh;
 	{
 		[_x] joinSilent _group;
+		_x setVariable ["garrison","HQ",false];
 	}foreach(crew _veh);	
 	_wp = _group addWaypoint [_posTown,50];
 	_wp setWaypointType "MOVE";
@@ -241,6 +245,7 @@ sleep 20;
 	createVehicleCrew _veh;
 	{
 		[_x] joinSilent _group;
+		_x setVariable ["garrison","HQ",false];
 	}foreach(crew _veh);	
 	
 	{

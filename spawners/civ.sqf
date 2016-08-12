@@ -31,6 +31,9 @@ while{true} do {
 			
 			if(_pop > 15) then {
 				_numCiv = round(_pop * AIT_spawnCivPercentage);
+				if(_numCiv < 5) then {
+					_numCiv = 5;
+				};
 			}else {
 				_numCiv = _pop;
 			};
@@ -53,7 +56,8 @@ while{true} do {
 			if(_numCiv > 100) then {_pergroup = 8};
 			_idd = 1;
 			while {_count < _numCiv} do {
-				_groupcount = 0;
+				_groupcount = 0;				
+				sleep 0.1;
 				_group = createGroup civilian;
 				_groups pushback _group;
 				_group setGroupId [format["%1 %2-1",_town,_idd],""];
@@ -66,12 +70,11 @@ while{true} do {
 					
 					_civ = _group createUnit [_civTypes call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
-					[_civ] call initCivilian;		
+					[_civ] spawn initCivilian;		
 					_count = _count + 1;
 					_groupcount = _groupcount + 1;
 				};
 				[_group,_home] call civilianGroup;
-				sleep 0.01;
 				if((_hour > 18 and _hour < 23) or (_hour < 9 and _hour > 5)) then {
 					//Put a light on at home
 					_pos = getpos _home;
@@ -82,6 +85,13 @@ while{true} do {
 					_lights pushback _light;
 				};
 			};
+			
+			{
+				_cur = _x;
+				{	
+					_cur addCuratorEditableObjects [(units _x),true];				
+				}foreach(_groups);				
+			} forEach allCurators;
 			
 			sleep 1;
 			{	

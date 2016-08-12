@@ -7,4 +7,4 @@ _data = [];
 	_data pushback [_x,_me getVariable _x];
 }foreach(allVariables _me);
 
-server setVariable [_uid,_data,true];
+server setVariable [_uid,_data,false];

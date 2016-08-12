@@ -46,7 +46,7 @@ while{true} do {
 			_start = [_start,12,_dir+90] call BIS_fnc_relPos;
 			
 			_civ = _group createUnit [AIT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
-			_civ setVariable ["garrison",_name,true];
+			_civ setVariable ["garrison",_name,false];
 			_civ setRank "MAJOR";
 			_soldiers pushBack _civ;
 			[_civ,_name] call initMilitary;
@@ -63,7 +63,7 @@ while{true} do {
 			while {(spawner getVariable _id) and (_count < _numNATO)} do {	
 				_pos = [_start,0,60, 0.1, 0, 0, 0] call BIS_fnc_findSafePos;		
 				_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
-				_civ setVariable ["garrison",_name,true];
+				_civ setVariable ["garrison",_name,false];
 				_soldiers pushBack _civ;
 				_civ setRank "CAPTAIN";
 				[_civ,_name] call initMilitary;

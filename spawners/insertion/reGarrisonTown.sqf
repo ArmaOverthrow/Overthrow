@@ -94,7 +94,7 @@ if(!isNil "_close") then {
 	_police pushBack _veh;
 	
 	_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
-	_civ setVariable ["garrison",_town,true];
+	_civ setVariable ["garrison",_town,false];
 	_civ setRank "CAPTAIN";
 	_police pushBack _civ;
 	[_civ,_town] call initPolice;
@@ -106,7 +106,7 @@ if(!isNil "_close") then {
 	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
 	_civ setRank "SERGEANT";
-	_civ setVariable ["garrison",_town,true];
+	_civ setVariable ["garrison",_town,false];
 	
 	_police pushBack _civ;
 	[_civ,_town] call initPolice;
@@ -115,8 +115,8 @@ if(!isNil "_close") then {
 	};
 	_count = _count + 2;
 	
-	_group setVariable ["veh",_veh];
-	_group setVariable ["transport",_police];	
+	_group setVariable ["veh",_veh,false];
+	_group setVariable ["transport",_police,false];	
 	
 	if(isNil "_drop") then {
 		_drop = (([_townPos, 100, 800, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 200) select 0;

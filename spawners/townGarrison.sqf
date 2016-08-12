@@ -34,7 +34,7 @@ while{true} do {
 				
 				_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
 				_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
-				_civ setVariable ["garrison",_town,true];
+				_civ setVariable ["garrison",_town,false];
 
 				_civ setRank "CORPORAL";
 				_civ setBehaviour "SAFE";
@@ -46,7 +46,7 @@ while{true} do {
 					_pos = [[[_start,50]]] call BIS_fnc_randomPos;
 					
 					_civ = _group createUnit [AIT_NATO_Unit_Police, _pos, [],0, "NONE"];
-					_civ setVariable ["garrison",_town,true];
+					_civ setVariable ["garrison",_town,false];
 
 					_civ setRank "PRIVATE";
 					[_civ,_town] call initPolice;

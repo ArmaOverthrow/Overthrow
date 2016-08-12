@@ -16,7 +16,7 @@ _abandoned = [];
 	};
 }foreach (AIT_allTowns);
 server setVariable ["NATOabandoned",_abandoned,false];
-
+server setVariable ["garrisonHQ",1000,false];
 {
 	_airports pushBack text _x;
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["Airport"], 50000]);
@@ -76,8 +76,8 @@ server setVariable ["NATOabandoned",_abandoned,false];
 			_garrison = round(_garrison * 2);
 		};
 	};
-	server setVariable [format ["garrison%1",_x],_garrison,true];
-	server setVariable [format ["garrisonadd%1",_x], 0,true];
+	server setVariable [format ["garrison%1",_x],_garrison,false];
+	server setVariable [format ["garrisonadd%1",_x], 0,false];
 	
 }foreach (AIT_allTowns);
 publicVariable "AIT_NATOobjectives";

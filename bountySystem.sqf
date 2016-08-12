@@ -4,7 +4,6 @@ if !(isServer) exitWith {};
 
 {
 	server setVariable [format["CRIMbounty%1",_x],0,true];	
-	server setVariable [format["NATObounty%1",_x],0,true];
 }foreach(AIT_allTowns);
 
 while {true} do {

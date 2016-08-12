@@ -4,7 +4,7 @@ _unit = _this select 0;
 
 _town = _this select 1;
 
-_unit setVariable ["garrison",_town,true];
+_unit setVariable ["garrison",_town,false];
 
 _stability = server getVariable format["stability%1",_town];
 

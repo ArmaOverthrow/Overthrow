@@ -9,12 +9,12 @@ _stock = [];
 
 _building addEventHandler ["killed",{
 	_b = _this select 0;
-	_b setVariable ["status","finished",true];
+	_b setVariable ["status","finished",false];
 }];
 
 sleep (random 2);
 
-_building setVariable ["status","idle",true];
+_building setVariable ["status","idle",false];
 _status = "idle";
 _doingdelivery = false;
 
@@ -46,11 +46,11 @@ while {_status != "finished"} do {
 			};
 		}foreach(AIT_allItems + AIT_allBackpacks);
 		_building setVariable ["stock",_stock,true];
-		_building setVariable ["employees",_numemployees,true];
-		_building setVariable ["security",_numsecurity,true];
-		_building setVariable ["delivery",false,true];
-		_building setVariable ["deliveryid","",true];
-		_building setVariable ["orders",[],true];
+		_building setVariable ["employees",_numemployees,false];
+		_building setVariable ["security",_numsecurity,false];
+		_building setVariable ["delivery",false,false];
+		_building setVariable ["deliveryid","",false];
+		_building setVariable ["orders",[],false];
 	}else{
 		//check my orders
 		_hour = date select 3;

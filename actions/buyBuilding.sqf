@@ -39,7 +39,7 @@ if(_handled) then {
 
 	playSound "ClickSoft";
 	
-	_building setVariable ["owner",player];
+	_building setVariable ["owner",player,true];
 	player setVariable ["money",_money-_price,true];
 	
 	_mrk = createMarkerLocal [format["bought%1",str(_building)],getpos _building];

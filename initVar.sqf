@@ -14,11 +14,10 @@ AIT_standardMarkup = 0.2; //Markup in shops is calculated from this
 AIT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 
-//AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
-AIT_spawnTowns = ["Balavu"];
+AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-AIT_NATOwait = 20; //Half the Average time between NATO orders
+AIT_NATOwait = 300; //Half the Average time between NATO orders
 AIT_CRIMwait = 200; //Half the Average time between crim changes
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];

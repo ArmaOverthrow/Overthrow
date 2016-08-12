@@ -40,8 +40,8 @@ while{true} do {
 						
 				_veh setDir (getDir _building)-90;
 				_vehs pushBack _veh;
-				_building setVariable ["truck",_veh,true];
-				_veh setVariable ["distro",_building,true];
+				_building setVariable ["truck",_veh,false];
+				_veh setVariable ["distro",_building,false];
 							
 				_veh addEventHandler ["GetIn",{						
 					_unit = _this select 2;						
@@ -99,20 +99,20 @@ while{true} do {
 			_veh addEventHandler ["ContainerOpened",illegalContainerOpened];
 			
 			if(AIT_hasAce) then {
-				_veh setVariable ["ace_illegalCargo",true,true];				
+				_veh setVariable ["ace_illegalCargo",true,false];				
 			};
 			sleep 0.2;
 			_vehs pushBack _veh;
 			{		
 				if((random 100) > 97) then {
 					_pos = [_pos,2.5,(getDir _building)-90] call BIS_fnc_relPos;
-					_veh setVariable ["stockof",_building];
+					_veh setVariable ["stockof",_building,false];
 					_veh = _vehtype createVehicle _pos;
 					clearItemCargoGlobal _veh;					
 					_veh setDir (getDir _building);
 					_veh addEventHandler ["ContainerOpened",illegalContainerOpened];
 					if(AIT_hasAce) then {
-						_veh setVariable ["ace_illegalCargo",true,true];				
+						_veh setVariable ["ace_illegalCargo",true,false];				
 					};
 					sleep 0.2;
 				};

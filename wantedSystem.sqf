@@ -8,18 +8,33 @@ _unit setVariable ["hiding",false,true];
 
 _unit addEventHandler ["take", {
 	_me = _this select 0;
-	_container = _this select 1;
-	_type = typeof _container;
-	if(_container isKindOf "Man") then {
-		if !(_container call hasOwner) then {
-			//Looting dead bodies is illegal
+	if (captive _me) then {
+		_container = _this select 1;
+		_type = typeof _container;
+		if(_container isKindOf "Man") then {
+			if !(_container call hasOwner and (_me call unitSeen)) then {
+				//Looting dead bodies is illegal
+				_me setCaptive false;			
+			}
+		};
+	};
+}];
+
+_unit addEventHandler ["Fired", {
+	_me = _this select 0;
+	_weaponFired = _this select 1;
+	_range = 800;
+	if (captive _me) then {
+		//See if anyone heard the shots
+		_silencer = _me weaponAccessories currentMuzzle _me select 0;
+		if(!isNil "_silencer" && {_silencer != ""}) then {
+			//Shot was suppressed
+			_range = 50;
+		};
+		
+		if({side _x == west || side _x == east} count (_me nearentities ["Man",_range]) > 0) then {
 			_me setCaptive false;
-			{
-				if((side _x == west) and (_x knowsabout _unit > 1)) then {
-					_x reveal [_unit,1.5];					
-				};
-			}foreach(allUnits);
-		}
+		};
 	};
 }];
 

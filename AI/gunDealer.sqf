@@ -16,5 +16,5 @@ _unit forceAddUniform (AIT_clothes_guerilla call BIS_fnc_selectRandom);
 _group = group _unit;
 
 _group setBehaviour "CARELESS";
-_unit setvariable ["owner","self"];
+_unit setvariable ["owner","self",true];
 (group _unit) allowFleeing 0;

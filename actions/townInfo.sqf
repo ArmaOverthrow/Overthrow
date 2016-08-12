@@ -17,7 +17,7 @@ while {visibleMap} do {
 			_pop = server getVariable format["population%1",_town];
 			_stability = server getVariable format["stability%1",_town];
 			_rep = player getVariable format["rep%1",_town];
-			_numshops = count(server getVariable format["shopsin%1",_town]);
+			_numshops = server getVariable format["shopsin%1",_town];
 			if(_numshops == 0) then {
 				_numshops = "None";
 			};
