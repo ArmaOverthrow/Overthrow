@@ -26,14 +26,14 @@ class RscTitles {
 				x = safezoneX + (0.8 * safezoneW);
 				y = safezoneY + (0.15 * safezoneH);
 				w = 0.19 * safezoneW;
-				h = 0.0660106 * safezoneH;
+				h = 0.1 * safezoneH;
                 size = 0.055;//0.020
                 colorBackground[] = {0,0,0,0};
                 colorText[] = {0.34,0.33,0.33,0};//{1,1,1,1}
                 text = "";
-                font = "PuristaSemiBold";
+                font = "PuristaLight";
 					class Attributes {
-						font = "PuristaSemiBold";
+						font = "PuristaLight";
 						color = "#C1C0BB";//"#FFFFFF";
 						align = "RIGHT";
 						valign = "top";

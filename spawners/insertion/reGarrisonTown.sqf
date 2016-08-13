@@ -60,12 +60,11 @@ if(_stability < 25) then {
 	while {_count < _num} do {
 		_start = [_spawnpos,[10,29],random 360] call SHK_pos;
 		_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
-		_civ setRank "CAPTAIN";
+		_civ setRank "SERGEANT";
 		_police pushBack _civ;
 		[_civ,_town] call initPolice;
 		_count = _count + 1;
 		sleep 0.1;
-		_townPos spawn CTRGsupport;
 	};
 }else{
 	if(_stability < 40 and (random 100) > 50) then {
@@ -75,7 +74,7 @@ if(_stability < 25) then {
 		while {_count < _num} do {
 			_start = [_spawnpos,[10,29],random 360] call SHK_pos;
 			_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
-			_civ setRank "SERGEANT";
+			_civ setRank "CORPORAL";
 			
 			_police pushBack _civ;
 			[_civ,_town] call initPolice;
@@ -111,7 +110,7 @@ _police pushBack _veh;
 _start = [_spawnpos,[10,29],random 360] call SHK_pos;
 _civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 _civ setVariable ["garrison",_town,false];
-_civ setRank "CAPTAIN";
+_civ setRank "CORPORAL";
 _civ moveInCargo _veh;
 _police pushBack _civ;
 [_civ,_town] call initPolice;
@@ -122,7 +121,7 @@ if(_stability > 50) then {
 sleep 0.1;
 _start = [_spawnpos,[10,29],random 360] call SHK_pos;
 _civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
-_civ setRank "SERGEANT";
+_civ setRank "PRIVATE";
 _civ moveInCargo _veh;
 _civ setVariable ["garrison",_town,false];
 

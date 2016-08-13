@@ -5,29 +5,6 @@ private ["_Unit","_Wall","_Direction","_Killer","_UnitSide","_NoFlanking","_Grab
 
 _Unit = _this select 0;
 
-_Unit spawn
-{
-sleep 8;
-private ["_Wall"];
-	_Direction = 0;
-	for "_i" from 0 to 1 step 1 do
-	{
-		_Wall = "Land_InvisibleBarrier_F" createvehiclelocal (getpos _this);
-		_Wall disableCollisionWith _this;		
-		_Wall setDir _Direction;
-		_Wall setposATL (getposATL _this);		
-		
-		
-		//[[_Wall],"DisableCollisionALL"] call BIS_fnc_MP;
-		[_Wall] remoteExec ["DisableCollisionALL",0];
-		_Wall disableCollisionWith player;
-		
-		_Wall spawn {sleep 120;deletevehicle _this;};
-		_Direction = 90;
-	};
-};
-
-
 if !(side _unit in VCOM_SideBasedMovement) exitWith {};
 
 

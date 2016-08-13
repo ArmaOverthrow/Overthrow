@@ -12,10 +12,13 @@ removeVest player;
 player linkItem "ItemMap";
 
 
+
 if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
 	call compile preprocessFileLineNumbers "initVar.sqf";
 };
+
+player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
 
 if(player == bigboss) then {
 	waitUntil {!(isnull (findDisplay 46))};
@@ -26,14 +29,25 @@ if(player == bigboss) then {
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 
-
-player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
-
 _newplayer = true;
 _furniture = [];
 _town = "";
 _pos = [];
 _housepos = [];
+
+player addEventHandler ["HandleDamage", {
+	_me = _this select 0;
+	_dmg = _this select 2;
+	_src = _this select 3;
+	_proj = _this select 4;
+	_veh = vehicle _src;
+	if(_veh != _src) then {
+		if((driver _veh) == _src) then {
+			_dmg = _dmg * 0.01;
+		};
+	};
+	_dmg;
+}];
 
 if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
 	_data = server getvariable (getplayeruid player);
