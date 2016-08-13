@@ -24,12 +24,29 @@ while {alive player} do {
 			_wanted = "WANTED";
 		};		
 	};
-	_knows = (blufor knowsabout player);
+	_standing = "";
+	_rep = player getVariable "rep";
+	if(_rep > -1) then {
+		_standing = format["+%1",_rep];
+	}else{
+		_standing = format["%1",_rep];
+	};
+
 	_seen = "";
-	if(player call unitSeen) then {
-		_seen = "o_o";
-	};	
-	_txt = format ["<t size='0.6'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];
+	if(player call unitSeenNATO) then {
+		_seen = "<t color='#5D8AA8'>o_o</t>";
+		if(_rep < -50) then {
+			_seen = "<t color='#5D8AA8'>O_O</t>";
+		};
+	}else{
+		if(player call unitSeenCRIM) then {
+			_seen = "<t color='#B2282f'>o_o</t>";
+			if((abs _rep) > 50) then {
+				_seen = "<t color='#B2282f'>O_O</t>";
+			};
+		};
+	};
+	_txt = format ["<t size='0.6'>$%1<br/>%2<br/>%3<br/>%4</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_standing,_seen,_wanted];
 	if (_txt != _currentTxt) then {			
 		_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
 		_setText ctrlCommit 0;

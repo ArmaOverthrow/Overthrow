@@ -5,9 +5,8 @@ private ["_data"];
 
 _data = profileNameSpace getVariable ("Overthrow.save.001");
 if(isNil "_data") exitWith {
-	AIT_startupType = "NEW";
+	server setVariable ["StartupType","NEW",true];
 	hint "No save found, starting new game";
-	publicVariable "AIT_StartupType";
 };
 {
 	_key = _x select 0;
@@ -51,6 +50,4 @@ if(isNil "_data") exitWith {
 	};	
 }foreach(_data);
 
-
-AIT_StartupType = "LOAD";
-publicVariable "AIT_StartupType";
+server setVariable ["StartupType","LOAD",true];

@@ -5,7 +5,7 @@
 
 author="ARMAzac";
 OnLoadName = "Overthrow.Tanoa";
-OnLoadMission = "v0.2.3 20160812";
+OnLoadMission = "v0.3.0 (20160813)";
 loadScreen = "pic.jpg";
 
 class Header

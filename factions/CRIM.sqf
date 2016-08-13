@@ -1,7 +1,7 @@
 if (!isServer) exitwith {};
 
 _leaderpos = objNULL;
-if(AIT_StartupType == "NEW") then {
+if((server getVariable "StartupType") == "NEW") then {
 	{
 		_town = _x;
 		_posTown = server getVariable _town;

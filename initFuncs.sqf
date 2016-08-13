@@ -1,4 +1,6 @@
-
+if(isServer) then {
+	server setVariable ["StartupType","",true];
+};
 //Helper functions
 townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
 randomPosition = compileFinal preProcessFileLineNumbers "funcs\randomPosition.sqf";
@@ -36,6 +38,8 @@ civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
+NATOcounter = compileFinal preProcessFileLineNumbers "AI\QRF\NATOcounter.sqf";
+CTRGSupport = compileFinal preProcessFileLineNumbers "AI\QRF\CTRGSupport.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -99,8 +103,7 @@ newGame = {
 	"Please wait.. generating economy" remoteExec['blackFaded',0];
 	[] execVM "initEconomy.sqf";
 	waitUntil {!isNil "AIT_economyInitDone"};
-	AIT_StartupType = "NEW";
-	publicVariable "AIT_StartupType";
+	server setVariable["StartupType","NEW",true];
 };
 
 setupKeyHandler = {
@@ -152,9 +155,16 @@ stability = {
 	
 	//update the marker
 	if(_stability < 50) then {
+		_town setMarkerColor "ColorRed";
 		_town setMarkerAlpha 1.0 - (_stability / 50);
 	}else{
-		_town setMarkerAlpha 0;
+		_abandoned = server getVariable "NATOabandoned";
+		if(_town in _abandoned) then {
+			_town setMarkerAlpha ((_stability - 50) / 100);
+			_town setMarkerColor "ColorGreen";
+		}else{
+			_town setMarkerAlpha 0;
+		};
 	}
 };
 

@@ -50,7 +50,7 @@ _vehtype = AIT_NATO_Vehicle_PoliceHeli;
 _drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
 _spawnpos = AIT_NATO_HQPos;	
 
-if(_stability < 20) then {
+if(_stability < 25) then {
 	//last ditch efforts to save this town
 	//send in the big guns
 	_vehtype = AIT_NATO_Vehicle_AirTransport;
@@ -65,10 +65,11 @@ if(_stability < 20) then {
 		[_civ,_town] call initPolice;
 		_count = _count + 1;
 		sleep 0.1;
+		_townPos spawn CTRGsupport;
 	};
 }else{
 	if(_stability < 40 and (random 100) > 50) then {
-		//Shit's getting real, send more dudes
+		//Shit's getting real, send more dudes		
 		_num = 2;
 		_count = 0;
 		while {_count < _num} do {
@@ -81,18 +82,17 @@ if(_stability < 20) then {
 			_count = _count + 1;
 			sleep 0.1;
 		};
-	};
+	};	
+};
+
+if(_stability < 40 and (random 100) > 90) then {
+	_townPos spawn CTRGsupport;
 };
 
 _veh =  _vehtype createVehicle _spawnpos;
 _dir = [_spawnpos,_townPos] call BIS_fnc_dirTo;
 _veh setDir _dir;
 _tgroup addVehicle _veh;
-
-{
-	_x moveInCargo _veh;
-}foreach(_police);
-	
 
 createVehicleCrew _veh;
 sleep 0.1;
@@ -101,6 +101,10 @@ sleep 0.1;
 	_x setVariable ["NOAI",true,false];
 	_x setVariable ["garrison","HQ",false];
 }foreach(crew _veh);	
+
+{
+	_x moveInCargo _veh;
+}foreach(_police);
 
 _police pushBack _veh;
 
@@ -161,7 +165,7 @@ _moveto = [AIT_NATO_HQPos,200,_dir] call SHK_pos;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "LOITER";
-_wp setWaypointBehaviour "SAFE";
+_wp setWaypointBehaviour "CARELESS";
 _wp setWaypointSpeed "FULL";	
 _wp setWaypointCompletionRadius 100;
 

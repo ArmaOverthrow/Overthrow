@@ -21,7 +21,7 @@ while{true} do {
 		if (spawner getVariable _id) then {
 			_active = true;
 			
-			_numCRIM = server getVariable format ["numcrims%1",_town];
+			_numCRIM = server getVariable [format ["numcrims%1",_town],0];
 			
 			if(_numCRIM > 0) then {
 				_time = server getVariable format ["timecrims%1",_town];

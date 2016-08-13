@@ -19,7 +19,7 @@ AIT_saving = false;
 AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-AIT_NATOwait = 20; //Half the Average time between NATO orders
+AIT_NATOwait = 300; //Half the Average time between NATO orders
 AIT_CRIMwait = 200; //Half the Average time between crim changes
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
@@ -43,7 +43,7 @@ if(AIT_hasAce) then {
 }else{
 	AIT_consumableItems = ["FirstAidKit","Medikit"];
 };
-AIT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F"];
+AIT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F","H_HelmetB_TI_tna_F"];
 AIT_illegalVests = ["V_TacVest_gen_F"];
 
 if(AIT_hasAce) then {
@@ -123,6 +123,9 @@ AIT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F","B_T_Sniper_F","B_T_Spotter_F"];
 
+AIT_NATO_Units_CTRGSupport = ["B_CTRG_Soldier_TL_tna_F","B_CTRG_Soldier_tna_F","B_CTRG_Soldier_M_tna_F","B_CTRG_Soldier_Medic_tna_F"];
+AIT_NATO_Vehicle_CTRGTransport = "B_CTRG_Heli_Transport_01_tropic_F";
+
 AIT_NATO_weapons_Police = ["hgun_PDW2000_F","SMG_05_F","SMG_01_F","SMG_02_F","arifle_SPAR_01_blk_F","CUP_arifle_M4A1_black","arifle_MXC_Black_F"];
 AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 
@@ -144,14 +147,15 @@ AIT_vehTypes_crim = ["I_G_Offroad_01_F","I_C_Offroad_02_unarmed_F","C_Offroad_02
 AIT_items = [];
 if(AIT_hasAce) then {
 	[AIT_items,[
-		["ACE_fieldDressing",1,0,0,0.1],
-		["ACE_elasticBandage",2,0,0,0.2],
+		["ACE_fieldDressing",2,0,0,0.1],
+		["ACE_elasticBandage",3,0,0,0.2],
 		["ACE_SpraypaintBlue",20,0,0,0.2],
 		["ACE_SpraypaintRed",20,0,0,0.2],
 		["ACE_SpraypaintBlack",20,0,0,0.2],
 		["ACE_EarPlugs",5,0,0,0.2],		
-		["ACE_Sandbag_empty",1,0,0,0],
-		["ACE_Altimeter",110,0,0,1]		
+		["ACE_Sandbag_empty",2,0,0,0],
+		["ACE_Altimeter",110,0,0,1],
+		["ACE_Banana",1,0,0,0]
 	]] call BIS_fnc_arrayPushStack;
 }else{
 	[AIT_items,[
@@ -343,4 +347,7 @@ AIT_allTowns = [];
 
 {
 	AIT_allTowns pushBack (text _x);
+	if(isServer) then {
+		server setVariable [text _x,getpos _x,true];
+	};
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);

@@ -1,52 +1,48 @@
 private ["_group","_population","_posTown","_vehs","_soldier","_vehtype","_pos","_wp","_numgroups","_attackpos","_count","_tgroup","_ao"];
 
-_town = _this;
+_objective = _this;
+_posTown = getMarkerPos _objective;
 
-_population = server getVariable format["population%1",_town];
-_posTown = server getVariable _town;
 
-_mSize = 350;
-if(_town in AIT_capitals) then {
-	_mSize = 700;
-};
 
-_tskid = [resistance,[format["assault%1",_town]],[format["NATO is assaulting %1 from Tuvanaka Airbase.",_town],format["Battle of %1",_town],format["assault%1",_town]],_posTown,1,2,true,"Defend",true] call BIS_fnc_taskCreate;
+_tskid = [resistance,[format["counter%1",_objective]],[format["NATO is sending forces to %1 from Tuvanaka Airbase. This is our chance to capture it if we can hold the field.",_objective],format["Capture %1",_objective],format["counter%1",_objective]],_posTown,1,2,true,"Target",true] call BIS_fnc_taskCreate;
 
 _vehs = [];
 _soldiers = [];
 _groups = [];
 
 //Drones
-if(_population > 50) then {
-	{
-		_group = createGroup blufor;
-		_vehtype = _x;
-		_pos = [getMarkerPos AIT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
-		_veh = createVehicle [_vehtype, _pos, [], 0,""];  	
-		_veh setDir 50;
-		_vehs pushback _veh;
-		_group addVehicle _veh;
-		createVehicleCrew _veh;	
-		{
-			[_x] joinSilent _group;
-		}foreach(crew _veh);
-		
-		_wp = _group addWaypoint [_posTown,0];
-		_wp setWaypointType "SAD";
-		_wp setWaypointBehaviour "COMBAT";
-		_wp setWaypointSpeed "FULL"; 
-		
-		sleep 0.1;
-	}foreach(AIT_NATO_Vehicles_AirDrones);
 
+{
+	_group = createGroup blufor;
+	_vehtype = _x;
+	_pos = [getMarkerPos AIT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
+	_veh = createVehicle [_vehtype, _pos, [], 0,""];  	
+	_veh setDir 50;
+	_vehs pushback _veh;
+	_group addVehicle _veh;
+	createVehicleCrew _veh;	
 	{
-		_x addCuratorEditableObjects [_vehs+_soldiers,true];
-	} forEach allCurators;
-	sleep 25;
+		[_x] joinSilent _group;
+	}foreach(crew _veh);
+	
+	_wp = _group addWaypoint [_posTown,0];
+	_wp setWaypointType "SAD";
+	_wp setWaypointBehaviour "COMBAT";
+	_wp setWaypointSpeed "FULL"; 
+	
+	sleep 0.1;
+}foreach(AIT_NATO_Vehicles_AirDrones);
+
+{
+	_x addCuratorEditableObjects [_vehs+_soldiers,true];
+} forEach allCurators;
+sleep 25;
+
+_numgroups = 2;
+if(_objective in AIT_NATO_Priority) then {
+	_numgroups = 4;
 };
-
-_numgroups = 1+floor(_population / 100);
-if(_numgroups > 6) then {_numgroups = 6};
 
 _count = 0;
 _pos = AIT_NATO_HQPos;
@@ -131,7 +127,7 @@ while {_count < _numgroups} do {
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "LOITER";
-	_wp setWaypointBehaviour "CARELESS";
+	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointSpeed "FULL";	
 	_wp setWaypointCompletionRadius 100;
 	
@@ -153,10 +149,10 @@ while {_count < _numgroups} do {
 	sleep 20;
 };
 
-[_soldiers,_attackpos,_town,_tskid] spawn {
+[_soldiers,_attackpos,_objective,_tskid] spawn {
 	_soldiers = _this select 0;
 	_attackpos = _this select 1;
-	_town = _this select 2;
+	_objective = _this select 2;
 	_tskid = _this select 3;
 	
 	private ["_size","_active","_alive"];
@@ -179,7 +175,8 @@ while {_count < _numgroups} do {
 		}foreach(_soldiers);
 		if(count _alive <= _lostat) then {
 			[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-			_active = false;
+			_active = false;			
+			_objective setMarkerType "flag_Tanoa";
 		}else{
 			if(((count _inrange) / (count _alive)) > 0.7) then {
 				//check for any alive enemies
@@ -193,10 +190,10 @@ while {_count < _numgroups} do {
 					//NATO has won					
 					[_tskid, "FAILED",true] spawn BIS_fnc_taskSetState;
 					_active = false;
-					[_town,50] call stability;
 					_abandoned = server getVariable "NATOabandoned";
-					_abandoned deleteAt (_abandoned find _town);
+					_abandoned deleteAt (_abandoned find _objective);
 					server setVariable ["NATOabandoned",_abandoned,true];
+					server setVariable [format["garrison%1",_objective],8 + random 12,true];
 				};
 			};
 		};		
@@ -205,7 +202,6 @@ while {_count < _numgroups} do {
 
 };
 
-if(_population < 250) exitWith{};
 _pos = AIT_NATO_HQPos;
 //Air support (Heli)
 {	
@@ -234,35 +230,35 @@ _pos = AIT_NATO_HQPos;
 } forEach allCurators;
 
 
-if(_population < 500) exitWith{};
-sleep 20; 
-
-//Air support (Winged)
-{	
-	_group = createGroup blufor;
-	_vehtype = _x;
-	_pos = [getMarkerPos AIT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
-	_veh = createVehicle [_vehtype, _pos, [], 0,""];  	
-	_vehs pushback _veh;
-	_veh setDir 50;
-	_group addVehicle _veh;
-	createVehicleCrew _veh;
-	{
-		[_x] joinSilent _group;
-		_x setVariable ["garrison","HQ",false];
-	}foreach(crew _veh);	
-	
-	{
-		_x addCuratorEditableObjects [[_veh],true];
-	} forEach allCurators;
-	
-	_wp = _group addWaypoint [_posTown,0];
-	_wp setWaypointType "SAD";
-	_wp setWaypointBehaviour "COMBAT";
-	_wp setWaypointSpeed "FULL"; 
+if(_objective in AIT_NATO_Priority) then {
+	sleep 20; 
+	//Air support (Winged)
+	{	
+		_group = createGroup blufor;
+		_vehtype = _x;
+		_pos = [getMarkerPos AIT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
+		_veh = createVehicle [_vehtype, _pos, [], 0,""];  	
+		_vehs pushback _veh;
+		_veh setDir 50;
+		_group addVehicle _veh;
+		createVehicleCrew _veh;
+		{
+			[_x] joinSilent _group;
+			_x setVariable ["garrison","HQ",false];
+		}foreach(crew _veh);	
 		
-	sleep 5;
-}foreach(AIT_NATO_Vehicles_AirWingedSupport);
+		{
+			_x addCuratorEditableObjects [[_veh],true];
+		} forEach allCurators;
+		
+		_wp = _group addWaypoint [_posTown,0];
+		_wp setWaypointType "SAD";
+		_wp setWaypointBehaviour "COMBAT";
+		_wp setWaypointSpeed "FULL"; 
+			
+		sleep 5;
+	}foreach(AIT_NATO_Vehicles_AirWingedSupport);
+};
 
 
 

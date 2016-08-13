@@ -7,7 +7,7 @@ _airports = [];
 
 _NATObusy = false;
 _abandoned = [];
-if(AIT_StartupType == "NEW") then {
+if((server getVariable "StartupType") == "NEW") then {
 	{
 		_stability = server getVariable format ["stability%1",_x];
 		if(_stability < 11) then {
@@ -30,12 +30,6 @@ if(AIT_StartupType == "NEW") then {
 		
 			AIT_NATOobjectives pushBack [_pos,_name];
 			
-			_mrk = createMarker [_name,_pos];
-			_mrk setMarkerShape "ICON";
-			_mrk setMarkerType "hd_objective";
-			_mrk setMarkerColor "ColorBlue";
-			_mrk setMarkerAlpha 0;
-			
 			_garrison = floor(4 + random(8));
 			if(_name in AIT_NATO_priority) then {
 				_garrison = floor(16 + random(8));
@@ -50,6 +44,8 @@ if(AIT_StartupType == "NEW") then {
 		
 		sleep 0.05;
 	}foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameLocal","Airport"], 50000]);
+	
+	server setVariable ["NATOobjectives",AIT_NATOobjectives];
 
 	//Randomly distribute NATO's vehicles
 	{
@@ -109,10 +105,23 @@ if(AIT_StartupType == "NEW") then {
 		sleep 0.05;
 	}foreach (AIT_allTowns);
 };
-publicVariable "AIT_NATOobjectives";
+AIT_NATOobjectives = server getVariable "NATOobjectives";
+
 AIT_NATOInitDone = true;
 publicVariable "AIT_NATOInitDone";
-sleep 10;
+sleep 5;
+{
+	_name = _x select 1;
+	_mrk = createMarker [_name,_pos];
+	_mrk setMarkerShape "ICON";
+	if(_name in (server getVariable "NATOabandoned")) then {
+		_mrk setMarkerType "flag_Tanoa";
+		_mrk setMarkerAlpha 1;
+	}else{
+		_mrk setMarkerType "Faction_CUP_NATO";
+		_mrk setMarkerAlpha 0;
+	};
+}foreach(AIT_NATOobjectives);		
 
 while {true} do {	
 	_abandoned = server getVariable "NATOabandoned";
@@ -145,6 +154,23 @@ while {true} do {
 		};
 		sleep 0.1;
 	}foreach (AIT_allTowns);
+	
+	{
+		_pos = _x select 0;
+		_name = _x select 1;
+		if !(_name in _abandoned) then {	
+			_garrison = server getvariable format["garrison%1",_name];
+			_vehgarrison = server getvariable format["vehgarrison%1",_name];
+			
+			if(_garrison == 0) then {
+				_name spawn NATOcounter;				
+				_abandoned pushback _name;
+				server setVariable ["NATOabandoned",_abandoned,false];
+				_name setMarkerAlpha 1;				
+			};
+		}
+	}foreach(AIT_NATOobjectives);
+	
 	sleep AIT_NATOwait + round(random AIT_NATOwait);	
 };
 

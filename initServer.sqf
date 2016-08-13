@@ -9,7 +9,7 @@ if (!isMultiplayer) exitWith {};
 call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
 
-waitUntil {!isNil "AIT_StartupType"};
+waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "initEconomyLoad.sqf";
 
 [] execVM "factions\NATO.sqf";

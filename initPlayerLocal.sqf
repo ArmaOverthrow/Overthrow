@@ -21,11 +21,11 @@ if(player == bigboss) then {
 	waitUntil {!(isnull (findDisplay 46))};
 	sleep 1;
 	_nul = createDialog "AIT_dialog_start";
-	waitUntil {!isNil "AIT_StartupType"};
 }else{
-	titleText ["Waiting for host...", "BLACK FADED", 0];
-	waitUntil {sleep 2;server getVariable ["spawntown",""] != ""};
+	titleText ["Waiting for host...", "BLACK FADED", 0];	
 };
+waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
+
 
 player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
 
@@ -35,7 +35,7 @@ _town = "";
 _pos = [];
 _housepos = [];
 
-if(isMultiplayer || AIT_StartupType == "LOAD") then {
+if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
 	_data = server getvariable (getplayeruid player);
 	if !(isNil "_data") then {
 		_newplayer = false;

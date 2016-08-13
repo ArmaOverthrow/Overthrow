@@ -5,15 +5,13 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
 //For each city and/or town
 
 {
-	_name = text _x;// Get name
-	
-	server setVariable [_name,getpos _x,true];
+	_name = _x;// Get name
 	
 	_mSize = 350;
 	if(_name in AIT_capitals + AIT_sprawling) then {//larger search radius
 		_mSize = 1000;
 	};
-	_pos=getpos _x;
+	_pos= server getVariable _x;
 	
 	_info = [_name,_pos];
 
@@ -68,7 +66,7 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
 	{
 		if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
 	}foreach(AIT_regions);
-}foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);
+}foreach (AIT_allTowns);
 
 server setVariable ["spawntown",AIT_spawnTowns call BIS_fnc_selectrandom,true];
 {

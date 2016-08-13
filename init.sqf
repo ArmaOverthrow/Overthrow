@@ -21,7 +21,7 @@ if(!isMultiplayer) then {
 	call compile preprocessFileLineNumbers "initVar.sqf";
 
 	//SINGLE PLAYER init	
-	waitUntil {!isNil "AIT_StartupType"};
+	waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 	[] execVM "initEconomyLoad.sqf";
 		
 	//Init factions	
