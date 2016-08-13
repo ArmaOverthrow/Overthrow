@@ -1,4 +1,4 @@
-![image](https://cloud.githubusercontent.com/assets/19246239/17642714/fc9a8588-6193-11e6-8ddc-aa630382078a.png)
+![image](https://cloud.githubusercontent.com/assets/19246239/17642719/5af52d0e-6194-11e6-82c7-6d86b0b5d705.png)
 
 # Overthrow.Tanoa
 A dynamic and persistent RPG for Arma 3 APEX, Overthrow starts you in a random small town on one of the many islands of Tanoa as a lowly citizen with nothing but a map, an ammobox, and a dream.
