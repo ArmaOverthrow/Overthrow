@@ -21,11 +21,16 @@ if(rain > 0.9) then {
 };
 
 _ctrl = (findDisplay 8001) displayCtrl 1100;
+_standing = player getVariable format["rep%1",_town];
+_plusmin = "";
+if(_standing > -1) then {_plusmin = "+"};
 
 _ctrl ctrlSetStructuredText parseText format["
-	<t align='left' size='0.8'>Weather: %1</t><br/>
-	<t align='left' size='0.8'>Forecast: %2</t><br/>
-",_weather,server getVariable "forecast"];
+	<t align='left' size='1.3'>%1</t><br/>
+	<t align='left' size='1'>%2 (%3%4)</t><br/>	
+	<t align='left' size='0.7'>Weather: %5</t><br/>
+	<t align='left' size='0.7'>Forecast: %6</t><br/>
+",name player,_town,_plusmin,_standing,_weather,server getVariable "forecast"];
 
 sleep 0.1;
 //Nearest building info

@@ -59,10 +59,12 @@ _eh = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 				if(_ka > 1) then {
 					_opacity = (_ka-1) / 1;
 					if(_opacity > 1) then {_opacity = 1};
+					_pos = (player targetKnowledge _u) select 6;
+					if((_pos select 0) == 0) then {_pos = getpos _u};
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
 						[0,0.3,0.59,_opacity],
-						(player targetKnowledge _u) select 6,
+						_pos,
 						30,
 						30,
 						0
@@ -86,10 +88,12 @@ _eh = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 				if(_ka > 1) then {
 					_opacity = (_ka-1) / 1;
 					if(_opacity > 1) then {_opacity = 1};
+					_pos = (player targetKnowledge _u) select 6;
+					if((_pos select 0) == 0) then {_pos = getpos _u};
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
 						[0.5,0,0,_opacity],
-						(player targetKnowledge _u) select 6,
+						_pos,
 						30,
 						30,
 						0

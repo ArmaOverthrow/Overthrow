@@ -1,6 +1,6 @@
 private [];
 _mode = "Clear";
-_forecast = "";
+_forecast = "Clear";
 
 _raintarget = rain;
 _overtarget = overcast;
@@ -27,7 +27,7 @@ while {true} do {
 	};
 	//Yeh thats about it..
 	
-	if(_count > _nextchange) then {
+	if(_count >= _nextchange) then {
 		_mode = _forecast;
 		_forecast = "Clear";
 		_count = 0;
