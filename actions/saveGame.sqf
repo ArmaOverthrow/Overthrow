@@ -6,7 +6,9 @@ publicVariable "AIT_saving";
 _data = [];
 //get all server data
 {
-	_data pushback [_x,server getVariable _x];
+	if(_x != "StartupType") then {
+		_data pushback [_x,server getVariable _x];
+	};
 }foreach(allVariables server);
 
 //get all online player data

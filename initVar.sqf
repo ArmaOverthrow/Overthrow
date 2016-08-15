@@ -16,11 +16,17 @@ AIT_randomSpawnTown = false; //if true, every player will start in a different t
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 AIT_saving = false;
 
-AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Katkoula","Moddergat"]; //Towns where new players will spawn
+AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
 AIT_NATOwait = 300; //Half the Average time between NATO orders
 AIT_CRIMwait = 200; //Half the Average time between crim changes
+
+AIT_Placeables = [
+	["Sandbags",20,["Land_BagFence_01_long_green_F","Land_BagFence_01_short_green_F","Land_BagFence_01_round_green_F","Land_BagFence_01_corner_green_F","Land_BagFence_01_end_green_F"],[0,2,0.8]],
+	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2]],
+	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,3,1.2]]	
+];
 
 AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
 AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan"];
@@ -52,19 +58,13 @@ if(AIT_hasAce) then {
 	AIT_illegalItems = [];
 };
 
-//Player items
-AIT_item_Main = "Land_Laptop_unfolded_F"; //object for main interactions at owned houses
-AIT_item_Secondary = "Land_PortableLongRangeRadio_F"; //object for secondary interactions at owned houses (not used yet, may be a mid game thing)
-AIT_items_Sleep = ["CUP_vojenska_palanda"]; //Items with the "sleep" interaction (Single player only)
-AIT_items_Heal = ["Land_WaterCooler_01_old_F"]; //Where the player can heal themselves
-AIT_items_Repair = ["Toolkit"]; //Inventory items that can be used to repair vehicles
-
 //Interactable items that spawn in your house
 AIT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
 AIT_item_Desk = "OfficeTable_01_new_F"; //Your spawn desk
 AIT_item_Radio = "Land_PortableLongRangeRadio_F";
 AIT_item_Map = "Land_MapBoard_F";
 AIT_item_Repair = "Land_ToolTrolley_02_F";
+AIT_item_Tent = "Land_TentDome_F";
 
 AIT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
@@ -301,14 +301,14 @@ AIT_regions = ["island_1","island_2","island_3","island_4","island_5","island_6"
 AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu","Ipota"]; //region capitals
 AIT_sprawling = ["Blue Pearl industrial port"];
 
-AIT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_House_Small_04_F"]; //buildings that rich guys like to live in
+AIT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F"]; //buildings that rich guys like to live in
 
 AIT_gunDealerHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_GarageShelter_01_F","Land_House_Small_05_F","Land_House_Native_02_F"];//houses where gun dealers will spawn
 
 AIT_crimHouses = AIT_spawnHouses + AIT_gunDealerHouses + AIT_mansions;
 
 AIT_lowPopHouses = ["Land_House_Native_02_F","Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F","Land_Slum_04_F"]; //buildings with just 1-4 people living in them (also player start houses)
-AIT_medPopHouses = ["Land_House_Native_01_F","Land_House_Big_01_F","Land_Slum_05_F","Land_House_Small_01_F","Land_Slum_03_F","Land_Slum_04_F","Land_House_Small_05_F","Land_Addon_04_F"]; //buildings with 5-10 people living in them
+AIT_medPopHouses = ["Land_House_Small_04_F","Land_House_Native_01_F","Land_House_Big_01_F","Land_Slum_05_F","Land_House_Small_01_F","Land_Slum_03_F","Land_Slum_04_F","Land_House_Small_05_F","Land_Addon_04_F"]; //buildings with 5-10 people living in them
 AIT_highPopHouses = ["Land_House_Big_04_F","Land_Warehouse_01_F"]; //buildings with up to 20 (the warehouses are because ports end up with low pop)
 AIT_hugePopHouses = ["Land_MultistoryBuilding_03_F"]; //buildings with potentially lots of people living in them
 AIT_touristHouses = ["Land_House_Big_05_F"]; //hostels and the like
@@ -320,7 +320,7 @@ AIT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F
 AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"]; 
 AIT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 
-AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses;
+AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_mansions + [AIT_item_Tent];
 
 AIT_allHouses = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_touristHouses;
 AIT_allEnterableHouses = ["Land_House_Small_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_House_Big_01_F","Land_Slum_05_F","Land_Slum_01_F","Land_GarageShelter_01_F","Land_House_Small_01_F","Land_Slum_03_F","Land_House_Big_04_F","Land_House_Small_04_F","Land_House_Small_05_F"];

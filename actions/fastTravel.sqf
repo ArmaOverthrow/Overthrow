@@ -5,7 +5,7 @@ if((vehicle player) != player) then {
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
 };
 posTravel = [];
-hint "Click near a building you own";
+hint "Click near a building or camp you own";
 openMap true;
 
 onMapSingleClick "posTravel = _pos;";
@@ -15,13 +15,13 @@ onMapSingleClick "";
 
 if !(visibleMap) exitWith {};
 
-_buildings =  posTravel nearObjects 50;
 _handled = false;
-_possible = [];
-{
-	if (_x call hasOwner) then {
-		_owner = _x getVariable "owner";
-		if((_owner == getplayerUID player) and (typeof _x) in AIT_allBuyableBuildings) exitWith {
+_estate = posTravel call getNearestRealEstate;
+if(typename _estate == "ARRAY") then {
+	_b = _estate select 0;
+	if (_b call hasOwner) then {
+		_owner = _b getVariable "owner";
+		if((_owner == getplayerUID player) and (typeof _b) in AIT_allBuyableBuildings) exitWith {
 			_handled = true;
 			player allowDamage false;
 			disableUserInput true;
@@ -44,17 +44,22 @@ _possible = [];
 					vehicle player setPos _pos;
 				};				
 			}else{
-				player setpos (getpos _x);
+				if((typeof _b) == AIT_item_tent) then {
+					player setpos ([(getpos _b),4,getDir _b] call BIS_fnc_relPos);//Make sure they dont land on the fire
+				}else{
+					player setpos (getpos _b);
+				};
+				
 			};				
 
 			disableUserInput false;
 			cutText ["","BLACK IN",3]
 		};
 	}
-}foreach(_buildings);
+};
 
 if !(_handled) then {
-	"You don't own any buildings near there" call notify_minor;
+	"You don't own any buildings or camps near there" call notify_minor;
 	openMap false;
 }else{
 	if((vehicle player) != player) then {

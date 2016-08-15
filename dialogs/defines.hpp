@@ -190,7 +190,7 @@ class RscStructuredText
 	w = 0.1;
 	text = "";
 	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	shadow = 1;
+	shadow = 0;
 };
 class RscPicture
 {

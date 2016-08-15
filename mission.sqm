@@ -5,10 +5,10 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=10;
+	toggles=2;
 	class ItemIDProvider
 	{
-		nextID=1318;
+		nextID=1367;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=48;
+		nextID=53;
 	};
 	class Camera
 	{
-		pos[]={1942.1526,76.834404,11276.432};
-		dir[]={0.24238978,-0.73848498,-0.62927949};
-		up[]={0.26544672,0.67426068,-0.68913722};
-		aside[]={-0.93321294,-1.3727695e-006,-0.35946509};
+		pos[]={12480.681,8.0950537,2496.2363};
+		dir[]={0.78947824,-0.53774565,0.2961188};
+		up[]={0.50350457,0.8430959,0.18885477};
+		aside[]={0.35121822,-3.171619e-006,-0.93637025};
 	};
 };
 binarizationWanted=0;
@@ -38,14 +38,13 @@ addons[]=
 	"ace_medical",
 	"A3_Characters_F_Exp_Civil",
 	"A3_Boat_F_Exp_Boat_Transport_02",
-	"CUP_WaterVehicles_Fregata",
-	"A3_Modules_F_Curator_Curator"
+	"CUP_WaterVehicles_Fregata"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=10;
+		items=9;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -104,13 +103,6 @@ class AddonsMetaData
 		{
 			className="CUP_WaterVehicles_Fregata";
 			name="CUP_WaterVehicles_Fregata";
-		};
-		class Item9
-		{
-			className="A3_Modules_F_Curator";
-			name="Arma 3 Zeus Update - Scripted Modules";
-			author="Bohemia Interactive";
-			url="http://www.arma3.com";
 		};
 	};
 };
@@ -575,7 +567,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=29;
+		items=28;
 		class Item0
 		{
 			dataType="Logic";
@@ -3574,116 +3566,6 @@ class Mission
 			id=1296;
 			type="CUP_B_Frigate_ANZAC";
 			atlOffset=11.208818;
-		};
-		class Item28
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={1990.705,30.77953,11241.978};
-			};
-			id=1317;
-			type="ModuleCurator_F";
-			atlOffset=1.9073486e-006;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="ModuleCurator_F_Owner";
-					expression="_this setVariable ['Owner',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="bigboss";
-						};
-					};
-				};
-				class Attribute1
-				{
-					property="ModuleCurator_F_Forced";
-					expression="_this setVariable ['Forced',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute2
-				{
-					property="ModuleCurator_F_Name";
-					expression="_this setVariable ['Name',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="";
-						};
-					};
-				};
-				class Attribute3
-				{
-					property="ModuleInfo";
-					expression="false";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute4
-				{
-					property="ModuleCurator_F_Addons";
-					expression="_this setVariable ['Addons',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=2;
-						};
-					};
-				};
-				nAttributes=5;
-			};
 		};
 	};
 };

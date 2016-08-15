@@ -11,7 +11,7 @@ removeVest player;
 
 player linkItem "ItemMap";
 
-
+server setVariable [format["name%1",getplayeruid player],name player,true];
 
 if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
@@ -29,6 +29,7 @@ if(player == bigboss) then {
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 
+_startup = server getVariable "StartupType";
 _newplayer = true;
 _furniture = [];
 _town = "";
@@ -49,7 +50,7 @@ player addEventHandler ["HandleDamage", {
 	_dmg;
 }];
 
-if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
+if(isMultiplayer or _startup == "LOAD") then {
 	_data = server getvariable (getplayeruid player);
 	if !(isNil "_data") then {
 		_newplayer = false;
@@ -95,6 +96,8 @@ if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
 				};
 			};	
 		}foreach(_housepos nearObjects 50);
+	}else{
+		hint "New Player";
 	};
 
 	//JIP interactions
@@ -196,20 +199,7 @@ if (_newplayer) then {
 };
 
 {	
-	if(typeof _x == AIT_item_Map) then {
-		_x addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
-		_x addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
-		if(player == bigboss) then {
-			_x addAction ["Options", {
-				closedialog 0;			
-				_nul = createDialog "AIT_dialog_options";
-			},nil,0,false,true,"",""];			
-		};
-	};
-	if(typeof _x == AIT_item_Repair) then {
-		_x addAction ["Repair Nearby Vehicles", "actions\repairAll.sqf",nil,0,false,true,"",""];
-	};
-	_x addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
+	_x call initObjectLocal;	
 }foreach(_furniture);
 
 player setCaptive true;

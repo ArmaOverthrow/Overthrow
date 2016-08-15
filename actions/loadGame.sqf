@@ -3,8 +3,8 @@ private ["_data"];
 //get all server data
 "Please wait.. loading persistent save" remoteExec['blackFaded',0];
 
-_data = profileNameSpace getVariable ("Overthrow.save.001");
-if(isNil "_data") exitWith {
+_data = profileNameSpace getVariable ["Overthrow.save.001",""];
+if(typename _data != "ARRAY") exitWith {
 	server setVariable ["StartupType","NEW",true];
 	hint "No save found, starting new game";
 };
@@ -20,7 +20,8 @@ if(isNil "_data") exitWith {
 			_dir = _x select 2;
 			_stock = _x select 3;
 			_owner = _x select 4;
-			_veh = _type createVehicle _pos;
+			//_veh = _type createVehicle _pos;
+			_veh = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
 			_veh setPos _pos;
 			_veh setDir _dir;
 			clearWeaponCargoGlobal _veh;
@@ -49,5 +50,6 @@ if(isNil "_data") exitWith {
 		server setvariable [_key,_val,true];
 	};	
 }foreach(_data);
-
+sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
+hint "Persistent Save Loaded";

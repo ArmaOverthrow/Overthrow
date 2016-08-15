@@ -28,7 +28,8 @@ _objects = [];
 	
 	_pos = [(_buildingpos select 0)+(_rel select 0),(_buildingpos select 1)+(_rel select 1),(_buildingpos select 2)+(_rel select 2)];
 
-	_o = _type createVehicle _pos;
+	//_o = _type createVehicle _pos;
+	_o = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
 	//_o enableSimulationGlobal false;
 	_o setPos _pos;
 	_dir = _dir + _bdir;

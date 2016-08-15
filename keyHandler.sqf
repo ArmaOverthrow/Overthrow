@@ -3,8 +3,7 @@ _handled = false;
 _key = _this select 1;
 if (_key == 21) then
 {
-	closedialog 0;			
-	_nul = createDialog "AIT_dialog_main";
+	[] spawn mainMenu;	
 	_handled = true;
 }
 else

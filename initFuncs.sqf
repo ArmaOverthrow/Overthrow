@@ -16,7 +16,10 @@ unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
 hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
 getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
 getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
+getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestRealEstate.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
+nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
+giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
@@ -35,6 +38,9 @@ initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
+
+//UI
+mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -55,10 +61,11 @@ sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims
 newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
 logistics = compileFinal preProcessFileLineNumbers "spawners\insertion\logistics.sqf";
 
-//AI interactions
+//Local interactions
 initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
 initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarShopLocal.sqf";
 initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
+initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 
 //Economy agents
 run_shop = compileFinal preProcessFileLineNumbers "economy\shop.sqf";
@@ -78,10 +85,13 @@ rearmGroup = compileFinal preProcessFileLineNumbers "actions\rearmGroup.sqf";
 recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
 fastTravel = compileFinal preProcessFileLineNumbers "actions\fastTravel.sqf";
 setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
-buyAmmobox = compileFinal preProcessFileLineNumbers "actions\buyAmmobox.sqf";
 giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
 saveGamePersistent = compileFinal preProcessFileLineNumbers "actions\saveGame.sqf";
 loadGamePersistent = compileFinal preProcessFileLineNumbers "actions\loadGame.sqf";
+getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
+
+//Modes
+placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
 
 //Wanted System
 unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";

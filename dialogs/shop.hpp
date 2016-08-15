@@ -6,7 +6,7 @@ class AIT_dialog_buy
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Jeduvu)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Jeduvu)
 		////////////////////////////////////////////////////////
 
 		class RscListbox_1500: RscListbox
@@ -22,7 +22,7 @@ class AIT_dialog_buy
 		class RscPicture_1200: RscPicture
 		{
 			idc = 1200;
-			text = "#(argb,8,8,3)color(1,1,1,1)";
+			text = "";
 			x = 0.654688 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.237187 * safezoneW;
@@ -66,7 +66,7 @@ class AIT_dialog_sell
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Zobiki)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Zobiki)
 		////////////////////////////////////////////////////////
 
 		class RscListbox_1500: RscListbox

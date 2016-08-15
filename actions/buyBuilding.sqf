@@ -1,63 +1,65 @@
-if !(captive player) exitWith {hint "You cannot buy buildings while wanted"};
+if !(captive player) exitWith {"You cannot buy buildings while wanted" call notify_minor};
 
-
-
-_buildings =  (getpos player) nearObjects 15;
+_b = player call getNearestRealEstate;
 _handled = false;
-_building = objNULL;
-_price = 0;
-{
-	_owner = _x getVariable "owner";
-	if ((typeof _x) in AIT_allBuyableBuildings and (isNil "_owner")) exitWith {
+_type = "buy";
+_err = false;
+if(typename _b == "ARRAY") then {
+	_building = (_b select 0);
+	if !(_building call hasOwner) then {
 		_handled = true;
-		_town = (getpos _x) call nearestTown;
-		_stability = ((server getVariable format["stability%1",_town]) / 100);
-		_standing = (player getVariable format["rep%1",_town]) + 40;
-			
-		if(_standing < -100) then {_standing = -100};
-		if(_standing > 100) then {_standing = 100};
-		if(_standing != 0) then {
-			_standing = ((_standing/100) * -1)+1;
+	}else{
+		_owner = _building getVariable "owner";
+		if(_owner == getplayeruid player) then {
+			_home = player getVariable "home";
+			if(_home == _building) exitWith {"You cannot sell your home" call notify_minor;_err = true};
+			_type = "sell";
+			_handled = true;
 		};		
-				
-		_baseprice = 400;
-		_type = typeof _x;
-		if !(_type in AIT_spawnHouses) then {
-			if(_type in AIT_mansions) then {_baseprice = 25000}else{
-				if(_type in AIT_medPopHouses) then {_baseprice = 5000};
-				if(_type in AIT_lowPopHouses) then {_baseprice = 1000};
-			};			
-		};
-		_price = round(_baseprice + (_stability * _baseprice * _standing));
-		_building = _x;
 	};
-}foreach(_buildings);
-
+};
+if(_err) exitWith {};
 if(_handled) then {
-	_money = player getVariable "money";
-	if(_money < _price) exitWith {format["You need $%1",_price] call notify_minor};
+	_building = _b select 0;
+	_price = _b select 1;
+	_sell = _b select 2;
+	_lease = _b select 3;
+	_totaloccupants = _b select 4;
 
-	playSound "ClickSoft";
+	_money = player getVariable "money";
 	
-	_building setVariable ["owner",getPlayerUID player,true];
-	player setVariable ["money",_money-_price,true];
-	
-	_mrk = createMarkerLocal [format["bought%1",str(_building)],getpos _building];
-	_mrk setMarkerShape "ICON";
-	_mrk setMarkerType "loc_Tourism";
-	_mrk setMarkerColor "ColorWhite";
-	_mrk setMarkerAlpha 0;
-	_mrk setMarkerAlphaLocal 1;
-	
+	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call notify_minor};
+
+	playSound "3DEN_notificationDefault";
+	_mrkid = format["bought%1",str(_building)];
 	_owned = player getVariable "owned";
-	_owned pushback _building;
-	player setVariable ["owned",_owned,true];
 	
-	format["You purchased this building for $%1",_price] call notify_minor;
-	
-	if(_price > 2000) then {
-		[_town,round(_price / 1000)] call standing;		
+	if(_type == "buy") then {
+		_building setVariable ["owner",getPlayerUID player,true];
+		player setVariable ["money",_money-_price,true];
+		
+		_mrk = createMarkerLocal [_mrkid,getpos _building];
+		_mrk setMarkerShape "ICON";
+		_mrk setMarkerType "loc_Tourism";
+		_mrk setMarkerColor "ColorWhite";
+		_mrk setMarkerAlpha 0;
+		_mrk setMarkerAlphaLocal 1;
+		_owned pushback _building;
+		"Building purchased" call notify_minor;
+		if(_price > 10000) then {
+			[_town,round(_price / 10000)] call standing;		
+		};
+	}else{
+		_building setVariable ["owner",nil,true];
+		deleteMarker _mrkid;
+		_owned deleteAt (_owned find _building);
+		"Building sold" call notify_minor;
+		player setVariable ["money",_money+_sell,true];
 	};
+	
+	player setVariable ["owned",_owned,true];
+		
+	
 }else{
 	"There are no buildings for sale nearby" call notify_minor;
 };

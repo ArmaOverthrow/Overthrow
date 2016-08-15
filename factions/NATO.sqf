@@ -14,7 +14,7 @@ if((server getVariable "StartupType") == "NEW") then {
 			_abandoned pushback _x;
 		};
 	}foreach (AIT_allTowns);
-	server setVariable ["NATOabandoned",_abandoned,false];
+	server setVariable ["NATOabandoned",_abandoned,true];
 	server setVariable ["garrisonHQ",1000,false];
 	{
 		_airports pushBack text _x;
@@ -34,9 +34,9 @@ if((server getVariable "StartupType") == "NEW") then {
 			if(_name in AIT_NATO_priority) then {
 				_garrison = floor(16 + random(8));
 			};
-			server setVariable [format ["garrison%1",_name],_garrison,false];
-			server setVariable [format ["vehgarrison%1",_name],[],false];
-			server setVariable [format ["airgarrison%1",_name],[],false];
+			server setVariable [format ["garrison%1",_name],_garrison,true];
+			server setVariable [format ["vehgarrison%1",_name],[],true];
+			server setVariable [format ["airgarrison%1",_name],[],true];
 		};
 		if(_name == AIT_NATO_HQ) then {
 			AIT_NATO_HQPos = getpos _x;
@@ -45,7 +45,7 @@ if((server getVariable "StartupType") == "NEW") then {
 		sleep 0.05;
 	}foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameLocal","Airport"], 50000]);
 	
-	server setVariable ["NATOobjectives",AIT_NATOobjectives];
+	server setVariable ["NATOobjectives",AIT_NATOobjectives,true];
 
 	//Randomly distribute NATO's vehicles
 	{
@@ -58,7 +58,7 @@ if((server getVariable "StartupType") == "NEW") then {
 			_garrison = server getVariable format["vehgarrison%1",_name];
 			_garrison pushback _type;
 			_count = _count + 1;
-			server setVariable [format ["vehgarrison%1",_name],_garrison,false];
+			server setVariable [format ["vehgarrison%1",_name],_garrison,true];
 		};
 	}foreach(AIT_NATO_Vehicles_Garrison);
 	
@@ -71,7 +71,7 @@ if((server getVariable "StartupType") == "NEW") then {
 			_garrison = server getVariable format["airgarrison%1",_name];
 			_garrison pushback _type;
 			_count = _count + 1;
-			server setVariable [format ["airgarrison%1",_name],_garrison,false];
+			server setVariable [format ["airgarrison%1",_name],_garrison,true];
 		};
 	}foreach(AIT_NATO_Vehicles_AirGarrison);
 
@@ -83,7 +83,7 @@ if((server getVariable "StartupType") == "NEW") then {
 			
 		//_x setMarkerText format ["%1",_garrison];
 		_x setMarkerAlpha 0;
-		server setVariable [format ["garrison%1",_x],_garrison,false];
+		server setVariable [format ["garrison%1",_x],_garrison,true];
 		sleep 0.05;
 	}foreach (AIT_NATO_control);
 
@@ -100,7 +100,7 @@ if((server getVariable "StartupType") == "NEW") then {
 				_garrison = round(_garrison * 2);
 			};
 		};
-		server setVariable [format ["garrison%1",_x],_garrison,false];
+		server setVariable [format ["garrison%1",_x],_garrison,true];
 		server setVariable [format ["garrisonadd%1",_x], 0,false];
 		sleep 0.05;
 	}foreach (AIT_allTowns);
@@ -111,6 +111,7 @@ AIT_NATOInitDone = true;
 publicVariable "AIT_NATOInitDone";
 sleep 5;
 {
+	_pos = _x select 0;
 	_name = _x select 1;
 	_mrk = createMarker [_name,_pos];
 	_mrk setMarkerShape "ICON";
@@ -142,14 +143,14 @@ while {true} do {
 			if(_need < 0) then {_need = 0};
 			if(_need > 1) then {				
 				server setVariable [format ["garrisonadd%1",_x], 2,false];
-				server setVariable [format ["garrison%1",_x],_current+2,false];
+				server setVariable [format ["garrison%1",_x],_current+2,true];
 			};			
 		}else{
-			server setVariable [format ["garrison%1",_town],0,false];
+			server setVariable [format ["garrison%1",_town],0,true];
 			if(!(_town in _abandoned)) then {
 				_town spawn NATOattack;				
 				_abandoned pushback _town;
-				server setVariable ["NATOabandoned",_abandoned,false];
+				server setVariable ["NATOabandoned",_abandoned,true];
 			}
 		};
 		sleep 0.1;
@@ -165,7 +166,7 @@ while {true} do {
 			if(_garrison == 0) then {
 				_name spawn NATOcounter;				
 				_abandoned pushback _name;
-				server setVariable ["NATOabandoned",_abandoned,false];
+				server setVariable ["NATOabandoned",_abandoned,true];
 				_name setMarkerAlpha 1;				
 			};
 		}

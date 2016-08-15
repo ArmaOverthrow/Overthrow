@@ -6,7 +6,7 @@ class AIT_dialog_start
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Rofuji)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Rofuji)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
@@ -18,7 +18,7 @@ class AIT_dialog_start
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Continue previous save"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] remoteExec ['loadGamePersistent',2];";
+			action = "closeDialog 0;'actions\loadGame.sqf' remoteExec ['execVM',2];";
 		};
 		class RscButton_1601: RscButton
 		{
@@ -46,7 +46,7 @@ class AIT_dialog_options
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Wiwiho)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Wiwiho)
 		////////////////////////////////////////////////////////
 
 		class RscText_1001: RscText
@@ -130,74 +130,181 @@ class AIT_dialog_options
 
 class AIT_dialog_main
 {
-	idd=-1;
-	movingenable=false;
+	idd=8001;
+	movingenable=false;	
 
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Syqojo)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Giqadi)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
-			text = "Recruit Civ"; //--- ToDo: Localize;
-			x = 0.381406 * safezoneW + safezoneX;
-			y = 0.698 * safezoneH + safezoneY;
-			w = 0.0773437 * safezoneW;
-			h = 0.055 * safezoneH;
-			action = "closeDialog 0;[] call recruitCiv;";
+			action = "closeDialog 0;[] spawn fastTravel";
+
+			text = "Fast Travel"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+		class RscStructuredText_1100: RscStructuredText
+		{
+			idc = 1100;
+
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.368 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.121 * safezoneH;
+			colorBackground[] = {0,0,0,0.4};
 		};
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
-			text = "Buy Building"; //--- ToDo: Localize;
-			x = 0.469062 * safezoneW + safezoneX;
-			y = 0.698 * safezoneH + safezoneY;
-			w = 0.0773437 * safezoneW;
-			h = 0.055 * safezoneH;
-			action = "closeDialog 0;[] call buyBuilding;";
+
+			text = "Place"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.577 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+			action = "closeDialog 0;createDialog 'AIT_dialog_place'";
 		};
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
-			text = "Buy Ammobox"; //--- ToDo: Localize;
-			x = 0.556719 * safezoneW + safezoneX;
-			y = 0.698 * safezoneH + safezoneY;
-			w = 0.0670312 * safezoneW;
-			h = 0.055 * safezoneH;
-			action = "closeDialog 0;[] spawn buyAmmobox;";
+
+			text = "Build"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.654 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
 		};
 		class RscButton_1603: RscButton
 		{
-			idc = 1604;
-			text = "Set Home"; //--- ToDo: Localize;
-			x = 0.469062 * safezoneW + safezoneX;
-			y = 0.764 * safezoneH + safezoneY;
-			w = 0.0773437 * safezoneW;
-			h = 0.055 * safezoneH;
-			action = "closeDialog 0;[] call setHome;";
+			idc = 1603;
+
+			text = "Manage Recruits"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.731 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
 		};
 		class RscButton_1604: RscButton
 		{
-			idc = 1603;
-			text = "Give $100"; //--- ToDo: Localize;
-			x = 0.381406 * safezoneW + safezoneX;
-			y = 0.764 * safezoneH + safezoneY;
-			w = 0.0773437 * safezoneW;
-			h = 0.055 * safezoneH;
-			action = "[] call giveMoney;";
+			idc = 1604;
+
+			text = "Manage Buildings"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.808 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+		class RscPicture_1200: RscPicture
+		{
+			idc = 1200;
+
+			text = "#(argb,8,8,3)color(0,0,0,0)";
+			x = 0.762969 * safezoneW + safezoneX;
+			y = 0.368 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.143 * safezoneH;
 		};
 		class RscButton_1605: RscButton
 		{
+			idc = 1605;
+
+			text = "Recruit"; //--- ToDo: Localize;
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.522 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.044 * safezoneH;
+			action = "closeDialog 0;[] spawn recruitCiv";
+		};
+		class RscButton_1606: RscButton
+		{
 			idc = 1606;
-			text = "Fast Travel"; //--- ToDo: Localize;
-			x = 0.556719 * safezoneW + safezoneX;
-			y = 0.764 * safezoneH + safezoneY;
-			w = 0.0670312 * safezoneW;
-			h = 0.055 * safezoneH;
-			action = "closeDialog 0;[] spawn fastTravel;";
+
+			text = "Get Intel"; //--- ToDo: Localize;
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.577 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.044 * safezoneH;
+			action = "closeDialog 0;[] call getIntel";
+		};
+		class RscButton_1607: RscButton
+		{
+			idc = 1607;
+
+			text = "Give $100"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn giveMoney";
+			x = 0.943438 * safezoneW + safezoneX;
+			y = 0.577 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class RscPicture_1201: RscPicture
+		{
+			idc = 1201;
+
+			text = "#(argb,8,8,3)color(0,0,0,0)";
+			x = 0.762969 * safezoneW + safezoneX;
+			y = 0.632 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.143 * safezoneH;
+		};
+		class RscButton_1608: RscButton
+		{
+			idc = 1608;
+
+			text = "Buy"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] call buyBuilding";
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.786 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class RscButton_1609: RscButton
+		{
+			idc = 1609;
+
+			text = "Lease"; //--- ToDo: Localize;
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.841 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class RscButton_1610: RscButton
+		{
+			idc = 1610;
+
+			text = "Set Home"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn setHome";
+			x = 0.943438 * safezoneW + safezoneX;
+			y = 0.841 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class RscStructuredText_1101: RscStructuredText
+		{
+			idc = 1101;
+
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.368 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.143 * safezoneH;
+			colorBackground[] = {0,0,0,0.4};
+		};
+		class RscStructuredText_1102: RscStructuredText
+		{
+			idc = 1102;
+
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.632 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.143 * safezoneH;
+			colorBackground[] = {0,0,0,0.4};
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

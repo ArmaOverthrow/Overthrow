@@ -27,13 +27,15 @@
 {
 	_posTown = server getVariable _x;
 	_town = _x;
+	_key = format["shopsin%1",_town];
+	server setVariable [_key,0,true];
 	{	
 		if !(_x call hasOwner) then {
 			//spawn any main shops
 			if((random 100 > 20)) then {		
 				AIT_activeShops pushback _x;
 			};
-			_key = format["shopsin%1",_town];
+			
 			server setVariable [_key,(server getVariable [_key,0])+1,true];
 		};
 	}foreach(nearestObjects [_posTown, AIT_shops, 700]);
