@@ -64,20 +64,7 @@ call {
 		if(side _x == west) exitWith {
 			_handled = true;
 			_txt = "I saw a guy just now, I'll put it on your map";
-			_mrk = createMarkerLocal ["intel_gendarmpos",getpos _x];
-			_mrk setMarkerShape "ELLIPSE";
-			_mrk setMarkerSize [20,20];
-			_mrk setMarkerColor "ColorBLUFOR";
-			_mrk setMarkerAlphaLocal 0.5;
-			_mrk spawn {
-				_c = 0.5;
-				_mrk = _this;
-				while{_c > 0} do {
-					sleep 2;
-					_c = _c - 0.05;
-					_mrk setMarkerAlpha _c;
-				};
-			};
+			player reveal [(leader group _x),1.5];
 		};
 	}foreach(_pos nearentities ["Man",250]);
 	

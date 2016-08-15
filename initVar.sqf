@@ -7,7 +7,7 @@ AIT_hasAce = false;
 if (!isNil "ace_common_settingFeedbackIcons") then {
 	AIT_hasAce = true;
 };
-
+AIT_fastTime = true; //When true, 1 day will last 6 hrs real time
 AIT_spawnDistance = 1200;
 AIT_spawnCivPercentage = 0.08;
 AIT_spawnVehiclePercentage = 0.04;

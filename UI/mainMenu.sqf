@@ -9,6 +9,24 @@ _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 _town = (getpos player) call nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
+_weather = "Clear";
+if(overcast > 0.4) then {
+	_weather = "Cloudy";
+};
+if(rain > 0) then {
+	_weather = "Rain";
+};
+if(rain > 0.9) then {
+	_weather = "Storm";
+};
+
+_ctrl = (findDisplay 8001) displayCtrl 1100;
+
+_ctrl ctrlSetStructuredText parseText format["
+	<t align='left' size='0.8'>Weather: %1</t><br/>
+	<t align='left' size='0.8'>Forecast: %2</t><br/>
+",_weather,server getVariable "forecast"];
+
 sleep 0.1;
 //Nearest building info
 _b = player call getNearestRealEstate;
@@ -35,17 +53,33 @@ if(typename _b == "ARRAY") then {
 		_ownername = server getVariable format["name%1",_owner];
 		
 		if(_owner == getplayerUID player) then {
-			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
+			if(typeof _building != AIT_item_Tent) then {
+				ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
 			
-			_buildingTxt = format["
-				<t align='left' size='0.9'>%1</t><br/>
-				<t align='left' size='0.7'>Owned by %2</t><br/>
-				<t align='left' size='0.7'>Lease Value: $%3/hr</t>
-			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+				_buildingTxt = format["
+					<t align='left' size='0.9'>%1</t><br/>
+					<t align='left' size='0.7'>Owned by %2</t><br/>
+					<t align='left' size='0.7'>Lease Value: $%3/hr</t>
+				",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+			}else{
+				ctrlSetText [1608,"Sell"];
+				ctrlEnable [1608,false];
+				ctrlEnable [1609,false];
+				ctrlEnable [1610,false];
+			
+				_buildingTxt = format["
+					<t align='left' size='0.9'>Camp</t><br/>
+					<t align='left' size='0.7'>Owned by %1</t>
+				",_ownername];
+			};
+			
 		}else{
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
 			ctrlEnable [1610,false];
+			if(typeof _building == AIT_item_Tent) then {
+				_name = "Camp";
+			};
 			
 			_buildingTxt = format["
 				<t align='left' size='1'>%1</t><br/>

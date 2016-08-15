@@ -212,5 +212,5 @@ if (isMultiplayer) then {
 };
 
 [] spawn setupKeyHandler;
-
+[] execVM "intelSystem.sqf";
 [] execVM "setupPlayer.sqf";

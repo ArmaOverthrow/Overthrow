@@ -27,25 +27,24 @@ _civ addAction ["Buy", {
 					_cost = 5;
 				};
 				if(_type in AIT_allMachineGuns) then {
-					_cost = 8;
+					_cost = 12;
 				};
 				if(_type in AIT_allSniperRifles) then {
-					_cost = 10;
-				};
-				if(_type in AIT_allRocketLaunchers) then {
 					_cost = 20;
 				};
+				if(_type in AIT_allRocketLaunchers) then {
+					_cost = 50;
+				};
 				if(_type in AIT_allMissileLaunchers) then {
-					_cost = 40;
+					_cost = 100;
 				};				
 				_stock pushBack [_magazines call BIS_fnc_selectRandom,_cost];				
 			};
 		};
 		server setVariable [format["gunstock%1",_town],_stock,true];
 		
-		{
-			_cost = cost getVariable _x;
-			_price = round((_cost select 0) * ((random 1) + 1));
+		{			
+			_price = round(50 * ((random 1) + 1));
 			_stock pushBack [_x,_price];
 		}foreach(AIT_illegalItems);
 	};
