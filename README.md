@@ -9,12 +9,17 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * GTA-inspired wanted/stealth system
 * Dynamic political system with regional stability affecting presence of 2 different opposing factions to the player (NATO and criminal elements)
 * Buy and sell just about in any-game item/vehicle/weapon for currency at local shops and gun dealers
+* Capture towns and military objectives, island by island
 * Dynamic economy/Regional pricing/Trade
-* Buy real estate
+* Buy and sell real estate with pricing affected by regional politics
 * Fast travel to any owned real estate
-* Recruit and arm civilians
+* Manipulate the markets with guns or piles of cash
+* Recruit and arm civilians with easy to use commands, dont fiddle with scroll menus for 5 mins to tell them to pick up a gun
+* Recruit civilians simply just to loot for you
 * Designed to work in both single player and multiplayer
 * Committed to creating a living and breathing Tanoa where anything can happen
+
+# Coming Features
 
 # Required DLC
 * APEX
