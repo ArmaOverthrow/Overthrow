@@ -11,7 +11,7 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * Buy and sell just about in any-game item/vehicle/weapon for currency at local shops and gun dealers
 * Capture towns and military objectives, island by island
 * Dynamic economy/Regional pricing/Trade
-* Buy and sell real estate with pricing affected by regional politics 
+* Buy, sell and lease real estate with prices affected by regional politics 
 * Fast travel to any owned real estate or camp
 * Manipulate the markets with guns or piles of cash
 * Recruit and arm civilians with easy to use commands, dont fiddle with scroll menus for 5 mins to tell them to pick up a gun
