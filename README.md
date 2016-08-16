@@ -11,8 +11,8 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * Buy and sell just about in any-game item/vehicle/weapon for currency at local shops and gun dealers
 * Capture towns and military objectives, island by island
 * Dynamic economy/Regional pricing/Trade
-* Buy and sell real estate with pricing affected by regional politics
-* Fast travel to any owned real estate
+* Buy and sell real estate with pricing affected by regional politics 
+* Fast travel to any owned real estate or camp
 * Manipulate the markets with guns or piles of cash
 * Recruit and arm civilians with easy to use commands, dont fiddle with scroll menus for 5 mins to tell them to pick up a gun
 * Recruit civilians simply just to loot for you
@@ -20,6 +20,9 @@ Will you decide to overthrow the occupying NATO forces using brains.. or brawn?
 * Committed to creating a living and breathing Tanoa where anything can happen
 
 # Coming Features
+* Recruit and command entire squads
+* Player-based economy/production
+* Mid and end-game mechanics
 
 # Required DLC
 * APEX
