@@ -3,10 +3,13 @@ private ["_data"];
 if(AIT_saving) exitWith {hint "Please wait, save still in progress"};
 AIT_saving = true;
 publicVariable "AIT_saving";
+
+"Persistent Saving..." remoteExec ["notify_minor",0,true];
+
 _data = [];
 //get all server data
 {
-	if(_x != "StartupType") then {
+	if !(_x == "StartupType" or _x == "recruits") then {
 		_data pushback [_x,server getVariable _x];
 	};
 }foreach(allVariables server);
@@ -53,10 +56,29 @@ _vehicles = [];
 }foreach(vehicles);
 _data pushback ["vehicles",_vehicles];
 
+_recruits = [];
+{
+	_do = true;
+	_unitorpos = _x select 2;
+	if(typename _unitorpos == "OBJECT") then {		
+		if(alive _unitorpos) then {
+			_p = getpos _unitorpos;
+			_x set [4,getUnitLoadout _unitorpos];
+			_x set [2,[_p select 0,_p select 1,_p select 2]];
+		}else{
+			_do = false;
+		};
+	};
+	if(_do) then {		
+		_recruits pushback _x;
+	};
+}foreach(server getVariable ["recruits",[]]);
+_data pushback ["recruits",_recruits];
+
 profileNameSpace setVariable ["Overthrow.save.001",_data];
 if (isDedicated) then {saveProfileNamespace};
 
-"Persistent Save Done" remoteExec ["notify_minor",0,true];
+"Persistent Save Completed" remoteExec ["notify_minor",0,true];
 
 AIT_saving = false;
 publicVariable "AIT_saving";

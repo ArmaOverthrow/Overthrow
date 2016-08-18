@@ -58,27 +58,31 @@ while {true} do {
 				_overtarget = 1;
 				_fogtarget = 0.005;
 				_wavetarget = 1;
+				120 setRain 0.8;
 			};
 			if(_forecast == "Rain") exitWith {
 				_raintarget = 0.5;
 				_overtarget = 1;
 				_fogtarget = 0.002;
 				_wavetarget = 0.5;
+				120 setRain 0.5;
 			};
 			if(_forecast == "Cloudy") exitWith {
 				_raintarget = 0;
 				_overtarget = 0.7;
 				_fogtarget = 0.001;
 				_wavetarget = 0.2;
+				120 setRain 0;
 			};
 			if(_forecast == "Clear") exitWith {
 				_raintarget = 0;
 				_overtarget = random 0.2;
 				_fogtarget = 0;
 				_wavetarget = random 0.2;
+				120 setRain 0;
 			};
 		};
-		server setVariable ["forecast",_forecast];
+		server setVariable ["forecast",_forecast,true];
 	};
 
 	_rain = rain;
@@ -106,9 +110,8 @@ while {true} do {
 	if(overcast < 0.7) then {
 		_fog = 0;
 		_rain = 0;		
-	};
-	
-	0 setRain _rain;
+	};	
+
 	0 setOvercast _over;
 	0 setFog _fog;
 	0 setWaves _waves;

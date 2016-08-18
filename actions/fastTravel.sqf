@@ -16,46 +16,41 @@ onMapSingleClick "";
 if !(visibleMap) exitWith {};
 
 _handled = false;
-_estate = posTravel call getNearestRealEstate;
-if(typename _estate == "ARRAY") then {
-	_b = _estate select 0;
-	if (_b call hasOwner) then {
-		_owner = _b getVariable "owner";
-		if((_owner == getplayerUID player) and (typeof _b) in AIT_allBuyableBuildings) exitWith {
-			_handled = true;
-			player allowDamage false;
-			disableUserInput true;
-			
-			cutText ["Fast traveling, please wait","BLACK",2];			
-			sleep 2;
-			openMap false;
-			if((vehicle player) != player) then {
-				if (driver vehicle player == player) then {
-					_tam = 10;
-					_roads = [];
-					while {true} do {
-						_roads = posTravel nearRoads _tam;
-						if (count _roads < 1) then {_tam = _tam + 10};
-						if (count _roads > 0) exitWith {};
-					};
-					{_x allowDamage false} foreach(crew vehicle player);					
-					_road = _roads select 0;
-					_pos = position _road findEmptyPosition [1,50,typeOf (vehicle player)];
-					vehicle player setPos _pos;
-				};				
-			}else{
-				if((typeof _b) == AIT_item_tent) then {
-					player setpos ([(getpos _b),4,getDir _b] call BIS_fnc_relPos);//Make sure they dont land on the fire
-				}else{
-					player setpos (getpos _b);
-				};
-				
-			};				
-
-			disableUserInput false;
-			cutText ["","BLACK IN",3]
+_estate = posTravel call getNearestOwned;
+if(typename _estate == "OBJECT") then {
+	_b = _estate;	
+	_handled = true;
+	player allowDamage false;
+	disableUserInput true;
+	
+	cutText ["Fast traveling, please wait","BLACK",2];			
+	sleep 2;
+	openMap false;
+	if((vehicle player) != player) then {
+		if (driver vehicle player == player) then {
+			_tam = 10;
+			_roads = [];
+			while {true} do {
+				_roads = posTravel nearRoads _tam;
+				if (count _roads < 1) then {_tam = _tam + 10};
+				if (count _roads > 0) exitWith {};
+			};
+			{_x allowDamage false} foreach(crew vehicle player);					
+			_road = _roads select 0;
+			_pos = position _road findEmptyPosition [1,50,typeOf (vehicle player)];
+			vehicle player setPos _pos;
+		};				
+	}else{
+		if((typeof _b) == AIT_item_tent) then {
+			player setpos ([(getpos _b),5,getDir _b] call BIS_fnc_relPos);//Make sure they dont land on the fire
+		}else{
+			player setpos (getpos _b);
 		};
-	}
+		
+	};				
+
+	disableUserInput false;
+	cutText ["","BLACK IN",3]
 };
 
 if !(_handled) then {

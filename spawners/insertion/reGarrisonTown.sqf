@@ -50,7 +50,7 @@ _vehtype = AIT_NATO_Vehicle_PoliceHeli;
 _drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
 _spawnpos = AIT_NATO_HQPos;	
 
-if(_stability < 25) then {
+if(_stability < 15) then {
 	//last ditch efforts to save this town
 	//send in the big guns
 	_vehtype = AIT_NATO_Vehicle_AirTransport;

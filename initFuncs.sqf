@@ -17,12 +17,15 @@ hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
 getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
 getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
 getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestRealEstate.sqf";
+getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
 nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
 giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
+dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
+takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
@@ -38,6 +41,11 @@ initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
+initRecruit = compileFinal preProcessFileLineNumbers "AI\recruit.sqf";
+
+//AI Orders
+openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";
+loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";

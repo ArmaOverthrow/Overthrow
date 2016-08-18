@@ -30,20 +30,6 @@ _unit addEventHandler ["FiredNear", {
 	_u disableAI "fsm";
 }];
 
-_unit addEventHandler ["HandleDamage", {
-	_me = _this select 0;
-	_dmg = _this select 2;
-	_src = _this select 3;
-	_proj = _this select 4;
-	_veh = vehicle _src;
-	if(_veh != _src) then {
-		if((driver _veh) == _src) then {
-			_dmg = 0;
-		};
-	};
-	_dmg;
-}];
-
 while {alive _unit} do {
 	_s = _unit getVariable ["scared",-1];
 	if(_s > -1) then {

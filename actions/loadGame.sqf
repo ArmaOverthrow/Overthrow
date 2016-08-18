@@ -20,9 +20,7 @@ if(typename _data != "ARRAY") exitWith {
 			_dir = _x select 2;
 			_stock = _x select 3;
 			_owner = _x select 4;
-			//_veh = _type createVehicle _pos;
-			_veh = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
-			_veh setPos _pos;
+			_veh = _type createVehicle _pos;
 			_veh setDir _dir;
 			clearWeaponCargoGlobal _veh;
 			clearMagazineCargoGlobal _veh;

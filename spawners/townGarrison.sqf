@@ -73,7 +73,7 @@ while{true} do {
 				}foreach(units _x);							
 			}foreach(_groups);		
 		}else{
-			_need = server getVariable format ["garrisonadd%1",_town];			
+			_need = server getVariable [format ["garrisonadd%1",_town],0];			
 			if(_need > 1) then {		
 				server setVariable[format ["garrisonadd%1",_town],_need-2,false];
 				server setVariable[format ["garrison%1",_town],_numNATO+2,false];
@@ -83,7 +83,7 @@ while{true} do {
 		if (spawner getVariable _id) then {
 			//Do updates here that should happen only while spawned
 			//...
-			_need = server getVariable format ["garrisonadd%1",_town];			
+			_need = server getVariable [format ["garrisonadd%1",_town],0];			
 			if(_need > 1) then {
 				_town spawn reGarrisonTown;				
 				server setVariable[format ["garrisonadd%1",_town],_need-2,false];
@@ -103,5 +103,5 @@ while{true} do {
 	};
 	sleep 2;
 	
-	_numNATO = server getVariable format["garrison%1",_town];
+	_numNATO = server getVariable [format["garrison%1",_town],0];
 };

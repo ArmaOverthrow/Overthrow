@@ -17,8 +17,6 @@ if(random 100 > 80) then {
 _civ = player getvariable "hiringciv";
 _civ setVariable ["owner",getPlayerUID player,true];
 [_civ] joinSilent (group player);
-removeAllActions _civ;
-_civ setCaptive false;
-_civ setVariable ["NOAI",true,true];
+[_civ] spawn initRecruit;
 
 format["%1 has joined your crew",name _civ] call notify_minor;

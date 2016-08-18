@@ -24,8 +24,8 @@ while{true} do {
 			_numCRIM = server getVariable [format ["numcrims%1",_town],0];
 			
 			if(_numCRIM > 0) then {
-				_time = server getVariable format ["timecrims%1",_town];
-				_leaderpos = server getVariable format["crimleader%1",_town];
+				_time = server getVariable [format ["timecrims%1",_town],0];
+				_leaderpos = server getVariable [format["crimleader%1",_town],false];
 				_group = objNULL;
 				
 				_skill = 0.7;
@@ -133,8 +133,8 @@ while{true} do {
 		if (spawner getVariable _id) then {
 			//Do updates here that should happen only while spawned
 			//...
-			_newpos = server getVariable format["crimnew%1",_town];
-			_addnum = server getVariable format["crimadd%1",_town];
+			_newpos = server getVariable [format["crimnew%1",_town],false];
+			_addnum = server getVariable [format["crimadd%1",_town],0];
 			if((typename _newpos) == "ARRAY") then {				
 				server setVariable [format["crimleader%1",_town],_newpos,true];
 				_new = [_newpos,_addnum,_town] call newleader;
@@ -148,7 +148,7 @@ while{true} do {
 				};
 			};
 			server setVariable [format["crimnew%1",_town],false,false];
-			_current = server getVariable format["numcrims%1",_town];
+			_current = server getVariable [format["numcrims%1",_town],0];
 			server setVariable [format["numcrims%1",_town],_current+_addnum,false];	
 			server setVariable [format["crimadd%1",_town],0,false];
 		}else{			

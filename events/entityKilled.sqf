@@ -5,6 +5,18 @@ _killer = _this select 1;
 _killer setVariable ["lastkill",time,true];
 _town = (getpos _me) call nearestTown;
 
+_me addEventHandler ["ContainerOpened",{
+	_u = _this select 0;
+	_u setVariable ["looted",true,true];
+	[_u] spawn {
+		sleep 600;
+		_n = _this select 0;
+		if!(isNil "_n") then {
+			deleteVehicle (_this select 0);
+		}
+	};
+}];
+
 if(isPlayer _me) exitWith {	
 	_myuid = getPlayerUID _me;
 	{

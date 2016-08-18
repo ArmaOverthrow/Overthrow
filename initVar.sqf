@@ -155,7 +155,8 @@ if(AIT_hasAce) then {
 		["ACE_EarPlugs",5,0,0,0.2],		
 		["ACE_Sandbag_empty",2,0,0,0],
 		["ACE_Altimeter",110,0,0,1],
-		["ACE_Banana",1,0,0,0]
+		["ACE_Banana",1,0,0,0],
+		["ACE_microDAGR",200,0,0,1]
 	]] call BIS_fnc_arrayPushStack;
 }else{
 	[AIT_items,[

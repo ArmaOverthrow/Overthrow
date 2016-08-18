@@ -96,8 +96,31 @@ if(isMultiplayer or _startup == "LOAD") then {
 				};
 			};	
 		}foreach(_housepos nearObjects 50);
+		
+		_recruits = server getVariable ["recruits",[]];
+		_newrecruits = [];
+		{
+			_owner = _x select 0;
+			_name = _x select 1;	
+			_civ = _x select 2;					
+			_rank = _x select 3;				
+			_loadout = _x select 4;
+			_type = _x select 5;	
+			if(_owner == (getplayeruid player)) then {							
+				if(typename _civ == "ARRAY") then {
+					_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
+					_civ setUnitLoadout _loadout;
+					_civ spawn wantedSystem;
+					_civ setName _name;
+				}else{
+					[_civ] joinSilent (group player);
+				};				
+			};
+			_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
+		}foreach (_recruits);
+		server setVariable ["recruits",_newrecruits,true];
 	}else{
-		hint "New Player";
+		//hint "New Player";
 	};
 
 	//JIP interactions
@@ -199,8 +222,13 @@ if (_newplayer) then {
 };
 
 {	
-	_x call initObjectLocal;	
-}foreach(_furniture);
+	if(_x call hasOwner) then {
+		_owner = _x getVariable ["owner",""];
+		if(_owner == getplayeruid player) then {
+			_x call initObjectLocal;
+		};
+	};	
+}foreach(entities "Furniture");
 
 player setCaptive true;
 player setPos _housepos;

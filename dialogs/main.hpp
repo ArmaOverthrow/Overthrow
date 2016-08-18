@@ -37,6 +37,65 @@ class AIT_dialog_start
 	};
 };
 
+class AIT_dialog_command
+{
+	idd=-1;
+	movingenable=false;
+	
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
+		////////////////////////////////////////////////////////
+
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Fast Travel Unit/s"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Fast travels all selected units that are not currently wanted"; //--- ToDo: Localize;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Loot"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.654 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Commands all selected units to loot bodies and fill closest container to you"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn loot;"
+		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Open Inventory"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Commands first unit selected to walk to and open the closest container to you"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn openInventory;"
+		};
+		class RscButton_1603: RscButton
+		{
+			idc = 1603;
+			text = "Rearm"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.566 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Commands all selected units to find ammo in the surrounding area"; //--- ToDo: Localize;
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+
+	}
+}
 
 class AIT_dialog_options
 {
@@ -68,7 +127,7 @@ class AIT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "A more secure save than default, this will work across updates of both Arma and Overthrow"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn saveGamePersistent;";
+			action = "closeDialog 0;'actions\saveGame.sqf' remoteExec ['execVM',2];";
 		};
 		class RscButton_1601: RscButton
 		{
