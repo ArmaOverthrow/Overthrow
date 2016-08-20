@@ -60,6 +60,13 @@ if(isMultiplayer or _startup == "LOAD") then {
 			if(_key == "home") then {
 				_val = nearestBuilding _val;
 			};
+			if(_key == "camp" and typename _val == "ARRAY") then {				
+				_val = createVehicle [AIT_item_tent, _val, [], 0, "CAN_COLLIDE"];
+				_val setVariable ["owner",getplayeruid player,true];
+				_val call initObjectLocal;
+				
+				_v = "Land_ClutterCutter_large_F" createVehicle (getpos _val);
+			};
 			if(_key == "owned") then {
 				_d = [];
 				{
@@ -194,6 +201,9 @@ if (_newplayer) then {
 	_furniture = (_house call spawnTemplate) select 0;
 
 	{
+		if(typeof _x == AIT_item_Map) then {
+			_x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+		};
 		if(typeof _x == AIT_item_Storage) then {
 			_x addWeaponCargo [AIT_item_BasicGun,1];
 			_x addMagazineCargo [AIT_item_BasicAmmo,5];
@@ -228,7 +238,7 @@ if (_newplayer) then {
 			_x call initObjectLocal;
 		};
 	};	
-}foreach(entities "Furniture");
+}foreach(entities "");
 
 player setCaptive true;
 player setPos _housepos;

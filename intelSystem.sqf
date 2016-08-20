@@ -8,19 +8,13 @@ _handler = {
 		{
 			_veh = vehicle _x;			
 			if(_veh == _x) then {
+				_color = [0,0.5,0,1];
 				if!(captive _x) then {
-					(_this select 0) drawIcon [
-						"\A3\ui_f\data\map\groupicons\waypoint.paa",
-						[0,0.5,0,1],
-						getpos _x,
-						24,
-						24,
-						getdir _x
-					];
+					_color = [0.5,0,0,1];
 				};
 				(_this select 0) drawIcon [
 					"iconMan",
-					[0,0.5,0,1],
+					_color,
 					getpos _x,
 					24,
 					24,
@@ -41,11 +35,14 @@ _handler = {
 			if(_veh == _x) then {
 				_dest = expectedDestination _x;
 				_destpos = _dest select 0;
-				
+				_color = [0,0.5,0,1];
+				if !(captive _x) then {
+					_color = [0.5,0,0,1];
+				};
 				if(_x in groupSelectedUnits player) then {
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\igui\cfg\islandmap\iconplayer_ca.paa",
-						[0,0.5,0,1],
+						_color,
 						getpos _x,
 						24,
 						24,
@@ -56,11 +53,11 @@ _handler = {
 					(_this select 0) drawLine [
 						getPos _x,
 						_destpos,
-						[0,0.5,0,1]
+						_color
 					];
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\map\groupicons\waypoint.paa",
-						[0,0.5,0,1],
+						_color,
 						_destpos,
 						24,
 						24,
@@ -68,21 +65,14 @@ _handler = {
 					]; 
 				};
 				
-				_size = 24;
-				_icon = "iconMan";
-				_dir = getDir _x;
-				if !(captive _x) then {
-					_icon = "\A3\ui_f\data\map\groupicons\waypoint.paa";
-					_size = 30;
-					_dir = 0;
-				};
+				
 				(_this select 0) drawIcon [
-					_icon,
-					[0,0.5,0,1],
+					"iconMan",
+					_color,
 					getpos _x,
-					_size,
-					_size,
-					_dir,
+					24,
+					24,
+					getDir _x,
 					format["%1",_t]
 				];
 			}else{
@@ -96,15 +86,17 @@ _handler = {
 	
 	{
 		_passengers = "";
+		_color = [0,0.5,0,1];
 		{
-			if(isPlayer _x) then {
-				_passengers = format["%1 %2",_passengers,name _x]
+			if(isPlayer _x and _x != player) then {
+				_passengers = format["%1 %2",_passengers,name _x];				
 			};
+			if(!captive _x) then {_color = [0.5,0,0,1]};
 		}foreach(units _x);
 		
 		(_this select 0) drawIcon [
 			"iconCar",
-			[1,1,1,1],
+			_color,
 			getpos _x,
 			24,
 			24,

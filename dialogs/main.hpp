@@ -239,6 +239,7 @@ class AIT_dialog_main
 			y = 0.654 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
+			action = "closeDialog 0;[] spawn buildMenu";
 		};
 		class RscButton_1603: RscButton
 		{
@@ -249,16 +250,7 @@ class AIT_dialog_main
 			y = 0.731 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
-		};
-		class RscButton_1604: RscButton
-		{
-			idc = 1604;
-
-			text = "Manage Buildings"; //--- ToDo: Localize;
-			x = 0.005 * safezoneW + safezoneX;
-			y = 0.808 * safezoneH + safezoneY;
-			w = 0.149531 * safezoneW;
-			h = 0.066 * safezoneH;
+			action = "[] spawn manageRecruits;"
 		};
 		class RscPicture_1200: RscPicture
 		{
@@ -333,6 +325,7 @@ class AIT_dialog_main
 			y = 0.841 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
 			h = 0.044 * safezoneH;
+			action = "hint 'Not yet implemented'";
 		};
 		class RscButton_1610: RscButton
 		{

@@ -1,3 +1,4 @@
+private ["_pos","_town","_townPos","_drop","_group","_start","_stability","_vehtype","_num","_count","_police","_group","_tgroup","_wp","_attackdir","_vehtype","_civ"];
 
 _leaderpos = _this select 0;
 _numcrim = _this select 1;

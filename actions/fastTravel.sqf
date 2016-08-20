@@ -16,9 +16,13 @@ onMapSingleClick "";
 if !(visibleMap) exitWith {};
 
 _handled = false;
-_estate = posTravel call getNearestOwned;
-if(typename _estate == "OBJECT") then {
-	_b = _estate;	
+
+if(posTravel distance player < 250) then {
+	"You cannot fast travel less than 250m. Just walk!" call notify_minor;
+	openMap false;
+};
+
+if([posTravel,"Misc"] call canPlace) then {
 	_handled = true;
 	player allowDamage false;
 	disableUserInput true;
@@ -41,12 +45,7 @@ if(typename _estate == "OBJECT") then {
 			vehicle player setPos _pos;
 		};				
 	}else{
-		if((typeof _b) == AIT_item_tent) then {
-			player setpos ([(getpos _b),5,getDir _b] call BIS_fnc_relPos);//Make sure they dont land on the fire
-		}else{
-			player setpos (getpos _b);
-		};
-		
+		player setpos posTravel;		
 	};				
 
 	disableUserInput false;
@@ -54,7 +53,7 @@ if(typename _estate == "OBJECT") then {
 };
 
 if !(_handled) then {
-	"You don't own any buildings or camps near there" call notify_minor;
+	"You must click near a base, camp or owned building" call notify_minor;
 	openMap false;
 }else{
 	if((vehicle player) != player) then {

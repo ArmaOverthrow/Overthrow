@@ -1,3 +1,5 @@
+private ["_buildings","_building","_gotbuilding","_price","_lease","_sell","_totaloccupants"];
+
 _buildings =  _this nearObjects ["Building",30];
 _gotbuilding = false;
 _building = objNULL;
@@ -6,6 +8,11 @@ _lease = 0;
 _sell = 0;
 _totaloccupants = 0;
 _sorted = [_buildings,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
+
+if(!isNil "modeTarget") then {
+	_sorted = _sorted - [modeTarget];
+};
+
 {
 	if ((typeof _x) in AIT_allBuyableBuildings) exitWith {
 		_gotbuilding = true;

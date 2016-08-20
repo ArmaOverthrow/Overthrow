@@ -1,10 +1,12 @@
-private ["_data"];
+private ["_data","_done"];
 
 if(AIT_saving) exitWith {hint "Please wait, save still in progress"};
 AIT_saving = true;
 publicVariable "AIT_saving";
 
 "Persistent Saving..." remoteExec ["notify_minor",0,true];
+sleep 0.1;
+waitUntil {!isNil "AIT_NATOInitDone"};
 
 _data = [];
 //get all server data
@@ -35,7 +37,7 @@ _data = [];
 						_val = _owned;
 					};
 					
-					if(_x == "home") then {
+					if(_x == "home" or _x == "camp") then {
 						_val = getpos _val;
 					};					
 					_d pushback [_x,_val];											
@@ -48,12 +50,22 @@ _data = [];
 
 _vehicles = [];
 
+_count = 10001;
 {
-	if(alive _x and (_x call hasOwner)) then {
+	if((!isPlayer _x) and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag) and (!(_x isKindOf "Building"))) then {
 		_owner = _x getVariable ["owner",false];		
-		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner];	
+		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""]];	
+		_done pushback _x;
 	};
-}foreach(vehicles);
+	if(_count > 10000) then {
+		"Still persistent Saving... please wait" remoteExec ["notify_minor",0,true];
+		_count = 0;
+		sleep 0.1;
+	};
+	_count = _count + 1;
+}foreach((getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition")) nearObjects 50000);
+
+sleep 0.2;
 _data pushback ["vehicles",_vehicles];
 
 _recruits = [];

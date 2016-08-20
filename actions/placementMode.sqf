@@ -9,7 +9,8 @@ _description = "";
 modeFinished = false;
 modeCancelled = false;
 call {
-	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [AIT_item_Tent];_cost=40;_description="Creates a fast travel destination. Only one allowed per player, will remove any existing camps."};
+	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [AIT_item_Tent];_cost=40;_description="Creates a fast travel destination for you and your group. Only one allowed per player, will remove any existing camps."};
+	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [AIT_item_Flag];_cost=500;_description="Creates a fast travel destination for all friendlies and enables build mode for military structures"};
 	if(_typecls == "Ammobox") exitWith {modeValues = [AIT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
 	if(_typecls == "Whiteboard") exitWith {modeValues = [AIT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
 	{
@@ -20,29 +21,11 @@ call {
 _money = player getVariable "money";
 if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call notify_minor};
 
-//Building proximity check
-_estate = (getpos player) call getNearestRealEstate;
-if(typename _estate == "ARRAY") then {
-	_b = _estate select 0;
-	if(_b call hasOwner) then {
-		_owner = _b getVariable "owner";
-		if(_owner != getplayeruid player) then {
-			if(_typecls == "Camp") then {
-				_cost = 0;
-			};
-		}else{
-			if(_typecls == "Camp") then {
-				_cost = 0;
-			};
-		};
-	}else{
-		if(_typecls != "Camp") then {
-			_cost = 0;
-		};
-	};
-}else{
-	if(_typecls != "Camp") then {
-		_cost = 0;
+if !([getpos player,_typecls] call canPlace) exitWith {
+	call {
+		if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call notify_minor};
+		if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
+		"You must be near a base, camp or owned structure" call notify_minor
 	};
 };
 
@@ -84,13 +67,21 @@ if(_cost > 0) then {
 			if(_key == 57) exitWith {
 				//Space
 				_handled = true;
+				detach modeTarget;
 				deleteVehicle modeTarget;
 				modeValue = modeValue + 1;
 				if(modeValue > ((count modeValues)-1)) then {modeValue = 0};
 
 				_cls = modeValues select modeValue;
 
-				modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];	
+				modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
+				if(_cls == "C_Rubberboat") then {
+					_dir = _dir + 90;
+				};
+				modeTarget remoteExec ["enableSimulationGlobal false",2];
+				if(_cls == AIT_item_Map) then {
+					modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+				};				
 				clearWeaponCargoGlobal modeTarget;
 				clearMagazineCargoGlobal modeTarget;
 				clearBackpackCargoGlobal modeTarget;
@@ -114,8 +105,14 @@ if(_cost > 0) then {
 	};
 	_cls = modeValues select modeValue;
 	_handlerId = (findDisplay 46) displayAddEventHandler ["KeyDown",_keyhandler];	
-	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];	
+	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
+	modeTarget remoteExec ["enableSimulationGlobal false",2];
+	modeTarget enableSimulation false;
+	if(_cls == AIT_item_Map) then {
+		modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+	};		
 	modeTarget enableSimulationGlobal false;
+	
 	
 	clearWeaponCargoGlobal modeTarget;
 	clearMagazineCargoGlobal modeTarget;
@@ -124,6 +121,17 @@ if(_cost > 0) then {
 	
 	modeTarget attachTo [player,attachAt];
 	
+	if(_cls == "C_Rubberboat") then {
+		_p = getDir modeTarget;
+		_v = getDir player;
+		_c = 360;
+
+		_dir = _c-((_c-_p)-(_c-_v));
+		if(_dir >= 360) then {_dir = _dir - 360};
+		
+		modeTarget setDir _dir + 90;
+	};
+	
 	waitUntil {sleep 0.1; modeFinished or modeCancelled or (count attachedObjects player == 0) or (vehicle player != player) or (!alive player) or (!isPlayer player)};
 	
 	(findDisplay 46) displayRemoveEventHandler ["KeyDown",_handlerId];
@@ -131,52 +139,70 @@ if(_cost > 0) then {
 	{detach _x} forEach attachedObjects player;
 	
 	if(modeCancelled or (vehicle player != player) or (!alive player) or (!isPlayer player)) then {
+		detach modeTarget;
 		deleteVehicle modeTarget;
-	}else{	
-		_estate = (getpos player) call getNearestRealEstate;
-		if(typename _estate == "ARRAY") then {
-			_b = _estate select 0;
-			if(_b call hasOwner) then {
-				_owner = _b getVariable "owner";
-				if(_owner != getplayeruid player) then {
-					if(_typecls == "Camp") then {
-						_cost = 0;
-					};
-				}else{
-					if(_typecls == "Camp") then {
-						_cost = 0;
-					};
-				};
-			}else{
-				if(_typecls != "Camp") then {
-					_cost = 0;
-				};
-			};
-		}else{
-			if(_typecls != "Camp") then {
-				_cost = 0;
-			};
-		};
-		if(_cost > 0) then {
+	}else{		
+		if ([getpos player,_typecls] call canPlace) then {			
 			player setVariable ["money",_money - _cost,true];		
 			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
-			modeTarget enableSimulationGlobal true;
+			modeTarget remoteExec ["enableSimulationGlobal true",2];
+			modeTarget enableSimulation true;
 			modeTarget setVariable ["owner",getPlayerUID player,true];
 			modeTarget call initObjectLocal;
-		}else{
-			if(_typecls != "Camp") then {
-				"To place this item you must be near a building or camp that you own" call notify_minor;
-			}else{
-				"You cannot place a camp near an owned building" call notify_minor;
+			if(_typecls == "Base" or _typecls == "Camp") then {
+				_veh = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
 			};
+			
+			if(_typecls == "Base") then {
+				createDialog "AIT_dialog_name";
+				ctrlSetText [1400,"Base"];
+				
+				onNameDone = {
+					_name = ctrltext 1400;
+					if(_name != "") then {
+						closeDialog 0;
+						
+						_base = (player nearObjects [AIT_item_Flag,50]) select 0;
+						
+						_bases = server getVariable ["bases",[]];
+						_bases pushback [getpos _base,_name,getplayeruid player];
+						server setVariable ["bases",_bases,true];
+						
+						_base setVariable ["name",_name];
+						
+						_mrkid = format["%1-base",getpos _base];
+						createMarker [_mrkid,getpos _base];
+						_mrkid setMarkerShape "ICON";
+						_mrkid setMarkerType "mil_Flag";
+						_mrkid setMarkerColor "ColorWhite";
+						_mrkid setMarkerAlpha 1;
+						_mrkid setMarkerText _name;
+					};
+				};
+				onNameKeyDown = {
+					_key = _this select 1;
+					_name = ctrltext 1400;
+					if(_key == 28 and _name != "") exitWith {
+						[] call onNameDone;
+						true
+					};
+				};				
+			};
+		}else{
+			call {
+				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call notify_minor};
+				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
+				"You must be near a base, camp or owned structure" call notify_minor
+			};
+			detach modeTarget;
 			deleteVehicle modeTarget;
 		};
 	};	
 }else{
-	if(_typecls != "Camp") then {
-		"To place this item you must be near a building or camp that you own" call notify_minor;
+	if(_typecls != "Camp" and _typecls != "Base") then {
+		"To place this item you must be near a base or a building/camp that you own" call notify_minor;
 	}else{
-		"You cannot place a camp near a building you own" call notify_minor;
+		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call notify_minor;
 	};
 };
 

@@ -74,7 +74,6 @@ _last = time;
 while{true} do {
 	if (time - _last >= 0.5) then {sleep 0.1} else {sleep 0.5 - (time - _last)};
 	diag_virt = time - _last;
-	publicVariable "diag_virt";
 	_last = time;	
 	{
 		_id = _x select 0;

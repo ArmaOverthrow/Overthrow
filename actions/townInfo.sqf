@@ -16,6 +16,14 @@ while {visibleMap} do {
 		if!(isNil "_town") then {
 			_pop = server getVariable format["population%1",_town];
 			_stability = server getVariable format["stability%1",_town];
+			_abandon = "Under NATO Control";
+			if(_town in (server getVariable ["NATOabandoned",[]])) then {
+				if(_stability < 50) then {
+					_abandon = "Anarchy";
+				}else{
+					_abandon = "Under Resistance Control";
+				};				
+			};
 			_rep = player getVariable format["rep%1",_town];
 			_numshops = server getVariable format["shopsin%1",_town];
 			if(_numshops == 0) then {
@@ -25,7 +33,7 @@ while {visibleMap} do {
 			if(_rep > -1) then {
 				_plusmin = "+";
 			};
-			_txt = format ["<t size='1.2' color='#222222'>%1</t><br/><t size='0.5' color='#222222'>Population: %2</t><br/><t size='0.5' color='#222222'>Stability: %3%4</t><br/><t size='0.5' color='#222222'>Your Standing: %5%6</t><br/><t size='0.5' color='#222222'>Shops: %7</t>",_town,[_pop, 1, 0, true] call CBA_fnc_formatNumber,_stability,"%",_plusmin,_rep,_numshops];
+			_txt = format ["<t size='1.2' color='#222222'>%1</t><br/><t size='0.5' color='#222222'>Status: %8</t><br/><t size='0.5' color='#222222'>Population: %2</t><br/><t size='0.5' color='#222222'>Stability: %3%4</t><br/><t size='0.5' color='#222222'>Your Standing: %5%6</t><br/><t size='0.5' color='#222222'>Shops: %7</t>",_town,[_pop, 1, 0, true] call CBA_fnc_formatNumber,_stability,"%",_plusmin,_rep,_numshops,_abandon];
 			[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 		};
 		gotone = false;		

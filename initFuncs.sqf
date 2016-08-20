@@ -20,12 +20,14 @@ getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestR
 getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
 nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
+nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
 giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
+canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
@@ -49,6 +51,8 @@ loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
+buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
+manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -167,16 +171,26 @@ money = {
 
 stability = {
 	_town = _this select 0;
+	
+	_townmrk = format["%1-abandon",_town];
 	_stability = (server getVariable format["stability%1",_town])+(_this select 1);
 	if(_stability < 0) then {_stability = 0};
 	server setVariable [format["stability%1",_town],_stability,true];
 	
-	//update the marker
+	_abandoned = server getVariable "NATOabandoned";
+	if(_town in _abandoned) then {
+		_townmrk setMarkerAlpha 1;
+	}else{
+		_townmrk setMarkerAlpha 0;
+	};
+	
+	//update the markers
 	if(_stability < 50) then {
 		_town setMarkerColor "ColorRed";
 		_town setMarkerAlpha 1.0 - (_stability / 50);
+		_townmrk setMarkerColor "ColorOPFOR";		
 	}else{
-		_abandoned = server getVariable "NATOabandoned";
+		_townmrk setMarkerColor "ColorGUER";
 		if(_town in _abandoned) then {
 			_town setMarkerAlpha ((_stability - 50) / 100);
 			_town setMarkerColor "ColorGreen";
@@ -184,6 +198,7 @@ stability = {
 			_town setMarkerAlpha 0;
 		};
 	}
+	
 };
 
 KK_fnc_fileExists = {
@@ -198,24 +213,24 @@ KK_fnc_fileExists = {
 
 notify = {
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0.8, 0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0.8, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_good = {
 	playSound "3DEN_notificationDefault";
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_minor = {
 	playSound "ClickSoft";
 	_txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {
 	_txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
-	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 [] execVM "funcs\info.sqf";

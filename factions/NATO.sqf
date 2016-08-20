@@ -39,6 +39,7 @@ if((server getVariable "StartupType") == "NEW") then {
 			server setVariable [format ["airgarrison%1",_name],[],true];
 		};
 		if(_name == AIT_NATO_HQ) then {
+			hint "yep";
 			AIT_NATO_HQPos = getpos _x;
 		};
 		
@@ -171,6 +172,12 @@ while {true} do {
 			};
 		}
 	}foreach(AIT_NATOobjectives);
+	
+	{
+		if(side _x == west and count (units _x) == 0) then {
+			deleteGroup _x;
+		};
+	}foreach(allGroups);
 	
 	sleep AIT_NATOwait + round(random AIT_NATOwait);	
 };

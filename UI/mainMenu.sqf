@@ -58,15 +58,7 @@ if(typename _b == "ARRAY") then {
 		_ownername = server getVariable format["name%1",_owner];
 		
 		if(_owner == getplayerUID player) then {
-			if(typeof _building != AIT_item_Tent) then {
-				ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
-			
-				_buildingTxt = format["
-					<t align='left' size='0.9'>%1</t><br/>
-					<t align='left' size='0.7'>Owned by %2</t><br/>
-					<t align='left' size='0.7'>Lease Value: $%3/hr</t>
-				",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
-			}else{
+			if(typeof _building == AIT_item_Tent) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
 				ctrlEnable [1609,false];
@@ -77,6 +69,24 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.7'>Owned by %1</t>
 				",_ownername];
 			};
+			if(typeof _building == AIT_item_Flag) exitWith {
+				ctrlSetText [1608,"Sell"];
+				ctrlEnable [1608,false];
+				ctrlEnable [1609,false];
+				ctrlEnable [1610,false];
+			
+				_buildingTxt = format["
+					<t align='left' size='0.9'>%1</t><br/>
+					<t align='left' size='0.7'>Owned by %2</t>
+				",_building getVariable "name",_ownername];
+			};
+			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
+		
+			_buildingTxt = format["
+				<t align='left' size='0.9'>%1</t><br/>
+				<t align='left' size='0.7'>Owned by %2</t><br/>
+				<t align='left' size='0.7'>Lease Value: $%3/hr</t>
+			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];			
 			
 		}else{
 			ctrlEnable [1608,false];
@@ -85,7 +95,9 @@ if(typename _b == "ARRAY") then {
 			if(typeof _building == AIT_item_Tent) then {
 				_name = "Camp";
 			};
-			
+			if(typeof _building == AIT_item_Flag) then {
+				_name = _building getVariable "name";
+			};
 			_buildingTxt = format["
 				<t align='left' size='1'>%1</t><br/>
 				<t align='left' size='0.7'>Owned by %2</t>
@@ -132,12 +144,9 @@ if(count _possible > 0) then {
 	_civ = _possible select 0;
 	
 	_cls = typeof _civ;
-	_pic = getText(configFile >>  "CfgVehicles" >>  _cls >> "editorPreview");
-	_name = name _civ;	
 	
-	if !(isNil "_pic") then {
-		ctrlSetText [1200,_pic];
-	};	
+	_name = name _civ;	
+
 	player setVariable ["hiringciv",_civ,false];
 	
 	_civprice = [_town,"CIV",_standing] call getPrice;

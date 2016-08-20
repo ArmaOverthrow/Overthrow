@@ -246,6 +246,7 @@ class RscPicture
 		0.65
 	};
 };
+
 class RscEdit
 {
 	deletable = 0;

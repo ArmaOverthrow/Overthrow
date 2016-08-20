@@ -1,5 +1,3 @@
-
-
 if(typeof _this == AIT_item_Map) then {
 	_this addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
 	_this addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
@@ -13,7 +11,7 @@ if(typeof _this == AIT_item_Map) then {
 if(typeof _this == AIT_item_Repair) then {
 	_this addAction ["Repair Nearby Vehicles", "actions\repairAll.sqf",nil,0,false,true,"",""];
 };
-if(typeof _this == AIT_item_Tent) then {
+if(typeof _this == AIT_item_Tent) exitWith {
 	_camp = player getVariable ["camp",objNull];
 	if !(isNull _camp) then {
 		_fire = _camp getVariable "fire";
@@ -34,6 +32,18 @@ if(typeof _this == AIT_item_Tent) then {
 	_fire = "Land_Fire" createVehicle _pos;
 	_this setVariable ["fire",_fire,false];
 	player setvariable ["camp",_this,false];
+};
+
+if(_this isKindOf "Building" or _this isKindOf "Man") exitWith{};
+
+if(AIT_hasACE) then {
+	_dir = 0;
+	if(typeof _this == "C_Rubberboat") then {
+		_dir = 90;
+	};
+	[_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
 }else{
 	_this addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
 };
+
+

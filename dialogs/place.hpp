@@ -1,3 +1,50 @@
+class AIT_dialog_name
+{
+	idd=-1;
+	movingenable=false;
+
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Votehi)
+		////////////////////////////////////////////////////////
+
+		class RscEdit_1400: RscEdit
+		{
+			idc = 1400;
+			x = 0.37625 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
+			w = 0.242344 * safezoneW;
+			h = 0.055 * safezoneH;		
+			onKeyDown = "_this call onNameKeyDown;";
+			text = "Base";
+		};
+		class RscStructuredText_1100: RscStructuredText
+		{
+			idc = 1100;
+			text = "Enter a name for your new base"; //--- ToDo: Localize;
+			x = 0.37625 * safezoneW + safezoneX;
+			y = 0.379 * safezoneH + safezoneY;
+			w = 0.195937 * safezoneW;
+			h = 0.022 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Done"; //--- ToDo: Localize;
+			x = 0.577344 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "_this call onNameDone";
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+	};
+};
+
 class AIT_dialog_place
 {
 	idd=8002;
@@ -5,72 +52,108 @@ class AIT_dialog_place
 
 	class controls
 	{
-		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Lyxyxu)
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Jawatu)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
+			action = "closeDialog 0;'Sandbags' spawn placementMode";
+
 			text = "Sandbags"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
+			x = 0.551562 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			action = "closeDialog 0;'Sandbags' spawn placementMode";
+			tooltip = "Light defense"; //--- ToDo: Localize;
 		};
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
+			action = "closeDialog 0;'Camo Nets' spawn placementMode";
+
 			text = "Camo Nets"; //--- ToDo: Localize;
-			x = 0.597969 * safezoneW + safezoneX;
+			x = 0.7475 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			action = "closeDialog 0;'Camo Nets' spawn placementMode";
+			tooltip = "Hide from the helicopters"; //--- ToDo: Localize;
 		};
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
+			action = "closeDialog 0;'Barriers' spawn placementMode";
+
 			text = "Barriers"; //--- ToDo: Localize;
-			x = 0.695937 * safezoneW + safezoneX;
+			x = 0.649531 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			action = "closeDialog 0;'Barriers' spawn placementMode";
+			tooltip = "Medium defense"; //--- ToDo: Localize;
 		};
 		class RscButton_1603: RscButton
 		{
 			idc = 1603;
+			action = "closeDialog 0;'Camp' spawn placementMode";
+
 			text = "Camp"; //--- ToDo: Localize;
-			x = 0.206094 * safezoneW + safezoneX;
+			x = 0.159687 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			action = "closeDialog 0;'Camp' spawn placementMode";
+			tooltip = "Creates a fast travel destination for you and your group"; //--- ToDo: Localize;
 		};
 		class RscButton_1604: RscButton
 		{
 			idc = 1604;
+			action = "closeDialog 0;'Ammobox' spawn placementMode";
+
 			text = "Ammobox"; //--- ToDo: Localize;
-			x = 0.304062 * safezoneW + safezoneX;
+			x = 0.355625 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			action = "closeDialog 0;'Ammobox' spawn placementMode";
+			tooltip = "An empty ammobox"; //--- ToDo: Localize;
 		};
 		class RscButton_1605: RscButton
 		{
 			idc = 1605;
-			text = "Whiteboard"; //--- ToDo: Localize;
-			x = 0.402031 * safezoneW + safezoneX;
+			action = "closeDialog 0;'Misc' spawn placementMode";
+
+			text = "Misc"; //--- ToDo: Localize;
+			x = 0.453594 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			action = "closeDialog 0;'Whiteboard' spawn placementMode";
+			tooltip = "Miscellaneous (but useful) items"; //--- ToDo: Localize;
+		};
+		class RscButton_1606: RscButton
+		{
+			idc = 1603;
+			action = "closeDialog 0;'Base' spawn placementMode";
+
+			text = "Base"; //--- ToDo: Localize;
+			x = 0.257656 * safezoneW + safezoneX;
+			y = 0.797 * safezoneH + safezoneY;
+			w = 0.0928125 * safezoneW;
+			h = 0.088 * safezoneH;
+			tooltip = "Creates a fast travel destination for all friendlies, allows building of military structures"; //--- ToDo: Localize;
+		};
+		class RscButton_1607: RscButton
+		{
+			idc = 1607;
+			text = "Deploy"; //--- ToDo: Localize;
+			x = 0.422656 * safezoneW + safezoneX;
+			y = 0.687 * safezoneH + safezoneY;
+			w = 0.154687 * safezoneW;
+			h = 0.099 * safezoneH;
+			tooltip = "Deploy a static weapon or rubber boat"; //--- ToDo: Localize;
+			action = "closeDialog 0;'Deploy' spawn placementMode";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
+
 	};
 };

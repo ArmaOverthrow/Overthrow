@@ -2,6 +2,7 @@ if(AIT_fastTime) then {
 	setTimeMultiplier 4;
 };
 [] execVM "weather.sqf";
+[] execVM "income.sqf";
 
 if (!isMultiplayer) exitWith {};
 

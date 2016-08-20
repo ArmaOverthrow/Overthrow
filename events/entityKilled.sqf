@@ -5,18 +5,6 @@ _killer = _this select 1;
 _killer setVariable ["lastkill",time,true];
 _town = (getpos _me) call nearestTown;
 
-_me addEventHandler ["ContainerOpened",{
-	_u = _this select 0;
-	_u setVariable ["looted",true,true];
-	[_u] spawn {
-		sleep 600;
-		_n = _this select 0;
-		if!(isNil "_n") then {
-			deleteVehicle (_this select 0);
-		}
-	};
-}];
-
 if(isPlayer _me) exitWith {	
 	_myuid = getPlayerUID _me;
 	{
@@ -65,13 +53,13 @@ if(!isNil "_criminal") then {
 				if(isMultiplayer) then {
 					format["%1 has killed the gang leader in %2",name _killer,_town] remoteExec ["notify_minor",0,true];
 				}else{
-					format["You killed the gang leader in %2",_town] call notify_minor;
+					format["You killed the gang leader in %1",_town] call notify_minor;
 				};
 			}else{
 				if(side _killer == west) then {
-					format["NATO has removed the gang leader in %2",_town] remoteExec ["notify_minor",0,true];
+					format["NATO has removed the gang leader in %1",_town] remoteExec ["notify_minor",0,true];
 				}else{
-					format["The gang leader in %2 is dead",_town] remoteExec ["notify_minor",0,true];
+					format["The gang leader in %1 is dead",_town] remoteExec ["notify_minor",0,true];
 				};
 			};
 			server setVariable [format["CRIMbounty%1",_town],0,true];

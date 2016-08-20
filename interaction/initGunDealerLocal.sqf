@@ -23,8 +23,14 @@ _civ addAction ["Buy", {
 				_base = [_type] call BIS_fnc_baseWeapon;
 				_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
 				_cost = 2;
+				if(_type in AIT_allSubMachineGuns) then {
+					_cost = 3;
+				};
 				if(_type in AIT_allAssaultRifles) then {
 					_cost = 5;
+					if((_cost select 0) > 1400) then {
+						_cost = 10;
+					};
 				};
 				if(_type in AIT_allMachineGuns) then {
 					_cost = 12;

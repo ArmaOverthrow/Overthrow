@@ -74,6 +74,13 @@ while {true} do {
 			sleep 0.1;
 		}foreach (AIT_allTowns);
 	};
+	
+	{
+		if(side _x == east and count (units _x) == 0) then {
+			deleteGroup _x;
+		};
+	}foreach(allGroups);
+	
 	_sleeptime = AIT_CRIMwait + round(random AIT_CRIMwait);
 	sleep _sleeptime;
 };
