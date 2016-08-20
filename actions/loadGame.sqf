@@ -19,7 +19,7 @@ if(typename _data != "ARRAY") exitWith {
 			_owner = _x select 2;
 			
 			_veh = createVehicle [AIT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
-			_veh setVariable ["owner",_owner];
+			_veh setVariable ["owner",_owner,true];
 			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 			
 			_mrkid = format["%1-base",_pos];
@@ -49,23 +49,23 @@ if(typename _data != "ARRAY") exitWith {
 			clearMagazineCargoGlobal _veh;
 			clearBackpackCargoGlobal _veh;
 			clearItemCargoGlobal _veh;	
-			_veh setVariable ["name",_name];
+			_veh setVariable ["name",_name,true];
 			
 			if(_type == AIT_item_Map) then {
 				_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
 			};
 		
-			_veh setVariable ["owner",_owner];
+			_veh setVariable ["owner",_owner,true];
 			{
 				_cls = _x select 0;
 				_num = _x select 1;
 				if(_cls in AIT_allWeapons) then {
-					_veh addWeaponCargo _x;
+					_veh addWeaponCargoGlobal _x;
 				}else{
 					if(_cls in AIT_allMagazines) then {
-						_veh addMagazineCargo _x;
+						_veh addMagazineCargoGlobal _x;
 					}else{
-						_veh addItemCargo _x;
+						_veh addItemCargoGlobal _x;
 					};
 				};				
 			}foreach(_stock);
