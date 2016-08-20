@@ -1,7 +1,7 @@
 if !(captive player) exitWith {"You cannot fast travel while wanted" call notify_minor};
 
 if((vehicle player) != player) then {
-	if (driver vehicle player == player)  exitWith {"You are not the driver of this vehicle" call notify_minor};
+	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call notify_minor};
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
 };
 posTravel = [];

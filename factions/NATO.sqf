@@ -39,7 +39,6 @@ if((server getVariable "StartupType") == "NEW") then {
 			server setVariable [format ["airgarrison%1",_name],[],true];
 		};
 		if(_name == AIT_NATO_HQ) then {
-			hint "yep";
 			AIT_NATO_HQPos = getpos _x;
 		};
 		
@@ -152,7 +151,14 @@ while {true} do {
 				_town spawn NATOattack;				
 				_abandoned pushback _town;
 				server setVariable ["NATOabandoned",_abandoned,true];
-			}
+			}else{
+				_leaderpos = server getVariable [format["crimleader%1",_town],false];
+				if ((typeName _leaderpos) != "ARRAY") then {
+					if((random 100) > 75) then {
+						[_town,1] call stability;
+					};
+				};
+			};
 		};
 		sleep 0.1;
 	}foreach (AIT_allTowns);

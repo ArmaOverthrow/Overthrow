@@ -57,7 +57,7 @@ while {alive _unit} do {
 	if !(captive _unit) then {
 		//CURRENTLY WANTED
 		if(_timer >= 0) then {
-			_timer = _timer + 2;	
+			_timer = _timer + 3;	
 			_unit setVariable ["hiding",30 - _timer,false];
 			if(_timer >= 30) then {
 				_unit setCaptive true;

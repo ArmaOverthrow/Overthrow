@@ -37,6 +37,68 @@ class AIT_dialog_start
 	};
 };
 
+class AIT_dialog_vehicle
+{
+	idd=-1;
+	movingenable=false;
+	
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
+		////////////////////////////////////////////////////////
+
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Fast Travel"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "closeDialog 0;[] spawn fastTravel;"
+			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Transfer To"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.654 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Transfers the contents of the closest container into this vehicle"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferFrom;"
+		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Transfer From"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Transfers the contents of this vehicle into the closest container"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferTo;"
+		};
+		class RscButton_1603: RscButton
+		{
+			idc = 1603;
+			text = "Transfer Legit"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.566 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Transfers only legal (sellable) items from the closest container into this vehicle"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferLegit;"
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+
+	}
+}
+
 class AIT_dialog_command
 {
 	idd=-1;

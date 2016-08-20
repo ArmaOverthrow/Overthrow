@@ -19,7 +19,7 @@ AIT_saving = false;
 AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-AIT_NATOwait = 20; //Half the Average time between NATO orders
+AIT_NATOwait = 200; //Half the Average time between NATO orders
 AIT_CRIMwait = 200; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -63,7 +63,7 @@ AIT_item_BasicGun = "hgun_P07_F";//Player starts with this weapon in their ammob
 AIT_item_BasicAmmo = "16Rnd_9x21_Mag";
 
 if(AIT_hasAce) then {
-	AIT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty"]; //Shops will try to stock more of these
+	AIT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty","ACE_elasticBandage"]; //Shops will try to stock more of these
 }else{
 	AIT_consumableItems = ["FirstAidKit","Medikit"];
 };

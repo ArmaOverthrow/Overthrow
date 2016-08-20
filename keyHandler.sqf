@@ -6,11 +6,13 @@ _key = _this select 1;
 if (_key == 21) then
 {
 	if(!dialog) then {
-		if(count (groupSelectedUnits player) > 0) then {			
+		if(count (groupSelectedUnits player) > 0) exitWith {			
 			createDialog "AIT_dialog_command";
-		}else{
-			[] spawn mainMenu;	
 		};
+		if(vehicle player != player) exitWith {			
+			createDialog "AIT_dialog_vehicle";
+		};
+		[] spawn mainMenu;	
 	}else{
 		closeDialog 0;
 	};	

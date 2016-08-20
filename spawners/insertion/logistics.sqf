@@ -82,9 +82,9 @@ while{_status != "done"} do {
 					_cls = _x select 0;
 					_num = _x select 1;
 					if(_cls in AIT_allBackpacks) then {	
-						_veh addBackpackCargo _x;
+						_veh addBackpackCargoGlobal _x;
 					}else{
-						_veh addItemCargo _x;
+						_veh addItemCargoGlobal _x;
 					};				
 				}foreach(_load);
 				

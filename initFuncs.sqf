@@ -101,6 +101,9 @@ giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
 saveGamePersistent = compileFinal preProcessFileLineNumbers "actions\saveGame.sqf";
 loadGamePersistent = compileFinal preProcessFileLineNumbers "actions\loadGame.sqf";
 getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
+transferFrom = compileFinal preProcessFileLineNumbers "actions\transferFrom.sqf";
+transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
+transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
 
 //Modes
 placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
