@@ -2,10 +2,13 @@
 #include "dialogs\stats.hpp"
 #include "dialogs\shop.hpp"
 #include "dialogs\main.hpp"
+#include "dialogs\place.hpp"
+#include "dialogs\build.hpp"
+#include "dialogs\recruits.hpp"
 
 author="ARMAzac";
 OnLoadName = "Overthrow.Tanoa";
-OnLoadMission = "v0.3.0 (20160813)";
+OnLoadMission = "v0.4.0";
 loadScreen = "pic.jpg";
 
 class Header

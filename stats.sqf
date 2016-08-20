@@ -46,7 +46,7 @@ while {alive player} do {
 			};
 		};
 	};
-	_txt = format ["<t size='0.7'>$%1<br/>%2<br/>%3<br/>%4</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_standing,_seen,_wanted];
+	_txt = format ["<t size='0.7'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];
 	if (_txt != _currentTxt) then {			
 		_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
 		_setText ctrlCommit 0;

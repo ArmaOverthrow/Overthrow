@@ -3,8 +3,8 @@ private ["_data"];
 //get all server data
 "Please wait.. loading persistent save" remoteExec['blackFaded',0];
 
-_data = profileNameSpace getVariable ("Overthrow.save.001");
-if(isNil "_data") exitWith {
+_data = profileNameSpace getVariable ["Overthrow.save.001",""];
+if(typename _data != "ARRAY") exitWith {
 	server setVariable ["StartupType","NEW",true];
 	hint "No save found, starting new game";
 };
@@ -12,6 +12,25 @@ if(isNil "_data") exitWith {
 	_key = _x select 0;
 	_val = _x select 1;
 	_set = true;
+	if(_key == "bases") then {
+		{
+			_pos = _x select 0;
+			_name = _x select 1;
+			_owner = _x select 2;
+			
+			_veh = createVehicle [AIT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
+			_veh setVariable ["owner",_owner];
+			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
+			
+			_mrkid = format["%1-base",_pos];
+			createMarker [_mrkid,_pos];
+			_mrkid setMarkerShape "ICON";
+			_mrkid setMarkerType "mil_Flag";
+			_mrkid setMarkerColor "ColorWhite";
+			_mrkid setMarkerAlpha 1;
+			_mrkid setMarkerText _name;
+		}foreach(_val);
+	};
 	if(_key == "vehicles") then {
 		_set = false;
 		{
@@ -20,14 +39,22 @@ if(isNil "_data") exitWith {
 			_dir = _x select 2;
 			_stock = _x select 3;
 			_owner = _x select 4;
-			_veh = _type createVehicle _pos;
-			_veh setPos _pos;
+			_name = "";
+			if(count _x > 5) then {
+				_name = _x select 5;
+			};
+			_veh = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
 			_veh setDir _dir;
 			clearWeaponCargoGlobal _veh;
 			clearMagazineCargoGlobal _veh;
 			clearBackpackCargoGlobal _veh;
 			clearItemCargoGlobal _veh;	
+			_veh setVariable ["name",_name];
 			
+			if(_type == AIT_item_Map) then {
+				_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+			};
+		
 			_veh setVariable ["owner",_owner];
 			{
 				_cls = _x select 0;
@@ -49,5 +76,6 @@ if(isNil "_data") exitWith {
 		server setvariable [_key,_val,true];
 	};	
 }foreach(_data);
-
+sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
+hint "Persistent Save Loaded";

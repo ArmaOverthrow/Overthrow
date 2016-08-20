@@ -1,4 +1,4 @@
-private ["_drop","_group","_start","_stability","_vehtype","_num","_count","_police","_group","_tgroup","_wp","_attackdir","_vehtype","_civ"];
+private ["_pos","_town","_townPos","_drop","_group","_start","_stability","_vehtype","_num","_count","_police","_group","_tgroup","_wp","_attackdir","_vehtype","_civ"];
 
 _town = _this;
 _townPos = server getVariable _town;
@@ -10,21 +10,7 @@ _police = [];
 _support = [];
 _opendoor = false;
 
-_close = nil;
 _dist = 8000;
-
-{
-	_pos = _x select 0;
-	_name = _x select 1;
-	if([_pos,_region] call fnc_isInMarker) then {
-		_d = (_pos distance _townPos);
-		if(_d < _dist) then {
-			_dist = _d;
-			_close = _pos;
-			
-		};
-	};
-}foreach(AIT_NATOobjectives);
 
 
 _attackdir = random 360;
@@ -50,7 +36,7 @@ _vehtype = AIT_NATO_Vehicle_PoliceHeli;
 _drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
 _spawnpos = AIT_NATO_HQPos;	
 
-if(_stability < 25) then {
+if(_stability < 15) then {
 	//last ditch efforts to save this town
 	//send in the big guns
 	_vehtype = AIT_NATO_Vehicle_AirTransport;

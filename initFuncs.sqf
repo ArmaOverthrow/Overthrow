@@ -16,10 +16,18 @@ unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
 hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
 getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
 getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
+getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestRealEstate.sqf";
+getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
+nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
+nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
+giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
+dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
+takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
+canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
@@ -35,6 +43,16 @@ initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
+initRecruit = compileFinal preProcessFileLineNumbers "AI\recruit.sqf";
+
+//AI Orders
+openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";
+loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
+
+//UI
+mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
+buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
+manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -55,10 +73,11 @@ sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims
 newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
 logistics = compileFinal preProcessFileLineNumbers "spawners\insertion\logistics.sqf";
 
-//AI interactions
+//Local interactions
 initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
 initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarShopLocal.sqf";
 initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
+initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 
 //Economy agents
 run_shop = compileFinal preProcessFileLineNumbers "economy\shop.sqf";
@@ -78,10 +97,13 @@ rearmGroup = compileFinal preProcessFileLineNumbers "actions\rearmGroup.sqf";
 recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
 fastTravel = compileFinal preProcessFileLineNumbers "actions\fastTravel.sqf";
 setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
-buyAmmobox = compileFinal preProcessFileLineNumbers "actions\buyAmmobox.sqf";
 giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
 saveGamePersistent = compileFinal preProcessFileLineNumbers "actions\saveGame.sqf";
 loadGamePersistent = compileFinal preProcessFileLineNumbers "actions\loadGame.sqf";
+getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
+
+//Modes
+placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
 
 //Wanted System
 unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
@@ -149,16 +171,26 @@ money = {
 
 stability = {
 	_town = _this select 0;
+	
+	_townmrk = format["%1-abandon",_town];
 	_stability = (server getVariable format["stability%1",_town])+(_this select 1);
 	if(_stability < 0) then {_stability = 0};
 	server setVariable [format["stability%1",_town],_stability,true];
 	
-	//update the marker
+	_abandoned = server getVariable "NATOabandoned";
+	if(_town in _abandoned) then {
+		_townmrk setMarkerAlpha 1;
+	}else{
+		_townmrk setMarkerAlpha 0;
+	};
+	
+	//update the markers
 	if(_stability < 50) then {
 		_town setMarkerColor "ColorRed";
 		_town setMarkerAlpha 1.0 - (_stability / 50);
+		_townmrk setMarkerColor "ColorOPFOR";		
 	}else{
-		_abandoned = server getVariable "NATOabandoned";
+		_townmrk setMarkerColor "ColorGUER";
 		if(_town in _abandoned) then {
 			_town setMarkerAlpha ((_stability - 50) / 100);
 			_town setMarkerColor "ColorGreen";
@@ -166,6 +198,7 @@ stability = {
 			_town setMarkerAlpha 0;
 		};
 	}
+	
 };
 
 KK_fnc_fileExists = {
@@ -180,24 +213,24 @@ KK_fnc_fileExists = {
 
 notify = {
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0.8, 0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0.8, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_good = {
 	playSound "3DEN_notificationDefault";
 	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_minor = {
 	playSound "ClickSoft";
 	_txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {
 	_txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
-	[_txt, 0, -0.2, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 [] execVM "funcs\info.sqf";

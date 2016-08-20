@@ -4,32 +4,19 @@ _town = (getpos player) call nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
 _price = [_town,"CIV",_standing] call getPrice;
-
 _money = player getVariable "money";
-if(_money < _price) exitWith {format["You need $%1",_price] call notify_minor};
 
-_civs = player nearEntities ["Man", 10];
-_possible = [];
-
-{
-	_owner = _x getVariable "owner";
-	if(isNil "_owner" and side _x == civilian and _x != player) then {
-		_possible pushBack _x;
-	};
-}foreach(_civs);
-
-if(count _possible == 0) exitWith {"No eligible civilians within 10 meters" call notify_minor};
-
-playSound "ClickSoft";
+if(_money < _price) exitWith {"You cannot afford that" call notify_minor};
+playSound "3DEN_notificationDefault";
 player setVariable ["money",_money-_price,true];
 
-[_town,1] call standing;
+if(random 100 > 80) then {
+	[_town,1] call standing;
+};
 
-_civ = _possible select 0;
+_civ = player getvariable "hiringciv";
 _civ setVariable ["owner",getPlayerUID player,true];
 [_civ] joinSilent (group player);
-removeAllActions _civ;
-_civ spawn wantedSystem;
-_civ setVariable ["NOAI",1,true];
+[_civ] spawn initRecruit;
 
 format["%1 has joined your crew",name _civ] call notify_minor;

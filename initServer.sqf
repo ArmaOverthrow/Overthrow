@@ -1,3 +1,9 @@
+if(AIT_fastTime) then {
+	setTimeMultiplier 4;
+};
+[] execVM "weather.sqf";
+[] execVM "income.sqf";
+
 if (!isMultiplayer) exitWith {};
 
 //VCOM AI, huge credits to Genesis, without VCOM this mission would be so much less

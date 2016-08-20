@@ -11,7 +11,7 @@ removeVest player;
 
 player linkItem "ItemMap";
 
-
+server setVariable [format["name%1",getplayeruid player],name player,true];
 
 if(isMultiplayer and (!isServer)) then {
 	call compile preprocessFileLineNumbers "initFuncs.sqf";
@@ -29,6 +29,7 @@ if(player == bigboss) then {
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 
+_startup = server getVariable "StartupType";
 _newplayer = true;
 _furniture = [];
 _town = "";
@@ -49,7 +50,7 @@ player addEventHandler ["HandleDamage", {
 	_dmg;
 }];
 
-if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
+if(isMultiplayer or _startup == "LOAD") then {
 	_data = server getvariable (getplayeruid player);
 	if !(isNil "_data") then {
 		_newplayer = false;
@@ -58,6 +59,13 @@ if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
 			_val = _x select 1;
 			if(_key == "home") then {
 				_val = nearestBuilding _val;
+			};
+			if(_key == "camp" and typename _val == "ARRAY") then {				
+				_val = createVehicle [AIT_item_tent, _val, [], 0, "CAN_COLLIDE"];
+				_val setVariable ["owner",getplayeruid player,true];
+				_val call initObjectLocal;
+				
+				_v = "Land_ClutterCutter_large_F" createVehicle (getpos _val);
 			};
 			if(_key == "owned") then {
 				_d = [];
@@ -95,6 +103,31 @@ if(isMultiplayer || (server getVariable "StartupType") == "LOAD") then {
 				};
 			};	
 		}foreach(_housepos nearObjects 50);
+		
+		_recruits = server getVariable ["recruits",[]];
+		_newrecruits = [];
+		{
+			_owner = _x select 0;
+			_name = _x select 1;	
+			_civ = _x select 2;					
+			_rank = _x select 3;				
+			_loadout = _x select 4;
+			_type = _x select 5;	
+			if(_owner == (getplayeruid player)) then {							
+				if(typename _civ == "ARRAY") then {
+					_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
+					_civ setUnitLoadout _loadout;
+					_civ spawn wantedSystem;
+					_civ setName _name;
+				}else{
+					[_civ] joinSilent (group player);
+				};				
+			};
+			_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
+		}foreach (_recruits);
+		server setVariable ["recruits",_newrecruits,true];
+	}else{
+		//hint "New Player";
 	};
 
 	//JIP interactions
@@ -168,6 +201,9 @@ if (_newplayer) then {
 	_furniture = (_house call spawnTemplate) select 0;
 
 	{
+		if(typeof _x == AIT_item_Map) then {
+			_x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+		};
 		if(typeof _x == AIT_item_Storage) then {
 			_x addWeaponCargo [AIT_item_BasicGun,1];
 			_x addMagazineCargo [AIT_item_BasicAmmo,5];
@@ -196,21 +232,13 @@ if (_newplayer) then {
 };
 
 {	
-	if(typeof _x == AIT_item_Map) then {
-		_x addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
-		_x addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
-		if(player == bigboss) then {
-			_x addAction ["Options", {
-				closedialog 0;			
-				_nul = createDialog "AIT_dialog_options";
-			},nil,0,false,true,"",""];			
+	if(_x call hasOwner) then {
+		_owner = _x getVariable ["owner",""];
+		if(_owner == getplayeruid player) then {
+			_x call initObjectLocal;
 		};
-	};
-	if(typeof _x == AIT_item_Repair) then {
-		_x addAction ["Repair Nearby Vehicles", "actions\repairAll.sqf",nil,0,false,true,"",""];
-	};
-	_x addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
-}foreach(_furniture);
+	};	
+}foreach(entities "");
 
 player setCaptive true;
 player setPos _housepos;
@@ -222,5 +250,5 @@ if (isMultiplayer) then {
 };
 
 [] spawn setupKeyHandler;
-
+[] execVM "intelSystem.sqf";
 [] execVM "setupPlayer.sqf";

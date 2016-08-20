@@ -8,16 +8,28 @@ _unit setVariable ["hiding",false,false];
 
 _unit addEventHandler ["take", {
 	_me = _this select 0;
-	if (captive _me) then {
-		_container = _this select 1;
+	_container = _this select 1;
+	
+	if (captive _me) then {		
 		_type = typeof _container;
 		if(_container isKindOf "Man") then {
-			if !(_container call hasOwner and (_me call unitSeen)) then {
+			if (!(_container call hasOwner) and (_me call unitSeen)) then {
 				//Looting dead bodies is illegal
 				_me setCaptive false;			
 			}
 		};
 	};
+	
+	if(_container isKindOf "Man" and !(_container call hasOwner)) then {
+		_container setVariable ["looted",true,true];
+		[_container] spawn {
+			sleep 300;
+			_n = _this select 0;
+			if!(isNil "_n") then {
+				deleteVehicle (_this select 0);
+			}
+		};
+	};	
 }];
 
 _unit addEventHandler ["Fired", {
@@ -39,7 +51,7 @@ _unit addEventHandler ["Fired", {
 }];
 
 while {alive _unit} do {
-	sleep 2;	
+	sleep 3;	
 	
 	//check wanted status
 	if !(captive _unit) then {
@@ -71,56 +83,126 @@ while {alive _unit} do {
 		_unit setVariable ["hiding",0,false];
 		
 		if(_unit call unitSeenCRIM) then {
+			sleep 0.05;
 			//chance they will just notice you if your global rep is very high or low
-			_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
-			if(random 10000 < _totalrep) then {
-				_unit setCaptive false;
-				hint "A gang has recognized you";
-			}else{
-				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) then {		
-					hint "A gang spotted your weapon";
-					_unit setCaptive false;	
+			if(vehicle _unit != _unit) exitWith {
+				_bad = false;
+				call {
+					if !(typeof (vehicle _unit) in AIT_allVehicles) exitWith {
+						_bad = true; //They are driving or in a non-civilian vehicle including statics
+					};
+					//Check if unit is turned out and showing a weapon						
+					if([_unit] call CBA_fnc_isTurnedOut) then {
+						if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) then {
+							_bad = true;
+						};
+					};
+				};
+				
+				if(_bad) then {
+					_unit setCaptive false;
 					{
 						if(side _x == east) then {
-							_x reveal [_unit,1.5];		
-							sleep 0.4;
+							_x reveal [_unit,1.5];					
 						};
 					}foreach(player nearentities ["Man",200]);
 				};
 			};
-		}else{	
-			//chance they will just notice you if your local or global rep is very low
-			//The info you came here for is: Your global rep needs to be 4 x your local rep in order to cancel out this effect
+			_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
+			if((_totalrep > 50) and (random 10000 < _totalrep)) exitWith {
+				_unit setCaptive false;
+				if(isPlayer _unit) then {
+					hint "A gang has recognized you";
+				};
+				{
+					if(side _x == east) then {
+						_x reveal [_unit,1.5];
+					};
+				}foreach(player nearentities ["Man",200]);
+			};			
+			if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) exitWith {	
+				if(isPlayer _unit) then {
+					hint "A gang spotted your weapon";
+				};
+				_unit setCaptive false;	
+				{
+					if(side _x == east) then {
+						_x reveal [_unit,1.5];
+					};
+				}foreach(player nearentities ["Man",200]);
+			};
+			
+		}else{				
 			if(_unit call unitSeenNATO) then {
+				sleep 0.05;
 				_town = (getpos _unit) call nearestTown;
-				_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable format["rep%1",_town]) * -1);
-				if(random 1500 < _totalrep) then {
+				_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
+				if((_totalrep > 50) and (random 10000 < _totalrep)) exitWith {					
 					_unit setCaptive false;
-					hint "NATO has recognized you";
-				}else{			
-					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) then {	
-						hint "NATO has seen your weapon";
-						_unit setCaptive false;	
-						{
-							if(side _x == west) then {
-								_x reveal [_unit,1.5];
-								sleep 0.2;								
-							};
-						}foreach(player nearentities ["Man",800]);
-					}else{
-						if ((headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) then {
-							hint "You are wearing Gendarmerie gear";
-							_unit setCaptive false;	
+					if(isPlayer _unit) then {
+						hint "NATO has recognized you";
+					};
+					{
+						if(side _x == west) then {
+							_x reveal [_unit,1.5];
+						};
+						sleep 0.05;
+					}foreach(player nearentities ["Man",200]);
+				};
+				if(((vehicle _unit) != _unit) or count attachedObjects _unit > 0) exitWith {
+					_bad = false;
+					call {
+						if(count attachedObjects _unit > 0) exitWith {
 							{
-								if(side _x == west) then {
-									_x reveal [_unit,1.5];
-									sleep 0.2;								
-								};
-							}foreach(player nearentities ["Man",200]);
+								if(typeOf _x in AIT_staticMachineGuns) exitWith {_bad = true};
+							}foreach(attachedObjects _unit);
+						};
+						if !(typeof (vehicle _unit) in AIT_allVehicles) exitWith {
+							_bad = true; //They are driving or in a non-civilian vehicle including statics
+						};
+						//Check if unit is turned out and showing a weapon						
+						if([_unit] call CBA_fnc_isTurnedOut) then {
+							if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) then {
+								_bad = true;
+							};
 						};
 					};
+					
+					if(_bad) then {
+						_unit setCaptive false;
+						{
+							if(side _x == west) then {
+								_x reveal [_unit,1.5];					
+							};
+							sleep 0.05;
+						}foreach(player nearentities ["Man",800]);
+					};
 				};
-			};
+				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {	
+					if(isPlayer _unit) then {
+						hint "NATO has seen your weapon";
+					};
+					_unit setCaptive false;	
+					{
+						if(side _x == west) then {
+							_x reveal [_unit,1.5];					
+						};
+						sleep 0.05;
+					}foreach(player nearentities ["Man",800]);
+				};
+				if ((headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) exitWith {
+					if(isPlayer _unit) then {
+						hint "You are wearing Gendarmerie gear";
+					};
+					_unit setCaptive false;	
+					{
+						if(side _x == west) then {
+							_x reveal [_unit,1.5];					
+						};
+						sleep 0.05;
+					}foreach(player nearentities ["Man",200]);
+				};
+			};			
 		};
 	};
 };

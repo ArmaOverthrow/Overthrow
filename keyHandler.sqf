@@ -1,10 +1,19 @@
+private ["_handled","_key","_showing"];
 _handled = false;
+_showing = false;
 
 _key = _this select 1;
 if (_key == 21) then
 {
-	closedialog 0;			
-	_nul = createDialog "AIT_dialog_main";
+	if(!dialog) then {
+		if(count (groupSelectedUnits player) > 0) then {			
+			createDialog "AIT_dialog_command";
+		}else{
+			[] spawn mainMenu;	
+		};
+	}else{
+		closeDialog 0;
+	};	
 	_handled = true;
 }
 else

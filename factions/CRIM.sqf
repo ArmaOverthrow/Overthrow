@@ -47,10 +47,10 @@ while {true} do {
 			};
 			_stability = server getVariable format ["stability%1",_town];
 			if((_stability < 30) || (_town in (server getvariable "NATOabandoned"))) then {
-				_time = server getVariable format ["timecrims%1",_town];
-				_num = server getVariable format ["numcrims%1",_town];
+				_time = server getVariable [format ["timecrims%1",_town],0];
+				_num = server getVariable [format ["numcrims%1",_town],0];
 				
-				_leaderpos = server getVariable format["crimleader%1",_town];
+				_leaderpos = server getVariable [format["crimleader%1",_town],false];
 				if ((typeName _leaderpos) == "ARRAY") then {
 					server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
 					if(((random 100) > 80) and _num < 20) then {
@@ -74,6 +74,13 @@ while {true} do {
 			sleep 0.1;
 		}foreach (AIT_allTowns);
 	};
+	
+	{
+		if(side _x == east and count (units _x) == 0) then {
+			deleteGroup _x;
+		};
+	}foreach(allGroups);
+	
 	_sleeptime = AIT_CRIMwait + round(random AIT_CRIMwait);
 	sleep _sleeptime;
 };
