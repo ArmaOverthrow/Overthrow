@@ -11,7 +11,7 @@ class AIT_dialog_buildbase
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Qytyja)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Qytyja)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton

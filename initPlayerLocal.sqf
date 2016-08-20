@@ -238,7 +238,7 @@ if (_newplayer) then {
 			_x call initObjectLocal;
 		};
 	};	
-}foreach(entities "");
+}foreach((getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition")) nearObjects 50000);
 
 player setCaptive true;
 player setPos _housepos;

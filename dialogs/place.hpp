@@ -6,7 +6,7 @@ class AIT_dialog_name
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Votehi)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Votehi)
 		////////////////////////////////////////////////////////
 
 		class RscEdit_1400: RscEdit
