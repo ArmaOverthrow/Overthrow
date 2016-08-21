@@ -20,7 +20,9 @@ getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestR
 getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
 nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
+nearestCheckpoint = compileFinal preProcessFileLineNumbers "funcs\nearestCheckpoint.sqf";
 nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
+nearestMobster = compileFinal preProcessFileLineNumbers "funcs\nearestMobster.sqf";
 giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
@@ -44,6 +46,8 @@ initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
 initRecruit = compileFinal preProcessFileLineNumbers "AI\recruit.sqf";
+initMobster = compileFinal preProcessFileLineNumbers "AI\mobster.sqf";
+initMobBoss = compileFinal preProcessFileLineNumbers "AI\mobBoss.sqf";
 
 //AI Orders
 openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";

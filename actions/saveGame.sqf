@@ -63,7 +63,7 @@ _count = 10001;
 		sleep 0.1;
 	};
 	_count = _count + 1;
-}foreach((getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition")) nearObjects 50000);
+}foreach((allMissionObjects "Building") + vehicles);
 
 sleep 0.2;
 _data pushback ["vehicles",_vehicles];

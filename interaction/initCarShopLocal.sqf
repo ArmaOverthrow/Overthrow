@@ -7,6 +7,9 @@ _civ addAction ["Buy Vehicle", {
 	{			
 		_cls = _x select 0;
 		_price = [_town,_cls,_standing] call getPrice;
+		if("fuel depot" in (server getVariable "AIT_NATOabandoned")) then {
+			_price = round(_price * 0.5);
+		};
 		_idx = lbAdd [1500,format["%1",_cls call ISSE_Cfg_Vehicle_GetName,_price]];
 		lbSetPicture [1500,_idx,_cls call ISSE_Cfg_Vehicle_GetPic];
 		lbSetData [1500,_idx,_cls];

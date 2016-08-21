@@ -24,11 +24,6 @@ if(_pop > 15) then {
 
 _hour = date select 3;
 
-_civTypes = AIT_civTypes_locals;
-
-if(_pop > 600) then {
-	_civTypes = _civTypes + AIT_civTypes_expats + AIT_civTypes_tourists;
-};
 
 _count = 0;
 
@@ -51,7 +46,7 @@ while {_count < _numCiv} do {
 	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
 		_pos = [[[getpos _home,50]]] call BIS_fnc_randomPos;				
 		
-		_civ = _group createUnit [_civTypes call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
+		_civ = _group createUnit [AIT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
 		[_civ] spawn initCivilian;		
 		_count = _count + 1;

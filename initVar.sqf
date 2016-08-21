@@ -16,6 +16,11 @@ AIT_randomSpawnTown = false; //if true, every player will start in a different t
 AIT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
 AIT_saving = false;
 
+AIT_flag_NATO = "Flag_NATO_F";
+AIT_flag_CRIM = "Flag_Syndikat_F";
+
+AIT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck_F","Land_Wreck_Car2_F","Land_Wreck_Car_F","Land_Wreck_Hunter_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad2_F","Land_Wreck_UAZ_F","Land_Wreck_Truck_dropside_F"]; //rekt
+
 AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Moddergat"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
@@ -46,10 +51,13 @@ AIT_Buildables_Base = [
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"]
 ];
 
-AIT_civTypes_gunDealers = ["CUP_C_C_Profiteer_01","CUP_C_C_Profiteer_02","CUP_C_C_Profiteer_03","CUP_C_C_Profiteer_04"];
-AIT_civTypes_locals = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan"];
-AIT_civTypes_expats = ["CUP_C_C_Citizen_02","CUP_C_C_Citizen_01","CUP_C_C_Citizen_04","CUP_C_C_Citizen_03","CUP_C_C_Rocker_01","CUP_C_C_Rocker_03","CUP_C_C_Rocker_02","CUP_C_C_Rocker_04","C_man_p_beggar_F","C_man_1","C_Man_casual_1_F","C_Man_casual_2_F","C_Man_casual_3_F","C_man_sport_1_F","C_man_sport_2_F","C_man_sport_3_F","C_Man_casual_4_F","C_Man_casual_5_F","C_Man_casual_6_F","C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_man_shorts_1_F","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_p_beggar_F_asia","C_Man_casual_1_F_asia","C_Man_casual_2_F_asia","C_Man_casual_3_F_asia","C_man_sport_1_F_asia","C_man_sport_2_F_asia","C_man_sport_3_F_asia","C_Man_casual_4_F_asia","C_Man_casual_5_F_asia","C_Man_casual_6_F_asia","C_man_polo_1_F_asia","C_man_polo_2_F_asia","C_man_polo_3_F_asia","C_man_polo_4_F_asia","C_man_polo_5_F_asia","C_man_polo_6_F_asia","C_man_shorts_1_F_asia"];
-AIT_civTypes_tourists = ["C_man_shorts_2_F","C_man_shorts_3_F","C_man_shorts_4_F","C_man_shorts_2_F_afro","C_man_shorts_3_F_afro","C_man_shorts_4_F_afro","C_man_shorts_2_F_asia","C_man_shorts_3_F_asia","C_man_shorts_4_F_asia","C_man_shorts_2_F_euro","C_man_shorts_3_F_euro","C_man_shorts_4_F_euro"];
+AIT_voices_local = ["Male01FRE","Male02FRE","Male03FRE"];
+AIT_faces_local = ["TanoanHead_A3_01","TanoanHead_A3_02","TanoanHead_A3_03","TanoanHead_A3_04","TanoanHead_A3_05","TanoanHead_A3_06","TanoanHead_A3_07","TanoanHead_A3_08","TanoanHead_A3_09"];
+
+AIT_civType_gunDealer = "C_man_p_fugitive_F";
+AIT_civType_local = "C_man_1";
+AIT_civType_carDealer = "C_man_w_worker_F";
+AIT_civType_shopkeeper = "C_man_w_worker_F";
 AIT_civType_worker = "C_man_w_worker_F";
 AIT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK"];
 AIT_vehType_distro = "C_Van_01_box_F";
@@ -90,6 +98,7 @@ AIT_clothes_port = "U_Marshal";
 AIT_clothes_shops = ["U_C_Man_casual_2_F","U_C_Man_casual_3_F","U_C_Man_casual_1_F"];
 AIT_clothes_carDealers = ["CUP_U_C_Mechanic_01","CUP_U_C_Mechanic_02","CUP_U_C_Mechanic_03"];
 AIT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
+AIT_clothes_mob = "U_I_C_Soldier_Camo_F";
 
 //NATO stuff
 AIT_NATOregion = "island_5"; //where NATO lives
@@ -101,22 +110,33 @@ AIT_NATO_AirSpawn = "NATO_airspawn";
 AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 AIT_NATO_Vehicles_Garrison = [
-	["B_T_MBT_01_TUSK_F", 6],
-	["B_T_MBT_01_cannon_F",6],
-	["B_T_LSV_01_armed_F",12],
+	["B_T_MBT_01_TUSK_F", 7],
+	["B_T_MBT_01_cannon_F",7],
+	["B_T_LSV_01_armed_F",14],
 	["B_T_MRAP_01_hmg_F",20],
 	["B_T_MRAP_01_gmg_F",20],
-	["B_T_APC_Tracked_01_AA_F",10]
+	["B_T_APC_Tracked_01_AA_F",10],
+	["B_T_Static_AA_F",15],
+	["B_T_Mortar_01_F",10],
+	["B_T_Static_AT_F",20],
+	["B_HMG_01_high_F",40],
+	["B_T_MBT_01_mlrs_F",2],
+	["B_T_MBT_01_arty_F",2]
 ];
 
 AIT_NATO_Vehicles_AirGarrison = [
 	["B_T_VTOL_01_vehicle_F",1],
 	["B_T_VTOL_01_infantry_F",1],
 	["B_Heli_Light_01_armed_F",1],
-	["B_Heli_Transport_03_unarmed_F",2],
-	["B_Heli_Light_01_F",4],
+	["B_Heli_Transport_03_unarmed_F",4],
+	["B_Heli_Light_01_F",6],
 	["B_Heli_Attack_01_F",1],
-	["B_Heli_Transport_01_F",2]
+	["B_Heli_Transport_01_F",4],
+	["B_Plane_CAS_01_F",1],
+	["CUP_B_AV8B_CAP_USMC",1],
+	["CUP_B_C130J_USMC",3],
+	["CUP_B_F35B_AA_USMC",1],
+	["CUP_B_CH53E_GER",2]
 ];
 
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
@@ -142,9 +162,9 @@ AIT_NATO_weapons_Police = ["hgun_PDW2000_F","SMG_05_F","SMG_01_F","SMG_02_F","ar
 AIT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 
 //Criminal stuff
-AIT_CRIM_Units_Bandit = ["I_C_Soldier_Bandit_1_F","I_C_Soldier_Bandit_2_F","I_C_Soldier_Bandit_3_F","I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_5_F","I_C_Soldier_Bandit_6_F","I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_8_F"];
-AIT_CRIM_Units_Para = ["I_C_Soldier_Para_1_F","I_C_Soldier_Para_2_F","I_C_Soldier_Para_3_F","I_C_Soldier_Para_4_F","I_C_Soldier_Para_5_F","I_C_Soldier_Para_6_F","I_C_Soldier_Para_7_F","I_C_Soldier_Para_8_F"];
-AIT_vehTypes_crim = ["I_G_Offroad_01_F","I_C_Offroad_02_unarmed_F","C_Offroad_02_unarmed_F","C_Offroad_01_F","I_C_Offroad_02_unarmed_F","I_C_Offroad_02_unarmed_F","I_C_Offroad_02_unarmed_F"];
+AIT_CRIM_Unit = "C_man_p_fugitive_F";
+AIT_CRIM_Clothes = ["U_I_C_Soldier_Bandit_3_F","U_BG_Guerilla3_1","U_C_HunterBody_grn","U_I_G_Story_Protagonist_F"];
+AIT_CRIM_Goggles = ["G_Balaclava_blk","G_Balaclava_combat","G_Balaclava_lowprofile","G_Balaclava_oli","G_Bandanna_blk","G_Bandanna_khk","G_Bandanna_oli","G_Bandanna_shades","G_Bandanna_sport","G_Bandanna_tan"];
 
 //ECONOMY
 
@@ -267,6 +287,7 @@ AIT_allSniperRifles = [];
 AIT_allHandGuns = [];
 AIT_allMissileLaunchers = [];
 AIT_allRocketLaunchers = [];
+AIT_allExpensiveRifles = [];
 
 {
 	_name = configName _x;
@@ -317,7 +338,10 @@ AIT_allRocketLaunchers = [];
 				_cost = 1500;
 			};
 			if(_haslauncher) then {_cost = round(_cost * 1.2)};
-			AIT_allAssaultRifles pushBack _name
+			AIT_allAssaultRifles pushBack _name;
+			if(_cost > 1400) then {
+				AIT_allExpensiveRifles pushback _name;
+			};
 		};
 		case "MachineGun": {_cost = 1500;AIT_allMachineGuns pushBack _name};
 		case "SniperRifle": {_cost = 2000;AIT_allSniperRifles pushBack _name};
@@ -368,6 +392,7 @@ AIT_warehouses = ["Land_Warehouse_03_F"]; //buildings that will spawn local dist
 AIT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F"]; //buildings that will spawn car salesmen (must have a template with a cash register)
 AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"]; 
 AIT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
+AIT_airportTerminal = "Land_Airport_01_terminal_F";
 
 AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_mansions + [AIT_item_Tent,AIT_item_Flag];
 
@@ -408,3 +433,8 @@ AIT_allTowns = [];
 		server setVariable [text _x,getpos _x,true];
 	};
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameCity","NameVillage","CityCenter"], 50000]);
+
+AIT_allAirports = [];
+{
+		AIT_allAirports pushBack text _x;
+}foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["Airport"], 50000]);

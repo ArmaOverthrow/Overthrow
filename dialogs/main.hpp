@@ -62,7 +62,7 @@ class AIT_dialog_vehicle
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
-			text = "Transfer To"; //--- ToDo: Localize;
+			text = "Transfer From"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.654 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
@@ -73,7 +73,7 @@ class AIT_dialog_vehicle
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
-			text = "Transfer From"; //--- ToDo: Localize;
+			text = "Transfer To"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.478 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;

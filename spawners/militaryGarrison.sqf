@@ -1,4 +1,4 @@
-private ["_id","_town","_posTown","_active","_groups","_soldiers","_numNATO","_pop","_count","_range"];
+private ["_id","_town","_posTown","_active","_groups","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _active = false;
@@ -9,7 +9,6 @@ _posTown = _this select 1;
 _name = _this select 3;
 
 _groups = [];
-_soldiers = []; //Stores all soldiers for tear down
 
 waitUntil{spawner getVariable _id};
 
@@ -21,7 +20,11 @@ while{true} do {
 	if !(_active) then {
 		if (spawner getVariable _id) then {
 			_active = true;
-			//Spawn stuff in			
+			//Spawn stuff in	
+			
+			_flag =  AIT_flag_NATO createVehicle _posTown;
+			_groups pushback _flag;
+			
 			_numNATO = server getVariable format["garrison%1",_name];
 			
 			_count = 0;
@@ -36,7 +39,6 @@ while{true} do {
 				_civ = _group createUnit [AIT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 				_civ setVariable ["garrison",_name,false];
 				_civ setRank "CAPTAIN";
-				_soldiers pushBack _civ;
 				[_civ,_name] call initMilitary;
 				_civ setBehaviour "SAFE";
 				
@@ -47,7 +49,6 @@ while{true} do {
 					
 					_civ = _group createUnit [AIT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
-					_soldiers pushBack _civ;
 					_civ setRank "LIEUTENANT";
 					[_civ,_name] call initMilitary;
 					_civ setBehaviour "SAFE";
@@ -60,7 +61,58 @@ while{true} do {
 				_group call initMilitaryPatrol;
 				_range = _range + 50;
 			};
+				
 			
+			_pos = [];
+			_dir = 0;
+			_terminal = _posTown nearobjects [AIT_airportTerminal,350];
+			if(count _terminal > 0) then {
+				_tp = getpos (_terminal select 0);
+				_dir = getdir (_terminal select 0);
+				_pos = [_tp,35,_dir] call BIS_fnc_relPos;
+				_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
+			}else{
+				_dir = 80;
+				_pos = [_posTown,20,_dir] call BIS_fnc_relPos;
+				_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
+			};
+			_airgarrison = server getVariable format["airgarrison%1",_name];
+			{				
+				_vehtype = _x;
+				
+				_pos = [_pos,30,_dir+90] call BIS_fnc_relPos;
+												
+				_veh =  _vehtype createVehicle _pos;
+				_veh setVariable ["airgarrison",_name,false];
+				
+				_veh addEventHandler ["GetIn",{						
+					_unit = _this select 2;						
+					_v = _this select 0;
+					if(isPlayer _unit) then {
+						_v setVariable ["owner",getPlayerUID _unit,true];
+						_v setVariable ["stolen",true,true];
+						_g = _v getVariable "airgarrison";
+						_vg = server getVariable format["airgarrison%1",_g];
+						_vg deleteAt (_vg find (typeof _veh));
+						server setVariable [format["airgarrison%1",_g],_vg,false];
+						
+						if(_unit call unitSeen) then {
+							_unit setCaptive false;
+							{
+								if(side _x == west) then {
+									_x reveal [_unit,1.5];		
+								};
+							}foreach(_unit nearentities ["Man",800]);
+						};
+					};
+				}];
+				
+				_veh setDir _dir;
+				
+				_groups pushback _veh;
+				sleep 0.1;				
+			}foreach(_airgarrison);
+			sleep 0.5;
 			_vehgarrison = server getVariable format["vehgarrison%1",_name];
 			{
 				_vgroup = creategroup blufor;
@@ -85,74 +137,25 @@ while{true} do {
 							_unit setCaptive false;
 							{
 								if(side _x == west) then {
-									_x reveal [_unit,1.5];		
-									sleep 0.4;
+									_x reveal [_unit,1.5];	
 								};
 							}foreach(_unit nearentities ["Man",800]);
 						};
 					};
 				}];
 				
-				_dir = random 360;
 				_veh setDir _dir;
-				if(random 100 < 99) then {
+				if(random 100 < 90) then {
 					createVehicleCrew _veh;
 				};
-				_soldiers pushback _veh;
+				_groups pushback _veh;
 				sleep 0.1;
 				{
 					[_x] joinSilent _vgroup;
 					_x setVariable ["garrison","HQ",false];
-					_soldiers pushback _x;
 				}foreach(crew _veh);
 				_vgroup call initMilitaryPatrol;
 			}foreach(_vehgarrison);
-			
-			_airgarrison = server getVariable format["airgarrison%1",_name];			
-			{				
-				_vehtype = _x;
-				_pos = [_posTown,[10,50]] call SHK_pos;
-				_pos = [_pos,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
-				_veh =  _vehtype createVehicle _pos;
-				_veh setVariable ["airgarrison",_name,false];
-				
-				_veh addEventHandler ["GetIn",{						
-					_unit = _this select 2;						
-					_v = _this select 0;
-					if(isPlayer _unit) then {
-						_v setVariable ["owner",getPlayerUID _unit,true];
-						_v setVariable ["stolen",true,true];
-						_g = _v getVariable "airgarrison";
-						_vg = server getVariable format["airgarrison%1",_g];
-						_vg deleteAt (_vg find (typeof _veh));
-						server setVariable [format["airgarrison%1",_g],_vg,false];
-						
-						if(_unit call unitSeen) then {
-							_unit setCaptive false;
-							{
-								if(side _x == west) then {
-									_x reveal [_unit,1.5];		
-									sleep 0.4;
-								};
-							}foreach(_unit nearentities ["Man",800]);
-						};
-					};
-				}];
-				
-				_dir = random 360;
-				_veh setDir _dir;
-				
-				_soldiers pushback _veh;
-				sleep 0.1;				
-			}foreach(_airgarrison);
-			
-			{
-				_x addCuratorEditableObjects [_soldiers,true];
-			} forEach allCurators;
-			sleep 1;
-			{
-				_x setDamage 0;
-			}foreach(_soldiers);			
 		};
 	}else{
 		if (spawner getVariable _id) then {
@@ -161,14 +164,22 @@ while{true} do {
 		}else{			
 			_active = false;
 			//Tear it all down
-			{
-				sleep 0.1;
-				deleteVehicle _x;			
-			}foreach(_soldiers);
-			{				
-				deleteGroup _x;			
+			{	
+				if(typename _x == "GROUP") then {
+					{
+						sleep 0.05;				
+						if !(_x call hasOwner) then {
+							deleteVehicle _x;
+						};	
+					}foreach(units _x);
+					deleteGroup _x;					
+				}else{
+					if !(_x call hasOwner) then {
+						deleteVehicle _x;
+					};	
+				};		
+				sleep 0.05;
 			}foreach(_groups);
-			_soldiers = [];
 		};
 	};
 	sleep 2;

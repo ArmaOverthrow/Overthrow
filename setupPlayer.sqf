@@ -1,3 +1,7 @@
+_clothes = player getVariable ["uniform",(AIT_clothes_guerilla call BIS_fnc_selectRandom)];
+player forceAddUniform _clothes;
+player setVariable ["uniform",_clothes,true];
+
 townChange = {
 	_town = _this;
 	_pop = server getVariable format["population%1",_town];

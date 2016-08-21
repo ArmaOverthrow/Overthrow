@@ -33,6 +33,7 @@ waitUntil {!isNil "AIT_fnc_registerSpawner"};
 [] execVM "virtualization\shops.sqf";
 [] execVM "virtualization\military.sqf";
 [] execVM "virtualization\distribution.sqf";
+[] execVM "virtualization\mobsters.sqf";
 
 addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
 if(AIT_hasAce) then {

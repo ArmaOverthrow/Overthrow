@@ -9,17 +9,15 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
+_unit setFace (AIT_faces_local call BIS_fnc_selectRandom);
+_unit setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+
 _unit setskill ["courage",1];
 _unit setVariable ["scared",-1,false];
 
-_clothes = AIT_clothes_locals;
-
-if((typeof _unit) in AIT_civTypes_expats) then {
-	_clothes = AIT_clothes_expats;
-};
 _counter = 0;
 
-_unit forceAddUniform (_clothes call BIS_fnc_selectRandom);
+_unit forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
 
 _unit addEventHandler ["FiredNear", {
 	_u = _this select 0;

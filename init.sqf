@@ -40,6 +40,7 @@ if(!isMultiplayer) then {
 	[] execVM "virtualization\shops.sqf";
 	[] execVM "virtualization\military.sqf";	
 	[] execVM "virtualization\distribution.sqf";
+	[] execVM "virtualization\mobsters.sqf";
 	
 	
 	addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];

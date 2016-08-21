@@ -24,8 +24,7 @@ _groups = [];
 	
 	_group = createGroup civilian;	
 	_group setBehaviour "CARELESS";
-	_type = (AIT_civTypes_locals + AIT_civTypes_expats) call BIS_Fnc_selectRandom;		
-	_shopkeeper = _group createUnit [_type, _pos, [],0, "NONE"];					
+	_shopkeeper = _group createUnit [AIT_civType_carDealer, _pos, [],0, "NONE"];					
 
 
 	_wp = _group addWaypoint [_cashpos,2];

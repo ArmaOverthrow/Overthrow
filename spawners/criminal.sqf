@@ -1,4 +1,4 @@
-private ["_id","_town","_posTown","_groups","_numNATO","_pop","_count","_range"];
+private ["_group","_id","_town","_posTown","_groups","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _count = 0;
@@ -25,13 +25,13 @@ if(_numCRIM > 0) then {
 	};				
 	//Spawn stuff in			
 	_count = 0;	
-	_group = createGroup east;	
-	_groups pushBack _group;					
-	
+	_group = createGroup east;				
+	_groups pushback _group;
 	if ((typeName _leaderpos) == "ARRAY") then {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 		
-		_civ = _group createUnit [AIT_CRIM_Units_Para call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		_civ = _group createUnit [AIT_CRIM_Unit, _start, [],0, "NONE"];
+		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
 		_civ setskill _skill;
 		if(_time > 1200) then {
@@ -44,14 +44,11 @@ if(_numCRIM > 0) then {
 			};
 		};
 		
-		[_civ,_name] call initCrimLeader;
-		_civ setBehaviour "SAFE";
-		
-		_count = _count + 1;					
+		[_civ,_town] call initCrimLeader;
+		_civ setBehaviour "SAFE";			
 		
 		_wp = _group addWaypoint [_leaderpos,0];
 		_wp setWaypointType "GUARD";				
-		
 		sleep 0.1;
 	}else{
 		_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
@@ -77,7 +74,8 @@ if(_numCRIM > 0) then {
 	while {(_count < _numCRIM)} do {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 		
-		_civ = _group createUnit [AIT_CRIM_Units_Bandit call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		_civ = _group createUnit [AIT_CRIM_Unit, _start, [],0, "NONE"];
+		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
 		if(_time > 1200) then {
 			_civ setRank "LIEUTENANT";
@@ -91,10 +89,17 @@ if(_numCRIM > 0) then {
 		[_civ,_town] call initCriminal;
 		_civ setBehaviour "SAFE";
 		
-		sleep 0.1;
 		_count = _count + 1;
+		sleep 0.1;		
 	};
-					
+	
 };
+
+{
+	_cur = _x;
+	{	
+		_cur addCuratorEditableObjects [(units _x),true];				
+	}foreach(_groups);				
+} forEach allCurators;
 
 _groups	

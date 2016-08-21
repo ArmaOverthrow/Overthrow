@@ -24,8 +24,10 @@ AIT_townSpawners = [
 			if !(_active) then {
 				if (spawner getVariable _id) then {
 					_active = true;
-					{
-						[_groups,_town call _x] call BIS_fnc_arrayPushStack;
+					{						
+						{
+							_groups pushback _x;
+						}foreach(_town call _x);
 					}foreach(AIT_townSpawners);
 				}else{
 					//NATO
@@ -42,9 +44,10 @@ AIT_townSpawners = [
 					if((typename "_newpos") == "ARRAY") then {
 						server setVariable [format["crimleader%1",_town],_newpos,false];	
 						server setVariable [format["crimnew%1",_town],false,false];
-					};
-					server setVariable [format["numcrims%1",_town],_current+_addnum,false];	
-					server setVariable [format["crimadd%1",_town],0,false];						
+						server setVariable [format["numcrims%1",_town],2+(random 4),false];
+					};					
+					server setVariable [format["crimadd%1",_town],0,false];
+					server setVariable [format["crimnew%1",_town],false,false];									
 				};
 			}else{
 				if (spawner getVariable _id) then {
@@ -60,37 +63,40 @@ AIT_townSpawners = [
 					//CRIM
 					_newpos = server getVariable [format["crimnew%1",_town],false];
 					_addnum = server getVariable [format["crimadd%1",_town],0];
+					_current = server getVariable [format["numcrims%1",_town],0];
 					if((typename _newpos) == "ARRAY") then {				
 						server setVariable [format["crimleader%1",_town],_newpos,true];
 						_new = [_newpos,_addnum,_town] call newleader;
-						[_soldiers,_new] call BIS_fnc_arrayPushStack;
-						_groups pushback group(_new select 0);
+						_groups pushback _new;
 					}else{
 						if(_addnum > 0) then {
-							_new = [_addnum,_town] call sendCrims;
-							[_soldiers,_new] call BIS_fnc_arrayPushStack;
-							_groups pushback group(_new select 0);
+							_new = [server getVariable _town,_addnum,_town] call sendCrims;
+							_groups pushback _new;
+							server setVariable [format["numcrims%1",_town],_current+_addnum,false];	
 						};
 					};
 					server setVariable [format["crimnew%1",_town],false,false];
 					_current = server getVariable [format["numcrims%1",_town],0];
-					server setVariable [format["numcrims%1",_town],_current+_addnum,false];	
+					
 					server setVariable [format["crimadd%1",_town],0,false];					
 				}else{		
 					_active = false;
+					sleep 1;
 					//Tear it all down
 					{	
 						if(typename _x == "GROUP") then {
-							{
-								sleep 0.05;				
+							
+							{		
 								if !(_x call hasOwner) then {
 									deleteVehicle _x;
 								};	
 							}foreach(units _x);
 							deleteGroup _x;					
 						}else{
-							deleteVehicle _x;
-						};		
+							if !(_x call hasOwner) then {
+								deleteVehicle _x;
+							};	
+						};			
 						sleep 0.05;
 					}foreach(_groups);
 					_groups = [];

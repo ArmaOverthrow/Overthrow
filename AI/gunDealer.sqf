@@ -9,6 +9,9 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
+_unit setFace (AIT_faces_local call BIS_fnc_selectRandom);
+_unit setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+
 _unit setVariable ["NOAI",true,false];
 
 _unit forceAddUniform (AIT_clothes_guerilla call BIS_fnc_selectRandom);

@@ -1,4 +1,4 @@
-private ["_id","_town","_posTown","_groups","_numNATO","_pop","_count","_range"];
+private ["_id","_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _count = 0;
@@ -14,13 +14,13 @@ _pergroup = 4;
 			
 while {_count < _numNATO} do {
 	_groupcount = 0;
-	_group = createGroup blufor;				
+	_group = createGroup west;				
 	_groups pushBack _group;
 	
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_town,false];
-
+	[_civ] joinSilent _group;
 	_civ setRank "CORPORAL";
 	_civ setBehaviour "SAFE";
 	[_civ,_town] call initPolice;
@@ -32,7 +32,7 @@ while {_count < _numNATO} do {
 		
 		_civ = _group createUnit [AIT_NATO_Unit_Police, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison",_town,false];
-
+		[_civ] joinSilent _group;
 		_civ setRank "PRIVATE";
 		[_civ,_town] call initPolice;
 		_civ setBehaviour "SAFE";
@@ -61,4 +61,5 @@ _groups spawn {
 		}foreach(units _x);							
 	}foreach(_this);		
 };
+
 _groups

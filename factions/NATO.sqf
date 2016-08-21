@@ -1,13 +1,13 @@
 if (!isServer) exitwith {};
 
-private ["_name","_pos","_garrison","_airports","_need","_townPos","_current","_stability","_police","_civ","_units","_move","_NATObusy","_abandoned"];
+private ["_name","_pos","_garrison","_need","_townPos","_current","_stability","_police","_civ","_units","_move","_NATObusy","_abandoned"];
 
 AIT_NATOobjectives = [];
-_airports = [];
 
 _NATObusy = false;
 _abandoned = [];
-if((server getVariable "StartupType") == "NEW") then {
+if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < 1) then {
+	server setVariable ["NATOversion",1,false];
 	{
 		_stability = server getVariable format ["stability%1",_x];
 		if(_stability < 11) then {
@@ -16,17 +16,14 @@ if((server getVariable "StartupType") == "NEW") then {
 	}foreach (AIT_allTowns);
 	server setVariable ["NATOabandoned",_abandoned,true];
 	server setVariable ["garrisonHQ",1000,false];
-	{
-		_airports pushBack text _x;
-	}foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["Airport"], 50000]);
-
+	
 	//Find military objectives
 	{
 		_name = text _x;// Get name
 		_pos=getpos _x;
 		
 		//if its in the whitelist, within the NATO home region, or an airport, NATO lives here
-		if((_name in AIT_NATOwhitelist) || ([_pos,AIT_NATOregion] call fnc_isInMarker) || (_name in _airports)) then {	
+		if((_name in AIT_NATOwhitelist) || ([_pos,AIT_NATOregion] call fnc_isInMarker) || (_name in AIT_allAirports)) then {	
 		
 			AIT_NATOobjectives pushBack [_pos,_name];
 			
@@ -67,7 +64,7 @@ if((server getVariable "StartupType") == "NEW") then {
 		_num = _x select 1;
 		_count = 0;
 		while {_count < _num} do {
-			_name = _airports call BIS_fnc_selectRandom;
+			_name = AIT_allAirports call BIS_fnc_selectRandom;
 			_garrison = server getVariable format["airgarrison%1",_name];
 			_garrison pushback _type;
 			_count = _count + 1;

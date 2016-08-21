@@ -12,6 +12,8 @@ AIT_fnc_registerSpawner = {
 	_pos = _this select 0;
 	_code = _this select 1;
 	_params = [];
+	
+	
 	if(count _this > 2) then {
 		_params = _this select 2;
 	};
@@ -31,6 +33,8 @@ AIT_fnc_registerSpawner = {
 	
 	spawner setvariable [_id,false,true];
 	AIT_allspawners pushBack [_id,_start,_end];
+	
+	
 	
 	if(typename _code == "ARRAY")then {
 		{

@@ -148,6 +148,8 @@ if(isMultiplayer or _startup == "LOAD") then {
 };
 
 if (_newplayer) then {
+	_clothes = (AIT_clothes_guerilla call BIS_fnc_selectRandom);
+	player setVariable ["uniform",_clothes,true];
 	player setVariable ["money",100,true];
 	player setVariable ["owner",getplayerUID player,true];
 	if(!isMultiplayer) then	{
@@ -157,9 +159,9 @@ if (_newplayer) then {
 			};
 		} foreach switchableUnits;
 	};
-	player createDiaryRecord ["Diary", ["Quick Start", "You can press Y to open a menu with various options that affect your immediate surroundings. Your house is marked on the map and contains items with further options. Small towns with low stability generally offer more opportunities early on for bounties and trade. Cars can be purchased from the car dealers at fuel stations and in larger towns. If you need a weapon try asking around at shops, you may need to check the town info on your whiteboard at home to find where they are."]];
-	player createDiaryRecord ["Diary", ["Standing", "Each player also has a local and global standing that affects prices. Standing is increased by killing criminal elements (red, opfor) or by throwing lots of money around buying real estate, walking up to civilians and giving it to them, or hiring them. Standing will decrease when you commit crime."]]; 
-	player createDiaryRecord ["Diary", ["Stability", "Each town in Tanoa has a stability percentage that affects local prices and the garrison strength of the town. When it is below 50% you will see a red marker on the map that increases in visibility as stability gets lower. NATO will decide to abandon a town if it drops too low and they are unable to establish order. Stability is only increased by killing criminal elements, which will continue to arrive after NATO has abandoned a town even if stability is high. Stability will decrease when NATO or civilians are killed."]]; 
+	player createDiaryRecord ["Diary", ["Quick Start", "You can press Y to open a menu with various options that affect your immediate surroundings. The menu is different according to context, ie if you are in a vehicle or have recruits selected. Your house is marked on the map and contains items with further options. Small towns with low stability generally offer more opportunities early on for bounties and trade. Cars can be purchased from the car dealers at fuel stations and in larger towns. If you need a weapon try asking around at shops, you may need to check the town info on your whiteboard at home to find where they are."]];
+	player createDiaryRecord ["Diary", ["Standing", "Each player also has a local and global standing that affects prices and your notoriety amongst NATO and underworld elements. Your standing will increase when you kill known criminals or perform tasks that the public support, and decrease when you cause instability or chaos."]]; 
+	player createDiaryRecord ["Diary", ["Stability", "Each town in Tanoa has a stability percentage that affects local prices and the garrison strength of the town. An unstable town may attract underworld elements or sink into total anarchy if NATO is unable to establish order there."]]; 
 	player createDiaryRecord ["Diary", ["Background", "NATO forces are occupying Tanoa after removing an evil dictator. Various smaller towns are still in a state of disarray but order has been achieved for the most part and the economy has started to recover, however many start to grow weary about the lack of local leadership and various criminal elements have been spotted in the less stable regions of the country. The time is ripe for revolution. It's time to take Tanoa back."]]; 
 	
 	

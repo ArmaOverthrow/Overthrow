@@ -8,9 +8,6 @@ if(typeof _this == AIT_item_Map) then {
 		},nil,0,false,true,"",""];			
 	};
 };
-if(typeof _this == AIT_item_Repair) then {
-	_this addAction ["Repair Nearby Vehicles", "actions\repairAll.sqf",nil,0,false,true,"",""];
-};
 if(typeof _this == AIT_item_Tent) exitWith {
 	_camp = player getVariable ["camp",objNull];
 	if !(isNull _camp) then {
@@ -29,7 +26,7 @@ if(typeof _this == AIT_item_Tent) exitWith {
 	_mrkid setMarkerText "Camp";
 	
 	_pos = [(getpos _this),1.2,getDir _this] call BIS_fnc_relPos;
-	_fire = "Land_Fire" createVehicle _pos;
+	_fire = "Land_Campfire_F" createVehicle _pos;
 	_this setVariable ["fire",_fire,false];
 	player setvariable ["camp",_this,false];
 };

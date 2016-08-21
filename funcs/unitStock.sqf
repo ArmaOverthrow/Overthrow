@@ -5,7 +5,7 @@ _done = [];
 
 _myitems = [];
 
-_myitems = items _this;
+_myitems = (items _this) + (magazines _this);
 if(count _myitems == 0) then {
 	_myitems = (itemCargo _this) + (weaponCargo _this) + (magazineCargo _this) + (backpackCargo _this);
 };

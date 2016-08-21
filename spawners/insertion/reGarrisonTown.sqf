@@ -36,7 +36,7 @@ _vehtype = AIT_NATO_Vehicle_PoliceHeli;
 _drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
 _spawnpos = AIT_NATO_HQPos;	
 
-if(_stability < 15) then {
+if(_stability < 25 and (random 100) > 50) then {
 	//last ditch efforts to save this town
 	//send in the big guns
 	_vehtype = AIT_NATO_Vehicle_AirTransport;
@@ -48,29 +48,14 @@ if(_stability < 15) then {
 		_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setRank "SERGEANT";
 		_police pushBack _civ;
-		[_civ,_town] call initPolice;
+		_civ setVariable ["garrison","HQ",false];
+		[_civ,_town] call initMilitary;
 		_count = _count + 1;
 		sleep 0.1;
 	};
-}else{
-	if(_stability < 40 and (random 100) > 50) then {
-		//Shit's getting real, send more dudes		
-		_num = 2;
-		_count = 0;
-		while {_count < _num} do {
-			_start = [_spawnpos,[10,29],random 360] call SHK_pos;
-			_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
-			_civ setRank "CORPORAL";
-			
-			_police pushBack _civ;
-			[_civ,_town] call initPolice;
-			_count = _count + 1;
-			sleep 0.1;
-		};
-	};	
 };
 
-if(_stability < 40 and (random 100) > 90) then {
+if(_stability < 40 and (random 100) > 70) then {
 	_townPos spawn CTRGsupport;
 };
 
@@ -160,8 +145,18 @@ _wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
 
 _attackpos = [_townPos,[0,150]] call SHK_pos;
 
-_wp = _group addWaypoint [_attackpos,0];
-_wp setWaypointType "MOVE";
+_dir = [_attackpos,_drop] call BIS_fnc_dirTo;
+_moveto = [_attackpos,100,_dir] call SHK_pos;
+
+_move = _group addWaypoint [_moveto,0];
+_move setWaypointType "MOVE";
+_move setWaypointSpeed "FULL";
+_move setWaypointBehaviour "COMBAT";
+
+_move = _group addWaypoint [_attackpos,0];
+_move setWaypointType "GUARD";
+_move setWaypointSpeed "NORMAL";
+_move setWaypointBehaviour "STEALTH";
 
 
 {

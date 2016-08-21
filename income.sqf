@@ -13,6 +13,8 @@ while {true} do {
 				_add = round(_add * 2);
 			};			
 			_total = _total + _add;
+		}else{
+			_total = _total + round(80 + random 100);
 		};
 	}foreach(server getVariable ["NATOabandoned",[]]);
 	

@@ -1,4 +1,4 @@
-private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper"];
+private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper","_groups"];
 if (!isServer) exitwith {};
 
 _count = 0;
@@ -21,9 +21,8 @@ _group = createGroup civilian;
 _groups	pushback _group;
 
 _group setBehaviour "CARELESS";
-_type = AIT_civTypes_gunDealers call BIS_Fnc_selectRandom;
 _pos = [[[_gundealerpos,50]]] call BIS_fnc_randomPos;
-_dealer = _group createUnit [_type, _pos, [],0, "NONE"];
+_dealer = _group createUnit [AIT_civType_gunDealer, _pos, [],0, "NONE"];
 			
 _wp = _group addWaypoint [_gundealerpos,0];
 _wp setWaypointType "MOVE";
