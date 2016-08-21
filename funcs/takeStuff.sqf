@@ -16,21 +16,16 @@ if(backpack _unit != "") then {
 {
 	_count = 0;
 	_cls = _x select 0;
-	_full = false;
-	while {_count < (_x select 1)} do {
-		if !([_unit,_cls] call canFit) exitWith {
-			_full = true;
-		};		
+	while {_count < (_x select 1)} do {	
 		if(_cls in AIT_allMagazines) then {
-			_unit addMagazineCargoGlobal [_cls,1];
-			_t removeMagazine _cls;
+			_t addMagazineCargoGlobal [_cls,1];
+			_unit removeMagazine _cls;
 		}else{
-			_unit addItemCargoGlobal [_cls,1];
-			_t removeItem _cls;
+			_t addItemCargoGlobal [_cls,1];
+			_unit removeItem _cls;
 		};		
 		_count = _count + 1;
 	};
-	if(_full) exitWith {};
 }foreach(_unit call unitStock);
 
 if(vest _unit != "") then {

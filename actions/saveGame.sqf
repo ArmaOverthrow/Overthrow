@@ -57,7 +57,7 @@ _count = 10001;
 		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""]];	
 		_done pushback _x;
 	};
-	if(_count > 10000) then {
+	if(_count > 5000) then {
 		"Still persistent Saving... please wait" remoteExec ["notify_minor",0,true];
 		_count = 0;
 		sleep 0.1;
