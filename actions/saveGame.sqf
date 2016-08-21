@@ -52,7 +52,7 @@ _vehicles = [];
 
 _count = 10001;
 {
-	if((!isPlayer _x) and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag) and (!(_x isKindOf "Building"))) then {
+	if((!isPlayer _x) and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag)) then {
 		_owner = _x getVariable ["owner",false];		
 		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""]];	
 		_done pushback _x;
