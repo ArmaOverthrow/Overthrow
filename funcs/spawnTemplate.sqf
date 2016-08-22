@@ -3,7 +3,7 @@ private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template
 _building = _this;
 _template = templates getVariable typeOf(_building);
 
-if(isNil "_template") exitWith {hint format["Error: no template for %1",typeOf(_building)];[[]]};
+if(isNil "_template") exitWith {};
 
 
 _buildingpos = getposatl _building;

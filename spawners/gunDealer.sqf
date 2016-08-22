@@ -1,4 +1,4 @@
-private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper","_groups"];
+private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper","_groups"];
 if (!isServer) exitwith {};
 
 _count = 0;
@@ -30,5 +30,7 @@ _wp setWaypointSpeed "LIMITED";
 
 _dealer remoteExec ["initGunDealerLocal",0,true];
 [_dealer] call initGunDealer;
+
+_dealer setVariable ["gundealer",true,true];
 
 _groups

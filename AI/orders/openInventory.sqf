@@ -16,6 +16,10 @@ _target = _sorted select 0;
 
 _unit = (groupSelectedUnits player) select 0;
 
+{
+    player groupSelectUnit [_x, false];
+} forEach (groupSelectedUnits player);
+
 _unit groupChat format["Opening %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName];
 if(((vehicle _unit) != _unit) and (vehicle _unit) != _target) then {
 	doGetOut _unit;

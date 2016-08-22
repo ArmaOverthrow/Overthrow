@@ -5,8 +5,8 @@ private ["_data"];
 
 _data = profileNameSpace getVariable ["Overthrow.save.001",""];
 if(typename _data != "ARRAY") exitWith {
-	server setVariable ["StartupType","NEW",true];
-	hint "No save found, starting new game";
+	[] execVM "initEconomy.sqf";
+	"No save found, starting new game" remoteExec ["hint",bigboss,true];
 };
 {
 	_key = _x select 0;
@@ -35,40 +35,42 @@ if(typename _data != "ARRAY") exitWith {
 		_set = false;
 		{
 			_type = _x select 0;
-			_pos = _x select 1;
-			_dir = _x select 2;
-			_stock = _x select 3;
-			_owner = _x select 4;
-			_name = "";
-			if(count _x > 5) then {
-				_name = _x select 5;
-			};
-			_veh = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
-			_veh setDir _dir;
-			clearWeaponCargoGlobal _veh;
-			clearMagazineCargoGlobal _veh;
-			clearBackpackCargoGlobal _veh;
-			clearItemCargoGlobal _veh;	
-			_veh setVariable ["name",_name,true];
+			if !(_type isKindOf "Man") then {
+				_pos = _x select 1;
+				_dir = _x select 2;
+				_stock = _x select 3;
+				_owner = _x select 4;
+				_name = "";
+				if(count _x > 5) then {
+					_name = _x select 5;
+				};
+				_veh = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
+				_veh setDir _dir;
+				clearWeaponCargoGlobal _veh;
+				clearMagazineCargoGlobal _veh;
+				clearBackpackCargoGlobal _veh;
+				clearItemCargoGlobal _veh;	
+				_veh setVariable ["name",_name,true];
+				
+				if(_type == AIT_item_Map) then {
+					_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+				};
 			
-			if(_type == AIT_item_Map) then {
-				_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
-			};
-		
-			_veh setVariable ["owner",_owner,true];
-			{
-				_cls = _x select 0;
-				_num = _x select 1;
-				if(_cls in AIT_allWeapons) then {
-					_veh addWeaponCargoGlobal _x;
-				}else{
-					if(_cls in AIT_allMagazines) then {
-						_veh addMagazineCargoGlobal _x;
+				_veh setVariable ["owner",_owner,true];
+				{
+					_cls = _x select 0;
+					_num = _x select 1;
+					if(_cls in AIT_allWeapons) then {
+						_veh addWeaponCargoGlobal _x;
 					}else{
-						_veh addItemCargoGlobal _x;
-					};
-				};				
-			}foreach(_stock);
+						if(_cls in AIT_allMagazines) then {
+							_veh addMagazineCargoGlobal _x;
+						}else{
+							_veh addItemCargoGlobal _x;
+						};
+					};				
+				}foreach(_stock);
+			};
 		}foreach(_val);
 	};
 	

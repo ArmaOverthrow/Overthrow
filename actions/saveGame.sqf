@@ -1,6 +1,6 @@
 private ["_data","_done"];
 
-if(AIT_saving) exitWith {hint "Please wait, save still in progress"};
+if(AIT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,true]};
 AIT_saving = true;
 publicVariable "AIT_saving";
 
@@ -52,7 +52,7 @@ _vehicles = [];
 
 _count = 10001;
 {
-	if((!isPlayer _x) and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag)) then {
+	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag)) then {
 		_owner = _x getVariable ["owner",false];		
 		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""]];	
 		_done pushback _x;

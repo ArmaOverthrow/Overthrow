@@ -1,4 +1,4 @@
-if !(captive player) exitWith {hint "You cannot buy an ammobox while wanted"};
+if !(captive player) exitWith {"You cannot buy an ammobox while wanted" call notify_minor};
 
 _price = 150;
 

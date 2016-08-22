@@ -70,17 +70,17 @@ while{true} do {
 				_tp = getpos (_terminal select 0);
 				_dir = getdir (_terminal select 0);
 				_pos = [_tp,35,_dir] call BIS_fnc_relPos;
-				_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
+				_pos = [_pos,130,_dir-90] call BIS_fnc_relPos;
 			}else{
 				_dir = 80;
 				_pos = [_posTown,20,_dir] call BIS_fnc_relPos;
-				_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
+				_pos = [_pos,130,_dir-90] call BIS_fnc_relPos;
 			};
 			_airgarrison = server getVariable format["airgarrison%1",_name];
 			{				
 				_vehtype = _x;
 				
-				_pos = [_pos,30,_dir+90] call BIS_fnc_relPos;
+				_pos = [_pos,42,_dir+90] call BIS_fnc_relPos;
 												
 				_veh =  _vehtype createVehicle _pos;
 				_veh setVariable ["airgarrison",_name,false];
@@ -116,6 +116,7 @@ while{true} do {
 			_vehgarrison = server getVariable format["vehgarrison%1",_name];
 			{
 				_vgroup = creategroup blufor;
+				_groups pushback _vgroup;
 				_vehtype = _x;
 				_pos = [_posTown,[10,50]] call SHK_pos;
 				_pos = [_pos,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;

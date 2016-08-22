@@ -6,7 +6,9 @@ AIT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\carDealer.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\criminal.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\gunDealer.sqf",
-	compileFinal preProcessFileLineNumbers "spawners\ambientVehicles.sqf"
+	compileFinal preProcessFileLineNumbers "spawners\ambientVehicles.sqf",
+	compileFinal preProcessFileLineNumbers "spawners\shop.sqf",
+	compileFinal preProcessFileLineNumbers "spawners\distribution.sqf"
 ];
 {	
 	_pos = server getVariable _x;
@@ -24,10 +26,18 @@ AIT_townSpawners = [
 			if !(_active) then {
 				if (spawner getVariable _id) then {
 					_active = true;
-					{						
-						{
-							_groups pushback _x;
-						}foreach(_town call _x);
+					{
+						_spawner = _x;
+						[_groups,_town,_spawner] spawn {
+							private ["_g","_t","_s"];
+							_g = _this select 0;
+							_t = _this select 1;
+							_s = _this select 2;
+							{
+								_g pushback _x;
+							}foreach(_t call _s);
+						};						
+						sleep 0.05;
 					}foreach(AIT_townSpawners);
 				}else{
 					//NATO

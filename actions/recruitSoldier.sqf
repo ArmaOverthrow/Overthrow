@@ -1,1 +1,1 @@
-if !(captive player) exitWith {hint "You cannot recruit while wanted"};
+if !(captive player) exitWith {"You cannot recruit while wanted" call notify_minor};

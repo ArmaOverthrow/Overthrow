@@ -2,79 +2,41 @@ _shopkeeper = _this;
 
 _shopkeeper addAction ["Buy", {
 	_civ = _this select 0;	
-	_b = _civ getVariable "shop";
-	_s = _b getVariable "stock";
-	_town = (getpos player) call nearestTown;
-	_standing = player getVariable format['rep%1',_town];
-	player setVariable ["shopping",_b,false];
-	createDialog "AIT_dialog_buy";
-	{			
-		_cls = _x select 0;
-		_num = _x select 1;
-		_price = [_town,_cls,_standing] call getPrice;
-		_name = "";
-		_pic = "";
-		if(_cls in AIT_allBackpacks) then {
-			_name = _cls call ISSE_Cfg_Vehicle_GetName;
-			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
-		}else{
-			_name = _cls call ISSE_Cfg_Weapons_GetName;
-			_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+	_bp = _civ getVariable "shop";
+	_s = [];
+	_town = (getpos _civ) call nearestTown;
+	{
+		_pos = _x select 0;
+		if(format["%1",_pos] == _bp) exitWith {
+			_s = _x select 1;
 		};
-		_idx = lbAdd [1500,format["%1 x %2",_num,_name]];
-		lbSetPicture [1500,_idx,_pic];
-		lbSetValue [1500,_idx,_price];
-		lbSetData [1500,_idx,_cls];
-	}foreach(_s);
+	}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+
+	_standing = player getVariable format['rep%1',_town];
+	player setVariable ["shopping",_civ,false];
+	createDialog "AIT_dialog_buy";
+	[_town,_standing,_s] call buyDialog;
 	
 },_shopkeeper,1.5,false,true,"","",5];
 
 _shopkeeper addAction ["Sell", {
 	_civ = _this select 0;	
-	_b = _civ getVariable "shop";
-	_s = player call unitStock;
-	_town = (getpos player) call nearestTown;
-	_standing = (player getVariable format['rep%1',_town]) * -1;
-	player setVariable ["shopping",_b,false];
-	createDialog "AIT_dialog_sell";
-	{			
-		_cls = _x select 0;
-		if!(_cls in AIT_allMagazines + AIT_illegalItems + AIT_illegalHeadgear + AIT_illegalVests + AIT_allWeapons) then {
-			_num = _x select 1;			
-			_price = [_town,_cls,_standing] call getSellPrice;
-			_mynum = 0;
-			_s = _b getVariable "stock";
-			{
-				_c = _x select 0;
-				if(_c == _cls) exitWith {_mynum = _x select 1};				
-			}foreach(_s);
-						
-			if(_mynum > 10) then {
-				_price = ceil(_price * 0.75);
-			};
-			if(_mynum > 20) then {
-				_price = ceil(_price * 0.5);
-			};
-			if(_mynum > 50) then {
-				_price = 1;
-			};
-			if(_price <= 0) then {_price = 1};
-			
-			_name = "";
-			_pic = "";
-			if(_cls in AIT_allBackpacks) then {
-				_name = _cls call ISSE_Cfg_Vehicle_GetName;
-				_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
-			}else{
-				_name = _cls call ISSE_Cfg_Weapons_GetName;
-				_pic = _cls call ISSE_Cfg_Weapons_GetPic;
-			};
-			_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
-			lbSetPicture [1500,_idx,_pic];
-			lbSetValue [1500,_idx,_price];
-			lbSetData [1500,_idx,_cls];
+	_bp = _civ getVariable "shop";
+	
+	_s = [];
+	_town = (getpos _civ) call nearestTown;
+	{
+		_pos = _x select 0;
+		if(format["%1",_pos] == _bp) exitWith {
+			_s = _x select 1;
 		};
-	}foreach(_s);
+	}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+	
+	_playerstock = player call unitStock;	
+	_standing = (player getVariable format['rep%1',_town]) * -1;
+	player setVariable ["shopping",_civ,false];
+	createDialog "AIT_dialog_sell";
+	[_playerstock,_town,_standing,_s] call sellDialog;
 	
 },_shopkeeper,1.5,false,true,"","",5];
 

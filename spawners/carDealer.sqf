@@ -1,4 +1,4 @@
-private ["_id","_pos","_building","_tracked","_civs","_vehs","_group","_groups","_all","_shopkeeper"];
+private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_groups","_all","_shopkeeper"];
 if (!isServer) exitwith {};
 
 
@@ -33,11 +33,7 @@ _groups = [];
 
 	_shopkeeper remoteExec ["initCarShopLocal",0,true];
 	[_shopkeeper] call initCarDealer;
-	
-	_allactive = spawner getVariable ["activecarshops",[]];
-	_allactive pushback _shopkeeper;
-	spawner setVariable ["activecarshops",_allactive,true];
-	
+	_shopkeeper setVariable ["carshop",true,true];
 }foreach(nearestObjects [_posTown,AIT_carShops, 400]);
 		
 		

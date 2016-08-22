@@ -1,4 +1,4 @@
-if !(captive player) exitWith {hint "You cannot set home while wanted"};
+if !(captive player) exitWith {"You cannot set home while wanted" call notify_minor};
 
 _buildings =  (getpos player) nearObjects 15;
 _handled = false;

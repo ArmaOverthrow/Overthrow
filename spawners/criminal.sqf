@@ -95,11 +95,4 @@ if(_numCRIM > 0) then {
 	
 };
 
-{
-	_cur = _x;
-	{	
-		_cur addCuratorEditableObjects [(units _x),true];				
-	}foreach(_groups);				
-} forEach allCurators;
-
 _groups	

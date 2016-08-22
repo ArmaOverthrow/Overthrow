@@ -1,5 +1,5 @@
 if(AIT_fastTime) then {
-	setTimeMultiplier 4;
+    setTimeMultiplier 4;
 };
 [] execVM "weather.sqf";
 [] execVM "income.sqf";
@@ -19,26 +19,24 @@ waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "initEconomyLoad.sqf";
 
 [] execVM "factions\NATO.sqf";
-[] execVM "factions\CRIM.sqf";	
+[] execVM "factions\CRIM.sqf";  
 waitUntil {!isNil "AIT_NATOInitDone"};
-waitUntil {!isNil "AIT_CRIMInitDone"};	
+waitUntil {!isNil "AIT_CRIMInitDone"};  
 
 //Bounty system
 [] execVM "bountySystem.sqf";
 
 //Init virtualization
-[] execVM "virtualization.sqf";	
-waitUntil {!isNil "AIT_fnc_registerSpawner"};
+[] execVM "virtualization.sqf"; 
+waitUntil {!isNil "AIT_economyLoadDone"};
 [] execVM "virtualization\towns.sqf";
-[] execVM "virtualization\shops.sqf";
 [] execVM "virtualization\military.sqf";
-[] execVM "virtualization\distribution.sqf";
 [] execVM "virtualization\mobsters.sqf";
 
 addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
 if(AIT_hasAce) then {
-	//ACE events
-	["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
+    //ACE events
+    ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
 };
 
 addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];

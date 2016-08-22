@@ -1,5 +1,5 @@
 if(isServer) then {
-	server setVariable ["StartupType","",true];
+    server setVariable ["StartupType","",true];
 };
 //Helper functions
 townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
@@ -57,6 +57,8 @@ loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
 buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
 manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
+buyDialog = compileFinal preProcessFileLineNumbers "UI\buyDialog.sqf";
+sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -83,9 +85,8 @@ initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarSh
 initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 
-//Economy agents
-run_shop = compileFinal preProcessFileLineNumbers "economy\shop.sqf";
-run_distribution = compileFinal preProcessFileLineNumbers "economy\distribution.sqf";
+//Economy
+setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";
 
 //Math
 rotationMatrix = compileFinal preProcessFileLineNumbers "funcs\rotationMatrix.sqf";
@@ -125,87 +126,87 @@ keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 [] execVM "SHK_pos\shk_pos_init.sqf";
 
 blackFaded = {
-	titleText [_this, "BLACK FADED", 0];
+    titleText [_this, "BLACK FADED", 0];
 };
 
 newGame = {
-	"Please wait.. generating economy" remoteExec['blackFaded',0];
-	[] execVM "initEconomy.sqf";
-	waitUntil {!isNil "AIT_economyInitDone"};
-	server setVariable["StartupType","NEW",true];
+    "Please wait.. generating economy" remoteExec['blackFaded',0];
+    [] execVM "initEconomy.sqf";
+    waitUntil {!isNil "AIT_economyInitDone"};
+    server setVariable["StartupType","NEW",true];
 };
 
 setupKeyHandler = {
-	waitUntil {!(isnull (findDisplay 46))};
-	sleep 1;
-	(findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
+    waitUntil {!(isnull (findDisplay 46))};
+    sleep 1;
+    (findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
 };
 
 standing = {
-	_town = _this select 0;
-	_rep = (player getVariable format["rep%1",_town])+(_this select 1);
-	player setVariable [format["rep%1",_town],_rep,true];
-	playSound "3DEN_notificationDefault";
-	_plusmin = "";
-	if(_rep > -1) then {
-		_plusmin = "+";
-	};
-	_totalrep = (player getVariable "rep")+(_this select 1);
-	player setVariable ["rep",_totalrep,true];
-	_plusmintotal = "";
-	if(_totalrep > -1) then {
-		_plusmintotal = "+";
-	};
-	format["Standing (%3): %1%2<br/>Standing (Tanoa): %4%5",_plusmin,_rep,_town,_plusmintotal,_totalrep] call notify_minor;
-	
+    _town = _this select 0;
+    _rep = (player getVariable format["rep%1",_town])+(_this select 1);
+    player setVariable [format["rep%1",_town],_rep,true];
+    playSound "3DEN_notificationDefault";
+    _plusmin = "";
+    if(_rep > -1) then {
+        _plusmin = "+";
+    };
+    _totalrep = (player getVariable "rep")+(_this select 1);
+    player setVariable ["rep",_totalrep,true];
+    _plusmintotal = "";
+    if(_totalrep > -1) then {
+        _plusmintotal = "+";
+    };
+    format["Standing (%3): %1%2<br/>Standing (Tanoa): %4%5",_plusmin,_rep,_town,_plusmintotal,_totalrep] call notify_minor;
+    
 };
 
 money = {
-	_amount = _this select 0;
-	_rep = (player getVariable "money")+_amount;
-	if(_rep < 0) then {		
-		_rep = 0;		
-	};
-	player setVariable ["money",_rep,true];
-	playSound "3DEN_notificationDefault";
-	_plusmin = "";
-	if(_amount > 0) then {
-		_plusmin = "+";
-	};
-	format["Money: %1%2",_plusmin,_amount] call notify_minor;
-	
+    _amount = _this select 0;
+    _rep = (player getVariable "money")+_amount;
+    if(_rep < 0) then {     
+        _rep = 0;       
+    };
+    player setVariable ["money",_rep,true];
+    playSound "3DEN_notificationDefault";
+    _plusmin = "";
+    if(_amount > 0) then {
+        _plusmin = "+";
+    };
+    format["Money: %1%2",_plusmin,_amount] call notify_minor;
+    
 };
 
 stability = {
-	_town = _this select 0;
-	
-	_townmrk = format["%1-abandon",_town];
-	_stability = (server getVariable format["stability%1",_town])+(_this select 1);
-	if(_stability < 0) then {_stability = 0};
-	server setVariable [format["stability%1",_town],_stability,true];
-	
-	_abandoned = server getVariable "NATOabandoned";
-	if(_town in _abandoned) then {
-		_townmrk setMarkerAlpha 1;
-	}else{
-		_townmrk setMarkerAlpha 0;
-	};
-	
-	//update the markers
-	if(_stability < 50) then {
-		_town setMarkerColor "ColorRed";
-		_town setMarkerAlpha 1.0 - (_stability / 50);
-		_townmrk setMarkerColor "ColorOPFOR";		
-	}else{
-		_townmrk setMarkerColor "ColorGUER";
-		if(_town in _abandoned) then {
-			_town setMarkerAlpha ((_stability - 50) / 100);
-			_town setMarkerColor "ColorGreen";
-		}else{
-			_town setMarkerAlpha 0;
-		};
-	}
-	
+    _town = _this select 0;
+    
+    _townmrk = format["%1-abandon",_town];
+    _stability = (server getVariable format["stability%1",_town])+(_this select 1);
+    if(_stability < 0) then {_stability = 0};
+    server setVariable [format["stability%1",_town],_stability,true];
+    
+    _abandoned = server getVariable "NATOabandoned";
+    if(_town in _abandoned) then {
+        _townmrk setMarkerAlpha 1;
+    }else{
+        _townmrk setMarkerAlpha 0;
+    };
+    
+    //update the markers
+    if(_stability < 50) then {
+        _town setMarkerColor "ColorRed";
+        _town setMarkerAlpha 1.0 - (_stability / 50);
+        _townmrk setMarkerColor "ColorOPFOR";       
+    }else{
+        _townmrk setMarkerColor "ColorGUER";
+        if(_town in _abandoned) then {
+            _town setMarkerAlpha ((_stability - 50) / 100);
+            _town setMarkerColor "ColorGreen";
+        }else{
+            _town setMarkerAlpha 0;
+        };
+    }
+    
 };
 
 KK_fnc_fileExists = {
@@ -219,25 +220,25 @@ KK_fnc_fileExists = {
 };
 
 notify = {
-	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0.8, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
+    [_txt, 0.8, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_good = {
-	playSound "3DEN_notificationDefault";
-	_txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    playSound "3DEN_notificationDefault";
+    _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
+    [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_minor = {
-	playSound "ClickSoft";
-	_txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
-	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    playSound "ClickSoft";
+    _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
+    [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {
-	_txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
-	[_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    _txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
+    [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 [] execVM "funcs\info.sqf";
@@ -251,15 +252,15 @@ fnc_isInMarker = {
     if (typeName _p == "OBJECT") then {
       _px = position _p select 0;
       _py = position _p select 1;
-	}else {
-		if(typeName _p == "ARRAY") then {
-		  _px = _p select 0;
-		  _py = _p select 1;
-		}else{
-			_p = server getVariable _p;
-			_px = _p select 0;
-			_py = _p select 1;
-		};
+    }else {
+        if(typeName _p == "ARRAY") then {
+          _px = _p select 0;
+          _py = _p select 1;
+        }else{
+            _p = server getVariable _p;
+            _px = _p select 0;
+            _py = _p select 1;
+        };
     };
     
     _mpx = getMarkerPos _m select 0;

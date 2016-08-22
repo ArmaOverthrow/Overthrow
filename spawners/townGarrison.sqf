@@ -1,4 +1,4 @@
-private ["_id","_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
+private ["_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
 _count = 0;
@@ -26,7 +26,7 @@ while {_count < _numNATO} do {
 	[_civ,_town] call initPolice;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
-	
+	sleep 0.1;
 	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {							
 		_pos = [[[_start,50]]] call BIS_fnc_randomPos;
 		
@@ -39,27 +39,10 @@ while {_count < _numNATO} do {
 		
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-		
+		sleep 0.1;
 	};				
 	_group call initPolicePatrol;				
 	_range = _range + 50;
-	sleep 0.03;
-};
-
-{
-	_cur = _x;
-	{	
-		_cur addCuratorEditableObjects [(units _x),true];				
-	}foreach(_groups);				
-} forEach allCurators;
-
-_groups spawn {
-	sleep 1;
-	{	
-		{					
-			_x setDamage 0;							
-		}foreach(units _x);							
-	}foreach(_this);		
 };
 
 _groups

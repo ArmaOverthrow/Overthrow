@@ -1,4 +1,4 @@
-private ["_id","_params","_town","_posTown","_groups","_civs","_numCiv","_shops","_houses","_stability","_pop","_count","_mSize","_civTypes","_hour","_range","_found"];
+private ["_town","_count","_pop","_stability","_numVeh","_start","_road","_vehtype","_dirveh","_roadscon","_mSize","_posTown","_groups"];
 if (!isServer) exitwith {};
 
 _count = 0;
@@ -19,10 +19,10 @@ _numVeh = 2;
 if(_pop > 15) then {
 	_numVeh = 2 + round(_pop * AIT_spawnVehiclePercentage);
 };
-while {(_count < _numVeh)} do {	
+while {(_count < _numVeh)} do {		
 	_start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
 	_road = [_start] call BIS_fnc_nearestRoad;
-	if (!isNull _road) then {
+	if (!isNull _road) then {		
 		_pos = getPos _road;
 		_vehtype = AIT_vehTypes_civ call BIS_Fnc_selectRandom;
 		_dirveh = 0;
@@ -32,7 +32,7 @@ while {(_count < _numVeh)} do {
 			if(isNil "_dirveh") then {_dirveh = random 359};
 			_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,15,_vehtype];
 			
-			if(count _posVeh > 0) then {				
+			if(count _posVeh > 0) then {
 				_veh = _vehtype createVehicle _posVeh;
 				clearItemCargoGlobal _veh;
 						

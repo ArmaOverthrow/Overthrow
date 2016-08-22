@@ -10,7 +10,7 @@ _price = [_town,_cls,_standing] call getPrice;
 _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
 
-playSound "ClickSoft";
+
 if(_cls in AIT_allVehicles) then {	
 	_pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
@@ -24,8 +24,8 @@ if(_cls in AIT_allVehicles) then {
 	clearItemCargoGlobal _veh;	
 	
 	player reveal _veh;
-	hint format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName];
-	
+	format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+	playSound "3DEN_notificationDefault";
 }else{
 	if(_cls in AIT_allWeapons) then {
 		player setVariable ["money",_money-_price,true];
@@ -42,7 +42,8 @@ if(_cls in AIT_allVehicles) then {
 			"Delivered to your closest ammobox" call notify_minor;
 		}else{
 			player addWeapon _cls;
-		};		
+		};	
+		playSound "3DEN_notificationDefault";
 	}else{
 		if(_cls in AIT_allMagazines) then {	
 			player setVariable ["money",_money-_price,true];
@@ -60,10 +61,21 @@ if(_cls in AIT_allVehicles) then {
 				"Delivered to your closest ammobox" call notify_minor;
 			}else{
 				player addMagazine _cls;
-			};		
+			};	
+			playSound "3DEN_notificationDefault";
 		}else{					
 			_b = player getVariable "shopping";
-			_s = _b getVariable "stock";
+			_bp = _b getVariable "shop";
+			
+			_s = [];
+			_active = server getVariable [format["activeshopsin%1",_town],[]];
+			{
+				_pos = _x select 0;
+				if(format["%1",_pos] == _bp) exitWith {
+					_s = _x select 1;
+				};
+			}foreach(_active);
+			
 			_handled = true;
 			if(_cls in AIT_allBackpacks) then {	
 				if(backpack player != "") exitWith {"You already have a backpack" call notify_minor;_handled = false};
@@ -71,6 +83,7 @@ if(_cls in AIT_allVehicles) then {
 				if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
 			};
 			if(_handled) then {
+				playSound "3DEN_notificationDefault";
 				if (_cls in AIT_illegalItems) exitWith {
 					player setVariable ["money",_money-_price,true];
 					player addItem _cls;
@@ -95,32 +108,20 @@ if(_cls in AIT_allVehicles) then {
 						_s deleteAt _stockidx;
 					};
 					player setVariable ["money",_money-_price,true];
-					_b setVariable ["stock",_s,true];	
+					server setVariable [format["activeshopsin%1",_town],_active,true];	
 					if(_cls in AIT_allBackpacks) then {	
 						player addBackpack _cls;
 					}else{
 						player addItem _cls;
 					};
-					
-					lbClear 1500;
-					{			
-						_cls = _x select 0;
-						_num = _x select 1;
-						_price = [_town,_cls,_standing] call getPrice;
-						_name = "";
-						_pic = "";
-						if(_cls in AIT_allBackpacks) then {
-							_name = _cls call ISSE_Cfg_Vehicle_GetName;
-							_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
-						}else{
-							_name = _cls call ISSE_Cfg_Weapons_GetName;
-							_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+					_s = [];					
+					{
+						_pos = _x select 0;
+						if(format["%1",_pos] == _bp) exitWith {
+							_s = _x select 1;
 						};
-						_idx = lbAdd [1500,format["%1 x %2",_num,_name]];
-						lbSetPicture [1500,_idx,_pic];
-						lbSetValue [1500,_idx,_price];
-						lbSetData [1500,_idx,_cls];
-					}foreach(_s);
+					}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+					[_town,_standing,_s] call buyDialog;
 				};
 			};
 		};

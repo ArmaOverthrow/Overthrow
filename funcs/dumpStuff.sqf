@@ -23,7 +23,7 @@ if(headgear _unit != "") then {
 	removeHeadgear _unit;
 };
 if(backpack _unit != "") then {
-	_t addItemCargoGlobal [backpack _unit,1];
+	_t addBackpackCargoGlobal [backpack _unit,1];
 	removeBackpack _unit;
 };
 if(vest _unit != "") then {
@@ -37,27 +37,20 @@ if(goggles _unit != "") then {
 if(primaryWeapon _unit != "") then {
 	{
 		_t addItemCargoGlobal [_x,1];
-		_unit removePrimaryWeaponItem _x;
 	}foreach(primaryWeaponItems _unit);
-	
+	removeAllPrimaryWeaponItems _unit;
 	_t addWeaponCargoGlobal [primaryWeapon _unit,1];
 	_unit removeWeapon primaryWeapon _unit;
 };
 if(secondaryWeapon _unit != "") then {
-	{
-		_t addItemCargoGlobal [_x,1];
-		_unit removeSecondaryWeaponItem _x;
-	}foreach(secondaryWeaponItems _unit);		
-	
 	_t addWeaponCargoGlobal [secondaryWeapon _unit,1];
 	_unit removeWeapon secondaryWeapon _unit;
 };
 if(handgunWeapon _unit != "") then {
 	{
 		_t addItemCargoGlobal [_x,1];
-		_unit removeHandgunItem _x;
 	}foreach(handgunItems _unit);		
-	
+	removeAllHandgunItems _unit;
 	_t addWeaponCargoGlobal [handgunWeapon _unit,1];
 	_unit removeWeapon handgunWeapon _unit;
 };

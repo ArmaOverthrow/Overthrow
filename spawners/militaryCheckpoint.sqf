@@ -75,9 +75,7 @@ while{true} do {
 			};
 			_group call initCheckpoint;
 
-			{
-				_x addCuratorEditableObjects [_soldiers,true];
-			} forEach allCurators;
+			
 			sleep 1;
 			{
 				_x setDamage 0;

@@ -18,8 +18,6 @@ _unit forceAddUniform (AIT_clothes_shops call BIS_fnc_selectRandom);
 
 _group = group _unit;
 _hour = date select 3;
-_home = nearestBuilding _unit;
-_hometown = (getpos _unit) call nearestTown;
 
 _group setBehaviour "CARELESS";
 

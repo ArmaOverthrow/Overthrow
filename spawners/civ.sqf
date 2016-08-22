@@ -61,17 +61,7 @@ while {_count < _numCiv} do {
 		_light setLightAmbient[.9, .9, .6];
 		_light setLightColor[.5, .5, .4];
 		_groups pushback _light;
-	};
-	sleep 0.03;
-};			
-
-_groups spawn {
-	sleep 1;
-	{	
-		{					
-			_x setDamage 0;							
-		}foreach(units _x);							
-	}foreach(_this);		
-};
-
+	};	
+	sleep (0.01 * _pergroup);
+};	
 _groups

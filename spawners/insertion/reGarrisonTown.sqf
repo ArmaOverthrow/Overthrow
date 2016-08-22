@@ -116,7 +116,7 @@ _wp setWaypointBehaviour "COMBAT";
 if(_opendoor) then {
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
 };
-wp setWaypointCompletionRadius 50;
+_wp setWaypointCompletionRadius 50;
 _wp setWaypointSpeed "FULL";
 
 _wp = _tgroup addWaypoint [_drop,0];

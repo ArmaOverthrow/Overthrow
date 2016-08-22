@@ -1,4 +1,10 @@
+private ["_sorted","_target","_deadguys","_wasincar","_unit","_t","_got","_timeout","_weapon","_myunits"];
+
 _sorted = [];
+_myunits = groupSelectedUnits player;
+{
+    player groupSelectUnit [_x, false];
+} forEach (groupSelectedUnits player);
 
 if(vehicle player != player) then {
 	_sorted = [vehicle player];
@@ -13,11 +19,11 @@ if(vehicle player != player) then {
 if(count _sorted == 0) exitWith {};
 _target = _sorted select 0;
 
-format["Units will loot any dead bodies within 80m into this %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+format["Units will loot any dead bodies within 100m into this %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 
 _deadguys = [];
 {
-	if !((_x distance player > 80) or (alive _x) or (_x getVariable ["looted",false])) then {
+	if !((_x distance player > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
 		_deadguys pushback _x;
 	};	
 }foreach(entities "Man");
@@ -56,12 +62,12 @@ _deadguys = [];
 					_got = true;
 				};
 			}foreach(_deadguys);
-			if(!_got) exitWith {_unit globalChat "All done sir!"};
+			if(!_got) exitWith {};
 			_deadguy setVariable ["looted",true,true];
 			
 			_unit doMove getpos _deadguy;
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _deadguy < 2) or (_timeOut < time) or (unitReady _unit)};		
-			if((!alive _unit) or (_timeOut < time)) exitWith {hint "0"};
+			if((!alive _unit) or (_timeOut < time)) exitWith {};
 			
 			[_deadguy,_unit] call takeStuff;
 			[_deadguy] spawn {
@@ -79,33 +85,70 @@ _deadguys = [];
 						_weapon = _x;
 						_weapon setVariable ["looted",true,true];
 					};
-				}foreach(_unit nearentities ["WeaponHolderSimulated",30]);
+				}foreach(_unit nearentities ["WeaponHolderSimulated",10]);
 				if !(isNull _weapon) then {
 					_unit doMove getpos _weapon;
 					waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 2) or (_timeOut < time) or (unitReady _unit)};		
 					if(alive _unit and (_timeOut > time)) then {
 						_s = (weaponsItems _weapon) select 0;
 						
-						_unit addWeapon (_s select 0);
+						_unit addWeapon ([(_s select 0)] call BIS_fnc_baseWeapon);
 						_i = _s select 1;
-						if(_i != "") then {_unit addPrimaryWeaponItem _i};
+						if(_i != "") then {_unit addItem _i};
 						_i = _s select 2;
-						if(_i != "") then {_unit addPrimaryWeaponItem _i};
+						if(_i != "") then {_unit addItem _i};
 						_i = _s select 3;
-						if(_i != "") then {_unit addPrimaryWeaponItem _i};						
+						if(_i != "") then {_unit addItem _i};
 						deleteVehicle _weapon;
 						sleep 1;
 					};
 				};
 			};
-			if(!alive _unit) exitWith {hint "1"};
+			if(!alive _unit) exitWith {};
 			_timeout = time + 120;
 			_unit doMove getpos _t;
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 2) or (_timeOut < time) or (unitReady _unit)};		
-			if((!alive _unit) or (_timeOut < time)) exitWith {hint "2"};
+			if((!alive _unit) or (_timeOut < time)) exitWith {};
 			
 			[_unit,_t] call dumpStuff;
 			sleep 1;
+		};
+		while {true} do {
+			_got = false;
+			_weapon = objNull;
+			{
+				if !(_x getVariable ["looted",false]) exitWith {
+					_weapon = _x;
+					_got = true;
+					_weapon setVariable ["looted",true,true];
+				};
+			}foreach(_unit nearentities ["WeaponHolderSimulated",100]);
+			
+			if(!_got) exitWith {_unit globalchat "All done, sir!"};
+			
+			_timeout = time + 120;
+			_unit doMove getpos _weapon;
+			waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 2) or (_timeOut < time) or (unitReady _unit)};		
+			if(alive _unit and (_timeOut > time)) then {
+				_s = (weaponsItems _weapon) select 0;				
+				_cls = (_s select 0);
+				_unit addWeapon ([(_s select 0)] call BIS_fnc_baseWeapon);
+				_i = _s select 1;
+				if(_i != "") then {_unit addItem _i};
+				_i = _s select 2;
+				if(_i != "") then {_unit addItem _i};
+				_i = _s select 3;
+				if(_i != "") then {_unit addItem _i};
+				deleteVehicle _weapon;
+				sleep 1;
+			};
+			if(!alive _unit) exitWith {};
+			_timeout = time + 120;
+			_unit doMove getpos _t;
+			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 2) or (_timeOut < time) or (unitReady _unit)};		
+			if((!alive _unit) or (_timeOut < time)) exitWith {};
+			
+			[_unit,_t] call dumpStuff;
 		};
 		
 		if(_wasincar) then {
@@ -114,4 +157,4 @@ _deadguys = [];
 		};
 	};
 	sleep 0.1;
-}foreach(groupSelectedUnits player);
+}foreach(_myunits);
