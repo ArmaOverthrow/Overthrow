@@ -21,7 +21,6 @@ if(_typecls != "Base") then {
 		};
 	};
 };
-
 if(!_canplace) exitWith {false};
 
 if !(_isbase) then {

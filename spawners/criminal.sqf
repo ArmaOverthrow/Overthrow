@@ -92,7 +92,9 @@ if(_numCRIM > 0) then {
 		_count = _count + 1;
 		sleep 0.1;		
 	};
-	
+	{
+		_x addCuratorEditableObjects [units _group,true];
+	} forEach allCurators;
 };
 
 _groups	

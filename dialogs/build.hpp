@@ -40,14 +40,14 @@ class AIT_dialog_buildbase
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
-			action = "'Training Camp' call build";
+			action = "'Observation Post' call build";
 
-			text = "Training Camp"; //--- ToDo: Localize;
+			text = "Observation Post"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Allows training of recruits and hiring of mercenaries"; //--- ToDo: Localize;
+			tooltip = "Provides intel about the area"; //--- ToDo: Localize;
 		};
 		class RscButton_1603: RscButton
 		{

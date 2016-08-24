@@ -1,6 +1,6 @@
 _civ = _this;
 
-_civ addAction ["Buy Vehicle", {		
+_civ addAction ["Buy Boat", {		
 	_town = (getpos player) call nearestTown; 
 	_standing = player getVariable format['rep%1',_town];
 	createDialog "AIT_dialog_buy";
@@ -14,12 +14,8 @@ _civ addAction ["Buy Vehicle", {
 		lbSetPicture [1500,_idx,_cls call ISSE_Cfg_Vehicle_GetPic];
 		lbSetData [1500,_idx,_cls];
 		lbSetValue [1500,_idx,_price];
-	}foreach(AIT_vehicles);
-	_price = [_town,AIT_item_UAV,_standing] call getPrice;
-	_idx = lbAdd [1500,format["Quadcopter"]];
-	lbSetPicture [1500,_idx,AIT_item_UAV call ISSE_Cfg_Vehicle_GetPic];
-	lbSetData [1500,_idx,AIT_item_UAV];
-	lbSetValue [1500,_idx,_price];
+	}foreach(AIT_boats);
+	
 },nil,1.5,true,true,"","alive _target",5];
 
 _civ addAction ["Ask about weapons", {

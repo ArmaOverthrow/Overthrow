@@ -7,6 +7,7 @@ _town = (getpos _me) call nearestTown;
 
 if(isPlayer _me) exitWith {	
 	_myuid = getPlayerUID _me;
+	_me setVariable ["spawntrack",true,false]; //Tells the spawner to consider this dead body within spawn distance
 	{
 		_uid = _x getVariable "player_uid";
 		if(_uid == _myuid and _x != _me) then {
@@ -14,8 +15,6 @@ if(isPlayer _me) exitWith {
 		};
 	}foreach(allDeadMen);
 };
-
-_me remoteExec ["removeAllActions",0,true];
 
 _garrison = _me getvariable "garrison";
 _vehgarrison = _me getvariable "vehgarrison";
@@ -41,9 +40,7 @@ call {
 		server setVariable ["activemobsters",_active,false];
 		
 		_standingChange = 50;
-		if(isPlayer _killer) then {
-			[2000] remoteExec ["money",_killer,true];
-		};
+		[_killer,1500] call rewardMoney;
 	};
 	if(!isNil "_mobster") exitWith {
 		_mobsterid = _me getVariable "garrison";
@@ -52,9 +49,7 @@ call {
 			server setVariable [format["crimgarrison%1",_mobsterid],_pop - 1,true];
 		};
 		_standingChange = 10;
-		if(isPlayer _killer) then {
-			[250] remoteExec ["money",_killer,true];
-		};
+		[_killer,150] call rewardMoney;
 	};
 	if(!isNil "_criminal") exitWith {
 		_pop = server getVariable format["numcrims%1",_town];
@@ -65,9 +60,7 @@ call {
 			[_town,1] call stability;
 		};
 		_standingChange = 1;
-		if(isPlayer _killer) then {
-			[50] remoteExec ["money",_killer,true];
-		};
+		[_killer,10] call rewardMoney;
 	};
 	if(!isNil "_crimleader") exitWith {
 		[_town,10] call stability;
@@ -82,8 +75,8 @@ call {
 		_standingChange = 10;
 		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
 		if(_bounty > 0) then {
+			[_killer,_bounty] call rewardMoney;
 			if(isPlayer _killer) then {
-				[_bounty] remoteExec ["money",_killer,true];
 				if(isMultiplayer) then {
 					format["%1 has claimed the bounty in %2",name _killer,_town] remoteExec ["notify_minor",0,true];
 				}else{

@@ -69,7 +69,7 @@ sleep 0.1;
 {
 	[_x] joinSilent _tgroup;
 	_x setVariable ["NOAI",true,false];
-	_x setVariable ["garrison","HQ",false];
+	_x setVariable ["garrison","HQ",false];	
 }foreach(crew _veh);	
 
 {

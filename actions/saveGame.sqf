@@ -1,4 +1,4 @@
-private ["_data","_done"];
+private ["_data","_done","_recruits","_vehicles"];
 
 if(AIT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,true]};
 AIT_saving = true;
@@ -54,13 +54,13 @@ _count = 10001;
 {
 	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag)) then {
 		_owner = _x getVariable ["owner",false];		
-		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""]];	
+		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""],_x getVariable ["AIT_init",""]];	
 		_done pushback _x;
 	};
-	if(_count > 5000) then {
+	if(_count > 2000) then {
 		"Still persistent Saving... please wait" remoteExec ["notify_minor",0,true];
 		_count = 0;
-		sleep 0.1;
+		sleep 0.01;
 	};
 	_count = _count + 1;
 }foreach((allMissionObjects "Building") + vehicles);
@@ -88,7 +88,11 @@ _recruits = [];
 _data pushback ["recruits",_recruits];
 
 profileNameSpace setVariable ["Overthrow.save.001",_data];
-if (isDedicated) then {saveProfileNamespace};
+if (isDedicated) then {
+	"Saving to dedicated server.. not long now" remoteExec ["notify_minor",0,true];
+	sleep 0.01;
+	saveProfileNamespace
+};
 
 "Persistent Save Completed" remoteExec ["notify_minor",0,true];
 

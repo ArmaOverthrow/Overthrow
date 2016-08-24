@@ -6,14 +6,9 @@ _unit setVariable ["mobboss",true,false];
 _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
-	if(isPlayer _src and captive _src) then {
+	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
-			_src setCaptive false;	
-			{
-				if(side _x == east) then {
-					_x reveal [_src,1.5];						
-				};
-			}foreach(_src nearentities ["Man",1000]);
+			_src setCaptive false;				
 		};		
 	};	
 }];
@@ -24,7 +19,6 @@ _unit forceAddUniform AIT_clothes_mob;
 
 removeAllItems _unit;
 removeHeadgear _unit;
-removeGoggles _unit;
 removeAllWeapons _unit;
 removeVest _unit;
 removeAllAssignedItems _unit;
@@ -35,7 +29,7 @@ _unit addHeadgear "H_Booniehat_khk_hs";
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest "V_PlateCarrierSpec_blk";
+_unit addVest (AIT_allExpensiveVests call BIS_fnc_selectRandom);
 _unit linkItem "ItemRadio";
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
@@ -51,7 +45,7 @@ if(AIT_hasACE) then {
 _weapons = (AIT_allExpensiveRifles + AIT_allSniperRifles);
 _weapon = _weapons select floor(random(count _weapons));
 _base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;

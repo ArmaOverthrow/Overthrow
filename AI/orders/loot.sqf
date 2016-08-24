@@ -21,15 +21,8 @@ _target = _sorted select 0;
 
 format["Units will loot any dead bodies within 100m into this %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 
-_deadguys = [];
 {
-	if !((_x distance player > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
-		_deadguys pushback _x;
-	};	
-}foreach(entities "Man");
-
-{
-	[_x,_target,_deadguys] spawn {	
+	[_x,_target] spawn {	
 		_wasincar = false;
 		_car = objNull;
 		
@@ -42,8 +35,7 @@ _deadguys = [];
 		};
 		
 		_t = _this select 1;
-		_deadguys = _this select 2;
-				
+						
 		_unit doMove getpos _t;
 		
 		_timeout = time + 120;
@@ -53,16 +45,17 @@ _deadguys = [];
 		[_unit,_t] call dumpStuff;
 				
 		while {true} do {
-			_timeout = time + 120;
-			_got = false;
-			_deadguy = objNull;
+			_deadguys = [];
 			{
-				if !(_x getVariable ["looted",false]) exitWith {
-					_deadguy = _x;
-					_got = true;
-				};
-			}foreach(_deadguys);
-			if(!_got) exitWith {};
+				if !((_x distance player > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
+					_deadguys pushback _x;
+				};	
+			}foreach(entities "Man");
+			if(count _deadguys == 0) exitWith {};
+			_sorted = [_deadguys,[],{_x distance _t},"ASCEND"] call BIS_fnc_SortBy;
+			
+			_timeout = time + 120;
+			_deadguy = _sorted select 0;
 			_deadguy setVariable ["looted",true,true];
 			
 			_unit doMove getpos _deadguy;

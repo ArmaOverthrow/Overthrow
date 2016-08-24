@@ -6,14 +6,9 @@ _unit setVariable ["mobster",true,false];
 _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
-	if(isPlayer _src and captive _src) then {
+	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
-			_src setCaptive false;	
-			{
-				if(side _x == east) then {
-					_x reveal [_src,1.5];						
-				};
-			}foreach(_src nearentities ["Man",150]);
+			_src setCaptive false;				
 		};		
 	};	
 }];
@@ -24,7 +19,6 @@ _unit forceAddUniform AIT_clothes_mob;
 
 removeAllItems _unit;
 removeHeadgear _unit;
-removeGoggles _unit;
 removeAllWeapons _unit;
 removeVest _unit;
 removeAllAssignedItems _unit;
@@ -35,7 +29,7 @@ _unit addHeadgear "H_Booniehat_khk";
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest "V_PlateCarrierSpec_blk";
+_unit addVest (AIT_allProtectiveVests call BIS_fnc_selectRandom);
 _unit linkItem "ItemRadio";
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
@@ -49,22 +43,14 @@ if(AIT_hasACE) then {
 
 _weapons = (AIT_allExpensiveRifles + AIT_allMachineGuns);
 _weapon = _weapons select floor(random(count _weapons));
-_base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
+
 _unit addWeapon _weapon;
 
 call {
-	if((random 100) > 70) exitWith {
+	if((random 100) > 90) exitWith {
 		//This guy has a launcher
 		_unit addBackpack (AIT_allBackpacks call BIS_fnc_selectRandom);	
-		_launcher = (AIT_allRocketLaunchers + AIT_allMissileLaunchers) call BIS_fnc_SelectRandom;
+		_launcher = (AIT_allRocketLaunchers + AIT_allMissileLaunchers) select 0;
 		_base = [_launcher] call BIS_fnc_baseWeapon;
 		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
 		_unit addMagazine _magazine;
@@ -72,7 +58,7 @@ call {
 		_unit addMagazine _magazine;	
 		_unit addWeapon _launcher;
 	};
-	if((random 100) > 80) exitWith {
+	if((random 100) > 85) exitWith {
 		//This is a medic
 		_unit addBackpack (AIT_allBackpacks call BIS_fnc_selectRandom);	
 		if(AIT_hasACE) then {
@@ -102,6 +88,28 @@ call {
 	};
 };
 
+_base = [_weapon] call BIS_fnc_baseWeapon;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+
+if((random 100) > 80) then {
+	_unit addItem "SmokeShell";
+};
+
+if((random 100) > 50) then {
+	_unit addItem "HandGrenade";
+}else{
+	_unit addItem "MiniGrenade";
+};
+
+if(AIT_hasACE and ((random 100) > 90)) then {
+	_unit addItem "ACE_M84";
+};
+
 _config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";
 _numslots = count(_config);
 for "_i" from 0 to (_numslots-1) do {
@@ -123,6 +131,10 @@ for "_i" from 0 to (_numslots-1) do {
 	};
 };
 
-
-_unit addWeapon "CUP_hgun_MicroUzi";
-for "_i" from 1 to 3 do {_unit addItemToUniform "CUP_30Rnd_9x19_UZI";};
+_weapon = AIT_allHandguns call BIS_fnc_selectRandom;
+_unit addWeapon _weapon;
+_base = [_weapon] call BIS_fnc_baseWeapon;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+if !(isNil "_magazine") then {
+	_unit addItem _magazine;
+};

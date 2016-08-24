@@ -1,4 +1,4 @@
-private ["_unit","_group","_home"];
+private ["_unit"];
 
 _unit = _this select 0;
 
@@ -12,14 +12,11 @@ removeVest _unit;
 _unit setFace (AIT_faces_local call BIS_fnc_selectRandom);
 _unit setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
 
-_unit setVariable ["NOAI",true,false];
-
-(group _unit) allowFleeing 0;
-
 _unit forceAddUniform (AIT_clothes_carDealers call BIS_fnc_selectRandom);
 
-_group = group _unit;
-_home = nearestBuilding _unit;
-_group setBehaviour "CARELESS";
-
 _unit setvariable ["owner","self"];
+
+_unit addEventHandler ["FiredNear", {
+	_u = _this select 0;	
+	_u setUnitPos "DOWN";
+}];

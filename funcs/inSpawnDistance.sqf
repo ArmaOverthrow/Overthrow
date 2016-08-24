@@ -1,14 +1,4 @@
-private ["_pos","_players","_posPlayer","_playersalive"];
-
-_pos = _this;
-_return = false;
-
-_players = [player];
-if(isMultiplayer) then {
-	_players = playableUnits;
-};
-	
-({alive _x and (_pos distance _x) < AIT_spawnDistance} count _players) > 0
+({alive _x and (_this distance _x) < AIT_spawnDistance} count (allPlayers + (spawner getVariable ["track",[]])) > 0)
 /*
 //So zeus spawns, a'la ALiVE
 _zeus = getpos curatorCamera;

@@ -26,6 +26,7 @@ if(!isMultiplayer) then {
         
     //Init factions 
     [] execVM "factions\NATO.sqf";
+	[] execVM "factions\GUER.sqf";
     [] execVM "factions\CRIM.sqf";  
     waitUntil {!isNil "AIT_NATOInitDone"};
     waitUntil {!isNil "AIT_CRIMInitDone"};  
@@ -40,7 +41,7 @@ if(!isMultiplayer) then {
     [] execVM "virtualization\military.sqf";
     [] execVM "virtualization\mobsters.sqf";
     
-    
+    missionNamespace setVariable [getplayeruid player,player,true];
     addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
     if(AIT_hasAce) then {
         //ACE events

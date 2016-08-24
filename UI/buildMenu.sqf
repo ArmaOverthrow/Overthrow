@@ -242,6 +242,8 @@ buildOnMouseUp = {
 			if(_money < modePrice) then {
 				"You cannot afford that" call notify_minor;
 			}else{
+				_created = objNULL;
+				playSound "3DEN_notificationDefault";
 				player setVariable ["money",_money-modePrice,true];
 				
 				if(modeMode == 0) then {
@@ -254,15 +256,20 @@ buildOnMouseUp = {
 						_x setVariable ["owner",getplayeruid player,true];
 						_x call initObjectLocal;
 					}foreach(_objects);
+					_created = _object select 0;
+					deleteVehicle modeTarget;
 				}else{
-					_cls = typeof modeTarget;
-					_o = createVehicle [_cls, modeValue, [], 0, "CAN_COLLIDE"];
-					_o setDir (getDir modeTarget);
-					_o setVariable ["owner",getplayeruid player,true];
+					_created = modeTarget;
+					modeTarget setVariable ["owner",getplayeruid player,true];
+					modeTarget enableSimulationGlobal true;
+					modeTarget = objNull;
 				};
-			};
-			deleteVehicle modeTarget;
+			};			
 			deleteVehicle modeVisual;
+			if(modeCode != "") then {
+				_created setVariable ["AIT_init",modeCode,true];
+				[modeValue] execVM modeCode;				
+			};
 		};
 		if(!isNull modeTarget and !canBuildHere) then {
 			"You cannot build that there" call notify_minor;
@@ -300,6 +307,7 @@ modePrice = 0;
 modeSelected = "";
 modeVisual = objNull;
 modeIndex = 0;
+modeCode = "";
 
 build = {
 	canBuildHere = false;
@@ -311,7 +319,7 @@ build = {
 	modeIndex = 0;
 	_name = _def select 0;
 	_description = _def select 5;
-	modeCode = compile preprocessFileLineNumbers (_def select 3);
+	modeCode = _def select 3;
 	modeValues = _def select 2;
 	modePrice = _def select 1;
 	_isTemplate = _def select 4;

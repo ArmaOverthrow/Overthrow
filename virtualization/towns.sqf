@@ -8,7 +8,8 @@ AIT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\gunDealer.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\ambientVehicles.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\shop.sqf",
-	compileFinal preProcessFileLineNumbers "spawners\distribution.sqf"
+	compileFinal preProcessFileLineNumbers "spawners\distribution.sqf",
+	compileFinal preProcessFileLineNumbers "spawners\harbor.sqf"
 ];
 {	
 	_pos = server getVariable _x;
@@ -44,7 +45,7 @@ AIT_townSpawners = [
 					_need = server getVariable [format ["garrisonadd%1",_town],0];			
 					if(_need > 1) then {		
 						server setVariable[format ["garrisonadd%1",_town],_need-2,false];
-						server setVariable[format ["garrison%1",_town],_numNATO+2,false];
+						server setVariable[format ["garrison%1",_town],(server getVariable format["garrison%1",_town])+2,false];
 					};
 					
 					//CRIM

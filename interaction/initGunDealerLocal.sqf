@@ -75,4 +75,4 @@ _civ addAction ["Buy", {
 		lbSetPicture [1500,_idx,_pic];
 	}foreach(_stock);
 	
-},nil,1.5,false,true,"","",5];
+},nil,1.5,true,true,"","alive _target",5];

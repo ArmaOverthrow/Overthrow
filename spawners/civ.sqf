@@ -37,6 +37,7 @@ _idd = 1;
 while {_count < _numCiv} do {
 	_groupcount = 0;
 	_group = createGroup civilian;
+	_group setBehaviour "SAFE";
 	_groups pushback _group;
 	_group setGroupId [format["%1 %2-1",_town,_idd],""];
 	_idd = _idd + 1;
@@ -48,7 +49,7 @@ while {_count < _numCiv} do {
 		
 		_civ = _group createUnit [AIT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
-		[_civ] spawn initCivilian;		
+		[_civ] call initCivilian;		
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 	};

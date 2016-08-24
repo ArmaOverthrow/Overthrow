@@ -11,7 +11,8 @@ removeVest _unit;
 
 _unit setFace (AIT_faces_local call BIS_fnc_selectRandom);
 _unit setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
-_unit forceAddUniform (AIT_clothes_shops call BIS_fnc_selectRandom);
+
+_unit forceAddUniform (AIT_clothes_harbor call BIS_fnc_selectRandom);
 
 _unit setvariable ["owner","self"];
 

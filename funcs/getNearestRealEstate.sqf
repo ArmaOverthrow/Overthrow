@@ -7,7 +7,7 @@ _price = 0;
 _lease = 0;
 _sell = 0;
 _totaloccupants = 0;
-_sorted = [_buildings,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
+_sorted = [_buildings,[_this],{_x distance _input0},"ASCEND"] call BIS_fnc_SortBy;
 
 if(!isNil "modeTarget") then {
 	_sorted = _sorted - [modeTarget];

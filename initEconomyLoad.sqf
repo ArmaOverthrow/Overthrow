@@ -43,12 +43,12 @@
         _mrk setMarkerAlpha 0;
     };
     
-    if((server getVariable ["EconomyVersion",0]) < 1) then {
+    if((server getVariable ["EconomyVersion",0]) < 2) then {
         [_x] call setupTownEconomy;
     };
 }foreach(AIT_allTowns);
 
-server setVariable ["EconomyVersion",1,false];
+server setVariable ["EconomyVersion",2,false];
 
 AIT_economyLoadDone = true;
 publicVariable "AIT_economyLoadDone";

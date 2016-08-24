@@ -27,6 +27,9 @@ sleep 5;
 			if(_cls in AIT_allMagazines) exitWith {
 				_veh addMagazineCargoGlobal [_cls,1];
 			};
+			if(_cls in AIT_allBackpacks) exitWith {
+				_veh addBackpackCargoGlobal [_cls,1];
+			};
 			_veh addItemCargoGlobal [_cls,1];
 		};		
 	};
@@ -34,5 +37,6 @@ sleep 5;
 clearItemCargoGlobal _target;
 clearMagazineCargoGlobal _target;
 clearWeaponCargoGlobal _target;
+clearBackpackCargoGlobal _target;
 
 "Cargo Transfer done" call notify_minor;

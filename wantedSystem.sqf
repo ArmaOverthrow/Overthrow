@@ -1,5 +1,5 @@
+private ["_unit","_timer","_bad","_rep","_totalrep"];
 _unit = _this;
-private ["_unit","_timer"];
 
 _timer = -1;
 
@@ -88,7 +88,7 @@ while {alive _unit} do {
 			if(vehicle _unit != _unit) exitWith {
 				_bad = false;
 				call {
-					if !(typeof (vehicle _unit) in AIT_allVehicles) exitWith {
+					if !(typeof (vehicle _unit) in (AIT_allVehicles+AIT_allBoats)) exitWith {
 						_bad = true; //They are driving or in a non-civilian vehicle including statics
 					};
 					//Check if unit is turned out and showing a weapon						
@@ -157,7 +157,7 @@ while {alive _unit} do {
 								if(typeOf _x in AIT_staticMachineGuns) exitWith {_bad = true};
 							}foreach(attachedObjects _unit);
 						};
-						if !(typeof (vehicle _unit) in AIT_allVehicles) exitWith {
+						if !(typeof (vehicle _unit) in (AIT_allVehicles+AIT_allBoats)) exitWith {
 							_bad = true; //They are driving or in a non-civilian vehicle including statics
 						};
 						//Check if unit is turned out and showing a weapon						

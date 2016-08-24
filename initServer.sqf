@@ -19,6 +19,7 @@ waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "initEconomyLoad.sqf";
 
 [] execVM "factions\NATO.sqf";
+[] execVM "factions\GUER.sqf";
 [] execVM "factions\CRIM.sqf";  
 waitUntil {!isNil "AIT_NATOInitDone"};
 waitUntil {!isNil "AIT_CRIMInitDone"};  
@@ -40,6 +41,7 @@ if(AIT_hasAce) then {
 };
 
 addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];
+addMissionEventHandler ["HandleConnnect",compile preprocessFileLineNumbers "events\playerConnect.sqf"];
 
 ["Initialize"] call BIS_fnc_dynamicGroups;
 

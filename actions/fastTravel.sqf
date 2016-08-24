@@ -17,7 +17,7 @@ if !(visibleMap) exitWith {};
 
 _handled = false;
 
-if(posTravel distance player < 250) then {
+if(posTravel distance player < 250) exitWith {
 	"You cannot fast travel less than 250m. Just walk!" call notify_minor;
 	openMap false;
 };
@@ -41,7 +41,7 @@ if([posTravel,"Misc"] call canPlace) then {
 			};
 			{_x allowDamage false} foreach(crew vehicle player);					
 			_road = _roads select 0;
-			_pos = position _road findEmptyPosition [1,50,typeOf (vehicle player)];
+			_pos = position _road findEmptyPosition [1,120,typeOf (vehicle player)];
 			vehicle player setPos _pos;
 		};				
 	}else{

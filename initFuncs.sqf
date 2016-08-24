@@ -43,6 +43,7 @@ initCriminal = compileFinal preProcessFileLineNumbers "AI\criminal.sqf";
 initCrimLeader = compileFinal preProcessFileLineNumbers "AI\crimLeader.sqf";
 initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
 initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
+initHarbor = compileFinal preProcessFileLineNumbers "AI\harbor.sqf";
 initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
 civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
 initRecruit = compileFinal preProcessFileLineNumbers "AI\recruit.sqf";
@@ -82,7 +83,8 @@ logistics = compileFinal preProcessFileLineNumbers "spawners\insertion\logistics
 //Local interactions
 initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
 initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarShopLocal.sqf";
-initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
+initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";\
+initHarborLocal = compileFinal preProcessFileLineNumbers "interaction\initHarborLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 
 //Economy
@@ -159,6 +161,20 @@ standing = {
     };
     format["Standing (%3): %1%2<br/>Standing (Tanoa): %4%5",_plusmin,_rep,_town,_plusmintotal,_totalrep] call notify_minor;
     
+};
+
+rewardMoney = {
+	_who = _this select 0;
+	_amount = _this select 1;
+	if(_who call hasOwner) then {
+		_owner = missionNamespace getVariable[_who getVariable ["owner",""],objNull];
+		if !(isNull _owner) then {
+			_who = _owner;
+		};
+	};
+	if(isPlayer _who) then {
+		[_amount] remoteExec ["money",_who,false];
+	};
 };
 
 money = {
@@ -242,6 +258,43 @@ notify_talk = {
 };
 
 [] execVM "funcs\info.sqf";
+
+fn_MovingTarget =
+{
+	private ["_target","_distance","_speed","_dir"];
+	_target = _this select 0;
+	_dir = _this select 1;
+	_distance = _this select 2;
+	_speed = _this select 3;
+	_pause = _this select 4;
+	
+	
+	while {true} do
+	{
+		sleep _pause;
+		for "_i" from 0 to _distance/_speed do
+		{
+			_target setPos 
+			[
+				(position _target select 0) + ((sin (_dir)))*_speed,
+				(position _target select 1) + ((cos (_dir)))*_speed,
+				0
+			];
+			sleep 0.01;
+		};
+		sleep _pause;
+		for "_i" from 0 to _distance/_speed do
+		{
+			_target setPos 
+			[
+				(position _target select 0) - (sin (_dir))*_speed,
+				(position _target select 1) - ((cos (_dir)))*_speed,
+				0
+			];
+			sleep 0.01;
+		};
+	};
+};
 
 fnc_isInMarker = {
     private ["_p","_m", "_px", "_py", "_mpx", "_mpy", "_msx", "_msy", "_rpx", "_rpy", "_xmin", "_xmax", "_ymin", "_ymax", "_ma", "_res", "_ret"];

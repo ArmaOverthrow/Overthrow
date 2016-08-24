@@ -5,7 +5,6 @@ _cls = _this select 1;
 _standing = _this select 2;
 _price = 0;
 
-
 if(_cls in (AIT_allWeapons + AIT_allMagazines + AIT_illegalItems)) then {
 	_stock = server getVariable format["gunstock%1",_town];
 	{

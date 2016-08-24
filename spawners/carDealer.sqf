@@ -8,33 +8,36 @@ _posTown = server getVariable _town;
 
 _shopkeeper = objNULL;
 
-_groups = [];
 
-{
-	_building = _x;
+_group = createGroup civilian;	
+_group setBehaviour "CARELESS";
+_groups = [_group];
+{	
+	_building = _x;		
 	_pos = getpos _building;
-	_tracked = _building call spawnTemplate;
-	sleep 1;
-	_vehs = _tracked select 0;
-	[_groups,_vehs] call BIS_fnc_arrayPushStack;
-	
-	_cashdesk = _pos nearestObject AIT_item_ShopRegister;
-	_cashpos = [getpos _cashdesk,1,getDir _cashdesk] call BIS_fnc_relPos;
-	_pos = [[[_cashpos,50]]] call BIS_fnc_randomPos;
-	
-	_group = createGroup civilian;	
-	_group setBehaviour "CARELESS";
-	_shopkeeper = _group createUnit [AIT_civType_carDealer, _pos, [],0, "NONE"];					
+	_t = _pos call nearestTown;
+	if(_t == _town) then {
+		_tracked = _building call spawnTemplate;
+		sleep 0.2;
+		_vehs = _tracked select 0;
+		[_groups,_vehs] call BIS_fnc_arrayPushStack;
+		
+		_cashdesk = _pos nearestObject AIT_item_ShopRegister;
+		_dir = getDir _cashdesk;
+		_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;		
+		
+		_shopkeeper = _group createUnit [AIT_civType_carDealer, _cashpos, [],0, "NONE"];
+		_shopkeeper disableAI "MOVE";
+		_shopkeeper disableAI "AUTOCOMBAT";
+		_shopkeeper setVariable ["NOAI",true,false];
 
+		_shopkeeper setDir (_dir-180);			
 
-	_wp = _group addWaypoint [_cashpos,2];
-	_wp setWaypointType "MOVE";
-	_wp setWaypointSpeed "LIMITED";				
-
-	_shopkeeper remoteExec ["initCarShopLocal",0,true];
-	[_shopkeeper] call initCarDealer;
-	_shopkeeper setVariable ["carshop",true,true];
-}foreach(nearestObjects [_posTown,AIT_carShops, 400]);
+		_shopkeeper remoteExec ["initCarShopLocal",0,true];
+		[_shopkeeper] call initCarDealer;
+		_shopkeeper setVariable ["carshop",true,true];
+	};
+}foreach(nearestObjects [_posTown,AIT_carShops, 700]);
 		
 		
 _groups

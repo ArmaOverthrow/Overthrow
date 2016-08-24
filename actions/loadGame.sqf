@@ -44,6 +44,7 @@ if(typename _data != "ARRAY") exitWith {
 				if(count _x > 5) then {
 					_name = _x select 5;
 				};
+				
 				_veh = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
 				_veh setDir _dir;
 				clearWeaponCargoGlobal _veh;
@@ -70,6 +71,13 @@ if(typename _data != "ARRAY") exitWith {
 						};
 					};				
 				}foreach(_stock);
+				
+				if(count _x > 6) then {
+					_code = (_x select 6);
+					if(_code != "") then {
+						[_veh] execVM _code;
+					};
+				};
 			};
 		}foreach(_val);
 	};

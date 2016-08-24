@@ -34,6 +34,11 @@ while{true} do {
 			_vehs = [_start,_dir,template_checkpoint] call BIS_fnc_objectsMapper;
 						
 			_numNATO = server getVariable format["garrison%1",_name];
+			if(isNil "_numNATO") then {
+				//New checkpoint was added to game
+				_numNATO = 4 + (random 4);
+				server setVariable [format["garrison%1",_name],_numNATO,true];
+			};
 			
 			_count = 0;
 			_range = 100;

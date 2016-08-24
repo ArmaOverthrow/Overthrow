@@ -17,7 +17,7 @@ _shopkeeper addAction ["Buy", {
 	createDialog "AIT_dialog_buy";
 	[_town,_standing,_s] call buyDialog;
 	
-},_shopkeeper,1.5,false,true,"","",5];
+},_shopkeeper,1.5,false,true,"","alive _target",5];
 
 _shopkeeper addAction ["Sell", {
 	_civ = _this select 0;	
@@ -38,7 +38,7 @@ _shopkeeper addAction ["Sell", {
 	createDialog "AIT_dialog_sell";
 	[_playerstock,_town,_standing,_s] call sellDialog;
 	
-},_shopkeeper,1.5,false,true,"","",5];
+},_shopkeeper,1.5,false,true,"","alive _target",5];
 
 _shopkeeper addAction ["Ask about weapons", {
 	_me = _this select 3;
@@ -78,4 +78,4 @@ _shopkeeper addAction ["Ask about weapons", {
 			}
 		};		
 	};
-},_shopkeeper,1.5,false,true,"","",5];
+},_shopkeeper,1.5,false,true,"","alive _target",5];

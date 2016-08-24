@@ -21,7 +21,7 @@ AIT_flag_CRIM = "Flag_Syndikat_F";
 
 AIT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck_F","Land_Wreck_Car2_F","Land_Wreck_Car_F","Land_Wreck_Hunter_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad2_F","Land_Wreck_UAZ_F","Land_Wreck_Truck_dropside_F"]; //rekt
 
-AIT_spawnTowns = ["Balavu","Rautake","Tavu","Yanukka","Tobakoro","Bua Bua","Saioko","Doodstil","Harcourt","Lijnhaven","Moddergat"]; //Towns where new players will spawn
+AIT_spawnTowns = ["Balavu","Rautake","Namuvaka","Laikoro","Tavu","Muaceba","Leqa"]; //Towns where new players will spawn
 AIT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
 AIT_NATOwait = 200; //Half the Average time between NATO orders
@@ -41,14 +41,15 @@ AIT_Placeables = [
 	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2]],
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2]],
 	["Misc",30,[AIT_item_Map,AIT_item_Repair,"Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"],[0,2,1.2]],
-	["Deploy",500,["C_Rubberboat","I_HMG_01_high_F","I_HMG_01_F"],[0,2.3,2]]
+	["Deploy",500,["B_Boat_Transport_01_F","I_HMG_01_high_F","I_HMG_01_F"],[0,2.3,2]]
 ];
 
 AIT_Buildables_Base = [
 	["Training Camp",1500,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],
 	["Bunkers",500,["Land_BagBunker_01_small_green_F","Land_HBarrier_01_big_tower_green_F","Land_HBarrier_01_tower_green_F"],"",false,"Small Defensive Structures. Press space to change type."],
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
-	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"]
+	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"],
+	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"]
 ];
 
 AIT_voices_local = ["Male01FRE","Male02FRE","Male03FRE"];
@@ -84,7 +85,8 @@ if(AIT_hasAce) then {
 	AIT_illegalItems = [];
 };
 
-
+AIT_item_UAV = "I_UAV_01_F";
+AIT_item_UAVterminal = "I_UavTerminal";
 
 AIT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
@@ -97,6 +99,7 @@ AIT_clothes_tourists = [];
 AIT_clothes_port = "U_Marshal";
 AIT_clothes_shops = ["U_C_Man_casual_2_F","U_C_Man_casual_3_F","U_C_Man_casual_1_F"];
 AIT_clothes_carDealers = ["CUP_U_C_Mechanic_01","CUP_U_C_Mechanic_02","CUP_U_C_Mechanic_03"];
+AIT_clothes_harbor = ["U_C_man_sport_1_F","U_C_man_sport_2_F","U_C_man_sport_3_F"];
 AIT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
 AIT_clothes_mob = "U_I_C_Soldier_Camo_F";
 
@@ -104,7 +107,7 @@ AIT_clothes_mob = "U_I_C_Soldier_Camo_F";
 AIT_NATOregion = "island_5"; //where NATO lives
 AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port","fuel depot","railway depot"]; //NameLocal/Airport place names to definitely occupy with military personnel
 AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
-AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6","control_7","control_8","control_9","control_10","control_11","control_12","control_13","control_14","control_15","control_16","control_17"]; //NATO checkpoints, create markers in editor
+AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6","control_7","control_8","control_9","control_10","control_11","control_12","control_13","control_14","control_15","control_16","control_17","control_18"]; //NATO checkpoints, create markers in editor
 AIT_NATO_HQ = "Tuvanaka Airbase";
 AIT_NATO_AirSpawn = "NATO_airspawn";
 AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
@@ -225,6 +228,11 @@ AIT_backpacks = [
 	["B_Bergen_dgtl_F",100,0,0,1],
 	["B_Bergen_hex_F",100,0,0,1]
 ];
+AIT_boats = [
+	["C_Scooter_Transport_01_F",150,1,0,1],	
+	["C_Boat_Civil_01_rescue_F",300,1,1,1],
+	["C_Boat_Transport_02_F",600,1,0,1]
+];
 AIT_vehicles = [	
 	["CUP_C_Skoda_Blue_CIV",30,1,1,1],
 	["CUP_C_Skoda_Green_CIV",30,1,1,1],
@@ -239,46 +247,31 @@ AIT_vehicles = [
 	["CUP_C_Golf4_white_Civ",200,1,1,1],
 	["CUP_C_Golf4_yellow_Civ",200,1,1,1],
 	["CUP_C_Octavia_CIV",300,1,1,1],
-	["C_SUV_01_F",500,1,1,1],
-	["C_Offroad_01_F",600,1,1,1],
-	["C_Offroad_02_unarmed_F",800,1,1,1],
-	["C_Van_01_transport_F",1000,1,1,1],
-	["C_Van_01_box_F",1000,1,1,1],
-	["C_Truck_02_transport_F",1500,1,1,1],
-	["C_Truck_02_covered_F",1500,1,1,1],
+	["C_SUV_01_F",400,1,1,1],
+	["C_Offroad_01_F",500,1,1,1],
+	["C_Offroad_02_unarmed_F",600,1,1,1],
+	["C_Van_01_transport_F",700,1,1,1],
+	["C_Van_01_box_F",800,1,1,1],
+	["C_Truck_02_transport_F",1000,1,1,1],
+	["C_Truck_02_covered_F",1000,1,1,1],
 	["C_Truck_02_fuel_F",2000,1,1,1],
-	["C_Truck_02_box_F",2500,1,1,1]
+	["C_Truck_02_box_F",1500,1,1,1]
 ];
 
-AIT_allVehicles = ["C_Rubberboat"];
+AIT_allVehicles = [];
+AIT_allBoats = ["B_Boat_Transport_01_F"];
 AIT_allItems = [];
 AIT_allWeapons = [];
 AIT_allMagazines = [];
 AIT_allBackpacks = [];
 
-_allPrimaryWeapons = "
+_allWeapons = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
-    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""
-    &&
-    { getNumber ( _x >> ""type"" ) isEqualTo 1 } } )
+    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""})
 " configClasses ( configFile >> "cfgWeapons" );
 
-_allHandGuns = "
-    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
-    &&
-    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""
-    &&
-    { getNumber ( _x >> ""type"" ) isEqualTo 2 } } )
-" configClasses ( configFile >> "cfgWeapons" );
 
-_allLaunchers = "
-    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
-    &&
-    { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""
-    &&
-    { getNumber ( _x >> ""type"" ) isEqualTo 4 } } )
-" configClasses ( configFile >> "cfgWeapons" );
 
 AIT_allSubMachineGuns = [];
 AIT_allAssaultRifles = [];
@@ -288,6 +281,9 @@ AIT_allHandGuns = [];
 AIT_allMissileLaunchers = [];
 AIT_allRocketLaunchers = [];
 AIT_allExpensiveRifles = [];
+AIT_allVests = [];
+AIT_allProtectiveVests = [];
+AIT_allExpensiveVests = [];
 
 {
 	_name = configName _x;
@@ -348,27 +344,53 @@ AIT_allExpensiveRifles = [];
 		case "Handgun": {_cost = 100;AIT_allHandGuns pushBack _name};
 		case "MissileLauncher": {_cost=2500;AIT_allMissileLaunchers pushBack _name};
 		case "RocketLauncher": {_cost = 1500;AIT_allRocketLaunchers pushBack _name};
+		case "Vest": {
+			if !(_name in (AIT_illegalVests + ["V_RebreatherB","V_RebreatherIA","V_RebreatherIR","V_Rangemaster_belt"])) then {
+				_cost = 80 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 50);				
+				AIT_allVests pushBack _name;
+				if(_cost > 80) then {
+					AIT_allProtectiveVests pushback _name;
+				};
+				if(_cost > 900) then {
+					AIT_allExpensiveVests pushback _name;
+				};
+			};
+		};
 	};		
 	cost setVariable [_name,[_cost,1,0,1],true];
-} foreach (_allPrimaryWeapons + _allHandGuns + _allLaunchers);
+} foreach (_allWeapons);
 
 AIT_allWeapons = AIT_allSubMachineGuns + AIT_allAssaultRifles + AIT_allMachineGuns + AIT_allSniperRifles + AIT_allHandGuns + AIT_allMissileLaunchers + AIT_allRocketLaunchers;
 
-cost setVariable ["CIV",[50,0,0,0],true];
-
+if(isServer) then {
+	cost setVariable ["CIV",[35,0,0,0],true];
+	cost setVariable [AIT_item_UAV,[200,0,0,1],true];
+};
 //populate the cost gamelogic with the above data so it can be accessed quickly
 {
-	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	if(isServer) then {
+		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	};
 	AIT_allItems pushBack (_x select 0);
 }foreach(AIT_items);
 {
-	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	if(isServer) then {
+		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	};
 	AIT_allBackpacks pushBack (_x select 0);
 }foreach(AIT_backpacks);
 {
-	cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	if(isServer) then {
+		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	};
 	AIT_allVehicles pushBack (_x select 0);
 }foreach(AIT_vehicles);
+{
+	if(isServer) then {
+		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	};
+	AIT_allBoats pushBack (_x select 0);
+}foreach(AIT_boats);
 
 AIT_regions = ["island_1","island_2","island_3","island_4","island_5","island_6","island_7"]; //for both economic and travel purposes. define rectangles in eden
 AIT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu","Ipota"]; //region capitals
@@ -380,19 +402,21 @@ AIT_gunDealerHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Big_02_F","
 
 AIT_crimHouses = AIT_spawnHouses + AIT_gunDealerHouses + AIT_mansions;
 
-AIT_lowPopHouses = ["Land_House_Native_02_F","Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_Slum_01_F","Land_Slum_02_F","Land_GarageShelter_01_F","Land_Slum_04_F"]; //buildings with just 1-4 people living in them (also player start houses)
+AIT_lowPopHouses = AIT_spawnHouses + ["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"]; //buildings with just 1-4 people living in them (also player start houses)
 AIT_medPopHouses = ["Land_House_Small_04_F","Land_House_Native_01_F","Land_House_Big_01_F","Land_Slum_05_F","Land_House_Small_01_F","Land_Slum_03_F","Land_Slum_04_F","Land_House_Small_05_F","Land_Addon_04_F"]; //buildings with 5-10 people living in them
 AIT_highPopHouses = ["Land_House_Big_04_F","Land_Warehouse_01_F"]; //buildings with up to 20 (the warehouses are because ports end up with low pop)
 AIT_hugePopHouses = ["Land_MultistoryBuilding_03_F"]; //buildings with potentially lots of people living in them
 AIT_touristHouses = ["Land_House_Big_05_F"]; //hostels and the like
 AIT_allShops = ["Land_Shop_Town_01_F","Land_Shop_Town_02_F","Land_Shop_Town_03_F","Land_Shop_Town_04_F","Land_Shop_Town_05_F","Land_Shop_City_01_F","Land_Shop_City_02_F","Land_Shop_City_03_F","Land_Shop_City_04_F","Land_Shop_City_05_F","Land_Shop_City_06_F","Land_Shop_City_07_F"]; //used to calculate civ spawn positions and initial stability
 AIT_markets = []; //buildings/objects that will spawn local markets (no templates required)
-AIT_shops = ["Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Shop_City_02_F","Land_Supermarket_01_F"]; //buildings that will spawn the main shops (must have a template with a cash register)
+AIT_shops = ["Land_FuelStation_01_shop_F","Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Shop_City_02_F","Land_Supermarket_01_F"]; //buildings that will spawn the main shops (must have a template with a cash register)
 AIT_warehouses = ["Land_Warehouse_03_F"]; //buildings that will spawn local distribution centers
 AIT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F"]; //buildings that will spawn car salesmen (must have a template with a cash register)
+AIT_piers = ["Land_PierConcrete_01_steps_F","Land_PierWooden_01_platform_F","Land_PierConcrete_01_end_F","Land_PierWooden_01_hut_F"]; //spawns dudes that sell boats n stuff
 AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"]; 
 AIT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 AIT_airportTerminal = "Land_Airport_01_terminal_F";
+AIT_portBuilding = "Land_Warehouse_02_F";
 
 AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_mansions + [AIT_item_Tent,AIT_item_Flag];
 

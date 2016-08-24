@@ -123,6 +123,7 @@ sleep 5;
 
 while {true} do {	
 	_abandoned = server getVariable "NATOabandoned";
+	_garrisoned = false;
 	{		
 		_town = _x;
 		_townPos = server getVariable _town;
@@ -138,14 +139,16 @@ while {true} do {
 			};
 			_need = _garrison - _current;
 			if(_need < 0) then {_need = 0};
-			if(_need > 1) then {				
+			if(_need > 1) then {
+				_garrisoned = true;
 				server setVariable [format ["garrisonadd%1",_x], 2,false];
 				server setVariable [format ["garrison%1",_x],_current+2,true];
 			};			
 		}else{
 			server setVariable [format ["garrison%1",_town],0,true];
 			if(!(_town in _abandoned)) then {
-				_town spawn NATOattack;				
+				_town spawn NATOattack;
+				_garrisoned = true;
 				_abandoned pushback _town;
 				server setVariable ["NATOabandoned",_abandoned,true];
 			}else{
@@ -157,24 +160,29 @@ while {true} do {
 				};
 			};
 		};
+		if(_garrisoned) exitWith {}; //only send one garrison per turn
 		sleep 0.1;
 	}foreach (AIT_allTowns);
 	
-	{
-		_pos = _x select 0;
-		_name = _x select 1;
-		if !(_name in _abandoned) then {	
-			_garrison = server getvariable format["garrison%1",_name];
-			_vehgarrison = server getvariable format["vehgarrison%1",_name];
-			
-			if(_garrison == 0) then {
-				_name spawn NATOcounter;				
-				_abandoned pushback _name;
-				server setVariable ["NATOabandoned",_abandoned,true];
-				_name setMarkerAlpha 1;				
+	if !(_garrisoned) then {
+		{
+			_pos = _x select 0;
+			_name = _x select 1;
+			if !(_name in _abandoned) then {	
+				_garrison = server getvariable format["garrison%1",_name];
+				_vehgarrison = server getvariable format["vehgarrison%1",_name];
+				
+				if(_garrison == 0) then {
+					_garrisoned = true;
+					_name spawn NATOcounter;				
+					_abandoned pushback _name;
+					server setVariable ["NATOabandoned",_abandoned,true];
+					_name setMarkerAlpha 1;				
+				};
 			};
-		}
-	}foreach(AIT_NATOobjectives);
+			if(_garrisoned) exitWith {};
+		}foreach(AIT_NATOobjectives);
+	};
 	
 	{
 		if(side _x == west and count (units _x) == 0) then {

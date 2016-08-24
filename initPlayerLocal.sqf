@@ -102,6 +102,7 @@ if(isMultiplayer or _startup == "LOAD") then {
             if(_owner == (getplayeruid player)) then {                          
                 if(typename _civ == "ARRAY") then {
                     _civ =  group player createUnit [_type,_civ,[],0,"NONE"];
+					_civ setVariable ["owner",getplayeruid player,true];
                     _civ setFace (AIT_faces_local call BIS_fnc_selectRandom);
                     _civ setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
                     _civ setUnitLoadout _loadout;
@@ -127,6 +128,9 @@ if(isMultiplayer or _startup == "LOAD") then {
 		};
 		if(_x getVariable ["carshop",false]) then {
 			_x call initCarShopLocal;
+		};
+		if(_x getVariable ["harbor",false]) then {
+			_x call initHarborLocal;
 		};
 	}foreach(allUnits);
 };
