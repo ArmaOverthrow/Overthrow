@@ -103,8 +103,8 @@ if(isMultiplayer or _startup == "LOAD") then {
                 if(typename _civ == "ARRAY") then {
                     _civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 					_civ setVariable ["owner",getplayeruid player,true];
-                    _civ setFace (AIT_faces_local call BIS_fnc_selectRandom);
-                    _civ setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+					[_civ, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
+					[_civ, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
                     _civ setUnitLoadout _loadout;
                     _civ spawn wantedSystem;
                     _civ setName _name;
@@ -246,6 +246,43 @@ if (isMultiplayer) then {
     ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
     ["InitializeGroup", [player,playerSide,true]] call BIS_fnc_dynamicGroups;
 };
+
+player addEventHandler ["WeaponAssembled",{
+	_me = _this select 0;
+	_wpn = _this select 1;
+	if(typeof _wpn in AIT_staticMachineGuns) then {
+		_wpn addAction ["Rearm",{		
+			_w = _this select 0;
+			_p = _this select 1;
+			if(_p call unitSeen) then {
+				_p setCaptive false;
+			};
+			_ammocount = {_x == AIT_ammo_50cal} count (magazineCargo _p);
+			if(_ammocount >= 4) then {
+				disableUserInput true;
+				_p removeMagazineGlobal AIT_ammo_50cal;
+				_p removeMagazineGlobal AIT_ammo_50cal;
+				_p removeMagazineGlobal AIT_ammo_50cal;
+				_p removeMagazineGlobal AIT_ammo_50cal;
+				_w spawn {					
+					"Rearming MG..." call notify_minor;
+					[15,false] call progressBar;
+					sleep 15;
+					[_this,1] remoteExec ["setVehicleAmmoDef",_this];
+					"MG rearmed" call notify_minor;
+					disableUserInput false;
+				};				
+			}else{
+				"You need 4 x 12.7mm M2 HMG Belts to rearm this MG" call notify_minor;
+			};			
+		},_civ,1.5,false,true,"","(alive _target) and !(someAmmo _target)",5];
+	};
+	if(typeof _wpn in AIT_staticWeapons) then {
+		if(_me call unitSeen) then {
+			_me setCaptive false;
+		};
+	};
+}];
 
 [] spawn setupKeyHandler;
 [] execVM "intelSystem.sqf";

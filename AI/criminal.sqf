@@ -14,8 +14,8 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
-_unit setFace (AIT_faces_local call BIS_fnc_selectRandom);
-_unit setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+[_unit, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
 _unit forceAddUniform (AIT_CRIM_Clothes call BIS_fnc_selectRandom);
 
 removeAllItems _unit;

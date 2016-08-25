@@ -154,7 +154,7 @@ while {alive _unit} do {
 					call {
 						if(count attachedObjects _unit > 0) exitWith {
 							{
-								if(typeOf _x in AIT_staticMachineGuns) exitWith {_bad = true};
+								if(typeOf _x in AIT_staticWeapons) exitWith {_bad = true};
 							}foreach(attachedObjects _unit);
 						};
 						if !(typeof (vehicle _unit) in (AIT_allVehicles+AIT_allBoats)) exitWith {

@@ -30,6 +30,7 @@ displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sq
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
 canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
+progressBar = compileFinal preProcessFileLineNumbers "funcs\progressBar.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";

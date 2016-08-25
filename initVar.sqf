@@ -91,7 +91,8 @@ AIT_item_UAVterminal = "I_UavTerminal";
 AIT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 AIT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
 
-AIT_staticMachineGuns = ["B_HMG_01_F","B_HMG_01_high_F","I_HMG_01_high_F","I_HMG_01_F"];
+AIT_staticMachineGuns = ["I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
+AIT_staticWeapons = ["I_Mortar_01_F","I_static_AA_F","I_static_AT_F","I_GMG_01_F","I_GMG_01_high_F","I_GMG_01_A_F","I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_static_AA_F","O_static_AT_F","O_Mortar_01_F","O_GMG_01_F","O_GMG_01_high_F","O_GMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_static_AA_F","B_static_AT_F","B_Mortar_01_F","B_GMG_01_F","B_GMG_01_high_F","B_GMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
 
 AIT_clothes_locals = ["CUP_U_I_GUE_Anorak_01","CUP_U_I_GUE_Anorak_02","CUP_U_I_GUE_Anorak_03","U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
 AIT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
@@ -102,6 +103,8 @@ AIT_clothes_carDealers = ["CUP_U_C_Mechanic_01","CUP_U_C_Mechanic_02","CUP_U_C_M
 AIT_clothes_harbor = ["U_C_man_sport_1_F","U_C_man_sport_2_F","U_C_man_sport_3_F"];
 AIT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
 AIT_clothes_mob = "U_I_C_Soldier_Camo_F";
+
+AIT_ammo_50cal = "100Rnd_127x99_mag";
 
 //NATO stuff
 AIT_NATOregion = "island_5"; //where NATO lives
@@ -211,6 +214,18 @@ if(AIT_hasAce) then {
 	["ItemRadio",20,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 
+AIT_staticBackpacks = [
+	["I_HMG_01_high_weapon_F",500,1,0,1],	
+	["I_GMG_01_high_weapon_F",1000,1,0,1],
+	["I_HMG_01_support_high_F",50,1,0,0],
+	["I_HMG_01_weapon_F",500,1,0,1],
+	["I_HMG_01_support_F",50,1,0,0],
+	["I_Mortar_01_weapon_F",1500,1,0,1],
+	["I_Mortar_01_support_F",100,1,0,0],	
+	["I_HMG_01_A_weapon_F",2500,1,0,1],
+	["I_GMG_01_A_weapon_F",4000,1,01]
+];
+
 AIT_backpacks = [
 	["B_AssaultPack_cbr",30,0,0,1],
 	["B_AssaultPack_blk",30,0,0,1],
@@ -262,8 +277,9 @@ AIT_allVehicles = [];
 AIT_allBoats = ["B_Boat_Transport_01_F"];
 AIT_allItems = [];
 AIT_allWeapons = [];
-AIT_allMagazines = [];
+AIT_allMagazines = [AIT_ammo_50cal];
 AIT_allBackpacks = [];
+AIT_allStaticBackpacks = [];
 
 _allWeapons = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
@@ -379,6 +395,12 @@ if(isServer) then {
 	};
 	AIT_allBackpacks pushBack (_x select 0);
 }foreach(AIT_backpacks);
+{
+	if(isServer) then {
+		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	};
+	AIT_allStaticBackpacks pushBack (_x select 0);
+}foreach(AIT_staticBackpacks);
 {
 	if(isServer) then {
 		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];

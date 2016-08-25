@@ -46,8 +46,8 @@ ISSE_Cfg_MagazineInfo = {
         ""
     };
 	
-    _DescLong  = if (isText(_cfg >> "Library" >> "libTextDesc")) then {
-        getText(_cfg >> "Library" >>"libTextDesc")
+    _DescLong  = if (isText(_cfg >> "descriptionShort")) then {
+        getText(_cfg >> "descriptionShort")
     }
     else {
         ""

@@ -1,6 +1,3 @@
-if(AIT_fastTime) then {
-    setTimeMultiplier 4;
-};
 [] execVM "weather.sqf";
 [] execVM "income.sqf";
 
@@ -14,6 +11,10 @@ if (!isMultiplayer) exitWith {};
 
 call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
+
+if(AIT_fastTime) then {
+    setTimeMultiplier 4;
+};
 
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "initEconomyLoad.sqf";

@@ -22,37 +22,45 @@ _civ addAction ["Buy", {
 				
 				_base = [_type] call BIS_fnc_baseWeapon;
 				_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
-				_cost = 2;
+				_price = 2;
 				if(_type in AIT_allSubMachineGuns) then {
-					_cost = 3;
+					_price = 3;
 				};
 				if(_type in AIT_allAssaultRifles) then {
-					_cost = 5;
+					_price = 5;
 					if((_cost select 0) > 1400) then {
-						_cost = 10;
+						_price = 10;
 					};
 				};
 				if(_type in AIT_allMachineGuns) then {
-					_cost = 12;
+					_price = 12;
 				};
 				if(_type in AIT_allSniperRifles) then {
-					_cost = 20;
+					_price = 20;
 				};
 				if(_type in AIT_allRocketLaunchers) then {
-					_cost = 50;
+					_price = 50;
 				};
 				if(_type in AIT_allMissileLaunchers) then {
-					_cost = 100;
+					_price = 100;
 				};				
-				_stock pushBack [_magazines call BIS_fnc_selectRandom,_cost];				
+				_stock pushBack [_magazines call BIS_fnc_selectRandom,_price];				
 			};
 		};
 		server setVariable [format["gunstock%1",_town],_stock,true];
 		
+		_stock pushback [AIT_ammo_50cal,25];
+		
+		{			
+			_cost = cost getVariable _x;
+			_price = _cost select 0;
+			_stock pushBack [_x,_price];
+		}foreach(AIT_allStaticBackpacks);
+		
 		{			
 			_price = round(50 * ((random 1) + 1));
 			_stock pushBack [_x,_price];
-		}foreach(AIT_illegalItems);
+		}foreach(AIT_illegalItems);		
 	};
 	
 	createDialog "AIT_dialog_buy";
@@ -62,17 +70,22 @@ _civ addAction ["Buy", {
 		_txt = _cls;
 		_pic = "";
 		
-		if(_cls in AIT_allMagazines) then {	
-			_txt = format["--- %1",_cls call ISSE_Cfg_Magazine_GetName];			
-			_pic = _cls call ISSE_Cfg_Magazine_GetPic;
-		}else{
+		call {
+			if(_cls in AIT_allMagazines) exitWith {	
+				_txt = format["--- %1",_cls call ISSE_Cfg_Magazine_GetName];			
+				_pic = _cls call ISSE_Cfg_Magazine_GetPic;
+			};
+			if(_cls in AIT_allStaticBackpacks) exitWith {	
+				_txt = format["--- %1",_cls call ISSE_Cfg_Vehicle_GetName];			
+				_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+			};			
 			_txt = _cls call ISSE_Cfg_Weapons_GetName;	
-			_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+			_pic = _cls call ISSE_Cfg_Weapons_GetPic;			
 		};
 		_idx = lbAdd [1500,format["%1",_txt]];
 		lbSetData [1500,_idx,_cls];
 		lbSetValue [1500,_idx,_price];
 		lbSetPicture [1500,_idx,_pic];
 	}foreach(_stock);
-	
+
 },nil,1.5,true,true,"","alive _target",5];

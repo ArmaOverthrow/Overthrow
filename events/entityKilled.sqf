@@ -5,16 +5,7 @@ _killer = _this select 1;
 _killer setVariable ["lastkill",time,true];
 _town = (getpos _me) call nearestTown;
 
-if(isPlayer _me) exitWith {	
-	_myuid = getPlayerUID _me;
-	_me setVariable ["spawntrack",true,false]; //Tells the spawner to consider this dead body within spawn distance
-	{
-		_uid = _x getVariable "player_uid";
-		if(_uid == _myuid and _x != _me) then {
-			deleteVehicle _x;
-		};
-	}foreach(allDeadMen);
-};
+if(isPlayer _me) exitWith {};
 
 _garrison = _me getvariable "garrison";
 _vehgarrison = _me getvariable "vehgarrison";

@@ -28,6 +28,7 @@ if !(_isbase) then {
 	_estate = _pos call getNearestRealEstate;
 	if(typename _estate == "ARRAY") then {
 		_b = _estate select 0;
+		if(typeof _b == AIT_item_Tent) exitWith {_canplace = false};
 		if(_b call hasOwner) then {
 			_owner = _b getVariable "owner";
 			if(_owner != getplayeruid player) then {

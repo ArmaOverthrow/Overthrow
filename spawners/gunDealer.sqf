@@ -33,4 +33,8 @@ _dealer remoteExec ["initGunDealerLocal",0,true];
 
 _dealer setVariable ["gundealer",true,true];
 
+{
+	_x addCuratorEditableObjects [[_dealer],true];
+} forEach allCurators;
+
 _groups

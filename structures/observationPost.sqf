@@ -11,8 +11,8 @@ _group setFormDir _dir;
 
 _posleft = [_pos,[[-1.5104,-0.4,4.34404], -(getDir _post)] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _civ =  _group createUnit ["I_Spotter_F",_posleft,[],0,"NONE"];
-_civ setFace (AIT_faces_local call BIS_fnc_selectRandom);
-_civ setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+[_civ, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
+[_civ, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];             
 _civ disableAI "MOVE";
 _civ disableAI "AUTOCOMBAT";
 _civ setVariable ["NOAI",true,false];
@@ -38,8 +38,8 @@ _civ linkItem "ItemRadio";
 
 _posright = [_pos,[[1.5104,-0.4,4.34404], -(getDir _post)] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _civ =  _group createUnit ["I_Spotter_F",_posright,[],0,"NONE"];
-_civ setFace (AIT_faces_local call BIS_fnc_selectRandom);
-_civ setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+[_civ, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
+[_civ, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];             
 _civ disableAI "MOVE";
 _civ disableAI "AUTOCOMBAT";
 _civ setVariable ["NOAI",true,false];

@@ -36,12 +36,12 @@ _vehtype = AIT_NATO_Vehicle_PoliceHeli;
 _drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
 _spawnpos = AIT_NATO_HQPos;	
 
-if(_stability < 25 and (random 100) > 50) then {
+if(_stability < 25 and (random 100) > 80) then {
 	//last ditch efforts to save this town
 	//send in the big guns
 	_vehtype = AIT_NATO_Vehicle_AirTransport;
 	_opendoor = true;
-	_num = 5 + round(random 6);
+	_num = 4 + round(random 4);
 	_count = 0;
 	while {_count < _num} do {
 		_start = [_spawnpos,[10,29],random 360] call SHK_pos;
@@ -55,7 +55,7 @@ if(_stability < 25 and (random 100) > 50) then {
 	};
 };
 
-if(_stability < 40 and (random 100) > 70) then {
+if(_stability < 40 and (random 100) > 90) then {
 	_townPos spawn CTRGsupport;
 };
 

@@ -43,9 +43,9 @@ while {_count < _numCiv} do {
 	_idd = _idd + 1;
 	
 	//Give this group a "home"
-	_home = [_posTown,AIT_allEnterableHouses] call getRandomBuilding;				
+	_home = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;			
 	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
-		_pos = [[[getpos _home,50]]] call BIS_fnc_randomPos;				
+		_pos = [[[_home,50]]] call BIS_fnc_randomPos;
 		
 		_civ = _group createUnit [AIT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";

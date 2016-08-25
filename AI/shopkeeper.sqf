@@ -9,8 +9,8 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
-_unit setFace (AIT_faces_local call BIS_fnc_selectRandom);
-_unit setSpeaker (AIT_voices_local call BIS_fnc_selectRandom);
+[_unit, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
 _unit forceAddUniform (AIT_clothes_shops call BIS_fnc_selectRandom);
 
 _unit setvariable ["owner","self"];

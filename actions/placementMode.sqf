@@ -23,7 +23,7 @@ if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost
 
 if !([getpos player,_typecls] call canPlace) exitWith {
 	call {
-		if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call notify_minor};
+		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call notify_minor};
 		if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
 		"You must be near a base, camp or owned structure" call notify_minor
 	};
@@ -192,7 +192,7 @@ if(_cost > 0) then {
 			call {
 				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call notify_minor};
 				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
-				"You must be near a base, camp or owned structure" call notify_minor
+				"You must be near a base or owned building" call notify_minor
 			};
 			detach modeTarget;
 			deleteVehicle modeTarget;
@@ -200,7 +200,7 @@ if(_cost > 0) then {
 	};	
 }else{
 	if(_typecls != "Camp" and _typecls != "Base") then {
-		"To place this item you must be near a base or a building/camp that you own" call notify_minor;
+		"To place this item you must be near a base or a building that you own" call notify_minor;
 	}else{
 		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call notify_minor;
 	};

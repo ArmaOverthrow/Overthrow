@@ -1,4 +1,4 @@
-({alive _x and (_this distance _x) < AIT_spawnDistance} count (allPlayers + (spawner getVariable ["track",[]])) > 0)
+({(alive _x or typename (_x getVariable ["player_uid",false]) == "STRING") and (_this distance _x) < AIT_spawnDistance} count (allPlayers + alldeadmen + (spawner getVariable ["track",[]])) > 0)
 /*
 //So zeus spawns, a'la ALiVE
 _zeus = getpos curatorCamera;

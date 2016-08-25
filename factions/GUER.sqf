@@ -10,6 +10,6 @@ while {true} do {
 			if(((side _x == resistance) or (_x call hasOwner)) and (alive _x) and (!isPlayer _x)) then {};
 		};	
 		sleep 0.01;
-	}foreach(allunits);
+	}foreach(allunits);	
 	spawner setVariable ["track",_track,false];
 };

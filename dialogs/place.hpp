@@ -52,8 +52,8 @@ class AIT_dialog_place
 
 	class controls
 	{
-				////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by Aaron Static, v1.063, #Jawatu)
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Jawatu)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
@@ -139,18 +139,7 @@ class AIT_dialog_place
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
 			tooltip = "Creates a fast travel destination for all friendlies, allows building of military structures"; //--- ToDo: Localize;
-		};
-		class RscButton_1607: RscButton
-		{
-			idc = 1607;
-			text = "Deploy"; //--- ToDo: Localize;
-			x = 0.422656 * safezoneW + safezoneX;
-			y = 0.687 * safezoneH + safezoneY;
-			w = 0.154687 * safezoneW;
-			h = 0.099 * safezoneH;
-			tooltip = "Deploy a static weapon or rubber boat"; //--- ToDo: Localize;
-			action = "closeDialog 0;'Deploy' spawn placementMode";
-		};
+		};		
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////

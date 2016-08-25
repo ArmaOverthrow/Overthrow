@@ -84,47 +84,38 @@ call {
 	};
 	if(_cls in AIT_allMagazines) exitWith {	
 		player setVariable ["money",_money-_price,true];
-		
-		_house = player getVariable "home";
-		_box = false;
-		{
-			_owner = _x getVariable "owner";
-			if(!isNil "_owner") then {
-				if(_owner == getplayerUID player) exitWith {_box = _x};				
-			};
-		}foreach(nearestObjects [getpos player, [AIT_item_Storage],1200]);
-		if(typename _box == "OBJECT") then {
-			_box addMagazineCargo [_cls,1];
-			"Delivered to your closest ammobox" call notify_minor;
-		}else{
-			player addMagazine _cls;
-		};	
+		player addMagazine _cls;		
 		playSound "3DEN_notificationDefault";
 	};
-	_b = player getVariable "shopping";
-	_bp = _b getVariable "shop";
-	
-	_s = [];
-	_active = server getVariable [format["activeshopsin%1",_town],[]];
-	{
-		_pos = _x select 0;
-		if(format["%1",_pos] == _bp) exitWith {
-			_s = _x select 1;
-		};
-	}foreach(_active);
-	
 	_handled = true;
-	if(_cls in AIT_allBackpacks) then {	
+	if(_cls in (AIT_allBackpacks + AIT_allStaticBackpacks)) then {	
 		if(backpack player != "") exitWith {"You already have a backpack" call notify_minor;_handled = false};
 	}else{
 		if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
 	};
-	if(_handled) then {
+		
+	if(_handled) then {	
 		playSound "3DEN_notificationDefault";
 		if (_cls in AIT_illegalItems) exitWith {
 			player setVariable ["money",_money-_price,true];
 			player addItem _cls;
 		};
+		if (_cls in AIT_allStaticBackpacks) exitWith {
+			player setVariable ["money",_money-_price,true];
+			player addBackpack _cls;
+		};
+		_b = player getVariable ["shopping",objNull];
+		_bp = _b getVariable "shop";
+		
+		_s = [];
+		_active = server getVariable [format["activeshopsin%1",_town],[]];
+		{
+			_pos = _x select 0;
+			if(format["%1",_pos] == _bp) exitWith {
+				_s = _x select 1;
+			};
+		}foreach(_active);
+	
 		_done = false;
 		_soldout = false;			
 		_stockidx = 0;
