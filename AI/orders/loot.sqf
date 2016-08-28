@@ -2,24 +2,22 @@ private ["_sorted","_target","_deadguys","_wasincar","_unit","_t","_got","_timeo
 
 _sorted = [];
 _myunits = groupSelectedUnits player;
-{
-    player groupSelectUnit [_x, false];
-} forEach (groupSelectedUnits player);
 
-if(vehicle player != player) then {
-	_sorted = [vehicle player];
+_tt = _myunits select 0;
+if(vehicle _tt != _tt) then {
+	_sorted = [vehicle _tt];
 }else{
-	_objects = player nearEntities [["LandVehicle",AIT_item_Storage],20];
+	_objects = _tt nearEntities [["LandVehicle",AIT_item_Storage],20];
 	if(count _objects == 0) exitWith {
-		"Cannot find any containers or vehicles within 20m of you" call notify_minor;
+		"Cannot find any containers or vehicles within 20m of first selected unit" call notify_minor;
 	};
-	_sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
+	_sorted = [_objects,[],{_x distance _tt},"ASCEND"] call BIS_fnc_SortBy;
 };
 
 if(count _sorted == 0) exitWith {};
 _target = _sorted select 0;
 
-format["Units will loot any dead bodies within 100m into this %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+_tt groupChat format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName];
 
 {
 	[_x,_target] spawn {	

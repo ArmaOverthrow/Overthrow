@@ -65,6 +65,7 @@ AIT_vehType_distro = "C_Van_01_box_F";
 
 AIT_activeDistribution = [];
 AIT_activeShops = [];
+AIT_selling = false;
 
 //Shop items
 AIT_item_ShopRegister = "Land_CashDesk_F";//Cash registers
@@ -266,6 +267,7 @@ AIT_vehicles = [
 	["C_Offroad_01_F",500,1,1,1],
 	["C_Offroad_02_unarmed_F",600,1,1,1],
 	["C_Van_01_transport_F",700,1,1,1],
+	["C_Van_01_fuel_F",900,1,1,1],
 	["C_Van_01_box_F",800,1,1,1],
 	["C_Truck_02_transport_F",1000,1,1,1],
 	["C_Truck_02_covered_F",1000,1,1,1],

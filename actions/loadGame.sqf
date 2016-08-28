@@ -45,7 +45,8 @@ if(typename _data != "ARRAY") exitWith {
 					_name = _x select 5;
 				};
 				
-				_veh = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
+				_veh = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
+				_veh setPos _pos;
 				_veh setDir _dir;
 				clearWeaponCargoGlobal _veh;
 				clearMagazineCargoGlobal _veh;
@@ -55,6 +56,10 @@ if(typename _data != "ARRAY") exitWith {
 				
 				if(_type == AIT_item_Map) then {
 					_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+				};
+				
+				if(_type in AIT_staticMachineGuns) then {		
+					_veh remoteExec["initStaticMGLocal",0,_veh];
 				};
 			
 				_veh setVariable ["owner",_owner,true];

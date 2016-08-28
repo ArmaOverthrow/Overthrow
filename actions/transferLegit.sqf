@@ -13,15 +13,15 @@ if(count _objects == 0) exitWith {
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
 
-"Please wait.. transferring legit cargo" call notify_minor;
-sleep 5;
+"Transferring legit cargo from container" call notify_minor;
+[5,false] call progressBar;	
 _putback = [];
 {
 	_count = 0;
 	_cls = _x select 0;
 	if(_cls in (AIT_allItems - AIT_consumableItems)) then {
 		while {_count < (_x select 1)} do {			
-			_veh addItemCargo [_cls,1];		
+			_veh addItemCargoGlobal [_cls,1];		
 			_count = _count + 1;
 		};
 	}else{

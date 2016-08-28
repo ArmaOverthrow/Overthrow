@@ -55,6 +55,11 @@ if(handgunWeapon _unit != "") then {
 	_unit removeWeapon handgunWeapon _unit;
 };
 {
-	_unit unlinkItem _x;
+	if (([(configFile >> "CfgWeapons" >> _x),"optics",0] call BIS_fnc_returnConfigEntry) > 0) then {
+		_unit unassignItem _x;
+		_unit removeWeapon _x;
+	}else{
+		_unit unlinkItem _x;
+	};
 	_t addItemCargoGlobal[_x,1];
 }foreach(assignedItems _unit);

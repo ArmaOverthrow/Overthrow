@@ -63,16 +63,7 @@ while{_status != "done"} do {
 				
 				_veh addEventHandler ["Take",{
 					_unit setCaptive false;
-				}];
-				_veh addEventHandler ["GetIn",{						
-					_unit = _this select 2;						
-					_v = _this select 0;
-					if(isPlayer _unit) then {
-						_v setVariable ["owner",getPlayerUID _unit,true];
-						_v setVariable ["stolen",true,true];
-						_unit setCaptive false;
-					};
-				}];
+				}];				
 				_vehs pushback _veh;
 			};
 			if !(isNull _veh) then {

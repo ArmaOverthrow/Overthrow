@@ -13,7 +13,8 @@ if(count _objects == 0) exitWith {
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
 
-"Please wait.. transferring cargo" call notify_minor;
+"Transferring cargo from container" call notify_minor;
+[5,false] call progressBar;				
 sleep 5;
 {
 	_count = 0;

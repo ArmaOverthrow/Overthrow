@@ -16,7 +16,7 @@ if(_typecls != "Base") then {
 }else{
 	_base = _pos call nearestBase;
 	if !(isNil "_base") then {
-		if((_base select 0) distance _pos < 1500) then {
+		if((_base select 0) distance _pos < 800) then {
 			_canplace = false;
 		};
 	};

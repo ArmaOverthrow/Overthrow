@@ -87,6 +87,7 @@ initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarSh
 initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";\
 initHarborLocal = compileFinal preProcessFileLineNumbers "interaction\initHarborLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
+initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
 
 //Economy
 setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";

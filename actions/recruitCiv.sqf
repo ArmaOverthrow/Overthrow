@@ -17,6 +17,7 @@ if(random 100 > 80) then {
 _civ = player getvariable "hiringciv";
 _civ setVariable ["owner",getPlayerUID player,true];
 _civ removeAllEventHandlers "FiredNear";
+[_civ] joinSilent grpNull;
 [_civ] joinSilent (group player);
 [_civ] spawn initRecruit;
 

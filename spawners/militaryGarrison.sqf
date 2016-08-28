@@ -83,29 +83,7 @@ while{true} do {
 				_pos = [_pos,42,_dir+90] call BIS_fnc_relPos;
 												
 				_veh =  _vehtype createVehicle _pos;
-				_veh setVariable ["airgarrison",_name,false];
-				
-				_veh addEventHandler ["GetIn",{						
-					_unit = _this select 2;						
-					_v = _this select 0;
-					if(isPlayer _unit) then {
-						_v setVariable ["owner",getPlayerUID _unit,true];
-						_v setVariable ["stolen",true,true];
-						_g = _v getVariable "airgarrison";
-						_vg = server getVariable format["airgarrison%1",_g];
-						_vg deleteAt (_vg find (typeof _veh));
-						server setVariable [format["airgarrison%1",_g],_vg,false];
-						
-						if(_unit call unitSeen) then {
-							_unit setCaptive false;
-							{
-								if(side _x == west) then {
-									_x reveal [_unit,1.5];		
-								};
-							}foreach(_unit nearentities ["Man",800]);
-						};
-					};
-				}];
+				_veh setVariable ["airgarrison",_name,false];					
 				
 				_veh setDir _dir;
 				
@@ -122,28 +100,6 @@ while{true} do {
 				_pos = [_pos,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
 				_veh =  _vehtype createVehicle _pos;
 				_veh setVariable ["vehgarrison",_name,false];
-				
-				_veh addEventHandler ["GetIn",{						
-					_unit = _this select 2;						
-					_v = _this select 0;
-					if(isPlayer _unit) then {
-						_v setVariable ["owner",getPlayerUID _unit,true];
-						_v setVariable ["stolen",true,true];
-						_g = _v getVariable "vehgarrison";
-						_vg = server getVariable format["vehgarrison%1",_g];
-						_vg deleteAt (_vg find (typeof _veh));
-						server setVariable [format["vehgarrison%1",_g],_vg,false];
-						
-						if(_unit call unitSeen) then {
-							_unit setCaptive false;
-							{
-								if(side _x == west) then {
-									_x reveal [_unit,1.5];	
-								};
-							}foreach(_unit nearentities ["Man",800]);
-						};
-					};
-				}];
 				
 				_veh setDir _dir;
 				if(random 100 < 90) then {

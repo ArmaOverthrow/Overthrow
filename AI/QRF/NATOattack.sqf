@@ -89,8 +89,7 @@ while {_count < _numgroups} do {
 	_tgroup addVehicle _veh;
 	createVehicleCrew _veh;
 	{
-		[_x] joinSilent _tgroup;
-		_x setVariable ["NOAI",true,false];
+		[_x] joinSilent _tgroup;		
 		_x setVariable ["garrison","HQ",false];
 	}foreach(crew _veh);	
 	
@@ -189,7 +188,7 @@ while {_count < _numgroups} do {
 						_enemies pushback _x;
 					};
 				}foreach(_attackpos nearentities ["Man",400]);
-				if((count _inrange) > (count _enemies)) then {
+				if((count _enemies) == 0 and (count _inrange) > 1) then {
 					//NATO has won					
 					[_tskid, "FAILED",true] spawn BIS_fnc_taskSetState;
 					_active = false;

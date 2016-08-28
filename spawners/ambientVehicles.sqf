@@ -38,19 +38,6 @@ while {(_count < _numVeh)} do {
 						
 				_veh setDir _dirveh;
 				_groups pushBack _veh;
-							
-				_veh addEventHandler ["GetIn",{						
-					_unit = _this select 2;						
-					_v = _this select 0;
-					if(isPlayer _unit) then {
-						_v setVariable ["owner",getPlayerUID _unit,true];
-						_v setVariable ["stolen",true,true];
-						
-						if(_unit call unitSeen) then {
-							_unit setCaptive false;
-						};
-					};
-				}];
 				sleep 0.03;
 			};
 		};

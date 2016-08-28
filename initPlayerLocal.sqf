@@ -108,6 +108,7 @@ if(isMultiplayer or _startup == "LOAD") then {
                     _civ setUnitLoadout _loadout;
                     _civ spawn wantedSystem;
                     _civ setName _name;
+					[_civ] joinSilent grpNull;
                     [_civ] joinSilent (group player);
                 }else{
                     [_civ] joinSilent (group player);
@@ -250,36 +251,67 @@ if (isMultiplayer) then {
 player addEventHandler ["WeaponAssembled",{
 	_me = _this select 0;
 	_wpn = _this select 1;
-	if(typeof _wpn in AIT_staticMachineGuns) then {
-		_wpn addAction ["Rearm",{		
-			_w = _this select 0;
-			_p = _this select 1;
-			if(_p call unitSeen) then {
-				_p setCaptive false;
-			};
-			_ammocount = {_x == AIT_ammo_50cal} count (magazineCargo _p);
-			if(_ammocount >= 4) then {
-				disableUserInput true;
-				_p removeMagazineGlobal AIT_ammo_50cal;
-				_p removeMagazineGlobal AIT_ammo_50cal;
-				_p removeMagazineGlobal AIT_ammo_50cal;
-				_p removeMagazineGlobal AIT_ammo_50cal;
-				_w spawn {					
-					"Rearming MG..." call notify_minor;
-					[15,false] call progressBar;
-					sleep 15;
-					[_this,1] remoteExec ["setVehicleAmmoDef",_this];
-					"MG rearmed" call notify_minor;
-					disableUserInput false;
-				};				
-			}else{
-				"You need 4 x 12.7mm M2 HMG Belts to rearm this MG" call notify_minor;
-			};			
-		},_civ,1.5,false,true,"","(alive _target) and !(someAmmo _target)",5];
+	if(typeof _wpn in AIT_staticMachineGuns) then {		
+		_wpn remoteExec["initStaticMGLocal",0,_wpn];
 	};
 	if(typeof _wpn in AIT_staticWeapons) then {
 		if(_me call unitSeen) then {
 			_me setCaptive false;
+		};
+	};
+}];
+
+player addEventHandler ["GetInMan",{						
+	_unit = _this select 0;
+	_position = _this select 1;
+	_veh = _this select 2;
+	_notified = false;
+	
+	if(_position == "driver") then {
+		if !(_veh call hasOwner) then {
+			_veh setVariable ["owner",getplayeruid player,true];
+			_veh setVariable ["stolen",true,true];
+			if(_unit call unitSeenNATO) then {
+				_notified = true;
+				{
+					_x setCaptive false;
+				}foreach(units _veh);
+				{
+					if(side _x == west) then {
+						_x reveal [_veh,1.5];		
+					};
+				}foreach(_unit nearentities ["Man",200]);
+			};
+		};
+	};
+	_g = _v getVariable ["vehgarrison",false];
+	if(typename _g == "STRING") then {
+		_vg = server getVariable format["vehgarrison%1",_g];
+		_vg deleteAt (_vg find (typeof _veh));
+		server setVariable [format["vehgarrison%1",_g],_vg,false];
+		_veh setVariable ["vehgarrison",nil,true];
+	};
+	_g = _v getVariable ["airgarrison",false];
+	if(typename _g == "STRING") then {
+		_vg = server getVariable format["airgarrison%1",_g];
+		_vg deleteAt (_vg find (typeof _veh));
+		server setVariable [format["airgarrison%1",_g],_vg,false];
+		_veh setVariable ["airgarrison",nil,true];
+	};
+	
+	if !(_notified) then {
+		if (!(_veh call hasOwner) or !((typeof _veh) in AIT_allVehicles)) then {
+			if(_unit call unitSeenNATO) then {
+				_notified = true;
+				{
+					_x setCaptive false;
+				}foreach(units _veh);
+				{
+					if(side _x == west) then {
+						_x reveal [_veh,1.5];		
+					};
+				}foreach(_unit nearentities ["Man",200]);
+			};
 		};
 	};
 }];

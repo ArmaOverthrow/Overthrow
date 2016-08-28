@@ -47,7 +47,6 @@ _civ addAction ["Buy", {
 				_stock pushBack [_magazines call BIS_fnc_selectRandom,_price];				
 			};
 		};
-		server setVariable [format["gunstock%1",_town],_stock,true];
 		
 		_stock pushback [AIT_ammo_50cal,25];
 		
@@ -61,6 +60,8 @@ _civ addAction ["Buy", {
 			_price = round(50 * ((random 1) + 1));
 			_stock pushBack [_x,_price];
 		}foreach(AIT_illegalItems);		
+		
+		server setVariable [format["gunstock%1",_town],_stock,true];
 	};
 	
 	createDialog "AIT_dialog_buy";

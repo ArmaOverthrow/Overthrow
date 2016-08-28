@@ -118,7 +118,7 @@ class AIT_dialog_command
 			y = 0.39 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Fast travels all selected units that are not currently wanted"; //--- ToDo: Localize;
+			tooltip = "Fast travels all selected units that are not currently wanted (not implemented yet)"; //--- ToDo: Localize;
 		};
 		class RscButton_1601: RscButton
 		{
@@ -128,7 +128,7 @@ class AIT_dialog_command
 			y = 0.654 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Commands all selected units to loot bodies and fill closest container to you"; //--- ToDo: Localize;
+			tooltip = "Commands all selected units to loot bodies and fill closest container to them"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn loot;"
 		};
 		class RscButton_1602: RscButton
@@ -139,7 +139,7 @@ class AIT_dialog_command
 			y = 0.478 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Commands first unit selected to walk to and open the closest container to you"; //--- ToDo: Localize;
+			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn openInventory;"
 		};
 		class RscButton_1603: RscButton
@@ -150,7 +150,7 @@ class AIT_dialog_command
 			y = 0.566 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Commands all selected units to find ammo in the surrounding area"; //--- ToDo: Localize;
+			tooltip = "Commands all selected units to find ammo in the surrounding area (not implemented yet)"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

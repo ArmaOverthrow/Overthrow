@@ -8,7 +8,7 @@ if !(_del) then {
 		ctrlDelete (uiNamespace getVariable "pBar");
 		ctrlDelete (uiNamespace getVariable "pBartext");
 		pBar = findDisplay 46 ctrlCreate ["RscProgress", -1];
-		pBar ctrlSetPosition [ 0.345, -0.2 ];
+		pBar ctrlSetPosition [ 0.345, -0.15 ];
 		pBar progressSetPosition 0;
 		pBar ctrlSetTextColor [0,0.5,0,1];
 		pBar ctrlCommit 0;

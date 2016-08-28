@@ -17,14 +17,14 @@ lbClear 1500;
 			if(_c == _cls) exitWith {_mynum = _x select 1};				
 		}foreach(_s);
 					
-		if(_mynum > 10) then {
+		if(_mynum > 50) then {
 			_price = ceil(_price * 0.75);
 		};
-		if(_mynum > 20) then {
-			_price = ceil(_price * 0.5);
+		if(_mynum > 100) then {
+			_price = ceil(_price * 0.6);
 		};
-		if(_mynum > 50) then {
-			_price = 1;
+		if(_mynum > 200) then {
+			_price = ceil(_price * 0.5);
 		};
 		if(_price <= 0) then {_price = 1};
 		

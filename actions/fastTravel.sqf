@@ -17,13 +17,30 @@ if !(visibleMap) exitWith {};
 
 _handled = false;
 
-if(posTravel distance player < 250) exitWith {
-	"You cannot fast travel less than 250m. Just walk!" call notify_minor;
+if(posTravel distance player < 150) exitWith {
+	"You cannot fast travel less than 150m. Just walk!" call notify_minor;
 	openMap false;
 };
 
-if([posTravel,"Misc"] call canPlace) then {
-	_handled = true;
+_buildings =  posTravel nearObjects [AIT_item_Tent,30];
+if !(_buildings isEqualTo []) then {
+	{
+		if(_x getVariable ["owner",""] == getplayeruid player) then {
+			_handled = true;
+		};
+	}foreach(_buildings);
+};
+
+if !(_handled) then {
+	if([posTravel,"Misc"] call canPlace) then {
+		_handled = true;		
+	};
+};
+
+if !(_handled) then {
+	"You must click near a base or a building/camp you own" call notify_minor;
+	openMap false;
+}else{
 	player allowDamage false;
 	disableUserInput true;
 	
@@ -49,13 +66,8 @@ if([posTravel,"Misc"] call canPlace) then {
 	};				
 
 	disableUserInput false;
-	cutText ["","BLACK IN",3]
-};
-
-if !(_handled) then {
-	"You must click near a base, camp or owned building" call notify_minor;
-	openMap false;
-}else{
+	cutText ["","BLACK IN",3];
+		
 	if((vehicle player) != player) then {
 		_crew = crew vehicle player;
 		sleep 5;

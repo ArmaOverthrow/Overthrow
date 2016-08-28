@@ -29,16 +29,16 @@ AIT_townSpawners = [
 					_active = true;
 					{
 						_spawner = _x;
-						[_groups,_town,_spawner] spawn {
+						[_groups,_town,_spawner] spawn {							
 							private ["_g","_t","_s"];
 							_g = _this select 0;
 							_t = _this select 1;
 							_s = _this select 2;
+							sleep (random 2);
 							{
 								_g pushback _x;
 							}foreach(_t call _s);
-						};						
-						sleep 0.05;
+						};
 					}foreach(AIT_townSpawners);
 				}else{
 					//NATO

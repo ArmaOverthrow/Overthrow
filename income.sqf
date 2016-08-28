@@ -23,7 +23,7 @@ while {true} do {
 	if(_perPlayer > 0) then {
 		{
 			_money = _x getVariable ["money",0];
-			_x setVariable ["money",_money+_perPlayer];			 			
+			_x setVariable ["money",_money+_perPlayer,true];			 			
 		}foreach(allPlayers);
 		format ["Tax income: $%1",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber] remoteExec ["notify_good",0,true];
 	};
