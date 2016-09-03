@@ -20,6 +20,7 @@ getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestR
 getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
 nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
+nearestComms = compileFinal preProcessFileLineNumbers "funcs\nearestComms.sqf";
 nearestCheckpoint = compileFinal preProcessFileLineNumbers "funcs\nearestCheckpoint.sqf";
 nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
 nearestMobster = compileFinal preProcessFileLineNumbers "funcs\nearestMobster.sqf";
@@ -37,6 +38,7 @@ initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
 initPolice = compileFinal preProcessFileLineNumbers "AI\police.sqf";
 initSecurity = compileFinal preProcessFileLineNumbers "AI\security.sqf";
 initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
+initSniper = compileFinal preProcessFileLineNumbers "AI\sniper.sqf";
 initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
 initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
 initCheckpoint = compileFinal preProcessFileLineNumbers "AI\checkpoint.sqf";
@@ -134,7 +136,7 @@ blackFaded = {
 };
 
 newGame = {
-    "Please wait.. generating economy" remoteExec['blackFaded',0];
+    "Generating economy" remoteExec['blackFaded',0];
     [] execVM "initEconomy.sqf";
     waitUntil {!isNil "AIT_economyInitDone"};
     server setVariable["StartupType","NEW",true];
@@ -149,20 +151,9 @@ setupKeyHandler = {
 standing = {
     _town = _this select 0;
     _rep = (player getVariable format["rep%1",_town])+(_this select 1);
-    player setVariable [format["rep%1",_town],_rep,true];
-    playSound "3DEN_notificationDefault";
-    _plusmin = "";
-    if(_rep > -1) then {
-        _plusmin = "+";
-    };
+    player setVariable [format["rep%1",_town],_rep,true];    
     _totalrep = (player getVariable "rep")+(_this select 1);
-    player setVariable ["rep",_totalrep,true];
-    _plusmintotal = "";
-    if(_totalrep > -1) then {
-        _plusmintotal = "+";
-    };
-    format["Standing (%3): %1%2<br/>Standing (Tanoa): %4%5",_plusmin,_rep,_town,_plusmintotal,_totalrep] call notify_minor;
-    
+    player setVariable ["rep",_totalrep,true];    
 };
 
 rewardMoney = {

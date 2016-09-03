@@ -31,12 +31,14 @@ if(!isMultiplayer) then {
     waitUntil {!isNil "AIT_NATOInitDone"};
     waitUntil {!isNil "AIT_CRIMInitDone"};  
     
-    //Bounty system
+    //Game systems
     [] execVM "bountySystem.sqf";
+	[] execVM "propagandaSystem.sqf";
+	[] execVM "weather.sqf";
     
     //Init virtualization
     [] execVM "virtualization.sqf"; 
-    waitUntil {!isNil "AIT_economyLoadDone"};
+    waitUntil {!isNil "AIT_economyLoadDone" and !isNil "AIT_fnc_registerSpawner"};
     [] execVM "virtualization\towns.sqf";
     [] execVM "virtualization\military.sqf";
     [] execVM "virtualization\mobsters.sqf";

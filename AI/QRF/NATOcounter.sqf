@@ -177,6 +177,11 @@ while {_count < _numgroups} do {
 			[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 			_active = false;			
 			_objective setMarkerType "flag_Tanoa";
+			_o = "";
+			if(_objective in AIT_needsThe) then {
+				_o = "The ";
+			};
+			format["We have captured %1%2",_o,_town] remoteExec ["notify_good",0,false];
 		}else{
 			if(((count _inrange) / (count _alive)) > 0.7) then {
 				//check for any alive enemies

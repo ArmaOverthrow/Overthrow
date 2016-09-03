@@ -54,8 +54,7 @@ OpenPlayerChute =
 	_x addBackPack "B_parachute";
 	unassignvehicle _x;
 	moveout _x;
-	_x setDir (_dir + 90);// Exit the chopper at right angles.
-	sleep 0.3;
+	_x setDir (_dir + 90);// Exit the chopper at right angles.	
 } forEach _paras;
 
 _vehicle allowDamage true;

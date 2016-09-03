@@ -5,7 +5,7 @@ if((vehicle player) != player) then {
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
 };
 posTravel = [];
-"Click near a building or camp you own" call notify_minor;
+"Click near a base, or building/camp you own" call notify_minor;
 openMap true;
 
 onMapSingleClick "posTravel = _pos;";
@@ -22,13 +22,22 @@ if(posTravel distance player < 150) exitWith {
 	openMap false;
 };
 
-_buildings =  posTravel nearObjects [AIT_item_Tent,30];
-if !(_buildings isEqualTo []) then {
-	{
-		if(_x getVariable ["owner",""] == getplayeruid player) then {
-			_handled = true;
-		};
-	}foreach(_buildings);
+_obj = posTravel call nearestObjective;
+_objpos = _obj select 0;
+_closestobj = _obj select 1;
+if(_closestobj in (server getVariable ["NATOabandoned",[]]) and (_objpos distance posTravel) < 50) then {
+	_handled = true;
+};
+	
+if !(_handled) then {
+	_buildings =  posTravel nearObjects [AIT_item_Tent,30];
+	if !(_buildings isEqualTo []) then {
+		{
+			if(_x getVariable ["owner",""] == getplayeruid player) then {
+				_handled = true;
+			};
+		}foreach(_buildings);
+	};
 };
 
 if !(_handled) then {

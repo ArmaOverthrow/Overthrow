@@ -89,13 +89,6 @@ while{true} do {
 			
 			_wp = _group addWaypoint [_flagpos,0];
 			_wp setWaypointType "GUARD";
-			
-			{
-				_cur = _x;
-				{	
-					_cur addCuratorEditableObjects [(units _x),true];				
-				}foreach(_groups);				
-			} forEach allCurators;
 		};
 	}else{
 		if (spawner getVariable _id) then {

@@ -138,7 +138,7 @@ class RscText
 	};
 	font = "PuristaMedium";
 	SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	linespacing = 1;
+	linespacing = 0.8;
 	tooltipColorText[] = 
 	{
 		1,
@@ -191,6 +191,7 @@ class RscStructuredText
 	text = "";
 	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	shadow = 0;
+	lineSpacing = 0.8;
 };
 class RscPicture
 {

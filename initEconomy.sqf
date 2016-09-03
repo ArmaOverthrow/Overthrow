@@ -54,7 +54,7 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
     };
     _stability = round(_base + random(20));
     if((_pop < 40) and !(_name in AIT_NATO_priority) and !(_name in AIT_Capitals) and (_pos select 1 < 7000)) then {
-        _stability = floor(10 + random(20));
+        _stability = floor(20 + random(20));
     };
     server setVariable [format["stability%1",_name],_stability,true];
 

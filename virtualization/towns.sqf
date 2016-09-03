@@ -37,8 +37,13 @@ AIT_townSpawners = [
 							sleep (random 2);
 							{
 								_g pushback _x;
+								_grp = _x;
+								{
+									
+									_x addCuratorEditableObjects [units _grp,true];
+								} forEach allCurators;
 							}foreach(_t call _s);
-						};
+						};						
 					}foreach(AIT_townSpawners);
 				}else{
 					//NATO

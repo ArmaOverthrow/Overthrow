@@ -14,7 +14,7 @@ _setText ctrlSetBackgroundColor [0,0,0,0];
 
 _currentTxt = "";
 
-while {alive player} do {
+while {true} do {
 	_wanted = "<br/>";
 	if !(captive player) then {
 		_hiding = player getVariable "hiding";
@@ -52,5 +52,5 @@ while {alive player} do {
 		_setText ctrlCommit 0;
 		_currentTxt = _txt;
 	};
-	sleep 0.5;
-};
+	sleep 1;
+}

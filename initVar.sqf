@@ -2,6 +2,7 @@
 private ["_allPrimaryWeapons","_allHandGuns","__allLaunchers"];
 
 AIT_spawnBlacklist = ["Georgetown","Sosovu","Tuvanaka","Belfort","Nani","Saint-Julien","Ipota"]; //dont spawn in these towns
+AIT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 AIT_hasAce = false;
 if (!isNil "ace_common_settingFeedbackIcons") then {
@@ -44,12 +45,16 @@ AIT_Placeables = [
 	["Deploy",500,["B_Boat_Transport_01_F","I_HMG_01_high_F","I_HMG_01_F"],[0,2.3,2]]
 ];
 
-AIT_Buildables_Base = [
-	["Training Camp",1500,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],
+AIT_Buildables = [
+	["Training Camp",1200,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],
 	["Bunkers",500,["Land_BagBunker_01_small_green_F","Land_HBarrier_01_big_tower_green_F","Land_HBarrier_01_tower_green_F"],"",false,"Small Defensive Structures. Press space to change type."],
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"],
-	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"]
+	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
+	["Barracks",5000,["Land_Barracks_01_camo_F","Land_Barracks_01_grey_F"],"",false,"Allows recruiting of squads"],
+	["Guard Tower",15000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need? besides 2 x Static MGs maybe but it comes with those."],
+	["Hangar",3000,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
+	["Workshop",2500,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"A place to repair and rearm your vehicles"]
 ];
 
 AIT_voices_local = ["Male01FRE","Male02FRE","Male03FRE"];
@@ -109,24 +114,25 @@ AIT_ammo_50cal = "100Rnd_127x99_mag";
 
 //NATO stuff
 AIT_NATOregion = "island_5"; //where NATO lives
-AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","Comms Whiskey","port","fuel depot","railway depot"]; //NameLocal/Airport place names to definitely occupy with military personnel
+AIT_NATOwhitelist = ["Comms Alpha","Comms Bravo","port","fuel depot","railway depot"]; //NameLocal/Airport place names to definitely occupy with military personnel
+AIT_NATOblacklist = ["Forbidden Village","training base","Comms Whiskey","GSM station"];
 AIT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
+AIT_needsThe = ["fuel depot","maze","firing range","vehicle range","camp remnants","railway depot"];
 AIT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6","control_7","control_8","control_9","control_10","control_11","control_12","control_13","control_14","control_15","control_16","control_17","control_18"]; //NATO checkpoints, create markers in editor
 AIT_NATO_HQ = "Tuvanaka Airbase";
 AIT_NATO_AirSpawn = "NATO_airspawn";
 AIT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 AIT_NATO_Vehicles_Garrison = [
-	["B_T_MBT_01_TUSK_F", 7],
-	["B_T_MBT_01_cannon_F",7],
-	["B_T_LSV_01_armed_F",14],
-	["B_T_MRAP_01_hmg_F",20],
-	["B_T_MRAP_01_gmg_F",20],
-	["B_T_APC_Tracked_01_AA_F",10],
-	["B_T_Static_AA_F",15],
+	["B_T_MBT_01_TUSK_F", 2],
+	["B_T_MBT_01_cannon_F",2],
+	["B_T_LSV_01_armed_F",5],
+	["B_T_MRAP_01_hmg_F",10],
+	["B_T_MRAP_01_gmg_F",10],
+	["B_T_APC_Tracked_01_AA_F",6],
 	["B_T_Mortar_01_F",10],
-	["B_T_Static_AT_F",20],
-	["B_HMG_01_high_F",40],
+	["B_T_Static_AT_F",15],
+	["B_HMG_01_high_F",20],
 	["B_T_MBT_01_mlrs_F",2],
 	["B_T_MBT_01_arty_F",2]
 ];
@@ -135,16 +141,18 @@ AIT_NATO_Vehicles_AirGarrison = [
 	["B_T_VTOL_01_vehicle_F",1],
 	["B_T_VTOL_01_infantry_F",1],
 	["B_Heli_Light_01_armed_F",1],
-	["B_Heli_Transport_03_unarmed_F",4],
-	["B_Heli_Light_01_F",6],
+	["B_Heli_Transport_03_unarmed_F",2],
+	["B_Heli_Light_01_F",3],
 	["B_Heli_Attack_01_F",1],
-	["B_Heli_Transport_01_F",4],
+	["B_Heli_Transport_01_F",2],
 	["B_Plane_CAS_01_F",1],
 	["CUP_B_AV8B_CAP_USMC",1],
-	["CUP_B_C130J_USMC",3],
+	["CUP_B_C130J_USMC",1],
 	["CUP_B_F35B_AA_USMC",1],
-	["CUP_B_CH53E_GER",2]
+	["CUP_B_CH53E_GER",1]
 ];
+
+AIT_NATO_CommTowers = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F"];
 
 AIT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
 AIT_NATO_Unit_Police = "B_Gen_Soldier_F";
@@ -156,11 +164,18 @@ AIT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_
 AIT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
 AIT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
 AIT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
+AIT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 AIT_NATO_Vehicle_AirTransport = "B_Heli_Transport_03_F";
+AIT_NATO_Vehicle_AirTransport_Large = "CUP_B_C130J_USMC";
 
 AIT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 AIT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
-AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F","B_T_Sniper_F","B_T_Spotter_F"];
+AIT_NATO_Units_LevelTwo = AIT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F"];
+
+AIT_NATO_Unit_Sniper = "B_T_Sniper_F";
+AIT_NATO_Unit_Spotter = "B_T_Spotter_F";
+AIT_NATO_Unit_AA_spec = "B_T_Soldier_AA_F";
+AIT_NATO_Unit_AA_ass = "B_T_Soldier_AAA_F";
 
 AIT_NATO_Units_CTRGSupport = ["B_CTRG_Soldier_TL_tna_F","B_CTRG_Soldier_tna_F","B_CTRG_Soldier_M_tna_F","B_CTRG_Soldier_Medic_tna_F"];
 AIT_NATO_Vehicle_CTRGTransport = "B_CTRG_Heli_Transport_01_tropic_F";
@@ -439,9 +454,10 @@ AIT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F
 AIT_piers = ["Land_PierConcrete_01_steps_F","Land_PierWooden_01_platform_F","Land_PierConcrete_01_end_F","Land_PierWooden_01_hut_F"]; //spawns dudes that sell boats n stuff
 AIT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"]; 
 AIT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
-AIT_airportTerminal = "Land_Airport_01_terminal_F";
+AIT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F"];
 AIT_portBuilding = "Land_Warehouse_02_F";
 
+AIT_loadingMessages = ["Adding Hidden Agendas","Adjusting Bell Curves","Aesthesizing Industrial Areas","Aligning Covariance Matrices","Applying Feng Shui Shaders","Applying Theatre Soda Layer","Asserting Packed Exemplars","Attempting to Lock Back-Buffer","Binding Sapling Root System","Breeding Fauna","Building Data Trees","Bureacritizing Bureaucracies","Calculating Inverse Probability Matrices","Calculating Llama Expectoration Trajectory","Calibrating Blue Skies","Charging Ozone Layer","Coalescing Cloud Formations","Cohorting Exemplars","Collecting Meteor Particles","Compounding Inert Tessellations","Compressing Fish Files","Computing Optimal Bin Packing","Concatenating Sub-Contractors","Containing Existential Buffer","Debarking Ark Ramp","Debunching Unionized Commercial Services","Deciding What Message to Display Next","Decomposing Singular Values","Decrementing Tectonic Plates","Deleting Ferry Routes","Depixelating Inner Mountain Surface Back Faces","Depositing Slush Funds","Destabilizing Economic Indicators","Determining Width of Blast Fronts","Deunionizing Bulldozers","Dicing Models","Diluting Livestock Nutrition Variables","Downloading Satellite Terrain Data","Exposing Flash Variables to Streak System","Extracting Resources","Factoring Pay Scale","Fixing Election Outcome Matrix","Flood-Filling Ground Water","Flushing Pipe Network","Gathering Particle Sources","Generating Jobs","Gesticulating Mimes","Graphing Whale Migration","Hiding Willio Webnet Mask","Implementing Impeachment Routine","Increasing Accuracy of RCI Simulators","Increasing Magmafacation","Initializing Rhinoceros Breeding Timetable","Initializing Robotic Click-Path AI","Inserting Sublimated Messages","Integrating Curves","Integrating Illumination Form Factors","Integrating Population Graphs","Iterating Cellular Automata","Lecturing Errant Subsystems","Mixing Genetic Pool","Modeling Object Components","Mopping Occupant Leaks","Normalizing Power","Obfuscating Quigley Matrix","Overconstraining Dirty Industry Calculations","Partitioning City Grid Singularities","Perturbing Matrices","Pixellating Nude Patch","Polishing Water Highlights","Populating Lot Templates","Preparing Sprites for Random Walks","Prioritizing Landmarks","Projecting Law Enforcement Pastry Intake","Realigning Alternate Time Frames","Reconfiguring User Mental Processes","Relaxing Splines","Removing Road Network Speed Bumps","Removing Texture Gradients","Removing Vehicle Avoidance Behavior","Resolving GUID Conflict","Reticulating Splines","Retracting Phong Shader","Retrieving from Back Store","Reverse Engineering Image Consultant","Routing Neural Network Infanstructure","Scattering Rhino Food Sources","Scrubbing Terrain","Searching for Llamas","Seeding Architecture Simulation Parameters","Sequencing Particles","Setting Advisor ","Setting Inner Deity ","Setting Universal Physical Constants","Sonically Enhancing Occupant-Free Timber","Speculating Stock Market Indices","Splatting Transforms","Stratifying Ground Layers","Sub-Sampling Water Data","Synthesizing Gravity","Synthesizing Wavelets","Time-Compressing Simulator Clock","Unable to Reveal Current Activity","Weathering Buildings","Zeroing Crime Network"];
 AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_mansions + [AIT_item_Tent,AIT_item_Flag];
 
 {
@@ -450,7 +466,7 @@ AIT_allBuyableBuildings = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouse
 		_tpl = _x select 2;
 		AIT_allBuyableBuildings pushback ((_tpl select 0) select 0);
 	};
-}foreach(AIT_Buildables_Base);
+}foreach(AIT_Buildables);
 
 AIT_allHouses = AIT_lowPopHouses + AIT_medPopHouses + AIT_highPopHouses + AIT_hugePopHouses + AIT_touristHouses;
 AIT_allEnterableHouses = ["Land_House_Small_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_House_Big_01_F","Land_Slum_05_F","Land_Slum_01_F","Land_GarageShelter_01_F","Land_House_Small_01_F","Land_Slum_03_F","Land_House_Big_04_F","Land_House_Small_04_F","Land_House_Small_05_F"];

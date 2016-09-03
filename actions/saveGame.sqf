@@ -86,6 +86,7 @@ _recruits = [];
 	};
 }foreach(server getVariable ["recruits",[]]);
 _data pushback ["recruits",_recruits];
+_data pushback ["timedate",date];
 
 profileNameSpace setVariable ["Overthrow.save.001",_data];
 if (isDedicated) then {

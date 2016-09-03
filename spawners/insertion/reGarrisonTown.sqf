@@ -39,7 +39,7 @@ _spawnpos = AIT_NATO_HQPos;
 if(_stability < 25 and (random 100) > 80) then {
 	//last ditch efforts to save this town
 	//send in the big guns
-	_vehtype = AIT_NATO_Vehicle_AirTransport;
+	_vehtype = AIT_NATO_Vehicle_AirTransport_Small;
 	_opendoor = true;
 	_num = 4 + round(random 4);
 	_count = 0;

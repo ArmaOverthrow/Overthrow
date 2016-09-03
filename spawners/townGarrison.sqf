@@ -41,10 +41,7 @@ while {_count < _numNATO} do {
 		_count = _count + 1;
 		sleep 0.1;
 	};				
-	_group call initPolicePatrol;	
-	{
-		_x addCuratorEditableObjects [units _group,true];
-	} forEach allCurators;
+	_group call initPolicePatrol;		
 	_range = _range + 50;
 };
 

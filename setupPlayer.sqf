@@ -1,3 +1,4 @@
+player spawn wantedSystem;
 _clothes = player getVariable ["uniform",(AIT_clothes_guerilla call BIS_fnc_selectRandom)];
 player forceAddUniform _clothes;
 player setVariable ["uniform",_clothes,true];
@@ -29,8 +30,6 @@ _timer = -1;
 
 player setVariable ["player_uid",getPlayerUID player,true];
 
-player spawn wantedSystem;
-[] execVM "stats.sqf";
 _closestcount = 0;
 
 while {true} do {

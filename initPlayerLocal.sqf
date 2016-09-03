@@ -182,7 +182,7 @@ if (_newplayer) then {
     
     //Put a light on at home
     _light = "#lightpoint" createVehicle [_housepos select 0,_housepos select 1,(_housepos select 2)+2.2];
-    _light setLightBrightness 0.09;
+    _light setLightBrightness 0.11;
     _light setLightAmbient[.9, .9, .6];
     _light setLightColor[.5, .5, .4];
 
@@ -221,19 +221,19 @@ if (_newplayer) then {
     _mrkName setMarkerAlphaLocal 1;
 
 };
-titleText ["Loading session...", "BLACK FADED", 0];    
-sleep 0.2;
 _count = 0;
-{   
-    if(_x call hasOwner) then {
-        _owner = _x getVariable ["owner",""];
-        if((_owner == getplayeruid player) or (typeof _x == AIT_item_Map)) then {
-            _x call initObjectLocal;
-        };
-    };  
+{ 
+	if !(_x isKindOf "Vehicle") then {
+		if(_x call hasOwner) then {
+			_owner = _x getVariable ["owner",""];
+			if((_owner == getplayeruid player) or (typeof _x == AIT_item_Map)) then {
+				_x call initObjectLocal;
+			};
+		}; 
+	};
 	if(_count > 5000) then {
 		_count = 0;
-		titleText ["Loading session... please wait", "BLACK FADED", 0];   
+		titleText ["Loading... please wait", "BLACK FADED", 0];   
 	};
 	_count = _count + 1;
 }foreach((allMissionObjects "Building") + vehicles);
@@ -241,11 +241,11 @@ _count = 0;
 player setCaptive true;
 player setPos _housepos;
 
+waitUntil {!isNil "AIT_SystemInitDone"};
 titleText ["", "BLACK IN", 5];
 
 if (isMultiplayer) then {
     ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
-    ["InitializeGroup", [player,playerSide,true]] call BIS_fnc_dynamicGroups;
 };
 
 player addEventHandler ["WeaponAssembled",{
@@ -316,6 +316,7 @@ player addEventHandler ["GetInMan",{
 	};
 }];
 
+[] execVM "stats.sqf";
 [] spawn setupKeyHandler;
 [] execVM "intelSystem.sqf";
 [] execVM "setupPlayer.sqf";

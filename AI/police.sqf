@@ -50,6 +50,7 @@ if(_skill > 0.8) then {
 	_idx = _numweap - 1;
 	if(AIT_hasAce) then {
 		_unit addItemToUniform "ACE_rangeCard";
+		_unit addItem "ACE_morphine";
 	};
 }else{	
 	if(_skill > 0.7) then {
@@ -60,6 +61,11 @@ if(_skill > 0.8) then {
 			_unit linkItem "ItemGPS";
 		};
 	};
+};
+
+if(AIT_hasACE) then {
+	_unit addItem "ACE_fieldDressing";
+	_unit addItem "ACE_fieldDressing";
 };
 
 _weapon = AIT_NATO_weapons_Police select round(random(_idx));

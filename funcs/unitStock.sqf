@@ -5,8 +5,9 @@ _done = [];
 
 _myitems = [];
 
-_myitems = (items _this) + (magazines _this);
-if(count _myitems == 0) then {
+if(_this isKindOf "Man") then {
+	_myitems = (items _this) + (magazines _this);
+}else{
 	_myitems = (itemCargo _this) + (weaponCargo _this) + (magazineCargo _this) + (backpackCargo _this);
 };
 if !(isNil "_myitems") then {

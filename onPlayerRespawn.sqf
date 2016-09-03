@@ -1,6 +1,14 @@
 if (isDedicated) exitWith {};
 _new = _this select 0;
 _old = _this select 1;
+call {	
+	disableSerialization;
+	_display = uiNameSpace getVariable "AIT_statsHUD";
+	if(isNil "_display") exitWith{};
+	_setText = _display displayCtrl 1001;
+	_setText ctrlSetStructuredText (parseText "");
+	_setText ctrlCommit 0;
+};
 
 if(isNull(_old)) exitWith {};
 

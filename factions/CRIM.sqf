@@ -114,32 +114,33 @@ while {true} do {
 					_leaderpos = server getVariable [format["crimleader%1",_town],false];
 					_mob = _posTown call nearestMobster;
 					_mobpos = _mob select 0;
-					_region = server getVariable format["region_%1",_town];
-									
-					if([_mobpos,_region] call fnc_isInMarker) then {
-						if ((typeName _leaderpos) == "ARRAY") then {
-							server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
-							_chance = 20;
-							if(_town in (server getVariable ["NATOabandoned",[]])) then {
-								_chance = 80;
+					_region = server getVariable [format["region_%1",_town],""];
+					if(_region != "") then {
+						if([_mobpos,_region] call fnc_isInMarker) then {
+							if ((typeName _leaderpos) == "ARRAY") then {
+								server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
+								_chance = 20;
+								if(_town in (server getVariable ["NATOabandoned",[]])) then {
+									_chance = 80;
+								};
+								if(((random 100) < _chance) and _num < 20) then {
+									_numadd = round(random 6);
+									server setVariable [format ["numcrims%1",_x],_num + _numadd,false];
+									server setVariable [format ["crimadd%1",_x],_numadd,false];
+								};
+							}else{							
+								//New leader spawn
+								
+								_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
+								if(isNil "_building") then {
+									_leaderpos = [[[_posTown,50]]] call BIS_fnc_randomPos;
+								}else{
+									_leaderpos = getpos _building;
+								};	
+								server setVariable [format["crimnew%1",_town],_leaderpos,false];
+								server setVariable [format ["crimadd%1",_x],0,false];
+								server setVariable [format ["timecrims%1",_x],0,false];							
 							};
-							if(((random 100) < _chance) and _num < 20) then {
-								_numadd = round(random 6);
-								server setVariable [format ["numcrims%1",_x],_num + _numadd,false];
-								server setVariable [format ["crimadd%1",_x],_numadd,false];
-							};
-						}else{							
-							//New leader spawn
-							
-							_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
-							if(isNil "_building") then {
-								_leaderpos = [[[_posTown,50]]] call BIS_fnc_randomPos;
-							}else{
-								_leaderpos = getpos _building;
-							};	
-							server setVariable [format["crimnew%1",_town],_leaderpos,false];
-							server setVariable [format ["crimadd%1",_x],0,false];
-							server setVariable [format ["timecrims%1",_x],0,false];							
 						};
 					};
 				};
