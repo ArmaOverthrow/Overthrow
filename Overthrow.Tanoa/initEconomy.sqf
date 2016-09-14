@@ -8,7 +8,7 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
     _name = _x;// Get name
     
     _mSize = 350;
-    if(_name in AIT_capitals + AIT_sprawling) then {//larger search radius
+    if(_name in OT_capitals + OT_sprawling) then {//larger search radius
         _mSize = 1000;
     };
     _pos= server getVariable _x;
@@ -24,23 +24,23 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
     
     {
         _low pushback (getpos _x);
-    }foreach(nearestObjects [_pos, AIT_lowPopHouses, _mSize]);
+    }foreach(nearestObjects [_pos, OT_lowPopHouses, _mSize]);
     
     {
         _med pushback (getpos _x);
-    }foreach(nearestObjects [_pos, AIT_medPopHouses, _mSize]);
+    }foreach(nearestObjects [_pos, OT_medPopHouses, _mSize]);
     
     {
         _hi pushback (getpos _x);
-    }foreach(nearestObjects [_pos, AIT_highPopHouses, _mSize]);
+    }foreach(nearestObjects [_pos, OT_highPopHouses, _mSize]);
     
     {
         _huge pushback (getpos _x);
-    }foreach(nearestObjects [_pos, AIT_hugePopHouses, _mSize]);
+    }foreach(nearestObjects [_pos, OT_hugePopHouses, _mSize]);
         
     {
         _allshops pushback (getpos _x);
-    }foreach(nearestObjects [_pos, AIT_allShops + AIT_offices + AIT_warehouses + AIT_carShops + AIT_portBuildings, _mSize]);
+    }foreach(nearestObjects [_pos, OT_allShops + OT_offices + OT_warehouses + OT_carShops + OT_portBuildings, _mSize]);
     
     _lopop = round(count(_low) * (random(2) + 1));
     _medpop = round(count(_med) * (random(4) + 2)); 
@@ -53,7 +53,7 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
         _base = 80;
     };
     _stability = round(_base + random(20));
-    if((_pop < 40) and !(_name in AIT_NATO_priority) and !(_name in AIT_Capitals) and (_pos select 1 < 7000)) then {
+    if((_pop < 40) and !(_name in OT_NATO_priority) and !(_name in OT_Capitals) and (_pos select 1 < 7000)) then {
         _stability = floor(20 + random(20));
     };
     server setVariable [format["stability%1",_name],_stability,true];
@@ -65,16 +65,16 @@ private ["_mSize","_name","_low","_med","_hi","_huge","_shops","_allshops","_pos
     
     {
         if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
-    }foreach(AIT_regions);
-}foreach (AIT_allTowns);
+    }foreach(OT_regions);
+}foreach (OT_allTowns);
 
-server setVariable ["spawntown",AIT_spawnTowns call BIS_fnc_selectrandom,true];
+server setVariable ["spawntown",OT_spawnTowns call BIS_fnc_selectrandom,true];
 {
     _region = _x;
         
     _towns = [_x] call townsInRegion;
     server setVariable [format ["towns_%1",_x],_towns,true];
-}foreach(AIT_regions);
+}foreach(OT_regions);
 
-AIT_economyInitDone = true;
-publicVariable "AIT_economyInitDone";
+OT_economyInitDone = true;
+publicVariable "OT_economyInitDone";

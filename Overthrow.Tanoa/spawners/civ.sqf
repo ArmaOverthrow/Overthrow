@@ -9,12 +9,12 @@ _stability = server getVariable format ["stability%1",_town];
 _posTown = server getVariable _town;
 
 _mSize = 350;
-if(_town in AIT_capitals) then {
+if(_town in OT_capitals) then {
 	_mSize = 800;
 };
 
 if(_pop > 15) then {
-	_numCiv = round(_pop * AIT_spawnCivPercentage);
+	_numCiv = round(_pop * OT_spawnCivPercentage);
 	if(_numCiv < 5) then {
 		_numCiv = 5;
 	};
@@ -31,7 +31,7 @@ if !(_church isEqualTo []) then {
 	_group setBehaviour "SAFE";
 	_groups pushback _group;
 	_pos = [[[_church,20]]] call BIS_fnc_randomPos;
-	_civ = _group createUnit [AIT_civType_priest, _pos, [],0, "NONE"];
+	_civ = _group createUnit [OT_civType_priest, _pos, [],0, "NONE"];
 	[_civ] call initPriest;		
 };
 
@@ -55,7 +55,7 @@ while {_count < _numCiv} do {
 	_home = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;			
 	
 	if((_hour > 18 and _hour < 23) or (_hour < 9 and _hour > 5)) then {
-		_home = getpos([_home,AIT_allEnterableHouses] call getRandomBuilding);		
+		_home = getpos([_home,OT_allEnterableHouses] call getRandomBuilding);		
 		//Put a light on at home
 		_light = "#lightpoint" createVehicle [_home select 0,_home select 1,(_home select 2)+2.2];
 		_light setLightBrightness 0.09;
@@ -66,7 +66,7 @@ while {_count < _numCiv} do {
 	
 	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
 		_pos = [[[_home,50]]] call BIS_fnc_randomPos;
-		_civ = _group createUnit [AIT_civType_local, _pos, [],0, "NONE"];
+		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
 		[_civ] call initCivilian;		
 		_count = _count + 1;

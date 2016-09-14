@@ -11,7 +11,7 @@ _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
 
 call {
-	if(_cls == AIT_item_UAV) exitWith {	
+	if(_cls == OT_item_UAV) exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 		
@@ -25,14 +25,14 @@ call {
 		
 		_veh setVariable ["owner",getPlayerUID player,true];
 
-		player linkItem AIT_item_UAVterminal;
+		player linkItem OT_item_UAVterminal;
 		player connectTerminalToUAV _veh;
 		
 		player reveal _veh;
 		format["You bought a Quadcopter",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in AIT_allVehicles) exitWith {	
+	if(_cls in OT_allVehicles) exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 		
@@ -48,7 +48,7 @@ call {
 		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in AIT_allBoats) exitWith {	
+	if(_cls in OT_allBoats) exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 		
@@ -64,7 +64,7 @@ call {
 		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in AIT_allWeapons) then {
+	if(_cls in OT_allWeapons) then {
 		player setVariable ["money",_money-_price,true];
 
 		_box = false;
@@ -73,7 +73,7 @@ call {
 			if(!isNil "_owner") then {
 				if(_owner == getplayerUID player) exitWith {_box = _x};				
 			};
-		}foreach(nearestObjects [getpos player, [AIT_item_Storage],1200]);
+		}foreach(nearestObjects [getpos player, [OT_item_Storage],1200]);
 		if(typename _box == "OBJECT") then {
 			_box addWeaponCargo [_cls,1];
 			"Delivered to your closest ammobox" call notify_minor;
@@ -82,13 +82,13 @@ call {
 		};	
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in AIT_allMagazines) exitWith {	
+	if(_cls in OT_allMagazines) exitWith {	
 		player setVariable ["money",_money-_price,true];
 		player addMagazine _cls;		
 		playSound "3DEN_notificationDefault";
 	};
 	_handled = true;
-	if(_cls in (AIT_allBackpacks + AIT_allStaticBackpacks)) then {	
+	if(_cls in (OT_allBackpacks + OT_allStaticBackpacks)) then {	
 		if(backpack player != "") exitWith {"You already have a backpack" call notify_minor;_handled = false};
 	}else{
 		if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
@@ -96,11 +96,11 @@ call {
 		
 	if(_handled) then {	
 		playSound "3DEN_notificationDefault";
-		if (_cls in AIT_illegalItems) exitWith {
+		if (_cls in OT_illegalItems) exitWith {
 			player setVariable ["money",_money-_price,true];
 			player addItem _cls;
 		};
-		if (_cls in AIT_allStaticBackpacks) exitWith {
+		if (_cls in OT_allStaticBackpacks) exitWith {
 			player setVariable ["money",_money-_price,true];
 			player addBackpack _cls;
 		};
@@ -137,7 +137,7 @@ call {
 			};
 			player setVariable ["money",_money-_price,true];
 			server setVariable [format["activeshopsin%1",_town],_active,true];	
-			if(_cls in AIT_allBackpacks) then {	
+			if(_cls in OT_allBackpacks) then {	
 				player addBackpack _cls;
 			}else{
 				player addItem _cls;

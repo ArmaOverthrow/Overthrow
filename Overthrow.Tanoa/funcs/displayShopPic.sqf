@@ -9,17 +9,17 @@ _pic = "";
 _txt = "";
 _desc = "";
 
-if(_cls in AIT_allMagazines) then {	
+if(_cls in OT_allMagazines) then {	
 	_txt = _cls call ISSE_Cfg_Magazine_GetName;
 	_pic = _cls call ISSE_Cfg_Magazine_GetPic;
 	_desc = _cls call ISSE_Cfg_Magazine_GetDesc;
 };
-if(_cls in AIT_allBackpacks or _cls in AIT_allVehicles) then {
+if(_cls in OT_allBackpacks or _cls in OT_allVehicles) then {
 	_txt = _cls call ISSE_Cfg_Vehicle_GetName;
 	_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 	_desc = _cls call ISSE_Cfg_Vehicle_GetDesc;
 };
-if(_cls in AIT_allWeapons or _cls in AIT_allItems) then {	
+if(_cls in OT_allWeapons or _cls in OT_allItems) then {	
 	_txt = _cls call ISSE_Cfg_Weapons_GetName;
 	_pic = _cls call ISSE_Cfg_Weapons_GetPic;
 	_desc = _cls call ISSE_Cfg_Weapons_GetDesc;

@@ -7,7 +7,7 @@ _soldiers = [];
 _groups = [];
 
 _count = 0;
-_pos = AIT_NATO_HQPos;
+_pos = OT_NATO_HQPos;
 
 _dir = [_pos,_posTown] call BIS_fnc_dirTo;
 
@@ -36,17 +36,17 @@ _group = createGroup blufor;
 
 {
 	_type = _x;
-	_civ = _group createUnit [_type, AIT_NATO_HQPos, [],0, "NONE"];
+	_civ = _group createUnit [_type, OT_NATO_HQPos, [],0, "NONE"];
 	_civ setRank "CAPTAIN";	
-}foreach(AIT_NATO_Units_CTRGSupport);
+}foreach(OT_NATO_Units_CTRGSupport);
 
 sleep 0.2;
 
 //Transport
 _tgroup = creategroup blufor;
-_pos = [_pos,60,80,false,[0,0],[100,AIT_NATO_Vehicle_CTRGTransport]] call SHK_pos;
+_pos = [_pos,60,80,false,[0,0],[100,OT_NATO_Vehicle_CTRGTransport]] call SHK_pos;
 sleep 0.1;
-_veh = createVehicle [AIT_NATO_Vehicle_CTRGTransport, _pos, [], 0,""];  		
+_veh = createVehicle [OT_NATO_Vehicle_CTRGTransport, _pos, [], 0,""];  		
 _vehs pushback _veh;
 
 
@@ -67,7 +67,7 @@ createVehicleCrew _veh;
 
 sleep 1;
 
-_moveto = [AIT_NATO_HQPos,500,_dir] call SHK_pos;
+_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
@@ -92,7 +92,7 @@ _wp setWaypointType "SCRIPTED";
 _wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];	
 _wp setWaypointTimeout [15,15,15];
 
-_moveto = [AIT_NATO_HQPos,200,_dir] call SHK_pos;
+_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "LOITER";
@@ -112,10 +112,10 @@ _wp = _group addWaypoint [_attackpos,0];
 _wp setWaypointType "GUARD";
 _wp setWaypointBehaviour "COMBAT";
 
-_comp = AIT_NATO_Vehicle_CTRGTransport call ISSE_Cfg_Vehicle_GetName;
+_comp = OT_NATO_Vehicle_CTRGTransport call ISSE_Cfg_Vehicle_GetName;
 _an = "A";
 if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
-[5,_ao,format["%1 Reinforcements",_town],format["NATO has dispatched a CTRG support team to this location. Reports indicate that %1 %2 is departing %3 as we speak.",_an,_comp,AIT_NATO_HQ]] remoteExec ["intelEvent",0,false];
+[5,_ao,format["%1 Reinforcements",_town],format["NATO has dispatched a CTRG support team to this location. Reports indicate that %1 %2 is departing %3 as we speak.",_an,_comp,OT_NATO_HQ]] remoteExec ["intelEvent",0,false];
 
 {
 	_x addCuratorEditableObjects [_vehs+_soldiers,true];

@@ -8,7 +8,7 @@ private _hour = date select 3;
 
 if(_hour > 6 and _hour < 19) then {
 	//Walk to a shop and back again
-	private _dest = getpos([_start,AIT_allHouses + AIT_allShops + AIT_offices + AIT_portBuildings] call getRandomBuilding);
+	private _dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
 		
 	private _wp = _g addWaypoint [_dest,0];
 	_wp setWaypointType "MOVE";

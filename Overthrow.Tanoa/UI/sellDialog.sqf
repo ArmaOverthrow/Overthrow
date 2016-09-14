@@ -8,7 +8,7 @@ _s = _this select 3;
 lbClear 1500;
 {			
 	_cls = _x select 0;
-	if(_cls in AIT_allItems) then {
+	if(_cls in OT_allItems) then {
 		_num = _x select 1;			
 		_price = [_town,_cls,_standing] call getSellPrice;
 		_mynum = 0;
@@ -30,7 +30,7 @@ lbClear 1500;
 		
 		_name = "";
 		_pic = "";
-		if(_cls in AIT_allBackpacks) then {
+		if(_cls in OT_allBackpacks) then {
 			_name = _cls call ISSE_Cfg_Vehicle_GetName;
 			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 		}else{

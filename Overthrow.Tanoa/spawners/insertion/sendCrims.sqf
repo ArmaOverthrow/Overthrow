@@ -14,7 +14,7 @@ _count = 0;
 _start = [[[_mobpos,40]]] call BIS_fnc_randomPos;
 while{_count < _numcrim} do {
 	
-	_civ = _group createUnit [AIT_CRIM_Unit, _start, [],0, "NONE"];
+	_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
 	[_civ] joinSilent nil;
 	[_civ] joinSilent _group;
 	_civ setRank "SERGEANT";

@@ -32,7 +32,7 @@ player setPos _housepos;
 
 call {	
 	disableSerialization;
-	_display = uiNameSpace getVariable "AIT_statsHUD";
+	_display = uiNameSpace getVariable "OT_statsHUD";
 	if(isNil "_display") exitWith{};
 	_setText = _display displayCtrl 1001;
 	_setText ctrlSetStructuredText (parseText "");

@@ -31,6 +31,6 @@ while {true} do {
 				};
 			};
 		};
-	}foreach(AIT_allTowns);
+	}foreach(OT_allTowns);
 	sleep 600;
 };

@@ -14,7 +14,7 @@ if(!isNil "modeTarget") then {
 };
 
 {
-	if ((typeof _x) in AIT_allBuyableBuildings) exitWith {
+	if ((typeof _x) in OT_allBuyableBuildings) exitWith {
 		_gotbuilding = true;
 		_town = (getpos _x) call nearestTown;
 		_stability = ((server getVariable format["stability%1",_town]) / 100);
@@ -25,16 +25,16 @@ if(!isNil "modeTarget") then {
 				
 		_baseprice = 400;
 		_type = typeof _x;
-		if !(_type in AIT_spawnHouses) then {
+		if !(_type in OT_spawnHouses) then {
 			call {
-				if(_type in AIT_lowPopHouses) exitWith {_baseprice = 1000;_totaloccupants=4};
-				if(_type in AIT_mansions) exitWith {_baseprice = 25000;_totaloccupants=5;};
-				if(_type in AIT_medPopHouses) exitWith {_baseprice = 5000;_totaloccupants=6};
-				if(_type in AIT_highPopHouses) exitWith {_baseprice = 5000;_totaloccupants=12};
-				if(_type in AIT_hugePopHouses) exitWith {_baseprice = 5000;_totaloccupants=50};
+				if(_type in OT_lowPopHouses) exitWith {_baseprice = 1000;_totaloccupants=4};
+				if(_type in OT_mansions) exitWith {_baseprice = 25000;_totaloccupants=5;};
+				if(_type in OT_medPopHouses) exitWith {_baseprice = 5000;_totaloccupants=6};
+				if(_type in OT_highPopHouses) exitWith {_baseprice = 5000;_totaloccupants=12};
+				if(_type in OT_hugePopHouses) exitWith {_baseprice = 5000;_totaloccupants=50};
 			};				
 		};
-		_price = round(_baseprice + ((_baseprice * _stability * _population) * (1+AIT_standardMarkup)));
+		_price = round(_baseprice + ((_baseprice * _stability * _population) * (1+OT_standardMarkup)));
 		_sell = round(_baseprice + (_baseprice * _stability * _population));
 		_lease = round((_stability * _population) * (_baseprice * 0.15));
 		if(_lease < 5) then {_lease = 5};

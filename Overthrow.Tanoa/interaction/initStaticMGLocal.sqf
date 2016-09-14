@@ -7,13 +7,13 @@ if !(_wpn getVariable ["actioned",false]) then {
 		if(_p call unitSeen) then {
 			_p setCaptive false;
 		};
-		_ammocount = {_x == AIT_ammo_50cal} count (magazineCargo _p);
+		_ammocount = {_x == OT_ammo_50cal} count (magazineCargo _p);
 		if(_ammocount >= 4) then {
 			disableUserInput true;
-			_p removeMagazineGlobal AIT_ammo_50cal;
-			_p removeMagazineGlobal AIT_ammo_50cal;
-			_p removeMagazineGlobal AIT_ammo_50cal;
-			_p removeMagazineGlobal AIT_ammo_50cal;
+			_p removeMagazineGlobal OT_ammo_50cal;
+			_p removeMagazineGlobal OT_ammo_50cal;
+			_p removeMagazineGlobal OT_ammo_50cal;
+			_p removeMagazineGlobal OT_ammo_50cal;
 			_w spawn {					
 				"Rearming MG..." call notify_minor;
 				[15,false] call progressBar;

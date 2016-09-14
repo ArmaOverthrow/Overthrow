@@ -9,13 +9,13 @@ _description = "";
 modeFinished = false;
 modeCancelled = false;
 call {
-	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [AIT_item_Tent];_cost=40;_description="Creates a fast travel destination for you and your group. Only one allowed per player, will remove any existing camps."};
-	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [AIT_item_Flag];_cost=500;_description="Creates a fast travel destination for all friendlies and enables build mode for military structures"};
-	if(_typecls == "Ammobox") exitWith {modeValues = [AIT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
-	if(_typecls == "Whiteboard") exitWith {modeValues = [AIT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
+	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for you and your group. Only one allowed per player, will remove any existing camps."};
+	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_item_Flag];_cost=500;_description="Creates a fast travel destination for all friendlies and enables build mode for military structures"};
+	if(_typecls == "Ammobox") exitWith {modeValues = [OT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
+	if(_typecls == "Whiteboard") exitWith {modeValues = [OT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
 	{
 		if((_x select 0) == _typecls) exitWith {modeValues = _x select 2;_cost = _x select 1;attachAt = _x select 3};
-	}foreach(AIT_Placeables);
+	}foreach(OT_Placeables);
 };
 //Price check (on aisle 3)
 _money = player getVariable "money";
@@ -79,7 +79,7 @@ if(_cost > 0) then {
 					_dir = _dir + 90;
 				};
 				modeTarget remoteExec ["enableSimulationGlobal false",2];
-				if(_cls == AIT_item_Map) then {
+				if(_cls == OT_item_Map) then {
 					modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
 				};				
 				clearWeaponCargoGlobal modeTarget;
@@ -108,7 +108,7 @@ if(_cost > 0) then {
 	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
 	modeTarget remoteExec ["enableSimulationGlobal false",2];
 	modeTarget enableSimulation false;
-	if(_cls == AIT_item_Map) then {
+	if(_cls == OT_item_Map) then {
 		modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
 	};		
 	modeTarget enableSimulationGlobal false;
@@ -154,7 +154,7 @@ if(_cost > 0) then {
 			};
 			
 			if(_typecls == "Base") then {
-				createDialog "AIT_dialog_name";
+				createDialog "OT_dialog_name";
 				ctrlSetText [1400,"Base"];
 				
 				onNameDone = {
@@ -162,7 +162,7 @@ if(_cost > 0) then {
 					if(_name != "") then {
 						closeDialog 0;
 						
-						_base = (player nearObjects [AIT_item_Flag,50]) select 0;
+						_base = (player nearObjects [OT_item_Flag,50]) select 0;
 						
 						_bases = server getVariable ["bases",[]];
 						_bases pushback [getpos _base,_name,getplayeruid player];

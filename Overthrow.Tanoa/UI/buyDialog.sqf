@@ -13,7 +13,7 @@ lbClear 1500;
 	_price = [_town,_cls,_standing] call getPrice;
 	_name = "";
 	_pic = "";
-	if(_cls in AIT_allBackpacks) then {
+	if(_cls in OT_allBackpacks) then {
 		_name = _cls call ISSE_Cfg_Vehicle_GetName;
 		_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 	}else{

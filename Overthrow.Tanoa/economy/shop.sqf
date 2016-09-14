@@ -30,7 +30,7 @@ while {true} do {
 		_count = 0;
 		
 		while {_count < _numitems} do {
-			_item = (AIT_allItems - AIT_illegalItems - AIT_consumableItems) call BIS_Fnc_selectRandom;
+			_item = (OT_allItems - OT_illegalItems - OT_consumableItems) call BIS_Fnc_selectRandom;
 			if!(_item in _itemsToStock) then {
 				_itemsToStock pushback _item;
 				_count = _count + 1;
@@ -38,7 +38,7 @@ while {true} do {
 		};
 		
 		//1 Backpack
-		_item = (AIT_allBackpacks) call BIS_Fnc_selectRandom;
+		_item = (OT_allBackpacks) call BIS_Fnc_selectRandom;
 		_itemsToStock pushback _item;		
 		
 		{
@@ -48,14 +48,14 @@ while {true} do {
 		{
 			_num = floor(random 20) + 10;			
 			_stock pushBack [_x,_num];
-		}foreach(AIT_consumableItems);
+		}foreach(OT_consumableItems);
 		
 		_building setVariable ["stock",_stock,true];
 	}else{		
 		_currentitems = [];
 		
 		//Find the closest distro center and check if I already have an order there
-		_closest = nearestBuilding([AIT_activeDistribution,_building,_region] call nearestPositionRegion);
+		_closest = nearestBuilding([OT_activeDistribution,_building,_region] call nearestPositionRegion);
 		if !(isNil "_closest") then {
 			_orders = _closest getVariable ["orders",[]];
 			_idx = -1;
@@ -83,7 +83,7 @@ while {true} do {
 					//Add it to my order
 					_onorder pushback _x;
 					_num = floor(random 3) + 1;
-					if(_x in AIT_consumableItems) then {
+					if(_x in OT_consumableItems) then {
 						_num = floor(_num * 2);
 					};
 					_order pushback [_x,_num];

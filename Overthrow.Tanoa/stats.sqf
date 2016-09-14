@@ -5,10 +5,10 @@ showStatistics = true;
 disableSerialization;
 //1 cutRsc ["H8erHUD","PLAIN",0,false];
 _layer = ["stats"] call bis_fnc_rscLayer;
-_layer cutRsc ["AIT_statsHUD","PLAIN",0,false];
-waitUntil {!isNull (uiNameSpace getVariable "AIT_statsHUD")};
+_layer cutRsc ["OT_statsHUD","PLAIN",0,false];
+waitUntil {!isNull (uiNameSpace getVariable "OT_statsHUD")};
 
-_display = uiNameSpace getVariable "AIT_statsHUD";
+_display = uiNameSpace getVariable "OT_statsHUD";
 _setText = _display displayCtrl 1001;
 _setText ctrlSetBackgroundColor [0,0,0,0];
 

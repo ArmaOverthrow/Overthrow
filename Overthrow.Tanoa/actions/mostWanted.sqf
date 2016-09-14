@@ -5,7 +5,7 @@ _bounties = [];
 	if(_bounty > 0) then {
 		_bounties pushback [_x,_bounty];
 	};
-}foreach(AIT_allTowns);
+}foreach(OT_allTowns);
 
 _toshow = 5;
 _count = 1;

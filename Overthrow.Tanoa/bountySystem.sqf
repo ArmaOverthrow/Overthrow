@@ -4,7 +4,7 @@ if !(isServer) exitWith {};
 
 {
 	server setVariable [format["CRIMbounty%1",_x],0,true];	
-}foreach(AIT_allTowns);
+}foreach(OT_allTowns);
 
 while {true} do {
 	{
@@ -22,6 +22,6 @@ while {true} do {
 				server setVariable [format["CRIMbounty%1",_x],_newbounty,true];
 			};
 		};		 
-	}foreach(AIT_allTowns);
+	}foreach(OT_allTowns);
 	sleep 240;
 };

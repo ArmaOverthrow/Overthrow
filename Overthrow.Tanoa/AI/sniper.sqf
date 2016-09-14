@@ -1,9 +1,9 @@
 private _unit = _this select 0;
 
-[_unit, (AIT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (AIT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+[_unit, (OT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (OT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
 
-if(AIT_hasACE) then {
+if(OT_hasACE) then {
 	_unit addItemToUniform "ACE_rangeCard";
 };
 _unit setVariable ["NOAI",true,false];

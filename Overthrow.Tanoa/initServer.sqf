@@ -12,7 +12,7 @@ if (!isMultiplayer) exitWith {};
 call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
 
-if(AIT_fastTime) then {
+if(OT_fastTime) then {
     setTimeMultiplier 4;
 };
 
@@ -22,8 +22,8 @@ waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "factions\NATO.sqf";
 [] execVM "factions\GUER.sqf";
 [] execVM "factions\CRIM.sqf";  
-waitUntil {!isNil "AIT_NATOInitDone"};
-waitUntil {!isNil "AIT_CRIMInitDone"};  
+waitUntil {!isNil "OT_NATOInitDone"};
+waitUntil {!isNil "OT_CRIMInitDone"};  
 
 //Game systems
 [] execVM "bountySystem.sqf";
@@ -32,13 +32,13 @@ waitUntil {!isNil "AIT_CRIMInitDone"};
 
 //Init virtualization
 [] execVM "virtualization.sqf"; 
-waitUntil {!isNil "AIT_economyLoadDone" and !isNil "AIT_fnc_registerSpawner"};
+waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\towns.sqf";
 [] execVM "virtualization\military.sqf";
 [] execVM "virtualization\mobsters.sqf";
 
 addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
-if(AIT_hasAce) then {
+if(OT_hasAce) then {
     //ACE events
     ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
 };
@@ -46,5 +46,5 @@ if(AIT_hasAce) then {
 addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];
 addMissionEventHandler ["HandleConnnect",compile preprocessFileLineNumbers "events\playerConnect.sqf"];
 
-AIT_serverInitDone = true;
-publicVariable "AIT_serverInitDone";
+OT_serverInitDone = true;
+publicVariable "OT_serverInitDone";

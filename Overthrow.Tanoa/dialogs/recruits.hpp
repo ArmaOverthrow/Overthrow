@@ -1,4 +1,4 @@
-class AIT_dialog_recruits
+class OT_dialog_recruits
 {
 	idd=8004;
 	movingenable=false;

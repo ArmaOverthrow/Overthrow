@@ -22,12 +22,12 @@ _p = [0,2.5,((_p select 2) - (_j select 2))+1.2];
 _cosa attachTo [_jugador,_p];
 _cosa allowDamage false;
 
-AIT_moveIdx = _jugador addAction ["Drop Here", {{detach _x} forEach attachedObjects player;},nil,0,false,true,"",""];
+OT_moveIdx = _jugador addAction ["Drop Here", {{detach _x} forEach attachedObjects player;},nil,0,false,true,"",""];
 
 waitUntil {sleep 0.1; (count attachedObjects _jugador == 0) or (vehicle _jugador != _jugador) or (!alive _jugador) or (!isPlayer _jugador)};
 
 {detach _x} forEach attachedObjects _jugador;
-_jugador removeAction AIT_moveIdx;
+_jugador removeAction OT_moveIdx;
 
 if!([(getpos player),"Misc"] call canPlace) exitWith {
 	"You cannot move this too far from a building or camp that you own" call notify_minor;

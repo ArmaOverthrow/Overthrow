@@ -18,7 +18,7 @@ _groups = [_group];
 	_t = _pos call nearestTown;
 	if(_t == _town) then {		
 		_dir = getDir _building;		
-		_shopkeeper = _group createUnit [AIT_civType_carDealer, [_pos,[0,0,2]] call BIS_fnc_vectorAdd, [],0, "NONE"];
+		_shopkeeper = _group createUnit [OT_civType_carDealer, [_pos,[0,0,2]] call BIS_fnc_vectorAdd, [],0, "NONE"];
 		_shopkeeper disableAI "MOVE";
 		_shopkeeper disableAI "AUTOCOMBAT";
 		_shopkeeper setVariable ["NOAI",true,false];
@@ -29,7 +29,7 @@ _groups = [_group];
 		[_shopkeeper] call initHarbor;
 		_shopkeeper setVariable ["harbor",true,true];
 	};
-}foreach(nearestObjects [_posTown,AIT_piers, 700]);
+}foreach(nearestObjects [_posTown,OT_piers, 700]);
 		
 {
 	_x addCuratorEditableObjects [units _group,true];

@@ -28,13 +28,13 @@ while{true} do {
 			//Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 			_count = 0;
 			if(_name find "Comms" == 0) then {
-				_tower = nearestObjects [_posTown,AIT_NATO_CommTowers,100] select 0;
+				_tower = nearestObjects [_posTown,OT_NATO_CommTowers,100] select 0;
 				_posTown = getpos _tower;
 				
 				_group = createGroup blufor;							
 				_groups pushBack _group;
 				
-				_civ = _group createUnit [AIT_NATO_Unit_Sniper, _posTown, [],0, "NONE"];
+				_civ = _group createUnit [OT_NATO_Unit_Sniper, _posTown, [],0, "NONE"];
 				_civ setVariable ["garrison",_name,false];
 				_civ setRank "CAPTAIN";
 				[_civ,_name] call initSniper;
@@ -45,7 +45,7 @@ while{true} do {
 				
 				if(_count < _numNATO) then {
 					sleep 2;
-					_civ = _group createUnit [AIT_NATO_Unit_Spotter, _posTown, [],0, "NONE"];
+					_civ = _group createUnit [OT_NATO_Unit_Spotter, _posTown, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
 					[_civ,_name] call initSniper;
@@ -59,7 +59,7 @@ while{true} do {
 					_group = createGroup blufor;							
 					_groups pushBack _group;
 					_start = [[[_posTown,75]]] call BIS_fnc_randomPos;
-					_civ = _group createUnit [AIT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
+					_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
 					[_civ,_name] call initMilitary;
@@ -76,7 +76,7 @@ while{true} do {
 				
 				if(_count < _numNATO) then {
 					_start = [[[_posTown,75]]] call BIS_fnc_randomPos;
-					_civ = _group createUnit [AIT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
+					_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
 					[_civ,_name] call initMilitary;
@@ -87,7 +87,7 @@ while{true} do {
 				
 			}else{
 				//put up a flag
-				_flag =  AIT_flag_NATO createVehicle _posTown;
+				_flag =  OT_flag_NATO createVehicle _posTown;
 				_groups pushback _flag;
 			};			
 			
@@ -99,7 +99,7 @@ while{true} do {
 				_groups pushBack _group;	
 				_groupcount = 1;
 				
-				_civ = _group createUnit [AIT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
+				_civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 				_civ setVariable ["garrison",_name,false];
 				_civ setRank "CAPTAIN";
 				[_civ,_name] call initMilitary;
@@ -110,7 +110,7 @@ while{true} do {
 				while {(spawner getVariable _id) and (_count < _numNATO) and (_groupcount < 8)} do {
 					_start = [_start,0,40, 1, 0, 0, 0] call BIS_fnc_findSafePos;		
 					
-					_civ = _group createUnit [AIT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+					_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "LIEUTENANT";
 					[_civ,_name] call initMilitary;
@@ -128,7 +128,7 @@ while{true} do {
 			
 			_pos = [];
 			_dir = 0;
-			_terminal = nearestobjects [_posTown,AIT_airportTerminals,350];
+			_terminal = nearestobjects [_posTown,OT_airportTerminals,350];
 			if(count _terminal > 0) then {
 				_tp = getpos (_terminal select 0);
 				_dir = getdir (_terminal select 0);
@@ -168,7 +168,7 @@ while{true} do {
 				_vehtype = _x;
 				_dir = 0;
 				_got = false;				
-				if(_vehtype in AIT_staticWeapons) then {
+				if(_vehtype in OT_staticWeapons) then {
 					_pos = _posTown findEmptyPosition [10,50,_vehtype];					
 					_dir = [_posTown,_pos] call BIS_fnc_dirTo;
 					_p = [_pos,1.5,_dir] call BIS_fnc_relPos;

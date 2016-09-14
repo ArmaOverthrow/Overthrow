@@ -5,6 +5,6 @@ _ret = [];
 	if([_x,_region] call fnc_isInMarker) then {
 		_ret pushBack _x;
 	};
-}foreach (AIT_allTowns);
+}foreach (OT_allTowns);
 
 _ret

@@ -30,7 +30,7 @@ if(_numCRIM > 0) then {
 	if ((typeName _leaderpos) == "ARRAY") then {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 		
-		_civ = _group createUnit [AIT_CRIM_Unit, _start, [],0, "NONE"];
+		_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
 		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
 		_civ setskill _skill;
@@ -74,7 +74,7 @@ if(_numCRIM > 0) then {
 	while {(_count < _numCRIM)} do {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 		
-		_civ = _group createUnit [AIT_CRIM_Unit, _start, [],0, "NONE"];
+		_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
 		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
 		if(_time > 1200) then {

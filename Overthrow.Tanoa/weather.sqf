@@ -111,8 +111,8 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 	simulWeatherSync;
 };
 
-AIT_SystemInitDone = true;
-publicVariable "AIT_SystemInitDone";
+OT_SystemInitDone = true;
+publicVariable "OT_SystemInitDone";
 
 private _nextchange = 350 + (random 600);
 

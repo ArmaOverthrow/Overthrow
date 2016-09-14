@@ -1,4 +1,4 @@
-class AIT_dialog_buildbase
+class OT_dialog_buildbase
 {
 	idd=-1;
 	movingenable=false;	
@@ -81,7 +81,7 @@ class AIT_dialog_buildbase
 	}
 };
 
-class AIT_dialog_buildobjective
+class OT_dialog_buildobjective
 {
 	idd=-1;
 	movingenable=false;	
@@ -224,7 +224,7 @@ class AIT_dialog_buildobjective
 	}
 };
 
-class AIT_dialog_buildtown
+class OT_dialog_buildtown
 {
 	idd=-1;
 	movingenable=false;	

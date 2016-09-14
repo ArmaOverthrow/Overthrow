@@ -25,7 +25,7 @@ _distance = _pos distance _dest;
 if(_distance < 450) exitWith {
 	//Don't need a truck, just walk up the road mate
 	sleep 10;
-	_id call AIT_fnc_deregisterSpawner;
+	_id call OT_fnc_deregisterSpawner;
 	_building setVariable ["deliveryid","",true];
 };
 
@@ -49,7 +49,7 @@ while{_status != "done"} do {
 			//Do I already have a truck?
 			_veh = _building getVariable "truck";
 			if (isNil "_veh") then {
-				_vehtype = AIT_vehType_distro;
+				_vehtype = OT_vehType_distro;
 				_start = [_pos,11,(getDir _building)-155] call BIS_fnc_relPos;
 				_posVeh = _start findEmptyPosition [0,10,_vehtype];
 							
@@ -72,7 +72,7 @@ while{_status != "done"} do {
 				{				
 					_cls = _x select 0;
 					_num = _x select 1;
-					if(_cls in AIT_allBackpacks) then {	
+					if(_cls in OT_allBackpacks) then {	
 						_veh addBackpackCargoGlobal _x;
 					}else{
 						_veh addItemCargoGlobal _x;
@@ -85,7 +85,7 @@ while{_status != "done"} do {
 				_start = [_pos,-2,getDir _building] call BIS_fnc_relPos;			
 				_numworkers = 2;
 				while {_count < _numworkers} do {							
-					_civ = _group createUnit [AIT_civType_worker, _start, [],0, "NONE"];
+					_civ = _group createUnit [OT_civType_worker, _start, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
 					[_civ,_building] spawn initCivilian;
 					_civs pushBack _civ;				
@@ -126,7 +126,7 @@ while{_status != "done"} do {
 		}else{			
 			if(_counter > _triplength) then {
 				////delivery is done
-				_id call AIT_fnc_deregisterSpawner;
+				_id call OT_fnc_deregisterSpawner;
 				_status = "done";
 				_building setVariable ["deliveryid","",true];
 			};
@@ -136,7 +136,7 @@ while{_status != "done"} do {
 		if (spawner getVariable _id) then {
 			//Do updates here that should happen only while spawned
 			//...
-			[_id,getpos _veh,_dest] call AIT_fnc_updateSpawnerPosition;
+			[_id,getpos _veh,_dest] call OT_fnc_updateSpawnerPosition;
 		}else{		
 			_active = false;
 			//Tear it all down

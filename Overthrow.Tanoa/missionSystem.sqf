@@ -13,9 +13,9 @@ while {true} do {
 			}else{
 				{
 					
-				}foreach(AIT_NATO_missions);
+				}foreach(OT_NATO_missions);
 			};
 		};		
-	}foreach(AIT_allTowns);
+	}foreach(OT_allTowns);
 	sleep 600;
 };

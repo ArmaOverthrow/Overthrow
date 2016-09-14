@@ -38,13 +38,13 @@ while {_status != "finished"} do {
 			};			
 			
 			_num = floor(random _max);
-			if(_x in AIT_consumableItems) then {
+			if(_x in OT_consumableItems) then {
 				_num = floor(_num * 2);
 			};
 			if(_num > 0) then {
 				_stock pushBack [_x,_num];
 			};
-		}foreach(AIT_allItems + AIT_allBackpacks);
+		}foreach(OT_allItems + OT_allBackpacks);
 		_building setVariable ["stock",_stock,true];
 		_building setVariable ["employees",_numemployees,false];
 		_building setVariable ["security",_numsecurity,false];
@@ -108,7 +108,7 @@ while {_status != "finished"} do {
 			_town =  (_qty select 0) select 0;
 			_size = (_qty select 0) select 1;
 									
-			if(_size > AIT_distroThreshold) then {
+			if(_size > OT_distroThreshold) then {
 				//OK.. Send a truck				
 				_loaddict = [_towntotal,_town] call dict_get;				
 				_load = [];
@@ -151,7 +151,7 @@ while {_status != "finished"} do {
 				_building setVariable ["stock",_s,true];	
 				
 				if((count _actual) > 0) then {
-					_deliveryid = [[_pos,_townpos],logistics,[_building,_actual,_deliveries]] call AIT_fnc_registerSpawner;
+					_deliveryid = [[_pos,_townpos],logistics,[_building,_actual,_deliveries]] call OT_fnc_registerSpawner;
 					_doingdelivery = true;
 				};
 			};
@@ -168,5 +168,5 @@ while {_status != "finished"} do {
 	sleep 200 + random(600); //stagger the updates
 };
 
-AIT_activeDistribution deleteAt (AIT_activeDistribution find _building);
-publicVariable "AIT_activeDistribution";
+OT_activeDistribution deleteAt (OT_activeDistribution find _building);
+publicVariable "OT_activeDistribution";

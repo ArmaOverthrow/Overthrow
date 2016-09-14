@@ -28,8 +28,8 @@ if(!isMultiplayer) then {
     [] execVM "factions\NATO.sqf";
 	[] execVM "factions\GUER.sqf";
     [] execVM "factions\CRIM.sqf";  
-    waitUntil {!isNil "AIT_NATOInitDone"};
-    waitUntil {!isNil "AIT_CRIMInitDone"};  
+    waitUntil {!isNil "OT_NATOInitDone"};
+    waitUntil {!isNil "OT_CRIMInitDone"};  
     
     //Game systems
     [] execVM "bountySystem.sqf";
@@ -38,18 +38,18 @@ if(!isMultiplayer) then {
     
     //Init virtualization
     [] execVM "virtualization.sqf"; 
-    waitUntil {!isNil "AIT_economyLoadDone" and !isNil "AIT_fnc_registerSpawner"};
+    waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
     [] execVM "virtualization\towns.sqf";
     [] execVM "virtualization\military.sqf";
     [] execVM "virtualization\mobsters.sqf";
     
     missionNamespace setVariable [getplayeruid player,player,true];
     addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
-    if(AIT_hasAce) then {
+    if(OT_hasAce) then {
         //ACE events
         ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
     };
     
-    AIT_serverInitDone = true;
-    publicVariable "AIT_serverInitDone";
+    OT_serverInitDone = true;
+    publicVariable "OT_serverInitDone";
 };

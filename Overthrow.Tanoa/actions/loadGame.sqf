@@ -18,7 +18,7 @@ if(typename _data != "ARRAY") exitWith {
 			_name = _x select 1;
 			_owner = _x select 2;
 			
-			_veh = createVehicle [AIT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
+			_veh = createVehicle [OT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
 			_veh setVariable ["owner",_owner,true];
 			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 			
@@ -54,11 +54,11 @@ if(typename _data != "ARRAY") exitWith {
 				clearItemCargoGlobal _veh;	
 				_veh setVariable ["name",_name,true];
 				
-				if(_type == AIT_item_Map) then {
+				if(_type == OT_item_Map) then {
 					_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
 				};
 				
-				if(_type in AIT_staticMachineGuns) then {		
+				if(_type in OT_staticMachineGuns) then {		
 					_veh remoteExec["initStaticMGLocal",0,_veh];
 				};
 			
@@ -66,10 +66,10 @@ if(typename _data != "ARRAY") exitWith {
 				{
 					_cls = _x select 0;
 					_num = _x select 1;
-					if(_cls in AIT_allWeapons) then {
+					if(_cls in OT_allWeapons) then {
 						_veh addWeaponCargoGlobal _x;
 					}else{
-						if(_cls in AIT_allMagazines) then {
+						if(_cls in OT_allMagazines) then {
 							_veh addMagazineCargoGlobal _x;
 						}else{
 							_veh addItemCargoGlobal _x;

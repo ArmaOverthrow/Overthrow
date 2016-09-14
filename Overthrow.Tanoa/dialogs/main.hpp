@@ -1,4 +1,4 @@
-class AIT_dialog_start
+class OT_dialog_start
 {
 	idd=-1;
 	movingenable=false;
@@ -37,7 +37,7 @@ class AIT_dialog_start
 	};
 };
 
-class AIT_dialog_vehicle
+class OT_dialog_vehicle
 {
 	idd=-1;
 	movingenable=false;
@@ -99,7 +99,7 @@ class AIT_dialog_vehicle
 	}
 }
 
-class AIT_dialog_command
+class OT_dialog_command
 {
 	idd=-1;
 	movingenable=false;
@@ -159,7 +159,7 @@ class AIT_dialog_command
 	}
 }
 
-class AIT_dialog_options
+class OT_dialog_options
 {
 	idd=-1;
 	movingenable=false;
@@ -200,7 +200,7 @@ class AIT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Decreases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
-			action = "AIT_spawnCivPercentage = AIT_spawnCivPercentage - 0.01; if(AIT_spawnCivPercentage < 0) then {AIT_spawnCivPercentage = 0};publicVariable 'AIT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',AIT_spawnCivPercentage*100,'%'];";
+			action = "OT_spawnCivPercentage = OT_spawnCivPercentage - 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
 		};
 		class RscButton_1602: RscButton
 		{
@@ -211,7 +211,7 @@ class AIT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Increases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
-			action = "AIT_spawnCivPercentage = AIT_spawnCivPercentage + 0.01; if(AIT_spawnCivPercentage < 0) then {AIT_spawnCivPercentage = 0};publicVariable 'AIT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',AIT_spawnCivPercentage*100,'%'];";
+			action = "OT_spawnCivPercentage = OT_spawnCivPercentage + 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
 		};
 		class RscButton_1603: RscButton
 		{
@@ -249,7 +249,7 @@ class AIT_dialog_options
 	};
 };
 
-class AIT_dialog_main
+class OT_dialog_main
 {
 	idd=8001;
 	movingenable=false;	
@@ -290,7 +290,7 @@ class AIT_dialog_main
 			y = 0.577 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
-			action = "closeDialog 0;createDialog 'AIT_dialog_place'";
+			action = "closeDialog 0;createDialog 'OT_dialog_place'";
 			tooltip = "Place smaller items around houses you own or at friendly bases";
 		};
 		class RscButton_1602: RscButton

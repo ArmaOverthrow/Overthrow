@@ -26,7 +26,7 @@ while{true} do {
 
 			_road = [_start] call BIS_fnc_nearestRoad;
 			_start = getPos _road;
-			_vehtype = AIT_vehTypes_civ call BIS_Fnc_selectRandom;
+			_vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
 			
 			_roadscon = roadsConnectedto _road;
 			_dir = [_road, _roadscon select 0] call BIS_fnc_DirTo;
@@ -50,7 +50,7 @@ while{true} do {
 			
 			_start = [_start,12,_dir+90] call BIS_fnc_relPos;
 			
-			_civ = _group createUnit [AIT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
+			_civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 			_civ setVariable ["garrison",_name,false];
 			_civ setRank "MAJOR";
 			_soldiers pushBack _civ;
@@ -58,7 +58,7 @@ while{true} do {
 			_civ setBehaviour "SAFE";
 			
 			{
-				if(typeof _x in AIT_staticMachineGuns) then {
+				if(typeof _x in OT_staticMachineGuns) then {
 					_group addVehicle _x;
 				};
 			}foreach(_vehs);
@@ -67,7 +67,7 @@ while{true} do {
 			sleep 0.1;
 			while {(spawner getVariable _id) and (_count < _numNATO)} do {	
 				_pos = [_start,0,60, 0.1, 0, 0, 0] call BIS_fnc_findSafePos;		
-				_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
+				_civ = _group createUnit [OT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _pos, [],0, "NONE"];
 				_civ setVariable ["garrison",_name,false];
 				_soldiers pushBack _civ;
 				_civ setRank "CAPTAIN";

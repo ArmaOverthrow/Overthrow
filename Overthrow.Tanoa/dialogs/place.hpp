@@ -1,4 +1,4 @@
-class AIT_dialog_name
+class OT_dialog_name
 {
 	idd=-1;
 	movingenable=false;
@@ -45,7 +45,7 @@ class AIT_dialog_name
 	};
 };
 
-class AIT_dialog_place
+class OT_dialog_place
 {
 	idd=8002;
 	movingenable=false;

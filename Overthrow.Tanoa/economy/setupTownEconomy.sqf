@@ -6,7 +6,7 @@ _posTown = server getVariable _town;
 _shops   = 0;
 _active  = [];
 
-private _churches = nearestObjects [_posTown, AIT_churches, 700];
+private _churches = nearestObjects [_posTown, OT_churches, 700];
 if(count _churches > 0) then {
 	server setVariable [format["churchin%1",_town],getpos (_churches select 0),true];	
 };
@@ -23,7 +23,7 @@ if(count _churches > 0) then {
             _count        = 0;
             
             while {_count < _numitems} do {
-                _item = (AIT_allItems - AIT_illegalItems - AIT_consumableItems) call BIS_Fnc_selectRandom;
+                _item = (OT_allItems - OT_illegalItems - OT_consumableItems) call BIS_Fnc_selectRandom;
                 if!(_item in _itemsToStock) then {
                     _itemsToStock pushback _item;
                     _count = _count + 1;
@@ -31,7 +31,7 @@ if(count _churches > 0) then {
             };
             
             //1 Backpack
-            _item = (AIT_allBackpacks) call BIS_Fnc_selectRandom;
+            _item = (OT_allBackpacks) call BIS_Fnc_selectRandom;
             _itemsToStock pushback _item;       
             
             {
@@ -41,12 +41,12 @@ if(count _churches > 0) then {
             {
                 _num = floor(random 20) + 10;           
                 _stock pushBack [_x,_num];
-            }foreach(AIT_consumableItems);
+            }foreach(OT_consumableItems);
             
             _active pushback [(getpos _x),_stock];
         };
     };
-}foreach(nearestObjects [_posTown, AIT_shops, 700]);
+}foreach(nearestObjects [_posTown, OT_shops, 700]);
 
 server setVariable [format["shopsin%1",_town],_shops,true];
 server setVariable [format["activeshopsin%1",_town],_active,true];
@@ -66,16 +66,16 @@ _active = [];
                 };          
                 
                 _num = floor(random _max);
-                if(_x in AIT_consumableItems) then {
+                if(_x in OT_consumableItems) then {
                     _num = floor(_num * 2);
                 };
                 if(_num > 0) then {
                     _stock pushBack [_x,_num];
                 };
-            }foreach(AIT_allItems + AIT_allBackpacks);
+            }foreach(OT_allItems + OT_allBackpacks);
             server setVariable [format["garrison%1",(getpos _x)],2 + round(random 4),true];
             _active pushback [(getpos _x),_stock];
         };
     };
-}foreach(nearestObjects [_posTown, AIT_warehouses, 700]);
+}foreach(nearestObjects [_posTown, OT_warehouses, 700]);
 server setVariable [format["activedistin%1",_town],_active,true];

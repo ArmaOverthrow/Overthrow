@@ -7,7 +7,7 @@ while {true} do {
 	_inf = 1;
 	{
 		_town = _x;
-		if(_town in AIT_allTowns) then {
+		if(_town in OT_allTowns) then {
 			_population = server getVariable format["population%1",_town];
 			_stability = server getVariable format["stability%1",_town];
 			_add = round(_population * (_stability/100));			

@@ -18,7 +18,7 @@ if(backpack _unit != "") then {
 	_count = 0;
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {	
-		if(_cls in AIT_allMagazines) then {
+		if(_cls in OT_allMagazines) then {
 			_t addMagazine _cls;
 			_unit removeMagazine _cls;
 		}else{

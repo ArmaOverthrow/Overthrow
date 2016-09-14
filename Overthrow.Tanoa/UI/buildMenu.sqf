@@ -31,7 +31,7 @@ if(!_isBase) then {
 		_buildlocation = "objective";
 	}else{
 		_buildlocation = "town";
-		if(_town in AIT_capitals) then {
+		if(_town in OT_capitals) then {
 			modeMax = 750;
 		};
 	};
@@ -91,7 +91,7 @@ buildOnMouseMove = {
 		modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];	
 		
 		if(modeMode == 0) then {
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != AIT_item_Flag) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
+			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_item_Flag) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
@@ -270,7 +270,7 @@ buildOnMouseUp = {
 			};			
 			deleteVehicle modeVisual;
 			if(modeCode != "") then {
-				_created setVariable ["AIT_init",modeCode,true];
+				_created setVariable ["OT_init",modeCode,true];
 				[modeValue] execVM modeCode;				
 			};
 		};
@@ -318,7 +318,7 @@ build = {
 	_def = [];
 	{
 		if((_x select 0) == modeSelected) exitWith {_def = _x};
-	}foreach(AIT_Buildables);
+	}foreach(OT_Buildables);
 	modeIndex = 0;
 	_name = _def select 0;
 	_description = _def select 5;
@@ -360,7 +360,7 @@ build = {
 	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
-createDialog format["AIT_dialog_build%1",_buildlocation];
+createDialog format["OT_dialog_build%1",_buildlocation];
 
 waitUntil {sleep 1;modeFinished or modeCancelled or !dialog};
 

@@ -5,7 +5,7 @@ _cls = _this select 1;
 _standing = _this select 2;
 _price = 0;
 
-if(_cls in (AIT_allWeapons + AIT_allMagazines + AIT_illegalItems + AIT_allStaticBackpacks)) then {
+if(_cls in (OT_allWeapons + OT_allMagazines + OT_illegalItems + OT_allStaticBackpacks)) then {
 	_stock = server getVariable format["gunstock%1",_town];
 	{
 		if((_x select 0) == _cls) exitWith {_price = _x select 1}; 
@@ -24,7 +24,7 @@ if(_cls in (AIT_allWeapons + AIT_allMagazines + AIT_illegalItems + AIT_allStatic
 	if(_standing == 0) then {_standing = 1};
 	_standing = ((_standing/100) * -1)+1;
 
-	_price = _baseprice + ((_baseprice * _standing) + (_baseprice * _stability * _population) * (1+AIT_standardMarkup));
+	_price = _baseprice + ((_baseprice * _standing) + (_baseprice * _stability * _population) * (1+OT_standardMarkup));
 };
 
 round(_price)

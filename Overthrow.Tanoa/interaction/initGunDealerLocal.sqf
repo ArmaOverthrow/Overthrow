@@ -5,13 +5,13 @@ _civ addAction ["Buy", {
 
 	_stock = server getVariable format["gunstock%1",_town];
 	if(isNil "_stock") then {
-		_basic = cost getVariable AIT_item_BasicGun;		
+		_basic = cost getVariable OT_item_BasicGun;		
 		_numguns = round(random 5)+3;
 		_count = 0;
 		_stock = [];
 		_tostock = [];
 		while {_count < _numguns} do {
-			_type = AIT_allWeapons call BIS_fnc_selectRandom;
+			_type = OT_allWeapons call BIS_fnc_selectRandom;
 			if !(_type in _tostock) then {
 				
 				_tostock pushBack _type;
@@ -23,48 +23,48 @@ _civ addAction ["Buy", {
 				_base = [_type] call BIS_fnc_baseWeapon;
 				_magazines = getArray (configFile / "CfgWeapons" / _base / "magazines");
 				_price = 2;
-				if(_type in AIT_allSubMachineGuns) then {
+				if(_type in OT_allSubMachineGuns) then {
 					_price = 3;
 				};
-				if(_type in AIT_allAssaultRifles) then {
+				if(_type in OT_allAssaultRifles) then {
 					_price = 5;
 					if((_cost select 0) > 1400) then {
 						_price = 10;
 					};
 				};
-				if(_type in AIT_allMachineGuns) then {
+				if(_type in OT_allMachineGuns) then {
 					_price = 12;
 				};
-				if(_type in AIT_allSniperRifles) then {
+				if(_type in OT_allSniperRifles) then {
 					_price = 20;
 				};
-				if(_type in AIT_allRocketLaunchers) then {
+				if(_type in OT_allRocketLaunchers) then {
 					_price = 50;
 				};
-				if(_type in AIT_allMissileLaunchers) then {
+				if(_type in OT_allMissileLaunchers) then {
 					_price = 100;
 				};				
 				_stock pushBack [_magazines call BIS_fnc_selectRandom,_price];				
 			};
 		};
 		
-		_stock pushback [AIT_ammo_50cal,25];
+		_stock pushback [OT_ammo_50cal,25];
 		
 		{			
 			_cost = cost getVariable _x;
 			_price = _cost select 0;
 			_stock pushBack [_x,_price];
-		}foreach(AIT_allStaticBackpacks);
+		}foreach(OT_allStaticBackpacks);
 		
 		{			
 			_price = round(50 * ((random 1) + 1));
 			_stock pushBack [_x,_price];
-		}foreach(AIT_illegalItems);		
+		}foreach(OT_illegalItems);		
 		
 		server setVariable [format["gunstock%1",_town],_stock,true];
 	};
 	
-	createDialog "AIT_dialog_buy";
+	createDialog "OT_dialog_buy";
 	{			
 		_cls = _x select 0;
 		_price = _x select 1;
@@ -72,11 +72,11 @@ _civ addAction ["Buy", {
 		_pic = "";
 		
 		call {
-			if(_cls in AIT_allMagazines) exitWith {	
+			if(_cls in OT_allMagazines) exitWith {	
 				_txt = format["--- %1",_cls call ISSE_Cfg_Magazine_GetName];			
 				_pic = _cls call ISSE_Cfg_Magazine_GetPic;
 			};
-			if(_cls in AIT_allStaticBackpacks) exitWith {	
+			if(_cls in OT_allStaticBackpacks) exitWith {	
 				_txt = format["--- %1",_cls call ISSE_Cfg_Vehicle_GetName];			
 				_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 			};			

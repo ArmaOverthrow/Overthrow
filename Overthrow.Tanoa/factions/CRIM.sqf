@@ -1,18 +1,18 @@
 if (!isServer) exitwith {};
 
 _leaderpos = objNULL;
-AIT_CRIMmobsters = [];
+OT_CRIMmobsters = [];
 
-waitUntil {!isNil "AIT_NATOInitDone"};
+waitUntil {!isNil "OT_NATOInitDone"};
 
 _activemobsters = server getVariable ["activemobsters",false];
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMversion",0]) < AIT_CRIMversion) then {
-	server setVariable ["CRIMversion",AIT_CRIMversion,false];
+if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMversion",0]) < OT_CRIMversion) then {
+	server setVariable ["CRIMversion",OT_CRIMversion,false];
 	{
 		_town = _x;
 		_posTown = server getVariable _town;
 		_mSize = 300;
-		if(_town in AIT_capitals) then {
+		if(_town in OT_capitals) then {
 			_mSize = 800;
 		};
 		_garrison = 0;	
@@ -21,7 +21,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 		server setVariable [format["crimadd%1",_town],0,false];
 		if(_stability < 17) then {
 			_garrison = 4 + round(random 4);
-			_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
+			_building = [_posTown, OT_crimHouses] call getRandomBuilding;
 			if(isNil "_building") then {
 				_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
 			}else{
@@ -34,7 +34,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 		};
 		server setVariable [format ["numcrims%1",_x],_garrison,false];
 		server setVariable [format ["timecrims%1",_x],0,false];
-	}foreach (AIT_allTowns);
+	}foreach (OT_allTowns);
 	
 	
 	_mobsters = [];
@@ -90,8 +90,8 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 	
 	server setVariable ["activemobsters",_mobsters,true];
 };
-AIT_CRIMInitDone = true;
-publicVariable "AIT_CRIMInitDone";
+OT_CRIMInitDone = true;
+publicVariable "OT_CRIMInitDone";
 
 _sleeptime = 20;
 
@@ -102,7 +102,7 @@ while {true} do {
 			_town = _x;
 			_posTown = server getVariable _town;
 			_mSize = 300;
-			if(_town in AIT_capitals) then {
+			if(_town in OT_capitals) then {
 				_mSize = 800;
 			};
 			_stability = server getVariable format ["stability%1",_town];
@@ -131,7 +131,7 @@ while {true} do {
 							}else{							
 								//New leader spawn
 								
-								_building = [_posTown, AIT_crimHouses] call getRandomBuilding;
+								_building = [_posTown, OT_crimHouses] call getRandomBuilding;
 								if(isNil "_building") then {
 									_leaderpos = [[[_posTown,50]]] call BIS_fnc_randomPos;
 								}else{
@@ -148,7 +148,7 @@ while {true} do {
 				};
 			};
 			sleep 0.1;
-		}foreach (AIT_allTowns);
+		}foreach (OT_allTowns);
 	};
 	
 	{
@@ -160,6 +160,6 @@ while {true} do {
 		};
 	}foreach(allGroups);
 		
-	_sleeptime = AIT_CRIMwait + round(random AIT_CRIMwait);
+	_sleeptime = OT_CRIMwait + round(random OT_CRIMwait);
 };
 

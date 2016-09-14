@@ -1,7 +1,7 @@
 
 
 closedialog 0;
-createDialog "AIT_dialog_main";
+createDialog "OT_dialog_main";
 openMap false;
 disableSerialization;		
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
@@ -65,7 +65,7 @@ if(typename _b == "ARRAY") then {
 			_ownername = format["%1<br/>(Leased)",_ownername];
 		};
 		if(_owner == getplayerUID player) then {
-			if(typeof _building == AIT_item_Tent) exitWith {
+			if(typeof _building == OT_item_Tent) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
 				ctrlEnable [1609,false];
@@ -76,7 +76,7 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.7'>Owned by %1</t>
 				",_ownername];
 			};
-			if(typeof _building == AIT_item_Flag) exitWith {
+			if(typeof _building == OT_item_Flag) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
 				ctrlEnable [1609,false];
@@ -103,10 +103,10 @@ if(typename _b == "ARRAY") then {
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
 			ctrlEnable [1610,false];
-			if(typeof _building == AIT_item_Tent) then {
+			if(typeof _building == OT_item_Tent) then {
 				_name = "Camp";
 			};
-			if(typeof _building == AIT_item_Flag) then {
+			if(typeof _building == OT_item_Flag) then {
 				_name = _building getVariable "name";
 			};
 			_buildingTxt = format["

@@ -9,7 +9,7 @@ _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "LIMITED";
 _wp setWaypointTimeout [10,20,60];
 
-_dest = getpos([_start,AIT_allHouses + AIT_allShops + AIT_offices + AIT_portBuildings] call getRandomBuilding);
+_dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
 
 _wp = _group addWaypoint [_dest,10];
 _wp setWaypointType "MOVE";
@@ -17,7 +17,7 @@ _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "LIMITED";
 _wp setWaypointTimeout [10,20,60];
 
-_dest = getpos([_start,AIT_allHouses + AIT_allShops + AIT_offices + AIT_portBuildings] call getRandomBuilding);
+_dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
 
 _wp = _group addWaypoint [_dest,10];
 _wp setWaypointType "MOVE";
@@ -25,7 +25,7 @@ _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "LIMITED";
 _wp setWaypointTimeout [10,20,60];
 
-_dest = getpos([_start,AIT_allHouses + AIT_allShops + AIT_offices + AIT_portBuildings] call getRandomBuilding);
+_dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
 
 _wp = _group addWaypoint [_dest,10];
 _wp setWaypointType "MOVE";
@@ -33,7 +33,7 @@ _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "LIMITED";
 _wp setWaypointTimeout [10,20,60];
 
-_dest = getpos([_start,AIT_allHouses + AIT_allShops + AIT_offices + AIT_portBuildings] call getRandomBuilding);
+_dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
 
 _wp = _group addWaypoint [_dest,10];
 _wp setWaypointType "MOVE";

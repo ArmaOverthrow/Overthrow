@@ -4,8 +4,8 @@ _unit = _this select 0;
 
 _town = _this select 1;
 
-[_unit, (AIT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (AIT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+[_unit, (OT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (OT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
 
 _unit setVariable ["garrison",_town,false];
 
@@ -37,7 +37,7 @@ if(_stability < 30) then {
 
 removeAllWeapons _unit;
 
-_numweap = (count AIT_NATO_weapons_Police)-1;
+_numweap = (count OT_NATO_weapons_Police)-1;
 _idx = _numweap - 4;
 
 if(_skill > 0.85) then {
@@ -51,7 +51,7 @@ if(_skill > 0.8) then {
 	_unit addGoggles "G_Bandanna_aviator";
 	_unit addWeapon "Rangefinder";
 	_idx = _numweap - 1;
-	if(AIT_hasAce) then {
+	if(OT_hasAce) then {
 		_unit addItemToUniform "ACE_rangeCard";
 		_unit addItem "ACE_morphine";
 	};
@@ -66,12 +66,12 @@ if(_skill > 0.8) then {
 	};
 };
 
-if(AIT_hasACE) then {
+if(OT_hasACE) then {
 	_unit addItem "ACE_fieldDressing";
 	_unit addItem "ACE_fieldDressing";
 };
 
-_weapon = AIT_NATO_weapons_Police select round(random(_idx));
+_weapon = OT_NATO_weapons_Police select round(random(_idx));
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;
@@ -85,7 +85,7 @@ if(_hour > 17 or _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
 };
 
-_weapon = AIT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
+_weapon = OT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;

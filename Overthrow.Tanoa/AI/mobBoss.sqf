@@ -13,9 +13,9 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
-[_unit, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
-_unit forceAddUniform AIT_clothes_mob;
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+_unit forceAddUniform OT_clothes_mob;
 
 removeAllItems _unit;
 removeHeadgear _unit;
@@ -29,20 +29,20 @@ _unit addHeadgear "H_Booniehat_khk_hs";
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest (AIT_allExpensiveVests call BIS_fnc_selectRandom);
+_unit addVest (OT_allExpensiveVests call BIS_fnc_selectRandom);
 _unit linkItem "ItemRadio";
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
 	_unit linkItem "O_NVGoggles_ghex_F";
 };
-if(AIT_hasACE) then {
+if(OT_hasACE) then {
 	_unit linkItem "ACE_Altimeter";
 }else{
 	_unit linkItem "ItemWatch";
 };
 
 
-_weapons = (AIT_allExpensiveRifles + AIT_allSniperRifles);
+_weapons = (OT_allExpensiveRifles + OT_allSniperRifles);
 _weapon = _weapons select floor(random(count _weapons));
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;

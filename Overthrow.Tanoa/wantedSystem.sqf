@@ -89,7 +89,7 @@ while {alive _unit} do {
 			//chance they will just notice you if your global rep is very high or low
 			if(count attachedObjects _unit > 0) exitWith {
 				{
-					if(typeOf _x in AIT_staticWeapons) exitWith {
+					if(typeOf _x in OT_staticWeapons) exitWith {
 						_unit setCaptive false;
 						_unit spawn revealToNATO;
 						if(isPlayer _unit) then {
@@ -101,11 +101,11 @@ while {alive _unit} do {
 			if((vehicle _unit) != _unit) exitWith {
 				_bad = false;
 				call {
-					if !(typeof (vehicle _unit) in (AIT_allVehicles+AIT_allBoats)) exitWith {
+					if !(typeof (vehicle _unit) in (OT_allVehicles+OT_allBoats)) exitWith {
 						_bad = true; //They are driving or in a non-civilian vehicle including statics
 					};
 					if(driver (vehicle _unit) == _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...						
-					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) then {
+					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in OT_illegalHeadgear) or ((vest _unit) in OT_illegalVests)) then {
 						_bad = true;
 					};						
 				};
@@ -147,7 +147,7 @@ while {alive _unit} do {
 				};
 				if(count attachedObjects _unit > 0) exitWith {
 					{
-						if(typeOf _x in AIT_staticWeapons) exitWith {
+						if(typeOf _x in OT_staticWeapons) exitWith {
 							_unit setCaptive false;
 							_unit spawn revealToNATO;
 							if(isPlayer _unit) then {
@@ -159,11 +159,11 @@ while {alive _unit} do {
 				if((vehicle _unit) != _unit) exitWith {
 					_bad = false;
 					call {
-						if !(typeof (vehicle _unit) in (AIT_allVehicles+AIT_allBoats)) exitWith {
+						if !(typeof (vehicle _unit) in (OT_allVehicles+OT_allBoats)) exitWith {
 							_bad = true; //They are driving or in a non-civilian vehicle including statics
 						};
 						if(driver (vehicle _unit) == _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...						
-						if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in AIT_illegalHeadgear) or ((vest _unit) in AIT_illegalVests)) then {
+						if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in OT_illegalHeadgear) or ((vest _unit) in OT_illegalVests)) then {
 							_bad = true;
 						};						
 					};
@@ -183,7 +183,7 @@ while {alive _unit} do {
 					_unit setCaptive false;	
 					_unit spawn revealToNATO;
 				};
-				if ((headgear _unit in AIT_illegalHeadgear) or (vest _unit in AIT_illegalVests)) exitWith {
+				if ((headgear _unit in OT_illegalHeadgear) or (vest _unit in OT_illegalVests)) exitWith {
 					if(isPlayer _unit) then {
 						hint "You are wearing Gendarmerie gear";
 					};

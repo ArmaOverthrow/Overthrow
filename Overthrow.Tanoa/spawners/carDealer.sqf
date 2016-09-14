@@ -22,11 +22,11 @@ _groups = [_group];
 		_vehs = _tracked select 0;
 		[_groups,_vehs] call BIS_fnc_arrayPushStack;
 		
-		_cashdesk = _pos nearestObject AIT_item_ShopRegister;
+		_cashdesk = _pos nearestObject OT_item_ShopRegister;
 		_dir = getDir _cashdesk;
 		_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;		
 		
-		_shopkeeper = _group createUnit [AIT_civType_carDealer, _cashpos, [],0, "NONE"];
+		_shopkeeper = _group createUnit [OT_civType_carDealer, _cashpos, [],0, "NONE"];
 		_shopkeeper disableAI "MOVE";
 		_shopkeeper disableAI "AUTOCOMBAT";
 		_shopkeeper setVariable ["NOAI",true,false];
@@ -37,7 +37,7 @@ _groups = [_group];
 		[_shopkeeper] call initCarDealer;
 		_shopkeeper setVariable ["carshop",true,true];
 	};
-}foreach(nearestObjects [_posTown,AIT_carShops, 700]);
+}foreach(nearestObjects [_posTown,OT_carShops, 700]);
 		
 		
 _groups

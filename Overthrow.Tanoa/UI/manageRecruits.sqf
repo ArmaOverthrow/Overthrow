@@ -1,5 +1,5 @@
 closedialog 0;
-createDialog "AIT_dialog_recruits";
+createDialog "OT_dialog_recruits";
 openMap false;
 
 

@@ -31,21 +31,21 @@ sleep 0.1;
 _group = creategroup blufor;
 _tgroup = creategroup blufor;
 
-_vehtype = AIT_NATO_Vehicle_PoliceHeli;
+_vehtype = OT_NATO_Vehicle_PoliceHeli;
 
 _drop = [_townPos,[350,500],_attackdir + (random 90)] call SHK_pos;
-_spawnpos = AIT_NATO_HQPos;	
+_spawnpos = OT_NATO_HQPos;	
 
 if(_stability < 25 and (random 100) > 80) then {
 	//last ditch efforts to save this town
 	//send in the big guns
-	_vehtype = AIT_NATO_Vehicle_AirTransport_Small;
+	_vehtype = OT_NATO_Vehicle_AirTransport_Small;
 	_opendoor = true;
 	_num = 4 + round(random 4);
 	_count = 0;
 	while {_count < _num} do {
 		_start = [_spawnpos,[10,29],random 360] call SHK_pos;
-		_civ = _group createUnit [AIT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		_civ = _group createUnit [OT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setRank "SERGEANT";
 		_police pushBack _civ;
 		_civ setVariable ["garrison","HQ",false];
@@ -78,7 +78,7 @@ sleep 0.1;
 _police pushBack _veh;
 
 _start = [_spawnpos,[10,29],random 360] call SHK_pos;
-_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 _civ setVariable ["garrison",_town,false];
 _civ setRank "CORPORAL";
 _civ moveInCargo _veh;
@@ -90,7 +90,7 @@ if(_stability > 50) then {
 };
 sleep 0.1;
 _start = [_spawnpos,[10,29],random 360] call SHK_pos;
-_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
+_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
 _civ setRank "PRIVATE";
 _civ moveInCargo _veh;
 _civ setVariable ["garrison",_town,false];
@@ -101,7 +101,7 @@ if(_stability > 50) then {
 	_civ setBehaviour "SAFE";
 };
 
-_moveto = [AIT_NATO_HQPos,500,_dir] call SHK_pos;
+_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
@@ -130,7 +130,7 @@ if(_opendoor) then {
 };
 _wp setWaypointTimeout [15,15,15];
 
-_moveto = [AIT_NATO_HQPos,200,_dir] call SHK_pos;
+_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "LOITER";
@@ -159,7 +159,7 @@ _move setWaypointBehaviour "STEALTH";
 
 _an = "A";
 if((_comp select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
-[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %5 %3 is known to be departing %4 at the time of this message containing %2 personnel.",_town,count units _group,_comp,AIT_NATO_HQ,_an]] remoteExec ["intelEvent",0,false];
+[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %5 %3 is known to be departing %4 at the time of this message containing %2 personnel.",_town,count units _group,_comp,OT_NATO_HQ,_an]] remoteExec ["intelEvent",0,false];
 
 
 {

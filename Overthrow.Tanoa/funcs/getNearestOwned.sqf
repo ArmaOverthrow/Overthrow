@@ -3,7 +3,7 @@ _gotbuilding = false;
 _building = objNULL;
 _sorted = [_buildings,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 {
-	if ((typeof _x) in AIT_allBuyableBuildings and _x call hasOwner) then {
+	if ((typeof _x) in OT_allBuyableBuildings and _x call hasOwner) then {
 		_owner = _x getVariable "owner";
 		if(_owner == getplayeruid player) then {
 			_gotbuilding = true;

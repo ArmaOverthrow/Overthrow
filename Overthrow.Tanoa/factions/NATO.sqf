@@ -2,21 +2,21 @@ if (!isServer) exitwith {};
 
 private ["_name","_pos","_garrison","_need","_townPos","_current","_stability","_police","_civ","_units","_move","_NATObusy","_abandoned"];
 
-AIT_NATOobjectives = [];
-AIT_NATOcomms = [];
+OT_NATOobjectives = [];
+OT_NATOcomms = [];
 
 _NATObusy = false;
 _abandoned = [];
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < AIT_NATOversion) then {	
-	server setVariable ["NATOversion",AIT_NATOversion,false];
-	(AIT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
+if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {	
+	server setVariable ["NATOversion",OT_NATOversion,false];
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
 	sleep 0.1;
 	{
 		_stability = server getVariable format ["stability%1",_x];
 		if(_stability < 11) then {
 			_abandoned pushback _x;
 		};
-	}foreach (AIT_allTowns);
+	}foreach (OT_allTowns);
 	server setVariable ["NATOabandoned",_abandoned,true];
 	server setVariable ["garrisonHQ",1000,false];
 	
@@ -26,38 +26,38 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		_pos=getpos _x;
 		
 		//if its in the whitelist, within the NATO home region, or an airport, NATO lives here
-		if !(_name in AIT_NATOblacklist) then {
-			if((_name in AIT_NATOwhitelist) || ([_pos,AIT_NATOregion] call fnc_isInMarker) || (_name in AIT_allAirports)) then {	
+		if !(_name in OT_NATOblacklist) then {
+			if((_name in OT_NATOwhitelist) || ([_pos,OT_NATOregion] call fnc_isInMarker) || (_name in OT_allAirports)) then {	
 				
 				if((_name find "Comms") == 0) then {
-					AIT_NATOcomms pushBack [_pos,_name];			
+					OT_NATOcomms pushBack [_pos,_name];			
 				}else{
-					AIT_NATOobjectives pushBack [_pos,_name];
+					OT_NATOobjectives pushBack [_pos,_name];
 					server setVariable [format ["vehgarrison%1",_name],[],true];
 				};			
 				
 				_garrison = floor(4 + random(8));
-				if(_name in AIT_NATO_priority) then {
+				if(_name in OT_NATO_priority) then {
 					_garrison = floor(16 + random(8));
 					server setVariable [format ["vehgarrison%1",_name],["B_T_MBT_01_arty_F","B_HMG_01_high_F","B_HMG_01_high_F","B_T_Mortar_01_F"],true];					
 				};
-				if(_name == AIT_NATO_HQ) then {
+				if(_name == OT_NATO_HQ) then {
 					_garrison = 48;
 					server setVariable [format ["vehgarrison%1",_name],["B_T_MBT_01_arty_F","B_T_MBT_01_arty_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_T_Mortar_01_F","B_T_Mortar_01_F"],true];	
-					server setVariable [format ["airgarrison%1",_name],[AIT_NATO_Vehicle_AirTransport_Large],true];
+					server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
 				}else{
 					server setVariable [format ["airgarrison%1",_name],[],true];
 				};
 				server setVariable [format ["garrison%1",_name],_garrison,true];				
 			};
-			if(_name == AIT_NATO_HQ) then {
-				AIT_NATO_HQPos = getpos _x;
+			if(_name == OT_NATO_HQ) then {
+				OT_NATO_HQPos = getpos _x;
 			};
 			
 			sleep 0.05;
 		};
-	}foreach (nearestLocations [AIT_centerPos, ["NameLocal","Airport"], 12000]);
-	(AIT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
+	}foreach (nearestLocations [OT_centerPos, ["NameLocal","Airport"], 12000]);
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
 	sleep 0.1;
 	//Add other comms towers
 	_c = 1;
@@ -66,16 +66,16 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		_pos = getpos _x;
 		_near = _pos call nearestObjective;
 		if((_pos distance (_near select 0)) > 500) then {
-			AIT_NATOcomms pushBack [_pos,_name];
+			OT_NATOcomms pushBack [_pos,_name];
 			_garrison = floor(4 + random(4));
 			server setVariable [format ["garrison%1",_name],_garrison,true];
 			
 			_c = _c + 1;
 		};		
-	}foreach (nearestObjects [AIT_centerPos,AIT_NATO_CommTowers,12000]);
+	}foreach (nearestObjects [OT_centerPos,OT_NATO_CommTowers,12000]);
 	
-	server setVariable ["NATOobjectives",AIT_NATOobjectives,true];
-	server setVariable ["NATOcomms",AIT_NATOcomms,true];
+	server setVariable ["NATOobjectives",OT_NATOobjectives,true];
+	server setVariable ["NATOcomms",OT_NATOcomms,true];
 	
 	//Randomly distribute NATO's vehicles
 	{
@@ -83,31 +83,31 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		_num = _x select 1;
 		_count = 0;
 		while {_count < _num} do {
-			_obj = AIT_NATOobjectives call BIS_fnc_selectRandom;
+			_obj = OT_NATOobjectives call BIS_fnc_selectRandom;
 			_name = _obj select 1;
 			_garrison = server getVariable format["vehgarrison%1",_name];
 			_garrison pushback _type;
 			_count = _count + 1;
 			server setVariable [format ["vehgarrison%1",_name],_garrison,true];
 		};
-	}foreach(AIT_NATO_Vehicles_Garrison);
+	}foreach(OT_NATO_Vehicles_Garrison);
 	
 	{
 		_type = _x select 0;
 		_num = _x select 1;
 		_count = 0;
 		while {_count < _num} do {
-			_name = AIT_allAirports call BIS_fnc_selectRandom;
+			_name = OT_allAirports call BIS_fnc_selectRandom;
 			_garrison = server getVariable [format["airgarrison%1",_name],[]];
 			_garrison pushback _type;
 			_count = _count + 1;
 			server setVariable [format ["airgarrison%1",_name],_garrison,true];
 		};
-	}foreach(AIT_NATO_Vehicles_AirGarrison);
+	}foreach(OT_NATO_Vehicles_AirGarrison);
 
 	{
 		_garrison = floor(8 + random(6));
-		if(_x in AIT_NATO_priority) then {
+		if(_x in OT_NATO_priority) then {
 			_garrison = floor(12 + random(6));
 		};
 			
@@ -115,7 +115,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		_x setMarkerAlpha 0;
 		server setVariable [format ["garrison%1",_x],_garrison,true];
 		sleep 0.05;
-	}foreach (AIT_NATO_control);
+	}foreach (OT_NATO_control);
 	
 	{
 		_town = _x;
@@ -126,20 +126,20 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			_max = round(_population / 30);
 			if(_max < 4) then {_max = 4};
 			_garrison = 2+round((1-(_stability / 100)) * _max);
-			if(_town in AIT_NATO_priority) then {
+			if(_town in OT_NATO_priority) then {
 				_garrison = round(_garrison * 2);
 			};
 		};
 		server setVariable [format ["garrison%1",_x],_garrison,true];
 		server setVariable [format ["garrisonadd%1",_x], 0,false];
 		sleep 0.05;
-	}foreach (AIT_allTowns);
+	}foreach (OT_allTowns);
 };
-AIT_NATOobjectives = server getVariable "NATOobjectives";
-AIT_NATOcomms = server getVariable "NATOcomms";
+OT_NATOobjectives = server getVariable "NATOobjectives";
+OT_NATOcomms = server getVariable "NATOcomms";
 
-AIT_NATOInitDone = true;
-publicVariable "AIT_NATOInitDone";
+OT_NATOInitDone = true;
+publicVariable "OT_NATOInitDone";
 
 {
 	_pos = _x select 0;
@@ -151,7 +151,7 @@ publicVariable "AIT_NATOInitDone";
 	}else{
 		_mrk setMarkerType "Faction_CUP_NATO";
 	};
-}foreach(AIT_NATOobjectives);
+}foreach(OT_NATOobjectives);
 
 {
 	_pos = _x select 0;
@@ -164,7 +164,7 @@ publicVariable "AIT_NATOInitDone";
 	}else{
 		_mrk setMarkerColor "ColorBLUFOR";
 	};
-}foreach(AIT_NATOcomms);
+}foreach(OT_NATOcomms);
 		
 sleep 5;
 while {true} do {	
@@ -180,7 +180,7 @@ while {true} do {
 			_max = round(_population / 40);
 			if(_max < 4) then {_max = 4};
 			_garrison = 2+round((1-(_stability / 100)) * _max);
-			if(_town in AIT_NATO_priority) then {
+			if(_town in OT_NATO_priority) then {
 				_garrison = round(_garrison * 2);
 			};
 			_need = _garrison - _current;
@@ -201,7 +201,7 @@ while {true} do {
 		};
 		if(_garrisoned) exitWith {}; //only send one garrison per turn
 		sleep 0.1;
-	}foreach (AIT_allTowns);
+	}foreach (OT_allTowns);
 	
 	if !(_garrisoned) then {
 		{
@@ -220,7 +220,7 @@ while {true} do {
 				};
 			};
 			if(_garrisoned) exitWith {};
-		}foreach(AIT_NATOobjectives);
+		}foreach(OT_NATOobjectives);
 	};
 	
 	{
@@ -237,7 +237,7 @@ while {true} do {
 			};
 		};
 		if(_garrisoned) exitWith {};
-	}foreach(AIT_NATOcomms);
+	}foreach(OT_NATOcomms);
 	
 	
 	{
@@ -246,6 +246,6 @@ while {true} do {
 		};
 	}foreach(allGroups);
 	
-	sleep AIT_NATOwait + round(random AIT_NATOwait);	
+	sleep OT_NATOwait + round(random OT_NATOwait);	
 };
 

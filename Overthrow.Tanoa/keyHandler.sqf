@@ -7,10 +7,10 @@ if (_key == 21) then
 {
 	if(!dialog) then {
 		if(count (groupSelectedUnits player) > 0) exitWith {			
-			createDialog "AIT_dialog_command";
+			createDialog "OT_dialog_command";
 		};
 		if(vehicle player != player) exitWith {			
-			createDialog "AIT_dialog_vehicle";
+			createDialog "OT_dialog_vehicle";
 		};
 		[] spawn mainMenu;	
 	}else{
@@ -20,7 +20,7 @@ if (_key == 21) then
 }
 else
 {
-	if (_key == 207 and !AIT_hasAce) then
+	if (_key == 207 and !OT_hasAce) then
 	{		
 		if (soundVolume <= 0.5) then
 		{

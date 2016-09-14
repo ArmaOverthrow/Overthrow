@@ -18,7 +18,7 @@ while {_count < _numNATO} do {
 	_groups pushBack _group;
 	
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
-	_civ = _group createUnit [AIT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_town,false];
 	[_civ] joinSilent _group;
 	_civ setRank "CORPORAL";
@@ -30,7 +30,7 @@ while {_count < _numNATO} do {
 	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {							
 		_pos = [[[_start,50]]] call BIS_fnc_randomPos;
 		
-		_civ = _group createUnit [AIT_NATO_Unit_Police, _pos, [],0, "NONE"];
+		_civ = _group createUnit [OT_NATO_Unit_Police, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison",_town,false];
 		[_civ] joinSilent _group;
 		_civ setRank "PRIVATE";

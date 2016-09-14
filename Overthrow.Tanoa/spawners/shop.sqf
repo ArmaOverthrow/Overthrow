@@ -20,12 +20,12 @@ _groups = [_group];
 		_groups pushback _x;
 	}foreach(_vehs);
 	
-	_cashdesk = _pos nearestObject AIT_item_ShopRegister;
+	_cashdesk = _pos nearestObject OT_item_ShopRegister;
 	
 	_dir = getDir _cashdesk;
 	_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;		
 	
-	_shopkeeper = _group createUnit [AIT_civType_shopkeeper, _cashpos, [],0, "NONE"];
+	_shopkeeper = _group createUnit [OT_civType_shopkeeper, _cashpos, [],0, "NONE"];
 	_shopkeeper disableAI "MOVE";
 	_shopkeeper disableAI "AUTOCOMBAT";
 	_shopkeeper setVariable ["NOAI",true,false];

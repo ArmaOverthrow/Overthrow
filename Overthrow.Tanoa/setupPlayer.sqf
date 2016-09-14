@@ -1,5 +1,5 @@
 player spawn wantedSystem;
-_clothes = player getVariable ["uniform",(AIT_clothes_guerilla call BIS_fnc_selectRandom)];
+_clothes = player getVariable ["uniform",(OT_clothes_guerilla call BIS_fnc_selectRandom)];
 player forceAddUniform _clothes;
 player setVariable ["uniform",_clothes,true];
 

@@ -1,6 +1,6 @@
 private ["_pos"];
 
-AIT_townSpawners = [
+OT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\civ.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\townGarrison.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\carDealer.sqf",
@@ -44,7 +44,7 @@ AIT_townSpawners = [
 								} forEach allCurators;
 							}foreach(_t call _s);
 						};						
-					}foreach(AIT_townSpawners);
+					}foreach(OT_townSpawners);
 				}else{
 					//NATO
 					_need = server getVariable [format ["garrisonadd%1",_town],0];			
@@ -119,5 +119,5 @@ AIT_townSpawners = [
 				};
 			};
 		};
-	},_x] call AIT_fnc_registerSpawner;	
-}foreach(AIT_allTowns);
+	},_x] call OT_fnc_registerSpawner;	
+}foreach(OT_allTowns);

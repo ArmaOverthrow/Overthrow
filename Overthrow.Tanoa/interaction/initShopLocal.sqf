@@ -14,7 +14,7 @@ _shopkeeper addAction ["Buy", {
 
 	_standing = player getVariable format['rep%1',_town];
 	player setVariable ["shopping",_civ,false];
-	createDialog "AIT_dialog_buy";
+	createDialog "OT_dialog_buy";
 	[_town,_standing,_s] call buyDialog;
 	
 },_shopkeeper,1.5,false,true,"","alive _target",5];
@@ -35,7 +35,7 @@ _shopkeeper addAction ["Sell", {
 	_playerstock = player call unitStock;	
 	_standing = (player getVariable format['rep%1',_town]) * -1;
 	player setVariable ["shopping",_civ,false];
-	createDialog "AIT_dialog_sell";
+	createDialog "OT_dialog_sell";
 	[_playerstock,_town,_standing,_s] call sellDialog;
 	
 },_shopkeeper,1.5,false,true,"","alive _target",5];

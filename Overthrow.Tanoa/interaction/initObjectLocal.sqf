@@ -1,14 +1,14 @@
-if(typeof _this == AIT_item_Map) then {
+if(typeof _this == OT_item_Map) then {
 	_this addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
 	_this addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
 	if(player == bigboss) then {
 		_this addAction ["Options", {
 			closedialog 0;			
-			_nul = createDialog "AIT_dialog_options";
+			_nul = createDialog "OT_dialog_options";
 		},nil,0,false,true,"",""];			
 	};
 };
-if(typeof _this == AIT_item_Tent) exitWith {
+if(typeof _this == OT_item_Tent) exitWith {
 	_camp = player getVariable ["camp",objNull];
 	if !(isNull _camp) then {
 		_fire = _camp getVariable "fire";
@@ -33,7 +33,7 @@ if(typeof _this == AIT_item_Tent) exitWith {
 
 if(_this isKindOf "Building" or _this isKindOf "Man") exitWith{};
 
-if(AIT_hasACE) then {
+if(OT_hasACE) then {
 	_dir = 0;
 	if(typeof _this == "C_Rubberboat") then {
 		_dir = 90;

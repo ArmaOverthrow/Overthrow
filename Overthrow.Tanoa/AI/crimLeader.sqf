@@ -14,9 +14,9 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
-[_unit, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
-_unit forceAddUniform (AIT_CRIM_Clothes call BIS_fnc_selectRandom);
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+_unit forceAddUniform (OT_CRIM_Clothes call BIS_fnc_selectRandom);
 
 
 removeAllItems _unit;
@@ -29,7 +29,7 @@ _unit addHeadgear "H_Bandanna_khk_hs";
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest (AIT_allExpensiveVests call BIS_fnc_selectRandom);
+_unit addVest (OT_allExpensiveVests call BIS_fnc_selectRandom);
 _unit linkItem "ItemRadio";
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
@@ -37,7 +37,7 @@ if(_hour < 8 or _hour > 15) then {
 };
 _unit linkItem "ItemWatch";
 
-_weapon = (AIT_allExpensiveRifles call BIS_fnc_selectRandom);
+_weapon = (OT_allExpensiveRifles call BIS_fnc_selectRandom);
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;
@@ -69,7 +69,7 @@ for "_i" from 0 to (_numslots-1) do {
 	};
 };
 
-_weapon = AIT_allHandguns call BIS_fnc_selectRandom;
+_weapon = OT_allHandguns call BIS_fnc_selectRandom;
 _unit addWeapon _weapon;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
@@ -77,4 +77,4 @@ if !(isNil "_magazine") then {
 	_unit addItem _magazine;
 };
 
-_unit addGoggles (AIT_CRIM_Goggles call BIS_fnc_selectRandom);	
+_unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);	

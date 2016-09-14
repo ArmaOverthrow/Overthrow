@@ -1,4 +1,4 @@
-AIT_firstNames_local = [
+OT_firstNames_local = [
 	"Fetu",
 	"Fetuao",
 	"Losefa",
@@ -45,7 +45,7 @@ AIT_firstNames_local = [
 	"Tarau"
 ];
 
-AIT_lastNames_local = [
+OT_lastNames_local = [
 	"Ligamamada",
 	"Rabuka",
 	"Navakasuasua",

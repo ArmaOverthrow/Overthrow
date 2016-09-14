@@ -1,7 +1,7 @@
 private ["_b","_s","_town","_standing","_cls","_num","_price","_idx","_done"];
-if (AIT_selling) exitWith {};
+if (OT_selling) exitWith {};
 
-AIT_selling = true;
+OT_selling = true;
 playSound "3DEN_notificationDefault";
 _b = player getVariable "shopping";
 _bp = _b getVariable "shop";
@@ -61,4 +61,4 @@ player removeItem _cls;
 lbClear 1500;
 _mystock = player call unitStock;
 [_mystock,_town,_standing,_s] call sellDialog;
-AIT_selling = false;
+OT_selling = false;

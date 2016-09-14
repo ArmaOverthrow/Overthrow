@@ -11,13 +11,13 @@ _building = objNULL;
 {
 	_owner = _x getVariable "owner";
 	if(!isNil "_owner") then {
-		if ((typeof _x) in AIT_allBuyableBuildings and _owner == getplayerUID player) exitWith {
+		if ((typeof _x) in OT_allBuyableBuildings and _owner == getplayerUID player) exitWith {
 			_handled = true;
 			
 			playSound "ClickSoft";
 			player setVariable ["money",_money-_price,true];			
 			
-			_cosa = AIT_item_Storage createVehicle (getpos player);
+			_cosa = OT_item_Storage createVehicle (getpos player);
 			
 			clearWeaponCargoGlobal _cosa;
 			clearMagazineCargoGlobal _cosa;

@@ -1,12 +1,12 @@
 private ["_data","_done","_recruits","_vehicles"];
 
-if(AIT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,true]};
-AIT_saving = true;
-publicVariable "AIT_saving";
+if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,true]};
+OT_saving = true;
+publicVariable "OT_saving";
 
 "Persistent Saving..." remoteExec ["notify_minor",0,true];
 sleep 0.1;
-waitUntil {!isNil "AIT_NATOInitDone"};
+waitUntil {!isNil "OT_NATOInitDone"};
 
 _data = [];
 //get all server data
@@ -52,9 +52,9 @@ _vehicles = [];
 
 _count = 10001;
 {
-	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != AIT_item_Flag)) then {
+	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != OT_item_Flag)) then {
 		_owner = _x getVariable ["owner",false];		
-		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""],_x getVariable ["AIT_init",""]];	
+		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
 		_done pushback _x;
 	};
 	if(_count > 2000) then {
@@ -97,5 +97,5 @@ if (isDedicated) then {
 
 "Persistent Save Completed" remoteExec ["notify_minor",0,true];
 
-AIT_saving = false;
-publicVariable "AIT_saving";
+OT_saving = false;
+publicVariable "OT_saving";

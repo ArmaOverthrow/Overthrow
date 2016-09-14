@@ -3,22 +3,22 @@ _civ = _this;
 _civ addAction ["Buy Vehicle", {		
 	_town = (getpos player) call nearestTown; 
 	_standing = player getVariable format['rep%1',_town];
-	createDialog "AIT_dialog_buy";
+	createDialog "OT_dialog_buy";
 	{			
 		_cls = _x select 0;
 		_price = [_town,_cls,_standing] call getPrice;
-		if("fuel depot" in (server getVariable "AIT_NATOabandoned")) then {
+		if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
 			_price = round(_price * 0.5);
 		};
 		_idx = lbAdd [1500,format["%1",_cls call ISSE_Cfg_Vehicle_GetName]];
 		lbSetPicture [1500,_idx,_cls call ISSE_Cfg_Vehicle_GetPic];
 		lbSetData [1500,_idx,_cls];
 		lbSetValue [1500,_idx,_price];
-	}foreach(AIT_vehicles);
-	_price = [_town,AIT_item_UAV,_standing] call getPrice;
+	}foreach(OT_vehicles);
+	_price = [_town,OT_item_UAV,_standing] call getPrice;
 	_idx = lbAdd [1500,format["Quadcopter"]];
-	lbSetPicture [1500,_idx,AIT_item_UAV call ISSE_Cfg_Vehicle_GetPic];
-	lbSetData [1500,_idx,AIT_item_UAV];
+	lbSetPicture [1500,_idx,OT_item_UAV call ISSE_Cfg_Vehicle_GetPic];
+	lbSetData [1500,_idx,OT_item_UAV];
 	lbSetValue [1500,_idx,_price];
 },nil,1.5,true,true,"","alive _target",5];
 

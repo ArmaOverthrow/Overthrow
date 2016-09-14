@@ -29,7 +29,7 @@ if !(_isbase) then {
 	if(typename _estate == "ARRAY") then {
 		_b = _estate select 0;
 		if(_b getVariable ["leased",false]) exitWith {_canplace = false};
-		if(typeof _b == AIT_item_Tent) exitWith {_canplace = false};
+		if(typeof _b == OT_item_Tent) exitWith {_canplace = false};
 		if(_b call hasOwner) then {
 			_owner = _b getVariable "owner";
 			if(_owner != getplayeruid player) then {

@@ -29,12 +29,12 @@ if(isMultiplayer and (!isServer)) then {
 if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
     waitUntil {!(isnull (findDisplay 46))};
     sleep 1;
-    _nul = createDialog "AIT_dialog_start";
+    _nul = createDialog "OT_dialog_start";
 }else{
     titleText ["Waiting for host...", "BLACK FADED", 0];    
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-player forceAddUniform (AIT_clothes_locals call BIS_fnc_selectRandom);
+player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 _startup = server getVariable "StartupType";
 _newplayer = true;
 _furniture = [];
@@ -53,7 +53,7 @@ if(isMultiplayer or _startup == "LOAD") then {
                 _val = nearestBuilding _val;
             };
             if(_key == "camp" and typename _val == "ARRAY") then {              
-                _val = createVehicle [AIT_item_tent, _val, [], 0, "CAN_COLLIDE"];
+                _val = createVehicle [OT_item_tent, _val, [], 0, "CAN_COLLIDE"];
                 _val setVariable ["owner",getplayeruid player,true];
                 _val call initObjectLocal;
                 
@@ -109,8 +109,8 @@ if(isMultiplayer or _startup == "LOAD") then {
                 if(typename _civ == "ARRAY") then {
                     _civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 					_civ setVariable ["owner",getplayeruid player,true];
-					[_civ, (AIT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
-					[_civ, (AIT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
+					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
+					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
                     _civ setUnitLoadout _loadout;
                     _civ spawn wantedSystem;
                     _civ setName _name;
@@ -143,7 +143,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 };
 
 if (_newplayer) then {
-    _clothes = (AIT_clothes_guerilla call BIS_fnc_selectRandom);
+    _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
     player setVariable ["uniform",_clothes,true];
     player setVariable ["money",100,true];
     player setVariable ["owner",getplayerUID player,true];
@@ -158,21 +158,21 @@ if (_newplayer) then {
     player setVariable ["rep",0,true];
     {
         player setVariable [format["rep%1",_x],0,true];
-    }foreach(AIT_allTowns);
+    }foreach(OT_allTowns);
 
     _town = server getVariable "spawntown";
-    if(AIT_randomSpawnTown) then {
-        _town = AIT_spawnTowns call BIS_fnc_selectRandom;
+    if(OT_randomSpawnTown) then {
+        _town = OT_spawnTowns call BIS_fnc_selectRandom;
     };
     _pos = server getVariable _town;
 
-    _house = [_pos,AIT_spawnHouses] call getRandomBuilding;
+    _house = [_pos,OT_spawnHouses] call getRandomBuilding;
     if(isNil "_house") then {
 		//Spawn town is full, make a new one
-        _town = (AIT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
+        _town = (OT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
         server setVariable ["spawntown",_town,true];
         _pos = server getvariable _town;
-        _house = [_pos,AIT_spawnHouses] call getRandomBuilding;
+        _house = [_pos,OT_spawnHouses] call getRandomBuilding;
     };
     _housepos = getpos _house;
     
@@ -188,18 +188,18 @@ if (_newplayer) then {
     _furniture = (_house call spawnTemplate) select 0;
 
     {
-        if(typeof _x == AIT_item_Map) then {
+        if(typeof _x == OT_item_Map) then {
             _x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
         };
-        if(typeof _x == AIT_item_Storage) then {
-            _x addWeaponCargo [AIT_item_BasicGun,1];
-            _x addMagazineCargo [AIT_item_BasicAmmo,5];
+        if(typeof _x == OT_item_Storage) then {
+            _x addWeaponCargo [OT_item_BasicGun,1];
+            _x addMagazineCargo [OT_item_BasicAmmo,5];
             _box = _x;
             {
                 _box addItemCargo [_x,5];
-            }foreach(AIT_consumableItems);
+            }foreach(OT_consumableItems);
         };
-        if(typeof _x == AIT_item_Desk) then {
+        if(typeof _x == OT_item_Desk) then {
             _deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
         };
         _x setVariable ["owner",getplayerUID player,true];
@@ -222,7 +222,7 @@ _count = 0;
 	if !(_x isKindOf "Vehicle") then {
 		if(_x call hasOwner) then {
 			_owner = _x getVariable ["owner",""];
-			if((_owner == getplayeruid player) or (typeof _x == AIT_item_Map)) then {
+			if((_owner == getplayeruid player) or (typeof _x == OT_item_Map)) then {
 				_x call initObjectLocal;
 			};
 		}; 
@@ -237,7 +237,7 @@ _count = 0;
 player setCaptive true;
 player setPos _housepos;
 
-waitUntil {!isNil "AIT_SystemInitDone"};
+waitUntil {!isNil "OT_SystemInitDone"};
 titleText ["", "BLACK IN", 5];
 
 if (isMultiplayer) then {
@@ -247,10 +247,10 @@ if (isMultiplayer) then {
 player addEventHandler ["WieaponAssembled",{
 	_me = _this select 0;
 	_wpn = _this select 1;
-	if(typeof _wpn in AIT_staticMachineGuns) then {		
+	if(typeof _wpn in OT_staticMachineGuns) then {		
 		_wpn remoteExec["initStaticMGLocal",0,_wpn];
 	};
-	if(typeof _wpn in AIT_staticWeapons) then {
+	if(typeof _wpn in OT_staticWeapons) then {
 		if(_me call unitSeen) then {
 			_me setCaptive false;
 		};
@@ -292,7 +292,7 @@ player addEventHandler ["GetInMan",{
 	};
 	
 	if !(_notified) then {
-		if (!(_veh call hasOwner) or !((typeof _veh) in AIT_allVehicles)) then {
+		if (!(_veh call hasOwner) or !((typeof _veh) in OT_allVehicles)) then {
 			if(_unit call unitSeenNATO) then {
 				_notified = true;
 				{

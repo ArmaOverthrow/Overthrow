@@ -1,10 +1,10 @@
-{_x setMarkerAlpha 0} foreach AIT_regions;
+{_x setMarkerAlpha 0} foreach OT_regions;
 
 //Find NATO HQ
 {
     _name = text _x;
-    if(_name == AIT_NATO_HQ) then {
-        AIT_NATO_HQPos = getpos _x;
+    if(_name == OT_NATO_HQ) then {
+        OT_NATO_HQPos = getpos _x;
     };
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameLocal","Airport"], 50000]);
 
@@ -15,7 +15,7 @@
     _pos = [_posTown,40,-90] call BIS_fnc_relPos;
     _mSize = 250;
     
-    if(_x in AIT_Capitals) then {
+    if(_x in OT_Capitals) then {
         _mSize = 400;
     };
     
@@ -43,23 +43,23 @@
         _mrk setMarkerAlpha 0;
     };
     
-    if((server getVariable ["EconomyVersion",0]) < AIT_economyVersion) then {
+    if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
         [_x] call setupTownEconomy;
     };
 	
 	//place animals
-	[nearestBuilding _posTown, AIT_allTownAnimals, _mSize+400] call BIS_fnc_animalSiteSpawn;
+	[nearestBuilding _posTown, OT_allTownAnimals, _mSize+400] call BIS_fnc_animalSiteSpawn;
 	private _church = server getVariable [format["churchin%1",_x],[]];
 	if !(_church isEqualTo []) then {
 		_c = nearestBuilding _church;
 		if(typeof _c == "Land_Temple_Native_01_F") then {
-			[_c, AIT_allVillageAnimals, 150] call BIS_fnc_animalSiteSpawn;
+			[_c, OT_allVillageAnimals, 150] call BIS_fnc_animalSiteSpawn;
 		};
 	};
 	
-}foreach(AIT_allTowns);
+}foreach(OT_allTowns);
 
-server setVariable ["EconomyVersion",AIT_economyVersion,false];
+server setVariable ["EconomyVersion",OT_economyVersion,false];
 
-AIT_economyLoadDone = true;
-publicVariable "AIT_economyLoadDone";
+OT_economyLoadDone = true;
+publicVariable "OT_economyLoadDone";

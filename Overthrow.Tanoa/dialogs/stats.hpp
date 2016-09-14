@@ -6,7 +6,7 @@ class RscTitles {
        fadeout = 0;
        duration = 0;
 	};
-	class AIT_stashHUD
+	class OT_stashHUD
 	{
 		idd=746;
 		movingEnable =  0;
@@ -15,8 +15,8 @@ class RscTitles {
         duration     =  10e10;
         fadein       =  0;
         fadeout      =  0;
-		name = "AIT_stashHUD";
-		onLoad = "with uiNameSpace do { AIT_stashHUD = _this select 0 }";
+		name = "OT_stashHUD";
+		onLoad = "with uiNameSpace do { OT_stashHUD = _this select 0 }";
 			
 		class controls
 		{
@@ -71,7 +71,7 @@ class RscTitles {
 
 		};
 	};
-    class AIT_statsHUD {
+    class OT_statsHUD {
         idd = 745;
         movingEnable =  0;
         enableSimulation = 1;
@@ -79,8 +79,8 @@ class RscTitles {
         duration     =  10e10;
         fadein       =  0;
         fadeout      =  0;
-        name = "AIT_statsHUD";
-		onLoad = "with uiNameSpace do { AIT_statsHUD = _this select 0 }";
+        name = "OT_statsHUD";
+		onLoad = "with uiNameSpace do { OT_statsHUD = _this select 0 }";
 		class controls {
 		    class structuredText {
                 access = 0;

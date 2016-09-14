@@ -1,4 +1,4 @@
-class AIT_dialog_buy
+class OT_dialog_buy
 {
 	idd=8000;
 	movingenable=false;
@@ -58,7 +58,7 @@ class AIT_dialog_buy
 	};
 };
 
-class AIT_dialog_sell
+class OT_dialog_sell
 {
 	idd=-1;
 	movingenable=false;

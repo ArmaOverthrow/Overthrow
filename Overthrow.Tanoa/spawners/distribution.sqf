@@ -13,7 +13,7 @@ _groups = [];
 	_security = server getvariable format["garrison%1",_pos];
 	
 	//Parked truck
-	_vehtype = AIT_vehType_distro;
+	_vehtype = OT_vehType_distro;
 	_start = [_pos,11,(getDir _building)-155] call BIS_fnc_relPos;
 	
 	_posVeh = _start findEmptyPosition [0,15,_vehtype];
@@ -48,7 +48,7 @@ _groups = [];
 	_count = 0;
 	while {_count < _security} do {
 		_start = [[[_pos,50]]] call BIS_fnc_randomPos;									
-		_civ = _group createUnit [AIT_NATO_Unit_Police, _start, [],0, "NONE"];
+		_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
 		[_civ,_building] spawn initSecurity;			
 		_count = _count + 1;				
@@ -61,7 +61,7 @@ _groups = [];
 	_wp setWaypointSpeed "LIMITED";
 	
 	//Inventory
-	_vehtype = AIT_items_distroStorage select 0;	
+	_vehtype = OT_items_distroStorage select 0;	
 	
 	_pos = [_pos,4.5,(getDir _building)-135] call BIS_fnc_relPos;
 	_veh = _vehtype createVehicle _pos;
@@ -70,14 +70,14 @@ _groups = [];
 	_veh setVariable ["stockof",_building];
 	_veh addEventHandler ["ContainerOpened",illegalContainerOpened];
 	
-	if(AIT_hasAce) then {
+	if(OT_hasAce) then {
 		_veh setVariable ["ace_illegalCargo",true,false];				
 	};
 	_groups pushback _veh;
 	{
 		_cls = _x select 0;
 		_num = _x select 1;
-		if(_cls in AIT_allBackpacks) then {	
+		if(_cls in OT_allBackpacks) then {	
 			_veh addBackpackCargoGlobal _x;
 		}else{
 			_veh addItemCargoGlobal _x;

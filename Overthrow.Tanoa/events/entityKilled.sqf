@@ -95,7 +95,7 @@ call {
 			if(_pop > 0) then {
 				server setVariable [format["garrison%1",_garrison],_pop - 1,true];
 			};
-			if(_garrison in AIT_allTowns) then {
+			if(_garrison in OT_allTowns) then {
 				_town = _garrison;
 				if((random 100) > 50) then {
 					[_town,-2] call stability;

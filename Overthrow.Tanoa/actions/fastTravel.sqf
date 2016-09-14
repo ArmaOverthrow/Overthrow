@@ -22,7 +22,7 @@ openMap true;
 	};
 		
 	if !(_handled) then {
-		_buildings =  _pos nearObjects [AIT_item_Tent,30];
+		_buildings =  _pos nearObjects [OT_item_Tent,30];
 		if !(_buildings isEqualTo []) then {
 			{
 				if(_x getVariable ["owner",""] == getplayeruid player) then {

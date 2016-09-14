@@ -94,7 +94,7 @@ while {!(isNull _group) and count (units _group) > 0} do {
 						
 						{
 							_cls = _x select 0;
-							if(_cls in AIT_allWeapons + AIT_allMagazines + AIT_illegalHeadgear + AIT_illegalVests + AIT_illegalItems + AIT_allStaticBackpacks) exitWith {
+							if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_illegalItems + OT_allStaticBackpacks) exitWith {
 								_msg = "NATO found illegal items";
 								_unit setCaptive false;
 								{

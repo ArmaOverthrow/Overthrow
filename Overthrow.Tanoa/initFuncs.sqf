@@ -146,7 +146,7 @@ blackFaded = {
 newGame = {
     "Generating economy" remoteExec['blackFaded',0];
     [] execVM "initEconomy.sqf";
-    waitUntil {!isNil "AIT_economyInitDone"};
+    waitUntil {!isNil "OT_economyInitDone"};
     server setVariable["StartupType","NEW",true];
 };
 
