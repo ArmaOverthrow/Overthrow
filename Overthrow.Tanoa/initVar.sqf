@@ -15,7 +15,7 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
 OT_spawnCivPercentage = 0.08;
-OT_spawnVehiclePercentage = 0.05;
+OT_spawnVehiclePercentage = 0.03;
 OT_standardMarkup = 0.2; //Markup in shops is calculated from this
 OT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 OT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
@@ -82,8 +82,8 @@ OT_civType_local = "C_man_1";
 OT_civType_carDealer = "C_man_w_worker_F";
 OT_civType_shopkeeper = "C_man_w_worker_F";
 OT_civType_worker = "C_man_w_worker_F";
-OT_civType_priest = "CUP_C_C_Priest_01";
-OT_vehTypes_civ = ["CUP_C_Skoda_Blue_CIV","CUP_C_Skoda_Green_CIV","CUP_C_Skoda_Red_CIV","CUP_C_Skoda_White_CIV","CUP_C_Datsun","CUP_C_Datsun_4seat","CUP_C_Datsun_Covered","CUP_C_Datsun_Plain","CUP_C_Datsun_Tubeframe","CUP_C_LR_Transport_CTK"];
+OT_civType_priest = "C_man_w_worker_F";
+OT_vehTypes_civ = []; //populated automatically, but you can add more here and they will appear in streets
 OT_vehType_distro = "C_Van_01_box_F";
 
 OT_activeDistribution = [];
@@ -118,13 +118,13 @@ OT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F
 OT_staticMachineGuns = ["I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
 OT_staticWeapons = ["I_Mortar_01_F","I_static_AA_F","I_static_AT_F","I_GMG_01_F","I_GMG_01_high_F","I_GMG_01_A_F","I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_static_AA_F","O_static_AT_F","O_Mortar_01_F","O_GMG_01_F","O_GMG_01_high_F","O_GMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_static_AA_F","B_static_AT_F","B_Mortar_01_F","B_GMG_01_F","B_GMG_01_high_F","B_GMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
 
-OT_clothes_locals = ["CUP_U_I_GUE_Anorak_01","CUP_U_I_GUE_Anorak_02","CUP_U_I_GUE_Anorak_03","U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
+OT_clothes_locals = ["U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
 OT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
 OT_clothes_tourists = [];
-OT_clothes_priest = "CUP_U_C_Priest_01";
+OT_clothes_priest = "U_C_Man_casual_2_F";
 OT_clothes_port = "U_Marshal";
 OT_clothes_shops = ["U_C_Man_casual_2_F","U_C_Man_casual_3_F","U_C_Man_casual_1_F"];
-OT_clothes_carDealers = ["CUP_U_C_Mechanic_01","CUP_U_C_Mechanic_02","CUP_U_C_Mechanic_03"];
+OT_clothes_carDealers = OT_clothes_shops;
 OT_clothes_harbor = ["U_C_man_sport_1_F","U_C_man_sport_2_F","U_C_man_sport_3_F"];
 OT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
 OT_clothes_mob = "U_I_C_Soldier_Camo_F";
@@ -164,11 +164,7 @@ OT_NATO_Vehicles_AirGarrison = [
 	["B_Heli_Light_01_F",3],
 	["B_Heli_Attack_01_F",1],
 	["B_Heli_Transport_01_F",2],
-	["B_Plane_CAS_01_F",1],
-	["CUP_B_AV8B_CAP_USMC",1],
-	["CUP_B_C130J_USMC",1],
-	["CUP_B_F35B_AA_USMC",1],
-	["CUP_B_CH53E_GER",1]
+	["B_Plane_CAS_01_F",1]
 ];
 
 OT_NATO_CommTowers = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F"];
@@ -191,6 +187,7 @@ OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F"];
 
+OT_NATO_Unit_Pilot = "B_T_Pilot_F";
 OT_NATO_Unit_Sniper = "B_T_Sniper_F";
 OT_NATO_Unit_Spotter = "B_T_Spotter_F";
 OT_NATO_Unit_AA_spec = "B_T_Soldier_AA_F";
@@ -199,7 +196,7 @@ OT_NATO_Unit_AA_ass = "B_T_Soldier_AAA_F";
 OT_NATO_Units_CTRGSupport = ["B_CTRG_Soldier_TL_tna_F","B_CTRG_Soldier_tna_F","B_CTRG_Soldier_M_tna_F","B_CTRG_Soldier_Medic_tna_F"];
 OT_NATO_Vehicle_CTRGTransport = "B_CTRG_Heli_Transport_01_tropic_F";
 
-OT_NATO_weapons_Police = ["hgun_PDW2000_F","SMG_05_F","SMG_01_F","SMG_02_F","arifle_SPAR_01_blk_F","CUP_arifle_M4A1_black","arifle_MXC_Black_F"];
+OT_NATO_weapons_Police = ["hgun_PDW2000_F","SMG_05_F","SMG_01_F","SMG_02_F","arifle_SPAR_01_blk_F","arifle_MXC_Black_F"];
 OT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 
 //Criminal stuff
@@ -283,32 +280,7 @@ OT_boats = [
 	["C_Boat_Civil_01_rescue_F",300,1,1,1],
 	["C_Boat_Transport_02_F",600,1,0,1]
 ];
-OT_vehicles = [	
-	["CUP_C_Skoda_Blue_CIV",30,1,1,1],
-	["CUP_C_Skoda_Green_CIV",30,1,1,1],
-	["CUP_C_Skoda_Red_CIV",30,1,1,1],
-	["CUP_C_Skoda_White_CIV",30,1,1,1],
-	["CUP_C_Datsun",60,1,1,1],
-	["CUP_C_Datsun_Covered",60,1,1,1],
-	["C_Quadbike_01_F",80,1,1,1],
-	["CUP_C_Golf4_black_Civ",200,1,1,1],
-	["CUP_C_Golf4_blue_Civ",200,1,1,1],
-	["CUP_C_Golf4_green_Civ",200,1,1,1],
-	["CUP_C_Golf4_white_Civ",200,1,1,1],
-	["CUP_C_Golf4_yellow_Civ",200,1,1,1],
-	["CUP_C_Octavia_CIV",300,1,1,1],
-	["C_SUV_01_F",400,1,1,1],
-	["C_Offroad_01_F",500,1,1,1],
-	["C_Offroad_02_unarmed_F",600,1,1,1],
-	["C_Van_01_transport_F",700,1,1,1],
-	["C_Van_01_fuel_F",900,1,1,1],
-	["C_Van_01_box_F",800,1,1,1],
-	["C_Truck_02_transport_F",1000,1,1,1],
-	["C_Truck_02_covered_F",1000,1,1,1],
-	["C_Truck_02_fuel_F",2000,1,1,1],
-	["C_Truck_02_box_F",1500,1,1,1]
-];
-
+OT_vehicles = [];
 OT_allVehicles = [];
 OT_allBoats = ["B_Boat_Transport_01_F"];
 OT_allItems = [];
@@ -316,6 +288,45 @@ OT_allWeapons = [];
 OT_allMagazines = [OT_ammo_50cal];
 OT_allBackpacks = [];
 OT_allStaticBackpacks = [];
+OT_vehWeights_civ = [];
+_mostExpensive = 0;
+
+_allVehs = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car""}
+	&&
+    { getText ( _x >> ""faction"" ) isEqualTo ""CIV_F""}
+	)
+" configClasses ( configFile >> "cfgVehicles" );
+
+{
+	_cls = configName _x;
+	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower")) * 3;
+	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * 0.1);
+	
+	if(_cost > _mostExpensive)then {
+		_mostExpensive = _cost;
+	};
+	
+	OT_vehicles pushback [_cls,_cost,1,1,1];
+	OT_allVehicles pushback _cls;
+	if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" and getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
+		OT_vehTypes_civ pushback _cls;
+	};
+} foreach (_allVehs);
+
+{
+	_cls = _x select 0;
+	if(isServer) then {
+		cost setVariable [_cls,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+	};
+	if(_cls in OT_vehTypes_civ) then {
+		OT_vehWeights_civ pushback (_mostExpensive - (_x select 1)) + 1; //This will make whatever is the most expensive car very rare
+	};
+	OT_allVehicles pushBack _cls;
+}foreach(OT_vehicles);
+
 
 _allWeapons = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
@@ -437,12 +448,7 @@ if(isServer) then {
 	};
 	OT_allStaticBackpacks pushBack (_x select 0);
 }foreach(OT_staticBackpacks);
-{
-	if(isServer) then {
-		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
-	};
-	OT_allVehicles pushBack (_x select 0);
-}foreach(OT_vehicles);
+
 {
 	if(isServer) then {
 		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];

@@ -24,7 +24,12 @@ while {(_count < _numVeh)} do {
 	_road = [_start] call BIS_fnc_nearestRoad;
 	if (!isNull _road) then {		
 		_pos = getPos _road;
-		_vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
+		_vehtype = "";
+		if(_pop > 600) then {
+			_vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
+		}else{
+			_vehtype = [OT_vehTypes_civ,OT_vehWeights_civ] call BIS_Fnc_selectRandomWeighted;
+		};		
 		_dirveh = 0;
 		_roadscon = roadsConnectedto _road;
 		if (count _roadscon == 2) then {
@@ -38,7 +43,7 @@ while {(_count < _numVeh)} do {
 						
 				_veh setDir _dirveh;
 				
-				if((random 100) > 80) then {
+				if((random 100) > 95) then {
 					_group = createGroup CIVILIAN;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
@@ -58,10 +63,10 @@ while {(_count < _numVeh)} do {
 				}else{
 					_groups pushBack _veh;
 				};
+				_count = _count + 1;	
 				sleep 0.1;
 			};
 		};
-	};
-	_count = _count + 1;	
+	};	
 };
 _groups

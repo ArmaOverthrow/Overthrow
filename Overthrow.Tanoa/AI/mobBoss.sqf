@@ -76,7 +76,11 @@ for "_i" from 0 to (_numslots-1) do {
 	};
 };
 
-
-_unit addWeapon "CUP_hgun_TaurusTracker455_gold";
-for "_i" from 1 to 3 do {_unit addItemToUniform "CUP_6Rnd_45ACP_M";};
+_weapon = OT_allHandguns call BIS_fnc_selectRandom;
+_unit addWeapon _weapon;
+_base = [_weapon] call BIS_fnc_baseWeapon;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+if !(isNil "_magazine") then {
+	_unit addItem _magazine;
+};
 

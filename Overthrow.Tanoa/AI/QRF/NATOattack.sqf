@@ -82,13 +82,21 @@ _vehs pushback _veh;
 _veh setDir (50);
 
 _tgroup addVehicle _veh;
-createVehicleCrew _veh;
-{
-	_x setVariable ["NOAI",true,false];
-	[_x] joinSilent _tgroup;		
-	_x setVariable ["garrison","HQ",false];
-	_x disableAI "AUTOCOMBAT";
-}foreach(crew _veh);	
+//Pilot
+_civ = _tgroup createUnit [OT_NATO_Unit_Pilot, OT_NATO_HQPos, [],0, "NONE"];
+_civ moveInDriver _veh;
+_civ setVariable ["NOAI",true,false];
+[_civ] joinSilent _tgroup;	
+_civ setVariable ["garrison","HQ",false];
+_civ disableAI "AUTOCOMBAT";
+	
+//Co-Pilot
+_civ = _tgroup createUnit [OT_NATO_Unit_Pilot, OT_NATO_HQPos, [],0, "NONE"];
+_civ moveInTurret [_veh,[0]];
+_civ setVariable ["NOAI",true,false];
+[_civ] joinSilent _tgroup;	
+_civ setVariable ["garrison","HQ",false];
+_civ disableAI "AUTOCOMBAT";
 
 while {_count < _numgroups} do {
 	_ao = [_posTown,[350,500],_attackdir + (random 90)] call SHK_pos;

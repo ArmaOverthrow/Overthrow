@@ -149,7 +149,7 @@ publicVariable "OT_NATOInitDone";
 	if(_name in (server getVariable "NATOabandoned")) then {
 		_mrk setMarkerType "flag_Tanoa";
 	}else{
-		_mrk setMarkerType "Faction_CUP_NATO";
+		_mrk setMarkerType "flag_NATO";
 	};
 }foreach(OT_NATOobjectives);
 
