@@ -1,9 +1,3 @@
-player createDiaryRecord ["Diary", ["Quick Start", "You can press Y to open a menu with various options that affect your immediate surroundings. The menu is different according to context, ie if you are in a vehicle or have recruits selected. Your house is marked on the map and contains items with further options. Small towns with low stability generally offer more opportunities early on for bounties and trade. Cars can be purchased from the car dealers at fuel stations and in larger towns. If you need a weapon try asking around at shops, you may need to check the town info on your whiteboard at home to find where they are."]];
-player createDiaryRecord ["Diary", ["Standing", "Each player also has a local and global standing that affects prices and your notoriety amongst NATO and underworld elements. Your standing will increase when you kill known criminals or perform tasks that the public support, and decrease when you cause instability or chaos."]]; 
-player createDiaryRecord ["Diary", ["Stability", "Each town in Tanoa has a stability percentage that affects local prices and the garrison strength of the town. An unstable town may attract underworld elements or sink into total anarchy if NATO is unable to establish order there."]]; 
-player createDiaryRecord ["Diary", ["Background", "The year is 2025. Tanoa, a small pacific nation of only about 5000 people has been under occupation by NATO forces for almost five years. In 2020, international pressure mounted to remove a brutal dictator from the country and the international military consortium was put into action. A short and effective campaign saw the dictator fleeing to nearby Samoa after only a few hours of NATO air strikes. But five years have passed under international military rule. There have been minimal efforts at rebuilding the nation's once proud shipping industry and unemployment is at ridiculous levels. Political leaders from the east and west cannot agree on the future of Tanoa and the citizens are starting to wonder why it is even up to them at all. In these tense times, protests started forming in the less-populated south of Tanoa, centered around the capitals Balavu and Katkoula. A strong leader emerges from one of the many unorganized groups and he calls for a mass protest in the nation's capital Georgetown, with all disparate and misaligned groups to attend under the one banner of 'Free Tanoa'. That protest was last night, and that leader was shot live on international television by an unknown assailant. Tanoa awakes this morning to a strange new feeling of uncertainty. Was NATO ordered to carry out the assasination? If not, then who was responsible? One thing is definitely certain and it's written all over the signs now covered in blood in Georgetown. It's time for NATO to go. It's time to Free Tanoa."]]; 
-    
-
 private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture"];
 waitUntil {!isNull player};
 waitUntil {player == player};
@@ -24,6 +18,15 @@ if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
+_start = [1385.17,505.453,1.88826];
+_introcam = "camera" camCreate _start;
+_introcam camSetTarget [1420,535,5.8];
+_introcam cameraEffect ["internal", "BACK"];
+_introcam camSetFocus [15, 1];
+_introcam camsetfov 1.1;
+_introcam camCommit 0;
+waitUntil {camCommitted _introcam};
+introcam = _introcam;
 
 
 if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
@@ -31,7 +34,7 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
     sleep 1;
     _nul = createDialog "OT_dialog_start";
 }else{
-    titleText ["Waiting for host...", "BLACK FADED", 0];    
+	"Host is setting up game" call blackFaded;    
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
@@ -190,15 +193,7 @@ if (_newplayer) then {
     {
         if(typeof _x == OT_item_Map) then {
             _x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
-        };
-        if(typeof _x == OT_item_Storage) then {
-            _x addWeaponCargo [OT_item_BasicGun,1];
-            _x addMagazineCargo [OT_item_BasicAmmo,5];
-            _box = _x;
-            {
-                _box addItemCargo [_x,5];
-            }foreach(OT_consumableItems);
-        };
+        };        
         if(typeof _x == OT_item_Desk) then {
             _deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
         };
@@ -234,10 +229,10 @@ _count = 0;
 	_count = _count + 1;
 }foreach((allMissionObjects "Building") + vehicles);
 
+waitUntil {!isNil "OT_SystemInitDone"};
+titleText ["Loading Session", "BLACK FADED", 0];
 player setCaptive true;
 player setPos _housepos;
-
-waitUntil {!isNil "OT_SystemInitDone"};
 titleText ["", "BLACK IN", 5];
 
 if (isMultiplayer) then {
@@ -303,6 +298,15 @@ player addEventHandler ["GetInMan",{
 		};
 	};
 }];
+
+if(_newplayer) then {
+	if!(player getVariable ["tute",false]) then {
+		createDialog "OT_dialog_tute";
+		player setVariable ["tute",true,true];
+	};
+};
+_introcam cameraEffect ["Terminate", "BACK" ];
+_introcam = nil;
 
 [] execVM "stats.sqf";
 [] spawn setupKeyHandler;

@@ -7,9 +7,13 @@
 #include "dialogs\recruits.hpp"
 
 author="ARMAzac";
+briefingName = "Overthrow.Tanoa";
 OnLoadName = "Overthrow.Tanoa";
 OnLoadMission = "v0.5.0 (DEV)";
 loadScreen = "pic.jpg";
+onLoadMissionTime = 1;
+allowSubordinatesTakeWeapons= 1;
+skipLobby = 1;
 
 class Header
 {

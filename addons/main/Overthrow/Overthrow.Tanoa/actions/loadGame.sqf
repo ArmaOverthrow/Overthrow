@@ -1,11 +1,11 @@
 private ["_data"];
 
 //get all server data
-"Please wait.. loading persistent save" remoteExec['blackFaded',0];
+"Loading persistent save" remoteExec['blackFaded',0];
 
 _data = profileNameSpace getVariable ["Overthrow.save.001",""];
 if(typename _data != "ARRAY") exitWith {
-	[] execVM "initEconomy.sqf";
+	[] remoteExec ['newGame',2];
 	"No save found, starting new game" remoteExec ["hint",bigboss,true];
 };
 {

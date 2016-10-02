@@ -1,0 +1,29 @@
+closedialog 0;
+createDialog "OT_dialog_choose";
+openMap false;
+
+OT_choices = _this;
+_idc = 1600;
+
+{
+	private _text = _x select 0;
+	ctrlSetText [_idc,_text];
+	
+	_idc = _idc + 1;
+	if(_idc > 1605) exitWith {};
+}foreach(OT_choices);
+
+if(_idc < 1606) then {
+	while{_idc < 1606} do {
+		ctrlShow [_idc,false];	
+		_idc = _idc + 1;
+	};
+};
+
+OT_choiceMade = {
+	_choice = OT_choices select _this;
+	_text = _choice select 0;
+	_code = _choice select 1;
+	[_text] spawn _code;
+};
+

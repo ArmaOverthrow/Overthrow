@@ -59,6 +59,9 @@ initPriest = compileFinal preProcessFileLineNumbers "AI\priest.sqf";
 
 intelEvent = compileFinal preProcessFileLineNumbers "funcs\intelEvent.sqf";
 intelLevel = compileFinal preProcessFileLineNumbers "funcs\intelLevel.sqf";
+assignMission = compileFinal preProcessFileLineNumbers "funcs\assignMission.sqf";
+doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sqf";
+playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
 
 //AI Orders
 openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";
@@ -135,12 +138,14 @@ wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
+menuHandler = {};
 
 //Addons
 [] execVM "SHK_pos\shk_pos_init.sqf";
 
 blackFaded = {
-    titleText [_this, "BLACK FADED", 0];
+	_txt = format ["<t size='0.5' color='#000000'>Please wait... %1</t>",_this]; 
+    [_txt, 0, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 newGame = {
@@ -154,6 +159,10 @@ setupKeyHandler = {
     waitUntil {!(isnull (findDisplay 46))};
     sleep 1;
     (findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
+};
+
+assignedKey = {
+	(cba_keybinding_dikDecToStringTable select ((actionKeys _this) select 0)+1) select 1
 };
 
 standing = {
@@ -253,7 +262,6 @@ notify_good = {
 };
 
 notify_minor = {
-    playSound "ClickSoft";
     _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
     [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };

@@ -5,7 +5,6 @@ _count = 0;
 _town = _this;
 _posTown = server getVariable _town;
 _pop = server getVariable format["population%1",_town];
-if(_pop > 160) exitWith {};
 
 _groups = [];
 
@@ -32,5 +31,6 @@ _dealer remoteExec ["initGunDealerLocal",0,true];
 [_dealer] call initGunDealer;
 
 _dealer setVariable ["gundealer",true,true];
+spawner setVariable [format ["gundealer%1",_town],_dealer,true];
 
 _groups

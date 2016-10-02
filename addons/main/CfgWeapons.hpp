@@ -8,7 +8,7 @@ class CfgWeapons {
 	class InventoryItem_Base_F;
     class OT_Ganja: OT_ItemCore {
         scope = 2;        
-        picture = "\items\ui\items\ganja_x_ca.paa";
+        picture = "\main\ui\items\ganja_x_ca.paa";
         displayName = "Ganja";
         descriptionShort = "1 oz. of the finest bud around.";
         descriptionUse = "";

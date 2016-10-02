@@ -435,3 +435,149 @@ class OT_dialog_main
 
 	};
 };
+
+
+class OT_dialog_tute
+{
+	idd=-1;
+	movingenable=false;	
+
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Kizeru)
+		////////////////////////////////////////////////////////
+
+		class RscFrame_1800: RscFrame
+		{
+			idc = 1800;
+
+			x = 0.314375 * safezoneW + safezoneX;
+			y = 0.291 * safezoneH + safezoneY;
+			w = 0.37125 * safezoneW;
+			h = 0.264 * safezoneH;
+			colorText[] = {1,1,1,1};
+			colorBackground[] = {0,0,0,0.9};
+			colorActive[] = {0,0,0,0.9};
+		};
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			action = "closeDialog 0;[] execVM ""tutorial.sqf""";
+
+			text = "Yes"; //--- ToDo: Localize;
+			x = 0.340156 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
+			w = 0.0721875 * safezoneW;
+			h = 0.088 * safezoneH;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			action = "closeDialog 0;";
+
+			text = "No"; //--- ToDo: Localize;
+			x = 0.592812 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
+			w = 0.0721875 * safezoneW;
+			h = 0.088 * safezoneH;
+		};
+		class RscStructuredText_1100: RscStructuredText
+		{
+			idc = 1100;
+
+			text = "Would you like a quick tutorial?"; //--- ToDo: Localize;
+			x = 0.340156 * safezoneW + safezoneX;
+			y = 0.346 * safezoneH + safezoneY;
+			w = 0.324844 * safezoneW;
+			h = 0.033 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+	}
+}
+
+class OT_dialog_choose
+{
+	idd=-1;
+	movingenable=false;	
+	
+	class controls
+	{
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Humesu)
+		////////////////////////////////////////////////////////
+
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Lorem Ipsum dolor sit amet blah blah blah"; //--- ToDo: Localize;
+			action = "closeDialog 0;0 call OT_choiceMade;";
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.055 * safezoneH;
+			sizeEx = 0.017 * safezoneH;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Lorem Ipsum dolor sit amet blah blah blah"; //--- ToDo: Localize;
+			action = "closeDialog 0;1 call OT_choiceMade;";
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.544 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.055 * safezoneH;
+			sizeEx = 0.017 * safezoneH;
+		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Lorem Ipsum dolor sit amet blah blah blah"; //--- ToDo: Localize;
+			action = "closeDialog 0;2 call OT_choiceMade;";
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.61 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.055 * safezoneH;
+			sizeEx = 0.017 * safezoneH;
+		};
+		class RscButton_1603: RscButton
+		{
+			idc = 1603;
+			text = "Lorem Ipsum dolor sit amet blah blah blah"; //--- ToDo: Localize;
+			action = "closeDialog 0;3 call OT_choiceMade;";
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.676 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.055 * safezoneH;
+			sizeEx = 0.017 * safezoneH;
+		};
+		class RscButton_1604: RscButton
+		{
+			idc = 1604;
+			text = "Lorem Ipsum dolor sit amet blah blah blah"; //--- ToDo: Localize;
+			action = "closeDialog 0;4 call OT_choiceMade;";
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.742 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.055 * safezoneH;
+			sizeEx = 0.017 * safezoneH;
+		};
+		class RscButton_1605: RscButton
+		{
+			idc = 1605;
+			text = "Lorem Ipsum dolor sit amet blah blah blah"; //--- ToDo: Localize;
+			action = "closeDialog 0;5 call OT_choiceMade;";
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.808 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.055 * safezoneH;
+			sizeEx = 0.017 * safezoneH;
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+	}
+}

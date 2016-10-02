@@ -6,6 +6,7 @@ _key = _this select 1;
 if (_key == 21) then
 {
 	if(!dialog) then {
+		[] spawn menuHandler;
 		if(count (groupSelectedUnits player) > 0) exitWith {			
 			createDialog "OT_dialog_command";
 		};
