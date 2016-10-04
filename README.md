@@ -1,7 +1,7 @@
 ![image](https://cloud.githubusercontent.com/assets/19246239/17642726/b268a4da-6194-11e6-850a-8951aed0f930.png)
 
 # Overthrow
-A dynamic and persistent RPG Revolution Simulator mod for Arma 3
+A dynamic and persistent revolution campaign mod for ARMA 3 Apex
 
 # Current Features
 * GTA-inspired wanted/stealth system
@@ -29,8 +29,8 @@ A dynamic and persistent RPG Revolution Simulator mod for Arma 3
 * Advanced Towing by Duda http://www.armaholic.com/page.php?id=30575
 
 # Recommended Addons
-* ACE3 (Fully integrated) (Steam Workshop) http://ace3mod.com/
+* ACE3 (Fully integrated) [(Steam Workshop)](https://steamcommunity.com/sharedfiles/filedetails/?id=463939057)
 
 # To install
-Overthrow is currently in a pre-alpha state, but you are free to try it out, just expect bugs. The latest stable release can be found on the Releases page: https://github.com/armazac/Overthrow.Tanoa/releases
+Overthrow is available on the [Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=774201744)
 
