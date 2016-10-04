@@ -1,0 +1,46 @@
+class Campaign
+{
+	name = "Overthrow";
+	firstBattle = Missions;
+	disableMP = -1;
+
+	briefingName = "Overthrow";
+	author = "ARMAzac";
+	overviewPicture = "\overthrow_main\campaign\overthrow_campaign.jpg";
+	overviewText = "";
+
+	class MissionDefault
+	{
+		lives = -1;
+		
+		lost = ;
+		end1 = ;
+		end2 = ;
+		end3 = ;
+		end4 = ;
+		end5 = ;
+		end6 = ;
+	};
+
+	class Missions
+	{
+		name = "Overthrow";
+		cutScene = ;
+		firstMission = Tanoa;
+		end1 = ;
+		end2 = ;
+		end3 = ;
+		end4 = ;
+		end5 = ;
+		end6 = ;
+		lost = ;
+
+		#define _CAMPAIGN 1
+		
+		class Tanoa: MissionDefault
+		{
+			template = Overthrow.Tanoa;
+		};
+	};
+};
+	
