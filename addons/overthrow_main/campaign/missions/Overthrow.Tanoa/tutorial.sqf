@@ -7,6 +7,7 @@ _txt = format ["%1<t size='0.4' color='#ffffff'>Move Forward  <t size='0.6'>%2</
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Back  <t size='0.6'>%2</t></t><br/>",_txt,"MoveBack" call assignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Left  <t size='0.6'>%2</t></t><br/>",_txt,"TurnLeft" call assignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Right  <t size='0.6'>%2</t></t><br/><br/>",_txt,"TurnRight" call assignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Jump  <t size='0.6'>%2</t></t><br/><br/>",_txt,"GetOver" call assignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Open Inventory  <t size='0.6'>%2</t></t><br/>",_txt,"Gear" call assignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Open Map  <t size='0.6'>%2</t></t><br/>",_txt,"ShowMap" call assignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Main Menu  <t size='0.6'>Y</t></t><br/>",_txt];
@@ -29,10 +30,10 @@ menuHandler = {
 
 	hint format["Holding RMB will pan the map, zoom with the scrollwheel. When you are finished exploring the map, close it with the Esc key.","Action" call assignedKey];	
 	sleep 3;
-	_txt = "<t align='left'><t size='0.6' color='#000000'>Stability</t><br/>";
-	_txt = format ["%1<t size='0.5' color='#000000'>Red areas indicate towns where stability is lowest. Blue icons indicate known NATO installations.</t><br/><br/>",_txt];
-	_txt = format ["%1<t size='0.4' color='#101010'>This is Tanoa, a small island nation in the South Pacific with a long history of British and French colonial occupation. Currently under occupation by NATO forces, the nation has been under intense scrutiny by the media and international politicians since a tyrant was removed in 2020, with many conspiracy theories abound as to the future of the small but conveniently located archipelago.",_txt];
-	_txt = format ["%1A massive protest against continued NATO occupation took place in the nation's capital Georgetown and the spokesperson for the 'Free Tanoa' movement was assasinated in cold blood by an unknown assailant. In response to the event NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.<br/><br/></t>",_txt];
+	_txt = "<t align='left'><t size='0.7' color='#000000'>Stability</t><br/>";
+	_txt = format ["%1<t size='0.6' color='#000000'>Red areas indicate towns where stability is lowest. Blue icons indicate known NATO installations.</t><br/><br/>",_txt];
+	_txt = format ["%1<t size='0.5' color='#101010'>This is Tanoa, a small island nation in the South Pacific with a history of British and French colonialism. Tanoa is currently under occupation by NATO forces and has been at the center of international attention since the Vunakece regime was ousted in 2020. The Tanoan population is currently in dissaray and there are many conspiracy theories as to the economic and political future of this small but strategically valuable archipelago.",_txt];
+	_txt = format ["%1A massive protest against the NATO occupation recently took place in the nation's capital of Georgetown, where the spokesperson for the 'Free Tanoa' movement was assassinated by an unknown assailant. In response, NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.<br/><br/></t>",_txt];
 			
 	[_txt, -0.5, 0.5, 240, 1, 0, 2] spawn bis_fnc_dynamicText;
 	

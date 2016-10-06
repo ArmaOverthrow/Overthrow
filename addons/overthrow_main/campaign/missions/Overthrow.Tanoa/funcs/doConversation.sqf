@@ -11,8 +11,8 @@ if((count _this) > 3) then {
 private _person = _personOne;
 {
 	_person setRandomLip true;
-	_person globalChat _x;	
-	sleep 5;	
+	format["%1: %2", name _person, _x] call notify_talk;	
+	sleep ceil ((count _x) * 0.2)+1;	
 	_person setRandomLip false;
 	if(_person isEqualTo _personOne) then {
 		_person = _personTwo;

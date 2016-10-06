@@ -1,5 +1,6 @@
 //Manages passive income for all players (Lease + taxes)
 _lasthour = 0;
+waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 sleep 20;
 while {true} do {
 	_lasthour = date select 3;
@@ -37,6 +38,7 @@ while {true} do {
 	_inf remoteExec ["influence",0,false];	
 	
 	_numPlayers = count(allPlayers);
+	if(isNil "_total") then {_total = 0};
 	_perPlayer = round(_total / _numPlayers);
 	if(_perPlayer > 0) then {
 		{

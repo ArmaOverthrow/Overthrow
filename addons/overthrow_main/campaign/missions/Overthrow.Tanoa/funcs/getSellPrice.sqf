@@ -16,7 +16,7 @@ if(_cls in (OT_allWeapons + OT_allMagazines)) then {
 	_baseprice = _cost select 0;
 
 	_stability = 1.0 - ((server getVariable format["stability%1",_town]) / 100);
-	_population = server getVariable format["stability%1",_town];
+	_population = server getVariable format["population%1",_town];
 	if(_population > 1000) then {_population = 1000};
 	_population = 1-(_population / 1000);
 

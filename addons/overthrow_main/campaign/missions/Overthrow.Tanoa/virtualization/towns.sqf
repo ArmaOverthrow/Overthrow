@@ -11,6 +11,7 @@ OT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\distribution.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\harbor.sqf"
 ];
+private _lastSearch = time;
 {	
 	_pos = server getVariable _x;
 	[_pos,{
@@ -76,6 +77,10 @@ OT_townSpawners = [
 						server setVariable[format ["garrisonadd%1",_town],_need-2,false];
 					};
 					
+					if((time - _lastSearch) > 600) then {
+						(server getVariable _town) spawn NATOsearch;
+					};
+					
 					//CRIM
 					_newpos = server getVariable [format["crimnew%1",_town],false];
 					_addnum = server getVariable [format["crimadd%1",_town],0];
@@ -118,6 +123,7 @@ OT_townSpawners = [
 					_groups = [];
 				};
 			};
+			sleep 0.5;
 		};
 	},_x] call OT_fnc_registerSpawner;	
 }foreach(OT_allTowns);

@@ -38,7 +38,7 @@ class OT_dialog_recruits
 			h = 0.077 * safezoneH;
 			colorBackground[] = {0.5,0,0,1};
 			colorActive[] = {0.6,0,0,1};
-			action = "_this call dismissRecruit;"
+			action = "_this call dismissRecruit;";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

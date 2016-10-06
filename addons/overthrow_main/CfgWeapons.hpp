@@ -10,10 +10,10 @@ class CfgWeapons {
         scope = 2;        
         picture = "\overthrow_main\ui\items\ganja_x_ca.paa";
         displayName = "Ganja";
-        descriptionShort = "1 oz. of the finest bud around.";
+        descriptionShort = "1/8 oz. of the finest bud around.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 0.5;
+            mass = 5;
         };
     };
 };

@@ -81,7 +81,6 @@ while {!(isNull _group) and count (units _group) > 0} do {
 					};
 				}else{
 					if(isPlayer _x and !(_x in _searched)) then {
-						_brokenlaw = false;
 						_msg = "Search complete, be on your way";
 						_items = [];
 						_unit = _x;
@@ -91,20 +90,38 @@ while {!(isNull _group) and count (units _group) > 0} do {
 						}else{
 							_items = _x call unitStock;
 						};
-						
-						{
+						{							
 							_cls = _x select 0;
-							if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_illegalItems + OT_allStaticBackpacks) exitWith {
-								_msg = "NATO found illegal items";
+							if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_allStaticBackpacks) then {
+								_count = _x select 1;
+								for "_i" from 1 to _count do {
+									_target removeItem _cls;
+								};
+								_foundweapons = true;
+							};
+							if(_cls in OT_illegalItems) then {
+								_count = _x select 1;
+								for "_i" from 1 to _count do {
+									_target removeItem _cls;
+								};
+								_foundillegal = true;
+							};		
+						}foreach(_items);						
+						
+						if(_foundillegal or _foundweapons) then {
+							if(_foundweapons) then {
+								_msg = "What's this??!?";
 								_unit setCaptive false;
 								{
 									if(side _x == west) then {
 										_x reveal [_unit,1.5];
 										sleep 0.2;
 									};
-								}foreach(_start nearentities ["Man",500]);						
+								}foreach(_unit nearentities ["Man",500]);	
+							}else{
+								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
-						}foreach(_items);
+						};
 						_msg remoteExec ["notify_talk",_x,true];
 						_searched pushback _x;
 						_searching deleteAt(_searching find _x);

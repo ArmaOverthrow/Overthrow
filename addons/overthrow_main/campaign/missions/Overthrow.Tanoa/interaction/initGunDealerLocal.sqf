@@ -57,9 +57,9 @@ _civ addAction ["Buy", {
 		}foreach(OT_allStaticBackpacks);
 		
 		{			
-			_price = round(50 * ((random 1) + 1));
+			_price = round (([_town,_x] call getDrugPrice) * 0.9);
 			_stock pushBack [_x,_price];
-		}foreach(OT_illegalItems);		
+		}foreach(OT_allDrugs);		
 		
 		server setVariable [format["gunstock%1",_town],_stock,true];
 	};

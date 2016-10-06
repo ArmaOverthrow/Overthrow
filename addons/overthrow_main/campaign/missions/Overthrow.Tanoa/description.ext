@@ -10,7 +10,7 @@ overviewPicture = "\overthrow_main\campaign\missions\Overthrow.Tanoa\overthrow_t
 author="ARMAzac";
 briefingName = "Overthrow Tanoa";
 OnLoadName = "Overthrow Tanoa";
-OnLoadMission = "v0.5.0 (DEV)";
+OnLoadMission = "v0.5.0";
 loadScreen = "\overthrow_main\campaign\missions\Overthrow.Tanoa\pic.jpg";
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;
@@ -23,7 +23,7 @@ class Header
 	maxPlayers = 32;
 };
 
-overviewText = "This is Tanoa, a small island nation in the South Pacific with a long history of British and French colonial occupation. Currently under occupation by NATO forces, the nation has been under intense scrutiny by the media and international politicians since a tyrant was removed in 2020, with many conspiracy theories abound as to the future of the small but conveniently located archipelago.<br/><br/>A massive protest against continued NATO occupation took place in the nation's capital Georgetown and the spokesperson for the 'Free Tanoa' movement was assasinated in cold blood by an unknown assailant. In response to the event NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.";
+overviewText = "This is Tanoa, a small island nation in the South Pacific with a history of British and French colonialism. Tanoa is currently under occupation by NATO forces and has been at the center of international attention since the Vunakece regime was ousted in 2020. The Tanoan population is currently in dissaray and there are many conspiracy theories as to the economic and political future of this small but strategically valuable archipelago. A massive protest against the NATO occupation recently took place in the nation's capital of Georgetown, where the spokesperson for the 'Free Tanoa' movement was assassinated by an unknown assailant. In response, NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.";
 
 allowFunctionsLog = 1;
 enableDebugConsole = 1;

@@ -6,7 +6,7 @@ _population = server getVariable format["population%1",_town];
 _posTown = server getVariable _town;
 
 _mSize = 350;
-if(_town in OT_capitals) then {
+if(_town in AIT_capitals) then {
 	_mSize = 700;
 };
 
@@ -21,7 +21,7 @@ if(_population > 50) then {
 	{
 		_group = createGroup blufor;
 		_vehtype = _x;
-		_pos = [getMarkerPos OT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
+		_pos = [getMarkerPos AIT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
 		_veh = createVehicle [_vehtype, _pos, [], 0,""];  	
 		_veh setDir 50;
 		_vehs pushback _veh;
@@ -37,19 +37,19 @@ if(_population > 50) then {
 		_wp setWaypointSpeed "FULL"; 
 		
 		sleep 0.1;
-	}foreach(OT_NATO_Vehicles_AirDrones);
+	}foreach(AIT_NATO_Vehicles_AirDrones);
 
 	{
 		_x addCuratorEditableObjects [_vehs+_soldiers,true];
 	} forEach allCurators;
-	sleep 35;
+	sleep 25;
 };
 
 _numgroups = 1+floor(_population / 100);
-if(_numgroups > 3) then {_numgroups = 3};
+if(_numgroups > 6) then {_numgroups = 6};
 
 _count = 0;
-_pos = OT_NATO_HQPos;
+_pos = AIT_NATO_HQPos;
 
 _dir = [_pos,_posTown] call BIS_fnc_dirTo;
 
@@ -71,39 +71,28 @@ if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
 };
 _attackdir = _attackdir - 45;
 
-//Transport
-_tgroup = creategroup blufor;
-_pos = [getMarkerPos OT_NATO_AirSpawn,0,0,false,[0,0],[100,OT_NATO_Vehicle_AirTransport_Large]] call SHK_pos;
-sleep 0.1;
-
-_veh = createVehicle [OT_NATO_Vehicle_AirTransport_Large, _pos, [], 0,""];  		
-_vehs pushback _veh;
-
-_veh setDir (50);
-
-_tgroup addVehicle _veh;
-//Pilot
-_civ = _tgroup createUnit [OT_NATO_Unit_Pilot, OT_NATO_HQPos, [],0, "NONE"];
-_civ moveInDriver _veh;
-_civ setVariable ["NOAI",true,false];
-[_civ] joinSilent _tgroup;	
-_civ setVariable ["garrison","HQ",false];
-_civ disableAI "AUTOCOMBAT";
-	
-//Co-Pilot
-_civ = _tgroup createUnit [OT_NATO_Unit_Pilot, OT_NATO_HQPos, [],0, "NONE"];
-_civ moveInTurret [_veh,[0]];
-_civ setVariable ["NOAI",true,false];
-[_civ] joinSilent _tgroup;	
-_civ setVariable ["garrison","HQ",false];
-_civ disableAI "AUTOCOMBAT";
-
 while {_count < _numgroups} do {
 	_ao = [_posTown,[350,500],_attackdir + (random 90)] call SHK_pos;
-	_group = [OT_NATO_HQPos, blufor, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
+	_group = [AIT_NATO_HQPos, blufor, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
 	_count = _count + 1;
 	sleep 0.2;
-		
+	
+	//Transport
+	_tgroup = creategroup blufor;
+	_pos = [_pos,60,80,false,[0,0],[100,AIT_NATO_Vehicle_AirTransport]] call SHK_pos;
+	sleep 0.1;
+	_veh = createVehicle [AIT_NATO_Vehicle_AirTransport, _pos, [], 0,""];  		
+	_vehs pushback _veh;
+	
+	
+	_veh setDir (_dir);
+	_tgroup addVehicle _veh;
+	createVehicleCrew _veh;
+	{
+		[_x] joinSilent _tgroup;		
+		_x setVariable ["garrison","HQ",false];
+	}foreach(crew _veh);	
+	
 	{
 		_x moveInCargo _veh;
 		_soldiers pushback _x;
@@ -111,6 +100,43 @@ while {_count < _numgroups} do {
 	}foreach(units _group);	
 	
 	sleep 1;
+	
+	_moveto = [AIT_NATO_HQPos,500,_dir] call SHK_pos;
+	_wp = _tgroup addWaypoint [_moveto,0];
+	_wp setWaypointType "MOVE";
+	_wp setWaypointBehaviour "COMBAT";
+	_wp setWaypointSpeed "FULL";
+	_wp setWaypointCompletionRadius 150;
+	_wp setWaypointStatements ["true","(vehicle this) flyInHeight 150;"];
+	
+	_wp = _tgroup addWaypoint [_ao,0];
+	_wp setWaypointType "MOVE";
+	_wp setWaypointBehaviour "COMBAT";
+	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
+	wp setWaypointCompletionRadius 50;
+	_wp setWaypointSpeed "FULL";
+	
+	_wp = _tgroup addWaypoint [_ao,0];
+	_wp setWaypointType "SCRIPTED";
+	_wp setWaypointStatements ["true","[vehicle this,75] execVM 'funcs\addons\eject.sqf'"];	
+	_wp setWaypointTimeout [10,10,10];
+	
+	_wp = _tgroup addWaypoint [_ao,0];
+	_wp setWaypointType "SCRIPTED";
+	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];	
+	_wp setWaypointTimeout [15,15,15];
+	
+	_moveto = [AIT_NATO_HQPos,200,_dir] call SHK_pos;
+
+	_wp = _tgroup addWaypoint [_moveto,0];
+	_wp setWaypointType "LOITER";
+	_wp setWaypointBehaviour "CARELESS";
+	_wp setWaypointSpeed "FULL";	
+	_wp setWaypointCompletionRadius 100;
+	
+	_wp = _tgroup addWaypoint [_moveto,0];
+	_wp setWaypointType "SCRIPTED";
+	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
 	
 	_wp = _group addWaypoint [_attackpos,20];
 	_wp setWaypointType "MOVE";
@@ -123,69 +149,8 @@ while {_count < _numgroups} do {
 	{
 		_x addCuratorEditableObjects [_vehs+_soldiers,true];
 	} forEach allCurators;
+	sleep 20;
 };
-
-_moveto = [getMarkerPos OT_NATO_AirSpawn,2500,50] call BIS_fnc_relPos;
-
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "MOVE";
-_wp setWaypointStatements ["true","(vehicle this) flyInHeight 500;"];
-_wp setWaypointCompletionRadius 350;
-
-_moveto = [getMarkerPos OT_NATO_AirSpawn,5500,90] call BIS_fnc_relPos;
-
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "MOVE";
-_wp setWaypointCompletionRadius 550;
-_wp setWaypointSpeed "FULL";
-
-_flydir = [_moveto,_ao] call BIS_fnc_dirTo;
-_moveto = [_ao,3000,_flydir - 180] call BIS_fnc_relPos;
-
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "MOVE";
-_wp setWaypointBehaviour "CARELESS";
-_wp setWaypointCompletionRadius 350;
-
-_moveto = [_ao,200,_flydir - 180] call BIS_fnc_relPos;
-
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "MOVE";
-_wp setWaypointBehaviour "CARELESS";
-_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];(vehicle this) forceSpeed 65;"];
-_wp setWaypointCompletionRadius 350;
-_wp setWaypointSpeed "LIMITED";
-
-_moveto = [_ao,5000,_flydir] call BIS_fnc_relPos;
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this,75] execVM 'funcs\addons\eject.sqf';"];	
-_wp setWaypointCompletionRadius 125;
-_wp setWaypointSpeed "LIMITED";
-
-_moveto = [_moveto,4000,270] call BIS_fnc_relPos;
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "MOVE";
-_wp setWaypointCompletionRadius 550;
-_wp setWaypointSpeed "LIMITED";
-
-_moveto = [OT_NATO_HQPos,400,_dir] call SHK_pos;
-
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "LOITER";
-_wp setWaypointBehaviour "CARELESS";
-_wp setWaypointSpeed "FULL";	
-_wp setWaypointCompletionRadius 100;
-_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];(vehicle this) forceSpeed -1;"];	
-
-_wp = _tgroup addWaypoint [_moveto,0];
-_wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
-
-_comp = OT_NATO_Vehicle_AirTransport_Large call ISSE_Cfg_Vehicle_GetName;
-_an = "A";
-if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
-[3,_ao,"Known Intel",format["Intelligence reports that this will be the dropzone for the battle. %1 %2 is also known to be departing %3 with %4 troops",_an,_comp,OT_NATO_HQ,count _soldiers]] remoteExec ["intelEvent",0,false];
 
 [_soldiers,_attackpos,_town,_tskid] spawn {
 	_soldiers = _this select 0;
@@ -214,7 +179,6 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 		if(count _alive <= _lostat) then {
 			[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 			_active = false;
-			format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
 		}else{
 			if(((count _inrange) / (count _alive)) > 0.7) then {
 				//check for any alive enemies
@@ -241,8 +205,7 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 };
 
 if(_population < 120) exitWith{};
-_pos = OT_NATO_HQPos;
-sleep 60;
+_pos = AIT_NATO_HQPos;
 //Air support (Heli)
 {	
 	_group = createGroup blufor;
@@ -262,8 +225,8 @@ sleep 60;
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
 	_wp setWaypointSpeed "FULL"; 
-	sleep 40;
-}foreach(OT_NATO_Vehicles_AirSupport);
+	sleep 10;
+}foreach(AIT_NATO_Vehicles_AirSupport);
 
 {
 	_x addCuratorEditableObjects [_vehs+_soldiers,true];
@@ -277,7 +240,7 @@ sleep 20;
 {	
 	_group = createGroup blufor;
 	_vehtype = _x;
-	_pos = [getMarkerPos OT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
+	_pos = [getMarkerPos AIT_NATO_AirSpawn,0,0,false,[0,0],[100,_vehtype]] call SHK_pos;
 	_veh = createVehicle [_vehtype, _pos, [], 0,""];  	
 	_vehs pushback _veh;
 	_veh setDir 50;
@@ -298,7 +261,6 @@ sleep 20;
 	_wp setWaypointSpeed "FULL"; 
 		
 	sleep 5;
-}foreach(OT_NATO_Vehicles_AirWingedSupport);
-
+}foreach(AIT_NATO_Vehicles_AirWingedSupport);
 
 

@@ -56,7 +56,7 @@ class OT_dialog_vehicle
 			y = 0.39 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "closeDialog 0;[] spawn fastTravel;"
+			action = "closeDialog 0;[] spawn fastTravel;";
 			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
 		};
 		class RscButton_1601: RscButton
@@ -68,7 +68,7 @@ class OT_dialog_vehicle
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Transfers the contents of the closest container into this vehicle"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn transferFrom;"
+			action = "closeDialog 0;[] spawn transferFrom;";
 		};
 		class RscButton_1602: RscButton
 		{
@@ -79,7 +79,7 @@ class OT_dialog_vehicle
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Transfers the contents of this vehicle into the closest container"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn transferTo;"
+			action = "closeDialog 0;[] spawn transferTo;";
 		};
 		class RscButton_1603: RscButton
 		{
@@ -90,7 +90,7 @@ class OT_dialog_vehicle
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Transfers only legal (sellable) items from the closest container into this vehicle"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn transferLegit;"
+			action = "closeDialog 0;[] spawn transferLegit;";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -129,7 +129,7 @@ class OT_dialog_command
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Commands all selected units to loot bodies and fill closest container to them"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn loot;"
+			action = "closeDialog 0;[] spawn loot;";
 		};
 		class RscButton_1602: RscButton
 		{
@@ -140,7 +140,7 @@ class OT_dialog_command
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn openInventory;"
+			action = "closeDialog 0;[] spawn openInventory;";
 		};
 		class RscButton_1603: RscButton
 		{
@@ -212,37 +212,7 @@ class OT_dialog_options
 			h = 0.077 * safezoneH;
 			tooltip = "Increases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
 			action = "OT_spawnCivPercentage = OT_spawnCivPercentage + 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
-		};
-		class RscButton_1603: RscButton
-		{
-			idc = 1603;
-			text = "Clean bodies"; //--- ToDo: Localize;
-			x = 0.386562 * safezoneW + safezoneX;
-			y = 0.522 * safezoneH + safezoneY;
-			w = 0.118594 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Deletes all dead bodies"; //--- ToDo: Localize;
-		};
-		class RscButton_1604: RscButton
-		{
-			idc = 1604;
-			text = "Clean vehicles"; //--- ToDo: Localize;
-			x = 0.515469 * safezoneW + safezoneX;
-			y = 0.522 * safezoneH + safezoneY;
-			w = 0.118594 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Deletes all destroyed vehicles (damaged ones will remain)"; //--- ToDo: Localize;
-		};
-		class RscButton_1605: RscButton
-		{
-			idc = 1605;
-			text = "Clean All"; //--- ToDo: Localize;
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.632 * safezoneH + safezoneY;
-			w = 0.118594 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Deletes all dead bodies and damaged vehicles, including both stolen and purchased. You have been warned."; //--- ToDo: Localize;
-		};
+		};		
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -314,7 +284,7 @@ class OT_dialog_main
 			y = 0.731 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
-			action = "[] spawn manageRecruits;"
+			action = "[] spawn manageRecruits;";
 		};
 		class RscPicture_1200: RscPicture
 		{
@@ -330,38 +300,13 @@ class OT_dialog_main
 		{
 			idc = 1605;
 
-			text = "Recruit"; //--- ToDo: Localize;
+			text = "Talk"; //--- ToDo: Localize;
 			x = 0.881562 * safezoneW + safezoneX;
 			y = 0.522 * safezoneH + safezoneY;
 			w = 0.113437 * safezoneW;
 			h = 0.044 * safezoneH;
-			action = "closeDialog 0;[] spawn recruitCiv";
-			tooltip = "Recruit this civilian into your group";
-		};
-		class RscButton_1606: RscButton
-		{
-			idc = 1606;
-
-			text = "Get Intel"; //--- ToDo: Localize;
-			x = 0.881562 * safezoneW + safezoneX;
-			y = 0.577 * safezoneH + safezoneY;
-			w = 0.0515625 * safezoneW;
-			h = 0.044 * safezoneH;
-			action = "closeDialog 0;[] call getIntel";
-			tooltip = "Ask this civilian what he knows (Cost: 1 influence)";
-		};
-		class RscButton_1607: RscButton
-		{
-			idc = 1607;
-
-			text = "Give $100"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn giveMoney";
-			x = 0.943438 * safezoneW + safezoneX;
-			y = 0.577 * safezoneH + safezoneY;
-			w = 0.0515625 * safezoneW;
-			h = 0.044 * safezoneH;
-			tooltip = "Give this person $100";
-		};
+			action = "closeDialog 0;[] spawn talkToCiv";
+		};		
 		class RscPicture_1201: RscPicture
 		{
 			idc = 1201;
@@ -501,7 +446,7 @@ class OT_dialog_tute
 
 class OT_dialog_choose
 {
-	idd=-1;
+	idd=8002;
 	movingenable=false;	
 	
 	class controls

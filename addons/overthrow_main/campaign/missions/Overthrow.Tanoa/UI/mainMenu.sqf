@@ -159,14 +159,24 @@ if(count _possible > 0) then {
 	_name = name _civ;	
 
 	player setVariable ["hiringciv",_civ,false];
-	
-	_civprice = [_town,"CIV",_standing] call getPrice;
-	
-	ctrlSetText [1605,format["Recruit ($%1)",[_civprice, 1, 0, true] call CBA_fnc_formatNumber]];
-	
+	_type = "Civilian";
+	if(!isplayer _civ) then {
+		_civ disableAI "PATH";
+		(group _civ) setFormDir ([_civ,player] call BIS_fnc_dirTo);		
+		_civ spawn {			
+			waitUntil {sleep 1;!(_this getVariable["OT_talking",false]) and isNull (findDisplay 8001) and isNull (findDisplay 8002)};
+			_this enableAI "PATH";
+		};		
+	}else{
+		ctrlEnable [1605,false];
+		ctrlEnable [1606,false];
+		ctrlSetText [1605,"Give Money"];
+		_type = "Player";
+	};
 	_civTxt = format["
-		<t align='left' size='0.9'>%1</t>
-	",_name];
+		<t align='left' size='0.9'>%1</t><br/>
+		<t align='left' size='0.8'>%2</t><br/>
+	",_name,_type];	
 }else{
 	ctrlEnable [1605,false];
 	ctrlEnable [1606,false];

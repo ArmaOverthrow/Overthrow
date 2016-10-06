@@ -10,6 +10,7 @@ inSpawnDistance = compileFinal preProcessFileLineNumbers "funcs\inSpawnDistance.
 nearestTown = compileFinal preProcessFileLineNumbers "funcs\nearestTown.sqf";
 getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
 getSellPrice = compileFinal preProcessFileLineNumbers "funcs\getSellPrice.sqf";
+getDrugPrice = compileFinal preProcessFileLineNumbers "funcs\getDrugPrice.sqf";
 canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
@@ -126,6 +127,7 @@ getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
 transferFrom = compileFinal preProcessFileLineNumbers "actions\transferFrom.sqf";
 transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
 transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
+talkToCiv = compileFinal preProcessFileLineNumbers "actions\talkToCiv.sqf";
 
 //Modes
 placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
@@ -135,6 +137,7 @@ unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
 unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
 unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
+NATOsearch = compileFinal preProcessFileLineNumbers "AI\NATOsearch.sqf";
 
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
@@ -204,7 +207,7 @@ money = {
     if(_amount > 0) then {
         _plusmin = "+";
     };
-    format["Money: %1%2",_plusmin,_amount] call notify_minor;
+    format["%1$%2",_plusmin,_amount] call notify_minor;
     
 };
 

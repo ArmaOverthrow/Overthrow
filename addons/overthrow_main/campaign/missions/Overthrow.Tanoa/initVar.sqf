@@ -103,11 +103,8 @@ if(OT_hasAce) then {
 OT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F","H_HelmetB_TI_tna_F"];
 OT_illegalVests = ["V_TacVest_gen_F"];
 
-if(OT_hasAce) then {
-	OT_illegalItems = ["ACE_morphine","ACE_epinephrine","ACE_adenosine"];
-}else{
-	OT_illegalItems = [];
-};
+OT_allDrugs = ["OT_Ganja"];
+OT_illegalItems = OT_allDrugs;
 
 OT_item_UAV = "I_UAV_01_F";
 OT_item_UAVterminal = "I_UavTerminal";
@@ -181,7 +178,7 @@ OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = "B_Heli_Transport_03_F";
-OT_NATO_Vehicle_AirTransport_Large = "CUP_B_C130J_USMC";
+OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
 
 OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
@@ -219,6 +216,9 @@ if(OT_hasAce) then {
 	[OT_items,[
 		["ACE_fieldDressing",2,0,0,0.1],
 		["ACE_elasticBandage",3,0,0,0.2],
+		["ACE_morphine",40,0,0,0.2],
+		["ACE_epinephrine",40,0,0,0.2],
+		["ACE_adenosine",40,0,0,0.2],
 		["ACE_SpraypaintBlue",20,0,0,0.2],
 		["ACE_SpraypaintRed",20,0,0,0.2],
 		["ACE_SpraypaintBlack",20,0,0,0.2],
@@ -226,7 +226,7 @@ if(OT_hasAce) then {
 		["ACE_Sandbag_empty",2,0,0,0],
 		["ACE_Altimeter",110,0,0,1],
 		["ACE_Banana",1,0,0,0],
-		["ACE_microDAGR",200,0,0,1]
+		["ACE_microDAGR",200,0,0,1]		
 	]] call BIS_fnc_arrayPushStack;
 }else{
 	[OT_items,[
@@ -426,8 +426,11 @@ OT_allExpensiveVests = [];
 OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns + OT_allSniperRifles + OT_allHandGuns + OT_allMissileLaunchers + OT_allRocketLaunchers;
 
 if(isServer) then {
-	cost setVariable ["CIV",[35,0,0,0],true];
+	cost setVariable ["CIV",[100,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
+	
+	//Drug prices
+	cost setVariable ["OT_Ganja",[100,0,0,0],true];
 };
 //populate the cost gamelogic with the above data so it can be accessed quickly
 {
