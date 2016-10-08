@@ -127,7 +127,7 @@ if(isplayer _target) then {
 			};
 			_foundillegal = true;
 		};		
-	}foreach(_target call unitStock);
+	}foreach(_target call searchStock);
 	
 	if(_foundillegal or _foundweapons) then {
 		if(_foundweapons) then {

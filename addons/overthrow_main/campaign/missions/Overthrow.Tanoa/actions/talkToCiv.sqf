@@ -8,16 +8,12 @@ private _money = player getvariable "money";
 
 private _options = [];
 
-if(_money >= _civprice) then {
-	_options pushBack [
-		format["Recruit Civilian (-$%1)",_civprice],recruitCiv
-	];
-};
-if(_influence >= 1) then {
-	_options pushBack ["Ask about Gendarmerie (-1 influence)",{
-		
-	}];
-};
+
+_options pushBack [
+	format["Recruit Civilian (-$%1)",_civprice],recruitCiv
+];
+
+
 if(((items player) find "OT_Ganja") > -1 and !(_civ getVariable["OT_askedDrugs",false])) then {
 	
 	_options pushBack ["Sell Ganja",{

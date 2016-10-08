@@ -55,9 +55,7 @@ if (_mine isEqualTo []) exitWith {};
 		
 		
 		_ClosestEnemy = [_Array1,_Mine] call VCOMAI_ClosestObject;
-		if!(isNil "_ClosestEnemy") then {
-			if (_ClosestEnemy distance _Mine < 2.5) then {_NotSafe = false;};
-		};
+		if (_ClosestEnemy distance _Mine < 2.5) then {_NotSafe = false;};
 		sleep 0.1;	
 	};
 	_Mine setdamage 1;

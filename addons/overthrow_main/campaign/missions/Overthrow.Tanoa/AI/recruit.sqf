@@ -5,6 +5,8 @@ _civ = _this select 0;
 removeAllActions _civ;
 _civ removeAllEventHandlers "FiredNear";
 
+[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+
 _civ setSkill 1.0;
 _civ setRank "PRIVATE";
 

@@ -6,12 +6,13 @@ _VCOM_GARRISONED = _this select 2;
 _VCOM_MovedRecentlyCover = _this select 3;
 _VCOMAI_ActivelyClearing = _this select 4;
 _VCOMAI_StartedInside = _this select 5;
+_NearestEnemy = _this select 6;
 
 if (_VCOM_MovedRecentlyCover || {_VCOMAI_ActivelyClearing} || {_VCOMAI_StartedInside} || {_VCOM_GARRISONED}) exitWith {};
 
 
 //systemchat format ["E %1",_Unit];
-_NearestEnemy = _Unit call VCOMAI_ClosestEnemy;
+
 if (isNil "_NearestEnemy") exitWith {};
 
 
@@ -58,7 +59,7 @@ if !(_TypeListFinal isEqualTo []) then {_ClosestCover = _TypeListFinal call BIS_
 if (isNil "_ClosestCover") exitWith {};
 
 _GuessLocation = [];
-if (_NearestEnemy isEqualTo [0,0,0]) then {_GuessLocation = getpos _Unit} else {_GuessLocation = getpos _NearestEnemy;};
+if (_NearestEnemy isEqualTo [0,0,0]) then {_GuessLocation = getpos _Unit} else {if (typeName _NearestEnemy isEqualTo "ARRAY") then {_GuessLocation = _NearestEnemy;} else {_GuessLocation = getpos _NearestEnemy;};};
 
 _coverObjectspos = [_GuessLocation, (_ClosestCover distance _NearestEnemy) + 2, ([_GuessLocation, _ClosestCover] call BIS_fnc_dirTo)] call BIS_fnc_relPos;
 _coverObjectspos

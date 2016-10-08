@@ -143,7 +143,7 @@ _civtxtctrl = (findDisplay 8001) displayCtrl 1101;
 	if !(_x call hasOwner or _x == player or side _x == west or side _x == east) then {
 		//"self" returns true ie for shopkeepers, so double check this civ has no owner
 		_owner = _x getVariable "owner";
-		if(isNil "_owner") then {
+		if(isNil "_owner" and _x in allunits) then {
 			_possible pushBack _x;
 		};
 		
@@ -161,13 +161,13 @@ if(count _possible > 0) then {
 	player setVariable ["hiringciv",_civ,false];
 	_type = "Civilian";
 	if(!isplayer _civ) then {
-		_civ disableAI "PATH";
-		(group _civ) setFormDir ([_civ,player] call BIS_fnc_dirTo);		
+		hint ([_civ,player] call BIS_fnc_dirTo);
+		[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',2];
 		_civ spawn {			
 			waitUntil {sleep 1;!(_this getVariable["OT_talking",false]) and isNull (findDisplay 8001) and isNull (findDisplay 8002)};
-			_this enableAI "PATH";
+			_this remoteExec ['restartAI',2];
 		};		
-	}else{
+	}else{	
 		ctrlEnable [1605,false];
 		ctrlEnable [1606,false];
 		ctrlSetText [1605,"Give Money"];

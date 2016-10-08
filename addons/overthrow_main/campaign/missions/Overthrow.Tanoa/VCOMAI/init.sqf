@@ -17,7 +17,7 @@ if (isServer) then
 			_fileExists
 		};
 
-		_FileCheck = "userconfig\VCOM_AI\AISettingsV2.hpp" call KK_fnc_fileExists;
+		_FileCheck = "\userconfig\VCOM_AI\AISettingsV2.hpp" call KK_fnc_fileExists;
 		if (_FileCheck) then
 		{
 			VCOMAI_Func = compile preprocessFileLineNumbers "\userconfig\VCOM_AI\AISettingsV2.hpp";
@@ -98,7 +98,11 @@ VCOMAI_LoiterAction = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI
 VCOMAI_FragmentMove = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_FragmentMove.sqf";
 VCOMAI_FindCoverPos = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_FindCoverPos.sqf";
 VCOMAI_Waypointcheck = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_Waypointcheck.sqf";
+VCOMAI_WepSupCheck = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_WepSupCheck.sqf";
 VCOMAI_ForceHeal = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_ForceHeal.sqf";
+VCOMAI_DebugText = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_DebugText.sqf";
+VCOMAI_RearmSelf = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_RearmSelf.sqf";
+VCOMAI_RearmGo = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_RearmGo.sqf";
 
 //Danger FSM
 VCOMAI_RecentEnemyDetected = compile preprocessFileLineNumbers "VCOMAI\functions\DangerCauses\VCOMAI_RecentEnemyDetected.sqf";
@@ -112,11 +116,11 @@ VCOMAI_VehicleHandleDanger = compile preprocessFileLineNumbers "VCOMAI\functions
 
 
 //Global actions compiles
-playMoveEverywhere = compileFinal "_this select 0 playMoveNow (_this select 1);";
-switchMoveEverywhere = compileFinal "_this select 0 switchMove (_this select 1);";
-playActionNowEverywhere = compileFinal "_this select 0 playActionNow (_this select 1);";
-DisableCollisionALL = compileFinal "_this select 0 disableCollisionWith player";
-
+playMoveEverywhere = compileFinal "(_this select 0) playMoveNow (_this select 1);";
+switchMoveEverywhere = compileFinal "(_this select 0) switchMove (_this select 1);";
+playActionNowEverywhere = compileFinal "(_this select 0) playActionNow (_this select 1);";
+DisableCollisionALL = compileFinal "(_this select 0) disableCollisionWith player";
+3DText = compile "[_this select 0,_this select 1,_this select 2,_this select 3] call VCOMAI_DebugText;";
 
 //Below is loop to check for new AI spawning in to be added to the list
 if !(isDedicated) then 
@@ -131,18 +135,22 @@ if !(isDedicated) then
 
 VcomAI_UnitQueue = [];
 VcomAI_ActiveList = [];
+Vcom_ActivateAI = true;
 while {true} do 
 {
+	if (Vcom_ActivateAI) then
 	{
-		if (local _x) then 
 		{
-				if (!(_x in VcomAI_ActiveList) && {!(_x in VcomAI_UnitQueue)}) then
-				{
-					VcomAI_UnitQueue pushback _x;
-				};
-		};
-	} forEach allUnits;
-	sleep 2;
+			if (local _x) then 
+			{
+					if (!(_x in VcomAI_ActiveList) && {!(_x in VcomAI_UnitQueue)}) then
+					{
+						VcomAI_UnitQueue pushback _x;
+					};
+			};
+		} forEach allUnits;
+	};
+	sleep 10;
 };
 
 

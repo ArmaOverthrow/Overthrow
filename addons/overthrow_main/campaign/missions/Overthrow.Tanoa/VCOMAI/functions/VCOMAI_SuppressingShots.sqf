@@ -44,9 +44,15 @@ if ((diag_tickTime - _TimeShot) > 10) then
 	
 	{
 			_CheckDistance = (_pos distance _x);
-			if (_CheckDistance < 50) then 
+			_Kn = _unit knowsAbout _x;
+			if (_CheckDistance < 10 && (_Kn > 3.5)) then 
 			{
 				_x setSuppression 1;
+				if (VCOM_AIDEBUG isEqualTo 1) then
+				{
+					[_x,"I am suppressed!",30,20000] remoteExec ["3DText",0];
+				};		
+				
 			};		
 	} forEach units _UnitGroup;
 	

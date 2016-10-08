@@ -43,13 +43,22 @@ _CargoList = assignedCargo _Vehicle;
 					{
 							if (!(_x isEqualTo (assignedDriver (vehicle _x))) && {!(_x isEqualTo (assignedGunner (vehicle _x)))} && {!(_x isEqualTo (assignedCommander  (vehicle _x)))}) then
 							{
+									[_x] orderGetIn false;							
 									unassignVehicle _x;
 									commandGetOut _x;
 									doGetOut _x;
-									[_x] orderGetIn false;
-									_x action ["eject", _Vehicle];
+									//_x action ["eject", _Vehicle];
 									(driver _Vehicle) land "GET OUT";
 									_Vehicle land "GET OUT";
+									
+									if (leader _x isEqualTo _x) then 
+									{
+											_waypoint2 = (group _x) addwaypoint[_myNearestEnemy,15];
+											_waypoint2 setwaypointtype "MOVE";
+											_waypoint2 setWaypointSpeed "NORMAL";
+											_waypoint2 setWaypointBehaviour "AWARE";
+									};											
+									
 							};
 				
 					} foreach units _x;
@@ -66,18 +75,27 @@ _CargoList = assignedCargo _Vehicle;
 					{
 							if (!(_x isEqualTo (assignedDriver (vehicle _x))) && {!(_x isEqualTo (assignedGunner (vehicle _x)))} && {!(_x isEqualTo (assignedCommander  (vehicle _x)))}) then
 							{					
+									[_x] orderGetIn false;							
 									unassignVehicle _x;
 									commandGetOut _x;
 									doGetOut _x;
-									[_x] orderGetIn false;
-									_x action ["eject", _Vehicle];
+									
+									if (leader _x isEqualTo _x) then 
+									{
+											_waypoint2 = (group _x) addwaypoint[_myNearestEnemy,15];
+											_waypoint2 setwaypointtype "MOVE";
+											_waypoint2 setWaypointSpeed "NORMAL";
+											_waypoint2 setWaypointBehaviour "AWARE";
+									};									
+									
+									//_x action ["eject", _Vehicle];
 							};
 					} foreach units _x;
 				} foreach _GroupArray;
 				
 			};
+		};
 	};
-};
 
 if ((count (waypoints _UnitGroup)) < 2) then
 {
@@ -109,4 +127,11 @@ if ((count (waypoints _UnitGroup)) < 2) then
 		};
 	};
 
+	
+	
+			_index = currentWaypoint _UnitGroup;
+			_WPPosition = getWPPos [_UnitGroup,_index];
+			_Unit doMove _WPPosition;
+		
+	
 };

@@ -1,3 +1,6 @@
+//Created on 8/14/14
+// Modified on : 8/3/16: Resolved AI getting stuck when no enemies existed, or enemies were far away.
+
 private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy", "_intersections"];
 	
 	_Unit = _this select 0;
@@ -8,13 +11,22 @@ private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy"
 	////systemchat format ["M %1",_Unit];	
 	_NearestEnemy = _Unit call VCOMAI_ClosestEnemy;
 	_DistanceCheck = _NearestEnemy distance _Unit;
-	
 	//if (isNil "_NearestEnemy" || {_VCOM_MovedRecentlyCover} || {(typeName _NearestEnemy isEqualTo "ARRAY")} || {isNil "_Unit"} || {!(alive _NearestEnemy)} || {(_NearestEnemy distance _Unit) > 5000}) exitWith {};
-	if (isNil "_NearestEnemy" || {(typeName _NearestEnemy isEqualTo "ARRAY")} || {isNil "_Unit"} || {!(alive _NearestEnemy)} || {(_DistanceCheck) > 2000}) exitWith {};
+	if (isNil "_NearestEnemy" || {(typeName _NearestEnemy isEqualTo "ARRAY")} || {isNil "_Unit"} || {!(alive _NearestEnemy)} || {(_DistanceCheck) > 2000}) exitWith {_Unit forcespeed -1;};
 	
+	
+		//This will tell the AI to regroup if they have wandered too far.
 		_ReturnedFriendly = [units (group _Unit),_Unit] call VCOMAI_ClosestObject;
 		if (isNil "_ReturnedFriendly") then {_ReturnedFriendly = [0,0,0]};
-		if (_ReturnedFriendly distance _Unit > 60 && !(_ReturnedFriendly isEqualTo [0,0,0])) then {_Unit doMove (getpos _ReturnedFriendly);};
+		if (_ReturnedFriendly distance _Unit > 30 && !(_ReturnedFriendly isEqualTo [0,0,0])) then 
+		{
+			_Unit doMove (getpos _ReturnedFriendly);_Unit forcespeed -1;
+			if (VCOM_AIDEBUG isEqualTo 1) then
+			{
+				[_Unit,"I wandered too far :(. Returning to group.",15,20000] remoteExec ["3DText",0];
+			};						
+		
+		};
 		
 	//_intersections = lineIntersectsSurfaces [eyePos _Unit,eyepos _NearestEnemy,_Unit,_NearestEnemy, true, 1];
 	_cansee = [_Unit, "VIEW"] checkVisibility [eyePos _Unit, eyePos _NearestEnemy];
@@ -23,14 +35,18 @@ private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy"
 	//If the enemy is REALLY close, JUST OPEN FIRE!
 	//if ((count _intersections) isEqualTo 0 && ((_DistanceCheck) < 50)) exitwith 
 	
-
 	if (_cansee > 0 && {(_DistanceCheck) < 100}) exitwith 
 	{
 			_VCOM_VisuallyCanSee = true;
 			_Unit forceSpeed 0;
 			_Unit setUnitPos "AUTO";
 			_Unit doSuppressiveFire _NearestEnemy;
+			if (VCOM_AIDEBUG isEqualTo 1) then
+			{
+				[_Unit,"Enemy is close! Fire fire fire!",15,20000] remoteExec ["3DText",0];
+			};					
 			_VCOM_VisuallyCanSee
+			
 	};
 	
 

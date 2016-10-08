@@ -35,4 +35,8 @@ if (_ArtyScan isEqualTo 1) then
 	//ArtilleryArray = ArtilleryArray + [_Vehicle];
 	ArtilleryArray pushBack _Vehicle;
 	//null = [_Unit] execFSM "\VCOM_AI\AIBEHAVIORARTY.fsm";
+	if (VCOM_AIDEBUG isEqualTo 1) then
+	{
+		[_Vehicle,"I am Artillery :D!!!!",500,20000] remoteExec ["3DText",0];
+	};	
 };

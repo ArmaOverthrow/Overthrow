@@ -84,11 +84,9 @@ while {!(isNull _group) and count (units _group) > 0} do {
 						_msg = "Search complete, be on your way";
 						_items = [];
 						_unit = _x;
-						if(_iscar) then {
-							_items = _veh call unitStock;
+						_items = _veh call searchStock;
+						if(_iscar) then {							
 							_unit = driver _veh;
-						}else{
-							_items = _x call unitStock;
 						};
 						{							
 							_cls = _x select 0;

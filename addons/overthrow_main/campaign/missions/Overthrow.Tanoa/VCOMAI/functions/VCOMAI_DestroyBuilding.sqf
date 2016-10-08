@@ -55,6 +55,12 @@ _PreviousPosition = _this select 2;
 _SatchelOfUse = _Unit getVariable "VCOM_SATCHELBOMB";
 //Hint format ["_SatchelOfUse %1",_SatchelOfUse];
 
+if (VCOM_AIDEBUG isEqualTo 1) then
+{
+	[_Unit,"Blowing up a building! >:D!!!!",30,20000] remoteExec ["3DText",0];
+};		
+
+
 _Truth = true;
 while {_Truth} do {
 	if ((_Unit distance _Building) <= 10) then {_Truth = false;};
@@ -118,7 +124,7 @@ while {_NotSafe} do
 {
 	_ClosestFriendly = [_Array1,_PlantPosition] call VCOMAI_ClosestObject;
 	if (_ClosestFriendly distance _PlantPosition > 15) then {_NotSafe = false;};
-	sleep 1;
+	sleep 5;
 };
 //[_Unit] joinSilent _UnitGroup;
 //Hint "TOUCH OFF!";

@@ -46,88 +46,65 @@ _pos = [];
 _housepos = [];
 
 if(isMultiplayer or _startup == "LOAD") then {
-    _data = server getvariable (getplayeruid player);
-    if !(isNil "_data") then {
-        _newplayer = false;
-        {
-            _key = _x select 0;
-            _val = _x select 1;
-            if(_key == "home") then {
-                _val = nearestBuilding _val;
-            };
-            if(_key == "camp" and typename _val == "ARRAY") then {              
-                _val = createVehicle [OT_item_tent, _val, [], 0, "CAN_COLLIDE"];
-                _val setVariable ["owner",getplayeruid player,true];
-                _val call initObjectLocal;
-                
-                _v = "Land_ClutterCutter_large_F" createVehicle (getpos _val);
-            };
-            if(_key == "owned") then {
-                _d = [];
-                {
-                    _d pushback nearestBuilding _x;
-                }foreach(_val);
-                _val = _d;
-            };
-            player setVariable [_key,_val,true];
-        }foreach(_data);        
-        
-        _house = player getVariable "home";
-        _town = (getpos _house) call nearestTown;
-        _pos = server getVariable _town;
-        _housepos = getpos _house;
-        
-        _owned = player getVariable "owned";
-        {
-            _x setVariable ["owner",getPlayerUID player,true];
-            _mrkName = format["%1",_x];
-            if((markerpos _mrkName) select 0 == 0) then {
-                _mrkName = createMarkerLocal [_mrkName,getpos _x];
-                _mrkName setMarkerShape "ICON";
-                _mrkName setMarkerType "loc_Tourism";
-                _mrkName setMarkerColor "ColorWhite";
-                _mrkName setMarkerAlpha 0;
-            };
-            _mrkName setMarkerAlphaLocal 1;
-        }foreach(_owned);       
-        
-        {
-            if(_x call hasOwner) then {
-                if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
-                    _furniture pushback _x                  
-                };
-            };  
-        }foreach(_housepos nearObjects 50);
-        
-        _recruits = server getVariable ["recruits",[]];
-        _newrecruits = [];
-        {
-            _owner = _x select 0;
-            _name = _x select 1;    
-            _civ = _x select 2;                 
-            _rank = _x select 3;                
-            _loadout = _x select 4;
-            _type = _x select 5;    
-            if(_owner == (getplayeruid player)) then {                          
-                if(typename _civ == "ARRAY") then {
-                    _civ =  group player createUnit [_type,_civ,[],0,"NONE"];
-					_civ setVariable ["owner",getplayeruid player,true];
-					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
-					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
-                    _civ setUnitLoadout _loadout;
-                    _civ spawn wantedSystem;
-                    _civ setName _name;
-					[_civ] joinSilent grpNull;
-                    [_civ] joinSilent (group player);
-                }else{
-                    [_civ] joinSilent (group player);
-                };              
-            };
-            _newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
-        }foreach (_recruits);
-        server setVariable ["recruits",_newrecruits,true];
-    };
-
+	player remoteExec ["loadPlayerData",2];
+    waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
+	_newplayer = player getVariable ["OT_newplayer",true];
+	
+	_house = player getVariable "home";
+	
+	_town = (getpos _house) call nearestTown;
+	_pos = server getVariable _town;
+	_housepos = getpos _house;
+	
+	_owned = player getVariable "owned";
+	{
+		_x setVariable ["owner",getPlayerUID player,true];
+		_mrkName = format["%1",_x];
+		if((markerpos _mrkName) select 0 == 0) then {
+			_mrkName = createMarkerLocal [_mrkName,getpos _x];
+			_mrkName setMarkerShape "ICON";
+			_mrkName setMarkerType "loc_Tourism";
+			_mrkName setMarkerColor "ColorWhite";
+			_mrkName setMarkerAlpha 0;
+		};
+		_mrkName setMarkerAlphaLocal 1;
+	}foreach(_owned);       
+	
+	{
+		if(_x call hasOwner) then {
+			if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
+				_furniture pushback _x                  
+			};
+		};  
+	}foreach(_housepos nearObjects 50);
+	
+	_recruits = server getVariable ["recruits",[]];
+	_newrecruits = [];
+	{
+		_owner = _x select 0;
+		_name = _x select 1;    
+		_civ = _x select 2;                 
+		_rank = _x select 3;                
+		_loadout = _x select 4;
+		_type = _x select 5;    
+		if(_owner == (getplayeruid player)) then {                          
+			if(typename _civ == "ARRAY") then {
+				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
+				_civ setVariable ["owner",getplayeruid player,true];
+				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
+				_civ setUnitLoadout _loadout;
+				_civ spawn wantedSystem;
+				_civ setName _name;
+				[_civ] joinSilent grpNull;
+				[_civ] joinSilent (group player);
+			}else{
+				[_civ] joinSilent (group player);
+			};              
+		};
+		_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
+	}foreach (_recruits);
+	server setVariable ["recruits",_newrecruits,true];
     //JIP interactions
     {
 		if((typename(_x getVariable ["shop",false])) == "STRING") then {

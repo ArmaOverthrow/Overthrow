@@ -100,7 +100,7 @@ While {_Unit getvariable ["VCOM_LOITERING",true] && alive _Unit} do
 					While {_Counter < 11} do
 					{
 						sleep (random 2);
-						_RandomAnimationList = ["AmovPercMstpSnonWnonDnon_exercisePushup","SitDown","AmovPercMstpSnonWnonDnon_SaluteIn","AmovPercMstpSrasWrflDnon_AinvPknlMstpSlayWrflDnon"] call BIS_fnc_selectrandom;
+						_RandomAnimationList = ["AmovPercMstpSnonWnonDnon_exercisePushup","SitDown","AmovPercMstpSnonWnonDnon_SaluteIn"] call BIS_fnc_selectrandom;
 						[_this,_RandomAnimationList] remoteExec ["playMoveEverywhere",0];
 						_Counter = _Counter + 1;
 						sleep 10;
@@ -113,7 +113,7 @@ While {_Unit getvariable ["VCOM_LOITERING",true] && alive _Unit} do
 					While {_Counter < 11} do
 					{
 						sleep (random 2);
-						_RandomAnimationList = ["AmovPercMstpSnonWnonDnon_exercisePushup","SitDown","AmovPercMstpSnonWnonDnon_SaluteIn","AmovPercMstpSrasWrflDnon_AinvPknlMstpSlayWrflDnon"] call BIS_fnc_selectrandom;
+						_RandomAnimationList = ["AmovPercMstpSnonWnonDnon_exercisePushup","SitDown","AmovPercMstpSnonWnonDnon_SaluteIn"] call BIS_fnc_selectrandom;
 						[_this,_RandomAnimationList] remoteExec ["playMoveEverywhere",0];
 						_Counter = _Counter + 1;
 						sleep 12;

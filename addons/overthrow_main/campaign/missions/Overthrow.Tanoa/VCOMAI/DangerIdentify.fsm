@@ -1,7 +1,7 @@
 /*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, DangerIdentify">*/
 /*%FSM<HEAD>*/
 /*
-item0[] = {"For_now___only_the",-1,250,-1170.000000,-560.000000,-830.000000,-390.000000,0.000000,"For now - only the squad leaders run certain sections here" \n "" \n "it is not IDEAL but will save precious FPS"};
+item0[] = {"For_now___only_the",-1,250,-1220.000000,-540.000000,-880.000000,-370.000000,0.000000,"For now - only the squad leaders run certain sections here" \n "" \n "it is not IDEAL but will save precious FPS"};
 item1[] = {"Dead",4,218,-710.000000,-800.000000,-660.000000,-750.000000,1000.000000,"Dead"};
 item2[] = {"Exit",1,250,-710.000000,-880.000000,-660.000000,-830.000000,0.000000,"Exit"};
 item3[] = {"Dead",4,218,-670.000000,150.000000,-620.000000,200.000000,1000.000000,"Dead"};
@@ -11,7 +11,7 @@ item6[] = {"",7,210,15.999998,316.000000,24.000002,323.999969,0.000000,""};
 item7[] = {"",7,210,-9.000000,-524.000061,-1.000000,-516.000000,0.000000,""};
 item8[] = {"DEAD_BODY_FOUND",4,218,-820.000000,-60.000000,-710.000000,10.000000,70.000000,"DEAD BODY FOUND"};
 item9[] = {"COMBAT",4,218,-950.000000,-70.000000,-840.000000,0.000000,120.000000,"COMBAT"};
-item10[] = {"Stop_to_fire",2,4346,-940.000000,80.000000,-850.000000,130.000000,0.000000,"Stop to fire"};
+item10[] = {"Stop_to_fire",2,250,-940.000000,40.000000,-850.000000,90.000000,0.000000,"Stop to fire"};
 item11[] = {"Timeout",4,218,-940.000000,160.000000,-850.000000,210.000000,0.000000,"Timeout"};
 item12[] = {"EXPLOSION_",4,218,-670.000000,-80.000000,-560.000000,-10.000000,80.000000,"EXPLOSION" \n ""};
 item13[] = {"ENEMY_SPOTTED",4,218,-390.000000,-70.000000,-270.000000,0.000000,100.000000,"ENEMY SPOTTED"};
@@ -26,7 +26,7 @@ item21[] = {"_",8,218,-1070.000000,320.000000,-980.000000,370.000000,0.000000,""
 item22[] = {"Dead",4,218,-1270.000000,70.000000,-1220.000000,120.000000,1000.000000,"Dead"};
 item23[] = {"Exit_2",1,250,-1270.000000,-10.000000,-1220.000000,40.000000,0.000000,"Exit"};
 item24[] = {"_",8,218,-650.000000,-480.000000,-560.000000,-430.000000,0.000000,""};
-item25[] = {"Threat_Decisions",3,250,-530.000000,-360.000000,-440.000000,-310.000000,0.000000,"Threat Decisions"};
+item25[] = {"Threat_Decisions",3,4346,-530.000000,-360.000000,-440.000000,-310.000000,0.000000,"Threat Decisions"};
 item26[] = {"Dead",4,218,-380.000000,-500.000000,-330.000000,-450.000000,1000.000000,"Dead"};
 item27[] = {"Exit_3",1,250,-380.000000,-580.000000,-330.000000,-530.000000,0.000000,"Exit"};
 item28[] = {"_UseAI_NO",4,218,-300.000000,-490.000000,-220.000000,-450.000000,900.000000,"_UseAI NO"};
@@ -34,8 +34,8 @@ item29[] = {"isPlayer",4,218,-470.000000,-490.000000,-390.000000,-450.000000,800
 item30[] = {"GARRISON_CLEAR",4,218,-220.000000,-50.000000,-100.000000,20.000000,110.000000,"GARRISON CLEAR"};
 item31[] = {"Stop_to_fire_Pt",2,250,-940.000000,230.000000,-850.000000,280.000000,0.000000,"Stop to fire Pt.2"};
 item32[] = {"Wait",8,218,-510.000000,560.000000,-420.000000,610.000000,0.000000,"Wait"};
-item33[] = {"Squad_Leader_Che",4,218,-440.000000,-270.000000,-330.000000,-210.000000,100.000000,"Squad Leader Check"};
-item34[] = {"Threat_Decisions_1",3,250,-350.000000,-180.000000,-260.000000,-130.000000,0.000000,"Threat Decisions" \n "Pt .2"};
+item33[] = {"Squad_Leader_Che",4,218,-450.000000,-280.000000,-340.000000,-220.000000,100.000000,"Squad Leader Check"};
+item34[] = {"Threat_Decisions_1",3,250,-340.000000,-190.000000,-250.000000,-140.000000,0.000000,"Threat Decisions" \n "Pt .2"};
 item35[] = {"_",8,218,-640.000000,-260.000000,-550.000000,-210.000000,1.000000,""};
 item36[] = {"Threat_Decisions_2",3,250,-830.000000,-240.000000,-740.000000,-190.000000,0.000000,"Threat Decisions" \n "Pt .2"};
 item37[] = {"Wait",8,218,-270.000000,-330.000000,-180.000000,-280.000000,0.000000,"Wait"};
@@ -106,8 +106,8 @@ link47[] = {40,15};
 link48[] = {40,20};
 link49[] = {21,40};
 link50[] = {40,28};
-globals[] = {10.000000,1,0,1,16777215,640,480,1,257,6316128,1,-1305.935791,47.363216,681.337952,-369.996643,977,759,1};
-window[] = {0,-1,-1,-1,-1,1022,83,1630,143,1,995};
+globals[] = {10.000000,1,0,1,16777215,640,480,1,257,6316128,1,-1230.967163,-27.614536,190.163651,-745.640198,976,759,1};
+window[] = {0,-1,-1,-1,-1,905,26,1573,26,1,994};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -190,7 +190,8 @@ class FSM
     class Stop_to_fire
     {
       name = "Stop_to_fire";
-      init = /*%FSM<STATEINIT""">*/"_t = time;" \n
+      init = /*%FSM<STATEINIT""">*/"private [""_t""];" \n
+       "_t = time;" \n
        "" \n
        "[_Unit,_VCOM_MovedRecently,_VCOM_VisuallyCanSee,_VCOM_MovedRecentlyCover] spawn VCOMAI_CombatMovement;" \n
        "" \n
@@ -226,7 +227,7 @@ class FSM
           priority = 0.000000;
           to="Stop_to_fire_Pt";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"time > _t + 0.1"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _t + 1"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -326,7 +327,8 @@ class FSM
     class Threat_Decisions
     {
       name = "Threat_Decisions";
-      init = /*%FSM<STATEINIT""">*/"_t = time;" \n
+      init = /*%FSM<STATEINIT""">*/"private [""_t""];" \n
+       "_t = time;" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
@@ -425,7 +427,7 @@ class FSM
           priority = 120.000000;
           to="Stop_to_fire";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"_CurrentStance isEqualTo ""COMBAT""  && !(_Unit in ArtilleryArray)"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_CurrentStance isEqualTo ""COMBAT"" "/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -510,7 +512,7 @@ class FSM
           priority = 120.000000;
           to="Stop_to_fire";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"_CurrentStance isEqualTo ""COMBAT""  && !(_Unit in ArtilleryArray)"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_CurrentStance isEqualTo ""COMBAT"" "/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/

@@ -12,7 +12,7 @@ if (_TargetPosition isEqualTo [0,0,0]) then
 	_TargetPosition = getpos _target;
 }
 else
-{	
+{
 	//_target = assignedTarget _unit;
 	_target = _Unit call VCOMAI_ClosestEnemy;if (_target isEqualTo [0,0,0]) exitwith {};
 	_NewPosition = getpos _Target;
@@ -31,6 +31,10 @@ else
 		_Unit setSkill ["aimingSpeed",(_Speed + 0.1) - _WeatherCheck];
 		_Unit setSkill ["spotTime",(_SpotTime + 0.1) - _WeatherCheck];
 		_Unit setSkill ["spotDistance",(_SpotDistance + 0.1) - _WeatherCheck];
+		if (VCOM_AIDEBUG isEqualTo 1) then
+		{
+			[_Unit,"Target has not moved...Increasing accuracy :D",15,20000] remoteExec ["3DText",0];
+		};		
 	}
 	else
 	{
@@ -45,7 +49,11 @@ else
 		_Unit setSkill ["aimingShake",_Shake - _WeatherCheck];
 		_Unit setSkill ["aimingSpeed",_Speed - _WeatherCheck];
 		_Unit setSkill ["spotTime",_SpotTime - _WeatherCheck];
-		_Unit setSkill ["spotDistance",_SpotDistance - _WeatherCheck];		
+		_Unit setSkill ["spotDistance",_SpotDistance - _WeatherCheck];
+		if (VCOM_AIDEBUG isEqualTo 1) then
+		{
+			[_Unit,"Target has moved...Reset Accuracy :<",15,20000] remoteExec ["3DText",0];
+		};				
 	};
 	_TargetPosition = _NewPosition;
 };
