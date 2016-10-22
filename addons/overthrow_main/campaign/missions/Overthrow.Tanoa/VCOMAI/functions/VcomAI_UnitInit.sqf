@@ -1,6 +1,6 @@
 _Unit = _this select 0;
 
-
+/*
 if (VCOM_AIDEBUG isEqualTo 1) then 
 {
 	[_Unit] spawn 
@@ -79,6 +79,7 @@ if (VCOM_AIDEBUG isEqualTo 1) then
 		MarkerArray = MarkerArray + [_arrow];
 	};
 };
+*/
 
 _Player = false;
 if (isPlayer _Unit) then {_Player = true;};

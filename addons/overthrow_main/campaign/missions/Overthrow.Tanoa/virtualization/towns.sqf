@@ -11,7 +11,7 @@ OT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\distribution.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\harbor.sqf"
 ];
-private _lastSearch = time;
+
 {	
 	_pos = server getVariable _x;
 	[_pos,{
@@ -75,11 +75,7 @@ private _lastSearch = time;
 					if(_need > 1) then {
 						_town spawn reGarrisonTown;				
 						server setVariable[format ["garrisonadd%1",_town],_need-2,false];
-					};
-					
-					if((time - _lastSearch) > 600) then {
-						(server getVariable _town) spawn NATOsearch;
-					};
+					};					
 					
 					//CRIM
 					_newpos = server getVariable [format["crimnew%1",_town],false];

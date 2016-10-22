@@ -14,6 +14,7 @@ getDrugPrice = compileFinal preProcessFileLineNumbers "funcs\getDrugPrice.sqf";
 canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
+searchStock = compileFinal preProcessFileLineNumbers "funcs\searchStock.sqf";
 hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
 getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
 getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
@@ -176,9 +177,60 @@ standing = {
     player setVariable ["rep",_totalrep,true];    
 };
 
+setCivName = {
+	(_this select 0) setName (_this select 1);
+};
+
+loadPlayerData = {
+	private _player = _this;
+	_newplayer = true;
+	_data = server getvariable (getplayeruid _player);
+    if !(isNil "_data") then {
+        _newplayer = false;
+        {
+            _key = _x select 0;
+            _val = _x select 1;
+            if(_key == "home") then {
+                _val = nearestBuilding _val;
+            };
+            if(_key == "camp" and typename _val == "ARRAY") then {              
+                _val = createVehicle [OT_item_tent, _val, [], 0, "CAN_COLLIDE"];
+                _val setVariable ["owner",getplayeruid player,true];
+                _val call initObjectLocal;
+                
+                _v = "Land_ClutterCutter_large_F" createVehicle (getpos _val);
+            };
+            if(_key == "owned") then {
+                _d = [];
+                {
+                    _d pushback nearestBuilding _x;
+                }foreach(_val);
+                _val = _d;
+            };
+            _player setVariable [_key,_val,true];
+        }foreach(_data);        
+    };
+	_player setVariable ["OT_loaded",true,true];
+	_player setVariable ["OT_newplayer",_newplayer,true];
+};
+
 influence = {
     _totalrep = (player getVariable ["influence",0])+_this;
     player setVariable ["influence",_totalrep,true];    
+};
+
+stopAndFace = {	
+	(_this select 0) disableAI "PATH";
+	(group (_this select 0)) setFormDir (_this select 1);	
+	(_this select 0) spawn {
+		_ti = 0;
+		waitUntil {sleep 1;_ti = _ti + 1;(!(_this getVariable["OT_talking",false]) and isNull (findDisplay 8001) and isNull (findDisplay 8002)) or _ti > 20};
+		_this remoteExec ['restartAI',2];
+	};
+};
+
+restartAI = {
+	_this enableAI "PATH";
 };
 
 rewardMoney = {

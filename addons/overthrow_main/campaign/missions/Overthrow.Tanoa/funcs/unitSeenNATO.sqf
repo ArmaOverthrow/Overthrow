@@ -8,7 +8,7 @@ _ret = false;
 		}else{
 			_know = _x targetKnowledge _unit;
 			_lastSeen = _know select 2;
-			if(_lastSeen > 1 and (time - _lastSeen) < 30) then {
+			if(_lastSeen > 1 and (time - _lastSeen) < 10) then {
 				_ret = true;
 			};
 		};

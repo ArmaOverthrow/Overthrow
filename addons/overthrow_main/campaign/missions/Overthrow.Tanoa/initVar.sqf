@@ -140,17 +140,15 @@ OT_NATO_AirSpawn = "NATO_airspawn";
 OT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 OT_NATO_Vehicles_Garrison = [
-	["B_T_MBT_01_TUSK_F", 2],
-	["B_T_MBT_01_cannon_F",2],
-	["B_T_LSV_01_armed_F",5],
-	["B_T_MRAP_01_hmg_F",10],
-	["B_T_MRAP_01_gmg_F",10],
-	["B_T_APC_Tracked_01_AA_F",6],
-	["B_T_Mortar_01_F",10],
-	["B_T_Static_AT_F",15],
-	["B_HMG_01_high_F",20],
-	["B_T_MBT_01_mlrs_F",2],
-	["B_T_MBT_01_arty_F",2]
+	["B_T_MBT_01_TUSK_F", 1],
+	["B_T_MBT_01_cannon_F",1],
+	["B_T_LSV_01_armed_F",2],
+	["B_T_MRAP_01_hmg_F",5],
+	["B_T_MRAP_01_gmg_F",5],
+	["B_T_APC_Tracked_01_AA_F",3],
+	["B_T_Static_AT_F",7],
+	["B_HMG_01_high_F",10],
+	["B_T_MBT_01_mlrs_F",2]
 ];
 
 OT_NATO_Vehicles_AirGarrison = [

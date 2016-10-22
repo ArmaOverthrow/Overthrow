@@ -3,6 +3,11 @@ _unit = _this;
 
 _unit setVariable ["mobster",true,false];
 
+private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
+private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
+private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
+[_unit,_fullname] remoteExec ["setCivName",0,false];
+
 _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;

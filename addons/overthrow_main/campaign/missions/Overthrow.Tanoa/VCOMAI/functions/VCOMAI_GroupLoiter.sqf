@@ -7,12 +7,14 @@ _Group = _this select 1;
 //We need a list of actions that the AI can do for loitering.
 _UnitArray = units _Group;
 {
-	//Each AI will need to join their own group. The plan is to make them re-form when combat starts.
-	[_x] joinsilent grpnull;
-	_x setVariable ["VCOM_LOITERING",true];
-	_x setVariable ["VCOM_LOITERINGACT",0];
-	[_x,_UnitArray] spawn VCOMAI_LoiterAction;
-
+	if (_x isEqualTo (vehicle _x)) then
+	{
+		//Each AI will need to join their own group. The plan is to make them re-form when combat starts.
+		[_x] joinsilent grpnull;
+		_x setVariable ["VCOM_LOITERING",true];
+		_x setVariable ["VCOM_LOITERINGACT",0];
+		[_x,_UnitArray] spawn VCOMAI_LoiterAction;
+	};
 } foreach _UnitArray;
 
 

@@ -6,7 +6,8 @@ _Unit = _this;
 _UnitSide = (side _Unit);
 _Array1 = [];
 {
-	if ((side _x) != (_UnitSide) && !((side _x) isEqualTo CIVILIAN)) then {_Array1 pushback _x;};
+	_TargetSide = side _x;
+	if ([_UnitSide, _TargetSide] call BIS_fnc_sideIsEnemy) then {_Array1 pushback _x;};
 } forEach allUnits;
 
 _ReturnedEnemy = [_Array1,_Unit] call VCOMAI_ClosestObject;

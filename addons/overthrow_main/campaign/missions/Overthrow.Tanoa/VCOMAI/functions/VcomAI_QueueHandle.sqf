@@ -20,13 +20,15 @@ while {true} do
 		{
 				VcomAI_UnitQueue deleteAt 0;		
 		};
+		
+
+		{
+			if (isNull _x) then {VcomAI_ActiveList = VcomAI_ActiveList - [_x];};
+		} foreach VcomAI_ActiveList;		
 	};
 
 	
 	//systemchat format ["VcomAI_ActiveList: %1",VcomAI_ActiveList];
 
-	{
-		if (isNull _x) then {VcomAI_ActiveList = VcomAI_ActiveList - [_x];};
-	} foreach VcomAI_ActiveList;
 	
 };

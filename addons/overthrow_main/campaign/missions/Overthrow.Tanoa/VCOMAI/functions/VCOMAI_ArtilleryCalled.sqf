@@ -75,6 +75,7 @@ _AmmoArray = getArtilleryAmmo _ArtilleryGroupActual;
 if (isNil "_AmmoArray") exitWith {};
 
 _RandomAmmoArray = _AmmoArray call BIS_fnc_selectRandom;
+if (isNil "_RandomAmmoArray") exitWith {};
 //player sidechat format ["ARTY _RandomAmmoArray: %1",_RandomAmmoArray];
 _ContinueFiring = (getPos _Enemy) inRangeOfArtillery [_ArtilleryGroupActual,_RandomAmmoArray];
 //player sidechat format ["_ContinueFiring _ContinueFiring: %1",_ContinueFiring];
@@ -83,8 +84,18 @@ if !(_ContinueFiring) exitWith {};
 
 
 {
+	_target = _Enemy;
+	_dist = random (5 + (random 150));
+	_dir = random 360;
+	_pos = getpos _target;
+	_positions = [(_pos select 0) + (sin _dir) * _dist, (_pos select 1) + (cos _dir) * _dist, 0];
+
 	sleep (random 3);
-	_x doArtilleryFire [(getPos _Enemy),_RandomAmmoArray,(floor(random 4))];
+	_x doArtilleryFire [_positions,_RandomAmmoArray,(floor(random 4))];
 	//_x commandArtilleryFire [(getPos _Enemy),_RandomAmmoArray,(floor(random 4))];
+	if (VCOM_AIDEBUG isEqualTo 1) then
+	{
+		[_x,"I am firing my ARTY >:D!!!",120,20000] remoteExec ["3DText",0];
+	};	
 	
 } foreach _ArtilleryGroupActual;

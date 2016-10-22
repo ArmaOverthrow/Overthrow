@@ -93,7 +93,15 @@ if (_RandomChance < 25) then
 		_waypoint2 setwaypointtype "MOVE";
 		_waypoint2 setWaypointSpeed "NORMAL";
 		_waypoint2 setWaypointBehaviour "COMBAT";
+	
+	if (VCOM_AIDEBUG isEqualTo 1) then
+	{
+		[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["3DText",0];
+	};		
+
+	
 	};
+	
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//systemchat format ["%1 RAWR C",side _unit];
@@ -129,19 +137,24 @@ _RandomLocation = _RandomArray select 0;
 
 
 _group setBehaviour "COMBAT";
-_waypoint0 = _group addwaypoint [_RandomLocation,10];
+_waypoint0 = _group addwaypoint [_RandomLocation,15];
 _waypoint0 setwaypointtype "MOVE";
 _waypoint0 setWaypointSpeed "NORMAL";
 _waypoint0 setWaypointBehaviour "COMBAT";
 _group setCurrentWaypoint [_group,(_waypoint0 select 1)];
-_waypoint1 = _group addwaypoint[_positions,10];
-_waypoint1 setwaypointtype "MOVE";
-_waypoint1 setWaypointSpeed "NORMAL";
-_waypoint1 setWaypointBehaviour "COMBAT";
-_waypoint2 = _group addwaypoint[_myEnemyPos,10];
+//_waypoint1 = _group addwaypoint[_positions,10];
+//_waypoint1 setwaypointtype "MOVE";
+//_waypoint1 setWaypointSpeed "NORMAL";
+//_waypoint1 setWaypointBehaviour "COMBAT";
+_waypoint2 = _group addwaypoint[_myEnemyPos,15];
 _waypoint2 setwaypointtype "MOVE";
 _waypoint2 setWaypointSpeed "NORMAL";
 _waypoint2 setWaypointBehaviour "COMBAT";
+
+if (VCOM_AIDEBUG isEqualTo 1) then
+{
+	[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["3DText",0];
+};
 
 	//systemchat format ["%1 RAWR D",side _unit];
 

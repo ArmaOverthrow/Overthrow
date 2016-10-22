@@ -20,7 +20,8 @@ _Squadlead = leader _Unit;
 
 if (_Squadlead distance _Unit > 60) then
 {
-	_Unit domove (getposATL _Squadlead);
+	//_Unit domove (getposATL _Squadlead);
+		_Unit forcespeed -1;
 }
 else
 {
@@ -28,14 +29,16 @@ else
 	//Pull the waypoint information
 	_index = currentWaypoint _Group;
 	
-	_WPPosition = getWPPos [_Group,_index];	
+	_WPPosition = getWPPos [_Group,_index];
+	//systemchat format ["_WPPosition: %1",_WPPosition];
 	if !(_WPPosition isEqualTo [0,0,0]) then
 	{
 		if (_Unit isEqualTo (leader _Unit)) then
 		{
 			_GroupDudes = units (group _Unit);
 			_NearestEnemy = _Unit call VCOMAI_ClosestEnemy;
-			if (isNil "_NearestEnemy" || _NearestEnemy isEqualTo [0,0,0]) exitWith {};
+			if (isNil "_NearestEnemy" || _NearestEnemy isEqualTo [0,0,0]) then {_NearestEnemy = _WPPosition;};
+			//systemchat format ["_NearestEnemy: %1",_NearestEnemy];	
 			_VCOM_MovedRecentlyRETURN = true;
 			_VCOM_MovedRecentlyCoverRETURN = true;
 			_VCOM_InCoverRETURN = true;		
@@ -54,13 +57,15 @@ else
 					
 					
 					_MoveToPos = [_Unit,_Pos,_NearestEnemy] call VCOMAI_FragmentMove;
+					//systemchat format ["_MoveToPos: %1",_MoveToPos];	
 					if !((vehicle _Unit) isEqualTo _Unit) exitWith
 					{
 						_Unit forceSpeed -1;
 						_Unit doMove _Pos;
 						
 					};			
-					_CoverPos = [_Unit,_MoveToPos,_VCOM_GARRISONED,_VCOM_MovedRecentlyCover,_VCOMAI_ActivelyClearing,_VCOMAI_StartedInside] call VCOMAI_FindCoverPos;
+					_CoverPos = [_Unit,_MoveToPos,_VCOM_GARRISONED,_VCOM_MovedRecentlyCover,_VCOMAI_ActivelyClearing,_VCOMAI_StartedInside,_NearestEnemy] call VCOMAI_FindCoverPos;
+					//systemchat format ["_CoverPos: %1",_CoverPos];	
 					if !(isNil "_CoverPos") then
 					{
 					if (VCOM_AIDEBUG isEqualTo 1) then
@@ -88,9 +93,8 @@ else
 						{
 									_Unit forcespeed -1;
 									_Unit domove _CoverPos;
-									
 							//	};
-							sleep 5;		
+							sleep 3;		
 						};
 						//systemchat format ["MADE IT: %1",_Unit];
 						_Unit forcespeed 0;
