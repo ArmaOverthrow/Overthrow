@@ -34,7 +34,7 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
     sleep 1;
     _nul = createDialog "OT_dialog_start";
 }else{
-	"Host is setting up game" call blackFaded;    
+	"Loading" call blackFaded;    
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);

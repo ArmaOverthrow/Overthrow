@@ -75,12 +75,7 @@ OT_townSpawners = [
 					if(_need > 1) then {
 						_town spawn reGarrisonTown;				
 						server setVariable[format ["garrisonadd%1",_town],_need-2,false];
-					};
-					_lastSearch = spawner getVariable [format["search%1",_town],0];
-					if((time - _lastSearch) > 600) then {
-						(server getVariable _town) spawn NATOsearch;
-						spawner setVariable [format["search%1",_town],time,false];
-					};
+					};					
 					
 					//CRIM
 					_newpos = server getVariable [format["crimnew%1",_town],false];
