@@ -216,7 +216,7 @@ if (isMultiplayer) then {
     ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
 };
 
-player addEventHandler ["WieaponAssembled",{
+player addEventHandler ["WeaponAssembled",{
 	_me = _this select 0;
 	_wpn = _this select 1;
 	if(typeof _wpn in OT_staticMachineGuns) then {		

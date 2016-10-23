@@ -114,6 +114,7 @@ matrixRotate = compileFinal preProcessFileLineNumbers "funcs\matrixRotate.sqf";
 //Actions
 buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
 sell = compileFinal preProcessFileLineNumbers "actions\sell.sqf";
+sellall = compileFinal preProcessFileLineNumbers "actions\sellall.sqf";
 buyBuilding = compileFinal preProcessFileLineNumbers "actions\buyBuilding.sqf";
 leaseBuilding = compileFinal preProcessFileLineNumbers "actions\leaseBuilding.sqf";
 recruitCiv = compileFinal preProcessFileLineNumbers "actions\recruitCiv.sqf";

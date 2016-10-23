@@ -50,10 +50,10 @@ if(_mylevel >= _level) then {
 		[] spawn _script;
 	}else{
 		_name = format["%1%2%3",_pos,_text,_desc];
-		[player,_name,[_desc,_text,_name],_pos,0,1,true,_icon,true] call BIS_fnc_taskCreate;
+		[player,_name,[_desc,"Intel: " + _text,_name],_pos,0,1,true,_icon,true] call BIS_fnc_taskCreate;
 		_name spawn {
-			sleep 600;
-			[_this, "FAILED",false] spawn BIS_fnc_taskSetState;
+			sleep 10;
+			[_this, "SUCCEEDED",false] spawn BIS_fnc_taskSetState;
 		};
 	};
 	

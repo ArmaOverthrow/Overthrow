@@ -65,13 +65,14 @@ class OT_dialog_sell
 
 	class controls
 	{
-		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Zobiki)
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Fylaby)
 		////////////////////////////////////////////////////////
 
-		class RscListbox_1500: RscListbox
+		class RscListbox_1500: RscListBox
 		{
 			idc = 1500;
+
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
@@ -81,37 +82,38 @@ class OT_dialog_sell
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
-			text = "Sell"; //--- ToDo: Localize;
-			x = 0.613437 * safezoneW + safezoneX;
+			action = "[] call sell;";
+
+			text = "Sell 1"; //--- ToDo: Localize;
+			x = 0.515469 * safezoneW + safezoneX;
 			y = 0.786 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.055 * safezoneH;
-			action = "[] call sell;";
 		};
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
+			action = "closeDialog 0;";
+
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.786 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.055 * safezoneH;
-			action = "closeDialog 0;";
 		};
-		class RscStructuredText_1100: RscStructuredText
+		class RscButton_1602: RscButton
 		{
-			idc = 1100;
-			text = ""; //--- ToDo: Localize;
-			x = 0.391719 * safezoneW + safezoneX;
+			idc = 1600;
+			action = "[] call sellall;";
+
+			text = "Sell All"; //--- ToDo: Localize;
+			x = 0.613437 * safezoneW + safezoneX;
 			y = 0.786 * safezoneH + safezoneY;
-			w = 0.216563 * safezoneW;
+			w = 0.0928125 * safezoneW;
 			h = 0.055 * safezoneH;
-			colorBackground[] = {0,0,0,0.9};
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-
-
 	};
 };

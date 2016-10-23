@@ -267,12 +267,13 @@ buildOnMouseUp = {
 					modeTarget enableSimulationGlobal true;
 					modeTarget = objNull;
 				};
+				if(modeCode != "") then {
+					_created setVariable ["OT_init",modeCode,true];
+					[modeValue] execVM modeCode;				
+				};
 			};			
 			deleteVehicle modeVisual;
-			if(modeCode != "") then {
-				_created setVariable ["OT_init",modeCode,true];
-				[modeValue] execVM modeCode;				
-			};
+			
 		};
 		if(!isNull modeTarget and !canBuildHere) then {
 			"You cannot build that there" call notify_minor;
