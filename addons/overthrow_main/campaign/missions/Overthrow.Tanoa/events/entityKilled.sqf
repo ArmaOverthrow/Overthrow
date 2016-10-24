@@ -91,15 +91,18 @@ call {
 	
 	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") exitWith {
 		if(!isNil "_garrison") then {
-			_pop = server getVariable format["garrison%1",_garrison];
+			_pop = server getVariable format["garrison%1",_garrison];			
 			if(_pop > 0) then {
 				server setVariable [format["garrison%1",_garrison],_pop - 1,true];
 			};
 			if(_garrison in OT_allTowns) then {
 				_town = _garrison;
-				if((random 100) > 50) then {
-					[_town,-2] call stability;
+				_townpop = server getVariable [format["population%1",_town],0];
+				_stab = -1;
+				if(_townpop < 350 and (random 100) > 50) then {
+					_stab = -2;
 				};
+				[_town,_stab] call stability;
 			};
 			if(isPlayer _killer) then {
 				_standingChange = -1;

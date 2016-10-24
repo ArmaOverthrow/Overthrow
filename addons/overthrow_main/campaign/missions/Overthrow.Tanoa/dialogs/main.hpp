@@ -110,16 +110,6 @@ class OT_dialog_command
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
 		////////////////////////////////////////////////////////
 
-		class RscButton_1600: RscButton
-		{
-			idc = 1600;
-			text = "Fast Travel Unit/s"; //--- ToDo: Localize;
-			x = 0.0204687 * safezoneW + safezoneX;
-			y = 0.39 * safezoneH + safezoneY;
-			w = 0.0876563 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Fast travels all selected units that are not currently wanted (not implemented yet)"; //--- ToDo: Localize;
-		};
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
@@ -141,16 +131,6 @@ class OT_dialog_command
 			h = 0.077 * safezoneH;
 			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn openInventory;";
-		};
-		class RscButton_1603: RscButton
-		{
-			idc = 1603;
-			text = "Rearm"; //--- ToDo: Localize;
-			x = 0.0204687 * safezoneW + safezoneX;
-			y = 0.566 * safezoneH + safezoneY;
-			w = 0.0876563 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Commands all selected units to find ammo in the surrounding area (not implemented yet)"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -226,8 +206,8 @@ class OT_dialog_main
 
 	class controls
 	{
-		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Giqadi)
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Bagoqi)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
@@ -254,104 +234,104 @@ class OT_dialog_main
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
+			action = "closeDialog 0;createDialog 'OT_dialog_place'";
 
 			text = "Place"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.577 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
-			action = "closeDialog 0;createDialog 'OT_dialog_place'";
-			tooltip = "Place smaller items around houses you own or at friendly bases";
+			tooltip = "Place smaller items around houses you own or at friendly bases"; //--- ToDo: Localize;
 		};
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
+			action = "closeDialog 0;[] spawn buildMenu";
 
 			text = "Build"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.654 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
-			action = "closeDialog 0;[] spawn buildMenu";
-			tooltip = "Build structures in towns and at bases";
+			tooltip = "Build structures in towns and at bases"; //--- ToDo: Localize;
 		};
 		class RscButton_1603: RscButton
 		{
 			idc = 1603;
+			action = "[] spawn manageRecruits;";
 
 			text = "Manage Recruits"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.731 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
-			action = "[] spawn manageRecruits;";
 		};
 		class RscPicture_1200: RscPicture
 		{
 			idc = 1200;
 
 			text = "#(argb,8,8,3)color(0,0,0,0)";
-			x = 0.762969 * safezoneW + safezoneX;
-			y = 0.368 * safezoneH + safezoneY;
-			w = 0.113437 * safezoneW;
-			h = 0.143 * safezoneH;
+			x = 45.5 * GUI_GRID_W + GUI_GRID_X;
+			y = 6.5 * GUI_GRID_H + GUI_GRID_Y;
+			w = 11 * GUI_GRID_W;
+			h = 6.5 * GUI_GRID_H;
 		};
 		class RscButton_1605: RscButton
 		{
 			idc = 1605;
+			action = "closeDialog 0;[] spawn talkToCiv";
 
 			text = "Talk"; //--- ToDo: Localize;
 			x = 0.881562 * safezoneW + safezoneX;
 			y = 0.522 * safezoneH + safezoneY;
 			w = 0.113437 * safezoneW;
 			h = 0.044 * safezoneH;
-			action = "closeDialog 0;[] spawn talkToCiv";
-		};		
+		};
 		class RscPicture_1201: RscPicture
 		{
 			idc = 1201;
 
 			text = "#(argb,8,8,3)color(0,0,0,0)";
-			x = 0.762969 * safezoneW + safezoneX;
-			y = 0.632 * safezoneH + safezoneY;
-			w = 0.113437 * safezoneW;
-			h = 0.143 * safezoneH;
+			x = 45.5 * GUI_GRID_W + GUI_GRID_X;
+			y = 18.5 * GUI_GRID_H + GUI_GRID_Y;
+			w = 11 * GUI_GRID_W;
+			h = 6.5 * GUI_GRID_H;
 		};
 		class RscButton_1608: RscButton
 		{
 			idc = 1608;
+			action = "closeDialog 0;[] call buyBuilding";
 
 			text = "Buy"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] call buyBuilding";
 			x = 0.881562 * safezoneW + safezoneX;
 			y = 0.786 * safezoneH + safezoneY;
 			w = 0.113437 * safezoneW;
 			h = 0.044 * safezoneH;
-			tooltip = "Purchase this building";
+			tooltip = "Purchase this building"; //--- ToDo: Localize;
 		};
 		class RscButton_1609: RscButton
 		{
 			idc = 1609;
+			action = "closeDialog 0;[] call leaseBuilding";
 
 			text = "Lease"; //--- ToDo: Localize;
 			x = 0.881562 * safezoneW + safezoneX;
 			y = 0.841 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
 			h = 0.044 * safezoneH;
-			action = "closeDialog 0;[] call leaseBuilding";
-			tooltip = "Lease this building";
+			tooltip = "Lease this building"; //--- ToDo: Localize;
 		};
 		class RscButton_1610: RscButton
 		{
 			idc = 1610;
+			action = "closeDialog 0;[] spawn setHome";
 
 			text = "Set Home"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn setHome";
 			x = 0.943438 * safezoneW + safezoneX;
 			y = 0.841 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
 			h = 0.044 * safezoneH;
-			tooltip = "Make this your home (respawn point)";
+			tooltip = "Make this your home (respawn point)"; //--- ToDo: Localize;
 		};
 		class RscStructuredText_1101: RscStructuredText
 		{
@@ -373,13 +353,84 @@ class OT_dialog_main
 			h = 0.143 * safezoneH;
 			colorBackground[] = {0,0,0,0.4};
 		};
+		class RscButton_1611: RscButton
+		{
+			idc = 1611;
+			action = "[] spawn characterSheet;";
+
+			text = "Character Sheet"; //--- ToDo: Localize;
+			x = 0.00499997 * safezoneW + safezoneX;
+			y = 0.808 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
 
+
 	};
 };
+class OT_dialog_char
+{
+	idd=8003;
+	movingenable=false;	
+
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Pejity)
+		////////////////////////////////////////////////////////
+
+		class RscStructuredText_1100: RscStructuredText
+		{
+			idc = 1100;
+			text = ""; //--- ToDo: Localize;
+			x = 0.273125 * safezoneW + safezoneX;
+			y = 0.269 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.143 * safezoneH;
+			colorBackground[] = {0,0,0,0.5};
+			colorActive[] = {0,0,0,0.5};
+		};
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Increase Level (-10 Influence)"; //--- ToDo: Localize;
+			x = 0.273125 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.044 * safezoneH;
+			action="[] call buyFitness;"
+		};
+		class RscStructuredText_1101: RscStructuredText
+		{
+			idc = 1101;
+			text = "<t size=""2"">TBC</t><br/><t size=""1.1"">Level 1</t><br/>More perks coming soon"; //--- ToDo: Localize;
+			x = 0.427812 * safezoneW + safezoneX;
+			y = 0.269 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.143 * safezoneH;
+			colorBackground[] = {0,0,0,0.3};
+			colorActive[] = {0,0,0,0.3};
+		};
+		class RscStructuredText_1102: RscStructuredText
+		{
+			idc = 1102;
+			text = "<t size=""2"">TBC</t><br/><t size=""1.1"">Level 1</t><br/>More perks coming soon"; //--- ToDo: Localize;
+			x = 0.5825 * safezoneW + safezoneX;
+			y = 0.269 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.143 * safezoneH;
+			colorBackground[] = {0,0,0,0.3};
+			colorActive[] = {0,0,0,0.3};
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+	}
+}	
 
 
 class OT_dialog_tute

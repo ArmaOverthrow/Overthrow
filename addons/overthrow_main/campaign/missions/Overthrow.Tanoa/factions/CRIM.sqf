@@ -141,7 +141,7 @@ while {true} do {
 								server setVariable [format ["crimadd%1",_x],0,false];
 								server setVariable [format ["timecrims%1",_x],0,false];	
 
-								[2,_leaderpos,"Gang Leader",format["Intelligence reports that this building was recently purchased by a known underworld figure, it's possible they will use this location as a base of operations for a new gang in %1.",_town],"target"] remoteExec ["intelEvent",0,false];
+								[2,_leaderpos,"Gang Hideout",format["Intelligence reports that this building was recently purchased by a known underworld figure, it's possible they will use this location as a base of operations for a new gang in %1.",_town],"target"] remoteExec ["intelEvent",0,false];
 							};
 						};
 					};
