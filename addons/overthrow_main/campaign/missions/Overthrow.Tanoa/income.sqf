@@ -35,19 +35,22 @@ while {true} do {
 			[_x,"Lease Income",format["Lease income for this period: $%1",_lease]] call BIS_fnc_createLogRecord;
 		};
 	}foreach(allPlayers);
-	_inf remoteExec ["influence",0,false];	
+	
 	
 	_numPlayers = count(allPlayers);
 	if(isNil "_total") then {_total = 0};
 	_perPlayer = round(_total / _numPlayers);
 	if(_perPlayer > 0) then {
+		_inf remoteExec ["influenceSilent",0,false];	
 		{
 			_money = _x getVariable ["money",0];
 			_x setVariable ["money",_money+_perPlayer,true];
-			[_x,"Tax Income",format["Tax income for this period: $%1",_perPlayer]] call BIS_fnc_createLogRecord;
+			[_x,"Tax Income",format ["Tax income: $%1 (+%2 Influence)",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber,_inf]] call BIS_fnc_createLogRecord;
 		}foreach(allPlayers);
-		format ["Tax income: $%1",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber] remoteExec ["notify_good",0,true];
-	};	
+		format ["Tax income: $%1 (+%2 Influence)",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber,_inf] remoteExec ["notify_good",0,true];
+	}else{
+		_inf remoteExec ["influence",0,false];	
+	};
 	
 	waitUntil {sleep 5;(date select 3) != _lasthour}; //do actions on the hour
 };

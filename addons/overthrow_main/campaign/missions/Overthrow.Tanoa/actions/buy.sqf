@@ -31,6 +31,7 @@ call {
 		player reveal _veh;
 		format["You bought a Quadcopter",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
+		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
 	};
 	if(_cls in OT_allVehicles) exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];

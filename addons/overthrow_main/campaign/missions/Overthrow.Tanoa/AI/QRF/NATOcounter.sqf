@@ -186,7 +186,12 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 			if(_objective in OT_needsThe) then {
 				_o = "The ";
 			};
-			format["We have captured %1%2",_o,_town] remoteExec ["notify_good",0,false];
+			_effect = "";
+			if(_objective == "fuel depot") then {
+				_efect = "(Vehicles are now cheaper)";
+			};
+			format["Resistance has captured %1%2 (+100 Influence) %3",_o,_objective,_effect] remoteExec ["notify_good",0,false];
+			100 remoteExec ["influenceSilent",0,false];	
 		}else{
 			if(((count _inrange) / (count _alive)) > 0.7) then {
 				//check for any alive enemies

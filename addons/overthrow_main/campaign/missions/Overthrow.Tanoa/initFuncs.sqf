@@ -73,6 +73,7 @@ loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
 buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
 manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
+characterSheet = compileFinal preProcessFileLineNumbers "UI\characterSheet.sqf";
 buyDialog = compileFinal preProcessFileLineNumbers "UI\buyDialog.sqf";
 sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 
@@ -140,6 +141,9 @@ unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
 unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 NATOsearch = compileFinal preProcessFileLineNumbers "AI\NATOsearch.sqf";
+
+//Perk System
+perkSystem = compileFinal preProcessFileLineNumbers "perkSystem.sqf";
 
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
@@ -217,7 +221,17 @@ loadPlayerData = {
 
 influence = {
     _totalrep = (player getVariable ["influence",0])+_this;
-    player setVariable ["influence",_totalrep,true];    
+    player setVariable ["influence",_totalrep,true]; 
+	_plusmin = "";
+    if(_this > 0) then {
+        _plusmin = "+";
+    };
+    format["%1%2 Influence",_plusmin,_this] call notify_minor;	
+};
+
+influenceSilent = {
+    _totalrep = (player getVariable ["influence",0])+_this;
+    player setVariable ["influence",_totalrep,true]; 
 };
 
 stopAndFace = {	

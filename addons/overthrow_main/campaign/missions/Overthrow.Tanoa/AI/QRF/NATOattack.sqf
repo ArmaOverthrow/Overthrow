@@ -158,6 +158,8 @@ while {_count < _numgroups} do {
 	_town = _this select 2;
 	_tskid = _this select 3;
 	
+	_townpop = server getVariable [format["population%1",_town],0];
+	
 	private ["_size","_active","_alive"];
 	sleep 20;
 	_size = count _soldiers;
@@ -177,6 +179,7 @@ while {_count < _numgroups} do {
 			};
 		}foreach(_soldiers);
 		if(count _alive <= _lostat) then {
+			_townpop remoteExec ["influence",0,false];
 			[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 			_active = false;
 		}else{
