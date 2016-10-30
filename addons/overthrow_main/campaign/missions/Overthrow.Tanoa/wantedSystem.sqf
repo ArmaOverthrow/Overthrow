@@ -54,7 +54,6 @@ _unit addEventHandler ["Fired", {
 
 while {alive _unit} do {
 	sleep 3;	
-	
 	//check wanted status
 	if !(captive _unit) then {
 		//CURRENTLY WANTED

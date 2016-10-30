@@ -77,7 +77,6 @@ class OT_dialog_buildbase
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-
 	}
 };
 
@@ -254,26 +253,26 @@ class OT_dialog_buildtown
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
-			action = "'Walls' call build";
+			action = "'Workshop' call build";
 
-			text = "Walls"; //--- ToDo: Localize;
+			text = "Workshop"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.588 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Stop people (or tanks) from getting in"; //--- ToDo: Localize;
+			tooltip = "Repair, rearm and modify vehicles"; //--- ToDo: Localize;
 		};
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
-			action = "'Observation Post' call build";
+			action = "'House' call build";
 
-			text = "Observation Post"; //--- ToDo: Localize;
+			text = "House"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Provides intel about the area"; //--- ToDo: Localize;
+			tooltip = "4 Walls, a roof, maybe a door that opens if you're lucky."; //--- ToDo: Localize;
 		};
 		class RscButton_1603: RscButton
 		{
@@ -290,18 +289,20 @@ class OT_dialog_buildtown
 		class RscButton_1604: RscButton
 		{
 			idc = 1604;
-			action = "'Helipad' call build";
+			action = "'Fuel Station' call build";
 
-			text = "Helipad"; //--- ToDo: Localize;
+			text = "Fuel Station"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Apparently helicopter pilots need to be told where they are allowed to land"; //--- ToDo: Localize;
+			tooltip = "Refuels stuff"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
+		
+		
 
 
 	}

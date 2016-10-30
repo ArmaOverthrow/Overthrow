@@ -30,11 +30,11 @@ _pm = "";
 if(_rep > -1) then {_pm = "+"};
 
 _ctrl ctrlSetStructuredText parseText format["
-	<t align='left' size='1.3'>%1</t><br/>
-	<t align='left' size='1'>%2</t><br/>
-	<t align='left' size='0.7'>Standing: %3%4 (Tanoa: %5%6)</t><br/>
-	<t align='left' size='0.7'>Influence: %9</t><br/>
-	<t align='left' size='0.7'>Weather: %7 (Forecast: %8)</t>
+	<t align='left' size='1.2'>%1</t><br/>
+	<t align='left' size='0.9'>%2</t><br/>
+	<t align='left' size='0.65'>Standing: %3%4 (Tanoa: %5%6)</t><br/>
+	<t align='left' size='0.65'>Influence: %9</t><br/>
+	<t align='left' size='0.65'>Weather: %7 (Forecast: %8)</t>
 ",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0]];
 
 sleep 0.1;
@@ -72,8 +72,8 @@ if(typename _b == "ARRAY") then {
 				ctrlEnable [1610,false];
 			
 				_buildingTxt = format["
-					<t align='left' size='0.9'>Camp</t><br/>
-					<t align='left' size='0.7'>Owned by %1</t>
+					<t align='left' size='0.8'>Camp</t><br/>
+					<t align='left' size='0.65'>Owned by %1</t>
 				",_ownername];
 			};
 			if(typeof _building == OT_item_Flag) exitWith {
@@ -83,8 +83,8 @@ if(typename _b == "ARRAY") then {
 				ctrlEnable [1610,false];
 			
 				_buildingTxt = format["
-					<t align='left' size='0.9'>%1</t><br/>
-					<t align='left' size='0.7'>Owned by %2</t>
+					<t align='left' size='0.8'>%1</t><br/>
+					<t align='left' size='0.65'>Owned by %2</t>
 				",_building getVariable "name",_ownername];
 			};
 			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
@@ -94,9 +94,9 @@ if(typename _b == "ARRAY") then {
 				ctrlEnable [1610,false];
 			};
 			_buildingTxt = format["
-				<t align='left' size='0.9'>%1</t><br/>
-				<t align='left' size='0.7'>Owned by %2</t><br/>
-				<t align='left' size='0.7'>Lease Value: $%3/hr</t>
+				<t align='left' size='0.8'>%1</t><br/>
+				<t align='left' size='0.65'>Owned by %2</t><br/>
+				<t align='left' size='0.65'>Lease Value: $%3/hr</t>
 			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];			
 			
 		}else{
@@ -110,8 +110,8 @@ if(typename _b == "ARRAY") then {
 				_name = _building getVariable "name";
 			};
 			_buildingTxt = format["
-				<t align='left' size='1'>%1</t><br/>
-				<t align='left' size='0.7'>Owned by %2</t>
+				<t align='left' size='0.8'>%1</t><br/>
+				<t align='left' size='0.65'>Owned by %2</t>
 			",_name,_ownername];
 		};
 	}else{
@@ -119,10 +119,9 @@ if(typename _b == "ARRAY") then {
 		ctrlEnable [1609,false];
 		ctrlEnable [1610,false];
 		_buildingTxt = format["
-			<t align='left' size='0.9'>%1</t><br/>
-			<t align='left' size='0.7'>Capacity: %2</t><br/>
-			<t align='left' size='0.7'>Lease Value: $%3/hr</t>
-		",_name,_totaloccupants,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+			<t align='left' size='0.8'>%1</t><br/>
+			<t align='left' size='0.65'>Lease Value: $%2/hr</t>
+		",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
 	};	
 }else{
 	ctrlEnable [1608,false];
@@ -142,11 +141,14 @@ _civtxtctrl = (findDisplay 8001) displayCtrl 1101;
 {
 	if !(_x call hasOwner or _x == player or side _x == west or side _x == east) then {
 		//"self" returns true ie for shopkeepers, so double check this civ has no owner
-		_owner = _x getVariable "owner";
-		if(isNil "_owner" and _x in allunits) then {
+		if(isPlayer _x) then {
 			_possible pushBack _x;
-		};
-		
+		}else{
+			_owner = _x getVariable "owner";
+			if(isNil "_owner" and _x in allunits) then {
+				_possible pushBack _x;
+			};
+		};			
 	};
 }foreach(_civs);
 
@@ -169,8 +171,8 @@ if(count _possible > 0) then {
 		_type = "Player";
 	};
 	_civTxt = format["
-		<t align='left' size='0.9'>%1</t><br/>
-		<t align='left' size='0.8'>%2</t><br/>
+		<t align='left' size='0.8'>%1</t><br/>
+		<t align='left' size='0.7'>%2</t><br/>
 	",_name,_type];	
 }else{
 	ctrlEnable [1605,false];

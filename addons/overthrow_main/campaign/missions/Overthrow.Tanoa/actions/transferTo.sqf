@@ -28,7 +28,7 @@ sleep 5;
 			if(_cls in OT_allMagazines) exitWith {
 				_target addMagazineCargoGlobal [_cls,1];
 			};
-			if(_cls in OT_allBackpacks) exitWith {
+			if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) exitWith {
 				_target addBackpackCargoGlobal [_cls,1];
 			};
 			_target addItemCargoGlobal [_cls,1];

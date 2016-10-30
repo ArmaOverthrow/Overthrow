@@ -174,9 +174,30 @@ _handler = {
 		};
 		
 	}foreach(allGroups);	
+	
+	{
+		if(side _x == resistance or side _x == civilian) then {
+			if(_x isKindOf "StaticWeapon") then {
+				_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";	
+				if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
+				(_this select 0) drawIcon [
+					_i,
+					[0,0.5,0,1],
+					position _x,
+					30,
+					30,
+					0
+				]; 
+			};
+		};
+	}foreach(vehicles);
 };
 
-_eh = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _handler];
+if(!isNil "OT_OnDraw") then {
+	((findDisplay 12) displayCtrl 51) ctrlRemoveEventHandler ["Draw",OT_OnDraw];
+};
+
+OT_OnDraw = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _handler];
 
 [_handler] spawn {	
 	private ['_gps',"_handler"];
@@ -191,7 +212,10 @@ _eh = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _handler];
 		} count (uiNamespace getVariable 'IGUI_Displays');
 		uiSleep 1;
 		if (!isNull _gps) exitWith {
-			_gps ctrlAddEventHandler ['Draw',_handler];
+			if(!isNil "OT_GPSOnDraw") then {			
+				_gps ctrlRemoveEventHandler ['Draw',OT_GPSOnDraw];
+			};
+			OT_GPSOnDraw = _gps ctrlAddEventHandler ['Draw',_handler];
 		};
 		uiSleep 0.25;
 	};

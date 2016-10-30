@@ -28,7 +28,7 @@ sleep 5;
 			if(_cls in OT_allMagazines) exitWith {
 				_veh addMagazineCargoGlobal [_cls,1];
 			};
-			if(_cls in OT_allBackpacks) exitWith {
+			if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) exitWith {
 				_veh addBackpackCargoGlobal [_cls,1];
 			};
 			_veh addItemCargoGlobal [_cls,1];

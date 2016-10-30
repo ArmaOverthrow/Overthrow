@@ -142,8 +142,10 @@ unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 NATOsearch = compileFinal preProcessFileLineNumbers "AI\NATOsearch.sqf";
 
-//Perk System
+//Other Systems
 perkSystem = compileFinal preProcessFileLineNumbers "perkSystem.sqf";
+statsSystem = compileFinal preProcessFileLineNumbers "stats.sqf";
+intelSystem = compileFinal preProcessFileLineNumbers "intelSystem.sqf";
 
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
