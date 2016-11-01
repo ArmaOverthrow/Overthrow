@@ -65,6 +65,16 @@ call {
 		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
+	if(_cls in OT_allClothing) then {
+		player setVariable ["money",_money-_price,true];
+
+		if(backpack player != "") then {
+			player addItem _cls;
+		}else{
+			player forceAddUniform _cls;
+		};
+		playSound "3DEN_notificationDefault";
+	};
 	if(_cls in OT_allWeapons) then {
 		player setVariable ["money",_money-_price,true];
 

@@ -170,94 +170,96 @@ publicVariable "OT_NATOInitDone";
 }foreach(OT_NATOcomms);
 		
 sleep 5;
-while {true} do {	
-	_abandoned = server getVariable "NATOabandoned";
-	_garrisoned = false;
-	{		
-		_town = _x;
-		_townPos = server getVariable _town;
-		_current = server getVariable format ["garrison%1",_town];;	
-		_stability = server getVariable format ["stability%1",_town];
-		_population = server getVariable format ["population%1",_town];
-		if(_stability > 10 and !(_town in _abandoned)) then {
-			_max = round(_population / 40);
-			if(_max < 4) then {_max = 4};
-			_garrison = 2+round((1-(_stability / 100)) * _max);
-			if(_town in OT_NATO_priority) then {
-				_garrison = round(_garrison * 2);
-			};
-			_need = _garrison - _current;
-			if(_need < 0) then {_need = 0};
-			if(_need > 1) then {
-				_garrisoned = true;
-				server setVariable [format ["garrisonadd%1",_x], 2,false];
-				server setVariable [format ["garrison%1",_x],_current+2,true];
-			};			
-		}else{
-			server setVariable [format ["garrison%1",_town],0,true];
-			if(!(_town in _abandoned)) then {
-				_town spawn NATOattack;
-				_garrisoned = true;
-				_abandoned pushback _town;
-				server setVariable ["NATOabandoned",_abandoned,true];
-			};
-		};
-		if(_garrisoned) exitWith {}; //only send one garrison/attack per turn		
-		sleep 0.1;
-	}foreach (OT_allTowns);
-	_attacking = spawner getvariable["NATOattacking",""];
-	
-	if(_attacking != "") then {_garrisoned = true};//A counter-attack is still in progress, NATO is too busy
-	
-	//Town counter-attacks
-	if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 95) then {
-		_highest = 0;
-		_high = 0;
-		{
-			_pop = server getVariable[format["population%1",_x],0];
-			if(_pop > 0 and _pop > _high) then {
-				_high = _pop;
-				_highest = _x;
-			};
-		}foreach (_abandoned);
-		if(_high > 0) then {
-			_highest spawn NATOretakeTown;
-			spawner setVariable["NATOattacking",_highest,false];
-		};
-	};
-	
-	if !(_garrisoned) then {
-		{
-			_pos = _x select 0;
-			_name = _x select 1;
-			if !(_name in _abandoned) then {	
-				_garrison = server getvariable format["garrison%1",_name];
-				_vehgarrison = server getvariable format["vehgarrison%1",_name];
-				
-				if(_garrison == 0) then {
+while {true} do {
+	if(count allplayers > 0) then {
+		_abandoned = server getVariable "NATOabandoned";
+		_garrisoned = false;
+		{		
+			_town = _x;
+			_townPos = server getVariable _town;
+			_current = server getVariable format ["garrison%1",_town];;	
+			_stability = server getVariable format ["stability%1",_town];
+			_population = server getVariable format ["population%1",_town];
+			if(_stability > 10 and !(_town in _abandoned)) then {
+				_max = round(_population / 40);
+				if(_max < 4) then {_max = 4};
+				_garrison = 2+round((1-(_stability / 100)) * _max);
+				if(_town in OT_NATO_priority) then {
+					_garrison = round(_garrison * 2);
+				};
+				_need = _garrison - _current;
+				if(_need < 0) then {_need = 0};
+				if(_need > 1) then {
 					_garrisoned = true;
-					_name spawn NATOcounter;				
-					_abandoned pushback _name;
+					server setVariable [format ["garrisonadd%1",_x], 2,false];
+					server setVariable [format ["garrison%1",_x],_current+2,true];
+				};			
+			}else{
+				server setVariable [format ["garrison%1",_town],0,true];
+				if(!(_town in _abandoned)) then {
+					_town spawn NATOattack;
+					_garrisoned = true;
+					_abandoned pushback _town;
 					server setVariable ["NATOabandoned",_abandoned,true];
-					_name setMarkerAlpha 1;				
 				};
 			};
-			if(_garrisoned) exitWith {};
-		}foreach(OT_NATOobjectives);
-	};
-	
-	if !(_garrisoned) then {
-		//Nothing to do, so NATO will harass
-		_chance = 95;
-		if(count _abandoned > 4) then {_chance = 90};
-		if(count _abandoned > 8) then {_chance = 80};
-		if((random 100) > _chance) then {
-			_target = _abandoned call BIS_fnc_selectRandom;
-			_pos = server getvariable _target;
-			if !(isNil "_pos") then {
-				_pos spawn NATOsniper;
+			if(_garrisoned) exitWith {}; //only send one garrison/attack per turn		
+			sleep 0.1;
+		}foreach (OT_allTowns);
+		_attacking = spawner getvariable["NATOattacking",""];
+		
+		if(_attacking != "") then {_garrisoned = true};//A counter-attack is still in progress, NATO is too busy
+		
+		//Town counter-attacks
+		if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 95) then {
+			_highest = 0;
+			_high = 0;
+			{
+				_pop = server getVariable[format["population%1",_x],0];
+				if(_pop > 0 and _pop > _high) then {
+					_high = _pop;
+					_highest = _x;
+				};
+			}foreach (_abandoned);
+			if(_high > 0) then {
+				_highest spawn NATOretakeTown;
+				spawner setVariable["NATOattacking",_highest,false];
 			};
 		};
+		
+		if !(_garrisoned) then {
+			{
+				_pos = _x select 0;
+				_name = _x select 1;
+				if !(_name in _abandoned) then {	
+					_garrison = server getvariable format["garrison%1",_name];
+					_vehgarrison = server getvariable format["vehgarrison%1",_name];
+					
+					if(_garrison == 0) then {
+						_garrisoned = true;
+						_name spawn NATOcounter;				
+						_abandoned pushback _name;
+						server setVariable ["NATOabandoned",_abandoned,true];
+						_name setMarkerAlpha 1;				
+					};
+				};
+				if(_garrisoned) exitWith {};
+			}foreach(OT_NATOobjectives);
+		};
+		
+		if !(_garrisoned) then {
+			//Nothing to do, so NATO will harass
+			_chance = 95;
+			if(count _abandoned > 4) then {_chance = 90};
+			if(count _abandoned > 8) then {_chance = 80};
+			if((random 100) > _chance) then {
+				_target = _abandoned call BIS_fnc_selectRandom;
+				_pos = server getvariable _target;
+				if !(isNil "_pos") then {
+					_pos spawn NATOsniper;
+				};
+			};
+		};	
 	};
 	
 	{

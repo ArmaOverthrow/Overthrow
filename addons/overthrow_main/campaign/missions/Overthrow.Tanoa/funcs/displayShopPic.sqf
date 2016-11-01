@@ -24,7 +24,7 @@ if(_cls in OT_allVehicles or _cls in OT_staticWeapons) then {
 	_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
 	_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");
 };
-if(_cls in OT_allWeapons or _cls in OT_allItems) then {	
+if(_cls in OT_allWeapons or _cls in OT_allItems or _cls in OT_allClothing) then {	
 	_txt = _cls call ISSE_Cfg_Weapons_GetName;
 	_pic = _cls call ISSE_Cfg_Weapons_GetPic;
 	_desc = _cls call ISSE_Cfg_Weapons_GetDesc;

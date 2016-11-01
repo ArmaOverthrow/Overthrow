@@ -19,6 +19,15 @@ _shopkeeper addAction ["Buy", {
 	
 },_shopkeeper,1.5,false,true,"","alive _target",5];
 
+_shopkeeper addAction ["Buy Clothing", {
+	_civ = _this select 0;	
+	_town = (getpos _civ) call nearestTown;
+	_standing = player getVariable format['rep%1',_town];
+	player setVariable ["shopping",_civ,false];
+	createDialog "OT_dialog_buy";
+	[_town,_standing] call buyClothesDialog;
+},_shopkeeper,1.5,false,true,"","alive _target",5];
+
 _shopkeeper addAction ["Sell", {
 	_civ = _this select 0;	
 	_bp = _civ getVariable "shop";

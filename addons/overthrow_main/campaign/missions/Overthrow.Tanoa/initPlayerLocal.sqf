@@ -2,6 +2,8 @@ private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture
 waitUntil {!isNull player};
 waitUntil {player == player};
 
+if(isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
+
 removeAllWeapons player;
 removeAllAssignedItems player;
 removeGoggles player;
@@ -53,11 +55,10 @@ if(isMultiplayer or _startup == "LOAD") then {
 	_newplayer = player getVariable ["OT_newplayer",true];
 	
 	if(!_newplayer) then {
-		_house = player getVariable "home";		
-		if(isNil "_house") exitWith {_newplayer = true};
-		_town = (getpos _house) call nearestTown;
+		_housepos = player getVariable "home";		
+		if(isNil "_housepos") exitWith {_newplayer = true};
+		_town = _housepos call nearestTown;
 		_pos = server getVariable _town;
-		_housepos = getpos _house;
 		
 		_owned = player getVariable "owned";
 		{
@@ -167,7 +168,7 @@ if (_newplayer) then {
     _light setLightColor[.5, .5, .4];
 
     _house setVariable ["owner",getPlayerUID player,true];
-    player setVariable ["home",_house,true];
+    player setVariable ["home",_housepos,true];
 
     _furniture = (_house call spawnTemplate) select 0;
 

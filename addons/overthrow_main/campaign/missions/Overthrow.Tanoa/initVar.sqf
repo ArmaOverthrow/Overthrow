@@ -319,7 +319,11 @@ _allWeapons = "
     { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""})
 " configClasses ( configFile >> "cfgWeapons" );
 
-
+_allUniforms = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getNumber ( _x >> ""ItemInfo"" >> ""type"" ) isEqualTo 801})
+" configClasses ( configFile >> "cfgWeapons" );
 
 OT_allSubMachineGuns = [];
 OT_allAssaultRifles = [];
@@ -334,6 +338,8 @@ OT_allVests = [];
 OT_allProtectiveVests = [];
 OT_allExpensiveVests = [];
 OT_allCheapVests = [];
+OT_allClothing = [];
+
 {
 	_name = configName _x;
 	_name = [_name] call BIS_fnc_baseWeapon;
@@ -414,6 +420,17 @@ OT_allCheapVests = [];
 	};		
 	cost setVariable [_name,[_cost,1,0,1],true];
 } foreach (_allWeapons);
+
+{
+	_name = configName _x;	
+	_short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
+	_supply = getText(configfile >> "CfgWeapons" >> _name >> "ItemInfo" >> "containerClass");
+	_carry = getNumber(configfile >> "CfgVehicles" >> _supply >> "maximumLoad");
+	_cost = round(_carry * 0.5);
+	
+	OT_allClothing pushback _name;
+	cost setVariable [_name,[_cost,1,0,1],true];	
+} foreach (_allUniforms);
 
 OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns + OT_allSniperRifles + OT_allHandGuns + OT_allMissileLaunchers + OT_allRocketLaunchers;
 

@@ -75,6 +75,7 @@ buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
 manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 characterSheet = compileFinal preProcessFileLineNumbers "UI\characterSheet.sqf";
 buyDialog = compileFinal preProcessFileLineNumbers "UI\buyDialog.sqf";
+buyClothesDialog = compileFinal preProcessFileLineNumbers "UI\buyClothesDialog.sqf";
 sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
 
@@ -271,10 +272,7 @@ loadPlayerData = {
         _newplayer = false;
         {
             _key = _x select 0;
-            _val = _x select 1;
-            if(_key == "home") then {
-                _val = nearestBuilding _val;
-            };
+            _val = _x select 1;            
             if(_key == "camp" and typename _val == "ARRAY") then {              
                 _val = createVehicle [OT_item_tent, _val, [], 0, "CAN_COLLIDE"];
                 _val setVariable ["owner",getplayeruid player,true];
