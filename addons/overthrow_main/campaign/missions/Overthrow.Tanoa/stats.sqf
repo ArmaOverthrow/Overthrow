@@ -1,7 +1,4 @@
 private ["_txt","_currentTxt","_display","_setText"];
-showStatistics = false;
-sleep 3;
-showStatistics = true;
 disableSerialization;
 //1 cutRsc ["H8erHUD","PLAIN",0,false];
 _layer = ["stats"] call bis_fnc_rscLayer;
@@ -14,7 +11,7 @@ _setText ctrlSetBackgroundColor [0,0,0,0];
 
 _currentTxt = "";
 
-while {true} do {
+while {alive player} do {
 	_wanted = "<br/>";
 	if !(captive player) then {
 		_hiding = player getVariable "hiding";
@@ -46,11 +43,10 @@ while {true} do {
 			};
 		};
 	};
-	_txt = format ["<t size='0.7'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];
-	if (_txt != _currentTxt) then {			
-		_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
-		_setText ctrlCommit 0;
-		_currentTxt = _txt;
-	};
+	_txt = format ["<t size='0.7'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];		
+	_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
+	_setText ctrlCommit 0;
+	_currentTxt = _txt;
+
 	sleep 1;
 }

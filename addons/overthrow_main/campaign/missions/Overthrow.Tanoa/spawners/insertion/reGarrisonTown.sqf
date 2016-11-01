@@ -26,16 +26,24 @@ _closest = "";
 if(!isNil "_close") then {
 	_start = [_close,0,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_group = creategroup blufor;
+	_tgroup = creategroup blufor;
 
 	_spawnpos = _start findEmptyPosition [0,100,OT_NATO_Vehicle_Police];
 	_veh =  OT_NATO_Vehicle_Police createVehicle _spawnpos;
 	_veh setDir 180;
-	_group addVehicle _veh;	
+	_tgroup addVehicle _veh;
+	
+	createVehicleCrew _veh;
+	{
+		[_x] joinSilent _tgroup;		
+		_x setVariable ["garrison","HQ",false];
+	}foreach(crew _veh);	
 	
 	_police pushBack _veh;
 	
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	_police pushBack _civ;
+	_civ moveInCargo _veh;
 	[_civ,_town] call initPolice;
 	_civ setBehaviour "SAFE";
 	sleep 0.01;
@@ -45,30 +53,37 @@ if(!isNil "_close") then {
 	_police pushBack _civ;
 	[_civ,_town] call initPolice;
 	_civ setBehaviour "SAFE";
-	_count = _count + 2;
+	_civ moveInCargo _veh;
 	
 	_group setVariable ["veh",_veh];
 	_group setVariable ["transport",_police];	
+	sleep 5;
 	
-	_drop = (([_townPos, 100, 500, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 200) select 0;
-	
-	_move = _group addWaypoint [_spawnpos,0];
-	_move setWaypointType "GETIN";
-	_move setWaypointSpeed "FULL";	
-	
-	_move = _group addWaypoint [_drop,0];
+	_drop = (([_townPos, 50, 350, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 200) select 0;	
+
+	_move = _tgroup addWaypoint [_drop,0];
 	_move setWaypointType "MOVE";
 	_move setWaypointSpeed "FULL";	
 	
-	_move = _group addWaypoint [_drop,0];
-	_move setWaypointType "GETOUT";					
-	_move setWaypointStatements ["true","(group this) call initPolicePatrol;"];		
+	_move = _tgroup addWaypoint [_drop,0];
+	_move setWaypointType "TR UNLOAD";	
+	
+	_wp = _tgroup addWaypoint [_spawnpos,0];
+	_wp setWaypointType "MOVE";
+	_wp setWaypointSpeed "LIMITED";	
+	_wp setWaypointCompletionRadius 25;
+	
+	_wp = _tgroup addWaypoint [_spawnpos,0];
+	_wp setWaypointType "SCRIPTED";
+	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
+
+	_group call initPolicePatrol;
 	
 	{
 		_x addCuratorEditableObjects [_police+_support,true];
 	} forEach allCurators;
 };
 
-[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad.",_town,count units _group,_closest]] remoteExec ["intelEvent",0,false];
+[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad.",_town,2,_closest]] remoteExec ["intelEvent",0,false];
 
 _police+_support;

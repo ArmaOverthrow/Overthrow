@@ -12,6 +12,7 @@ removeVest player;
 player linkItem "ItemMap";
 
 server setVariable [format["name%1",getplayeruid player],name player,true];
+server setVariable [format["uid%1",name player],getplayeruid player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
@@ -50,33 +51,35 @@ if(isMultiplayer or _startup == "LOAD") then {
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
 	
-	_house = player getVariable "home";
-	
-	_town = (getpos _house) call nearestTown;
-	_pos = server getVariable _town;
-	_housepos = getpos _house;
-	
-	_owned = player getVariable "owned";
-	{
-		_x setVariable ["owner",getPlayerUID player,true];
-		_mrkName = format["%1",_x];
-		if((markerpos _mrkName) select 0 == 0) then {
-			_mrkName = createMarkerLocal [_mrkName,getpos _x];
-			_mrkName setMarkerShape "ICON";
-			_mrkName setMarkerType "loc_Tourism";
-			_mrkName setMarkerColor "ColorWhite";
-			_mrkName setMarkerAlpha 0;
-		};
-		_mrkName setMarkerAlphaLocal 1;
-	}foreach(_owned);       
-	
-	{
-		if(_x call hasOwner) then {
-			if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
-				_furniture pushback _x                  
+	if(!_newplayer) then {
+		_house = player getVariable "home";		
+		if(isNil "_house") exitWith {_newplayer = true};
+		_town = (getpos _house) call nearestTown;
+		_pos = server getVariable _town;
+		_housepos = getpos _house;
+		
+		_owned = player getVariable "owned";
+		{
+			_x setVariable ["owner",getPlayerUID player,true];
+			_mrkName = format["%1",_x];
+			if((markerpos _mrkName) select 0 == 0) then {
+				_mrkName = createMarkerLocal [_mrkName,getpos _x];
+				_mrkName setMarkerShape "ICON";
+				_mrkName setMarkerType "loc_Tourism";
+				_mrkName setMarkerColor "ColorWhite";
+				_mrkName setMarkerAlpha 0;
 			};
-		};  
-	}foreach(_housepos nearObjects 50);
+			_mrkName setMarkerAlphaLocal 1;
+		}foreach(_owned);       
+		
+		{
+			if(_x call hasOwner) then {
+				if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
+					_furniture pushback _x                  
+				};
+			};  
+		}foreach(_housepos nearObjects 50);
+	};
 	
 	_recruits = server getVariable ["recruits",[]];
 	_newrecruits = [];
@@ -212,13 +215,10 @@ player setCaptive true;
 player setPos _housepos;
 titleText ["", "BLACK IN", 5];
 
-if (isMultiplayer) then {
-    ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
-};
-
 player addEventHandler ["WeaponAssembled",{
 	_me = _this select 0;
 	_wpn = _this select 1;
+	_pos = position _wpn;
 	if(typeof _wpn in OT_staticMachineGuns) then {		
 		_wpn remoteExec["initStaticMGLocal",0,_wpn];
 	};
@@ -226,6 +226,9 @@ player addEventHandler ["WeaponAssembled",{
 		if(_me call unitSeen) then {
 			_me setCaptive false;
 		};
+	};
+	if(isplayer _me) then {
+		_wpn setVariable ["owner",getplayeruid _me,true];
 	};
 }];
 
@@ -238,14 +241,7 @@ player addEventHandler ["GetInMan",{
 	if(_position == "driver") then {
 		if !(_veh call hasOwner) then {
 			_veh setVariable ["owner",getplayeruid player,true];
-			_veh setVariable ["stolen",true,true];
-			if(_unit call unitSeenNATO) then {
-				_notified = true;
-				{
-					_x setCaptive false;
-				}foreach(units _veh);
-				_veh spawn revealToNATO;
-			};
+			_veh setVariable ["stolen",true,true];			
 		};
 	};
 	_g = _v getVariable ["vehgarrison",false];
@@ -254,6 +250,10 @@ player addEventHandler ["GetInMan",{
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["vehgarrison%1",_g],_vg,false];
 		_veh setVariable ["vehgarrison",nil,true];
+		{
+			_x setCaptive false;
+		}foreach(units _veh);
+		_veh spawn revealToNATO;
 	};
 	_g = _v getVariable ["airgarrison",false];
 	if(typename _g == "STRING") then {
@@ -261,19 +261,11 @@ player addEventHandler ["GetInMan",{
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["airgarrison%1",_g],_vg,false];
 		_veh setVariable ["airgarrison",nil,true];
-	};
-	
-	if !(_notified) then {
-		if (!(_veh call hasOwner) or !((typeof _veh) in OT_allVehicles)) then {
-			if(_unit call unitSeenNATO) then {
-				_notified = true;
-				{
-					_x setCaptive false;
-				}foreach(units _veh);
-				_veh spawn revealToNATO;
-			};
-		};
-	};
+		{
+			_x setCaptive false;
+		}foreach(units _veh);
+		_veh spawn revealToNATO;
+	};	
 }];
 
 if(_newplayer) then {
@@ -285,7 +277,5 @@ if(_newplayer) then {
 _introcam cameraEffect ["Terminate", "BACK" ];
 _introcam = nil;
 
-[] execVM "stats.sqf";
 [] spawn setupKeyHandler;
-[] execVM "intelSystem.sqf";
 [] execVM "setupPlayer.sqf";

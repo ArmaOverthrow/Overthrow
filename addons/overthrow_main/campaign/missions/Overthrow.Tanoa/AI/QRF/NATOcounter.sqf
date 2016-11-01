@@ -161,23 +161,22 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 	_tskid = _this select 3;
 	
 	private ["_size","_active","_alive"];
-	sleep 20;
 	_size = count _soldiers;
-	_lostat = round(_size * 0.2);
+	_lostat = round(_size * 0.4);
 	_active = true;
-	
 		
 	while {_active} do {
 		_alive = [];
 		_inrange = [];
 		{
-			if(alive _x and !(_x call hasOwner)) then {
+			if(alive _x) then {
 				_alive pushback _x;
 				if(_x distance _attackpos < 150) then {
 					_inrange pushback _x;
 				};
 			};
 		}foreach(_soldiers);
+		
 		if(count _alive <= _lostat) then {
 			[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 			_active = false;			
@@ -212,7 +211,7 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 				};
 			};
 		};		
-		sleep 10;
+		sleep 2;
 	};
 
 };

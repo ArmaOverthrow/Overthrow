@@ -1,7 +1,7 @@
 _group = _this;
 
 
-_start = getpos ((units _group) select 0);
+_start = server getvariable [((units _group) select 0) getvariable "garrison",getpos ((units _group) select 0)];
 
 _wp = _group addWaypoint [getpos (nearestbuilding _start),5];
 _wp setWaypointType "MOVE";

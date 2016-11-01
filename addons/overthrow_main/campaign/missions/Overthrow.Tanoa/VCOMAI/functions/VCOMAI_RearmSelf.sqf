@@ -29,6 +29,7 @@ if (_TC <= 2) then
 			_mags = [];
 			_Unit = _x;
 			if (_Unit isKindOf "Man") then {_mags = magazines _Unit} else {_mags = magazineCargo _Unit};
+			if(isNil "_mags") then {_mags = []};
 			{if (_x isEqualTo _CM) exitwith {[_this,_Unit] spawn VCOMAI_RearmGo;};_Stop = true;} foreach _mags;
 			if (_Stop) exitwith {};
 		} foreach _FB;		

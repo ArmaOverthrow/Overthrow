@@ -21,9 +21,13 @@ _standing = (player getVariable format['rep%1',_town]) * -1;
 _idx = lbCurSel 1500;
 _cls = lbData [1500,_idx];
 
+if(isNil "_cls" or _cls == "") exitWith {};
+
 _price = [_town,_cls,_standing] call getSellPrice;
 _done = false;
 _mynum = 0;
+
+if(isNil "_price") exitWith {};
 
 {
 	_c = _x select 0;

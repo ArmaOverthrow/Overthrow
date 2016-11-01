@@ -91,6 +91,7 @@ while {_count < _numgroups} do {
 	{
 		[_x] joinSilent _tgroup;		
 		_x setVariable ["garrison","HQ",false];
+		_x setVariable ["NOAI",true,false];
 	}foreach(crew _veh);	
 	
 	{
@@ -99,7 +100,7 @@ while {_count < _numgroups} do {
 		_x setVariable ["garrison","HQ",false];
 	}foreach(units _group);	
 	
-	sleep 1;
+	sleep 2;
 	
 	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
 	_wp = _tgroup addWaypoint [_moveto,0];
@@ -161,9 +162,8 @@ while {_count < _numgroups} do {
 	_townpop = server getVariable [format["population%1",_town],0];
 	
 	private ["_size","_active","_alive"];
-	sleep 20;
 	_size = count _soldiers;
-	_lostat = round(_size * 0.2);
+	_lostat = round(_size * 0.4);
 	_active = true;
 	
 		
@@ -171,7 +171,7 @@ while {_count < _numgroups} do {
 		_alive = [];
 		_inrange = [];
 		{
-			if(alive _x and !(_x call hasOwner)) then {
+			if(alive _x) then {
 				_alive pushback _x;
 				if(_x distance _attackpos < 150) then {
 					_inrange pushback _x;
@@ -179,7 +179,8 @@ while {_count < _numgroups} do {
 			};
 		}foreach(_soldiers);
 		if(count _alive <= _lostat) then {
-			_townpop remoteExec ["influence",0,false];
+			_townpop remoteExec ["influenceSilent",0,false];
+			format["NATO has abandoned %1 (+%2 Influence)",_town,_townpop] remoteExec ["notify_good",0,false];
 			[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 			_active = false;
 		}else{
@@ -202,7 +203,7 @@ while {_count < _numgroups} do {
 				};
 			};
 		};		
-		sleep 10;
+		sleep 2;
 	};
 
 };
