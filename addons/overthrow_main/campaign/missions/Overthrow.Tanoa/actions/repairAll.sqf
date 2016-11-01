@@ -7,7 +7,7 @@ if (_x distance _pos < 50)
 	{
 	_x setDamage 0;
 	//_x setVehicleAmmoDef 1;
-	[_x,1] remoteExec ["setVehicleAmmoDef",_x];
+	[_x,1] remoteExec ["setVehicleAmmoDef",_x,false];
 	};
 } forEach vehicles;
 

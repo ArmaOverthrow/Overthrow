@@ -18,7 +18,7 @@ if !(_wpn getVariable ["actioned",false]) then {
 				"Rearming MG..." call notify_minor;
 				[15,false] call progressBar;
 				sleep 15;
-				[_this,1] remoteExec ["setVehicleAmmoDef",_this];
+				[_this,1] remoteExec ["setVehicleAmmoDef",_this,_this];
 				"MG rearmed" call notify_minor;
 				disableUserInput false;
 			};				

@@ -76,11 +76,15 @@ manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 characterSheet = compileFinal preProcessFileLineNumbers "UI\characterSheet.sqf";
 buyDialog = compileFinal preProcessFileLineNumbers "UI\buyDialog.sqf";
 sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
+workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
 NATOcounter = compileFinal preProcessFileLineNumbers "AI\QRF\NATOcounter.sqf";
 CTRGSupport = compileFinal preProcessFileLineNumbers "AI\QRF\CTRGSupport.sqf";
+NATOretakeTown = compileFinal preProcessFileLineNumbers "AI\QRF\NATOretakeTown.sqf";
+NATOrecon = compileFinal preProcessFileLineNumbers "AI\QRF\NATOrecon.sqf";
+NATOsniper = compileFinal preProcessFileLineNumbers "AI\QRF\NATOsniper.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -116,6 +120,7 @@ matrixRotate = compileFinal preProcessFileLineNumbers "funcs\matrixRotate.sqf";
 buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
 sell = compileFinal preProcessFileLineNumbers "actions\sell.sqf";
 sellall = compileFinal preProcessFileLineNumbers "actions\sellall.sqf";
+workshopAdd = compileFinal preProcessFileLineNumbers "actions\workshopAdd.sqf";
 buyBuilding = compileFinal preProcessFileLineNumbers "actions\buyBuilding.sqf";
 leaseBuilding = compileFinal preProcessFileLineNumbers "actions\leaseBuilding.sqf";
 recruitCiv = compileFinal preProcessFileLineNumbers "actions\recruitCiv.sqf";
@@ -154,13 +159,79 @@ menuHandler = {};
 //Addons
 [] execVM "SHK_pos\shk_pos_init.sqf";
 
+//Credit to John681611: http://www.armaholic.com/page.php?id=25720
+mpAddEventHand = {
+private["_obj","_type","_code"];
+_obj = _this select 0;
+_type = _this select 1;
+_code = _this select 2;
+_add = _obj addEventHandler [_type,_code];
+};
+mpRemoveEventHand = {
+private["_obj","_type","_index"];
+_obj = _this select 0;
+_type = _this select 1;
+_index = _this select 2;
+_obj removeEventHandler [_type, _index];
+};
+AUG_GetIn = {
+	_aug = (_this select 0) getVariable["AUG_Attached",false];
+	if((count (crew _aug)) > 0) exitWith {hint 'Weapon must be empty to mount';};
+	(_this select 1) moveInGunner _aug;
+};
+AUG_UpdateState = {
+	//Update Action
+	[(_this select 0),((_this select 0) getVariable "AUG_Act")] call BIS_fnc_holdActionRemove;
+ 	_ls = [ (_this select 0),(_this select 1),
+				"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+				"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+				"speed _target <= 1 AND speed _target >= -1 AND _target distance _this < 5 AND vehicle _this == _this AND ( typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' OR typeNAME (_target getVariable 'AUG_Local') != 'BOOL')",
+				"true",
+					{(_this select 1) playMoveNow  "Acts_carFixingWheel";}
+					,{},
+					{(_this select 1) switchmove "";[(_this select 0)] Call AUG_Action;},
+					{(_this select 1) switchmove "";},[],13,1.5,false,false] Call BIS_fnc_holdActionAdd;
+	(_this select 0) setVariable ["AUG_Act",_ls,false];
+
+};
+AUG_UpdateGetInState = {
+	//Update Action
+	(_this select 0) setUserActionText [(_this select 0) getVariable "AUG_Act_GetIn",(_this select 1),(_this select 2)];
+};
+AUG_Action = {
+	_veh = (_this select 0);
+	if( typeNAME(_veh getVariable["AUG_Attached",false]) == "OBJECT")  then {
+		[_veh,(_this select 1)] call AUG_Detach;
+	}else{
+		[_veh,(_this select 1)] call AUG_Attach;
+
+	}
+};
+AUG_AddAction = {
+	// mp issues may occure
+	_ls = [ (_this select 0),"","","","speed _target <= 1 AND speed _target >= -1 AND _target distance _this < 5  AND vehicle _this == _this AND ( typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' OR typeNAME (_target getVariable 'AUG_Local') != 'BOOL')","true",{},{},{},{},[],13,nil,false,false] call BIS_fnc_holdActionAdd;
+	_vls = (_this select 0) addAction ["", {[(_this select 0),(_this select 1)] spawn AUG_GetIn;},[],5.5,true,true,"","typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' AND _target distance _this < 5"];
+	(_this select 0) setVariable ["AUG_Act",_ls,false];
+	(_this select 0) setVariable ["AUG_Act_GetIn",_vls,false];
+	(_this select 0) setVariable["AUG_Attached",false,true];
+	(_this select 0) setVariable["AUG_Local",false,true];
+};
+
+mpSetDir = {
+	private["_obj","_dir"];
+	_obj = _this select 0;
+	_dir = _this select 1;
+
+	_obj setDir _dir;
+};
+
 blackFaded = {
 	_txt = format ["<t size='0.5' color='#000000'>Please wait... %1</t>",_this]; 
     [_txt, 0, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 newGame = {
-    "Generating economy" remoteExec['blackFaded',0];
+    "Generating economy" remoteExec['blackFaded',0,false];
     [] execVM "initEconomy.sqf";
     waitUntil {!isNil "OT_economyInitDone"};
     server setVariable["StartupType","NEW",true];
@@ -182,6 +253,10 @@ standing = {
     player setVariable [format["rep%1",_town],_rep,true];    
     _totalrep = (player getVariable "rep")+(_this select 1);
     player setVariable ["rep",_totalrep,true];    
+	
+	if(count _this > 2) then {
+		format["%1 (%2 Standing)",_this select 2,_this select 1] call notify_minor;
+	};
 };
 
 setCivName = {
@@ -329,7 +404,7 @@ notify = {
 
 notify_good = {
     playSound "3DEN_notificationDefault";
-    _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
+    _txt = format ["<t size='0.7' color='#ffffff'>%1</t>",_this]; 
     [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 

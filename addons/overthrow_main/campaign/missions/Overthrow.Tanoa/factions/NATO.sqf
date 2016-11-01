@@ -5,11 +5,12 @@ private ["_name","_pos","_garrison","_need","_townPos","_current","_stability","
 OT_NATOobjectives = [];
 OT_NATOcomms = [];
 
+
 _NATObusy = false;
 _abandoned = [];
 if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {	
 	server setVariable ["NATOversion",OT_NATOversion,false];
-	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0,false];
 	sleep 0.1;
 	{
 		_stability = server getVariable format ["stability%1",_x];
@@ -151,6 +152,7 @@ publicVariable "OT_NATOInitDone";
 	}else{
 		_mrk setMarkerType "flag_NATO";
 	};
+	server setVariable [_name,_pos,true];
 }foreach(OT_NATOobjectives);
 
 {
@@ -164,6 +166,7 @@ publicVariable "OT_NATOInitDone";
 	}else{
 		_mrk setMarkerColor "ColorBLUFOR";
 	};
+	server setVariable [_name,_pos,true];
 }foreach(OT_NATOcomms);
 		
 sleep 5;
@@ -199,9 +202,29 @@ while {true} do {
 				server setVariable ["NATOabandoned",_abandoned,true];
 			};
 		};
-		if(_garrisoned) exitWith {}; //only send one garrison per turn
+		if(_garrisoned) exitWith {}; //only send one garrison/attack per turn		
 		sleep 0.1;
 	}foreach (OT_allTowns);
+	_attacking = spawner getvariable["NATOattacking",""];
+	
+	if(_attacking != "") then {_garrisoned = true};//A counter-attack is still in progress, NATO is too busy
+	
+	//Town counter-attacks
+	if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 95) then {
+		_highest = 0;
+		_high = 0;
+		{
+			_pop = server getVariable[format["population%1",_x],0];
+			if(_pop > 0 and _pop > _high) then {
+				_high = _pop;
+				_highest = _x;
+			};
+		}foreach (_abandoned);
+		if(_high > 0) then {
+			_highest spawn NATOretakeTown;
+			spawner setVariable["NATOattacking",_highest,false];
+		};
+	};
 	
 	if !(_garrisoned) then {
 		{
@@ -221,6 +244,20 @@ while {true} do {
 			};
 			if(_garrisoned) exitWith {};
 		}foreach(OT_NATOobjectives);
+	};
+	
+	if !(_garrisoned) then {
+		//Nothing to do, so NATO will harass
+		_chance = 95;
+		if(count _abandoned > 4) then {_chance = 90};
+		if(count _abandoned > 8) then {_chance = 80};
+		if((random 100) > _chance) then {
+			_target = _abandoned call BIS_fnc_selectRandom;
+			_pos = server getvariable _target;
+			if !(isNil "_pos") then {
+				_pos spawn NATOsniper;
+			};
+		};
 	};
 	
 	{

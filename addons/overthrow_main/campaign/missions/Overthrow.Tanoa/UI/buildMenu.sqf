@@ -197,7 +197,7 @@ buildOnKeyDown = {
 			_cls = modeValues select modeIndex;
 
 			modeTarget = createVehicle [_cls, modeValue, [], 0, "CAN_COLLIDE"];
-			modeTarget remoteExec ["enableSimulationGlobal false",2];
+			modeTarget remoteExec ["enableSimulationGlobal false",2,false];
 			modeTarget setDir _dir;			
 		};
 		_amt = 5;

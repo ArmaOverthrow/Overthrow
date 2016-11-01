@@ -15,9 +15,9 @@ if(_town in OT_capitals + OT_sprawling) then {//larger search radius
 _count = 0;
 _pop = server getVariable format["population%1",_town];
 _stability = server getVariable format ["stability%1",_town];
-_numVeh = 2;
+_numVeh = 4;
 if(_pop > 15) then {
-	_numVeh = 2 + round(_pop * OT_spawnVehiclePercentage);
+	_numVeh = 4 + round(_pop * OT_spawnVehiclePercentage);
 };
 while {(_count < _numVeh)} do {		
 	_start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;

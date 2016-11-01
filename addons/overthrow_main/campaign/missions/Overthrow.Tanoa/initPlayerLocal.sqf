@@ -13,6 +13,7 @@ player linkItem "ItemMap";
 
 server setVariable [format["name%1",getplayeruid player],name player,true];
 server setVariable [format["uid%1",name player],getplayeruid player,true];
+spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
@@ -47,7 +48,7 @@ _pos = [];
 _housepos = [];
 
 if(isMultiplayer or _startup == "LOAD") then {
-	player remoteExec ["loadPlayerData",2];
+	player remoteExec ["loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
 	

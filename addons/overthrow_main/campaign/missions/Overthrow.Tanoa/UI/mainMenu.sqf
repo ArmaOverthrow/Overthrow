@@ -163,7 +163,7 @@ if(count _possible > 0) then {
 	player setVariable ["hiringciv",_civ,false];
 	_type = "Civilian";
 	if(!isplayer _civ) then {
-		[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',2];				
+		[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',2,false];				
 	}else{	
 		ctrlEnable [1605,false];
 		ctrlEnable [1606,false];

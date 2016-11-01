@@ -1,19 +1,20 @@
-_town = _this;
-_townPos = server getVariable _town;
+private _town = _this;
+private _townPos = server getVariable _town;
 
-_stability = server getVariable format["stability%1",_town];
-_region = server getVariable format["region_%1",_town];
+private _stability = server getVariable format["stability%1",_town];
+private _region = server getVariable format["region_%1",_town];
 
-_police = [];
-_support = [];
+private _police = [];
+private _support = [];
 
-_close = nil;
-_dist = 8000;
-_closest = "";
+private _close = nil;
+private _dist = 8000;
+private _closest = "";
+private _abandoned = server getVariable["NATOabandoned",[]];
 {
 	_pos = _x select 0;
 	_name = _x select 1;
-	if([_pos,_region] call fnc_isInMarker) then {
+	if([_pos,_region] call fnc_isInMarker and !(_name in _abandoned)) then {
 		_d = (_pos distance _townPos);
 		if(_d < _dist) then {
 			_dist = _d;

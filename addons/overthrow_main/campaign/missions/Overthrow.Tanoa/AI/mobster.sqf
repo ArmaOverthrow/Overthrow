@@ -46,13 +46,12 @@ if(OT_hasACE) then {
 	_unit linkItem "ItemWatch";
 };
 
-_weapons = (OT_allExpensiveRifles + OT_allMachineGuns);
-_weapon = _weapons select floor(random(count _weapons));
+_weapon = OT_allCheapRifles call BIS_fnc_selectRandom;
 
 _unit addWeapon _weapon;
 
 call {
-	if((random 100) > 90) exitWith {
+	if((random 100) > 98) exitWith {
 		//This guy has a launcher
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
 		_launcher = (OT_allRocketLaunchers + OT_allMissileLaunchers) select 0;
@@ -75,7 +74,7 @@ call {
 			_unit addItemToBackpack "Medikit";
 		};
 	};
-	if((random 100) > 90) exitWith {
+	if((random 100) > 95) exitWith {
 		//This is an engineer
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
 		for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};

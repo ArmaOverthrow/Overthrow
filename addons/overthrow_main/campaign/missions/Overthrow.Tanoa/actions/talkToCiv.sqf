@@ -26,7 +26,7 @@ if(((items player) find "OT_Ganja") > -1 and !(_civ getVariable["OT_askedDrugs",
 		_civ setVariable["OT_talking",true,true];
 		if((random 100) > 75) then {
 			if(player call unitSeenNATO) then {
-				[player] remoteExec ["NATOsearch",2];
+				[player] remoteExec ["NATOsearch",2,false];
 			};
 			[player,_civ,["Would you like to buy some ganja?","How much?",format["$%1",_price],"OK"],{[([(getpos player) call nearestTown,"OT_Ganja"] call getDrugPrice)] call money;player removeItem "OT_Ganja";(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn doConversation;
 		}else{

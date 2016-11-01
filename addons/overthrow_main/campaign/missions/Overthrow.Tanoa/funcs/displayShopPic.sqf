@@ -14,12 +14,12 @@ if(_cls in OT_allMagazines) then {
 	_pic = _cls call ISSE_Cfg_Magazine_GetPic;
 	_desc = _cls call ISSE_Cfg_Magazine_GetDesc;
 };
-if(_cls in OT_allBackpacks) then {
+if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) then {
 	_txt = _cls call ISSE_Cfg_Vehicle_GetName;
 	_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 	_desc = _cls call ISSE_Cfg_Vehicle_GetDesc;
 };
-if(_cls in OT_allVehicles) then {
+if(_cls in OT_allVehicles or _cls in OT_staticWeapons) then {
 	_txt = _cls call ISSE_Cfg_Vehicle_GetName;
 	_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
 	_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");

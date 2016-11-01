@@ -55,7 +55,7 @@ _tgroup addVehicle _veh;
 createVehicleCrew _veh;
 {
 	[_x] joinSilent _tgroup;
-	_x setVariable ["NOAI",true,false];
+	_x setVariable ["NOAI",1,false];
 	_x setVariable ["garrison","HQ",false];
 }foreach(crew _veh);	
 
@@ -63,6 +63,7 @@ createVehicleCrew _veh;
 	_x moveInCargo _veh;
 	_soldiers pushback _x;
 	_x setVariable ["garrison","HQ",false];
+	_x setVariable ["VCOM_NOPATHING_Unit",1,false];
 }foreach(units _group);	
 
 sleep 1;

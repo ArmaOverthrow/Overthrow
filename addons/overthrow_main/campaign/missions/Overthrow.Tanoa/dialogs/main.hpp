@@ -147,52 +147,80 @@ class OT_dialog_options
 	class controls
 	{
 		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Wiwiho)
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Kawovy)
 		////////////////////////////////////////////////////////
 
 		class RscText_1001: RscText
 		{
 			idc = 1001;
+
 			text = "Overthrow.Tanoa"; //--- ToDo: Localize;
-			x = 0.443281 * safezoneW + safezoneX;
-			y = 0.203 * safezoneH + safezoneY;
-			w = 0.128906 * safezoneW;
-			h = 0.088 * safezoneH;
-			sizeEx = 2 * GUI_GRID_H;
+			x = 14.5 * GUI_GRID_W + GUI_GRID_X;
+			y = -1 * GUI_GRID_H + GUI_GRID_Y;
+			w = 12.5 * GUI_GRID_W;
+			h = 4 * GUI_GRID_H;
+			sizeEx = 2 * GUI_GRID_H * GUI_GRID_H;
 		};
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
+			action = "closeDialog 0;'actions\saveGame.sqf' remoteExec ['execVM',2];";
+
 			text = "Persistent Save"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;
 			y = 0.313 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "A more secure save than default, this will work across updates of both Arma and Overthrow"; //--- ToDo: Localize;
-			action = "closeDialog 0;'actions\saveGame.sqf' remoteExec ['execVM',2];";
+			tooltip = "A more secure save than default, this will work across updates of both Arma and Overthrow. To load this just restart the mission and choose ""load persistent""."; //--- ToDo: Localize;
 		};
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
+			action = "OT_spawnCivPercentage = OT_spawnCivPercentage - 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
+
 			text = "Civ % --"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
+			y = 0.511 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Decreases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
-			action = "OT_spawnCivPercentage = OT_spawnCivPercentage - 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
 		};
 		class RscButton_1602: RscButton
 		{
 			idc = 1602;
+			action = "OT_spawnCivPercentage = OT_spawnCivPercentage + 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
+
 			text = "Civ % ++"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
+			y = 0.511 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Increases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
-			action = "OT_spawnCivPercentage = OT_spawnCivPercentage + 0.01; if(OT_spawnCivPercentage < 0) then {OT_spawnCivPercentage = 0};publicVariable 'OT_spawnCivPercentage';hint format['Civilian spawn now at %1%2',OT_spawnCivPercentage*100,'%'];";
-		};		
+		};
+		class RscButton_1603: RscButton
+		{
+			idc = 1600;
+			action = "{deleteVehicle _x} foreach(alldeadmen);hint ""Cleaned all dead bodies"";";
+
+			text = "Clean all dead bodies"; //--- ToDo: Localize;
+			x = 0.386562 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
+			w = 0.118594 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Will completely destroy all dead bodies, including your own"; //--- ToDo: Localize;
+		};
+		class RscButton_1604: RscButton
+		{
+			idc = 1600;
+			action = "{if (!alive _x) then {deletevehicle _x}} foreach(vehicles);hint ""Cleaned all wrecks"";";
+
+			text = "Clean all wrecks"; //--- ToDo: Localize;
+			x = 0.515469 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
+			w = 0.118594 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Removes all wrecks"; //--- ToDo: Localize;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////

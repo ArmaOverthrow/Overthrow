@@ -1,7 +1,7 @@
 private ["_data"];
 
 //get all server data
-"Loading persistent save" remoteExec['blackFaded',0];
+"Loading persistent save" remoteExec['blackFaded',0,false];
 
 _data = profileNameSpace getVariable ["Overthrow.save.001",""];
 if(typename _data != "ARRAY") exitWith {
@@ -45,7 +45,7 @@ if(typename _data != "ARRAY") exitWith {
 					_name = _x select 5;
 				};
 				
-				_veh = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
+				_veh = _type createVehicle _pos;
 				_veh setPos _pos;
 				_veh setDir _dir;
 				clearWeaponCargoGlobal _veh;
@@ -53,6 +53,8 @@ if(typename _data != "ARRAY") exitWith {
 				clearBackpackCargoGlobal _veh;
 				clearItemCargoGlobal _veh;	
 				_veh setVariable ["name",_name,true];
+				
+				_veh enableSimulationGlobal true;
 				
 				if(_type == OT_item_Map) then {
 					_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
@@ -66,15 +68,18 @@ if(typename _data != "ARRAY") exitWith {
 				{
 					_cls = _x select 0;
 					_num = _x select 1;
-					if(_cls in OT_allWeapons) then {
-						_veh addWeaponCargoGlobal _x;
-					}else{
-						if(_cls in OT_allMagazines) then {
-							_veh addMagazineCargoGlobal _x;
-						}else{
-							_veh addItemCargoGlobal _x;
+					call {
+						if(_cls in OT_allWeapons) exitWith {
+							_veh addWeaponCargoGlobal _x;
 						};
-					};				
+						if(_cls in OT_allMagazines) exitWith {
+							_veh addMagazineCargoGlobal _x;
+						};
+						if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) exitWith {
+							_veh addBackpackCargoGlobal _x;
+						};
+						_veh addItemCargoGlobal _x;
+					};	
 				}foreach(_stock);
 				
 				if(count _x > 6) then {

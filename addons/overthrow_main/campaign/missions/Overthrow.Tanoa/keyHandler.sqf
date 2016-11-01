@@ -6,14 +6,18 @@ _key = _this select 1;
 if (_key == 21) then
 {
 	if(!dialog) then {
-		[] spawn menuHandler;
-		if(count (groupSelectedUnits player) > 0) exitWith {			
-			createDialog "OT_dialog_command";
-		};
-		if(vehicle player != player) exitWith {			
-			createDialog "OT_dialog_vehicle";
-		};
-		[] spawn mainMenu;	
+		if(count (player nearObjects ["Land_Cargo_House_V4_F",10]) > 0) then {
+			[] call workshopDialog;
+		}else{
+			[] spawn menuHandler;
+			if(count (groupSelectedUnits player) > 0) exitWith {			
+				createDialog "OT_dialog_command";
+			};
+			if(vehicle player != player) exitWith {			
+				createDialog "OT_dialog_vehicle";
+			};
+			[] spawn mainMenu;
+		};			
 	}else{
 		closeDialog 0;
 	};	

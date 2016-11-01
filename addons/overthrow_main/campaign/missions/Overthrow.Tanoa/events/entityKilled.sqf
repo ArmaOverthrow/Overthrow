@@ -58,8 +58,9 @@ call {
 		
 		if(_killer call hasOwner) then {
 			_owner = _killer getVariable "owner";
-			if(isPlayer _owner) then {
-				_killer = _owner;
+			if(_owner != "self") then {
+				_k = spawner getvariable _owner;
+				if(!isNil "_k") then {_killer = _k};
 			};
 		};
 		
@@ -69,7 +70,7 @@ call {
 			[_killer,_bounty] call rewardMoney;
 			if(isPlayer _killer) then {
 				if(isMultiplayer) then {
-					format["%1 has claimed the bounty in %2",name _killer,_town] remoteExec ["notify_minor",0,true];
+					format["%1 has claimed the bounty in %2",name _killer,_town] remoteExec ["notify_minor",0,false];
 				}else{
 					format["You claimed the bounty in %1",_town] call notify_minor;
 				};
@@ -135,6 +136,6 @@ if(captive _killer and ((_killer call unitSeen) or ((vehicle _killer) != _killer
 };
 if(isPlayer _killer) then {
 	if (_standingChange != 0) then {
-		[_town,_standingChange] remoteExec ["standing",_killer,true];
+		[_town,_standingChange,"You killed a civilian"] remoteExec ["standing",_killer,true];
 	};
 };	

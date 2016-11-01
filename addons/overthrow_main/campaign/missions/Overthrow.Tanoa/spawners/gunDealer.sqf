@@ -27,7 +27,7 @@ _wp = _group addWaypoint [_gundealerpos,0];
 _wp setWaypointType "MOVE";
 _wp setWaypointSpeed "LIMITED";
 
-_dealer remoteExec ["initGunDealerLocal",0,true];
+_dealer remoteExec ["initGunDealerLocal",0,_dealer];
 [_dealer] call initGunDealer;
 
 _dealer setVariable ["gundealer",true,true];

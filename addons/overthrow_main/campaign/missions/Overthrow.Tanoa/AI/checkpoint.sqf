@@ -32,7 +32,7 @@ while {!(isNull _group) and count (units _group) > 0} do {
 			_inrange pushback _unit;
 			if((isPlayer _unit) and (captive _unit)) then {
 				if(_iscar) then {
-					"Please approach the checkpoint slowly, do NOT exit your vehicle" remoteExec ["notify_talk",_unit,true];
+					"Please approach the checkpoint slowly, do NOT exit your vehicle" remoteExec ["notify_talk",_unit,false];
 				}else{
 					"Please approach the checkpoint for a search, citizen" remoteExec ["notify_talk",_unit,true];
 				};			

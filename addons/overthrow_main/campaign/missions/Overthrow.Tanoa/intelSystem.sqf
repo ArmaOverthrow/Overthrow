@@ -199,17 +199,18 @@ if(!isNil "OT_OnDraw") then {
 
 OT_OnDraw = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _handler];
 
+//GPS
 [_handler] spawn {	
 	private ['_gps',"_handler"];
 	_handler = _this select 0;
 	disableSerialization;
-	_gps = controlNull;
+	private _gps = controlNull;
 	for '_x' from 0 to 1 step 0 do {
 		{
-			if !(isNil {_x displayCtrl 101}) then {
+			if !(isNil {_x displayCtrl 101}) exitWith {
 				_gps = _x displayCtrl 101;
 			};
-		} count (uiNamespace getVariable 'IGUI_Displays');
+		} foreach(uiNamespace getVariable "IGUI_Displays");
 		uiSleep 1;
 		if (!isNull _gps) exitWith {
 			if(!isNil "OT_GPSOnDraw") then {			

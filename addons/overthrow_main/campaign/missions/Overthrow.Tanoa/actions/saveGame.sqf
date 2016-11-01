@@ -1,6 +1,6 @@
 private ["_data","_done","_recruits","_vehicles"];
 
-if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,true]};
+if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,false]};
 OT_saving = true;
 publicVariable "OT_saving";
 

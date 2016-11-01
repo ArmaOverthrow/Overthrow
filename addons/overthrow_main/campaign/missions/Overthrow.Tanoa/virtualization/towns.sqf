@@ -38,11 +38,7 @@ OT_townSpawners = [
 							sleep (random 2);
 							{
 								_g pushback _x;
-								_grp = _x;
-								{
-									
-									_x addCuratorEditableObjects [units _grp,true];
-								} forEach allCurators;
+								_grp = _x;								
 							}foreach(_t call _s);
 						};						
 					}foreach(OT_townSpawners);

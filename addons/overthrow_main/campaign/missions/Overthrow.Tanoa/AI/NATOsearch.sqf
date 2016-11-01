@@ -42,7 +42,7 @@ private _wp = _group addWaypoint [position _target,0];
 _wp setWaypointBehaviour "AWARE";
 _group setBehaviour "AWARE";
 if(isplayer _target) then {
-	"NATO: Stop right there!" remoteExec ["notify_talk",_target,true];	
+	"NATO: Stop right there!" remoteExec ["notify_talk",_target,false];	
 	_wp setWaypointSpeed "FULL";
 	_hdl = _target addEventHandler ["InventoryOpened", {
 		hint "NATO search is in progress, you cannot open your inventory";
@@ -131,7 +131,7 @@ if(isplayer _target) then {
 	
 	if(_foundillegal or _foundweapons) then {
 		if(_foundweapons) then {
-			"NATO: What's this??!?" remoteExec ["notify_talk",_target,true];
+			"NATO: What's this??!?" remoteExec ["notify_talk",_target,false];
 			_target setCaptive false;
 			{
 				if(side _x == west) then {
@@ -140,10 +140,10 @@ if(isplayer _target) then {
 				};
 			}foreach(_target nearentities ["Man",500]);	
 		}else{
-			"NATO: We found some illegal items and confiscated them, be on your way" remoteExec ["notify_talk",_target,true];
+			"NATO: We found some illegal items and confiscated them, be on your way" remoteExec ["notify_talk",_target,false];
 		};
 	}else{
-		"NATO: Thank you for your co-operation" remoteExec ["notify_talk",_target,true];
+		"NATO: Thank you for your co-operation" remoteExec ["notify_talk",_target,false];
 	};	
 };
 [] call _cleanup;

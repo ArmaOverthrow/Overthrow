@@ -48,6 +48,7 @@ while{true} do {
 					_civ = _group createUnit [OT_NATO_Unit_Spotter, _posTown, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
+					_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 					[_civ,_name] call initSniper;
 					_civ setBehaviour "SAFE";
 					_civ action ["ladderOnUp", _tower, 0, 0];
@@ -62,6 +63,7 @@ while{true} do {
 					_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
+					_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 					[_civ,_name] call initMilitary;
 					_civ setBehaviour "SAFE";
 					_count = _count + 1;
@@ -79,6 +81,7 @@ while{true} do {
 					_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
+					_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 					[_civ,_name] call initMilitary;
 					_civ setBehaviour "SAFE";
 					_count = _count + 1;
@@ -94,7 +97,7 @@ while{true} do {
 			_range = 100;
 			_groupcount = 0;
 			while {(spawner getVariable _id) and (_count < _numNATO)} do {			
-				_start = [[[_posTown,75]]] call BIS_fnc_randomPos;
+				_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
 				_group = createGroup blufor;							
 				_groups pushBack _group;	
 				_groupcount = 1;
@@ -102,6 +105,7 @@ while{true} do {
 				_civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 				_civ setVariable ["garrison",_name,false];
 				_civ setRank "CAPTAIN";
+				_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 				[_civ,_name] call initMilitary;
 				_civ setBehaviour "SAFE";
 				
@@ -113,6 +117,7 @@ while{true} do {
 					_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "LIEUTENANT";
+					_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 					[_civ,_name] call initMilitary;
 					_civ setBehaviour "SAFE";
 					

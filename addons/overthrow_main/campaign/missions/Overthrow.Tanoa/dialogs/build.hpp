@@ -202,18 +202,6 @@ class OT_dialog_buildobjective
 			h = 0.077 * safezoneH;
 			tooltip = "Sometimes you need to get above the trees to see what's happening. Comes with 2 x Static MGs."; //--- ToDo: Localize;
 		};
-		class RscButton_1609: RscButton
-		{
-			idc = 1603;
-			action = "'Fuel Station' call build";
-
-			text = "Fuel Station"; //--- ToDo: Localize;
-			x = 0.891875 * safezoneW + safezoneX;
-			y = 0.676 * safezoneH + safezoneY;
-			w = 0.0876563 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Refuels stuff"; //--- ToDo: Localize;
-		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -285,18 +273,6 @@ class OT_dialog_buildtown
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Small defensive structures"; //--- ToDo: Localize;
-		};
-		class RscButton_1604: RscButton
-		{
-			idc = 1604;
-			action = "'Fuel Station' call build";
-
-			text = "Fuel Station"; //--- ToDo: Localize;
-			x = 0.0204687 * safezoneW + safezoneX;
-			y = 0.676 * safezoneH + safezoneY;
-			w = 0.0876563 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Refuels stuff"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

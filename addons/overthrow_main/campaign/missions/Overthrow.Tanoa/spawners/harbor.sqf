@@ -25,7 +25,7 @@ _groups = [_group];
 
 		_shopkeeper setDir (_dir-180);			
 
-		_shopkeeper remoteExec ["initHarborLocal",0,true];
+		_shopkeeper remoteExec ["initHarborLocal",0,_shopkeeper];
 		[_shopkeeper] call initHarbor;
 		_shopkeeper setVariable ["harbor",true,true];
 	};

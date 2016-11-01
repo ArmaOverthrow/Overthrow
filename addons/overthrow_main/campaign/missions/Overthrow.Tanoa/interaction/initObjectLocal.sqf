@@ -1,12 +1,16 @@
 if(typeof _this == OT_item_Map) then {
 	_this addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
 	_this addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
-	if(player == bigboss) then {
-		_this addAction ["Options", {
-			closedialog 0;			
-			_nul = createDialog "OT_dialog_options";
-		},nil,0,false,true,"",""];			
-	};
+	_this addAction ["Options", {
+		closedialog 0;			
+		_nul = createDialog "OT_dialog_options";
+	},nil,0,false,true,"",""];		
+	_this addAction ["Reset UI", {
+		closedialog 0;			
+		[] execVM "setupPlayer.sqf";
+		[] spawn setupKeyHandler;
+	},nil,0,false,true,"",""];			
+	
 };
 if(typeof _this == OT_item_Tent) exitWith {
 	_camp = player getVariable ["camp",objNull];
@@ -31,7 +35,17 @@ if(typeof _this == OT_item_Tent) exitWith {
 	player setvariable ["camp",_this,false];
 };
 
-if(_this isKindOf "Building" or _this isKindOf "Man") exitWith{};
+if(typeof _this == "Land_Cargo_House_V4_F") then {
+	if(OT_hasACE) then {
+		[_this] call ace_repair_fnc_moduleAssignRepairFacility;	
+	};
+};
+
+if(typeof _this == "Land_Cargo_Patrol_V4_F") then {
+	[getpos _this] execVM "structures\observationPost.sqf";
+};
+
+if(_this isKindOf "Building" or _this isKindOf "Man" or _this isKindOf "LandVehicle") exitWith{};
 
 if(OT_hasACE) then {
 	_dir = 0;

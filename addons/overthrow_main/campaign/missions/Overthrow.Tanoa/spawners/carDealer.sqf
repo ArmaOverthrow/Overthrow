@@ -33,7 +33,7 @@ _groups = [_group];
 
 		_shopkeeper setDir (_dir-180);			
 
-		_shopkeeper remoteExec ["initCarShopLocal",0,true];
+		_shopkeeper remoteExec ["initCarShopLocal",0,_shopkeeper];
 		[_shopkeeper] call initCarDealer;
 		_shopkeeper setVariable ["carshop",true,true];
 	};

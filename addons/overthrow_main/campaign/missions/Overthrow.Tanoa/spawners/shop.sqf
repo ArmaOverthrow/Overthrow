@@ -32,7 +32,7 @@ _groups = [_group];
 
 	_shopkeeper setDir (_dir-180);	
 	
-	_shopkeeper remoteExec ["initShopLocal",0,true];
+	_shopkeeper remoteExec ["initShopLocal",0,_shopkeeper];
 	_shopkeeper setVariable ["shop",format["%1",_pos],true];
 	[_shopkeeper] call initShopkeeper;	
 	

@@ -15,6 +15,7 @@ _tskid = [resistance,[format["assault%1",_town]],[format["NATO is assaulting %1 
 _vehs = [];
 _soldiers = [];
 _groups = [];
+_airgroups = [];
 
 //Drones
 if(_population > 50) then {
@@ -26,6 +27,7 @@ if(_population > 50) then {
 		_veh setDir 50;
 		_vehs pushback _veh;
 		_group addVehicle _veh;
+		_airgroups pushback _group;
 		createVehicleCrew _veh;	
 		{
 			[_x] joinSilent _group;
@@ -73,7 +75,8 @@ _attackdir = _attackdir - 45;
 
 while {_count < _numgroups} do {
 	_ao = [_posTown,[350,500],_attackdir + (random 90)] call SHK_pos;
-	_group = [OT_NATO_HQPos, blufor, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
+	_squadtype = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"] call BIS_fnc_SelectRandom;	
+	_group = [OT_NATO_HQPos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 	_count = _count + 1;
 	sleep 0.2;
 	
@@ -83,7 +86,7 @@ while {_count < _numgroups} do {
 	sleep 0.1;
 	_veh = createVehicle [OT_NATO_Vehicle_AirTransport, _pos, [], 0,""];  		
 	_vehs pushback _veh;
-	
+	_airgroups pushback _tgroup;
 	
 	_veh setDir (_dir);
 	_tgroup addVehicle _veh;
@@ -96,8 +99,10 @@ while {_count < _numgroups} do {
 	
 	{
 		_x moveInCargo _veh;
+		[_x] joinSilent _group;		
 		_soldiers pushback _x;
 		_x setVariable ["garrison","HQ",false];
+		_x setVariable ["VCOM_NOPATHING_Unit",true,false];
 	}foreach(units _group);	
 	
 	sleep 2;
@@ -114,7 +119,7 @@ while {_count < _numgroups} do {
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
-	wp setWaypointCompletionRadius 50;
+	_wp setWaypointCompletionRadius 50;
 	_wp setWaypointSpeed "FULL";
 	
 	_wp = _tgroup addWaypoint [_ao,0];
@@ -153,7 +158,7 @@ while {_count < _numgroups} do {
 	sleep 20;
 };
 
-[_soldiers,_attackpos,_town,_tskid] spawn {
+[_soldiers,_attackpos,_town,_tskid,_airgroups] spawn {
 	_soldiers = _this select 0;
 	_attackpos = _this select 1;
 	_town = _this select 2;
@@ -165,14 +170,15 @@ while {_count < _numgroups} do {
 	_size = count _soldiers;
 	_lostat = round(_size * 0.4);
 	_active = true;
-	
 		
 	while {_active} do {
 		_alive = [];
 		_inrange = [];
 		{
 			if(alive _x) then {
-				_alive pushback _x;
+				if(_x distance _attackpos < 1200) then {
+					_alive pushback _x;
+				};
 				if(_x distance _attackpos < 150) then {
 					_inrange pushback _x;
 				};
@@ -205,7 +211,26 @@ while {_count < _numgroups} do {
 		};		
 		sleep 2;
 	};
+	//Send any air units home
+	{
+		if(alive (leader _x)) then {
+			_tgroup = _x;
+			 while {(count (waypoints _tgroup)) > 0} do
+			 {
+			  deleteWaypoint ((waypoints _tgroup) select 0);
+			 };
 
+			_wp = _tgroup addWaypoint [OT_NATO_HQPos,400];
+			_wp setWaypointType "MOVE";
+			_wp setWaypointBehaviour "COMBAT";
+			_wp setWaypointSpeed "FULL";
+			_wp setWaypointCompletionRadius 400;
+			
+			_wp = _tgroup addWaypoint [OT_NATO_HQPos,400];
+			_wp setWaypointType "SCRIPTED";
+			_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
+		};
+	}foreach(_airgroups);
 };
 
 if(_population < 120) exitWith{};
@@ -219,6 +244,7 @@ _pos = OT_NATO_HQPos;
 	_vehs pushback _veh;
 	_veh setDir 50;
 	_group addVehicle _veh;
+	_airgroups pushback _group;
 	
 	createVehicleCrew _veh;
 	{
@@ -249,6 +275,7 @@ sleep 20;
 	_vehs pushback _veh;
 	_veh setDir 50;
 	_group addVehicle _veh;
+	_airgroups pushback _group;
 	createVehicleCrew _veh;
 	{
 		[_x] joinSilent _group;
