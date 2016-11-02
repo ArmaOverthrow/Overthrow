@@ -120,11 +120,14 @@ while {true} do {
 							if ((typeName _leaderpos) == "ARRAY") then {
 								server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
 								_chance = 20;
+								_max = 6;
 								if(_town in (server getVariable ["NATOabandoned",[]])) then {
 									_chance = 80;
-								};
-								if(((random 100) < _chance) and _num < 20) then {
-									_numadd = round(random 6);
+									_max = 12;
+								};								
+								
+								if(((random 100) < _chance) and _num < _max) then {
+									_numadd = round(random 4);
 									server setVariable [format ["numcrims%1",_x],_num + _numadd,false];
 									server setVariable [format ["crimadd%1",_x],_numadd,false];
 								};

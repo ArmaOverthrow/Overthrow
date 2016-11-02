@@ -3,7 +3,7 @@ private ["_idx","_jugador","_cosa","_id"];
 _cosa = _this select 0;
 _jugador = _this select 1;
 _id = _this select 2;
-_cosa remoteExec ["enableSimulationGlobal false",2];
+_cosa remoteExec ["enableSimulationGlobal false",2,false];
 _cosa enableSimulation false;
 _cosa removeAction _id;
 

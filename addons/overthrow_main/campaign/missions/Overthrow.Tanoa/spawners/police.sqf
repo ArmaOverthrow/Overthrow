@@ -1,0 +1,47 @@
+private ["_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
+if (!isServer) exitwith {};
+
+
+
+_count = 0;
+_town = _this;
+private _abandoned = server getVariable ["NATOabandoned",[]];
+if !(_town in _abandoned) exitWith {};
+
+_posTown = server getVariable [format["policepos%1",_town],server getVariable _town];
+
+_groups = [];
+
+_numNATO = server getVariable [format["police%1",_town],0];
+_count = 0;
+_range = 15;
+_pergroup = 4;
+			
+while {_count < _numNATO} do {
+	_groupcount = 0;
+	_group = createGroup resistance;				
+	_groups pushBack _group;
+	
+	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
+	
+	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {							
+		_pos = [[[_start,20]]] call BIS_fnc_randomPos;
+		
+		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
+		_civ setVariable ["polgarrison",_town,false];
+		[_civ] joinSilent _group;
+		_civ setRank "PRIVATE";
+		[_civ,_town] call initPolice;
+		_civ setBehaviour "SAFE";
+		
+		_groupcount = _groupcount + 1;
+		_count = _count + 1;
+		sleep 0.1;
+	};				
+	_group call initPolicePatrol;		
+	_range = _range + 50;
+};
+
+
+
+_groups

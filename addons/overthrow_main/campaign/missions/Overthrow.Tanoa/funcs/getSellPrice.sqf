@@ -28,4 +28,6 @@ if(_cls in (OT_allWeapons + OT_allMagazines)) then {
 	_price = _baseprice + (_baseprice * _standing) + (_baseprice * _stability * _population);
 };
 
+if(_price < 0) then {_price = 1};
+
 round(_price)

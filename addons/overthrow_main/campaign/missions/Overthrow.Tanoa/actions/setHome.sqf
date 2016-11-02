@@ -8,7 +8,7 @@ _building = objNULL;
 	if(!isNil "_owner") then {
 		if ((typeof _x) in OT_allBuyableBuildings and _owner == getplayerUID player) exitWith {
 			_handled = true;
-			player setVariable ["home",_x,true];
+			player setVariable ["home",getpos _x,true];
 			"This is now your home" call notify_minor;
 		};
 	};

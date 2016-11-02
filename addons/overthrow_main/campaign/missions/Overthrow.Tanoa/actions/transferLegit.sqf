@@ -5,7 +5,7 @@ if(_veh == player) exitWith {};
 _objects = [];
 {
 	if(_x != _veh) then {_objects pushback _x};
-}foreach(player nearEntities [["LandVehicle",OT_item_Storage],20]);
+}foreach(player nearEntities [["LandVehicle",OT_item_Storage,OT_items_distroStorage select 0],20]);
 
 if(count _objects == 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call notify_minor;
@@ -15,6 +15,7 @@ _target = _sorted select 0;
 
 "Transferring legit cargo from container" call notify_minor;
 [5,false] call progressBar;	
+sleep 5;
 _putback = [];
 {
 	_count = 0;
@@ -44,8 +45,11 @@ clearWeaponCargoGlobal _target;
 			if(_cls in OT_allMagazines) exitWith {
 				_target addMagazineCargoGlobal [_cls,1];
 			};
+			if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) exitWith {
+				_target addBackpackCargoGlobal [_cls,1];
+			};
 			_target addItemCargoGlobal [_cls,1];
-		};
+		};	
 	};	
 }foreach(_putback);
 

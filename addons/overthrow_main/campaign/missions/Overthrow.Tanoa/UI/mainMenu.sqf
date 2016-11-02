@@ -37,6 +37,10 @@ _ctrl ctrlSetStructuredText parseText format["
 	<t align='left' size='0.65'>Weather: %7 (Forecast: %8)</t>
 ",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0]];
 
+_ctrl = (findDisplay 8001) displayCtrl 1106;
+_ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber];
+
+
 sleep 0.1;
 //Nearest building info
 _b = player call getNearestRealEstate;
@@ -163,7 +167,7 @@ if(count _possible > 0) then {
 	player setVariable ["hiringciv",_civ,false];
 	_type = "Civilian";
 	if(!isplayer _civ) then {
-		[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',2];				
+		[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',2,false];				
 	}else{	
 		ctrlEnable [1605,false];
 		ctrlEnable [1606,false];

@@ -1,6 +1,9 @@
 if !(isServer) exitWith {};
-
+_lasthour = 0;
+waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
+sleep 20;
 while {true} do {
+	_lasthour = date select 3;
 	private _abandoned = server getVariable ["NATOabandoned",[]];
 	{
 		private _town = _x;
@@ -9,10 +12,10 @@ while {true} do {
 		private _stability = server getVariable format["stability%1",_town];
 		if(_town in _abandoned) then {
 			if(_commsAbandoned) then {
-				//Resistance controls both, stability goes up if theres no crim leader
-				_leaderpos = server getVariable [format["crimleader%1",_town],false];
-				if ((typeName _leaderpos) != "ARRAY") then {
-					[_town,1] call stability;
+				//Resistance controls both, stability goes up if theres police
+				_police = server getVariable [format["police%1",_town],0];
+				if (_police > 0) then {
+					[_town,floor(_police / 2)] call stability;
 				};
 			}else{
 				//NATO owns the tower but not the town, stability goes down
@@ -32,5 +35,5 @@ while {true} do {
 			};
 		};
 	}foreach(OT_allTowns);
-	sleep 600;
+	waitUntil {sleep 5;(date select 3) != _lasthour}; //do actions on the hour
 };

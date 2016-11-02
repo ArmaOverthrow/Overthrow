@@ -78,7 +78,7 @@ if(_cost > 0) then {
 				if(_cls == "B_Boat_Transport_01_F") then {
 					_dir = _dir + 90;
 				};
-				modeTarget remoteExec ["enableSimulationGlobal false",2];
+				modeTarget remoteExec ["enableSimulationGlobal false",2,false];
 				if(_cls == OT_item_Map) then {
 					modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
 				};				

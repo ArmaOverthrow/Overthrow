@@ -15,9 +15,9 @@ if(_town in OT_capitals + OT_sprawling) then {//larger search radius
 _count = 0;
 _pop = server getVariable format["population%1",_town];
 _stability = server getVariable format ["stability%1",_town];
-_numVeh = 2;
+_numVeh = 4;
 if(_pop > 15) then {
-	_numVeh = 2 + round(_pop * OT_spawnVehiclePercentage);
+	_numVeh = 4 + round(_pop * OT_spawnVehiclePercentage);
 };
 while {(_count < _numVeh)} do {		
 	_start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
@@ -46,7 +46,7 @@ while {(_count < _numVeh)} do {
 				if((random 100) > 95) then {
 					_group = createGroup CIVILIAN;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
-					_civ setBehaviour "SAFE";
+					_civ setBehaviour "SAFE";					
 					[_civ] call initCivilian;
 					_civ moveInDriver _veh;
 					

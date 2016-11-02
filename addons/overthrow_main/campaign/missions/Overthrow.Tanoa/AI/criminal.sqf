@@ -38,7 +38,7 @@ if(_hour < 8 or _hour > 15) then {
 };
 _unit linkItem "ItemWatch";
 
-_weapon = (OT_allAssaultRifles + OT_allMachineGuns) call BIS_fnc_selectRandom;
+_weapon = OT_allCheapRifles call BIS_fnc_selectRandom;
 _unit addWeapon _weapon;
 
 call {

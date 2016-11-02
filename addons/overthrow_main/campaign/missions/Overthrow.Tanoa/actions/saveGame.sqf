@@ -1,6 +1,6 @@
 private ["_data","_done","_recruits","_vehicles"];
 
-if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,true]};
+if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,false]};
 OT_saving = true;
 publicVariable "OT_saving";
 
@@ -37,7 +37,7 @@ _data = [];
 						_val = _owned;
 					};
 					
-					if(_x == "home" or _x == "camp") then {
+					if(_x == "camp") then {
 						_val = getpos _val;
 					};					
 					_d pushback [_x,_val];											

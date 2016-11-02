@@ -1,16 +1,13 @@
 private ["_town","_unit","_numweap","_skill","_unit","_magazine","_weapon","_stability","_idx"];
 
-private _unit = _this select 0;
-private _town = _this select 1;
+_unit = _this select 0;
 
-_unit forceAddUniform (OT_clothes_police call BIS_fnc_selectRandom);
-_unit addVest OT_vest_police;
-_unit addHeadgear OT_hat_police;
+_town = _this select 1;
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+[_unit, (OT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, (OT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
 
-_unit setVariable ["polgarrison",_town,false];
+_unit setVariable ["garrison",_town,false];
 
 _stability = server getVariable format["stability%1",_town];
 
@@ -24,16 +21,30 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
+_skill = 0.5;
+if(_stability < 60) then {
+	_skill = 0.6;
+};
+if(_stability < 50) then {
+	_skill = 0.7;
+};
+if(_stability < 40) then {
+	_skill = 0.8;
+};
+if(_stability < 30) then {
+	_skill = 0.9;
+};
+
 removeAllWeapons _unit;
 
 _numweap = (count OT_NATO_weapons_Police)-1;
 _idx = _numweap - 4;
 
-if(_stability > 85) then {
+if(_skill > 0.85) then {
 	_idx = _numweap;
 };
 _hour = date select 3;
-if(_stability > 80) then {
+if(_skill > 0.8) then {
 	if(_hour > 17 or _hour < 6) then {
 		_unit linkItem "NVGoggles_OPFOR";
 	};
@@ -45,10 +56,10 @@ if(_stability > 80) then {
 		_unit addItem "ACE_morphine";
 	};
 }else{	
-	if(_stability > 70) then {
+	if(_skill > 0.7) then {
 		_idx = _numweap - 2;
 	}else{
-		if(_stability > 60) then {
+		if(_skill > 0.6) then {
 			_idx = _numweap - 3;
 			_unit linkItem "ItemGPS";
 		};
@@ -81,7 +92,7 @@ _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addWeapon _weapon;
 
-if(_stability > 80) then {
+if(_skill > 0.8) then {
 	_unit addPrimaryWeaponItem "optic_Holosight_blk_F";
 }else{	
 	_unit addPrimaryWeaponItem "optic_Aco";
