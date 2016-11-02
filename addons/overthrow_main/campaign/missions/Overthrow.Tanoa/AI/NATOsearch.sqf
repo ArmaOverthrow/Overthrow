@@ -57,7 +57,7 @@ _timenow = time;
 
 private _cleanup = {
 	_group setBehaviour "SAFE";
-	_group call initPolicePatrol;
+	_group call initGendarmPatrol;
 	_cop setVariable ["OT_searching",false,true];
 	_cop switchMove "";
 	if(isplayer _target) then {

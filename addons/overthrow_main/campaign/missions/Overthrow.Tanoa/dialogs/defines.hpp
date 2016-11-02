@@ -179,19 +179,19 @@ class RscStructuredText
 	};
 	class Attributes
 	{
-		font = "PuristaMedium";
+		font = "RobotoCondensed";
 		color = "#ffffff";
 		align = "left";
-		shadow = 1;
+		shadow = 0;
 	};
 	x = 0;
 	y = 0;
 	h = 0.035;
 	w = 0.1;
 	text = "";
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.1)";
 	shadow = 0;
-	lineSpacing = 0.8;
+	lineSpacing = 0;
 };
 class RscPicture
 {
@@ -801,8 +801,8 @@ class RscButton
 	w = 0.095589;
 	h = 0.039216;
 	shadow = 2;
-	font = "PuristaMedium";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	font = "RobotoCondensed";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
 	offsetX = 0;
 	offsetY = 0;
 	offsetPressedX = 0;

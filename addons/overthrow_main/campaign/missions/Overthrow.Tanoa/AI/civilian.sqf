@@ -14,6 +14,8 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
+_unit setVariable ["NOAI",true,false];
+
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
 [_unit, "NoVoice"] remoteExec ["setSpeaker", 0, _unit];
 

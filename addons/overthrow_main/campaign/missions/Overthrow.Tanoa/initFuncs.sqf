@@ -40,11 +40,13 @@ revealToCRIM = compileFinal preProcessFileLineNumbers "funcs\revealToCRIM.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
+initGendarm = compileFinal preProcessFileLineNumbers "AI\gendarm.sqf";
 initPolice = compileFinal preProcessFileLineNumbers "AI\police.sqf";
 initSecurity = compileFinal preProcessFileLineNumbers "AI\security.sqf";
 initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
 initSniper = compileFinal preProcessFileLineNumbers "AI\sniper.sqf";
 initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
+initGendarmPatrol = compileFinal preProcessFileLineNumbers "AI\gendarmPatrol.sqf";
 initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
 initCheckpoint = compileFinal preProcessFileLineNumbers "AI\checkpoint.sqf";
 initCriminal = compileFinal preProcessFileLineNumbers "AI\criminal.sqf";
@@ -108,6 +110,7 @@ initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGun
 initHarborLocal = compileFinal preProcessFileLineNumbers "interaction\initHarborLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
+initPoliceStationLocal = compileFinal preProcessFileLineNumbers "interaction\initPoliceStationLocal.sqf";
 
 //Economy
 setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";
@@ -359,6 +362,7 @@ stability = {
     _townmrk = format["%1-abandon",_town];
     _stability = (server getVariable format["stability%1",_town])+(_this select 1);
     if(_stability < 0) then {_stability = 0};
+	if(_stability > 100) then {_stability = 100};
     server setVariable [format["stability%1",_town],_stability,true];
     
     _abandoned = server getVariable "NATOabandoned";

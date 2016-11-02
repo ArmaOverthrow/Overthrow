@@ -3,6 +3,10 @@ if (!isServer) exitwith {};
 
 _count = 0;
 _town = _this;
+
+private _abandoned = server getVariable ["NATOabandoned",[]];
+if (_town in _abandoned) exitWith {};
+
 _posTown = server getVariable _town;
 
 _groups = [];
@@ -23,7 +27,7 @@ while {_count < _numNATO} do {
 	[_civ] joinSilent _group;
 	_civ setRank "CORPORAL";
 	_civ setBehaviour "SAFE";
-	[_civ,_town] call initPolice;
+	[_civ,_town] call initGendarm;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
 	sleep 0.1;
@@ -34,14 +38,14 @@ while {_count < _numNATO} do {
 		_civ setVariable ["garrison",_town,false];
 		[_civ] joinSilent _group;
 		_civ setRank "PRIVATE";
-		[_civ,_town] call initPolice;
+		[_civ,_town] call initGendarm;
 		_civ setBehaviour "SAFE";
 		
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
 		sleep 0.1;
 	};				
-	_group call initPolicePatrol;		
+	_group call initGendarmPatrol;		
 	_range = _range + 50;
 };
 

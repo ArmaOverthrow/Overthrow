@@ -2,34 +2,58 @@ class OT_dialog_start
 {
 	idd=-1;
 	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1100: RscStructuredText
+		{
+			idc = 1100;
+			x = 0.381406 * safezoneW + safezoneX;
+			y = 0.137 * safezoneH + safezoneY;
+			w = 0.252656 * safezoneW;
+			h = 0.407 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+			colorActive[] = {0.1,0.1,0.1,1};
+		};
+	}
 
 	class controls
 	{
-		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Rofuji)
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Peqoja)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
+			action = "closeDialog 0;'actions\loadGame.sqf' remoteExec ['execVM',2];";
+
 			text = "Load Persistent Save"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;
 			y = 0.313 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Continue previous save"; //--- ToDo: Localize;
-			action = "closeDialog 0;'actions\loadGame.sqf' remoteExec ['execVM',2];";
 		};
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
+			action = "closeDialog 0;[] remoteExec ['newGame',2];";
+
 			text = "New Game"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Starts a new game (Please note, saving will overwrite any previous games)"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] remoteExec ['newGame',2];";
+		};
+		class RscPicture_1200: RscPicture
+		{
+			idc = 1200;
+			text = "\overthrow_main\ui\logo_overthrow.paa";
+			x = 0.399969 * safezoneW + safezoneX;
+			y = 0.038 * safezoneH + safezoneY;
+			w = 0.216563 * safezoneW;
+			h = 0.363 * safezoneH;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -232,10 +256,35 @@ class OT_dialog_main
 	idd=8001;
 	movingenable=false;	
 
+	class controlsBackground {
+		class RscStructuredText_1103: RscStructuredText
+		{
+			idc = 1103;
+
+			text = "";
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+		class RscStructuredText_1104: RscStructuredText
+		{
+			idc = 1104;
+
+			text = "";
+			x = 0.876406 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.123759 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+	}
+	
 	class controls
 	{
-				////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Bagoqi)
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Mucomo)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
@@ -254,9 +303,9 @@ class OT_dialog_main
 			idc = 1100;
 
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.368 * safezoneH + safezoneY;
+			y = 0.28 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
-			h = 0.121 * safezoneH;
+			h = 0.209 * safezoneH;
 			colorBackground[] = {0,0,0,0.4};
 		};
 		class RscButton_1601: RscButton
@@ -294,16 +343,6 @@ class OT_dialog_main
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
 		};
-		class RscPicture_1200: RscPicture
-		{
-			idc = 1200;
-
-			text = "#(argb,8,8,3)color(0,0,0,0)";
-			x = 45.5 * GUI_GRID_W + GUI_GRID_X;
-			y = 6.5 * GUI_GRID_H + GUI_GRID_Y;
-			w = 11 * GUI_GRID_W;
-			h = 6.5 * GUI_GRID_H;
-		};
 		class RscButton_1605: RscButton
 		{
 			idc = 1605;
@@ -311,7 +350,7 @@ class OT_dialog_main
 
 			text = "Talk"; //--- ToDo: Localize;
 			x = 0.881562 * safezoneW + safezoneX;
-			y = 0.522 * safezoneH + safezoneY;
+			y = 0.423 * safezoneH + safezoneY;
 			w = 0.113437 * safezoneW;
 			h = 0.044 * safezoneH;
 		};
@@ -320,10 +359,10 @@ class OT_dialog_main
 			idc = 1201;
 
 			text = "#(argb,8,8,3)color(0,0,0,0)";
-			x = 45.5 * GUI_GRID_W + GUI_GRID_X;
-			y = 18.5 * GUI_GRID_H + GUI_GRID_Y;
-			w = 11 * GUI_GRID_W;
-			h = 6.5 * GUI_GRID_H;
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.143 * safezoneH;
 		};
 		class RscButton_1608: RscButton
 		{
@@ -366,7 +405,7 @@ class OT_dialog_main
 			idc = 1101;
 
 			x = 0.881562 * safezoneW + safezoneX;
-			y = 0.368 * safezoneH + safezoneY;
+			y = 0.269 * safezoneH + safezoneY;
 			w = 0.113437 * safezoneW;
 			h = 0.143 * safezoneH;
 			colorBackground[] = {0,0,0,0.4};
@@ -387,16 +426,45 @@ class OT_dialog_main
 			action = "[] spawn characterSheet;";
 
 			text = "Character Sheet"; //--- ToDo: Localize;
-			x = 0.00499997 * safezoneW + safezoneX;
+			x = 0.005 * safezoneW + safezoneX;
 			y = 0.808 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
 		};
+		class RscPicture_1200: RscPicture
+		{
+			idc = 1200;
+			text = "\overthrow_main\ui\logo_overthrow.paa";
+			x = 0.00499997 * safezoneW + safezoneX;
+			y = 0.016 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.149531 * safezoneW;
+		};
+		class RscStructuredText_1105: RscStructuredText
+		{
+			idc = 1105;
+
+			x = 0.00499997 * safezoneW + safezoneX;
+			y = 0.115 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.154 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+			colorActive[] = {0,0,0,0};
+		};
+		class RscStructuredText_1106: RscStructuredText
+		{
+			idc = 1106;
+
+			x = safezoneX + (0.8 * safezoneW);
+			y = safezoneY + (0.15 * safezoneH);
+			w = 0.19 * safezoneW;
+			h = 0.1 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+			colorActive[] = {0,0,0,0};
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-
-
 
 	};
 };

@@ -3,6 +3,7 @@ private ["_pos"];
 OT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\civ.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\townGarrison.sqf",
+	compileFinal preProcessFileLineNumbers "spawners\police.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\carDealer.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\criminal.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\gunDealer.sqf",
@@ -113,9 +114,29 @@ OT_townSpawners = [
 						sleep 0.05;
 					}foreach(_groups);
 					_groups = [];
+					
+					_despawn = spawner getVariable [format["despawn%1",_town],[]];
+					{
+						if(typename _x == "GROUP") then {
+							
+							{		
+								if !(_x call hasOwner) then {
+									deleteVehicle _x;
+								};	
+							}foreach(units _x);
+							deleteGroup _x;					
+						}else{
+							if !(_x call hasOwner) then {
+								deleteVehicle _x;
+							};	
+						};			
+						sleep 0.05;
+					}foreach(_despawn);
+					spawner setVariable [format["despawn%1",_town],[],false];
 				};
 			};
 			sleep 0.5;
 		};
-	},_x] call OT_fnc_registerSpawner;	
+	},_x] call OT_fnc_registerSpawner;
+	spawner setVariable [format["despawn%1",_x],[],false];
 }foreach(OT_allTowns);

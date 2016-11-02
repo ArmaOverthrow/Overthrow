@@ -46,7 +46,7 @@ while {(_count < _numVeh)} do {
 				if((random 100) > 95) then {
 					_group = createGroup CIVILIAN;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
-					_civ setBehaviour "SAFE";
+					_civ setBehaviour "SAFE";					
 					[_civ] call initCivilian;
 					_civ moveInDriver _veh;
 					

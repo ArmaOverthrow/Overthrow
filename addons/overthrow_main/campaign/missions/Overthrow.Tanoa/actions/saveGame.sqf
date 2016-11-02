@@ -37,7 +37,7 @@ _data = [];
 						_val = _owned;
 					};
 					
-					if(_x == "home" or _x == "camp") then {
+					if(_x == "camp") then {
 						_val = getpos _val;
 					};					
 					_d pushback [_x,_val];											

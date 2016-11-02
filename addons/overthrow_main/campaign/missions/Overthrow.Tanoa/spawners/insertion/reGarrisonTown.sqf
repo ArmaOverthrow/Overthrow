@@ -45,14 +45,14 @@ if(!isNil "_close") then {
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	_police pushBack _civ;
 	_civ moveInCargo _veh;
-	[_civ,_town] call initPolice;
+	[_civ,_town] call initGendarm;
 	_civ setBehaviour "SAFE";
 	sleep 0.01;
 	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
 	
 	_police pushBack _civ;
-	[_civ,_town] call initPolice;
+	[_civ,_town] call initGendarm;
 	_civ setBehaviour "SAFE";
 	_civ moveInCargo _veh;
 	
@@ -78,13 +78,15 @@ if(!isNil "_close") then {
 	_wp setWaypointType "SCRIPTED";
 	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
 
-	_group call initPolicePatrol;
+	_group call initGendarmPatrol;
 	
 	{
 		_x addCuratorEditableObjects [_police+_support,true];
 	} forEach allCurators;
+	
+	[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad.",_town,2,_closest]] remoteExec ["intelEvent",0,false];
 };
 
-[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad.",_town,2,_closest]] remoteExec ["intelEvent",0,false];
+
 
 _police+_support;

@@ -30,6 +30,7 @@ _introcam camSetFocus [15, 1];
 _introcam camsetfov 1.1;
 _introcam camCommit 0;
 waitUntil {camCommitted _introcam};
+showCinemaBorder false;
 introcam = _introcam;
 
 

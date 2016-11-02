@@ -48,8 +48,9 @@ if ((!_isbase) and !(_closest in (server getVariable ["NATOabandoned",[]]))) exi
 };
 
 openMap false;
+_playerpos = (getpos player);
 
-_campos = [(_center select 0)+35,(_center select 1)+35,(_center select 2)+70];
+_campos = [(_playerpos select 0)+35,(_playerpos select 1)+35,(_playerpos select 2)+70];
 _start = [position player select 0, position player select 1, 2];
 buildcam = "camera" camCreate _start;
 buildFocus = createVehicle ["Sign_Sphere10cm_F", [_start,1000,getDir player] call BIS_fnc_relPos, [], 0, "NONE"];
@@ -61,7 +62,7 @@ buildcam camCommit 0;
 showCinemaBorder false;
 waitUntil {camCommitted buildcam};
 
-buildFocus setPos _center;
+buildFocus setPos _playerpos;
 buildcam camSetTarget buildFocus;
 buildcam camSetPos _campos;
 buildcam camCommit 2;

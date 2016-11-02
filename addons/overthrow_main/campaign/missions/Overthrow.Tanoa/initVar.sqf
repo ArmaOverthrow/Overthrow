@@ -109,9 +109,12 @@ OT_clothes_tourists = [];
 OT_clothes_priest = "U_C_Man_casual_2_F";
 OT_clothes_port = "U_Marshal";
 OT_clothes_shops = ["U_C_Man_casual_2_F","U_C_Man_casual_3_F","U_C_Man_casual_1_F"];
-OT_clothes_carDealers = OT_clothes_shops;
+OT_clothes_carDealers = ["U_Marshal"];
 OT_clothes_harbor = ["U_C_man_sport_1_F","U_C_man_sport_2_F","U_C_man_sport_3_F"];
 OT_clothes_guerilla = ["U_I_C_Soldier_Para_1_F","U_I_C_Soldier_Para_2_F","U_I_C_Soldier_Para_3_F","U_I_C_Soldier_Para_5_F","U_I_C_Soldier_Para_4_F"];
+OT_clothes_police = ["U_I_G_resistanceLeader_F","U_BG_Guerilla2_1","U_BG_Guerilla2_3","U_I_C_Soldier_Para_4_F"];
+OT_vest_police = "V_TacVest_blk_POLICE";
+OT_hat_police = "H_Cap_police";
 OT_clothes_mob = "U_I_C_Soldier_Camo_F";
 
 OT_ammo_50cal = "100Rnd_127x99_mag";
@@ -504,10 +507,11 @@ OT_Buildables = [
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"],
 	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
 	["Barracks",5000,["Land_Barracks_01_camo_F","Land_Barracks_01_grey_F"],"",false,"Allows recruiting of squads"],
-	["Guard Tower",15000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need? besides 2 x Static MGs maybe but it comes with those."],
-	["Hangar",3000,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
+	["Guard Tower",10000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need? besides 2 x Static MGs maybe but it comes with those."],
+	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
 	["Workshop",2500,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"A place to repair and rearm your vehicles"],
-	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."]
+	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
+	["Police Station",3500,["Land_Cargo_House_V3_F"],"structures\policeStation.sqf",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."]
 ];
 
 OT_workshop = [

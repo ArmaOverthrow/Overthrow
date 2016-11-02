@@ -66,7 +66,13 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		_name = format["Comms%1",_c];
 		_pos = getpos _x;
 		_near = _pos call nearestObjective;
-		if((_pos distance (_near select 0)) > 500) then {
+		_do = true;
+		if !(isNil "_near") then {
+			if((_pos distance (_near select 0)) < 500) then {
+				_do = false;
+			};
+		};
+		if(_do) then {
 			OT_NATOcomms pushBack [_pos,_name];
 			_garrison = floor(4 + random(4));
 			server setVariable [format ["garrison%1",_name],_garrison,true];
@@ -171,9 +177,9 @@ publicVariable "OT_NATOInitDone";
 		
 sleep 5;
 while {true} do {
+	_garrisoned = false;
 	if(count allplayers > 0) then {
 		_abandoned = server getVariable "NATOabandoned";
-		_garrisoned = false;
 		{		
 			_town = _x;
 			_townPos = server getVariable _town;
@@ -267,7 +273,7 @@ while {true} do {
 		_name = _x select 1;
 		if !(_name in _abandoned) then {			
 			_garrison = server getvariable format["garrison%1",_name];				
-			if(_garrison < 3) then {	
+			if(_garrison < 2) then {	
 				_abandoned pushback _name;
 				server setVariable ["NATOabandoned",_abandoned,true];				
 				_name setMarkerColor "ColorGUER";
@@ -275,7 +281,6 @@ while {true} do {
 				format["We have captured the radio tower near %1",_t] remoteExec ["notify_good",0,false];
 			};
 		};
-		if(_garrisoned) exitWith {};
 	}foreach(OT_NATOcomms);
 	
 	
