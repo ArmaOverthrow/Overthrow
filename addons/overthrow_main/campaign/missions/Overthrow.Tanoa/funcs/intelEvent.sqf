@@ -52,7 +52,7 @@ if(_mylevel >= _level) then {
 		_name = format["%1%2%3",_pos,_text,_desc];
 		[player,_name,[_desc,"Intel: " + _text,_name],_pos,0,1,true,_icon,true] call BIS_fnc_taskCreate;
 		_name spawn {
-			sleep 10;
+			sleep 1200;
 			[_this, "SUCCEEDED",false] spawn BIS_fnc_taskSetState;
 		};
 	};

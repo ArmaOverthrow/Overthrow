@@ -8,6 +8,7 @@ if(typename _data != "ARRAY") exitWith {
 	[] remoteExec ['newGame',2];
 	"No save found, starting new game" remoteExec ["hint",bigboss,true];
 };
+
 {
 	_key = _x select 0;
 	_val = _x select 1;
@@ -35,6 +36,9 @@ if(typename _data != "ARRAY") exitWith {
 		_set = false;
 		{
 			_type = _x select 0;
+			
+			
+			
 			if !(_type isKindOf "Man") then {
 				_pos = _x select 1;
 				_dir = _x select 2;
@@ -85,8 +89,18 @@ if(typename _data != "ARRAY") exitWith {
 				if(count _x > 6) then {
 					_code = (_x select 6);
 					if(_code != "") then {
-						[_veh] execVM _code;
+						[getpos _veh] execVM _code;
 					};
+				};
+				
+				if(_type == OT_policeStation) then {
+					_town = _pos call nearestTown;
+					_mrkid = format["%1-police",_town];
+					createMarker [_mrkid,_pos];
+					_mrkid setMarkerShape "ICON";
+					_mrkid setMarkerType "o_installation";
+					_mrkid setMarkerColor "ColorGUER";
+					_mrkid setMarkerAlpha 1;
 				};
 			};
 		}foreach(_val);

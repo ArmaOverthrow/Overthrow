@@ -330,7 +330,7 @@ class OT_dialog_police
 			colorBackground[] = {0,0,0,1};
 			colorActive[] = {0,0,0,1};
 		};
-		
+		/*
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
@@ -352,7 +352,7 @@ class OT_dialog_police
 			h = 0.022 * safezoneH;
 			colorBackground[] = {0,0,0,0};
 			colorActive[] = {0,0,0,0};
-		};
+		};*/
 		class RscStructuredText_1103: RscStructuredText
 		{
 			idc = 1103;
@@ -377,6 +377,7 @@ class OT_dialog_police
 			colorBackground[] = {0,0,0,1};
 			colorActive[] = {0,0,0,1};
 		};
+		/*
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
@@ -407,6 +408,7 @@ class OT_dialog_police
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
 		};
+		*/
 		class RscButton_1604: RscButton
 		{
 			idc = 1604;
@@ -416,6 +418,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
+			action = "1 call addPolice;";
 		};
 		class RscButton_1605: RscButton
 		{
@@ -426,6 +429,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
+			action = "2 call addPolice;";
 		};
 		class RscButton_1606: RscButton
 		{
@@ -436,6 +440,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
+			action = "4 call addPolice;";
 		};
 		class RscButton_1607: RscButton
 		{
@@ -446,6 +451,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
+			action = "8 call addPolice;";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

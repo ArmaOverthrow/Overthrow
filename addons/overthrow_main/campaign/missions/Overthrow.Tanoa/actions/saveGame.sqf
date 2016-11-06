@@ -4,7 +4,7 @@ if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint"
 OT_saving = true;
 publicVariable "OT_saving";
 
-"Persistent Saving..." remoteExec ["notify_minor",0,true];
+"Persistent Saving..." remoteExec ["notify_long",0,true];
 sleep 0.1;
 waitUntil {!isNil "OT_NATOInitDone"};
 
@@ -24,7 +24,7 @@ _data = [];
 	_d = [];
 	_all = [];
 	{
-		if(_x != "owner" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		if(_x != "ot_loaded" and _x != "owner" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
@@ -58,12 +58,12 @@ _count = 10001;
 		_done pushback _x;
 	};
 	if(_count > 2000) then {
-		"Still persistent Saving... please wait" remoteExec ["notify_minor",0,true];
+		"Still persistent Saving... please wait" remoteExec ["notify_long",0,true];
 		_count = 0;
 		sleep 0.01;
 	};
 	_count = _count + 1;
-}foreach((allMissionObjects "Building") + vehicles);
+}foreach((allMissionObjects "Static") + vehicles);
 
 sleep 0.2;
 _data pushback ["vehicles",_vehicles];
@@ -85,12 +85,17 @@ _recruits = [];
 		_recruits pushback _x;
 	};
 }foreach(server getVariable ["recruits",[]]);
+
 _data pushback ["recruits",_recruits];
 _data pushback ["timedate",date];
 
+{	
+	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
+}foreach(allplayers);
+
 profileNameSpace setVariable ["Overthrow.save.001",_data];
 if (isDedicated) then {
-	"Saving to dedicated server.. not long now" remoteExec ["notify_minor",0,true];
+	"Saving to dedicated server.. not long now" remoteExec ["notify_long",0,true];
 	sleep 0.01;
 	saveProfileNamespace
 };

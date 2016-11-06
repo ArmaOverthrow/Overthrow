@@ -47,7 +47,7 @@ if(OT_hasACE) then {
 };
 
 
-_weapon = OT_allAssaultRifles call BIS_fnc_selectRandom;
+_weapon = OT_allCheapRifles call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;

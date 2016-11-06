@@ -19,6 +19,9 @@ _numVeh = 4;
 if(_pop > 15) then {
 	_numVeh = 4 + round(_pop * OT_spawnVehiclePercentage);
 };
+private _numExisting = {(side _x) != west} count(_posTown nearEntities ["LandVehicle",_mSize]);
+_numVeh = _numVeh - _numExisting;
+if(_numVeh <= 0) exitWith {[]};
 while {(_count < _numVeh)} do {		
 	_start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
 	_road = [_start] call BIS_fnc_nearestRoad;

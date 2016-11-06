@@ -9,6 +9,7 @@ if(isPlayer _me) exitWith {};
 
 _garrison = _me getvariable "garrison";
 _vehgarrison = _me getvariable "vehgarrison";
+_polgarrison = _me getvariable "polgarrison";
 _airgarrison = _me getvariable "airgarrison";
 _criminal = _me getvariable "criminal";
 _crimleader = _me getvariable "crimleader";
@@ -89,7 +90,12 @@ call {
 			server setVariable [format["crimleader%1",_town],false,true];
 		};
 	};
-	
+	if(!isNil "_polgarrison") exitWith {
+		_pop = server getVariable format["police%1",_polgarrison];			
+		if(_pop > 0) then {
+			server setVariable [format["police%1",_polgarrison],_pop - 1,true];
+		};
+	};
 	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") exitWith {
 		if(!isNil "_garrison") then {
 			_pop = server getVariable format["garrison%1",_garrison];			
@@ -120,12 +126,6 @@ call {
 			_vg = server getVariable format["airgarrison%1",_airgarrison];
 			_vg deleteAt (_vg find (typeof _me));
 			server setVariable [format["airgarrison%1",_airgarrison],_vg,false];
-		};
-		if(isPlayer _killer) then {
-		
-			if(isPlayer _killer) then {
-				
-			};
 		};
 	};
 	_standingChange = -10;

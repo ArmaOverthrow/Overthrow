@@ -4,8 +4,7 @@ if(isMultiplayer) then {
 	onEachFrame {
 		{
 			if !(_x isEqualTo player) then {
-				private _pos = getPosWorld _x;
-				drawIcon3D ["a3\ui_f\data\map\groupicons\selector_selectable_ca.paa", [1,1,1,0.5], [_pos select 0,_pos select 1,1], 1, 1, 0, format["%1 (%2m)",name _x,round(_x distance player)], 0, 0.02, "TahomaB", "center", true];
+				drawIcon3D ["a3\ui_f\data\map\groupicons\selector_selectable_ca.paa", [1,1,1,0.5], getPos _x, 1, 1, 0, format["%1 (%2m)",name _x,round(_x distance player)], 0, 0.02, "TahomaB", "center", true];
 			};
 		}foreach(allPlayers);	
 	};
@@ -176,8 +175,8 @@ _handler = {
 	}foreach(allGroups);	
 	
 	{
-		if(side _x == resistance or side _x == civilian) then {
-			if(_x isKindOf "StaticWeapon") then {
+		if(side _x == resistance) then {
+			if(_x isKindOf "StaticWeapon" and isNull attachedTo _x) then {
 				_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";	
 				if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
 				(_this select 0) drawIcon [

@@ -1,6 +1,12 @@
+_b = player call getNearestRealEstate;
+_building = objNull;
+if(typename _b == "ARRAY") then {
+	_building = (_b select 0);	
+};
+if(typeof _building == OT_policeStation) exitWith {[] call policeDialog};
 if !(captive player) exitWith {"You cannot lease buildings while wanted" call notify_minor};
 
-_b = player call getNearestRealEstate;
+
 _handled = false;
 _type = "buy";
 _err = false;
@@ -13,7 +19,7 @@ if(typename _b == "ARRAY") then {
 		_owner = _building getVariable "owner";
 		if(_owner == getplayeruid player) then {
 			_home = player getVariable "home";
-			if(_home == _building) exitWith {"You cannot lease your home" call notify_minor;_err = true};
+			if((_home distance _building) < 5) exitWith {"You cannot lease your home" call notify_minor;_err = true};
 			_handled = true;
 		};		
 	};

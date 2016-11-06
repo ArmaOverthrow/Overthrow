@@ -59,7 +59,7 @@ while{true} do {
 				if(_count < _numNATO) then {
 					_group = createGroup blufor;							
 					_groups pushBack _group;
-					_start = [[[_posTown,75]]] call BIS_fnc_randomPos;
+					_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
 					_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";
@@ -77,7 +77,7 @@ while{true} do {
 				};
 				
 				if(_count < _numNATO) then {
-					_start = [[[_posTown,75]]] call BIS_fnc_randomPos;
+					_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
 					_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
 					_civ setVariable ["garrison",_name,false];
 					_civ setRank "CAPTAIN";

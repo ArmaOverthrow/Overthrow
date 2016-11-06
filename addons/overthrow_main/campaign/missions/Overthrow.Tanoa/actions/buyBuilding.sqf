@@ -12,7 +12,7 @@ if(typename _b == "ARRAY") then {
 		_owner = _building getVariable "owner";
 		if(_owner == getplayeruid player) then {
 			_home = player getVariable "home";
-			if(_home == _building) exitWith {"You cannot sell your home" call notify_minor;_err = true};
+			if(_home distance _building < 5) exitWith {"You cannot sell your home" call notify_minor;_err = true};
 			_type = "sell";
 			_handled = true;
 		};		
@@ -30,13 +30,13 @@ if(_handled) then {
 	
 	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call notify_minor};
 
-	playSound "3DEN_notificationDefault";
+	
 	_mrkid = format["bought%1",str(_building)];
 	_owned = player getVariable "owned";
 	
 	if(_type == "buy") then {
 		_building setVariable ["owner",getPlayerUID player,true];
-		player setVariable ["money",_money-_price,true];
+		[-_price] call money;
 		
 		_mrk = createMarkerLocal [_mrkid,getpos _building];
 		_mrk setMarkerShape "ICON";
@@ -45,7 +45,6 @@ if(_handled) then {
 		_mrk setMarkerAlpha 0;
 		_mrk setMarkerAlphaLocal 1;
 		_owned pushback _building;
-		"Building purchased" call notify_minor;
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {
 			[_town,round(_price / 10000)] call standing;		
@@ -55,9 +54,8 @@ if(_handled) then {
 		_building setVariable ["leased",nil,true];
 		deleteMarker _mrkid;
 		_owned deleteAt (_owned find _building);
-		"Building sold" call notify_minor;
 		[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_sell]] call BIS_fnc_createLogRecord;
-		player setVariable ["money",_money+_sell,true];
+		[_sell] call money;
 	};
 	
 	player setVariable ["owned",_owned,true];

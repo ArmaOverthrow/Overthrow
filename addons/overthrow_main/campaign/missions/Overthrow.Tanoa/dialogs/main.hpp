@@ -49,7 +49,7 @@ class OT_dialog_start
 		class RscPicture_1200: RscPicture
 		{
 			idc = 1200;
-			text = "\overthrow_main\ui\logo_overthrow.paa";
+			text = "\ot\ui\logo_overthrow.paa";
 			x = 0.399969 * safezoneW + safezoneX;
 			y = 0.038 * safezoneH + safezoneY;
 			w = 0.216563 * safezoneW;
@@ -65,6 +65,20 @@ class OT_dialog_vehicle
 {
 	idd=-1;
 	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1103: RscStructuredText
+		{
+			idc = 1103;
+
+			text = "";
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+	};
 	
 	class controls
 	{
@@ -127,6 +141,20 @@ class OT_dialog_command
 {
 	idd=-1;
 	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1103: RscStructuredText
+		{
+			idc = 1103;
+
+			text = "";
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+	};
 	
 	class controls
 	{
@@ -434,7 +462,7 @@ class OT_dialog_main
 		class RscPicture_1200: RscPicture
 		{
 			idc = 1200;
-			text = "\overthrow_main\ui\logo_overthrow.paa";
+			text = "\ot\ui\logo_overthrow.paa";
 			x = 0.00499997 * safezoneW + safezoneX;
 			y = 0.016 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
@@ -533,6 +561,19 @@ class OT_dialog_tute
 {
 	idd=-1;
 	movingenable=false;	
+	
+	class controlsBackground {
+		class RscStructuredText_1101: RscStructuredText
+		{
+			idc = 1101;			
+			x = 0.324687 * safezoneW + safezoneX;
+			y = 0.313 * safezoneH + safezoneY;
+			w = 0.355781 * safezoneW;
+			h = 0.198 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+			colorActive[] = {0.1,0.1,0.1,1};
+		};
+	}
 
 	class controls
 	{
@@ -540,18 +581,6 @@ class OT_dialog_tute
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Kizeru)
 		////////////////////////////////////////////////////////
 
-		class RscFrame_1800: RscFrame
-		{
-			idc = 1800;
-
-			x = 0.314375 * safezoneW + safezoneX;
-			y = 0.291 * safezoneH + safezoneY;
-			w = 0.37125 * safezoneW;
-			h = 0.264 * safezoneH;
-			colorText[] = {1,1,1,1};
-			colorBackground[] = {0,0,0,0.9};
-			colorActive[] = {0,0,0,0.9};
-		};
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;

@@ -80,6 +80,18 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.65'>Owned by %1</t>
 				",_ownername];
 			};
+			if(typeof _building == OT_policeStation) exitWith {
+				ctrlSetText [1608,"Sell"];
+				ctrlEnable [1608,false];
+				ctrlSetText [1609,"Manage"];
+				//ctrlEnable [1609,false];
+				//ctrlEnable [1610,false];
+			
+				_buildingTxt = format["
+					<t align='left' size='0.8'>Police Station</t><br/>
+					<t align='left' size='0.65'>Built by %1</t>
+				",_ownername];
+			};
 			if(typeof _building == OT_item_Flag) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
@@ -88,7 +100,7 @@ if(typename _b == "ARRAY") then {
 			
 				_buildingTxt = format["
 					<t align='left' size='0.8'>%1</t><br/>
-					<t align='left' size='0.65'>Owned by %2</t>
+					<t align='left' size='0.65'>Founded by %2</t>
 				",_building getVariable "name",_ownername];
 			};
 			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
