@@ -28,15 +28,7 @@ _data = [];
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
-				if(typename _val != "CODE") then {
-					if(_x == "owned") then {
-						_owned = [];
-						{
-							_owned pushback (getpos _x);
-						}foreach(_val);
-						_val = _owned;
-					};
-					
+				if(typename _val != "CODE") then {					
 					if(_x == "camp") then {
 						_val = getpos _val;
 					};					

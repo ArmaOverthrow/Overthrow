@@ -56,15 +56,7 @@ call {
 	};
 	if(!isNil "_crimleader") exitWith {
 		[_town,10] call stability;
-		
-		if(_killer call hasOwner) then {
-			_owner = _killer getVariable "owner";
-			if(_owner != "self") then {
-				_k = spawner getvariable _owner;
-				if(!isNil "_k") then {_killer = _k};
-			};
-		};
-		
+	
 		_standingChange = 10;
 		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
 		if(_bounty > 0) then {

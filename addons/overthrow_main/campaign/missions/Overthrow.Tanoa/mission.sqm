@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=119;
+		nextID=121;
 	};
 	class Camera
 	{
@@ -1410,7 +1410,7 @@ class Mission
 									"SCALAR"
 								};
 							};
-							value=120;
+							value=30;
 						};
 					};
 				};
@@ -5450,11 +5450,11 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={11642.185,5.3316717,3141.4236};
+				position[]={11642.185,5.3320427,3141.4241};
 			};
 			id=1841;
 			type="ACE_moduleAdvancedMedicalSettings";
-			atlOffset=0.020634174;
+			atlOffset=0.021000385;
 			class CustomAttributes
 			{
 				class Attribute0

@@ -66,7 +66,7 @@ if(typename _b == "ARRAY") then {
 		_owner = _building getVariable "owner";
 		_ownername = server getVariable format["name%1",_owner];
 		if(_building getVariable ["leased",false]) then {
-			_ownername = format["%1<br/>(Leased)",_ownername];
+			_ownername = format["%1 (Leased)",_ownername];
 		};
 		if(_owner == getplayerUID player) then {
 			if(typeof _building == OT_item_Tent) exitWith {
@@ -79,19 +79,7 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.8'>Camp</t><br/>
 					<t align='left' size='0.65'>Owned by %1</t>
 				",_ownername];
-			};
-			if(typeof _building == OT_policeStation) exitWith {
-				ctrlSetText [1608,"Sell"];
-				ctrlEnable [1608,false];
-				ctrlSetText [1609,"Manage"];
-				//ctrlEnable [1609,false];
-				//ctrlEnable [1610,false];
-			
-				_buildingTxt = format["
-					<t align='left' size='0.8'>Police Station</t><br/>
-					<t align='left' size='0.65'>Built by %1</t>
-				",_ownername];
-			};
+			};			
 			if(typeof _building == OT_item_Flag) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
@@ -139,11 +127,28 @@ if(typename _b == "ARRAY") then {
 			<t align='left' size='0.65'>Lease Value: $%2/hr</t>
 		",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
 	};	
+	
+	if(typeof _building == OT_policeStation) then {
+		_owner = _building getVariable "owner";
+		_ownername = server getVariable format["name%1",_owner];
+		ctrlSetText [1608,"Sell"];
+		ctrlEnable [1608,false];
+		ctrlSetText [1609,"Manage"];
+		//ctrlEnable [1609,false];
+		//ctrlEnable [1610,false];
+
+		_buildingTxt = format["
+			<t align='left' size='0.8'>Police Station</t><br/>
+			<t align='left' size='0.65'>Built by %1</t>
+		",_ownername];
+	};
 }else{
 	ctrlEnable [1608,false];
 	ctrlEnable [1609,false];
 	ctrlEnable [1610,false];	
 };
+
+
 
 
 _buildingtextctrl ctrlSetStructuredText parseText _buildingTxt;

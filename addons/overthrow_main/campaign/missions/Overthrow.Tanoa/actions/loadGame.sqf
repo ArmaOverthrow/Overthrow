@@ -48,7 +48,6 @@ if(typename _data != "ARRAY") exitWith {
 				if(count _x > 5) then {
 					_name = _x select 5;
 				};
-				
 				_veh = _type createVehicle _pos;
 				_veh setPos _pos;
 				_veh setDir _dir;
@@ -89,8 +88,9 @@ if(typename _data != "ARRAY") exitWith {
 				if(count _x > 6) then {
 					_code = (_x select 6);
 					if(_code != "") then {
-						[getpos _veh] execVM _code;
+						[getpos _veh,_code] call structureInit;
 					};
+					_veh setVariable ["OT_init",_code,true];
 				};
 				
 				if(_type == OT_policeStation) then {

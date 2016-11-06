@@ -19,7 +19,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 		_stability = server getVariable format ["stability%1",_town];
 		server setVariable [format["crimnew%1",_town],false,false];
 		server setVariable [format["crimadd%1",_town],0,false];
-		if(_stability < 17) then {
+		if(_stability < 30) then {
 			_garrison = 4 + round(random 4);
 			_building = [_posTown, OT_crimHouses] call getRandomBuilding;
 			if(isNil "_building") then {

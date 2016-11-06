@@ -24,9 +24,12 @@ while {true} do {
 		_owned = _x getvariable ["owned",[]];
 		_lease = 0;
 		{
-			if(_x getVariable ["leased",false]) then {				
-				_data = _x call getRealEstateData;
-				_lease = _lease + (_data select 2);				
+			_bdg = OT_centerPos nearestObject _x;
+			if !(isNil "_bdg") then {
+				if(_bdg getVariable ["leased",false]) then {				
+					_data = _x call getRealEstateData;
+					_lease = _lease + (_data select 2);				
+				};
 			};
 		}foreach(_owned);
 		if(_lease > 0) then {

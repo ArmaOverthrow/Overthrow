@@ -26,6 +26,9 @@ if(typename _b == "ARRAY") then {
 };
 if(_err) exitWith {};
 if(_handled) then {
+	_leased = player getvariable ["leased",[]];
+	_leased pushback ([_building] call fnc_getBuildID);
+	player setvariable ["leased",_leased,true];
 	_building setVariable ["leased",true,true];
 	_mrkid = format["bought%1",str(_building)];
 	_mrkid setMarkerAlpha 0;	

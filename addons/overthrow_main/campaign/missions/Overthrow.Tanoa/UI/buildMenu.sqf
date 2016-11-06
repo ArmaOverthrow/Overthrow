@@ -249,7 +249,6 @@ buildOnMouseUp = {
 				_created = objNULL;
 				playSound "3DEN_notificationDefault";
 				player setVariable ["money",_money-modePrice,true];
-				
 				if(modeMode == 0) then {
 					_objects = [modeValue,getDir modeTarget,modeValues] call BIS_fnc_objectsMapper;
 					{
@@ -258,9 +257,9 @@ buildOnMouseUp = {
 						clearBackpackCargoGlobal _x;
 						clearItemCargoGlobal _x;	
 						_x setVariable ["owner",getplayeruid player,true];
-						_x call initObjectLocal;
+						_x call initObjectLocal;							
 					}foreach(_objects);
-					_created = _object select 0;
+					_created = _objects select 0;
 					deleteVehicle modeTarget;
 				}else{
 					_created = modeTarget;
@@ -268,9 +267,10 @@ buildOnMouseUp = {
 					modeTarget enableSimulationGlobal true;
 					modeTarget = objNull;
 				};
+				
 				if(modeCode != "") then {
 					_created setVariable ["OT_init",modeCode,true];
-					[modeValue] execVM modeCode;				
+					[modeValue,modeCode] remoteExec ["structureInit",2];					
 				};
 			};			
 			deleteVehicle modeVisual;

@@ -164,6 +164,8 @@ menuHandler = {};
 //Addons
 [] execVM "SHK_pos\shk_pos_init.sqf";
 
+fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
+
 //Credit to John681611: http://www.armaholic.com/page.php?id=25720
 mpAddEventHand = {
 private["_obj","_type","_code"];
@@ -230,6 +232,12 @@ mpSetDir = {
 	_obj setDir _dir;
 };
 
+structureInit = {
+	private _pos = _this select 0;
+	private _code = compileFinal preProcessFileLineNumbers (_this select 1);
+	[_pos] spawn _code;
+};
+
 blackFaded = {
 	_txt = format ["<t size='0.5' color='#000000'>Please wait... %1</t>",_this]; 
     [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
@@ -272,7 +280,6 @@ loadPlayerData = {
 	private _player = _this;
 	_newplayer = true;
 	_data = server getvariable (getplayeruid _player);
-	_owned = [];
     if !(isNil "_data") then {
         _newplayer = false;
         {
@@ -285,18 +292,11 @@ loadPlayerData = {
 			};
         }foreach(_data);        
     };
-	{
-		if(_x getVariable ["owner",""] == (getplayeruid _player)) then {
-			if(_x isKindOf "Building") then {
-				_owned pushback _x;
-			};
-		};
-	}foreach(allMissionObjects "Static");
+	
 	_loadout = server getvariable format["loadout%1",getplayeruid _player];
 	if !(isNil "_loadout") then {
 		_player setunitloadout _loadout;
 	};
-	_player setVariable ["owned",_owned,true];
 	_player setVariable ["OT_loaded",true,true];
 	_player setVariable ["OT_newplayer",_newplayer,true];
 };
@@ -340,7 +340,7 @@ rewardMoney = {
 		_perPlayer = round(_amount / count(allPlayers));
 		if(_perPlayer > 0) then {
 			{
-				[_amount] remoteExec ["money",_x,false];
+				[_perPlayer] remoteExec ["money",_x,false];
 			}foreach(allPlayers);	
 		};		
 	};	

@@ -44,7 +44,7 @@ if(_handled) then {
 		_mrk setMarkerColor "ColorWhite";
 		_mrk setMarkerAlpha 0;
 		_mrk setMarkerAlphaLocal 1;
-		_owned pushback _building;
+		_owned pushback ([_building] call fnc_getBuildID);
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {
 			[_town,round(_price / 10000)] call standing;		
@@ -53,7 +53,7 @@ if(_handled) then {
 		_building setVariable ["owner",nil,true];
 		_building setVariable ["leased",nil,true];
 		deleteMarker _mrkid;
-		_owned deleteAt (_owned find _building);
+		_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
 		[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_sell]] call BIS_fnc_createLogRecord;
 		[_sell] call money;
 	};

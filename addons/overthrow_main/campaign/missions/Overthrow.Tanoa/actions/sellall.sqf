@@ -3,6 +3,7 @@ if (OT_selling) exitWith {};
 
 OT_selling = true;
 
+
 _b = player getVariable "shopping";
 _bp = _b getVariable "shop";
 _town = (getpos player) call nearestTown;
@@ -21,6 +22,12 @@ _cls = lbData [1500,_idx];
 
 if(isNil "_cls" or _cls == "") exitWith {OT_selling = false};
 
+_price = [_town,_cls,_standing] call getSellPrice;
+_done = false;
+_mynum = 0;
+
+if(isNil "_price") exitWith {OT_selling = false};
+
 _pstock = player call unitStock;
 _qty = 0;
 {
@@ -29,13 +36,6 @@ _qty = 0;
 }foreach(_pstock);
 
 if(_qty == 0) exitWith {[_mystock,_town,_standing,_s] call sellDialog};
-
-_price = [_town,_cls,_standing] call getSellPrice;
-
-if(isNil "_price") exitWith {OT_selling = false};
-
-_done = false;
-_mynum = 0;
 
 {
 	_c = _x select 0;
@@ -53,6 +53,7 @@ if(_mynum > 200) then {
 };
 if(_price <= 0) then {_price = 1};
 
+_done = false;
 _stockidx = 0;
 {	
 	if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
@@ -73,7 +74,7 @@ _b setVariable ["stock",_s,true];
 for "_i" from 0 to _qty do {
 	player removeItem _cls;
 };
+OT_selling = false;
 _mystock = player call unitStock;
 lbClear 1500;
 [_mystock,_town,_standing,_s] call sellDialog;
-OT_selling = false;

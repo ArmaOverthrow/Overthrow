@@ -13,6 +13,14 @@ if(_typecls != "Base") then {
 			_isbase = true;
 		};
 	};
+	if(!_isbase) then {
+		_base = _pos call nearestObjective;
+		if !(isNil "_base") then {
+			if(((_base select 1) in (server getvariable "NATOabandoned")) and ((_base select 0) distance _pos) < 100) then {
+				_isbase = true;
+			};
+		};
+	};
 }else{
 	_base = _pos call nearestBase;
 	if !(isNil "_base") then {
@@ -20,7 +28,14 @@ if(_typecls != "Base") then {
 			_canplace = false;
 		};
 	};
+	if(_canplace) then {
+		_base = _pos call nearestObjective;
+		if((_base select 0) distance _pos < 800) then {
+			_canplace = false;
+		};
+	};
 };
+
 if(!_canplace) exitWith {false};
 
 if !(_isbase) then {
@@ -59,5 +74,7 @@ if(_typecls == "Base") then {
 	if(_town == "Georgetown") then {_dist = 950};
 	if((_postown distance _pos) < _dist) then {_canplace = false};
 };
+
+
 
 _canplace

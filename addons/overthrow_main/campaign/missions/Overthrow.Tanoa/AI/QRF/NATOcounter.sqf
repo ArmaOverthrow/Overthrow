@@ -166,7 +166,7 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 	_tskid = _this select 3;
 	_airgroups = _this select 4;
 	
-	_first = _soldiers select 0;
+	_first = _soldiers select ((count _soldiers) - 1);
 	waitUntil {(_first distance _attackpos) < 1000};
 	
 	private ["_size","_active","_alive"];

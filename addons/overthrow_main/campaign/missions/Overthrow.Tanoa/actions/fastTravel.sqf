@@ -14,18 +14,10 @@ openMap true;
 		openMap false;
 	};
 	private _handled = false;
-	private _obj = _pos call nearestObjective;
-	private _objpos = _obj select 0;
-	private _closestobj = _obj select 1;
-	if(_closestobj in (server getVariable ["NATOabandoned",[]]) and (_objpos distance _pos) < 50) then {
-		_handled = true;
-	};
-		
-	if !(_handled) then {
-		_buildings =  _pos nearObjects [OT_item_Tent,30];
-		if !(_buildings isEqualTo []) then {			
-			_handled = true;				
-		};
+
+	_buildings =  _pos nearObjects [OT_item_Tent,30];
+	if !(_buildings isEqualTo []) then {			
+		_handled = true;				
 	};
 
 	if !(_handled) then {
@@ -42,7 +34,7 @@ openMap true;
 		player allowDamage false;
 		disableUserInput true;
 		
-		cutText ["Fast traveling, please wait","BLACK",2];
+		cutText ["Fast travelling","BLACK",2];
 		_pos spawn {
 			private _pos = _this;
 			sleep 2;

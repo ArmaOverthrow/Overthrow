@@ -4,8 +4,9 @@ _playerstock = _this select 0;
 _town = _this select 1;
 _standing = _this select 2;
 _s = _this select 3;
-
+private _cursel = lbCurSel 1500;
 lbClear 1500;
+private _numitems = 0;
 {			
 	_cls = _x select 0;
 	if(_cls in OT_allItems) then {
@@ -41,7 +42,8 @@ lbClear 1500;
 		lbSetPicture [1500,_idx,_pic];
 		lbSetValue [1500,_idx,_price];
 		lbSetData [1500,_idx,_cls];
+		_numitems = _numitems + 1;
 	};	
 }foreach(_playerstock);
-
-lbSetCurSel [1500, 0];
+if(_cursel >= _numitems) then {_cursel = 0};
+lbSetCurSel [1500, _cursel];

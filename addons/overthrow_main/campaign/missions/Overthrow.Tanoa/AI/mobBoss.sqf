@@ -18,7 +18,7 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
+[_unit, OT_face_localBoss] remoteExec ["setFace", 0, _unit];
 [_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
 _unit forceAddUniform OT_clothes_mob;
 
