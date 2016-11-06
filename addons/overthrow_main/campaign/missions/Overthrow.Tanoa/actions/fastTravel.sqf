@@ -5,7 +5,7 @@ if((vehicle player) != player) then {
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
 };
 
-"Click near a friendly base, or a building/camp you own" call notify_minor;
+"Click near a friendly base/camp or a building you own" call notify_minor;
 openMap true;
 
 ["fastTravel", "onMapSingleClick", {
@@ -23,12 +23,8 @@ openMap true;
 		
 	if !(_handled) then {
 		_buildings =  _pos nearObjects [OT_item_Tent,30];
-		if !(_buildings isEqualTo []) then {
-			{
-				if(_x getVariable ["owner",""] == getplayeruid player) then {
-					_handled = true;
-				};
-			}foreach(_buildings);
+		if !(_buildings isEqualTo []) then {			
+			_handled = true;				
 		};
 	};
 
@@ -40,7 +36,7 @@ openMap true;
 
 	if !(_handled) then {
 		
-		"You must click near a friendly base or a building/camp you own" call notify_minor;
+		"You must click near a friendly base/camp or a building you own" call notify_minor;
 		openMap false;
 	}else{
 		player allowDamage false;

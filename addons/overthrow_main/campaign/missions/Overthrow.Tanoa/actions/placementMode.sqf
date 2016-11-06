@@ -25,7 +25,7 @@ if !([getpos player,_typecls] call canPlace) exitWith {
 	call {
 		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call notify_minor};
 		if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
-		"You must be near a base, camp or owned structure" call notify_minor
+		"You must be near a base or owned structure" call notify_minor
 	};
 };
 

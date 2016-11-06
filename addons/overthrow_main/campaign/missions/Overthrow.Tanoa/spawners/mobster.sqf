@@ -65,7 +65,7 @@ while{true} do {
 			sleep 0.1;			
 			
 			//spawn in the crime boss
-			_start = [[[_pos,40]]] call BIS_fnc_randomPos;
+			_start = [_pos,[0,30]] call SHK_pos;			
 			_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
 			_civ setRank "COLONEL";
 			[_civ] joinSilent nil;
@@ -77,7 +77,7 @@ while{true} do {
 			//spawn in his protection
 			_count = 0;
 			while {_count < _garrison} do {
-				_start = [[[_pos,40]]] call BIS_fnc_randomPos;
+				_start = [_pos,[0,60]] call SHK_pos;
 				_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
 				_civ setRank "MAJOR";
 				[_civ] joinSilent nil;

@@ -6,12 +6,12 @@
 #include "dialogs\build.hpp"
 #include "dialogs\recruits.hpp"
 
-overviewPicture = "\overthrow_main\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
+overviewPicture = "\ot\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
 author="ARMAzac";
 briefingName = "Overthrow Tanoa";
 OnLoadName = "Overthrow Tanoa";
-OnLoadMission = "v0.5.3";
-loadScreen = "\overthrow_main\campaign\missions\Overthrow.Tanoa\pic.jpg";
+OnLoadMission = "v0.5.4";
+loadScreen = "\ot\campaign\missions\Overthrow.Tanoa\pic.jpg";
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;
 skipLobby = 1;

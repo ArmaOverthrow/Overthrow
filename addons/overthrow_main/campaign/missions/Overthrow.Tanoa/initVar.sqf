@@ -30,7 +30,7 @@ OT_spawnTowns = ["Rautake","Tavu","Balavu","Muaceba","Katkoula","Savaka"]; //Tow
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
 OT_NATOwait = 200; //Half the Average time between NATO orders
-OT_CRIMwait = 300; //Half the Average time between crim changes
+OT_CRIMwait = 350; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
 OT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
@@ -61,7 +61,7 @@ OT_churches = ["Land_Church_03_F","Land_Church_01_F","Land_Church_02_F","Land_Te
 OT_voices_local = ["Male01ENGFRE","Male02ENGFRE"];
 OT_voices_western = ["Male01ENG","Male02ENG","Male03ENG","Male04ENG","Male05ENG","Male06ENG","Male07ENG","Male08ENG","Male09ENG","Male10ENG","Male11ENG","Male12ENG","Male01ENGB","Male02ENGB","Male03ENGB","Male04ENGB","Male05ENGB"];
 OT_voices_eastern = ["Male01CHI","Male02CHI","Male03CHI"];
-OT_faces_local = ["TanoanHead_A3_01","TanoanHead_A3_02","TanoanHead_A3_03","TanoanHead_A3_04","TanoanHead_A3_05","TanoanHead_A3_06","TanoanHead_A3_07","TanoanHead_A3_08","TanoanHead_A3_09"];
+OT_faces_local = ["TanoanHead_A3_01","TanoanHead_A3_02","TanoanHead_A3_03","TanoanHead_A3_04","TanoanHead_A3_05","TanoanHead_A3_06","TanoanHead_A3_07","TanoanHead_A3_08"];
 OT_faces_western = ["WhiteHead_1","WhiteHead_2","WhiteHead_3","WhiteHead_4","WhiteHead_5","WhiteHead_6","WhiteHead_7","WhiteHead_8","WhiteHead_9","WhiteHead_10","WhiteHead_11","WhiteHead_12","WhiteHead_13","WhiteHead_14","WhiteHead_15","WhiteHead_16","WhiteHead_17","WhiteHead_18","WhiteHead_19","WhiteHead_20","WhiteHead_21","AfricanHead_01","AfricanHead_02","AfricanHead_03"];
 OT_faces_eastern = ["AsianHead_A3_01","AsianHead_A3_02","AsianHead_A3_03","AsianHead_A3_04","AsianHead_A3_05","AsianHead_A3_06","AsianHead_A3_07"];
 
@@ -138,8 +138,7 @@ OT_NATO_Vehicles_Garrison = [
 	["B_T_MRAP_01_gmg_F",5],
 	["B_T_APC_Tracked_01_AA_F",3],
 	["B_T_Static_AT_F",7],
-	["B_HMG_01_high_F",10],
-	["B_T_MBT_01_mlrs_F",2]
+	["B_HMG_01_high_F",10]
 ];
 
 OT_NATO_Vehicles_AirGarrison = [
@@ -496,6 +495,7 @@ OT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 OT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 OT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F"];
 OT_portBuilding = "Land_Warehouse_02_F";
+OT_policeStation = "Land_Cargo_House_V3_F";
 
 OT_loadingMessages = ["Adding Hidden Agendas","Adjusting Bell Curves","Aesthesizing Industrial Areas","Aligning Covariance Matrices","Applying Feng Shui Shaders","Applying Theatre Soda Layer","Asserting Packed Exemplars","Attempting to Lock Back-Buffer","Binding Sapling Root System","Breeding Fauna","Building Data Trees","Bureacritizing Bureaucracies","Calculating Inverse Probability Matrices","Calculating Llama Expectoration Trajectory","Calibrating Blue Skies","Charging Ozone Layer","Coalescing Cloud Formations","Cohorting Exemplars","Collecting Meteor Particles","Compounding Inert Tessellations","Compressing Fish Files","Computing Optimal Bin Packing","Concatenating Sub-Contractors","Containing Existential Buffer","Debarking Ark Ramp","Debunching Unionized Commercial Services","Deciding What Message to Display Next","Decomposing Singular Values","Decrementing Tectonic Plates","Deleting Ferry Routes","Depixelating Inner Mountain Surface Back Faces","Depositing Slush Funds","Destabilizing Economic Indicators","Determining Width of Blast Fronts","Deunionizing Bulldozers","Dicing Models","Diluting Livestock Nutrition Variables","Downloading Satellite Terrain Data","Exposing Flash Variables to Streak System","Extracting Resources","Factoring Pay Scale","Fixing Election Outcome Matrix","Flood-Filling Ground Water","Flushing Pipe Network","Gathering Particle Sources","Generating Jobs","Gesticulating Mimes","Graphing Whale Migration","Hiding Willio Webnet Mask","Implementing Impeachment Routine","Increasing Accuracy of RCI Simulators","Increasing Magmafacation","Initializing Rhinoceros Breeding Timetable","Initializing Robotic Click-Path AI","Inserting Sublimated Messages","Integrating Curves","Integrating Illumination Form Factors","Integrating Population Graphs","Iterating Cellular Automata","Lecturing Errant Subsystems","Mixing Genetic Pool","Modeling Object Components","Mopping Occupant Leaks","Normalizing Power","Obfuscating Quigley Matrix","Overconstraining Dirty Industry Calculations","Partitioning City Grid Singularities","Perturbing Matrices","Pixellating Nude Patch","Polishing Water Highlights","Populating Lot Templates","Preparing Sprites for Random Walks","Prioritizing Landmarks","Projecting Law Enforcement Pastry Intake","Realigning Alternate Time Frames","Reconfiguring User Mental Processes","Relaxing Splines","Removing Road Network Speed Bumps","Removing Texture Gradients","Removing Vehicle Avoidance Behavior","Resolving GUID Conflict","Reticulating Splines","Retracting Phong Shader","Retrieving from Back Store","Reverse Engineering Image Consultant","Routing Neural Network Infanstructure","Scattering Rhino Food Sources","Scrubbing Terrain","Searching for Llamas","Seeding Architecture Simulation Parameters","Sequencing Particles","Setting Advisor ","Setting Inner Deity ","Setting Universal Physical Constants","Sonically Enhancing Occupant-Free Timber","Speculating Stock Market Indices","Splatting Transforms","Stratifying Ground Layers","Sub-Sampling Water Data","Synthesizing Gravity","Synthesizing Wavelets","Time-Compressing Simulator Clock","Unable to Reveal Current Activity","Weathering Buildings","Zeroing Crime Network"];
 OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_item_Tent,OT_item_Flag];
@@ -511,7 +511,7 @@ OT_Buildables = [
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
 	["Workshop",2500,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"A place to repair and rearm your vehicles"],
 	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
-	["Police Station",3500,["Land_Cargo_House_V3_F"],"structures\policeStation.sqf",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."]
+	["Police Station",3500,[OT_policeStation],"structures\policeStation.sqf",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."]
 ];
 
 OT_workshop = [
@@ -526,7 +526,9 @@ OT_workshop = [
 	if(_istpl) then {
 		_tpl = _x select 2;
 		OT_allBuyableBuildings pushback ((_tpl select 0) select 0);
-	};
+	}else{	
+		[OT_allBuyableBuildings,(_x select 2)] call BIS_fnc_arrayPushStack;
+	}
 }foreach(OT_Buildables);
 
 OT_allHouses = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_touristHouses;

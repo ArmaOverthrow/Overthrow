@@ -4,6 +4,7 @@ _Unit = _this;
 _VCOM_HasMine = false;
 
 _magazinesAmmo = magazinesAmmo _Unit;
+if(isNil "_magazinesAmmo") then {_magazinesAmmo = []};
 
 //Set all values to false!
 _VCOM_HASSATCHEL = false;

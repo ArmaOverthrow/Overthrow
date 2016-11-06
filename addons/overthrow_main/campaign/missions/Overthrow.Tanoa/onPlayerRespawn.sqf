@@ -23,9 +23,6 @@ sleep 2;
 
 _housepos = _old getVariable "home";
 _town = _housepos call nearestTown;
-
-player setVariable ["home",_housepos,true];
-
 player setPos _housepos;
 [] execVM "setupPlayer.sqf";
 

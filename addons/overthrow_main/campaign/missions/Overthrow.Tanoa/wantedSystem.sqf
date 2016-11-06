@@ -92,7 +92,7 @@ while {alive _unit} do {
 						_unit setCaptive false;
 						_unit spawn revealToNATO;
 						if(isPlayer _unit) then {
-							hint "A gang has seen the static weapon";
+							"A gang has seen the static weapon" call notify_minor;
 						};
 					};
 				}foreach(attachedObjects _unit);
@@ -119,16 +119,16 @@ while {alive _unit} do {
 			};
 			if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {	
 				if(isPlayer _unit) then {
-					hint "A gang has seen your weapon";
+					"A gang has seen your weapon" call notify_minor;
 				};
 				_unit setCaptive false;	
 				_unit spawn revealToNATO;
 			};
 			_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
-			if((_totalrep > 50) and (random 10000 < _totalrep)) exitWith {
+			if((_totalrep > 50) and (random 1000 < _totalrep)) exitWith {
 				_unit setCaptive false;
 				if(isPlayer _unit) then {
-					hint "A gang has recognized you";
+					"A gang has recognized you" call notify_minor;
 				};
 				_unit spawn revealToCRIM;
 			};
@@ -137,10 +137,10 @@ while {alive _unit} do {
 				sleep 0.1;
 				_town = (getpos _unit) call nearestTown;
 				_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
-				if((_totalrep > 50) and (random 10000 < _totalrep)) exitWith {					
+				if((_totalrep > 50) and (random 1000 < _totalrep)) exitWith {					
 					_unit setCaptive false;
 					if(isPlayer _unit) then {
-						hint "NATO has recognized you";
+						"NATO has recognized you" call notify_minor;
 					};
 					_unit spawn revealToNATO;
 				};
@@ -150,7 +150,7 @@ while {alive _unit} do {
 							_unit setCaptive false;
 							_unit spawn revealToNATO;
 							if(isPlayer _unit) then {
-								hint "NATO has seen the static weapon";
+								"NATO has seen the static weapon" call notify_minor;
 							};
 						};
 					}foreach(attachedObjects _unit);
@@ -177,14 +177,14 @@ while {alive _unit} do {
 				};
 				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {	
 					if(isPlayer _unit) then {
-						hint "NATO has seen your weapon";
+						"NATO has seen your weapon" call notify_minor;
 					};
 					_unit setCaptive false;	
 					_unit spawn revealToNATO;
 				};
 				if ((headgear _unit in OT_illegalHeadgear) or (vest _unit in OT_illegalVests)) exitWith {
 					if(isPlayer _unit) then {
-						hint "You are wearing Gendarmerie gear";
+						"You are wearing Gendarmerie gear" call notify_minor;
 					};
 					_unit setCaptive false;	
 					_unit spawn revealToNATO;
@@ -197,7 +197,7 @@ while {alive _unit} do {
 					};
 					if((_base select 0) distance (getpos player) < _dist) exitWith {	
 						if(isPlayer _unit) then {
-							hint "You are in a restricted area";
+							"You are in a restricted area" call notify_minor;
 						};
 						_unit setCaptive false;	
 						_unit spawn revealToNATO;

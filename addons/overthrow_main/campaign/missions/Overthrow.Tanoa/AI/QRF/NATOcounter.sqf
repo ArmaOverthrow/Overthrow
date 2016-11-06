@@ -166,6 +166,9 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 	_tskid = _this select 3;
 	_airgroups = _this select 4;
 	
+	_first = _soldiers select 0;
+	waitUntil {(_first distance _attackpos) < 1000};
+	
 	private ["_size","_active","_alive"];
 	_size = count _soldiers;
 	_lostat = round(_size * 0.4);
@@ -199,6 +202,10 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 			};
 			format["Resistance has captured %1%2 (+100 Influence) %3",_o,_objective,_effect] remoteExec ["notify_good",0,false];
 			100 remoteExec ["influenceSilent",0,false];	
+			_flag = _attackpos nearEntities[OT_flag_NATO,500];
+			if(count _flag > 0) then{
+				deleteVehicle (_flag select 0);
+			};
 		}else{
 			if(((count _inrange) / (count _alive)) > 0.7) then {
 				//check for any alive enemies

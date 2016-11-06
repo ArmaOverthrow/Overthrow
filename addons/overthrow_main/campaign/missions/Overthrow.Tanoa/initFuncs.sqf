@@ -80,6 +80,7 @@ buyDialog = compileFinal preProcessFileLineNumbers "UI\buyDialog.sqf";
 buyClothesDialog = compileFinal preProcessFileLineNumbers "UI\buyClothesDialog.sqf";
 sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
+policeDialog = compileFinal preProcessFileLineNumbers "UI\policeDialog.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -110,7 +111,6 @@ initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGun
 initHarborLocal = compileFinal preProcessFileLineNumbers "interaction\initHarborLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
-initPoliceStationLocal = compileFinal preProcessFileLineNumbers "interaction\initPoliceStationLocal.sqf";
 
 //Economy
 setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";
@@ -140,6 +140,7 @@ transferFrom = compileFinal preProcessFileLineNumbers "actions\transferFrom.sqf"
 transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
 transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
 talkToCiv = compileFinal preProcessFileLineNumbers "actions\talkToCiv.sqf";
+addPolice = compileFinal preProcessFileLineNumbers "actions\addPolice.sqf";
 
 //Modes
 placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
@@ -231,7 +232,7 @@ mpSetDir = {
 
 blackFaded = {
 	_txt = format ["<t size='0.5' color='#000000'>Please wait... %1</t>",_this]; 
-    [_txt, 0, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 newGame = {
@@ -271,28 +272,31 @@ loadPlayerData = {
 	private _player = _this;
 	_newplayer = true;
 	_data = server getvariable (getplayeruid _player);
+	_owned = [];
     if !(isNil "_data") then {
         _newplayer = false;
         {
             _key = _x select 0;
-            _val = _x select 1;            
-            if(_key == "camp" and typename _val == "ARRAY") then {              
-                _val = createVehicle [OT_item_tent, _val, [], 0, "CAN_COLLIDE"];
-                _val setVariable ["owner",getplayeruid player,true];
-                _val call initObjectLocal;
-                
-                _v = "Land_ClutterCutter_large_F" createVehicle (getpos _val);
-            };
-            if(_key == "owned") then {
-                _d = [];
-                {
-                    _d pushback nearestBuilding _x;
-                }foreach(_val);
-                _val = _d;
-            };
-            _player setVariable [_key,_val,true];
+            _val = _x select 1;  
+			if !(isNil "_val") then {
+				_player setVariable [_key,_val,true];
+			}else{
+				_player globalChat format["%1 is null",_key];
+			};
         }foreach(_data);        
     };
+	{
+		if(_x getVariable ["owner",""] == (getplayeruid _player)) then {
+			if(_x isKindOf "Building") then {
+				_owned pushback _x;
+			};
+		};
+	}foreach(allMissionObjects "Static");
+	_loadout = server getvariable format["loadout%1",getplayeruid _player];
+	if !(isNil "_loadout") then {
+		_player setunitloadout _loadout;
+	};
+	_player setVariable ["owned",_owned,true];
 	_player setVariable ["OT_loaded",true,true];
 	_player setVariable ["OT_newplayer",_newplayer,true];
 };
@@ -329,15 +333,17 @@ restartAI = {
 rewardMoney = {
 	_who = _this select 0;
 	_amount = _this select 1;
-	if(_who call hasOwner) then {
-		_owner = missionNamespace getVariable[_who getVariable ["owner",""],objNull];
-		if !(isNull _owner) then {
-			_who = _owner;
-		};
-	};
 	if(isPlayer _who) then {
 		[_amount] remoteExec ["money",_who,false];
-	};
+	}else{
+		//we spread it amongst everyone
+		_perPlayer = round(_amount / count(allPlayers));
+		if(_perPlayer > 0) then {
+			{
+				[_amount] remoteExec ["money",_x,false];
+			}foreach(allPlayers);	
+		};		
+	};	
 };
 
 money = {
@@ -406,13 +412,18 @@ notify = {
 
 notify_good = {
     playSound "3DEN_notificationDefault";
-    _txt = format ["<t size='0.7' color='#ffffff'>%1</t>",_this]; 
+    _txt = format ["<t size='0.6' color='#ffffff'>%1</t>",_this]; 
     [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_minor = {
-    _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this]; 
-    [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    _txt = format ["<t align='right' size='0.5' color='#ffffff'>%1</t>",_this]; 
+    [_txt, 0.6, -0.136, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+};
+
+notify_long = {
+    _txt = format ["<t align='right' size='0.5' color='#ffffff'>%1</t>",_this]; 
+    [_txt, 0.6, -0.136, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {

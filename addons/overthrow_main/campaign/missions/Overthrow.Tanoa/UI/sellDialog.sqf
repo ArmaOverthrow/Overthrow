@@ -41,5 +41,7 @@ lbClear 1500;
 		lbSetPicture [1500,_idx,_pic];
 		lbSetValue [1500,_idx,_price];
 		lbSetData [1500,_idx,_cls];
-	};
+	};	
 }foreach(_playerstock);
+
+lbSetCurSel [1500, 0];

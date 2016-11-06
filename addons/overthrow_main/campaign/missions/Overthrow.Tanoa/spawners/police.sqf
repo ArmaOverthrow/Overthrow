@@ -29,8 +29,8 @@ while {_count < _numNATO} do {
 		
 		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
 		_civ setVariable ["polgarrison",_town,false];
-		[_civ] joinSilent _group;
-		_civ setRank "PRIVATE";
+		[_civ] joinSilent _group;		
+		_civ setRank "SERGEANT";
 		[_civ,_town] call initPolice;
 		_civ setBehaviour "SAFE";
 		

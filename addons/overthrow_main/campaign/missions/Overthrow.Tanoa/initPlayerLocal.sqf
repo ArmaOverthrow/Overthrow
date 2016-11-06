@@ -55,9 +55,9 @@ if(isMultiplayer or _startup == "LOAD") then {
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
 	
-	if(!_newplayer) then {
+	if(!_newplayer) then {		
 		_housepos = player getVariable "home";		
-		if(isNil "_housepos") exitWith {_newplayer = true};
+		if(isNil "_housepos") exitWith {hint "null home";_newplayer = true};
 		_town = _housepos call nearestTown;
 		_pos = server getVariable _town;
 		
