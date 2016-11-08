@@ -4,10 +4,6 @@ player spawn perkSystem;
 player spawn intelSystem;
 disableUserInput false;
 
-_clothes = player getVariable ["uniform",(OT_clothes_guerilla call BIS_fnc_selectRandom)];
-player forceAddUniform _clothes;
-player setVariable ["uniform",_clothes,true];
-
 townChange = {
 	_town = _this;
 	_pop = server getVariable format["population%1",_town];

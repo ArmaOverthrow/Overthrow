@@ -24,6 +24,8 @@ sleep 2;
 _housepos = _old getVariable "home";
 _town = _housepos call nearestTown;
 player setPos _housepos;
+_clothes = player getVariable ["uniform",(OT_clothes_guerilla call BIS_fnc_selectRandom)];
+player forceAddUniform _clothes;
 [] execVM "setupPlayer.sqf";
 
 call {	

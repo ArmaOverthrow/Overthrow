@@ -31,7 +31,7 @@ private _numitems = 0;
 		
 		_name = "";
 		_pic = "";
-		if(_cls in OT_allBackpacks) then {
+		if(_cls isKindOf "Bag_Base") then {	
 			_name = _cls call ISSE_Cfg_Vehicle_GetName;
 			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 		}else{

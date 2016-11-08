@@ -47,20 +47,28 @@ if ((!_isbase) and !(_closest in (server getVariable ["NATOabandoned",[]]))) exi
 	};	
 };
 
+if((player distance _center) > modeMax) exitWith {format ["You need to be within %1m of the %2.",modeMax,_buildlocation] call notify_minor};
+
 openMap false;
 _playerpos = (getpos player);
 
 _campos = [(_playerpos select 0)+35,(_playerpos select 1)+35,(_playerpos select 2)+70];
 _start = [position player select 0, position player select 1, 2];
 buildcam = "camera" camCreate _start;
+
 buildFocus = createVehicle ["Sign_Sphere10cm_F", [_start,1000,getDir player] call BIS_fnc_relPos, [], 0, "NONE"];
 buildFocus setObjectTexture [0,"dialogs\clear.paa"];
 
 buildcam camSetTarget buildFocus;
 buildcam cameraEffect ["internal", "BACK"];
 buildcam camCommit 0;
+
 showCinemaBorder false;
 waitUntil {camCommitted buildcam};
+
+if(currentVisionMode player > 0) then {
+	camUseNVG true;
+}; 
 
 buildFocus setPos _playerpos;
 buildcam camSetTarget buildFocus;

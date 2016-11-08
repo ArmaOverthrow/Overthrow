@@ -7,7 +7,7 @@ _t = _this select 1;
 	_count = 0;
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {		
-		if(_cls in OT_allMagazines) then {
+		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
 			_t addMagazineCargoGlobal [_cls,1];
 			_unit removeMagazine _cls;
 		}else{
