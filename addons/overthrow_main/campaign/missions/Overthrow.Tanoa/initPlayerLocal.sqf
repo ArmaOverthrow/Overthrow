@@ -91,7 +91,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 					_bdg = OT_centerPos nearestObject _x;
 					if !(isNil "_bdg") then {
 						_bdg setVariable ["owner",getplayeruid player,true];				
-						if((typeof _bdg) != OT_policeStation) then {
+						if(_bdg isKindOf "Building") then {
 							_mrkName = format["bdg-%1",_x];
 							_mrkName = createMarkerLocal [_mrkName,getpos _bdg];
 							_mrkName setMarkerShape "ICON";
@@ -107,10 +107,10 @@ if(isMultiplayer or _startup == "LOAD") then {
 				};
 			};
 		}foreach(_owned);
-		
+		/*
 		{
-			if((_x getVariable ["owner",0]) == getplayeruid player) then {
-				if((typeof _x) != OT_policeStation) then {
+			if((_x getVariable ["owner",""]) == (getplayeruid player)) then {
+				if(_x isKindOf "Building") then {
 					_mrkName = format["bdg-%1",_x];
 					_mrkName = createMarkerLocal [_mrkName,getpos _x];
 					_mrkName setMarkerShape "ICON";
@@ -124,6 +124,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 				};
 			};
 		}foreach(allMissionObjects "Building");
+		*/
 
 		if(count _nowowned > 0) then {
 			player setvariable ["owned",_nowowned,true];

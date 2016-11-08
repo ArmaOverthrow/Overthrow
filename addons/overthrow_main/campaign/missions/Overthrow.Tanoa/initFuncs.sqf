@@ -287,8 +287,6 @@ loadPlayerData = {
             _val = _x select 1;  
 			if !(isNil "_val") then {
 				_player setVariable [_key,_val,true];
-			}else{
-				_player globalChat format["%1 is null",_key];
 			};
         }foreach(_data);        
     };
@@ -336,13 +334,15 @@ rewardMoney = {
 	if(isPlayer _who) then {
 		[_amount] remoteExec ["money",_who,false];
 	}else{
-		//we spread it amongst everyone
-		_perPlayer = round(_amount / count(allPlayers));
-		if(_perPlayer > 0) then {
-			{
-				[_perPlayer] remoteExec ["money",_x,false];
-			}foreach(allPlayers);	
-		};		
+		if((side _who) == resistance) then {
+			//we spread it amongst everyone
+			_perPlayer = round(_amount / count(allPlayers));
+			if(_perPlayer > 0) then {
+				{
+					[_perPlayer] remoteExec ["money",_x,false];
+				}foreach(allPlayers);	
+			};		
+		};
 	};	
 };
 

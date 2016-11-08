@@ -2,6 +2,7 @@
 
 closedialog 0;
 createDialog "OT_dialog_main";
+
 openMap false;
 disableSerialization;		
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;

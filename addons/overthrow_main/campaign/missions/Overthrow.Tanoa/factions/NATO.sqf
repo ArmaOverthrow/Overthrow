@@ -258,7 +258,7 @@ while {true} do {
 			_chance = 95;
 			if(count _abandoned > 4) then {_chance = 90};
 			if(count _abandoned > 8) then {_chance = 80};
-			if((random 100) > _chance) then {
+			if(((random 100) > _chance) and (count _abandoned) > 0) then {
 				_target = _abandoned call BIS_fnc_selectRandom;
 				_pos = server getvariable _target;
 				if !(isNil "_pos") then {
