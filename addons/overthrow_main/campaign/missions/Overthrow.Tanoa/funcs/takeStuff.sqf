@@ -3,12 +3,10 @@ private ["_unit","_t"];
 _unit = _this select 0;
 _t = _this select 1;
 
-if(headgear _unit != "") then {
-	_t addHeadgear headgear _unit;
-	removeHeadgear _unit;
-};
 if(vest _unit != "") then {
-	_t addVest vest _unit;
+	if !(typeof(vest _unit) in OT_illegalVests) then {
+		_t addVest vest _unit;
+	};
 };
 if(backpack _unit != "") then {
 	_t addBackpack backpack _unit;
@@ -18,7 +16,7 @@ if(backpack _unit != "") then {
 	_count = 0;
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {	
-		if(_cls in OT_allMagazines) then {
+		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
 			_t addMagazine _cls;
 			_unit removeMagazine _cls;
 		}else{
@@ -30,11 +28,13 @@ if(backpack _unit != "") then {
 }foreach(_unit call unitStock);
 
 if(vest _unit != "") then {
-	removeVest _unit;
+	if !(typeof(vest _unit) in OT_illegalVests) then {
+		removeVest _unit;
+	};
 };
 
 if(backpack _unit != "") then {
-	removeBackpack _unit;
+	removeBackpackGlobal _unit;
 };
 
 if(goggles _unit != "") then {

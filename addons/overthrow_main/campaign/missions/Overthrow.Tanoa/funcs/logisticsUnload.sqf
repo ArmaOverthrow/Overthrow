@@ -54,7 +54,7 @@ clearItemCargoGlobal _veh;
 {				
 	_cls = _x select 0;
 	_num = _x select 1;
-	if(_cls in OT_allBackpacks) then {	
+	if(_cls isKindOf "Bag_Base") then {
 		_veh addBackpackCargo _x;
 	}else{
 		_veh addItemCargo _x;

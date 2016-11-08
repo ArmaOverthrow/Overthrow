@@ -1,6 +1,8 @@
 _me = _this select 0;
 _killer = _me getVariable "ace_medical_lastDamageSource";
-_killer setVariable ["lastkill",time,true];
+if(_killer call unitSeen) then {
+	_killer setVariable ["lastkill",time,true];
+};
 _town = (getpos _me) call nearestTown;
 
 if(isPlayer _me) exitWith {};

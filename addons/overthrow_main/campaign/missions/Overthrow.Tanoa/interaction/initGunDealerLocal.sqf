@@ -72,7 +72,7 @@ _civ addAction ["Buy", {
 		_pic = "";
 		
 		call {
-			if(_cls in OT_allMagazines) exitWith {	
+			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {	
 				_txt = format["--- %1",_cls call ISSE_Cfg_Magazine_GetName];			
 				_pic = _cls call ISSE_Cfg_Magazine_GetPic;
 			};

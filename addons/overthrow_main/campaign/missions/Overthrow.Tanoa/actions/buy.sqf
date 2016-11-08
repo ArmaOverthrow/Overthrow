@@ -25,7 +25,14 @@ call {
 		
 		_veh setVariable ["owner",getPlayerUID player,true];
 
-		player linkItem OT_item_UAVterminal;
+		if("ItemGPS" in (assignedItems player)) then {
+			player addItem OT_item_UAVterminal;
+		}else{
+			if !(OT_item_UAVterminal in (assignedItems player)) then {
+				player linkItem OT_item_UAVterminal;
+			};
+		};
+		
 		player connectTerminalToUAV _veh;
 		
 		player reveal _veh;
@@ -33,7 +40,7 @@ call {
 		playSound "3DEN_notificationDefault";
 		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
 	};
-	if(_cls in OT_allVehicles) exitWith {	
+	if(_cls isKindOf "LandVehicle") exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 		
@@ -49,7 +56,7 @@ call {
 		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in OT_allBoats) exitWith {	
+	if(_cls isKindOf "Ship") exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 		
@@ -65,7 +72,7 @@ call {
 		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in OT_allClothing) then {
+	if(_cls in OT_allClothing) exitWith {
 		player setVariable ["money",_money-_price,true];
 
 		if(backpack player != "") then {
@@ -75,7 +82,7 @@ call {
 		};
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in OT_allWeapons) then {
+	if((_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Rifle",configFile >> "CfgWeapons"])) exitWith {
 		player setVariable ["money",_money-_price,true];
 
 		_box = false;
@@ -93,13 +100,13 @@ call {
 		};	
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls in OT_allMagazines) exitWith {	
+	if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {	
 		player setVariable ["money",_money-_price,true];
 		player addMagazine _cls;		
 		playSound "3DEN_notificationDefault";
 	};
 	_handled = true;
-	if(_cls in (OT_allBackpacks + OT_allStaticBackpacks)) then {	
+	if(_cls isKindOf "Bag_Base") then {	
 		if(backpack player != "") exitWith {"You already have a backpack" call notify_minor;_handled = false};
 	}else{
 		if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
@@ -148,7 +155,7 @@ call {
 			};
 			player setVariable ["money",_money-_price,true];
 			server setVariable [format["activeshopsin%1",_town],_active,true];	
-			if(_cls in OT_allBackpacks) then {	
+			if(_cls isKindOf "Bag_Base") then {	
 				player addBackpack _cls;
 			}else{
 				player addItem _cls;

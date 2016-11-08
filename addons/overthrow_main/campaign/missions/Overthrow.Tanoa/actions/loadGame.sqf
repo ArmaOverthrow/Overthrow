@@ -72,13 +72,13 @@ if(typename _data != "ARRAY") exitWith {
 					_cls = _x select 0;
 					_num = _x select 1;
 					call {
-						if(_cls in OT_allWeapons) exitWith {
+						if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) exitWith {
 							_veh addWeaponCargoGlobal _x;
 						};
-						if(_cls in OT_allMagazines) exitWith {
+						if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
 							_veh addMagazineCargoGlobal _x;
 						};
-						if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) exitWith {
+						if(_cls isKindOf "Bag_Base") exitWith {
 							_veh addBackpackCargoGlobal _x;
 						};
 						_veh addItemCargoGlobal _x;

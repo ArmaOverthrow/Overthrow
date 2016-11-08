@@ -1,8 +1,9 @@
 //Manages passive income for all players (Lease + taxes)
-_lasthour = 0;
+
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-sleep 20;
-while {true} do {
+private _lasthour = date select 3;
+while {true} do {	
+	waitUntil {sleep 5;(date select 3) != _lasthour}; //do actions on the hour
 	_lasthour = date select 3;
 	_total = 0;	
 	_inf = 1;
@@ -55,6 +56,5 @@ while {true} do {
 		_inf remoteExec ["influence",0,false];	
 	};
 	
-	waitUntil {sleep 5;(date select 3) != _lasthour}; //do actions on the hour
 };
 

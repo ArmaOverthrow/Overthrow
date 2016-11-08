@@ -22,13 +22,13 @@ sleep 5;
 	while {_count < (_x select 1)} do {	
 		_count = _count + 1;
 		call {
-			if(_cls in OT_allWeapons) exitWith {
+			if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) exitWith {
 				_target addWeaponCargoGlobal [_cls,1];
 			};
-			if(_cls in OT_allMagazines) exitWith {
+			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
 				_target addMagazineCargoGlobal [_cls,1];
 			};
-			if(_cls in OT_allBackpacks or _cls in OT_allStaticBackpacks) exitWith {
+			if(_cls isKindOf "Bag_Base") exitWith {
 				_target addBackpackCargoGlobal [_cls,1];
 			};
 			_target addItemCargoGlobal [_cls,1];
