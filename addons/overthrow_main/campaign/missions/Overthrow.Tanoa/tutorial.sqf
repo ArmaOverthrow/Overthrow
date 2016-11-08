@@ -41,8 +41,8 @@ menuHandler = {
 	hint "";
 	sleep 3;
 	
-	_txt = "<t align='center'><t size='0.6' color='#ffffff'>Doing stuff</t><br/>";
-	_txt = format ["%1<t size='0.5' color='#ffffff'>Some objects, including most of the ones in your shack, have actions that you can perform on them. Try it out by moving towards one of them and using your scroll wheel or pressing %2 to open the action menu. Select an item with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call assignedKey];
+	_txt = "<t align='center'><t size='0.6' color='#ffffff'>Interaction</t><br/>";
+	_txt = format ["%1<t size='0.5' color='#ffffff'>Most interactions will be done via the 'Y' menu. However some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards one of them and using your scroll wheel or pressing %2 to open the action menu. Select an item with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call assignedKey];
 	
 	[_txt, 0, 0.2, 20, 1, 0, 2] spawn bis_fnc_dynamicText;
 	
@@ -63,9 +63,22 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call nearestTown];
 						private _end = {						
-							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you, so best to keep it where it is until you uh... 'need' it", "Gear" call assignedKey]
+							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you, so best to keep it where it is until you uh... 'need' it", "Gear" call assignedKey];
+							_targets = [];
+							_group = nil;
+							{
+								if(typeof _x == OT_NATO_Unit_PoliceCommander) exitWith {
+									_group = group _x;
+								};
+							}foreach(player nearEntities["Man",1200]);
+							if(!isNil "_group") then {
+								{
+									_targets pushback _x;
+								}foreach(units _group);								
+								[player,waypointPosition [_group, currentWaypoint _group],"Greeting the local Gendarmerie","Well I have a gun and a location where some NATO Gendarmerie were spotted. I guess if you want something done you just got to do it yourself.",{},_targets,0,2] spawn assignMission;
+							};							
 						};
-						[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, just come back if you need more ammunition or anything else the stores won't sell you."],_end] spawn doConversation;					
+						[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, I saw some NATO Gendarmerie nearby recently why don't you go say hi?"],_end] spawn doConversation;					
 						player addItemToUniform OT_item_BasicGun;
 						player addItemToUniform OT_item_BasicAmmo;
 						player addItemToUniform OT_item_BasicAmmo;
@@ -77,7 +90,23 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call nearestTown];
 						private _end = {						
-							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you. Bounties can be found by accessing 'Most Wanted' on the map in your home.", "Gear" call assignedKey]
+							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you.", "Gear" call assignedKey];
+							_target = nil;
+							_group = nil;
+							_bounties = [];
+							{
+								_bounty = server getVariable [format["CRIMbounty%1",_x],0];
+								if(_bounty > 0) then {
+									_bounties pushback [_x,_bounty];
+								};
+							}foreach(OT_allTowns);
+							if(count _bounties > 0) then {
+								_sorted = [_bounties,[],{(server getvariable (_x select 0)) distance player},"ASCEND"] call BIS_fnc_sortBy;
+								_first = _sorted select 0;
+								_town = _first select 0;
+															
+								[player,server getVariable [format["CRIMleader%1",_town],0],format["Kill the gang leader in %1",_town],format["There is a gang causing trouble in %1 and a bounty on the leader's head. I should go and take care of that considering NATO doesn't seem to be.",_town],{},format["CRIMleader%1",_town]] spawn assignMission;
+							};
 						};
 						[player,_gundealer,[(_this select 0),"I agree. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","Local businessmen are always setting bounties on the gang leaders around Tanoa, go and claim a few!","Alright.. thanks","No problem, just come back if you need more ammunition or anything else the stores won't sell you."],_end] spawn doConversation;					
 						player addItemToUniform OT_item_BasicGun;

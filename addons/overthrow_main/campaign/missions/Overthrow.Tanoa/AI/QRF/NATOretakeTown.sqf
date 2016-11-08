@@ -225,7 +225,7 @@ sleep 20;
 	_tskid = _this select 3;
 	_airgroups = _this select 4;
 	
-	_first = _soldiers select 0;
+	_first = _soldiers select ((count _soldiers) - 1);
 	waitUntil {(_first distance _attackpos) < 1000};
 	
 	_townpop = server getVariable [format["population%1",_town],0];

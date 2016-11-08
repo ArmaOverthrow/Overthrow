@@ -57,23 +57,78 @@ if(isMultiplayer or _startup == "LOAD") then {
 	
 	if(!_newplayer) then {		
 		_housepos = player getVariable "home";		
-		if(isNil "_housepos") exitWith {hint "null home";_newplayer = true};
+		if(isNil "_housepos") exitWith {_newplayer = true};
 		_town = _housepos call nearestTown;
 		_pos = server getVariable _town;
 		
-		_owned = player getVariable "owned";
+		_owned = player getVariable ["owned",[]];
+		_nowowned = [];
+		_leased = player getVariable ["leased",[]];
 		{
-			_x setVariable ["owner",getPlayerUID player,true];
-			_mrkName = format["%1",_x];
-			if((markerpos _mrkName) select 0 == 0) then {
-				_mrkName = createMarkerLocal [_mrkName,getpos _x];
-				_mrkName setMarkerShape "ICON";
-				_mrkName setMarkerType "loc_Tourism";
-				_mrkName setMarkerColor "ColorWhite";
-				_mrkName setMarkerAlpha 0;
+			if(typename _x == "ARRAY") then {
+				//old save with positions
+				_mrkName = format["bdg-%1",_x];
+				_buildings = (_x nearObjects ["Building",8]);
+				if(count _buildings > 0) then {
+					_bdg = _buildings select 0;
+					_bdg setVariable ["owner",getplayeruid player,true];				
+					if((typeof _bdg) != OT_policeStation) then {
+						_mrkName = createMarkerLocal [_mrkName,_x];
+						_mrkName setMarkerShape "ICON";
+						_mrkName setMarkerType "loc_Tourism";
+						_mrkName setMarkerColor "ColorWhite";
+						_mrkName setMarkerAlpha 0;
+						_mrkName setMarkerAlphaLocal 1;
+					};
+					if(_x in _leased) then {
+						_bdg setVariable ["leased",true,true];
+					};
+					_nowowned pushback ([_bdg] call fnc_getBuildID);
+				};
+			}else{
+				//new save with IDs
+				if (typename _x == "SCALAR") then {
+					_bdg = OT_centerPos nearestObject _x;
+					if !(isNil "_bdg") then {
+						_bdg setVariable ["owner",getplayeruid player,true];				
+						if(_bdg isKindOf "Building") then {
+							_mrkName = format["bdg-%1",_x];
+							_mrkName = createMarkerLocal [_mrkName,getpos _bdg];
+							_mrkName setMarkerShape "ICON";
+							_mrkName setMarkerType "loc_Tourism";
+							_mrkName setMarkerColor "ColorWhite";
+							_mrkName setMarkerAlpha 0;
+							_mrkName setMarkerAlphaLocal 1;
+						};
+						if(_x in _leased) then {
+							_bdg setVariable ["leased",true,true];
+						};
+					};
+				};
 			};
-			_mrkName setMarkerAlphaLocal 1;
-		}foreach(_owned);       
+		}foreach(_owned);
+		/*
+		{
+			if((_x getVariable ["owner",""]) == (getplayeruid player)) then {
+				if(_x isKindOf "Building") then {
+					_mrkName = format["bdg-%1",_x];
+					_mrkName = createMarkerLocal [_mrkName,getpos _x];
+					_mrkName setMarkerShape "ICON";
+					_mrkName setMarkerType "loc_Tourism";
+					_mrkName setMarkerColor "ColorWhite";
+					_mrkName setMarkerAlpha 0;
+					_mrkName setMarkerAlphaLocal 1;
+				};
+				if(_x in _leased) then {
+					_x setVariable ["leased",true,true];
+				};
+			};
+		}foreach(allMissionObjects "Building");
+		*/
+
+		if(count _nowowned > 0) then {
+			player setvariable ["owned",_nowowned,true];
+		};
 		
 		{
 			if(_x call hasOwner) then {
@@ -182,7 +237,7 @@ if (_newplayer) then {
         };
         _x setVariable ["owner",getplayerUID player,true];
     }foreach(_furniture);   
-    player setVariable ["owned",[_house],true];
+    player setVariable ["owned",[[_house] call fnc_getBuildID],true];
     
     _mrkName = format["home-%1",getPlayerUID player];
     if((markerpos _mrkName) select 0 == 0) then {

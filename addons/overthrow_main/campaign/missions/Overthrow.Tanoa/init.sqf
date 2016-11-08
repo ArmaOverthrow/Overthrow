@@ -44,7 +44,6 @@ if(!isMultiplayer) then {
     [] execVM "virtualization\mobsters.sqf";
     
     missionNamespace setVariable [getplayeruid player,player,true];
-    addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
     if(OT_hasAce) then {
         //ACE events
         ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;

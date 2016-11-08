@@ -10,7 +10,7 @@ overviewPicture = "\ot\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
 author="ARMAzac";
 briefingName = "Overthrow Tanoa";
 OnLoadName = "Overthrow Tanoa";
-OnLoadMission = "v0.5.4";
+OnLoadMission = "v0.5.5";
 loadScreen = "\ot\campaign\missions\Overthrow.Tanoa\pic.jpg";
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;
@@ -43,3 +43,11 @@ showBinocular=1;
 showNotepad=1;
 showWatch=1;
 debriefing=1;
+
+class Extended_Killed_EventHandlers {
+class CAManBase {
+	class ADDON {
+		killed = "call compile preprocessFileLineNumbers 'events\entityKilled.sqf'";
+	};
+};
+};

@@ -1,7 +1,5 @@
-
-
 _me = _this select 0;
-_killer = _this select 1;
+_killer = _me getVariable "ace_medical_lastDamageSource";
 _killer setVariable ["lastkill",time,true];
 _town = (getpos _me) call nearestTown;
 
@@ -50,21 +48,15 @@ call {
 		};
 		if((random 100) > 50) then {
 			[_town,1] call stability;
+			format["%1 (+1 Stability)",_town] remoteExec ["notify_minor",0,false];
 		};
 		_standingChange = 1;
 		[_killer,10] call rewardMoney;
 	};
 	if(!isNil "_crimleader") exitWith {
 		[_town,10] call stability;
-		
-		if(_killer call hasOwner) then {
-			_owner = _killer getVariable "owner";
-			if(_owner != "self") then {
-				_k = spawner getvariable _owner;
-				if(!isNil "_k") then {_killer = _k};
-			};
-		};
-		
+		format["%1 (+10 Stability)",_town] remoteExec ["notify_minor",0,false];
+	
 		_standingChange = 10;
 		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
 		if(_bounty > 0) then {
@@ -85,7 +77,7 @@ call {
 			server setVariable [format["CRIMbounty%1",_town],0,true];
 		};
 
-		_leader = server getVariable [format["crimleader%1",_x],false];
+		_leader = server getVariable [format["crimleader%1",_town],false];
 		if (typename _leader == "ARRAY") then {		
 			server setVariable [format["crimleader%1",_town],false,true];
 		};
@@ -110,6 +102,7 @@ call {
 					_stab = -2;
 				};
 				[_town,_stab] call stability;
+				format["%1 (%2 Stability)",_town,_stab] remoteExec ["notify_minor",0,false];
 			};
 			if(isPlayer _killer) then {
 				_standingChange = -1;
@@ -135,7 +128,10 @@ if(captive _killer and ((_killer call unitSeen) or ((vehicle _killer) != _killer
 	_killer setCaptive false;				
 };
 if(isPlayer _killer) then {
-	if (_standingChange != 0) then {
+	if (_standingChange == -1) then {
+		[_town,_standingChange] remoteExec ["standing",_killer,true];
+	};
+	if (_standingChange == -10) then {
 		[_town,_standingChange,"You killed a civilian"] remoteExec ["standing",_killer,true];
 	};
 };	

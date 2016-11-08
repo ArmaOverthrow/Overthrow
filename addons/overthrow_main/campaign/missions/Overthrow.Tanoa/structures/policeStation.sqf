@@ -25,6 +25,4 @@ if(isNil "_garrison") then {
 	spawner setVariable [format["despawn%1",_town],_despawn,false];
 };
 
-_post remoteExec ["initPoliceStationLocal",0,_post];
-
 

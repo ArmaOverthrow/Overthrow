@@ -4,9 +4,6 @@ _unit = _this select 0;
 
 _town = _this select 1;
 
-[_unit, (OT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (OT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
-
 _unit setVariable ["garrison",_town,false];
 
 _stability = server getVariable format["stability%1",_town];

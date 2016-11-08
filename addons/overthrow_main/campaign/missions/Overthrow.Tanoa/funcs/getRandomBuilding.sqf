@@ -9,8 +9,8 @@ _house = false;
 while {not _found} do {					
 	_houses = nearestObjects [_search, _types, _range];
 	_possible = [];
-	if(count _houses > 3) then {
-		{if !(_x call hasOwner or [getpos _x,"blacklist_1"] call fnc_isInMarker) then {_possible pushback _x}}foreach(_houses);
+	if(count _houses > 0) then {
+		{if !(_x call hasOwner) then {_possible pushback _x}}foreach(_houses);
 		if(count _possible > 0) then {
 			_house = _possible call BIS_fnc_selectRandom;		
 			_found = true;	

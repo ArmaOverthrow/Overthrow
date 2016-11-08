@@ -37,7 +37,6 @@ waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\military.sqf";
 [] execVM "virtualization\mobsters.sqf";
 
-addMissionEventHandler ["EntityKilled",compile preprocessFileLineNumbers "events\entityKilled.sqf"];
 if(OT_hasAce) then {
     //ACE events
     ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
