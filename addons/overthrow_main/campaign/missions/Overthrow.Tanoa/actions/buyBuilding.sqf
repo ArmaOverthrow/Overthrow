@@ -44,6 +44,13 @@ if(_handled) then {
 		_mrk setMarkerColor "ColorWhite";
 		_mrk setMarkerAlpha 0;
 		_mrk setMarkerAlphaLocal 1;
+		
+		if(typeof _building == OT_warehouse) then {
+			_mrk setMarkerType "mil_box";
+			_mrk setMarkerColor "ColorGUER";
+			_mrk setMarkerAlpha 1;
+		};
+		
 		_owned pushback ([_building] call fnc_getBuildID);
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {

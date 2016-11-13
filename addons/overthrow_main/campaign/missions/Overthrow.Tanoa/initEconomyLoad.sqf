@@ -8,6 +8,8 @@
     };
 }foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameLocal","Airport"], 50000]);
 
+OT_allActiveShops = [];
+
 //Stability markers
 {
     _stability = server getVariable format["stability%1",_x];
@@ -46,6 +48,9 @@
     if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
         [_x] call setupTownEconomy;
     };
+	
+	_shops = server getVariable [format["activeshopsin%1",_x],[]];
+	[OT_allActiveShops,_shops] call BIS_fnc_arrayPushStack;
 	
 	//place animals
 	[nearestBuilding _posTown, OT_allTownAnimals, _mSize+400] call BIS_fnc_animalSiteSpawn;

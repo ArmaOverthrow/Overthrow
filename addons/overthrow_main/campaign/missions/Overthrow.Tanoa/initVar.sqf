@@ -4,7 +4,7 @@ private ["_allPrimaryWeapons","_allHandGuns","__allLaunchers"];
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 4;
+OT_economyVersion = 5;
 OT_NATOversion = 2;
 OT_CRIMversion = 1;
 

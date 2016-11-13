@@ -2,7 +2,7 @@ private ["_shops","_active","_posTown"];
 
 _town    = _this select 0;
 _posTown = server getVariable _town;
-
+_stability = server getVariable format["stability%1",_town];
 _shops   = 0;
 _active  = [];
 
@@ -11,10 +11,10 @@ if(count _churches > 0) then {
 	server setVariable [format["churchin%1",_town],getpos (_churches select 0),true];	
 };
 
-{   
+{  
     if !(_x call hasOwner) then {
         //spawn any main shops
-        if((random 100 > 20)) then {
+        if((random 120 < _stability)) then {
             _shops        = _shops + 1;
             _stock        = [];
             _itemsToStock = [];

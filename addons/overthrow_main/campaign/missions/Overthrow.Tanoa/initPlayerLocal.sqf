@@ -99,6 +99,12 @@ if(isMultiplayer or _startup == "LOAD") then {
 							_mrkName setMarkerColor "ColorWhite";
 							_mrkName setMarkerAlpha 0;
 							_mrkName setMarkerAlphaLocal 1;
+							
+							if(typeof _bdg == OT_warehouse) then {
+								_mrkName setMarkerType "mil_box";
+								_mrkName setMarkerColor "ColorGUER";
+								_mrkName setMarkerAlpha 1;
+							};
 						};
 						if(_x in _leased) then {
 							_bdg setVariable ["leased",true,true];
@@ -223,7 +229,7 @@ if (_newplayer) then {
     _light setLightAmbient[.9, .9, .6];
     _light setLightColor[.5, .5, .4];
 
-    _house setVariable ["owner",getPlayerUID player,true];
+    _house setVariable ["owner",getPlayerUID player,true];	
     player setVariable ["home",_housepos,true];
 
     _furniture = (_house call spawnTemplate) select 0;
