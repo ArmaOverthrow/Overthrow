@@ -31,6 +31,7 @@ _end = time + 5;
 {
 	_count = 0;
 	_cls = _x select 0;
+	
 	_full = false;
 	while {_count < (_x select 1)} do {	
 		if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd _cls)) exitWith {

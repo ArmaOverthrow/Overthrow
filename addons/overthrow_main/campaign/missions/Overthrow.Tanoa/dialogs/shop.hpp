@@ -75,19 +75,6 @@ class OT_dialog_sell
 {
 	idd=-1;
 	movingenable=false;
-	
-	class controlsBackground {
-		class RscStructuredText_1199: RscStructuredText
-		{
-			idc = 1199;
-			x = 0.242187 * safezoneW + safezoneX;
-			y = 0.214 * safezoneH + safezoneY;
-			w = 0.654844 * safezoneW;
-			h = 0.572 * safezoneH;
-			colorBackground[] = {0.1,0.1,0.1,1};
-			colorActive[] = {0.1,0.1,0.1,1};
-		};
-	}
 
 	class controls
 	{

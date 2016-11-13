@@ -22,6 +22,10 @@ if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+   player linkItem "tf_anprc148jem";
+};
+
 _start = [1385.17,505.453,1.88826];
 _introcam = "camera" camCreate _start;
 _introcam camSetTarget [1420,535,5.8];
@@ -191,6 +195,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 
 if (_newplayer) then {
     _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
+	player forceAddUniform _clothes;
     player setVariable ["uniform",_clothes,true];
     player setVariable ["money",100,true];
     player setVariable ["owner",getplayerUID player,true];

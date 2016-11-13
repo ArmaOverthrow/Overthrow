@@ -34,7 +34,11 @@ _civ selectWeapon "Rangefinder";
 _civ linkItem "ItemMap";
 _civ linkItem "ItemCompass";
 _civ linkItem "ItemWatch";
-_civ linkItem "ItemRadio";
+if(OT_hasTFAR) then {
+	_unit linkItem "tf_anprc148jem";
+}else{
+	_unit linkItem "ItemRadio";
+};
 
 _posright = [_pos,[[1.5104,-0.4,4.34404], (getDir _post)-180] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _civ =  _group createUnit ["I_Spotter_F",_posright,[],0,"NONE"];

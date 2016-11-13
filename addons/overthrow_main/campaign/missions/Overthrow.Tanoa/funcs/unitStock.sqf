@@ -12,11 +12,23 @@ if(_this isKindOf "Man") then {
 };
 if !(isNil "_myitems") then {
 	{
-		if !(_x in _done) then {
-			_done pushback _x;
-			_items pushback [_x,1];
+		_cls = _x;
+		if(OT_hasTFAR) then {
+			_c = _cls splitString "_";
+			if((_c select 0) == "tf") then {
+				_cls = "tf";
+				{
+					if(_forEachIndex == (count _c)-1) exitWith {};
+					if(_forEachIndex != 0) then {
+						_cls = format["%1_%2",_cls,_x];
+					};
+				}foreach(_c);
+			};
+		};
+		if !(_cls in _done) then {
+			_done pushback _cls;
+			_items pushback [_cls,1];
 		}else {
-			_cls = _x;
 			{
 				if((_x select 0) == _cls) then {
 					_x set [1,(_x select 1)+1];				

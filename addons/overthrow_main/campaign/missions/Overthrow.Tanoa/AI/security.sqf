@@ -11,7 +11,11 @@ removeAllAssignedItems _unit;
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit linkItem "ItemRadio";
+if(OT_hasTFAR) then {
+	_unit linkItem "tf_anprc152";
+}else{
+	_unit linkItem "ItemRadio";
+};
 
 if(OT_hasAce) then {
 	_unit addItemToVest "ACE_fieldDressing";

@@ -30,7 +30,10 @@ _unit addHeadgear "H_Bandanna_khk_hs";
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
 _unit addVest (OT_allExpensiveVests call BIS_fnc_selectRandom);
-_unit linkItem "ItemRadio";
+if(OT_hasTFAR) then {
+	_unit linkItem "tf_fadak";
+}else{
+	;
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
 	_unit linkItem "NVGoggles_OPFOR";

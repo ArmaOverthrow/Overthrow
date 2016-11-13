@@ -69,9 +69,17 @@ if !(_done) then {
 };
 
 [(_price*_qty)] call money;
-
+_ocls = _cls;
 _b setVariable ["stock",_s,true];
 for "_i" from 0 to _qty do {
+	if(OT_hasTFAR) then {
+		_c = _ocls splitString "_";
+		if((_c select 0) == "tf") then {
+			{			
+				if(_x find _ocls == 0) exitWith {_cls = _x};
+			}foreach(items player);
+		};
+	};
 	player removeItem _cls;
 };
 OT_selling = false;

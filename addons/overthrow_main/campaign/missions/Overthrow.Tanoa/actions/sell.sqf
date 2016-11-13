@@ -59,7 +59,16 @@ if !(_done) then {
 };
 
 [_price] call money;
-_b setVariable ["stock",_s,true];	
+_b setVariable ["stock",_s,true];
+
+if(OT_hasTFAR) then {
+	_c = _cls splitString "_";
+	if((_c select 0) == "tf") then {
+		{			
+			if(_x find _cls == 0) exitWith {_cls = _x};
+		}foreach(items player);
+	};
+};
 player removeItem _cls;
 lbClear 1500;
 _mystock = player call unitStock;

@@ -31,7 +31,11 @@ if((random 100) > 50) then {
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
 _unit addVest (OT_allProtectiveVests call BIS_fnc_selectRandom);
-_unit linkItem "ItemRadio";
+if(OT_hasTFAR) then {
+	_unit linkItem "tf_fadak";
+}else{
+	_unit linkItem "ItemRadio";
+};
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
 	_unit linkItem "NVGoggles_OPFOR";

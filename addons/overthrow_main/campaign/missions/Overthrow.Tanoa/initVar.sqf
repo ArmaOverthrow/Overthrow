@@ -54,11 +54,18 @@ OT_allFarmAnimals = ["Hen_random_F","Cock_random_F","Sheep_random_F"];
 OT_allVillageAnimals = ["Hen_random_F","Cock_random_F"];
 OT_allTownAnimals = ["Alsatian_Random_F","Fin_random_F"];
 
+_miscables = [OT_item_Map,OT_item_Safe,"Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"];
+
+if(OT_hasACE) then {
+	_miscables pushback "ACE_Wheel";
+	_miscables pushback "ACE_Track";
+};
+
 OT_Placeables = [
 	["Sandbags",20,["Land_BagFence_01_long_green_F","Land_BagFence_01_short_green_F","Land_BagFence_01_round_green_F","Land_BagFence_01_corner_green_F","Land_BagFence_01_end_green_F"],[0,3,0.8]],
 	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2]],
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2]],
-	["Misc",30,[OT_item_Map,OT_item_Safe,"Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"],[0,2,1.2]],
+	["Misc",30,_miscables,[0,2,1.2]],
 	["Deploy",500,["B_Boat_Transport_01_F","I_HMG_01_high_F","I_HMG_01_F"],[0,2.3,2]]
 ];
 
@@ -233,6 +240,18 @@ if(OT_hasAce) then {
 	]] call BIS_fnc_arrayPushStack;
 };
 
+if(OT_hasTFAR) then {
+	[OT_items,[
+		["tf_anprc148jem",20,0,0,0.1],
+		["tf_anprc152",20,0,0,0.1],
+		["tf_fadak",20,0,0,0.5],
+		["tf_pnr1000a",10,0,0,0.5],
+		["tf_rf7800str",10,0,0,0.5]
+	]] call BIS_fnc_arrayPushStack;
+}else{
+	OT_items pushback ["ItemRadio",20,0,0,1];
+};
+
 [OT_items,[
 	["ToolKit",25,1,0,0],
 	["ItemGPS",60,0,0,1],
@@ -240,8 +259,7 @@ if(OT_hasAce) then {
 	["ItemMap",1,0,0,0],
 	["ItemWatch",30,0,0,1],
 	["Binocular",70,0,0,1],
-	["Rangefinder",130,0,0,1],
-	["ItemRadio",20,0,0,1]
+	["Rangefinder",130,0,0,1]	
 ]] call BIS_fnc_arrayPushStack;
 
 OT_staticBackpacks = [
@@ -271,6 +289,18 @@ OT_backpacks = [
 	["B_Bergen_dgtl_F",100,0,0,1],
 	["B_Bergen_hex_F",100,0,0,1]
 ];
+
+if(OT_hasTFAR) then {
+	[OT_backpacks,[
+		["tf_anprc155",100,0,0,0.1],
+		["tf_anarc210",150,0,0,0.1],
+		["tf_anarc164",20,0,0,0.5],
+		["tf_anprc155_coyote",10,0,0,0.5]
+	]] call BIS_fnc_arrayPushStack;
+};
+
+
+
 OT_boats = [
 	["C_Scooter_Transport_01_F",150,1,0,1],	
 	["C_Boat_Civil_01_rescue_F",300,1,1,1],
