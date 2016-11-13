@@ -77,18 +77,22 @@ if(typename _data != "ARRAY") exitWith {
 				{
 					_cls = _x select 0;
 					_num = _x select 1;
+					
 					call {
+						if(_cls == "money") exitWith {
+							_veh setVariable ["money",_num,true];
+						};
 						if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-							_veh addWeaponCargoGlobal [_cls,1];
+							_veh addWeaponCargoGlobal [_cls,_num];
 						};
 						if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-							_veh addWeaponCargoGlobal [_cls,1];
+							_veh addWeaponCargoGlobal [_cls,_num];
 						};
 						if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-							_veh addMagazineCargoGlobal [_cls,1];
+							_veh addMagazineCargoGlobal [_cls,_num];
 						};
 						if(_cls isKindOf "Bag_Base") exitWith {
-							_veh addBackpackCargoGlobal [_cls,1];
+							_veh addBackpackCargoGlobal [_cls,_num];
 						};
 						_veh addItemCargoGlobal _x;
 					};	

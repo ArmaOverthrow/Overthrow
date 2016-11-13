@@ -83,6 +83,7 @@ sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
 policeDialog = compileFinal preProcessFileLineNumbers "UI\policeDialog.sqf";
 warehouseDialog = compileFinal preProcessFileLineNumbers "UI\warehouseDialog.sqf";
+inputDialog = compileFinal preProcessFileLineNumbers "UI\inputDialog.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";

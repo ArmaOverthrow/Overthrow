@@ -12,6 +12,11 @@ if(typeof _this == OT_item_Map) then {
 	},nil,0,false,true,"",""];			
 	
 };
+if(typeof _this == OT_item_Safe) then {
+	_this addAction ["Put Money", "actions\putMoney.sqf",nil,0,false,true,"",""];
+	_this addAction ["Take Money", "actions\takeMoney.sqf",nil,0,false,true,"",""];
+	_this addAction ["Set Password", "actions\setPassword.sqf",nil,0,false,true,"","(_target getVariable ['owner','']) == getplayeruid _this"];	
+};
 if(typeof _this == OT_item_Tent) exitWith {
 	_camp = player getVariable ["camp",objNull];
 	if !(isNull _camp) then {

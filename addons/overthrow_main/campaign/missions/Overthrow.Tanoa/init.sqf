@@ -4,7 +4,10 @@
  * 
  * https://github.com/armazac/Overthrow.Tanoa
  */
-
+if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
+	_txt = format ["<t size='0.5' color='#000000'>Overthrow addon not detected, you must add @Overthrow to your -mod commandline</t>",_this]; 
+    [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
+};
 
 inGameUISetEventHandler ["PrevAction", ""];
 inGameUISetEventHandler ["Action", ""];

@@ -9,9 +9,15 @@ OT_NATOversion = 2;
 OT_CRIMversion = 1;
 
 OT_hasAce = false;
-if (!isNil "ace_common_settingFeedbackIcons") then {
+if (isClass (configFile >> "CfgPatches" >> "ace_ui")) then {
 	OT_hasAce = true;
 };
+
+OT_hasTFAR = false;
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	OT_hasTFAR = true;
+};
+
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
 OT_spawnCivPercentage = 0.08;
@@ -40,6 +46,7 @@ OT_item_Map = "Land_MapBoard_F";
 OT_item_Repair = "Land_ToolTrolley_02_F";
 OT_item_Tent = "Land_TentDome_F";
 OT_item_Flag = "Flag_HorizonIslands_F";
+OT_item_Safe = "Land_MetalCase_01_small_F";
 
 OT_allLowAnimals = ["Rabbit_F","Turtle_F"];
 OT_allHighAnimals = ["Goat_random_F"];
@@ -51,7 +58,7 @@ OT_Placeables = [
 	["Sandbags",20,["Land_BagFence_01_long_green_F","Land_BagFence_01_short_green_F","Land_BagFence_01_round_green_F","Land_BagFence_01_corner_green_F","Land_BagFence_01_end_green_F"],[0,3,0.8]],
 	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2]],
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2]],
-	["Misc",30,[OT_item_Map,OT_item_Repair,"Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"],[0,2,1.2]],
+	["Misc",30,[OT_item_Map,OT_item_Safe,"Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"],[0,2,1.2]],
 	["Deploy",500,["B_Boat_Transport_01_F","I_HMG_01_high_F","I_HMG_01_F"],[0,2.3,2]]
 ];
 
