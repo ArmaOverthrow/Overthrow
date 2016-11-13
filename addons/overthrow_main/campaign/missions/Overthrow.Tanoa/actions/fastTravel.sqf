@@ -9,6 +9,12 @@ if((vehicle player) != player) then {
 openMap true;
 
 ["fastTravel", "onMapSingleClick", {
+	private _starttown = player call nearestTown;
+	private _region = server getVariable format["region_%1",_starttown];
+	if !([_pos,_region] call fnc_isInMarker) exitWith {
+		"You cannot fast travel between islands" call notify_minor;
+		openMap false;
+	};
 	if(_pos distance player < 150) exitWith {
 		"You cannot fast travel less than 150m. Just walk!" call notify_minor;
 		openMap false;

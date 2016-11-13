@@ -92,7 +92,17 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.65'>Founded by %2</t>
 				",_building getVariable "name",_ownername];
 			};
+			
 			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
+			
+			if(typeof _building == OT_warehouse) exitWith {
+				ctrlEnable [1609,false];
+			
+				_buildingTxt = format["
+					<t align='left' size='0.8'>Warehouse</t><br/>
+					<t align='left' size='0.65'>Owned by %1</t>
+				",_ownername];
+			};
 			
 			if(_building getVariable ["leased",false]) then {
 				ctrlEnable [1609,false];
@@ -123,6 +133,9 @@ if(typename _b == "ARRAY") then {
 		ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
 		ctrlEnable [1609,false];
 		ctrlEnable [1610,false];
+		if(typeof _building == OT_warehouse) exitWith {
+			_buildingTxt = "<t align='left' size='0.8'>Warehouse</t>";
+		};
 		_buildingTxt = format["
 			<t align='left' size='0.8'>%1</t><br/>
 			<t align='left' size='0.65'>Lease Value: $%2/hr</t>

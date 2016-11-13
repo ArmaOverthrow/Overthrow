@@ -137,6 +137,82 @@ class OT_dialog_vehicle
 	}
 }
 
+class OT_dialog_vehiclewarehouse
+{
+	idd=-1;
+	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1103: RscStructuredText
+		{
+			idc = 1103;
+
+			text = "";
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+	};
+	
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
+		////////////////////////////////////////////////////////
+
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Fast Travel"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "closeDialog 0;[] spawn fastTravel;";
+			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Take From"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.654 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Take from the warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;createDialog ""OT_dialog_warehouse"";[] call warehouseDialog;";
+		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Store All"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Stores the contents of this vehicle in the warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferTo;";
+		};
+		class RscButton_1603: RscButton
+		{
+			idc = 1603;
+			text = "Take Legit"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.566 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Takes all legal (sellable) items from the warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferLegit;";
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+
+	}
+}
+
 class OT_dialog_command
 {
 	idd=-1;

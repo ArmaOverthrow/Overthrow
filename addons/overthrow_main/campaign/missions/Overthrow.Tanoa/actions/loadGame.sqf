@@ -32,6 +32,12 @@ if(typename _data != "ARRAY") exitWith {
 			_mrkid setMarkerText _name;
 		}foreach(_val);
 	};
+	if(_key == "warehouse") then {
+		{
+			_cls = _x select 0;
+			warehouse setVariable [_cls,_x,true];
+		}foreach(_val);
+	};
 	if(_key == "vehicles") then {
 		_set = false;
 		{
@@ -72,14 +78,17 @@ if(typename _data != "ARRAY") exitWith {
 					_cls = _x select 0;
 					_num = _x select 1;
 					call {
-						if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) exitWith {
-							_veh addWeaponCargoGlobal _x;
+						if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+							_veh addWeaponCargoGlobal [_cls,1];
+						};
+						if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+							_veh addWeaponCargoGlobal [_cls,1];
 						};
 						if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-							_veh addMagazineCargoGlobal _x;
+							_veh addMagazineCargoGlobal [_cls,1];
 						};
 						if(_cls isKindOf "Bag_Base") exitWith {
-							_veh addBackpackCargoGlobal _x;
+							_veh addBackpackCargoGlobal [_cls,1];
 						};
 						_veh addItemCargoGlobal _x;
 					};	

@@ -30,6 +30,7 @@ giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
+displayWarehousePic = compileFinal preProcessFileLineNumbers "funcs\displayWarehousePic.sqf";
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
 canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
@@ -81,6 +82,7 @@ buyClothesDialog = compileFinal preProcessFileLineNumbers "UI\buyClothesDialog.s
 sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
 policeDialog = compileFinal preProcessFileLineNumbers "UI\policeDialog.sqf";
+warehouseDialog = compileFinal preProcessFileLineNumbers "UI\warehouseDialog.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -141,6 +143,7 @@ transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
 transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
 talkToCiv = compileFinal preProcessFileLineNumbers "actions\talkToCiv.sqf";
 addPolice = compileFinal preProcessFileLineNumbers "actions\addPolice.sqf";
+warehouseTake = compileFinal preProcessFileLineNumbers "actions\warehouseTake.sqf";
 
 //Modes
 placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";

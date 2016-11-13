@@ -8,7 +8,7 @@ class EditorData
 	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=1860;
+		nextID=1863;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=125;
+		nextID=131;
 	};
 	class Camera
 	{
-		pos[]={11650.592,23.617928,3098.2451};
-		dir[]={0.05677253,-0.35712317,0.93245697};
-		up[]={0.021715941,0.93395948,0.35664409};
-		aside[]={0.99828118,-2.0644948e-006,-0.060783774};
+		pos[]={7121.4829,170.85294,7173.0264};
+		dir[]={-0.64564049,-0.57237124,0.50556821};
+		up[]={-0.45072752,0.8199271,0.35294104};
+		aside[]={0.61654562,-2.667075e-007,0.78736776};
 	};
 };
 binarizationWanted=0;
@@ -639,7 +639,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=73;
+		items=74;
 		class Item0
 		{
 			dataType="Logic";
@@ -656,12 +656,12 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={6964.0986,2.6599121,7372.5869};
+				position[]={6951.3999,2.6601276,7369.8564};
 			};
 			name="spawner";
 			id=170;
 			type="Logic";
-			atlOffset=-8.7976456e-005;
+			atlOffset=0.00012755394;
 		};
 		class Item2
 		{
@@ -5728,6 +5728,17 @@ class Mission
 				};
 				nAttributes=3;
 			};
+		};
+		class Item73
+		{
+			dataType="Logic";
+			class PositionInfo
+			{
+				position[]={6951.25,2.6600001,7365.313};
+			};
+			name="warehouse";
+			id=1860;
+			type="Logic";
 		};
 	};
 	class Connections

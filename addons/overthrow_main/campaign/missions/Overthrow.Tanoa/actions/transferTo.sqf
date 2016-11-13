@@ -1,43 +1,81 @@
-_veh = vehicle player;
+_target = vehicle player;
 
-if(_veh == player) exitWith {};
+if(_target == player) exitWith {};
+private _objects = [];
 
-_objects = [];
-{
-	if(_x != _veh) then {_objects pushback _x};
-}foreach(player nearEntities [["LandVehicle",OT_item_Storage,OT_items_distroStorage select 0],20]);
+private _b = player call getNearestRealEstate;
+private _iswarehouse = false;
+if(typename _b == "ARRAY") then {
+	_building = _b select 0;
+	if((typeof _building) == OT_warehouse and _building call hasOwner) then {
+		_iswarehouse = true;
+	};
+	_objects = [_building];
+};
+
+if(!_iswarehouse) then {
+	{
+		if(_x != _target) then {_objects pushback _x};
+	}foreach(player nearEntities [["LandVehicle","ReammoBox_F"],20]);
+};
 
 if(count _objects == 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call notify_minor;
 };
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
-_target = _sorted select 0;
+_veh = _sorted select 0;
 
-"Transferring cargo to container" call notify_minor;
+private _toname = (typeof _veh) call ISSE_Cfg_Vehicle_GetName;
+if(_iswarehouse) then {_toname = "Warehouse"};
+
+format["Transferring inventory to %1",_toname] call notify_minor;
 [5,false] call progressBar;	
 sleep 5;
-{
-	_count = 0;
-	_cls = _x select 0;
-	while {_count < (_x select 1)} do {	
-		_count = _count + 1;
-		call {
-			if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) exitWith {
-				_target addWeaponCargoGlobal [_cls,1];
+if(_iswarehouse) then {
+	{	
+		_cls = _x select 0;
+		_d = warehouse getVariable [(_x select 0),[_cls,0]];		
+		_num = _x select 1;
+		_in =  _d select 1;
+		warehouse setVariable[_cls,[_cls,_in + _num],true];		
+	}foreach(_target call unitStock);
+	clearMagazineCargoGlobal _target;
+	clearWeaponCargoGlobal _target;
+	clearBackpackCargoGlobal _target;
+	clearItemCargoGlobal _target;
+}else{
+	{
+		_count = 0;
+		_cls = _x select 0;
+		_full = false;
+		while {_count < (_x select 1)} do {	
+			if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd _cls)) exitWith {
+				_full = true;
 			};
-			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-				_target addMagazineCargoGlobal [_cls,1];
-			};
-			if(_cls isKindOf "Bag_Base") exitWith {
-				_target addBackpackCargoGlobal [_cls,1];
-			};
-			_target addItemCargoGlobal [_cls,1];
-		};		
-	};
-}foreach(_veh call unitStock);
-clearMagazineCargoGlobal _veh;
-clearWeaponCargoGlobal _veh;
-clearItemCargoGlobal _veh;
-clearBackpackCargoGlobal _veh;
+			_count = _count + 1;
+			call {
+				if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+					_veh addWeaponCargoGlobal [_cls,1];
+					[_target, _cls, 1] call CBA_fnc_removeWeaponCargoGlobal;
+				};
+				if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+					_veh addWeaponCargoGlobal [_cls,1];
+					[_target, _cls, 1] call CBA_fnc_removeWeaponCargoGlobal;
+				};
+				if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+					_veh addMagazineCargoGlobal [_cls,1];
+					[_target, _cls, 1] call CBA_fnc_removeMagazineCargoGlobal;
+				};
+				if(_cls isKindOf "Bag_Base") exitWith {
+					_veh addBackpackCargoGlobal [_cls,1];
+					[_target, _cls, 1] call CBA_fnc_removeBackpackCargoGlobal;
+				};
+				_veh addItemCargoGlobal [_cls,1];
+				[_target, _cls, 1] call CBA_fnc_removeItemCargoGlobal;
+			};		
+		};
+		if(_full) exitWith {hint "The vehicle is full, use a truck or ammobox for more storage"};
+	}foreach(_target call unitStock);
+};
 
-"Cargo Transfer done" call notify_minor;
+"Inventory Transfer done" call notify_minor;

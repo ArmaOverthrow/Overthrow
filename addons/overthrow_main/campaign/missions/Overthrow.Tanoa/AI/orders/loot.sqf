@@ -3,6 +3,8 @@ private ["_sorted","_target","_deadguys","_wasincar","_unit","_t","_got","_timeo
 _sorted = [];
 _myunits = groupSelectedUnits player;
 
+_active = true;
+
 _tt = _myunits select 0;
 if(vehicle _tt != _tt) then {
 	_sorted = [vehicle _tt];
@@ -40,9 +42,12 @@ _tt groupChat format["Looting nearby bodies into the %1",(typeof _target) call I
 		waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 2) or (_timeOut < time) or (unitReady _unit)};		
 		if(!alive _unit or (isNull _t) or (_timeOut < time)) exitWith {};
 		
-		[_unit,_t] call dumpStuff;
+		if !([_unit,_t] call dumpStuff) then {
+			_unit globalchat "This vehicle is full, cancelling loot order";
+			_active = false;
+		};			
 				
-		while {true} do {
+		while {true and _active} do {
 			_deadguys = [];
 			{
 				if !((_x distance player > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
@@ -101,10 +106,14 @@ _tt groupChat format["Looting nearby bodies into the %1",(typeof _target) call I
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 2) or (_timeOut < time) or (unitReady _unit)};		
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 			
-			[_unit,_t] call dumpStuff;
+			if !([_unit,_t] call dumpStuff) exitWith {
+				_unit globalchat "This vehicle is full, cancelling loot order";
+				_active = false;
+			};			
+			
 			sleep 1;
 		};
-		while {true} do {
+		while {true and _active} do {
 			_got = false;
 			_weapon = objNull;
 			{

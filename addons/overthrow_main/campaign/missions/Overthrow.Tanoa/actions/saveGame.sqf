@@ -60,6 +60,12 @@ _count = 10001;
 sleep 0.2;
 _data pushback ["vehicles",_vehicles];
 
+_warehouse = [];
+{
+	_warehouse pushback (warehouse getVariable _x);
+}foreach(allvariables warehouse);
+_data pushback ["warehouse",_warehouse];
+
 _recruits = [];
 {
 	_do = true;
