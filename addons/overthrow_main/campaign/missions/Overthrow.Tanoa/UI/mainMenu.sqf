@@ -92,7 +92,18 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.65'>Founded by %2</t>
 				",_building getVariable "name",_ownername];
 			};
+			
 			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
+			
+			if(typeof _building == OT_warehouse) exitWith {
+				ctrlEnable [1609,true];
+				ctrlSetText [1609,"Procurement"];
+			
+				_buildingTxt = format["
+					<t align='left' size='0.8'>Warehouse</t><br/>
+					<t align='left' size='0.65'>Owned by %1</t>
+				",_ownername];
+			};
 			
 			if(_building getVariable ["leased",false]) then {
 				ctrlEnable [1609,false];
@@ -119,14 +130,43 @@ if(typename _b == "ARRAY") then {
 				<t align='left' size='0.65'>Owned by %2</t>
 			",_name,_ownername];
 		};
+		if(typeof _building == OT_barracks) then {
+			_owner = _building getVariable "owner";
+			_ownername = server getVariable format["name%1",_owner];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,true];
+			ctrlSetText [1609,"Recruit"];
+			//ctrlEnable [1609,false];
+			//ctrlEnable [1610,false];
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Barracks</t><br/>
+				<t align='left' size='0.65'>Built by %1</t>
+			",_ownername];
+		};
 	}else{
 		ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
 		ctrlEnable [1609,false];
 		ctrlEnable [1610,false];
+		if(typeof _building == OT_warehouse) exitWith {
+			_buildingTxt = "<t align='left' size='0.8'>Warehouse</t>";
+		};
 		_buildingTxt = format["
 			<t align='left' size='0.8'>%1</t><br/>
 			<t align='left' size='0.65'>Lease Value: $%2/hr</t>
 		",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+		
+		if(typeof _building == OT_barracks) then {			
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,false];
+			ctrlEnable [1610,false];
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Barracks</t><br/>
+			",_ownername];
+		};
 	};	
 	
 	if(typeof _building == OT_policeStation) then {
@@ -135,7 +175,7 @@ if(typename _b == "ARRAY") then {
 		ctrlSetText [1608,"Sell"];
 		ctrlEnable [1608,false];
 		ctrlSetText [1609,"Manage"];
-		//ctrlEnable [1609,false];
+		ctrlEnable [1609,true];
 		//ctrlEnable [1610,false];
 
 		_buildingTxt = format["
@@ -143,10 +183,48 @@ if(typename _b == "ARRAY") then {
 			<t align='left' size='0.65'>Built by %1</t>
 		",_ownername];
 	};
+	
+	if(typeof _building == "Land_Cargo_House_V4_F") then {
+		_owner = _building getVariable "owner";
+		_ownername = server getVariable format["name%1",_owner];
+		ctrlSetText [1608,"Sell"];
+		ctrlEnable [1608,false];
+		ctrlEnable [1609,false];
+		//ctrlEnable [1610,false];
+
+		_buildingTxt = format["
+			<t align='left' size='0.8'>Workshop</t><br/>
+			<t align='left' size='0.65'>Built by %1</t>
+		",_ownername];
+	};
 }else{
-	ctrlEnable [1608,false];
-	ctrlEnable [1609,false];
-	ctrlEnable [1610,false];	
+	private _ob = (getpos player) call nearestObjective;
+	_ob params ["_obpos","_obname"];
+	if(_obpos distance player < 250) then {
+		if(_obname in (server getVariable ["NATOabandoned",[]])) then {
+			ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+			_buildingTxt = format["
+				<t align='left' size='0.8'>%1</t><br/>
+				<t align='left' size='0.65'>Under resistance control</t>
+			",_obname];
+			ctrlEnable [1609,true];
+		}else{
+			ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\nato_ca.paa"];
+			_buildingTxt = format["
+				<t align='left' size='0.8'>%1</t><br/>
+				<t align='left' size='0.65'>Under NATO control</t>
+			",_obname];
+			ctrlEnable [1609,false];
+		};
+		ctrlSetText [1608,"Sell"];
+		ctrlEnable [1608,false];
+		ctrlSetText [1609,"Procurement"];
+		ctrlEnable [1610,false];
+	}else{
+		ctrlEnable [1608,false];
+		ctrlEnable [1609,false];
+		ctrlEnable [1610,false];
+	};
 };
 
 

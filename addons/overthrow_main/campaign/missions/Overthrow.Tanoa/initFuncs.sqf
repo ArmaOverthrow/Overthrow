@@ -30,6 +30,7 @@ giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
 eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
+displayWarehousePic = compileFinal preProcessFileLineNumbers "funcs\displayWarehousePic.sqf";
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
 canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
@@ -37,6 +38,13 @@ progressBar = compileFinal preProcessFileLineNumbers "funcs\progressBar.sqf";
 getRealEstateData = compileFinal preProcessFileLineNumbers "funcs\getRealEstateData.sqf";
 revealToNATO = compileFinal preProcessFileLineNumbers "funcs\revealToNATO.sqf";
 revealToCRIM = compileFinal preProcessFileLineNumbers "funcs\revealToCRIM.sqf";
+findScopeInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findScopeInWarehouse.sqf";
+findWeaponInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findWeaponInWarehouse.sqf";
+findVestInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findVestInWarehouse.sqf";
+findHelmetInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findHelmetInWarehouse.sqf";
+removeFromWarehouse = compileFinal preProcessFileLineNumbers "funcs\removeFromWarehouse.sqf";
+getSoldier = compileFinal preProcessFileLineNumbers "funcs\getSoldier.sqf";
+createSoldier = compileFinal preProcessFileLineNumbers "funcs\createSoldier.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
@@ -81,6 +89,11 @@ buyClothesDialog = compileFinal preProcessFileLineNumbers "UI\buyClothesDialog.s
 sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
 workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
 policeDialog = compileFinal preProcessFileLineNumbers "UI\policeDialog.sqf";
+warehouseDialog = compileFinal preProcessFileLineNumbers "UI\warehouseDialog.sqf";
+inputDialog = compileFinal preProcessFileLineNumbers "UI\inputDialog.sqf";
+importDialog = compileFinal preProcessFileLineNumbers "UI\importDialog.sqf";
+recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
+buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 
 //QRF
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
@@ -130,6 +143,7 @@ leaseBuilding = compileFinal preProcessFileLineNumbers "actions\leaseBuilding.sq
 recruitCiv = compileFinal preProcessFileLineNumbers "actions\recruitCiv.sqf";
 rearmGroup = compileFinal preProcessFileLineNumbers "actions\rearmGroup.sqf";
 recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
+recruitSquad = compileFinal preProcessFileLineNumbers "actions\recruitSquad.sqf";
 fastTravel = compileFinal preProcessFileLineNumbers "actions\fastTravel.sqf";
 setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
 giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
@@ -141,6 +155,11 @@ transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
 transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
 talkToCiv = compileFinal preProcessFileLineNumbers "actions\talkToCiv.sqf";
 addPolice = compileFinal preProcessFileLineNumbers "actions\addPolice.sqf";
+warehouseTake = compileFinal preProcessFileLineNumbers "actions\warehouseTake.sqf";
+exportAll = compileFinal preProcessFileLineNumbers "actions\exportAll.sqf";
+import = compileFinal preProcessFileLineNumbers "actions\import.sqf";
+restoreLoadout = compileFinal preProcessFileLineNumbers "actions\restoreLoadout.sqf";
+removeLoadout = compileFinal preProcessFileLineNumbers "actions\removeLoadout.sqf";
 
 //Modes
 placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
@@ -256,6 +275,14 @@ setupKeyHandler = {
     (findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
 };
 
+setAIFace = {
+	(_this select 0) setFace (_this select 1);
+};
+
+setAISpeaker = {
+	(_this select 0) setSpeaker (_this select 1);
+};
+
 assignedKey = {
 	(cba_keybinding_dikDecToStringTable select ((actionKeys _this) select 0)+1) select 1
 };
@@ -280,6 +307,7 @@ loadPlayerData = {
 	private _player = _this;
 	_newplayer = true;
 	_data = server getvariable (getplayeruid _player);
+	_count = 0;
     if !(isNil "_data") then {
         _newplayer = false;
         {
@@ -288,7 +316,13 @@ loadPlayerData = {
 			if !(isNil "_val") then {
 				_player setVariable [_key,_val,true];
 			};
+			_count = _count + 1;
+			if(_count > 50) then {
+				_count = 0;
+				sleep 0.1;
+			};
         }foreach(_data);        
+		
     };
 	
 	_loadout = server getvariable format["loadout%1",getplayeruid _player];
@@ -358,7 +392,7 @@ money = {
     if(_amount > 0) then {
         _plusmin = "+";
     };
-    format["%1$%2",_plusmin,_amount] call notify_minor;
+    format["%1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber] call notify_minor;
     
 };
 

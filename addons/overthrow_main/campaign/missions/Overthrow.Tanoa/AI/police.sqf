@@ -7,8 +7,8 @@ _unit forceAddUniform (OT_clothes_police call BIS_fnc_selectRandom);
 _unit addVest OT_vest_police;
 _unit addHeadgear OT_hat_police;
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _unit];
+[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _unit];
 
 _unit setVariable ["polgarrison",_town,false];
 

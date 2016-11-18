@@ -48,8 +48,7 @@ if(_numCRIM > 0) then {
 		_civ setBehaviour "SAFE";			
 		
 		_wp = _group addWaypoint [_leaderpos,0];
-		_wp setWaypointType "GUARD";				
-		sleep 0.1;
+		_wp setWaypointType "GUARD";
 	}else{
 		_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
 		_group setBehaviour "CARELESS";	
@@ -90,7 +89,6 @@ if(_numCRIM > 0) then {
 		_civ setBehaviour "SAFE";
 		
 		_count = _count + 1;
-		sleep 0.1;		
 	};
 	{
 		_x addCuratorEditableObjects [units _group,true];

@@ -11,8 +11,8 @@ _group setFormDir _dir;
 
 _posleft = [_pos,[[-1.5104,-0.4,4.34404], (getDir _post)-180] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _civ =  _group createUnit ["I_Spotter_F",_posleft,[],0,"NONE"];
-[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
-[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];             
+[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _civ];
+[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _civ];             
 _civ disableAI "MOVE";
 _civ disableAI "AUTOCOMBAT";
 _civ setVariable ["NOAI",true,false];
@@ -34,12 +34,16 @@ _civ selectWeapon "Rangefinder";
 _civ linkItem "ItemMap";
 _civ linkItem "ItemCompass";
 _civ linkItem "ItemWatch";
-_civ linkItem "ItemRadio";
+if(OT_hasTFAR) then {
+	_unit linkItem "tf_anprc148jem";
+}else{
+	_unit linkItem "ItemRadio";
+};
 
 _posright = [_pos,[[1.5104,-0.4,4.34404], (getDir _post)-180] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;
 _civ =  _group createUnit ["I_Spotter_F",_posright,[],0,"NONE"];
-[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
-[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];             
+[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _civ];
+[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _civ];             
 _civ disableAI "MOVE";
 _civ disableAI "AUTOCOMBAT";
 _civ setVariable ["NOAI",true,false];

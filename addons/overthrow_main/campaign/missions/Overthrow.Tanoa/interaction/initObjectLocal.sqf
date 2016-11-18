@@ -12,27 +12,15 @@ if(typeof _this == OT_item_Map) then {
 	},nil,0,false,true,"",""];			
 	
 };
-if(typeof _this == OT_item_Tent) exitWith {
-	_camp = player getVariable ["camp",objNull];
-	if !(isNull _camp) then {
-		_fire = _camp getVariable "fire";
-		deleteVehicle _fire;
-		deleteVehicle _camp;
-	};
-	_mrkid = format["%1-camp",getplayeruid player];
-	createMarkerLocal [_mrkid,getpos _this];
-	_mrkid setMarkerPos (getpos _this);
-	_mrkid setMarkerShape "ICON";
-	_mrkid setMarkerType "loc_Bunker";
-	_mrkid setMarkerColor "ColorWhite";
-	_mrkid setMarkerAlpha 0;
-	_mrkid setMarkerAlphaLocal 1;
-	_mrkid setMarkerText "Camp";
-	
-	_pos = [(getpos _this),1.2,getDir _this] call BIS_fnc_relPos;
-	_fire = "Land_Campfire_F" createVehicle _pos;
-	_this setVariable ["fire",_fire,false];
-	player setvariable ["camp",_this,false];
+if(typeof _this == OT_item_Storage) then {
+	_this addAction ["Dump Everything", {[player,_this select 0] call dumpStuff},nil,0,false,true,"",""];		
+	_this addAction ["Save Loadout", "actions\saveLoadout.sqf",nil,0,false,true,"",""];
+	_this addAction ["Restore Loadout", "UI\loadoutDialog.sqf",nil,0,false,true,"",""];	
+};
+if(typeof _this == OT_item_Safe) then {
+	_this addAction ["Put Money", "actions\putMoney.sqf",nil,0,false,true,"",""];
+	_this addAction ["Take Money", "actions\takeMoney.sqf",nil,0,false,true,"",""];
+	_this addAction ["Set Password", "actions\setPassword.sqf",nil,0,false,true,"","(_target getVariable ['owner','']) == getplayeruid _this"];	
 };
 
 if(typeof _this == "Land_Cargo_House_V4_F") then {

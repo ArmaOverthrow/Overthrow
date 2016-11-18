@@ -25,7 +25,7 @@ class OT_dialog_start
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
-			action = "closeDialog 0;'actions\loadGame.sqf' remoteExec ['execVM',2];";
+			action = "closeDialog 0;'actions\loadGame.sqf' remoteExec ['execVM',2,false];";
 
 			text = "Load Persistent Save"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;
@@ -37,7 +37,7 @@ class OT_dialog_start
 		class RscButton_1601: RscButton
 		{
 			idc = 1601;
-			action = "closeDialog 0;[] remoteExec ['newGame',2];";
+			action = "closeDialog 0;[] remoteExec ['newGame',2,false];";
 
 			text = "New Game"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;
@@ -129,6 +129,147 @@ class OT_dialog_vehicle
 			h = 0.077 * safezoneH;
 			tooltip = "Transfers only legal (sellable) items from the closest container into this vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn transferLegit;";
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+
+	}
+}
+
+class OT_dialog_vehiclewarehouse
+{
+	idd=-1;
+	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1103: RscStructuredText
+		{
+			idc = 1103;
+
+			text = "";
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+	};
+	
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
+		////////////////////////////////////////////////////////
+
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Fast Travel"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "closeDialog 0;[] spawn fastTravel;";
+			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Take From"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.654 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Take from the warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;createDialog ""OT_dialog_warehouse"";[] call warehouseDialog;";
+		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Store All"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Stores the contents of this vehicle in the warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferTo;";
+		};
+		class RscButton_1603: RscButton
+		{
+			idc = 1603;
+			text = "Take Legit"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.566 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Takes all legal (sellable) items from the warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn transferLegit;";
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+
+	}
+}
+
+class OT_dialog_vehicleport
+{
+	idd=-1;
+	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1103: RscStructuredText
+		{
+			idc = 1103;
+
+			text = "";
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 1 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+		};
+	};
+	
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
+		////////////////////////////////////////////////////////
+
+		class RscButton_1600: RscButton
+		{
+			idc = 1600;
+			text = "Fast Travel"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "closeDialog 0;[] spawn fastTravel;";
+			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Import"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.654 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Import items from the global market"; //--- ToDo: Localize;
+			action = "closeDialog 0;createDialog ""OT_dialog_import"";[] call importDialog;";
+		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Export All"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.566 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Exports the contents of this vehicle"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn exportAll;";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -318,7 +459,7 @@ class OT_dialog_main
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;
-			action = "closeDialog 0;[] call fastTravel";
+			action = "closeDialog 0;[] spawn fastTravel";
 
 			text = "Fast Travel"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
@@ -526,18 +667,28 @@ class OT_dialog_char
 			y = 0.423 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.044 * safezoneH;
-			action="[] call buyFitness;"
+			action="[""fitness""] call buyPerk;";
 		};
 		class RscStructuredText_1101: RscStructuredText
 		{
 			idc = 1101;
-			text = "<t size=""2"">TBC</t><br/><t size=""1.1"">Level 1</t><br/>More perks coming soon"; //--- ToDo: Localize;
+			text = "Increase Level (-10 Influence)"; //--- ToDo: Localize;
 			x = 0.427812 * safezoneW + safezoneX;
 			y = 0.269 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.143 * safezoneH;
 			colorBackground[] = {0,0,0,0.3};
 			colorActive[] = {0,0,0,0.3};
+		};
+		class RscButton_1601: RscButton
+		{
+			idc = 1601;
+			text = "Increase Level (-10 Influence)"; //--- ToDo: Localize;
+			x = 0.427812 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.044 * safezoneH;
+			action="[""trade""] call buyPerk;";
 		};
 		class RscStructuredText_1102: RscStructuredText
 		{

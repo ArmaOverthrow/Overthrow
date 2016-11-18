@@ -18,7 +18,6 @@ _groups = [_group];
 	_t = _pos call nearestTown;
 	if(_t == _town) then {
 		_tracked = _building call spawnTemplate;
-		sleep 0.2;
 		_vehs = _tracked select 0;
 		[_groups,_vehs] call BIS_fnc_arrayPushStack;
 		

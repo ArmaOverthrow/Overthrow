@@ -2,7 +2,7 @@ private ["_shops","_active","_posTown"];
 
 _town    = _this select 0;
 _posTown = server getVariable _town;
-
+_stability = server getVariable format["stability%1",_town];
 _shops   = 0;
 _active  = [];
 
@@ -11,10 +11,10 @@ if(count _churches > 0) then {
 	server setVariable [format["churchin%1",_town],getpos (_churches select 0),true];	
 };
 
-{   
+{  	
     if !(_x call hasOwner) then {
         //spawn any main shops
-        if((random 100 > 20)) then {
+        if(_shops < 5) then {
             _shops        = _shops + 1;
             _stock        = [];
             _itemsToStock = [];
@@ -54,6 +54,7 @@ _active = [];
 {   
     if !(_x call hasOwner) then {
         if((random 100) > 60) then {
+			_bdgid = [_x] call fnc_getBuildID;
             _pos   = getpos _x;
             _stock = [];
             {
@@ -63,7 +64,10 @@ _active = [];
                 _max = 20;
                 if(_base > 40) then {
                     _max = 5;
-                };          
+                };        
+				if(_x in OT_allBackpacks) then {
+					_max = 2;
+				};
                 
                 _num = floor(random _max);
                 if(_x in OT_consumableItems) then {
@@ -73,7 +77,7 @@ _active = [];
                     _stock pushBack [_x,_num];
                 };
             }foreach(OT_allItems + OT_allBackpacks);
-            server setVariable [format["garrison%1",(getpos _x)],2 + round(random 4),true];
+            server setVariable [format["garrison%1",_bdgid],2 + round(random 4),true];
             _active pushback [(getpos _x),_stock];
         };
     };

@@ -146,14 +146,14 @@ class OT_dialog_buildobjective
 		class RscButton_1604: RscButton
 		{
 			idc = 1604;
-			action = "'Helipad' call build";
+			action = "'Warehouse' call build";
 
-			text = "Helipad"; //--- ToDo: Localize;
+			text = "Warehouse"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Apparently helicopter pilots need to be told where they are allowed to land"; //--- ToDo: Localize;
+			tooltip = "Stores and retrieves items from all warehouses"; //--- ToDo: Localize;
 		};
 		class RscButton_1605: RscButton
 		{
@@ -265,14 +265,14 @@ class OT_dialog_buildtown
 		class RscButton_1603: RscButton
 		{
 			idc = 1603;
-			action = "'Bunkers' call build";
+			action = "'Warehouse' call build";
 
-			text = "Bunkers"; //--- ToDo: Localize;
+			text = "Warehouse"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Small defensive structures"; //--- ToDo: Localize;
+			tooltip = "Store items"; //--- ToDo: Localize;
 		};
 		class RscButton_1604: RscButton
 		{

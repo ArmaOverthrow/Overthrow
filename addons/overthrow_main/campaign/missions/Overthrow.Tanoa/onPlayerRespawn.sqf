@@ -10,6 +10,12 @@ waitUntil {alive player};
 player setCaptive true;
 player allowDamage false;
 
+private _money = player getVariable ["money",0];
+private _take = floor(_money * 0.25);
+if(_take > 0) then {
+	[-_take] call money;
+};
+
 removeHeadgear player;
 removeAllWeapons player;
 removeAllAssignedItems player;

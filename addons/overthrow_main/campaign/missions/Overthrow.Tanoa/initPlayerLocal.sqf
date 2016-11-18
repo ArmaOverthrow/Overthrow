@@ -11,6 +11,11 @@ removeBackpack player;
 removeHeadgear player;
 removeVest player;
 
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	call TFAR_fnc_sendVersionInfo;
+    "task_force_radio_pipe" callExtension "dummy";
+};
+
 player linkItem "ItemMap";
 
 server setVariable [format["name%1",getplayeruid player],name player,true];
@@ -19,7 +24,15 @@ spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		call TFAR_fnc_sendVersionInfo;
+		"task_force_radio_pipe" callExtension "dummy";
+	};
     call compile preprocessFileLineNumbers "initVar.sqf";
+};
+
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+   player linkItem "tf_anprc148jem";
 };
 
 _start = [1385.17,505.453,1.88826];
@@ -99,6 +112,12 @@ if(isMultiplayer or _startup == "LOAD") then {
 							_mrkName setMarkerColor "ColorWhite";
 							_mrkName setMarkerAlpha 0;
 							_mrkName setMarkerAlphaLocal 1;
+							
+							if(typeof _bdg == OT_warehouse) then {
+								_mrkName setMarkerType "mil_box";
+								_mrkName setMarkerColor "ColorGUER";
+								_mrkName setMarkerAlpha 1;
+							};
 						};
 						if(_x in _leased) then {
 							_bdg setVariable ["leased",true,true];
@@ -152,8 +171,8 @@ if(isMultiplayer or _startup == "LOAD") then {
 			if(typename _civ == "ARRAY") then {
 				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 				_civ setVariable ["owner",getplayeruid player,true];
-				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
-				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
+				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _civ];
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _civ];            
 				_civ setUnitLoadout _loadout;
 				_civ spawn wantedSystem;
 				_civ setName _name;
@@ -185,6 +204,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 
 if (_newplayer) then {
     _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
+	player forceAddUniform _clothes;
     player setVariable ["uniform",_clothes,true];
     player setVariable ["money",100,true];
     player setVariable ["owner",getplayerUID player,true];
@@ -223,7 +243,7 @@ if (_newplayer) then {
     _light setLightAmbient[.9, .9, .6];
     _light setLightColor[.5, .5, .4];
 
-    _house setVariable ["owner",getPlayerUID player,true];
+    _house setVariable ["owner",getPlayerUID player,true];	
     player setVariable ["home",_housepos,true];
 
     _furniture = (_house call spawnTemplate) select 0;
@@ -254,10 +274,7 @@ _count = 0;
 { 
 	if !(_x isKindOf "Vehicle") then {
 		if(_x call hasOwner) then {
-			_owner = _x getVariable ["owner",""];
-			if((_owner == getplayeruid player) or (typeof _x == OT_item_Map)) then {
-				_x call initObjectLocal;
-			};
+			_x call initObjectLocal;
 		}; 
 	};
 	if(_count > 5000) then {
@@ -332,6 +349,7 @@ if(_newplayer) then {
 		player setVariable ["tute",true,true];
 	};
 };
+
 _introcam cameraEffect ["Terminate", "BACK" ];
 _introcam = nil;
 

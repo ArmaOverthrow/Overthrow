@@ -45,8 +45,12 @@ _vehicles = [];
 _count = 10001;
 {
 	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != OT_item_Flag)) then {
-		_owner = _x getVariable ["owner",false];		
-		_vehicles pushback [typeof _x,getpos _x,getdir _x,_x call unitStock,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
+		_owner = _x getVariable ["owner",false];
+		_s = _x call unitStock;
+		if(typeof _x == OT_item_safe) then {
+			_s pushback ["money",_x getVariable ["money",0]];
+		};
+		_vehicles pushback [typeof _x,getpos _x,getdir _x,_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
 		_done pushback _x;
 	};
 	if(_count > 2000) then {
@@ -59,6 +63,15 @@ _count = 10001;
 
 sleep 0.2;
 _data pushback ["vehicles",_vehicles];
+
+_warehouse = [];
+{
+	_var = warehouse getVariable _x;
+	if (!isNil "_var") then {
+		_warehouse pushback _var;
+	};
+}foreach(allvariables warehouse);
+_data pushback ["warehouse",_warehouse];
 
 _recruits = [];
 {

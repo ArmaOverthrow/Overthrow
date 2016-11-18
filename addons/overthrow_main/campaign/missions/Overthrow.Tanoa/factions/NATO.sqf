@@ -8,54 +8,69 @@ OT_NATOcomms = [];
 
 _NATObusy = false;
 _abandoned = [];
+OT_NATOobjectives = server getVariable ["NATOobjectives",[]];
+OT_NATOcomms = server getVariable ["NATOcomms",[]];
+
 if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {	
 	server setVariable ["NATOversion",OT_NATOversion,false];
+	_abandoned = server getVariable ["NATOabandoned",[]];
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0,false];
 	sleep 0.1;
 	{
 		_stability = server getVariable format ["stability%1",_x];
-		if(_stability < 11) then {
+		if(_stability < 11 and !(_x in _abandoned)) then {
 			_abandoned pushback _x;
 		};
 	}foreach (OT_allTowns);
 	server setVariable ["NATOabandoned",_abandoned,true];
 	server setVariable ["garrisonHQ",1000,false];
+	OT_NATOobjectives = [];
+	OT_NATOcomms = [];
+	server setVariable ["NATOobjectives",OT_NATOobjectives,false];
+	server setVariable ["NATOcomms",OT_NATOcomms,false];
 	
 	//Find military objectives
 	{
 		_name = text _x;// Get name
 		_pos=getpos _x;
-		
-		//if its in the whitelist, within the NATO home region, or an airport, NATO lives here
-		if !(_name in OT_NATOblacklist) then {
-			if((_name in OT_NATOwhitelist) || ([_pos,OT_NATOregion] call fnc_isInMarker) || (_name in OT_allAirports)) then {	
-				
-				if((_name find "Comms") == 0) then {
-					OT_NATOcomms pushBack [_pos,_name];			
-				}else{
-					OT_NATOobjectives pushBack [_pos,_name];
-					server setVariable [format ["vehgarrison%1",_name],[],true];
-				};			
-				
-				_garrison = floor(4 + random(8));
-				if(_name in OT_NATO_priority) then {
-					_garrison = floor(16 + random(8));
-					server setVariable [format ["vehgarrison%1",_name],["B_T_MBT_01_arty_F","B_HMG_01_high_F","B_HMG_01_high_F","B_T_Mortar_01_F"],true];					
+		if !(_name in _abandoned) then {			
+			//if its in the whitelist, within the NATO home region, or an airport, NATO lives here
+			if !(_name in OT_NATOblacklist) then {
+				if((_name in OT_NATOwhitelist) || ([_pos,OT_NATOregion] call fnc_isInMarker) || (_name in OT_allAirports)) then {	
+					
+					if((_name find "Comms") == 0) then {
+						OT_NATOcomms pushBack [_pos,_name];						
+					}else{
+						OT_NATOobjectives pushBack [_pos,_name];
+						server setVariable [format ["vehgarrison%1",_name],[],true];
+					};			
+					
+					_garrison = floor(4 + random(8));
+					if(_name in OT_NATO_priority or _name in OT_allAirports) then {
+						_garrison = floor(16 + random(8));
+						server setVariable [format ["vehgarrison%1",_name],["B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];					
+					};
+					if(_name == OT_NATO_HQ) then {
+						_garrison = 48;
+						server setVariable [format ["vehgarrison%1",_name],["B_T_MBT_01_arty_F","B_T_MBT_01_arty_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_T_Mortar_01_F","B_T_Mortar_01_F"],true];	
+						server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
+					}else{
+						server setVariable [format ["airgarrison%1",_name],[],true];
+					};
+					server setVariable [format ["garrison%1",_name],_garrison,true];				
 				};
 				if(_name == OT_NATO_HQ) then {
-					_garrison = 48;
-					server setVariable [format ["vehgarrison%1",_name],["B_T_MBT_01_arty_F","B_T_MBT_01_arty_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_T_Mortar_01_F","B_T_Mortar_01_F"],true];	
-					server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
-				}else{
-					server setVariable [format ["airgarrison%1",_name],[],true];
+					OT_NATO_HQPos = getpos _x;
 				};
-				server setVariable [format ["garrison%1",_name],_garrison,true];				
+				
+				sleep 0.05;
 			};
-			if(_name == OT_NATO_HQ) then {
-				OT_NATO_HQPos = getpos _x;
-			};
-			
-			sleep 0.05;
+		}else{
+			if((_name find "Comms") == 0) then {
+				OT_NATOcomms pushBack [_pos,_name];			
+			}else{
+				OT_NATOobjectives pushBack [_pos,_name];
+			};	
 		};
 	}foreach (nearestLocations [OT_centerPos, ["NameLocal","Airport"], 12000]);
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
@@ -138,12 +153,10 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			};
 		};
 		server setVariable [format ["garrison%1",_x],_garrison,true];
-		server setVariable [format ["garrisonadd%1",_x], 0,false];
 		sleep 0.05;
 	}foreach (OT_allTowns);
 };
-OT_NATOobjectives = server getVariable "NATOobjectives";
-OT_NATOcomms = server getVariable "NATOcomms";
+
 
 OT_NATOInitDone = true;
 publicVariable "OT_NATOInitDone";
@@ -196,9 +209,8 @@ while {true} do {
 				_need = _garrison - _current;
 				if(_need < 0) then {_need = 0};
 				if(_need > 1) then {
-					_garrisoned = true;
-					server setVariable [format ["garrisonadd%1",_x], 2,false];
-					server setVariable [format ["garrison%1",_x],_current+2,true];
+					_garrisoned = true;					
+					_x spawn reGarrisonTown;
 				};			
 			}else{
 				server setVariable [format ["garrison%1",_town],0,true];

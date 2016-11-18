@@ -70,10 +70,8 @@ while {_count < _numCiv} do {
 		_civ setBehaviour "SAFE";
 		[_civ] call initCivilian;		
 		_count = _count + 1;
-		_groupcount = _groupcount + 1;
-		sleep 0.1;
+		_groupcount = _groupcount + 1;		
 	};
 	_group spawn civilianGroup;
-	sleep (0.01 * _pergroup);
 };	
 _groups

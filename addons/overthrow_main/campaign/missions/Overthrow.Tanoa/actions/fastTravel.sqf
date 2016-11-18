@@ -1,4 +1,5 @@
 if !(captive player) exitWith {"You cannot fast travel while wanted" call notify_minor};
+if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call notify_minor};
 
 if((vehicle player) != player) then {
 	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call notify_minor};
@@ -9,10 +10,9 @@ if((vehicle player) != player) then {
 openMap true;
 
 ["fastTravel", "onMapSingleClick", {
-	if(_pos distance player < 150) exitWith {
-		"You cannot fast travel less than 150m. Just walk!" call notify_minor;
-		openMap false;
-	};
+	private _starttown = player call nearestTown;
+	private _region = server getVariable format["region_%1",_starttown];
+	
 	private _handled = false;
 
 	_buildings =  _pos nearObjects [OT_item_Tent,30];
@@ -25,6 +25,25 @@ openMap true;
 			_handled = true;		
 		};
 	};
+	
+	_ob = _pos call nearestObjective;
+	_valid = true;
+	_ob params ["_obpos","_obname"];
+	_validob = (_obpos distance _pos < 50) and (_obname in OT_allAirports);
+	if !(_validob) then {
+		if (!OT_adminMode and !([_pos,_region] call fnc_isInMarker)) then {
+			_valid = false;
+			"You cannot fast travel between islands unless your destination is a controlled airfield" call notify_minor;
+			openMap false;
+		};
+	};
+	if(!_valid) exitWith {};
+	if(_pos distance player < 150) exitWith {
+		"You cannot fast travel less than 150m. Just walk!" call notify_minor;
+		openMap false;
+	};
+	
+	if(OT_adminMode) then {_handled = true};
 
 	if !(_handled) then {
 		
@@ -68,5 +87,8 @@ openMap true;
 			openMap false;
 		};
 	};
-	["fastTravel", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 }, nil] call BIS_fnc_addStackedEventHandler;
+
+waitUntil {!visibleMap};
+
+["fastTravel", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;

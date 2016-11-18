@@ -1,8 +1,3 @@
-private ["_uniqueCounter","_allspawners","_id","_start","_end"];
-
-diag_virt = 0;
-publicVariable "diag_virt";
-
 OT_spawnUniqueCounter = -1;
 
 OT_allspawners = [];
@@ -30,19 +25,9 @@ OT_fnc_registerSpawner = {
     OT_spawnUniqueCounter = OT_spawnUniqueCounter + 1;
 
     _id = format["spawn%1",OT_spawnUniqueCounter];
-    
-    spawner setvariable [_id,false,true];
-    OT_allspawners pushBack [_id,_start,_end];
-    
-    
-    
-    if(typename _code == "ARRAY")then {
-        {
-            [_id,_start,_end,_params] spawn _x;
-        }foreach(_code);
-    }else{
-        [_id,_start,_end,_params] spawn _code;
-    };
+
+    OT_allspawners pushBack [_id,_start,_end,_code,_params];
+
     OT_spawnUniqueCounter
 };
 publicVariable "OT_fnc_registerSpawner";
@@ -74,36 +59,66 @@ OT_fnc_updateSpawnerPosition = {
     }foreach(OT_allspawners);
 };
 
-_last = time;
+OT_allSpawned = [];
+
+_spawn = {
+	params ["_i","_s","_e","_c","_p"];
+	private _g = _p call _c;
+	spawner setVariable [_i,_g,false];
+};
+
+_despawn = {	
+	params ["_i"];
+	{	
+		if(typename _x == "GROUP") then {
+			{
+				sleep 0.1;				
+				if !(_x call hasOwner) then {
+					deleteVehicle _x;
+				};	
+			}foreach(units _x);
+			deleteGroup _x;					
+		}else{
+			if !(_x call hasOwner) then {
+				deleteVehicle _x;
+			};	
+		};		
+		sleep 0.1;
+	}foreach(spawner getVariable [_i,[]]);
+	spawner setVariable [_i,[],false];
+};
+
 while{true} do {
-    if (time - _last >= 0.5) then {sleep 0.1} else {sleep 0.5 - (time - _last)};
-    diag_virt = time - _last;
-    //hint format["virt %1 @ %2",diag_virt,count OT_allSpawners];
-    _last = time;   
+    sleep 0.1; 
     {
-        _id = _x select 0;
-        _start = _x select 1;
-        _end = _x select 2;
-        _val = spawner getvariable [_id,false];
+        private _id = _x select 0;
+        private _start = _x select 1;
+        private _end = _x select 2;
+		private _spawnidx = OT_allSpawned find _id;
+        private _val = (_spawnidx > -1);
         
         if((_start select 0) == (_end select 0)) then {
             if(_val) then {
                 if !(_start call inSpawnDistance) then {
-                    spawner setvariable [_id,false,false];
+					OT_allSpawned deleteAt _spawnidx;
+					[_id] spawn _despawn;
                 };
             }else{
                 if (_start call inSpawnDistance) then {
-                    spawner setvariable [_id,true,false];
+                    OT_allSpawned pushback _id;
+					_x spawn _spawn;
                 };
             };
         }else{
             if(_val) then {
                 if !((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
-                    spawner setvariable [_id,false,false];
+                    OT_allSpawned deleteAt _spawnidx;
+					[_id] spawn _despawn;
                 };
             }else{
                 if ((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
-                    spawner setvariable [_id,true,false];
+                    OT_allSpawned pushback _id;
+					_x spawn _spawn;
                 };
             };
         };

@@ -6,6 +6,7 @@ private _region = server getVariable format["region_%1",_town];
 
 private _police = [];
 private _support = [];
+private _groups = [];
 
 private _close = nil;
 private _dist = 8000;
@@ -25,8 +26,13 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 }foreach(OT_NATOobjectives);
 
 if(!isNil "_close") then {
+	_current = server setVariable [format ["garrison%1",_x],0];
+	server setVariable [format ["garrison%1",_x],_current+2,true];
+	if !(_townPos call inSpawnDistance) exitWith {};
+	
 	_start = [_close,0,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_group = creategroup blufor;
+	_groups pushback _group;
 	_tgroup = creategroup blufor;
 
 	_spawnpos = _start findEmptyPosition [0,100,OT_NATO_Vehicle_Police];
@@ -48,6 +54,7 @@ if(!isNil "_close") then {
 	[_civ,_town] call initGendarm;
 	_civ setBehaviour "SAFE";
 	sleep 0.01;
+	
 	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
 	
@@ -84,9 +91,11 @@ if(!isNil "_close") then {
 		_x addCuratorEditableObjects [_police+_support,true];
 	} forEach allCurators;
 	
-	[3,_townPos,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad.",_town,2,_closest]] remoteExec ["intelEvent",0,false];
+	[3,_drop,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad and are currently enroute to the marked location.",_town,2,_closest]] remoteExec ["intelEvent",0,false];
+}else{
+	[_town,-4] call stability;
 };
 
 
 
-_police+_support;
+_groups

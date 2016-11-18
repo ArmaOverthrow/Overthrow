@@ -134,7 +134,11 @@ menuHandler = {
 							hint format["The items are in your pocket, you can see it in your inventory (%1 key). Balavu, Rautake and Tavu have shops that will buy them from you as well as locations all over Tanoa. Towns with lower stability will pay higher prices for all items.", "Gear" call assignedKey]
 						};
 						[player,_gundealer,[(_this select 0),"Well I'm not really the guy to help you there, but I have these items laying around","What am I supposed to do with these?","Take them to a shop and sell them I guess"],_end] spawn doConversation;					
-						player addItemToUniform "ItemRadio";
+						if(OT_hasTFAR) then {
+							player addItemToUniform "tf_anprc148jem";
+						}else{
+							player addItemToUniform "ItemRadio";
+						};						
 						player addItemToUniform "ItemWatch";
 					}
 				]

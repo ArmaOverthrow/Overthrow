@@ -5,8 +5,13 @@ _numcrim = _this select 1;
 _town = _this select 2;
 _townPos = server getVariable _town;
 
+_region = server getVariable format["region_%1",_town];
 _mob = _townPos call nearestMobster;
 _mobpos = _mob select 0;
+if !([_mobpos,_region] call fnc_isInMarker) exitWith {[_town,1] call stability};
+
+_num = server getVariable [format ["numcrims%1",_town],0];
+server setVariable [format ["numcrims%1",_town],_num + _numcrim,false];	
 
 _group = creategroup east;
 

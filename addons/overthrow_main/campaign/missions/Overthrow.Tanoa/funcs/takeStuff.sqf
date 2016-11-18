@@ -4,7 +4,7 @@ _unit = _this select 0;
 _t = _this select 1;
 
 if(vest _unit != "") then {
-	if !(typeof(vest _unit) in OT_illegalVests) then {
+	if !(vest _unit in OT_illegalVests) then {
 		_t addVest vest _unit;
 	};
 };
@@ -28,7 +28,7 @@ if(backpack _unit != "") then {
 }foreach(_unit call unitStock);
 
 if(vest _unit != "") then {
-	if !(typeof(vest _unit) in OT_illegalVests) then {
+	if !(vest _unit in OT_illegalVests) then {
 		removeVest _unit;
 	};
 };
@@ -50,7 +50,7 @@ if(handgunWeapon _unit != "") then {
 	_unit removeWeapon handgunWeapon _unit;
 };
 {
-	if (([(configFile >> "CfgWeapons" >> _x),"optics",0] call BIS_fnc_returnConfigEntry) > 0) then {
+	if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
 		_t addWeapon _x;
 		_t assignItem _x; 
 		_unit unassignItem _x;

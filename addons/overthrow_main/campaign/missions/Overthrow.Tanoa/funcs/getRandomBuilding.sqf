@@ -1,11 +1,11 @@
 private ["_found","_range","_houses","_house"];
 
-_search = _this select 0;
-_types = _this select 1;
+private _search = _this select 0;
+private _types = _this select 1;
 
-_found = false;
-_range = 500;
-_house = false;
+private _found = false;
+private _range = 150;
+private _house = false;
 while {not _found} do {					
 	_houses = nearestObjects [_search, _types, _range];
 	_possible = [];
@@ -17,6 +17,7 @@ while {not _found} do {
 		}		
 	};
 	_range = _range + 100;					
+	if(_range > 1200) exitWith {};
 };
 
 _house

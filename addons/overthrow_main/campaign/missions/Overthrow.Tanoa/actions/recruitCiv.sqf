@@ -23,3 +23,6 @@ _civ removeAllEventHandlers "FiredNear";
 
 [player,format["New Recruit: %1",name _civ],format["Recruited: %1 for $%2",name _civ,_price]] call BIS_fnc_createLogRecord;
 format["%1 has been recruited",name _civ] call notify_minor;
+
+_civ setBehaviour "SAFE";
+[[_civ,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP;

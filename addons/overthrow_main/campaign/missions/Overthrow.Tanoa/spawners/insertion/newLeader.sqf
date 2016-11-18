@@ -4,10 +4,18 @@ private ["_pos","_town","_townPos","_drop","_group","_start","_stability","_veht
 
 _leaderpos = _this select 0;
 _numcrim = 2 + (random 4);
-_town = _this select 2;
+_town = _this select 1;
 _townPos = server getVariable _town;
 
+_region = server getVariable format["region_%1",_town];
+_mob = _townPos call nearestMobster;
+_mobpos = _mob select 0;
+if !([_mobpos,_region] call fnc_isInMarker) exitWith {};
+
 server setVariable [format["numcrims%1",_town],_numcrim,false];	
+server setVariable [format["crimleader%1",_town],_leaderpos,false];	
+
+if !(_leaderpos call inSpawnDistance) exitWith {};
 
 _mob = _townPos call nearestMobster;
 _mobpos = _mob select 0;

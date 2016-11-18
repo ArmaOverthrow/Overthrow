@@ -142,13 +142,13 @@ if(_cost > 0) then {
 		detach modeTarget;
 		deleteVehicle modeTarget;
 	}else{		
-		if ([getpos player,_typecls] call canPlace) then {			
-			player setVariable ["money",_money - _cost,true];		
+		if ([getpos player,_typecls] call canPlace) then {						
+			[-_cost] call money;
 			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
 			modeTarget remoteExec ["enableSimulationGlobal true",2];
 			modeTarget enableSimulation true;
 			modeTarget setVariable ["owner",getPlayerUID player,true];
-			modeTarget call initObjectLocal;
+			modeTarget remoteExec["initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {
 				_veh = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
 			};

@@ -18,20 +18,9 @@ _unit addEventHandler ["take", {
 				_me setCaptive false;
 				_me spawn revealToNATO;
 				_me spawn revealToCRIM;
-			}
+			};	
 		};
 	};
-	
-	if(_container isKindOf "Man" and !(_container call hasOwner)) then {
-		_container setVariable ["looted",true,true];
-		[_container] spawn {
-			sleep 300;
-			_n = _this select 0;
-			if!(isNil "_n") then {
-				hideBody (_this select 0);
-			}
-		};
-	};	
 }];
 
 _unit addEventHandler ["Fired", {
@@ -52,7 +41,7 @@ _unit addEventHandler ["Fired", {
 	};
 }];
 
-while {alive _unit} do {
+while {alive _unit} do {	
 	sleep 3;	
 	//check wanted status
 	if !(captive _unit) then {
@@ -191,17 +180,20 @@ while {alive _unit} do {
 				};
 				_base = (getpos player) call nearestObjective;
 				if !(isNil "_base") then {
-					_dist = 200;
-					if(((_base select 1) find "Comm") == 0) then {
-						_dist = 20;
-					};
-					if((_base select 0) distance (getpos player) < _dist) exitWith {	
-						if(isPlayer _unit) then {
-							"You are in a restricted area" call notify_minor;
+					_base params ["_obpos","_obname"];
+					if !(_obname in (server getVariable ["NATOabandoned",[]])) then {
+						_dist = 200;
+						if((_obname find "Comm") == 0) then {
+							_dist = 20;
 						};
-						_unit setCaptive false;	
-						_unit spawn revealToNATO;
-					}
+						if(_obpos distance (getpos player) < _dist) exitWith {	
+							if(isPlayer _unit) then {
+								"You are in a restricted area" call notify_minor;
+							};
+							_unit setCaptive false;	
+							_unit spawn revealToNATO;
+						};
+					};
 				};
 			};			
 		};

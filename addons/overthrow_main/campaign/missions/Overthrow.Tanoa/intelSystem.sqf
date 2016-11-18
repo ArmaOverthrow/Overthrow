@@ -53,7 +53,7 @@ _handler = {
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\igui\cfg\islandmap\iconplayer_ca.paa",
 						_color,
-						getpos _x,
+						visiblePosition  _x,
 						24,
 						24,
 						0
@@ -79,7 +79,7 @@ _handler = {
 				(_this select 0) drawIcon [
 					"iconMan",
 					_color,
-					getpos _x,
+					visiblePosition  _x,
 					24,
 					24,
 					getDir _x,
@@ -102,12 +102,12 @@ _handler = {
 				_passengers = format["%1 %2",_passengers,name _x];				
 			};
 			if !(captive _x) then {_color = [0.5,0,0,1]};
-		}foreach(units _x);
+		}foreach(crew _x);
 		
 		(_this select 0) drawIcon [
 			getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 			_color,
-			getpos _x,
+			visiblePosition  _x,
 			24,
 			24,
 			getdir _x,
@@ -131,7 +131,7 @@ _handler = {
 				if(_ka > 1.4) then {
 					_opacity = (_ka-1.4) / 1;
 					if(_opacity > 1) then {_opacity = 1};
-					_pos = getpos _u;					
+					_pos = visiblePosition  _u;					
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
 						[0,0.3,0.59,_opacity],
@@ -159,7 +159,7 @@ _handler = {
 				if(_ka > 1.4) then {
 					_opacity = (_ka-1.4) / 1;
 					if(_opacity > 1) then {_opacity = 1};
-					_pos = getpos _u;
+					_pos = visiblePosition  _u;
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
 						[0.5,0,0,_opacity],
@@ -190,6 +190,23 @@ _handler = {
 			};
 		};
 	}foreach(vehicles);
+	
+	_scale = ctrlMapScale (_this select 0);
+	if(_scale <= 0.14) then {
+		{
+			(_this select 0) drawIcon [
+				"iconObject_circle",
+				[1,1,1,1],
+				_x select 0,
+				0.5/ctrlMapScale (_this select 0),
+				0.5/ctrlMapScale (_this select 0),
+				0
+			]; 
+		}foreach(OT_allActiveShops);
+	};
+	
+	
+	mapCenter 
 };
 
 if(!isNil "OT_OnDraw") then {

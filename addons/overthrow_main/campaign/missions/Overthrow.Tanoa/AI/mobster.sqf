@@ -18,8 +18,8 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _unit];
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _unit];
+[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _unit];
 _unit forceAddUniform OT_clothes_mob;
 
 removeAllItems _unit;
@@ -35,7 +35,11 @@ _unit addHeadgear "H_Booniehat_khk";
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
 _unit addVest (OT_allProtectiveVests call BIS_fnc_selectRandom);
-_unit linkItem "ItemRadio";
+if(OT_hasTFAR) then {
+	_unit linkItem "tf_fadak";
+}else{
+	_unit linkItem "ItemRadio";
+};
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
 	_unit linkItem "O_NVGoggles_ghex_F";
