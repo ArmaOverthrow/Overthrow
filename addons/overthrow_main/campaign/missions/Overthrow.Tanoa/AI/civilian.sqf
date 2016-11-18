@@ -16,8 +16,8 @@ removeVest _unit;
 
 _unit setVariable ["NOAI",true,false];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _unit];
-[_unit, "NoVoice"] remoteExec ["setSpeaker", 0, _unit];
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _unit];
+[_unit, "NoVoice"] remoteExec ["setAISpeaker", 0, _unit];
 
 _unit forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 

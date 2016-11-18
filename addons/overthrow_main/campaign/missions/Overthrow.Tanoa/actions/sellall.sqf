@@ -1,4 +1,4 @@
-private ["_b","_s","_town","_standing","_cls","_num","_price","_idx","_done"];
+private ["_b","_s","_town","_standing","_cls","_num","_price","_idx","_done","_qty"];
 if (OT_selling) exitWith {};
 
 OT_selling = true;
@@ -28,12 +28,11 @@ _mynum = 0;
 
 if(isNil "_price") exitWith {OT_selling = false};
 
-_pstock = player call unitStock;
 _qty = 0;
 {
 	_c = _x select 0;
 	if(_c == _cls) exitWith {_qty = _x select 1};				
-}foreach(_pstock);
+}foreach(player call unitStock);
 
 if(_qty == 0) exitWith {[_mystock,_town,_standing,_s] call sellDialog};
 

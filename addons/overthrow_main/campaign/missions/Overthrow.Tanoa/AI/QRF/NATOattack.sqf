@@ -164,8 +164,10 @@ while {_count < _numgroups} do {
 	_town = _this select 2;
 	_tskid = _this select 3;
 	
+	_timeout = time + 600;
+	
 	_first = _soldiers select ((count _soldiers) - 1);
-	waitUntil {(_first distance _attackpos) < 1000};
+	waitUntil {sleep 1;((_first distance _attackpos) < 1000) or (time > _timeout)};
 	
 	_townpop = server getVariable [format["population%1",_town],0];
 	

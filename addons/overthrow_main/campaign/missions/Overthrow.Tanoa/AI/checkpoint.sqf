@@ -29,13 +29,15 @@ while {!(isNull _group) and count (units _group) > 0} do {
 			_vehs pushBack [_unit,_x];
 		};
 		if !(_unit in _inrange) then {
-			_inrange pushback _unit;
-			if((isPlayer _unit) and (captive _unit)) then {
-				if(_iscar) then {
-					"Please approach the checkpoint slowly, do NOT exit your vehicle" remoteExec ["notify_talk",_unit,false];
-				}else{
-					"Please approach the checkpoint for a search, citizen" remoteExec ["notify_talk",_unit,true];
-				};			
+			if(_unit call unitSeenNATO) then {
+				_inrange pushback _unit;
+				if((isPlayer _unit) and (captive _unit)) then {
+					if(_iscar) then {
+						"Please approach the checkpoint slowly, do NOT exit your vehicle" remoteExec ["notify_talk",_unit,false];
+					}else{
+						"Please approach the checkpoint for a search, citizen" remoteExec ["notify_talk",_unit,true];
+					};			
+				};
 			};
 		};		
 	}foreach(_start nearentities [["Man","LandVehicle"],_outerRange]);
@@ -90,7 +92,7 @@ while {!(isNull _group) and count (units _group) > 0} do {
 						};
 						{							
 							_cls = _x select 0;
-							if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_allStaticBackpacks) then {
+							if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_allStaticBackpacks + OT_allOptics) then {
 								_count = _x select 1;
 								for "_i" from 1 to _count do {
 									_target removeItem _cls;

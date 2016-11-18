@@ -68,10 +68,6 @@ if(typename _data != "ARRAY") exitWith {
 				if(_type == OT_item_Map) then {
 					_veh setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
 				};
-				
-				if(_type in OT_staticMachineGuns) then {		
-					_veh remoteExec["initStaticMGLocal",0,_veh];
-				};
 			
 				_veh setVariable ["owner",_owner,true];
 				{

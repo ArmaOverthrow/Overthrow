@@ -120,16 +120,19 @@ while {true} do {
 							if ((typeName _leaderpos) == "ARRAY") then {
 								server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
 								_chance = 20;
-								_max = 6;
+								_max = 4;
 								if(_town in (server getVariable ["NATOabandoned",[]])) then {
 									_chance = 80;
-									_max = 12;
+									_max = 10;
 								};								
 								
 								if(((random 100) < _chance) and _num < _max) then {
-									_numadd = round(random 4);
-									server setVariable [format ["numcrims%1",_x],_num + _numadd,false];
-									server setVariable [format ["crimadd%1",_x],_numadd,false];
+									_numadd = round(random 4);																	
+									if(_leaderpos call inSpawnDistance) then {
+										[_leaderpos,_numadd,_x] spawn sendCrims;
+									}else{
+										server setVariable [format ["numcrims%1",_x],_num+_numadd,true];
+									};
 								};
 							}else{							
 								//New leader spawn
@@ -140,8 +143,9 @@ while {true} do {
 								}else{
 									_leaderpos = getpos _building;
 								};	
-								server setVariable [format["crimnew%1",_town],_leaderpos,false];
-								server setVariable [format ["crimadd%1",_x],0,false];
+								
+								[_leaderpos,_x] spawn newLeader;
+																
 								server setVariable [format ["timecrims%1",_x],0,false];	
 
 								[2,_leaderpos,"Gang Hideout",format["Intelligence reports that this building was recently purchased by a known underworld figure, it's possible they will use this location as a base of operations for a new gang in %1.",_town],"target"] remoteExec ["intelEvent",0,false];

@@ -11,6 +11,11 @@ removeBackpack player;
 removeHeadgear player;
 removeVest player;
 
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	call TFAR_fnc_sendVersionInfo;
+    "task_force_radio_pipe" callExtension "dummy";
+};
+
 player linkItem "ItemMap";
 
 server setVariable [format["name%1",getplayeruid player],name player,true];
@@ -19,6 +24,10 @@ spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		call TFAR_fnc_sendVersionInfo;
+		"task_force_radio_pipe" callExtension "dummy";
+	};
     call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
@@ -162,8 +171,8 @@ if(isMultiplayer or _startup == "LOAD") then {
 			if(typename _civ == "ARRAY") then {
 				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 				_civ setVariable ["owner",getplayeruid player,true];
-				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setFace", 0, _civ];
-				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setSpeaker", 0, _civ];            
+				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _civ];
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _civ];            
 				_civ setUnitLoadout _loadout;
 				_civ spawn wantedSystem;
 				_civ setName _name;
@@ -265,10 +274,7 @@ _count = 0;
 { 
 	if !(_x isKindOf "Vehicle") then {
 		if(_x call hasOwner) then {
-			_owner = _x getVariable ["owner",""];
-			if((_owner == getplayeruid player) or (typeof _x == OT_item_Map)) then {
-				_x call initObjectLocal;
-			};
+			_x call initObjectLocal;
 		}; 
 	};
 	if(_count > 5000) then {
@@ -343,6 +349,7 @@ if(_newplayer) then {
 		player setVariable ["tute",true,true];
 	};
 };
+
 _introcam cameraEffect ["Terminate", "BACK" ];
 _introcam = nil;
 

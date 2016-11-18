@@ -17,7 +17,6 @@ _groups = [];
 	
 	if(_hour > 18 or _hour < 8) then {
 		//Put a light on
-		sleep 0.1;
 		_lightpos = getpos _building;
 		_light = "#lightpoint" createVehicle [_lightpos select 0,_lightpos select 1,(_lightpos select 2)+4];
 		_light setLightBrightness 0.2;
@@ -35,8 +34,7 @@ _groups = [];
 		_civ setBehaviour "SAFE";
 		[_civ,_building] spawn initSecurity;	
 		_civ setVariable ["garrison",_bdgid,true];
-		_count = _count + 1;				
-		sleep 0.1;
+		_count = _count + 1;		
 	};
 	
 	_wp = _group addWaypoint [_pos,5];
@@ -66,7 +64,6 @@ _groups = [];
 		}else{
 			_veh addItemCargoGlobal _x;
 		};	
-		sleep 0.1;
 	}foreach(_stock);
 	
 }foreach(_activeshops);

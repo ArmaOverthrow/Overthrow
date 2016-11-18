@@ -23,6 +23,10 @@ _numitems = 0;
 			_name = _cls call ISSE_Cfg_Vehicle_GetName;
 			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
 		};
+		if(isClass (configFile >> "CfgGlasses" >> _cls)) then {
+			_name = gettext(configFile >> "CfgGlasses" >> _cls >> "displayName");
+			_pic = gettext(configFile >> "CfgGlasses" >> _cls >> "picture");
+		};
 
 		_idx = lbAdd [1500,format["%1 x %2",_num,_name]];
 		lbSetPicture [1500,_idx,_pic];

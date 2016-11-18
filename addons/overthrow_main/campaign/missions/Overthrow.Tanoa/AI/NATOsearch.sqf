@@ -56,6 +56,9 @@ _posnow = position _target;
 _timenow = time;
 
 private _cleanup = {
+	private _group = _this select 0;
+	private _cop = _this select 1;
+	private _target = _this select 2;
 	_group setBehaviour "SAFE";
 	_group call initGendarmPatrol;
 	_cop setVariable ["OT_searching",false,true];
@@ -82,7 +85,7 @@ if((_target distance _posnow) > 2) then {
 		waitUntil {sleep 1;(_cop distance _target) < 2 or (_target distance _posnow) > 2 or (time - _timenow) > 120};		
 		if((_target distance _posnow) > 2) then {
 			_target setCaptive false;
-			[] call _cleanup;
+			[_group,_cop,_target] call _cleanup;
 		};
 	};
 };
@@ -100,7 +103,7 @@ if((isplayer _target and !captive _target) or (!alive _cop) or ((time - _timenow
 if((_target distance _posnow) > 2) exitWith {
 	if(isplayer _target) then {
 		_target setCaptive false;	
-		[] call _cleanup;
+		[_group,_cop,_target] call _cleanup;
 	};
 };
 
@@ -111,7 +114,7 @@ if(isplayer _target) then {
 	private _foundweapons = false;
 	{
 		_cls = _x select 0;
-		if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_allStaticBackpacks) then {
+		if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_allStaticBackpacks + OT_allOptics) then {
 			_count = _x select 1;
 			for "_i" from 1 to _count do {
 				_target removeItem _cls;
@@ -133,12 +136,7 @@ if(isplayer _target) then {
 		if(_foundweapons) then {
 			"NATO: What's this??!?" remoteExec ["notify_talk",_target,false];
 			_target setCaptive false;
-			{
-				if(side _x == west) then {
-					_x reveal [_target,1.5];
-					sleep 0.2;
-				};
-			}foreach(_target nearentities ["Man",500]);	
+			_target spawn revealToNATO;
 		}else{
 			"NATO: We found some illegal items and confiscated them, be on your way" remoteExec ["notify_talk",_target,false];
 		};
@@ -146,4 +144,4 @@ if(isplayer _target) then {
 		"NATO: Thank you for your co-operation" remoteExec ["notify_talk",_target,false];
 	};	
 };
-[] call _cleanup;
+[_group,_cop,_target] call _cleanup;

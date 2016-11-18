@@ -26,7 +26,7 @@ if(count _objects == 0) exitWith {
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
 
-private _toname = (typeof _veh) call ISSE_Cfg_Vehicle_GetName;
+private _toname = (typeof _target) call ISSE_Cfg_Vehicle_GetName;
 if(_iswarehouse) then {_toname = "Warehouse"};
 format["Transferring legal inventory from %1",_toname] call notify_minor;
 
@@ -37,16 +37,20 @@ _full = false;
 if(_iswarehouse) then {
 	{
 		_count = 0;
-		_d = warehouse getVariable _x;
+		_d = warehouse getVariable [_x,[_x,0]];
 		_cls = _d select 0;
 		_num = _d select 1;
-		if(_cls in (OT_allItems - OT_consumableItems)) then {
-			while {_count < _num} do {
-				if !(_veh canAdd _cls) exitWith {_full = true;warehouse setVariable [_cls,_num - _count,true]};
-				_veh addItemCargoGlobal [_cls,1];
-				_count = _count + 1;
+		if(_num > 0) then {
+			if(_cls in (OT_allItems - OT_consumableItems)) then {
+				while {_count < _num} do {
+					if !(_veh canAdd _cls) exitWith {_full = true;warehouse setVariable [_cls,_num - _count,true]};
+					_veh addItemCargoGlobal [_cls,1];
+					_count = _count + 1;
+				};
+				if !(_full) then {
+					warehouse setVariable [_cls,nil,true];
+				};
 			};
-			warehouse setVariable [_cls,nil,true];
 		};
 		if(_full) exitWith {};
 	}foreach(allvariables warehouse);
@@ -57,10 +61,12 @@ if(_iswarehouse) then {
 		if(_cls in (OT_allItems - OT_consumableItems)) then {
 			while {_count < (_x select 1)} do {
 				if !(_veh canAdd _cls) exitWith {_full = true};
-				_veh addItemCargoGlobal [_cls,1];
-				[_target, _cls, 1] call CBA_fnc_removeItemCargoGlobal;
+				_veh addItemCargoGlobal [_cls,1];				
 				_count = _count + 1;
 			};
+		};
+		if !([_target, _cls, _count] call CBA_fnc_removeItemCargoGlobal) then {
+			[_target, _cls, _count] call CBA_fnc_removeWeaponCargoGlobal;
 		};
 		if(_full) exitWith {};
 	}foreach(_target call unitStock);

@@ -2,13 +2,14 @@
 
 //Find NATO HQ
 {
-    _name = text _x;
+    _name = _x select 0;
+	_pos = _x select 1;
     if(_name == OT_NATO_HQ) then {
-        OT_NATO_HQPos = getpos _x;
+        OT_NATO_HQPos = _pos;
     };
-}foreach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameLocal","Airport"], 50000]);
+}foreach (OT_airportData);
 
-OT_allActiveShops = [];
+_allActiveShops = [];
 
 //Stability markers
 {
@@ -50,7 +51,7 @@ OT_allActiveShops = [];
     };
 	
 	_shops = server getVariable [format["activeshopsin%1",_x],[]];
-	[OT_allActiveShops,_shops] call BIS_fnc_arrayPushStack;
+	[_allActiveShops,_shops] call BIS_fnc_arrayPushStack;
 	
 	//place animals
 	[nearestBuilding _posTown, OT_allTownAnimals, _mSize+400] call BIS_fnc_animalSiteSpawn;
@@ -65,6 +66,9 @@ OT_allActiveShops = [];
 }foreach(OT_allTowns);
 
 server setVariable ["EconomyVersion",OT_economyVersion,false];
+
+OT_allActiveShops = _allActiveShops;
+publicVariable "OT_allActiveShops";
 
 OT_economyLoadDone = true;
 publicVariable "OT_economyLoadDone";

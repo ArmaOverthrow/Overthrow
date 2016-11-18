@@ -6,17 +6,17 @@ _standing = _this select 2;
 _price = 0;
 
 
-if(_cls in (OT_allWeapons + OT_allMagazines)) then {
+if(_cls in (OT_allWeapons + OT_allMagazines) and (_town in OT_allTowns)) then {
 	_stock = server getVariable format["gunstock%1",_town];
 	{
 		if((_x select 0) == _cls) exitWith {_price = _x select 1}; 
 	}foreach(_stock);
 }else{		
-	_cost = cost getVariable _cls;
+	_cost = cost getVariable [_cls,[10,0,0,0]];
 	_baseprice = _cost select 0;
 
-	_stability = 1.0 - ((server getVariable format["stability%1",_town]) / 100);
-	_population = server getVariable format["population%1",_town];
+	_stability = 1.0 - ((server getVariable [format["stability%1",_town],100]) / 100);
+	_population = server getVariable [format["population%1",_town],1000];
 	if(_population > 1000) then {_population = 1000};
 	_population = 1-(_population / 1000);
 

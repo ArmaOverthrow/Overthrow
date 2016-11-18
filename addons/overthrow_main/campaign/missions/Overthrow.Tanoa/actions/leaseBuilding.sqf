@@ -4,6 +4,19 @@ if(typename _b == "ARRAY") then {
 	_building = (_b select 0);	
 };
 if(typeof _building == OT_policeStation) exitWith {[] call policeDialog};
+if(typeof _building == OT_barracks) exitWith {[] call recruitDialog};
+if(typeof _building == OT_warehouse) exitWith {[] call buyVehicleDialog};
+
+if(typename _b != "ARRAY") exitWith {
+	private _ob = (getpos player) call nearestObjective;
+	_ob params ["_obpos","_obname"];
+	if(_obpos distance player < 250) then {
+		if(_obname in (server getVariable ["NATOabandoned",[]])) then {
+			[] call buyVehicleDialog;
+		};
+	};
+};
+
 if !(captive player) exitWith {"You cannot lease buildings while wanted" call notify_minor};
 
 

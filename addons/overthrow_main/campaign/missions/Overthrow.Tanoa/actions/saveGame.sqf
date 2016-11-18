@@ -66,7 +66,10 @@ _data pushback ["vehicles",_vehicles];
 
 _warehouse = [];
 {
-	_warehouse pushback (warehouse getVariable _x);
+	_var = warehouse getVariable _x;
+	if (!isNil "_var") then {
+		_warehouse pushback _var;
+	};
 }foreach(allvariables warehouse);
 _data pushback ["warehouse",_warehouse];
 

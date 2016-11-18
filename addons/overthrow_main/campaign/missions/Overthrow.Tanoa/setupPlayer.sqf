@@ -33,15 +33,17 @@ player setVariable ["player_uid",getPlayerUID player,true];
 
 _closestcount = 0;
 
-while {true} do {
+while {alive player} do {
 	sleep 2;
 		
 	if(_closestcount <= 0) then {
 		_closest = (getPos player) call nearestTown;
-		if(_closest != _town) then {
-			_closest call townChange;	
-			_closestcount = 20;		
-		};		
+		if !(isNil "_closest") then {
+			if(_closest != _town) then {
+				_closest call townChange;	
+				_closestcount = 60;		
+			};		
+		};
 	};	
 	_closestcount = _closestcount - 2;	
 };

@@ -9,15 +9,19 @@ while {true} do {
 	_inf = 1;
 	{
 		_town = _x;
-		if(_town in OT_allTowns) then {
+		_total = _total + 250;
+		if(_town in OT_allAirports) then {
+			_total = _total + ((server getVariable ["stabilityTanoa",100]) * 4); //Tourism income
+		};
+		_inf = _inf + 1;
+		if(_town in OT_allTowns) then {			
 			_population = server getVariable format["population%1",_town];
 			_stability = server getVariable format["stability%1",_town];
 			_add = round(_population * (_stability/100));			
 			if(_stability > 49) then {
-				_add = round(_add * 2);
+				_add = round(_add * 4);
 			};			
 			_total = _total + _add;
-			_inf = _inf + 1;
 		};
 	}foreach(server getVariable ["NATOabandoned",[]]);
 	

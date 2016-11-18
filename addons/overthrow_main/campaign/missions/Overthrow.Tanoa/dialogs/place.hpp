@@ -125,11 +125,24 @@ class OT_dialog_place
 {
 	idd=8002;
 	movingenable=false;
+	
+	class controlsBackground {
+		class RscStructuredText_1199: RscStructuredText
+		{
+			idc = 1199;
+			x = -0.000156274 * safezoneW + safezoneX;
+			y = 0.786 * safezoneH + safezoneY;
+			w = 1.00031 * safezoneW;
+			h = 0.11 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+			colorActive[] = {0.1,0.1,0.1,1};
+		};
+	}
 
 	class controls
 	{
-		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Jawatu)
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Jevede)
 		////////////////////////////////////////////////////////
 
 		class RscButton_1600: RscButton
@@ -174,11 +187,11 @@ class OT_dialog_place
 			action = "closeDialog 0;'Camp' spawn placementMode";
 
 			text = "Camp"; //--- ToDo: Localize;
-			x = 0.159687 * safezoneW + safezoneX;
+			x = 0.0617187 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			tooltip = "Creates a fast travel destination for you and your group"; //--- ToDo: Localize;
+			tooltip = "Creates a fast travel destination"; //--- ToDo: Localize;
 		};
 		class RscButton_1604: RscButton
 		{
@@ -198,7 +211,7 @@ class OT_dialog_place
 			action = "closeDialog 0;'Misc' spawn placementMode";
 
 			text = "Misc"; //--- ToDo: Localize;
-			x = 0.453594 * safezoneW + safezoneX;
+			x = 0.845469 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
@@ -206,19 +219,44 @@ class OT_dialog_place
 		};
 		class RscButton_1606: RscButton
 		{
-			idc = 1603;
+			idc = 1606;
 			action = "closeDialog 0;'Base' spawn placementMode";
 
-			text = "Base"; //--- ToDo: Localize;
+			text = "FOB"; //--- ToDo: Localize;
+			x = 0.159687 * safezoneW + safezoneX;
+			y = 0.797 * safezoneH + safezoneY;
+			w = 0.0928125 * safezoneW;
+			h = 0.088 * safezoneH;
+			tooltip = "Creates a fast travel destination, allows building of light military structures"; //--- ToDo: Localize;
+		};
+		class RscButton_1607: RscButton
+		{
+			idc = 1607;
+			action = "closeDialog 0;'Map' spawn placementMode";
+
+			text = "Map"; //--- ToDo: Localize;
 			x = 0.257656 * safezoneW + safezoneX;
 			y = 0.797 * safezoneH + safezoneY;
 			w = 0.0928125 * safezoneW;
 			h = 0.088 * safezoneH;
-			tooltip = "Creates a fast travel destination for all friendlies, allows building of military structures"; //--- ToDo: Localize;
-		};		
+			tooltip = "A map"; //--- ToDo: Localize;
+		};
+		class RscButton_1608: RscButton
+		{
+			idc = 1608;
+			action = "closeDialog 0;'Safe' spawn placementMode";
+
+			text = "Safe"; //--- ToDo: Localize;
+			x = 0.453594 * safezoneW + safezoneX;
+			y = 0.797 * safezoneH + safezoneY;
+			w = 0.0928125 * safezoneW;
+			h = 0.088 * safezoneH;
+			tooltip = "Store and retrieve money"; //--- ToDo: Localize;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
+
 
 	};
 };

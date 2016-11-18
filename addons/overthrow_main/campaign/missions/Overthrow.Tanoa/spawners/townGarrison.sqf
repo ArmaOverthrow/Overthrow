@@ -30,7 +30,7 @@ while {_count < _numNATO} do {
 	[_civ,_town] call initGendarm;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
-	sleep 0.1;
+
 	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {							
 		_pos = [[[_start,50]]] call BIS_fnc_randomPos;
 		
@@ -43,7 +43,7 @@ while {_count < _numNATO} do {
 		
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-		sleep 0.1;
+
 	};				
 	_group call initGendarmPatrol;		
 	_range = _range + 50;

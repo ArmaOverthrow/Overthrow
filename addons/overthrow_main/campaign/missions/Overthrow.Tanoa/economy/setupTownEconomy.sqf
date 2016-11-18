@@ -11,10 +11,10 @@ if(count _churches > 0) then {
 	server setVariable [format["churchin%1",_town],getpos (_churches select 0),true];	
 };
 
-{  
+{  	
     if !(_x call hasOwner) then {
         //spawn any main shops
-        if((random 120 < _stability)) then {
+        if(_shops < 5) then {
             _shops        = _shops + 1;
             _stock        = [];
             _itemsToStock = [];

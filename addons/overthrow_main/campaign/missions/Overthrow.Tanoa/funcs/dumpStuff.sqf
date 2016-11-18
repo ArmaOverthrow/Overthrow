@@ -101,13 +101,13 @@ if(_full and !_istruck) exitWith {false};
 	if !(_t canAdd _x) exitWith {
 		_full = true;
 	};
-	if (([(configFile >> "CfgWeapons" >> _x),"optics",0] call BIS_fnc_returnConfigEntry) > 0) then {
+	if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
 		_unit unassignItem _x;
 		_unit removeWeapon _x;
 	}else{
 		_unit unlinkItem _x;
-	};
-	_t addItemCargoGlobal[_x,1];
+	};	
+	_t addItemCargoGlobal [_x,1];
 }foreach(assignedItems _unit);
 if(_full and !_istruck) exitWith {false};
 

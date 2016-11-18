@@ -4,7 +4,7 @@ OT_taking = true;
 private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 private _num = _this select 0;
-private _d = warehouse getVariable _cls;
+private _d = warehouse getVariable [_cls,[_cls,0]];
 _in = _d select 1;
 
 if(_num > _in or _num == -1) then {
@@ -14,7 +14,7 @@ if(_num > _in or _num == -1) then {
 _count = 0;
 private _veh = (vehicle player);
 while {_count < _num} do {
-	if (!(_veh isKindOf "Truck_F") and !(_veh canAdd _cls)) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
+	if ((!(_veh isKindOf "Truck_F")) and (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};	
 	call {
 		if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 			_veh addWeaponCargoGlobal [_cls,1];

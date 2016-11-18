@@ -5,12 +5,18 @@ _cls = lbData [1500,_idx];
 _town = (getPos player) call nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
-_price = [_town,_cls,_standing] call getPrice;
+_price = lbValue [1500,_idx];
 
 _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
 
 call {
+	if(_cls isKindOf "Man") exitWith {	
+		[_cls,getpos player,group player] call recruitSoldier;
+	};
+	if(_cls in OT_allSquads) exitWith {
+		[_cls,getpos player] call recruitSquad;
+	};
 	if(_cls == OT_item_UAV) exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
@@ -40,7 +46,7 @@ call {
 		playSound "3DEN_notificationDefault";
 		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
 	};
-	if(_cls isKindOf "LandVehicle") exitWith {	
+	if(_cls in OT_allVehicles) exitWith {	
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
 		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 		
@@ -53,7 +59,7 @@ call {
 		clearItemCargoGlobal _veh;	
 		
 		player reveal _veh;
-		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+		format["You bought a %1 for $%2",_cls call ISSE_Cfg_Vehicle_GetName,_price] call notify_minor;
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls isKindOf "Ship") exitWith {	
@@ -73,17 +79,29 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls in OT_allClothing) exitWith {
-		player setVariable ["money",_money-_price,true];
+		[-_price] call money;
 
-		if(backpack player != "") then {
-			player addItem _cls;
+		if((backpack player != "") and (player canAdd _cls)) then {
+			player addItemToBackpack _cls;
+			"Clothing added to your backpack" call notify_minor;
 		}else{
 			player forceAddUniform _cls;
 		};
 		playSound "3DEN_notificationDefault";
 	};
+	if(_cls == "V_RebreatherIA") exitWith {
+		[-_price] call money;
+
+		if((backpack player != "") and (player canAdd _cls)) then {
+			player addItemToBackpack _cls;
+			"Rebreather added to your backpack" call notify_minor;
+		}else{
+			player addVest _cls;
+		};
+		playSound "3DEN_notificationDefault";
+	};
 	if((_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Rifle",configFile >> "CfgWeapons"])) exitWith {
-		player setVariable ["money",_money-_price,true];
+		[-_price] call money;
 
 		_box = false;
 		{
@@ -101,7 +119,7 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {	
-		player setVariable ["money",_money-_price,true];
+		[-_price] call money;
 		player addMagazine _cls;		
 		playSound "3DEN_notificationDefault";
 	};
@@ -112,9 +130,13 @@ call {
 		if!([player,_cls] call canFit) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
 	};
 		
-	if(_handled) then {	
+	if(_handled) then {
+		_b = player getVariable ["shopping",objNull];
+		_bp = _b getVariable "shop";
+		if(isNil "_bp") exitWith {};
+		
 		playSound "3DEN_notificationDefault";
-		if (_cls in OT_illegalItems) exitWith {
+		if (_cls in OT_illegalItems) exitWith {			
 			player setVariable ["money",_money-_price,true];
 			player addItem _cls;
 		};
@@ -122,8 +144,6 @@ call {
 			player setVariable ["money",_money-_price,true];
 			player addBackpack _cls;
 		};
-		_b = player getVariable ["shopping",objNull];
-		_bp = _b getVariable "shop";
 		
 		_s = [];
 		_active = server getVariable [format["activeshopsin%1",_town],[]];

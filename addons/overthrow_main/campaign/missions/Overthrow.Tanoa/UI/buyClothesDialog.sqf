@@ -10,7 +10,7 @@ lbClear 1500;
 	
 	_c = _cls splitString "_";
 	_side = _c select 1;
-	if((_side == "C" or _side == "I") and _cls != "U_I_Soldier_VR") then {
+	if((_cls == "V_RebreatherIA" or _side == "C" or _side == "I") and _cls != "U_I_Soldier_VR") then {
 		_price = [_town,_cls,_standing] call getPrice;
 		_name = "";
 		_pic = "";
@@ -22,4 +22,4 @@ lbClear 1500;
 		lbSetValue [1500,_idx,_price];
 		lbSetData [1500,_idx,_cls];
 	};
-}foreach(OT_allClothing);
+}foreach(OT_allClothing + ["V_RebreatherIA"]);

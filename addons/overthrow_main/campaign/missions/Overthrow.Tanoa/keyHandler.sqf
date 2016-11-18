@@ -8,27 +8,31 @@ if (_key == 21) then
 	if(!dialog) then {
 		if(count (player nearObjects ["Land_Cargo_House_V4_F",10]) > 0) then {
 			[] call workshopDialog;
-		}else{			
-			[] spawn menuHandler;
-			if(count (groupSelectedUnits player) > 0) exitWith {			
-				createDialog "OT_dialog_command";
-			};
-			if(vehicle player != player) exitWith {		
-				_b = player call getNearestRealEstate;
-				_iswarehouse = false;
-				if(typename _b == "ARRAY") then {
-					_building = _b select 0;
-					if((typeof _building) == OT_warehouse and _building call hasOwner) then {
-						_iswarehouse = true;
+		}else{
+			if((vehicle player) != player and count (player nearObjects [OT_portBuilding,30]) > 0) then {
+				createDialog "OT_dialog_vehicleport";
+			}else{
+				[] spawn menuHandler;
+				if(count (groupSelectedUnits player) > 0) exitWith {			
+					createDialog "OT_dialog_command";
+				};
+				if(vehicle player != player) exitWith {		
+					_b = player call getNearestRealEstate;
+					_iswarehouse = false;
+					if(typename _b == "ARRAY") then {
+						_building = _b select 0;
+						if((typeof _building) == OT_warehouse and _building call hasOwner) then {
+							_iswarehouse = true;
+						};
+					};
+					if(_iswarehouse) then {
+						createDialog "OT_dialog_vehiclewarehouse";
+					}else{
+						createDialog "OT_dialog_vehicle";
 					};
 				};
-				if(_iswarehouse) then {
-					createDialog "OT_dialog_vehiclewarehouse";
-				}else{
-					createDialog "OT_dialog_vehicle";
-				};
+				[] spawn mainMenu;
 			};
-			[] spawn mainMenu;
 		};			
 	}else{
 		closeDialog 0;

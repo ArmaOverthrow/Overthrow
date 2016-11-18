@@ -62,12 +62,11 @@ while {(_count < _numVeh)} do {
 					_wp setWaypointSpeed "LIMITED";
 					_wp setWaypointBehaviour "SAFE";
 					_wp setWaypointCompletionRadius 60;
-					_wp setWaypointStatements ["true","unassignvehicle this;moveout this;(group this) call civilianGroup;[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
+					_wp setWaypointStatements ["true","unassignvehicle this;moveout this;(group this) call civilianGroup;[vehicle this] execVM 'funcs\cleanup.sqf';[this] execVM 'funcs\cleanup.sqf'"]; 
 				}else{
 					_groups pushBack _veh;
 				};
-				_count = _count + 1;	
-				sleep 0.1;
+				_count = _count + 1;
 			};
 		};
 	};	

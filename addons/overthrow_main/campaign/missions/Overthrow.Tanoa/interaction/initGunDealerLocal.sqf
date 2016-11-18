@@ -4,11 +4,10 @@ _civ addAction ["Buy", {
 	_town = (getpos player) call nearestTown; 
 
 	_stock = server getVariable format["gunstock%1",_town];
-	if(isNil "_stock") then {
-		_basic = cost getVariable OT_item_BasicGun;		
-		_numguns = round(random 5)+3;
-		_count = 0;
-		_stock = [];
+	if(isNil "_stock") then {		
+		_numguns = round(random 7)+3;
+		_count = 0;		
+		_stock = [[OT_item_BasicGun,25],[OT_item_BasicAmmo,1]];
 		_tostock = [];
 		while {_count < _numguns} do {
 			_type = OT_allWeapons call BIS_fnc_selectRandom;
@@ -47,6 +46,12 @@ _civ addAction ["Buy", {
 				_stock pushBack [_magazines call BIS_fnc_selectRandom,_price];				
 			};
 		};
+		
+		{			
+			_cost = cost getVariable _x;
+			_price = _cost select 0;
+			_stock pushBack [_x,_price];
+		}foreach(OT_allOptics);
 		
 		_stock pushback [OT_ammo_50cal,25];
 		

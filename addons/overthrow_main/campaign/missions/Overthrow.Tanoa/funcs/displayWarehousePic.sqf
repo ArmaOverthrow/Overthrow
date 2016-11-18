@@ -19,6 +19,10 @@ if(_cls isKindOf "Default") then {
 	_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
 	_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");
 };
+if(isClass (configFile >> "CfgGlasses" >> _cls)) then {
+	_txt = gettext(configFile >> "CfgGlasses" >> _cls >> "displayName");
+	_pic = gettext(configFile >> "CfgGlasses" >> _cls >> "picture");		
+};
 if(_cls isKindOf "Bag_Base") then {
 	_txt = _cls call ISSE_Cfg_Vehicle_GetName;
 	_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
