@@ -1,5 +1,4 @@
 [] execVM "income.sqf";
-[] execVM "data\names_local.sqf";
 
 if (!isMultiplayer) exitWith {};
 

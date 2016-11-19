@@ -26,7 +26,7 @@ OT_fnc_registerSpawner = {
 
     _id = format["spawn%1",OT_spawnUniqueCounter];
 
-    OT_allspawners pushBack [_id,_start,_end,_code,_params];
+    OT_allspawners pushBack [_id,_start,_end,_code,_params,[]];
 
     OT_spawnUniqueCounter
 };
@@ -62,13 +62,26 @@ OT_fnc_updateSpawnerPosition = {
 OT_allSpawned = [];
 
 _spawn = {
-	params ["_i","_s","_e","_c","_p"];
-	private _g = _p call _c;
-	spawner setVariable [_i,_g,false];
+	params ["_i","_s","_e","_c","_p","_sp"];
+	private _g = _p call _c;		
+	{
+		_send = true;
+		if(OT_serverTakesLoad) then {
+			if(random 100 > (100 / ((count OT_activeClients) + 1))) then {
+				_send = false;
+			};
+		};
+		if(_send) then {
+			if(typename _x == "GROUP") then {
+				_x setGroupOwner owner(selectRandom OT_activeClients);
+			};
+		};
+		_sp pushback _x;
+	}foreach(_g);			
 };
 
 _despawn = {	
-	params ["_i"];
+	params ["_i","_s","_e","_c","_p","_sp"];
 	{	
 		if(typename _x == "GROUP") then {
 			{
@@ -84,12 +97,33 @@ _despawn = {
 			};	
 		};		
 		sleep 0.1;
-	}foreach(spawner getVariable [_i,[]]);
-	spawner setVariable [_i,[],false];
+	}foreach(_sp);
+	_this set [5,[]];
 };
 
+OT_activeClients = [];
+OT_serverTakesLoad = false;
+
 while{true} do {
-    sleep 0.1; 
+    sleep 0.1; 	
+	OT_activeClients = [];
+	{
+
+		if (_x in allPlayers) then { 
+			OT_activeClients pushback _x;
+			OT_activeClients pushback _x;//Twice for weight in random sel
+		};
+	} forEach (entities "HeadlessClient_F"); 
+	if(count OT_activeClients == 0) then {
+		if(count allplayers < 6) then {
+			OT_serverTakesLoad = true;
+		}else{
+			OT_serverTakesLoad = false;
+		};
+		OT_activeClients = allplayers;
+	}else{
+		[OT_activeClients,allplayers] call BIS_fnc_arrayPushStack;
+	};
     {
         private _id = _x select 0;
         private _start = _x select 1;
@@ -101,7 +135,7 @@ while{true} do {
             if(_val) then {
                 if !(_start call inSpawnDistance) then {
 					OT_allSpawned deleteAt _spawnidx;
-					[_id] spawn _despawn;
+					_x spawn _despawn;
                 };
             }else{
                 if (_start call inSpawnDistance) then {
@@ -113,12 +147,12 @@ while{true} do {
             if(_val) then {
                 if !((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
                     OT_allSpawned deleteAt _spawnidx;
-					[_id] spawn _despawn;
+					_x spawn _despawn;
                 };
             }else{
                 if ((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
                     OT_allSpawned pushback _id;
-					_x spawn _spawn;
+					_x spawn _x;
                 };
             };
         };

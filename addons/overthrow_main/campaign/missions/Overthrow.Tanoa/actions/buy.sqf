@@ -100,7 +100,7 @@ call {
 		};
 		playSound "3DEN_notificationDefault";
 	};
-	if((_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Rifle",configFile >> "CfgWeapons"])) exitWith {
+	if((_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Pistol",configFile >> "CfgWeapons"])) exitWith {
 		[-_price] call money;
 
 		_box = false;
@@ -131,19 +131,23 @@ call {
 	};
 		
 	if(_handled) then {
-		_b = player getVariable ["shopping",objNull];
-		_bp = _b getVariable "shop";
-		if(isNil "_bp") exitWith {};
-		
 		playSound "3DEN_notificationDefault";
 		if (_cls in OT_illegalItems) exitWith {			
-			player setVariable ["money",_money-_price,true];
+			[-_price] call money;
 			player addItem _cls;
 		};
 		if (_cls in OT_allStaticBackpacks) exitWith {
-			player setVariable ["money",_money-_price,true];
+			[-_price] call money;
 			player addBackpack _cls;
 		};
+		if (_cls in OT_allOptics) exitWith {
+			[-_price] call money;
+			player addItem _cls;
+		};
+		
+		_b = player getVariable ["shopping",objNull];
+		_bp = _b getVariable "shop";
+		if(isNil "_bp") exitWith {};
 		
 		_s = [];
 		_active = server getVariable [format["activeshopsin%1",_town],[]];

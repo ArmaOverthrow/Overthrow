@@ -21,6 +21,7 @@ if(!isMultiplayer) then {
     [] execVM "funcs\fn_advancedTowingInit.sqf";
     
     call compile preprocessFileLineNumbers "initFuncs.sqf";
+	call compile preprocessFileLineNumbers "data\names_local.sqf";
     call compile preprocessFileLineNumbers "initVar.sqf";
 
     //SINGLE PLAYER init    

@@ -30,6 +30,9 @@ _total = 0;
 			if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
 				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
 			};
+			if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
+			};
 			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
 				[_target, _cls, _num] call CBA_fnc_removeMagazineCargoGlobal;
 			};
