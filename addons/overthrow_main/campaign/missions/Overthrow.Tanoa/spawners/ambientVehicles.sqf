@@ -48,6 +48,7 @@ while {(_count < _numVeh)} do {
 				
 				if((random 100) > 95) then {
 					_group = createGroup CIVILIAN;
+					_groups pushback _group;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";					
 					[_civ] call initCivilian;
@@ -63,9 +64,9 @@ while {(_count < _numVeh)} do {
 					_wp setWaypointBehaviour "SAFE";
 					_wp setWaypointCompletionRadius 60;
 					_wp setWaypointStatements ["true","unassignvehicle this;moveout this;(group this) call civilianGroup;[vehicle this] execVM 'funcs\cleanup.sqf';[this] execVM 'funcs\cleanup.sqf'"]; 
-				}else{
-					_groups pushBack _veh;
 				};
+				_groups pushBack _veh;
+				
 				_count = _count + 1;
 			};
 		};

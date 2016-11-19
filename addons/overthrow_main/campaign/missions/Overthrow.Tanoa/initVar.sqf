@@ -349,6 +349,10 @@ OT_backpacks = [
 	["B_Parachute",120,0,0,1]
 ];
 
+if(OT_hasAce) then {	
+	OT_backpacks pushback ["ACE_TacticalLadder_Pack",40,0,0,1];
+};
+
 if(OT_hasTFAR) then {
 	[OT_backpacks,[
 		["tf_anprc155",100,0,0,0.1],
@@ -716,21 +720,23 @@ OT_allTowns = [];
 
 //get all the templates we need
 
+_allTemplates = ["Land_FuelStation_01_shop_F","Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F","Land_GarageShelter_01_F","Land_House_Native_02_F","Land_House_Small_03_F","Land_Shop_City_02_F","Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Slum_01_F","Land_Slum_02_F","Land_Supermarket_01_F"];
+
 {
 	_filename = format["templates\houses\%1.sqf",_x];
-	if(_filename call KK_fnc_fileExists) then {
-		_template = call(compileFinal preProcessFileLineNumbers _filename);
-		{
-			if((_x select 0) in OT_items_Simulate) then {
-				_x set [8,true];
-			}else{
-				_x set [8,false];
-			};
-		}forEach(_template);
-		
-		templates setVariable [_x,_template,true];		
-	};	
-} foreach(OT_mansions + OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_shops + OT_carShops);
+
+	_template = call(compileFinal preProcessFileLineNumbers _filename);
+	{
+		if((_x select 0) in OT_items_Simulate) then {
+			_x set [8,true];
+		}else{
+			_x set [8,false];
+		};
+	}forEach(_template);
+	
+	templates setVariable [_x,_template,true];		
+
+} foreach(_allTemplates);
 
 {
 	_name = _x select 0;

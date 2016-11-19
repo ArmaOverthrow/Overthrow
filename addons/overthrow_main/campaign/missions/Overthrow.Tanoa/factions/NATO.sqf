@@ -191,8 +191,31 @@ publicVariable "OT_NATOInitDone";
 sleep 5;
 while {true} do {
 	_garrisoned = false;
-	if(count allplayers > 0) then {
+	_numplayers = count([] call CBA_fnc_players);
+	if(_numplayers > 0) then {
 		_abandoned = server getVariable "NATOabandoned";
+		_attacking = spawner getvariable["NATOattacking",""];
+		
+		if (_attacking == "") then {
+			{
+				_pos = _x select 0;
+				_name = _x select 1;
+				if !(_name in _abandoned) then {	
+					_garrison = server getvariable format["garrison%1",_name];
+					_vehgarrison = server getvariable format["vehgarrison%1",_name];
+					
+					if(_garrison == 0) then {
+						_garrisoned = true;
+						_name spawn NATOcounter;				
+						_abandoned pushback _name;
+						server setVariable ["NATOabandoned",_abandoned,true];
+						_name setMarkerAlpha 1;				
+					};
+				};
+				if(_garrisoned) exitWith {};
+			}foreach(OT_NATOobjectives);
+		};
+		
 		{		
 			_town = _x;
 			_townPos = server getVariable _town;
@@ -224,12 +247,12 @@ while {true} do {
 			if(_garrisoned) exitWith {}; //only send one garrison/attack per turn		
 			sleep 0.1;
 		}foreach (OT_allTowns);
-		_attacking = spawner getvariable["NATOattacking",""];
+		
 		
 		if(_attacking != "") then {_garrisoned = true};//A counter-attack is still in progress, NATO is too busy
 		
 		//Town counter-attacks
-		if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 95) then {
+		if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 98) then {
 			_highest = 0;
 			_high = 0;
 			{
@@ -246,30 +269,10 @@ while {true} do {
 		};
 		
 		if !(_garrisoned) then {
-			{
-				_pos = _x select 0;
-				_name = _x select 1;
-				if !(_name in _abandoned) then {	
-					_garrison = server getvariable format["garrison%1",_name];
-					_vehgarrison = server getvariable format["vehgarrison%1",_name];
-					
-					if(_garrison == 0) then {
-						_garrisoned = true;
-						_name spawn NATOcounter;				
-						_abandoned pushback _name;
-						server setVariable ["NATOabandoned",_abandoned,true];
-						_name setMarkerAlpha 1;				
-					};
-				};
-				if(_garrisoned) exitWith {};
-			}foreach(OT_NATOobjectives);
-		};
-		
-		if !(_garrisoned) then {
 			//Nothing to do, so NATO will harass
-			_chance = 95;
-			if(count _abandoned > 4) then {_chance = 90};
-			if(count _abandoned > 8) then {_chance = 80};
+			_chance = 98;
+			if(count _abandoned > 4) then {_chance = 95};
+			if(count _abandoned > 8) then {_chance = 90};
 			if(((random 100) > _chance) and (count _abandoned) > 0) then {
 				_target = _abandoned call BIS_fnc_selectRandom;
 				_pos = server getvariable _target;

@@ -96,7 +96,8 @@ publicVariable "OT_CRIMInitDone";
 _sleeptime = 20;
 
 while {true} do {
-	if(count allPlayers > 0) then {		
+	_numplayers = count([] call CBA_fnc_players);
+	if(_numplayers > 0) then {
 		sleep _sleeptime;
 		{			
 			_town = _x;

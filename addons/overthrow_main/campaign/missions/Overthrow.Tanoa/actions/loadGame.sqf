@@ -84,6 +84,9 @@ if(typename _data != "ARRAY") exitWith {
 						if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
 							_veh addWeaponCargoGlobal [_cls,_num];
 						};
+						if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+							_veh addWeaponCargoGlobal [_cls,_num];
+						};
 						if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
 							_veh addMagazineCargoGlobal [_cls,_num];
 						};

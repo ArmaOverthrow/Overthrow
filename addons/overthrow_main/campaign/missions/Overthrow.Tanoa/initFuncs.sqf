@@ -21,10 +21,10 @@ getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuild
 getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestRealEstate.sqf";
 getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
 nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
-nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
 nearestComms = compileFinal preProcessFileLineNumbers "funcs\nearestComms.sqf";
 nearestCheckpoint = compileFinal preProcessFileLineNumbers "funcs\nearestCheckpoint.sqf";
 nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
+nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
 nearestMobster = compileFinal preProcessFileLineNumbers "funcs\nearestMobster.sqf";
 giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
 logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
@@ -300,7 +300,9 @@ standing = {
 };
 
 setCivName = {
-	(_this select 0) setName (_this select 1);
+	if(typename (_this select 1) == "STRING") then {
+		(_this select 0) setName (_this select 1);
+	};
 };
 
 loadPlayerData = {
