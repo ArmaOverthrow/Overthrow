@@ -1,20 +1,17 @@
-private ["_group","_id","_town","_posTown","_groups","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
 
-_count = 0;
+private _town = _this;
+private _posTown = server getVariable _town;
 
-_town = _this;
-_posTown = server getVariable _town;
-
-_groups = [];
+private _groups = [];
 
 			
-_numCRIM = server getVariable [format ["numcrims%1",_town],0];
+private _numCRIM = server getVariable [format ["numcrims%1",_town],0];
 
 if(_numCRIM > 0) then {
-	_time = server getVariable [format ["timecrims%1",_town],0];
-	_leaderpos = server getVariable [format["crimleader%1",_town],false];
-	_group = objNULL;
+	private _time = server getVariable [format ["timecrims%1",_town],0];
+	private _leaderpos = server getVariable [format["crimleader%1",_town],false];
+	private _group = objNULL;
 	
 	_skill = 0.7;
 	if(_time > 0) then {
@@ -25,7 +22,7 @@ if(_numCRIM > 0) then {
 	};				
 	//Spawn stuff in			
 	_count = 0;	
-	_group = createGroup east;				
+	private _group = createGroup east;				
 	_groups pushback _group;
 	if ((typeName _leaderpos) == "ARRAY") then {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
@@ -90,9 +87,6 @@ if(_numCRIM > 0) then {
 		
 		_count = _count + 1;
 	};
-	{
-		_x addCuratorEditableObjects [units _group,true];
-	} forEach allCurators;
 };
 
 _groups	

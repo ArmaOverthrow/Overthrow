@@ -1,9 +1,7 @@
-private ["_items","_myitems"];
+private _items = [];
+private _done = [];
 
-_items = [];
-_done = [];
-
-_myitems = [];
+private _myitems = [];
 
 if(_this isKindOf "Man") then {
 	_myitems = (items _this) + (magazines _this);
@@ -12,7 +10,7 @@ if(_this isKindOf "Man") then {
 };
 if !(isNil "_myitems") then {
 	{
-		_cls = _x;
+		private _cls = _x;
 		if(OT_hasTFAR) then {
 			_c = _cls splitString "_";
 			if((_c select 0) == "tf") then {

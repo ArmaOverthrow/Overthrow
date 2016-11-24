@@ -5,7 +5,7 @@ if(_veh == player) exitWith {};
 _objects = [];
 {
 	if(_x != _veh) then {_objects pushback _x};
-}foreach(player nearEntities [["LandVehicle","ReammoBox_F"],20]);
+}foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 
 if(count _objects == 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call notify_minor;

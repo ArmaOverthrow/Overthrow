@@ -42,14 +42,14 @@ if(_hour < 8 or _hour > 15) then {
 };
 _unit linkItem "ItemWatch";
 
-_weapon = OT_allCheapRifles call BIS_fnc_selectRandom;
+_weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
 _unit addWeapon _weapon;
 
 call {
 	if((random 100) > 70) exitWith {
 		//This guy has a launcher
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
-		_launcher = (OT_allRocketLaunchers + OT_allMissileLaunchers) call BIS_fnc_SelectRandom;
+		_launcher = (OT_allRocketLaunchers) call BIS_fnc_SelectRandom;
 		_base = [_launcher] call BIS_fnc_baseWeapon;
 		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
 		_unit addMagazine _magazine;

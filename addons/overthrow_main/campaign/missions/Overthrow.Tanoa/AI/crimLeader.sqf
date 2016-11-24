@@ -33,14 +33,15 @@ _unit addVest (OT_allExpensiveVests call BIS_fnc_selectRandom);
 if(OT_hasTFAR) then {
 	_unit linkItem "tf_fadak";
 }else{
-	;
+	_unit linkItem "ItemRadio";
+};
 _hour = date select 3;
 if(_hour < 8 or _hour > 15) then {
 	_unit linkItem "NVGoggles_OPFOR";
 };
 _unit linkItem "ItemWatch";
 
-_weapon = (OT_allExpensiveRifles call BIS_fnc_selectRandom);
+_weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;

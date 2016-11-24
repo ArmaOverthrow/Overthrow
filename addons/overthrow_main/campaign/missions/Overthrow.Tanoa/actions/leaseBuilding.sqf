@@ -43,8 +43,8 @@ if(_handled) then {
 	_leased pushback ([_building] call fnc_getBuildID);
 	player setvariable ["leased",_leased,true];
 	_building setVariable ["leased",true,true];
-	_mrkid = format["bought%1",str(_building)];
-	_mrkid setMarkerAlpha 0;	
+	_mrkid = format["bdg-%1",_building];
+	_mrkid setMarkerAlphaLocal 0.3;	
 	playSound "3DEN_notificationDefault";
 	"Building leased" call notify_minor;
 };

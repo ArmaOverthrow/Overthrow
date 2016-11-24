@@ -2,6 +2,8 @@ private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture
 waitUntil {!isNull player};
 waitUntil {player == player};
 
+if (!hasInterface) exitWith {};
+
 if(isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
 removeAllWeapons player;
@@ -24,6 +26,7 @@ spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
+	call compile preprocessFileLineNumbers "data\names_local.sqf";
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 		call TFAR_fnc_sendVersionInfo;
 		"task_force_radio_pipe" callExtension "dummy";
@@ -103,24 +106,29 @@ if(isMultiplayer or _startup == "LOAD") then {
 				if (typename _x == "SCALAR") then {
 					_bdg = OT_centerPos nearestObject _x;
 					if !(isNil "_bdg") then {
-						_bdg setVariable ["owner",getplayeruid player,true];				
+						_bdg setVariable ["owner",getplayeruid player,true];	
+						_mrkName = format["bdg-%1",_bdg];
 						if(_bdg isKindOf "Building") then {
-							_mrkName = format["bdg-%1",_x];
-							_mrkName = createMarkerLocal [_mrkName,getpos _bdg];
-							_mrkName setMarkerShape "ICON";
-							_mrkName setMarkerType "loc_Tourism";
-							_mrkName setMarkerColor "ColorWhite";
-							_mrkName setMarkerAlpha 0;
-							_mrkName setMarkerAlphaLocal 1;
-							
-							if(typeof _bdg == OT_warehouse) then {
-								_mrkName setMarkerType "mil_box";
-								_mrkName setMarkerColor "ColorGUER";
-								_mrkName setMarkerAlpha 1;
-							};
+							if(typeof _bdg == OT_warehouse) then {								
+								_mrkName = createMarker [_mrkName,getpos _bdg];
+								_mrkName setMarkerShape "ICON";
+								_mrkName setMarkerColor "ColorWhite";
+								_mrkName setMarkerType "OT_warehouse";
+								_mrkName setMarkerAlpha 1;								
+							}else{
+								if(typeof _bdg != OT_policeStation) then {
+									_mrkName = createMarkerLocal [_mrkName,getpos _bdg];
+									_mrkName setMarkerShape "ICON";
+									_mrkName setMarkerType "loc_Tourism";
+									_mrkName setMarkerColor "ColorWhite";									
+									_mrkName setMarkerAlpha 0;								
+									_mrkName setMarkerAlphaLocal 1;							
+								};
+							};							
 						};
 						if(_x in _leased) then {
 							_bdg setVariable ["leased",true,true];
+							_mrkName setMarkerAlphaLocal 0.3;				
 						};
 					};
 				};

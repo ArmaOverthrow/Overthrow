@@ -24,7 +24,7 @@ if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost
 if !([getpos player,_typecls] call canPlace) exitWith {
 	call {
 		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call notify_minor};
-		if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
+		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call notify_minor};
 		"You must be near a base or owned structure" call notify_minor
 	};
 };
@@ -173,14 +173,14 @@ if(_cost > 0) then {
 						_mrkid = format["%1-base",getpos _base];
 						createMarker [_mrkid,getpos _base];
 						_mrkid setMarkerShape "ICON";
-						_mrkid setMarkerType "mil_Flag";
+						_mrkid setMarkerType "ot_FOB";
 						_mrkid setMarkerColor "ColorWhite";
 						_mrkid setMarkerAlpha 1;
 						_mrkid setMarkerText _name;
 						_builder = name player;
 						{
 							[_x,format["New Base: %1",_name],format["%1 created a new base for resistance efforts %2",_builder,(getpos _base) call BIS_fnc_locationDescription]] call BIS_fnc_createLogRecord;
-						}foreach(allplayers);
+						}foreach([] call CBA_fnc_players);
 					};
 				};
 				onNameKeyDown = {
@@ -191,6 +191,20 @@ if(_cost > 0) then {
 						true
 					};
 				};				
+			};
+			if(_typecls == "Camp") then {
+				_mrkid = format["%1-camp",getpos modeTarget];
+				createMarker [_mrkid,getpos modeTarget];
+				_mrkid setMarkerShape "ICON";
+				_mrkid setMarkerType "ot_Camp";
+				_mrkid setMarkerColor "ColorWhite";
+				_mrkid setMarkerAlpha 1;
+				_mrkid setMarkerText format ["Camp %1",name player];
+				_builder = name player;
+				{
+					_desc = (getpos modeTarget) call BIS_fnc_locationDescription;
+					[_x,format["New Camp %1",_desc],format["%1 placed a camp %2",_builder,_desc]] call BIS_fnc_createLogRecord;
+				}foreach([] call CBA_fnc_players);
 			};
 		}else{
 			call {

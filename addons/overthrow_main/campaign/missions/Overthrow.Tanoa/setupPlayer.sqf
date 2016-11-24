@@ -11,11 +11,12 @@ townChange = {
 	_rep = player getVariable format["rep%1",_town];
 	_abandon = "NATO Controlled";
 	if(_town in (server getVariable ["NATOabandoned",[]])) then {
-		if(_stability < 50) then {
-			_abandon = "Anarchy";
-		}else{
+		_garrison = server getVariable [format['police%1',_town],0];
+		if(_garrison > 0) then {
 			_abandon = "Resistance Controlled";
-		};				
+		}else{
+			_abandon = "Anarchy";
+		};							
 	};
 	_plusmin = "";
 	if(_rep > -1) then {

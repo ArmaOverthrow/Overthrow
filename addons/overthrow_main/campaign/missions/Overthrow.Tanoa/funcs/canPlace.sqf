@@ -24,13 +24,13 @@ if(_typecls != "Base") then {
 }else{
 	_base = _pos call nearestBase;
 	if !(isNil "_base") then {
-		if((_base select 0) distance _pos < 800) then {
+		if((_base select 0) distance _pos < 300) then {
 			_canplace = false;
 		};
 	};
 	if(_canplace) then {
 		_base = _pos call nearestObjective;
-		if((_base select 0) distance _pos < 800) then {
+		if((_base select 0) distance _pos < 300) then {
 			_canplace = false;
 		};
 	};
@@ -70,8 +70,7 @@ if !(_isbase) then {
 if(_typecls == "Base") then {
 	_town = _pos call nearestTown;
 	_postown = server getVariable _town;
-	_dist = 400;
-	if(_town == "Georgetown") then {_dist = 950};
+	_dist = 250;
 	if((_postown distance _pos) < _dist) then {_canplace = false};
 };
 

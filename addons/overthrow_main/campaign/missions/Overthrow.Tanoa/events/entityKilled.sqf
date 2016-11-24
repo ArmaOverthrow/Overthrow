@@ -1,5 +1,6 @@
 _me = _this select 0;
 _killer = _me getVariable "ace_medical_lastDamageSource";
+
 if(_killer call unitSeen) then {
 	_killer setVariable ["lastkill",time,true];
 };
@@ -7,6 +8,7 @@ _town = (getpos _me) call nearestTown;
 
 if(isPlayer _me) exitWith {};
 
+_civ = _me getvariable "civ";
 _garrison = _me getvariable "garrison";
 _vehgarrison = _me getvariable "vehgarrison";
 _polgarrison = _me getvariable "polgarrison";
@@ -19,6 +21,10 @@ _mobboss = _me getvariable "mobboss";
 _standingChange = 0;
 
 call {
+	if(!isNil "_civ") exitWith {
+		_standingChange = -10;
+		[_town,-1] call stability;
+	};
 	if(!isNil "_mobboss") exitWith {
 		_mobsterid = _me getVariable "garrison";	
 		server setVariable [format["mobleader%1",_mobsterid],false,true];
@@ -89,8 +95,9 @@ call {
 		if(_pop > 0) then {
 			server setVariable [format["police%1",_polgarrison],_pop - 1,true];
 		};
+		[_town,-1] call stability;
 	};
-	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") exitWith {
+	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") then {
 		if(!isNil "_garrison") then {
 			_pop = server getVariable [format["garrison%1",_garrison],0];			
 			if(_pop > 0) then {
@@ -122,18 +129,23 @@ call {
 			_vg deleteAt (_vg find (typeof _me));
 			server setVariable [format["airgarrison%1",_airgarrison],_vg,false];
 		};
-	};
-	_standingChange = -10;
+	}else{		
+		if(side _me == west) then {
+			[_town,-1] call stability;
+		};
+		if(side _me == east) then {
+			[_town,1] call stability;
+		};
+	};	
 };
 
-if(captive _killer and ((_killer call unitSeen) or ((vehicle _killer) != _killer))) then {
+if(captive _killer and (_killer call unitSeen)) then {
 	_killer setCaptive false;				
 };
 if(isPlayer _killer) then {
-	if (_standingChange == -1) then {
-		[_town,_standingChange] remoteExec ["standing",_killer,true];
-	};
 	if (_standingChange == -10) then {
 		[_town,_standingChange,"You killed a civilian"] remoteExec ["standing",_killer,true];
+	}else{
+		[_town,_standingChange] remoteExec ["standing",_killer,true];
 	};
 };	

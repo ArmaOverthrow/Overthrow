@@ -7,9 +7,13 @@ while {true} do {
 		if(_x getVariable ["spawntrack",false]) then {
 			_track pushback _x;
 		}else{
-			if(((side _x == resistance) or (_x call hasOwner)) and (alive _x) and (!isPlayer _x)) then {_track pushback _x};
+			if((_x call hasOwner) and (alive _x) and (!isPlayer _x)) then {_track pushback _x};
 		};	
 		sleep 0.01;
 	}foreach(allunits);	
 	spawner setVariable ["track",_track,false];
+	private _dead = count alldeadmen;
+	if(_dead > 100) then {
+		format["There are %1 dead bodies, loot them or clean via map options",_dead] remoteExec ["notify_minor",0,false];
+	};
 };

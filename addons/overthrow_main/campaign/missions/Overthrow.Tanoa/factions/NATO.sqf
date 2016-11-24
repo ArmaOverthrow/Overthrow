@@ -193,28 +193,26 @@ while {true} do {
 	_garrisoned = false;
 	_numplayers = count([] call CBA_fnc_players);
 	if(_numplayers > 0) then {
-		_abandoned = server getVariable "NATOabandoned";
-		_attacking = spawner getvariable["NATOattacking",""];
-		
-		if (_attacking == "") then {
-			{
-				_pos = _x select 0;
-				_name = _x select 1;
-				if !(_name in _abandoned) then {	
-					_garrison = server getvariable format["garrison%1",_name];
-					_vehgarrison = server getvariable format["vehgarrison%1",_name];
-					
-					if(_garrison == 0) then {
-						_garrisoned = true;
-						_name spawn NATOcounter;				
-						_abandoned pushback _name;
-						server setVariable ["NATOabandoned",_abandoned,true];
-						_name setMarkerAlpha 1;				
-					};
+		_abandoned = server getVariable "NATOabandoned";		
+
+		{
+			_pos = _x select 0;
+			_name = _x select 1;
+			if !(_name in _abandoned) then {	
+				_garrison = server getvariable format["garrison%1",_name];
+				_vehgarrison = server getvariable format["vehgarrison%1",_name];
+				
+				if(_garrison == 0) then {
+					_garrisoned = true;
+					_name spawn NATOcounter;				
+					_abandoned pushback _name;
+					server setVariable ["NATOabandoned",_abandoned,true];
+					_name setMarkerAlpha 1;				
 				};
-				if(_garrisoned) exitWith {};
-			}foreach(OT_NATOobjectives);
-		};
+			};
+			if(_garrisoned) exitWith {};
+		}foreach(OT_NATOobjectives);
+
 		
 		{		
 			_town = _x;
@@ -248,9 +246,7 @@ while {true} do {
 			sleep 0.1;
 		}foreach (OT_allTowns);
 		
-		
-		if(_attacking != "") then {_garrisoned = true};//A counter-attack is still in progress, NATO is too busy
-		
+				
 		//Town counter-attacks
 		if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 98) then {
 			_highest = 0;
@@ -264,7 +260,6 @@ while {true} do {
 			}foreach (_abandoned);
 			if(_high > 0) then {
 				_highest spawn NATOretakeTown;
-				spawner setVariable["NATOattacking",_highest,false];
 			};
 		};
 		
@@ -304,6 +299,14 @@ while {true} do {
 			deleteGroup _x;
 		};
 	}foreach(allGroups);
+	
+	if(count alldeadmen > 50) then {
+		{
+			if !(_x call inSpawnDistance) then {
+				deleteVehicle _x;
+			};
+		}foreach(alldeadmen);
+	};
 	
 	sleep OT_NATOwait + round(random OT_NATOwait);	
 };

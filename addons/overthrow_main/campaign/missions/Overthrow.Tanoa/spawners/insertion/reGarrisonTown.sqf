@@ -26,8 +26,8 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 }foreach(OT_NATOobjectives);
 
 if(!isNil "_close") then {
-	_current = server setVariable [format ["garrison%1",_x],0];
-	server setVariable [format ["garrison%1",_x],_current+2,true];
+	_current = server getVariable [format ["garrison%1",_town],0];
+	server setVariable [format ["garrison%1",_town],_current+2,true];
 	if !(_townPos call inSpawnDistance) exitWith {};
 	
 	_start = [_close,0,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
@@ -86,14 +86,12 @@ if(!isNil "_close") then {
 	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
 
 	_group call initGendarmPatrol;
-	
-	{
-		_x addCuratorEditableObjects [_police+_support,true];
-	} forEach allCurators;
+	_group call distributeAILoad;
+	_tgroup call distributeAILoad;
 	
 	[3,_drop,format["%1 Reinforcements",_town],format["Intelligence reports that NATO is reinforcing the garrison in %1. %2 personnel were spotted departing %3 in an offroad and are currently enroute to the marked location.",_town,2,_closest]] remoteExec ["intelEvent",0,false];
 }else{
-	[_town,-4] call stability;
+	[_town,-10] call stability;
 };
 
 

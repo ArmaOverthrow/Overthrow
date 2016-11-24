@@ -96,6 +96,10 @@ recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 
 //QRF
+NATOQRF = compileFinal preProcessFileLineNumbers "AI\QRF\NATOQRF.sqf";
+NATOGroundForces = compileFinal preProcessFileLineNumbers "AI\QRF\NATOGroundForces.sqf";
+NATOAirSupport = compileFinal preProcessFileLineNumbers "AI\QRF\NATOAirSupport.sqf";
+NATOGroundSupport = compileFinal preProcessFileLineNumbers "AI\QRF\NATOGroundSupport.sqf";
 NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
 NATOcounter = compileFinal preProcessFileLineNumbers "AI\QRF\NATOcounter.sqf";
 CTRGSupport = compileFinal preProcessFileLineNumbers "AI\QRF\CTRGSupport.sqf";
@@ -262,6 +266,28 @@ blackFaded = {
     [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
+canDrive = {
+	((_this getHitPointDamage "HitLFWheel") < 1) and
+	((_this getHitPointDamage "HitLF2Wheel") < 1) and
+	((_this getHitPointDamage "HitRFWheel") < 1) and
+	((_this getHitPointDamage "HitRF2Wheel") < 1) and
+	((_this getHitPointDamage "HitFuel") < 1) and
+	((_this getHitPointDamage "HitEngine") < 1)
+};
+
+distributeAILoad = {	
+	private _send = true;
+	private _group = _this;
+	if(OT_serverTakesLoad) then {
+		if(random 100 > (100 / ((count OT_activeClients) + 1))) then {
+			_send = false;
+		};
+	};
+	if(_send) then {	
+		_group setGroupOwner owner(selectRandom OT_activeClients);	
+	};
+};
+
 newGame = {
     "Generating economy" remoteExec['blackFaded',0,false];
     [] execVM "initEconomy.sqf";
@@ -372,11 +398,11 @@ rewardMoney = {
 	}else{
 		if((side _who) == resistance) then {
 			//we spread it amongst everyone
-			_perPlayer = round(_amount / count(allPlayers));
+			_perPlayer = round(_amount / count([] call CBA_fnc_players));
 			if(_perPlayer > 0) then {
 				{
 					[_perPlayer] remoteExec ["money",_x,false];
-				}foreach(allPlayers);	
+				}foreach([] call CBA_fnc_players);	
 			};		
 		};
 	};	
@@ -413,6 +439,13 @@ stability = {
     }else{
         _townmrk setMarkerAlpha 0;
     };
+	
+	_garrison = server getVariable [format['police%1',_town],0];
+	if(_garrison > 0) then {
+		_townmrk setMarkerType "OT_Police";
+	}else{
+		_townmrk setMarkerType "OT_Anarchy";
+	};			
     
     //update the markers
     if(_stability < 50) then {
@@ -423,7 +456,7 @@ stability = {
         _townmrk setMarkerColor "ColorGUER";
         if(_town in _abandoned) then {
             _town setMarkerAlpha ((_stability - 50) / 100);
-            _town setMarkerColor "ColorGreen";
+            _town setMarkerColor "ColorGUER";
         }else{
             _town setMarkerAlpha 0;
         };

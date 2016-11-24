@@ -1,31 +1,28 @@
-private ["_town","_count","_pop","_stability","_numVeh","_start","_road","_vehtype","_dirveh","_roadscon","_mSize","_posTown","_groups"];
 if (!isServer) exitwith {};
 
-_count = 0;
+private _count = 0;
 
-_town = _this;
-_posTown = server getVariable _town;
-_groups = [];
+private _town = _this;
+private _posTown = server getVariable _town;
+private _groups = [];
 
-_mSize = 380;
+private _mSize = 150;
 if(_town in OT_capitals + OT_sprawling) then {//larger search radius
-	_mSize = 700;
+	_mSize = 300;
 };
 
-_count = 0;
-_pop = server getVariable format["population%1",_town];
-_stability = server getVariable format ["stability%1",_town];
-_numVeh = 4;
+private _count = 0;
+private _pop = server getVariable format["population%1",_town];
+private _stability = server getVariable format ["stability%1",_town];
+private _numVeh = 4;
 if(_pop > 15) then {
-	_numVeh = 4 + round(_pop * OT_spawnVehiclePercentage);
+	_numVeh = 2 + round(_pop * OT_spawnVehiclePercentage);
 };
-private _numExisting = {(side _x) != west} count(_posTown nearEntities ["LandVehicle",_mSize]);
-_numVeh = _numVeh - _numExisting;
-if(_numVeh <= 0) exitWith {[]};
+if(_numVeh <= 0 or count vehicles > 200) exitWith {[]};
 while {(_count < _numVeh)} do {		
-	_start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
-	_road = [_start] call BIS_fnc_nearestRoad;
-	if (!isNull _road) then {		
+	private _start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
+	private _road = [_start] call BIS_fnc_nearestRoad;
+	if (!isNull _road) then {	
 		_pos = getPos _road;
 		_vehtype = "";
 		if(_pop > 600) then {
@@ -46,7 +43,7 @@ while {(_count < _numVeh)} do {
 						
 				_veh setDir _dirveh;
 				
-				if((random 100) > 95) then {
+				if((random 100) > 90 and (count allunits < 300)) then {
 					_group = createGroup CIVILIAN;
 					_groups pushback _group;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
@@ -66,10 +63,9 @@ while {(_count < _numVeh)} do {
 					_wp setWaypointStatements ["true","unassignvehicle this;moveout this;(group this) call civilianGroup;[vehicle this] execVM 'funcs\cleanup.sqf';[this] execVM 'funcs\cleanup.sqf'"]; 
 				};
 				_groups pushBack _veh;
-				
-				_count = _count + 1;
 			};
 		};
 	};	
+	_count = _count + 1;
 };
 _groups

@@ -1,10 +1,9 @@
-private ["_unit","_timer","_bad","_rep","_totalrep"];
-_unit = _this;
+private _unit = _this;
 
-_timer = -1;
+private _timer = -1;
 
 _unit setCaptive true;
-_unit setVariable ["hiding",false,false];
+_unit setVariable ["hiding",0,false];
 
 _unit addEventHandler ["take", {
 	_me = _this select 0;
@@ -46,7 +45,7 @@ while {alive _unit} do {
 	//check wanted status
 	if !(captive _unit) then {
 		//CURRENTLY WANTED
-		if(_timer >= 0) then {
+		if(_timer >= 0) then {			
 			_timer = _timer + 3;	
 			_unit setVariable ["hiding",30 - _timer,false];
 			if(_timer >= 30) then {
@@ -58,13 +57,10 @@ while {alive _unit} do {
 					_unit setVariable ["hiding",30,false];
 				};
 			};
-		}else{				
+		}else{
 			if !(_unit call unitSeen) then {
-				_lastkill = _unit getVariable ["lastkill",0];
-				if((time - _lastkill) > 120) then {
-					_unit setVariable ["hiding",30,false];	
-					_timer = 0;	
-				};
+				_unit setVariable ["hiding",30,false];	
+				_timer = 0;	
 			};
 		};
 	}else{

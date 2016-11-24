@@ -35,9 +35,9 @@ _civ linkItem "ItemMap";
 _civ linkItem "ItemCompass";
 _civ linkItem "ItemWatch";
 if(OT_hasTFAR) then {
-	_unit linkItem "tf_anprc148jem";
+	_civ linkItem "tf_anprc148jem";
 }else{
-	_unit linkItem "ItemRadio";
+	_civ linkItem "ItemRadio";
 };
 
 _posright = [_pos,[[1.5104,-0.4,4.34404], (getDir _post)-180] call BIS_fnc_rotateVector2D] call BIS_fnc_vectorAdd;

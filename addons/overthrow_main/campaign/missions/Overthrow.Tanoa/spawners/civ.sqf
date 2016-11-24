@@ -1,25 +1,30 @@
-private ["_id","_params","_town","_posTown","_groups","_numCiv","_shops","_houses","_stability","_pop","_count","_mSize","_civTypes","_hour","_range","_found"];
+if(count allunits > 300) exitWith {[]}; //dont spawn civs at all when under load.. just no point
 
-_count = 0;
-_town = _this;
-_groups = [];
+private _count = 0;
+private _town = _this;
+private _groups = [];
 			
-_pop = server getVariable format["population%1",_town];
-_stability = server getVariable format ["stability%1",_town];
-_posTown = server getVariable _town;
+private _pop = server getVariable format["population%1",_town];
+private _stability = server getVariable format ["stability%1",_town];
+private _posTown = server getVariable _town;
 
-_mSize = 350;
+private _mSize = 350;
 if(_town in OT_capitals) then {
 	_mSize = 800;
 };
+private _numciv = 0;
 
-if(_pop > 15) then {
+if(_pop > 5) then {
 	_numCiv = round(_pop * OT_spawnCivPercentage);
 	if(_numCiv < 5) then {
 		_numCiv = 5;
 	};
 }else {
 	_numCiv = _pop;
+};
+
+if(_numCiv > 20) then {
+	_numCiv = 20;
 };
 
 _hour = date select 3;
@@ -37,12 +42,9 @@ if !(_church isEqualTo []) then {
 
 _count = 0;
 
-_pergroup = 2;
-if(_numCiv < 10) then {_pergroup = 1};
-if(_numCiv > 30) then {_pergroup = 3};
-if(_numCiv > 50) then {_pergroup = 4};
-if(_numCiv > 70) then {_pergroup = 5};
-if(_numCiv > 100) then {_pergroup = 8};
+_pergroup = 1;
+if(_numCiv > 8) then {_pergroup = 2};
+if(_numCiv > 16) then {_pergroup = 4};
 _idd = 1;
 
 while {_count < _numCiv} do {

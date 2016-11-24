@@ -7,20 +7,19 @@ OT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\gunDealer.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\ambientVehicles.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\shop.sqf",
-	compileFinal preProcessFileLineNumbers "spawners\distribution.sqf",
 	compileFinal preProcessFileLineNumbers "spawners\harbor.sqf"
 ];
 
 {	
 	private _pos = server getVariable _x;
 	private _town = _x;
-	[_pos,{
-			private _t = _this;
+	[_pos,{			
+			private _spawntown = _this;
 			private _g = [];
-			{				
+			{					
 				{
 					_g pushback _x;
-				}foreach(_t call _x);									
+				}foreach(_spawntown call _x);									
 			}foreach(OT_townSpawners);
 			_g;
 	},_town] call OT_fnc_registerSpawner;

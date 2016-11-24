@@ -393,9 +393,9 @@ class OT_dialog_options
 		class RscButton_1603: RscButton
 		{
 			idc = 1600;
-			action = "{deleteVehicle _x} foreach(alldeadmen);hint ""Cleaned all dead bodies"";";
+			action = "{deleteVehicle _x} foreach(alldeadmen);""Cleaned dead bodies"" remoteExec [""notify_minor"",0,false];";
 
-			text = "Clean all dead bodies"; //--- ToDo: Localize;
+			text = "Clean dead bodies"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
@@ -405,14 +405,14 @@ class OT_dialog_options
 		class RscButton_1604: RscButton
 		{
 			idc = 1600;
-			action = "{if (!alive _x) then {deletevehicle _x}} foreach(vehicles);hint ""Cleaned all wrecks"";";
+			action = "{if (!(alive _x) or !(_x call canDrive) or (side _x == civilian and !(_x call hasowner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call hasowner) and !(_x call inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call hasowner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""notify_minor"",0,false];";
 
-			text = "Clean all wrecks"; //--- ToDo: Localize;
+			text = "Clean other"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Removes all wrecks"; //--- ToDo: Localize;
+			tooltip = "Removes all wrecks, vehicles that cannot move, unowned civilian vehicles and civilians"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

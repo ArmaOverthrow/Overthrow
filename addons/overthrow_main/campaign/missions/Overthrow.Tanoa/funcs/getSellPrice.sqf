@@ -25,8 +25,9 @@ if(_cls in (OT_allWeapons + OT_allMagazines) and (_town in OT_allTowns)) then {
 	if(_standing == 0) then {_standing = 1};
 	_standing = (_standing/100)+1;
 
-	_price = _baseprice + (_baseprice * _standing) + (_baseprice * _stability * _population);
+	_price = _baseprice + ((_baseprice * 0.55) + (_baseprice * _stability * _population));
 };
+
 
 if(_price < 0) then {_price = 1};
 

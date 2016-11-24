@@ -65,7 +65,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 
 	skiptime -24;
 	86400 setOvercast _newOvercast;
-	86400 setFog (_weather select 1);
+	86400 setFog 0;
 	86400 setWaves (_weather select 2);	
 	86400 setLightnings (_weather select 4);
 	86400 setWindForce (_newOvercast * 0.3);
@@ -90,7 +90,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 	_newOvercast = _weather select 0;
 	skiptime -24;
 	86400 setOvercast _newOvercast;
-	86400 setFog (_weather select 1);
+	86400 setFog 0;
 	86400 setWaves (_weather select 2);	
 	86400 setLightnings (_weather select 4);
 	86400 setRain (_weather select 3);
@@ -142,8 +142,6 @@ while {true} do {
 	_count = 0;
 	call {
 		if(_mode == "Clear") exitWith {
-			if((random 100) < _stormchance) exitWith {_forecast = "Storm"};
-			if((random 100) < _rainchance) exitWith {_forecast = "Rain"};
 			if((random 100) < _cloudychance) exitWith {_forecast = "Cloudy"};
 		};
 		if(_mode == "Storm") exitWith {				
@@ -151,11 +149,9 @@ while {true} do {
 		};
 		if(_mode == "Rain") exitWith {				
 			if((random 100) < _stormchance) exitWith {_forecast = "Storm"};
-			if((random 100) > _rainchance) exitWith {_forecast = "Clear"};
 			if((random 100) < 50) exitWith {_forecast = "Cloudy"};
 		};
-		if(_mode == "Cloudy") exitWith {				
-			if((random 100) < _stormchance) exitWith {_forecast = "Storm"};
+		if(_mode == "Cloudy") exitWith {
 			if((random 100) < _rainchance) exitWith {_forecast = "Rain"};
 			if((random 100) > _cloudychance) exitWith {_forecast = "Clear"};
 		};
@@ -164,7 +160,7 @@ while {true} do {
 	
 	_newOvercast = (_weather select 0);
 	120 setOvercast _newOvercast;
-	120 setFog (_weather select 1);
+	120 setFog 0;
 	120 setWaves (_weather select 2);
 	120 setRain (_weather select 3);
 	120 setLightnings (_weather select 4);

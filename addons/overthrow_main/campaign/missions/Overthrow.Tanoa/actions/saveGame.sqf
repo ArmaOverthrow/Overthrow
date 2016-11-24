@@ -38,7 +38,7 @@ _data = [];
 		};
 	}foreach(allVariables _me);
 	_data pushback [_uid,_d];
-}foreach(allPlayers);
+}foreach([] call CBA_fnc_players);
 
 _vehicles = [];
 
@@ -51,7 +51,6 @@ _count = 10001;
 			_s pushback ["money",_x getVariable ["money",0]];
 		};
 		_vehicles pushback [typeof _x,getpos _x,getdir _x,_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
-		_done pushback _x;
 	};
 	if(_count > 2000) then {
 		"Still persistent Saving... please wait" remoteExec ["notify_long",0,true];
@@ -96,7 +95,7 @@ _data pushback ["timedate",date];
 
 {	
 	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
-}foreach(allplayers);
+}foreach([] call CBA_fnc_players);
 
 profileNameSpace setVariable ["Overthrow.save.001",_data];
 if (isDedicated) then {

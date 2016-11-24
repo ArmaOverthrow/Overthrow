@@ -7,7 +7,7 @@ _tt = _myunits select 0;
 if(vehicle _tt != _tt) then {
 	_sorted = [vehicle _tt];
 }else{
-	_objects = _tt nearEntities [["Car",OT_item_Storage,OT_items_distroStorage select 0],20];
+	_objects = _tt nearEntities [["Car","ReammoBox_F","Air","Ship"],20];
 	if(count _objects == 0) exitWith {
 		"Cannot find any containers or vehicles within 20m of first selected unit" call notify_minor;
 	};
