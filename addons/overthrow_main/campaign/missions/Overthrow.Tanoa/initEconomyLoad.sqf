@@ -34,7 +34,12 @@ _allActiveShops = [];
     };
     _mrk = createMarker [format["%1-abandon",_x],_pos];
     _mrk setMarkerShape "ICON";
-    _mrk setMarkerType "mil_dot";
+    _garrison = server getVariable [format['police%1',_x],0];
+	if(_garrison > 0) then {
+		_mrk setMarkerType "OT_Police";
+	}else{
+		_mrk setMarkerType "OT_Anarchy";
+	};	
     if(_stability < 50) then {      
         _mrk setMarkerColor "ColorOPFOR";
     }else{

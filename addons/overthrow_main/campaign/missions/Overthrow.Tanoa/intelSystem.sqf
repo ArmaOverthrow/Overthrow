@@ -6,7 +6,7 @@ if(isMultiplayer) then {
 			if !(_x isEqualTo player) then {
 				drawIcon3D ["a3\ui_f\data\map\groupicons\selector_selectable_ca.paa", [1,1,1,0.5], getPos _x, 1, 1, 0, format["%1 (%2m)",name _x,round(_x distance player)], 0, 0.02, "TahomaB", "center", true];
 			};
-		}foreach(allPlayers);	
+		}foreach([] call CBA_fnc_players);	
 	};
 };
 
@@ -36,7 +36,7 @@ _handler = {
 					_vehs pushback _veh;
 				};
 			};
-		}foreach(allPlayers);
+		}foreach([] call CBA_fnc_players);
 	};
 	_t = 1;
 	{
@@ -195,14 +195,36 @@ _handler = {
 	if(_scale <= 0.14) then {
 		{
 			(_this select 0) drawIcon [
-				"iconObject_circle",
+				"ot\ui\markers\shop.paa",
 				[1,1,1,1],
 				_x select 0,
-				0.5/ctrlMapScale (_this select 0),
-				0.5/ctrlMapScale (_this select 0),
+				0.4/ctrlMapScale (_this select 0),
+				0.4/ctrlMapScale (_this select 0),
 				0
 			]; 
 		}foreach(OT_allActiveShops);
+		{
+			(_this select 0) drawIcon [
+				"ot\ui\markers\death.paa",
+				[1,1,1,0.5],
+				getpos _x,
+				0.2/ctrlMapScale (_this select 0),
+				0.2/ctrlMapScale (_this select 0),
+				0
+			]; 
+		}foreach(alldeadmen);
+		{
+			if(((_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call hasOwner)) then {
+				(_this select 0) drawIcon [
+					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
+					[1,1,1,1],
+					getpos _x,
+					0.4/ctrlMapScale (_this select 0),
+					0.4/ctrlMapScale (_this select 0),
+					getdir _x
+				]; 
+			};
+		}foreach(vehicles);
 	};
 	
 	

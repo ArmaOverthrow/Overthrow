@@ -27,7 +27,7 @@ if(isNil "_close") then {
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 _group = [_start, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_ReconTeam")] call BIS_fnc_spawnGroup;
-
+_group call distributeAILoad;
 sleep 0.5;
 
 _dir = [_start,_posTown] call BIS_fnc_dirTo;
@@ -57,6 +57,8 @@ if(_isHQ) then {
 	_veh =  OT_NATO_Vehicle_AirTransport_Small createVehicle _spawnpos;
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
+	
+	_tgroup call distributeAILoad;
 	
 	createVehicleCrew _veh;
 	{

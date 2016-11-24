@@ -31,7 +31,7 @@ if(_handled) then {
 	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call notify_minor};
 
 	
-	_mrkid = format["bought%1",str(_building)];
+	_mrkid = format["bdg-%1",_building];
 	_owned = player getVariable "owned";
 	
 	if(_type == "buy") then {
@@ -39,16 +39,14 @@ if(_handled) then {
 		[-_price] call money;
 		
 		_mrk = createMarkerLocal [_mrkid,getpos _building];
-		_mrk setMarkerShape "ICON";
-		_mrk setMarkerType "loc_Tourism";
+		_mrk setMarkerShape "ICON";		
 		_mrk setMarkerColor "ColorWhite";
-		_mrk setMarkerAlpha 0;
-		_mrk setMarkerAlphaLocal 1;
-		
 		if(typeof _building == OT_warehouse) then {
-			_mrk setMarkerType "mil_box";
-			_mrk setMarkerColor "ColorGUER";
-			_mrk setMarkerAlpha 1;
+			_mrk setMarkerType "OT_warehouse";
+		}else{
+			_mrk setMarkerType "loc_Tourism";
+			_mrk setMarkerAlpha 0;
+			_mrk setMarkerAlphaLocal 1;
 		};
 		
 		_owned pushback ([_building] call fnc_getBuildID);

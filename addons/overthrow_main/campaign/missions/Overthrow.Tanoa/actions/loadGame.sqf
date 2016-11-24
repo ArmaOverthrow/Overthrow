@@ -56,6 +56,10 @@ if(typename _data != "ARRAY") exitWith {
 				};
 				_veh = _type createVehicle _pos;
 				_veh setPos _pos;
+				if(_type isKindOf "Building") then {
+					createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
+					_veh setVectorDirAndUp [[0,0,-1],[0,1,0]];
+				};
 				_veh setDir _dir;
 				clearWeaponCargoGlobal _veh;
 				clearMagazineCargoGlobal _veh;
@@ -113,6 +117,25 @@ if(typename _data != "ARRAY") exitWith {
 					_mrkid setMarkerType "o_installation";
 					_mrkid setMarkerColor "ColorGUER";
 					_mrkid setMarkerAlpha 1;
+				};
+				
+				if(_type == OT_warehouse) then {
+					_mrkid = format["bdg-%1",_veh];
+					createMarker [_mrkid,_pos];
+					_mrkid setMarkerShape "ICON";
+					_mrkid setMarkerType "OT_warehouse";
+					_mrkid setMarkerColor "ColorWhite";
+					_mrkid setMarkerAlpha 1;
+				};
+				
+				if(_type == OT_item_tent) then {
+					_mrkid = format["%1-camp",_pos];
+					createMarker [_mrkid,_pos];
+					_mrkid setMarkerShape "ICON";
+					_mrkid setMarkerType "ot_Camp";
+					_mrkid setMarkerColor "ColorWhite";
+					_mrkid setMarkerAlpha 1;
+					_mrkid setMarkerText format ["Camp %1",server getvariable [format["name%1",_owner],""]];
 				};
 			};
 		}foreach(_val);

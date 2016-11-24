@@ -10,11 +10,11 @@ overviewPicture = "\ot\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
 author="ARMAzac";
 briefingName = "Overthrow Tanoa";
 OnLoadName = "Overthrow Tanoa";
-OnLoadMission = "v0.6.2";
+OnLoadMission = "v0.6.5";
 loadScreen = "\ot\campaign\missions\Overthrow.Tanoa\pic.jpg";
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;
-skipLobby = 1;
+skipLobby = 0;
 
 class Header
 {
@@ -50,4 +50,15 @@ class CAManBase {
 		killed = "call compile preprocessFileLineNumbers 'events\entityKilled.sqf'";
 	};
 };
+};
+
+//Disable ACE blood (just too much of it in a heavy game)
+class Params {
+    class ace_medical_blood_enabledFor { 
+        title = "Blood";
+        ACE_setting = 1;
+        values[] = {0, 1, 2};
+        texts[] =  {"None", "Players Only", "All"};
+        default = 0;
+    };
 };

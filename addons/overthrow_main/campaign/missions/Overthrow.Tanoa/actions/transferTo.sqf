@@ -16,7 +16,7 @@ if(typename _b == "ARRAY") then {
 if(!_iswarehouse) then {
 	{
 		if(_x != _target) then {_objects pushback _x};
-	}foreach(player nearEntities [["LandVehicle","ReammoBox_F"],20]);
+	}foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 };
 
 if(count _objects == 0) exitWith {

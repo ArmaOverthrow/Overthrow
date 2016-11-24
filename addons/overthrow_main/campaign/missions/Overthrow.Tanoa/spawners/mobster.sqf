@@ -15,19 +15,6 @@ _flagpos = [_pos,2,_dir] call BIS_fnc_relPos;
 _veh = createVehicle [OT_flag_CRIM,_flagpos,[],0,"CAN_COLLIDE"];
 _groups pushback _veh;
 
-_count = 0;
-_d = 0;
-while {_count < 8} do {
-	_p = [_pos,10,_d] call SHK_pos;
-	_cls = OT_item_wrecks call BIS_fnc_selectRandom;
-	_p = _p findEmptyPosition [1,50,_cls];
-	_veh = createVehicle [_cls,_p,[],0,"CAN_COLLIDE"];
-	_veh setDir (_d+90);
-	_groups pushback _veh;
-	_count = _count + 1;
-	_d = _d + 45;
-};	
-
 _numtents = 2 + round(random 3);
 _count = 0;
 

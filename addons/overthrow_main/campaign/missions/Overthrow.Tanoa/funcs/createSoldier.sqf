@@ -92,6 +92,16 @@ if(_cls == "I_Medic_F") then {
 	};
 };
 
+if((_cls find "_AA_") > -1 or (_cls find "_AAA_") > -1) then {
+	clearBackpackCargoGlobal _civ;
+	for "_i" from 1 to 3 do {_civ addItemToBackpack "Titan_AA";};
+};
+
+if((_cls find "_AT_") > -1 or (_cls find "_AAT_") > -1) then {
+	clearBackpackCargoGlobal _civ;
+	for "_i" from 1 to 3 do {_civ addItemToBackpack "Titan_AT";};
+};
+
 if(_scope != "") then {
 	_civ addPrimaryWeaponItem _scope;
 };

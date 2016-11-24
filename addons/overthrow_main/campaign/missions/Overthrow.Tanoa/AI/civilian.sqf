@@ -15,6 +15,7 @@ removeHeadgear _unit;
 removeVest _unit;
 
 _unit setVariable ["NOAI",true,false];
+_unit setVariable ["civ",true,true];
 
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _unit];
 [_unit, "NoVoice"] remoteExec ["setAISpeaker", 0, _unit];

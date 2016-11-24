@@ -30,7 +30,7 @@ _leader = false;
 {		
 	_civ = [_x,_pos,_group] call createSoldier;
 	player reveal [_civ,4];	
-	if(!_leader) then {_group selectLeader _civ;_leader=true};
+	if(!_leader) then {_group selectLeader _civ;_civ setVariable ["owner",getplayeruid player,true],_leader=true};
 }foreach(_soldiers);
 player hcSetGroup [_group,_cls];
 

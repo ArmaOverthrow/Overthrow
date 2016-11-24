@@ -24,11 +24,12 @@ if(!_isBase) then {
 
 	_closest = _town;
 	_center = _townpos;
-	if((_objpos distance player) < (_townpos distance player)) then {
+	if((_objpos distance player) < 250) then {
 		_closest = _obj select 1;
 		_isobj = true;
 		_center = _objpos;
 		_buildlocation = "objective";
+		modeMax = 250;
 	}else{
 		_buildlocation = "town";
 		if(_town in OT_capitals) then {
@@ -94,6 +95,7 @@ buildOnMouseMove = {
 	_relX = _this select 1;
 	_relY = _this select 2;
 	modeValue = screenToWorld getMousePosition;
+	modeValue = [modeValue select 0,modeValue select 1,0];
 	if(!isNull modeTarget) then {
 		modeTarget setPos modeValue;
 		modeVisual setPos modeValue;
@@ -280,6 +282,7 @@ buildOnMouseUp = {
 					_created setVariable ["OT_init",modeCode,true];
 					[modeValue,modeCode] remoteExec ["structureInit",2];					
 				};
+				createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
 			};			
 			deleteVehicle modeVisual;
 			

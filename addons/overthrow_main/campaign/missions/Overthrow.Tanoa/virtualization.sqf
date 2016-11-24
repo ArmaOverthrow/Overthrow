@@ -65,16 +65,8 @@ _spawn = {
 	params ["_i","_s","_e","_c","_p","_sp"];
 	private _g = _p call _c;		
 	{
-		_send = true;
-		if(OT_serverTakesLoad) then {
-			if(random 100 > (100 / ((count OT_activeClients) + 1))) then {
-				_send = false;
-			};
-		};
-		if(_send) then {
-			if(typename _x == "GROUP") then {
-				_x setGroupOwner owner(selectRandom OT_activeClients);
-			};
+		if(typename _x == "GROUP") then {
+			_x call distributeAILoad;
 		};
 		_sp pushback _x;
 	}foreach(_g);			
@@ -107,22 +99,25 @@ OT_serverTakesLoad = false;
 while{true} do {
     sleep 0.1; 	
 	OT_activeClients = [];
+	//Get all headless clients
+	OT_serverTakesLoad = false;
 	{
-
 		if (_x in allPlayers) then { 
 			OT_activeClients pushback _x;
-			OT_activeClients pushback _x;//Twice for weight in random sel
+			OT_activeClients pushback _x;
+			OT_activeClients pushback _x;//Thrice for weight in random sel
 		};
 	} forEach (entities "HeadlessClient_F"); 
+	//If no headless clients and less than 6 players, server will take load
 	if(count OT_activeClients == 0) then {
 		if(count allplayers < 6) then {
 			OT_serverTakesLoad = true;
 		}else{
 			OT_serverTakesLoad = false;
 		};
-		OT_activeClients = allplayers;
+		OT_activeClients = [] call CBA_fnc_players;
 	}else{
-		[OT_activeClients,allplayers] call BIS_fnc_arrayPushStack;
+		[OT_activeClients,[] call CBA_fnc_players] call BIS_fnc_arrayPushStack;
 	};
     {
         private _id = _x select 0;
@@ -136,11 +131,13 @@ while{true} do {
                 if !(_start call inSpawnDistance) then {
 					OT_allSpawned deleteAt _spawnidx;
 					_x spawn _despawn;
+					sleep 0.1;
                 };
             }else{
                 if (_start call inSpawnDistance) then {
                     OT_allSpawned pushback _id;
 					_x spawn _spawn;
+					sleep 0.1;
                 };
             };
         }else{
@@ -148,11 +145,13 @@ while{true} do {
                 if !((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
                     OT_allSpawned deleteAt _spawnidx;
 					_x spawn _despawn;
+					sleep 0.1;
                 };
             }else{
                 if ((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
                     OT_allSpawned pushback _id;
-					_x spawn _x;
+					_x spawn _spawn;
+					sleep 0.1;					
                 };
             };
         };

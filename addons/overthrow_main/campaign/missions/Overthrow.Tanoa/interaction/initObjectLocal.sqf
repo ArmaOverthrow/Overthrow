@@ -29,10 +29,6 @@ if(typeof _this == "Land_Cargo_House_V4_F") then {
 	};
 };
 
-if(typeof _this == "Land_Cargo_Patrol_V4_F") then {
-	[getpos _this] execVM "structures\observationPost.sqf";
-};
-
 if(_this isKindOf "Building" or _this isKindOf "Man" or _this isKindOf "LandVehicle") exitWith{};
 
 if(OT_hasACE) then {

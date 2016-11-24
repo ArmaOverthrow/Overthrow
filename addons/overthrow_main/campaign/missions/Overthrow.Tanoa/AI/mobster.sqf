@@ -50,7 +50,7 @@ if(OT_hasACE) then {
 	_unit linkItem "ItemWatch";
 };
 
-_weapon = OT_allCheapRifles call BIS_fnc_selectRandom;
+_weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
 
 _unit addWeapon _weapon;
 

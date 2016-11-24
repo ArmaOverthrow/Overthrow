@@ -22,8 +22,8 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
-OT_spawnCivPercentage = 0.06;
-OT_spawnVehiclePercentage = 0.03;
+OT_spawnCivPercentage = 0.05;
+OT_spawnVehiclePercentage = 0.02;
 OT_standardMarkup = 0.2; //Markup in shops is calculated from this
 OT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 OT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
@@ -181,9 +181,6 @@ OT_NATO_AirSpawn = "NATO_airspawn";
 OT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 OT_NATO_Vehicles_Garrison = [
-	["B_T_MBT_01_TUSK_F", 1],
-	["B_T_MBT_01_cannon_F",1],
-	["B_T_LSV_01_armed_F",2],
 	["B_T_MRAP_01_hmg_F",5],
 	["B_T_MRAP_01_gmg_F",5],
 	["B_T_APC_Tracked_01_AA_F",3],
@@ -213,11 +210,14 @@ OT_NATO_Vehicle_Transport = "B_T_Truck_01_transport_F";
 OT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
 OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
-OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
+OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_armed_F"];
+OT_NATO_Vehicles_GroundSupport = ["B_T_MRAP_01_gmg_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = "B_Heli_Transport_03_F";
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
+
+OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
 
 OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
@@ -239,7 +239,7 @@ OT_NATO_weapons_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F",
 OT_CRIM_Unit = "C_man_p_fugitive_F";
 OT_CRIM_Clothes = ["U_I_C_Soldier_Bandit_3_F","U_BG_Guerilla3_1","U_C_HunterBody_grn","U_I_G_Story_Protagonist_F"];
 OT_CRIM_Goggles = ["G_Balaclava_blk","G_Balaclava_combat","G_Balaclava_lowprofile","G_Balaclava_oli","G_Bandanna_blk","G_Bandanna_khk","G_Bandanna_oli","G_Bandanna_shades","G_Bandanna_sport","G_Bandanna_tan"];
-
+OT_CRIM_Weapons = ["arifle_AK12_F","arifle_AKM_F","arifle_AKM_F","arifle_AKM_F"];
 
 //ECONOMY
 

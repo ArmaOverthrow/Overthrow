@@ -20,7 +20,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 		server setVariable [format["crimnew%1",_town],false,false];
 		server setVariable [format["crimadd%1",_town],0,false];
 		if(_stability < 30) then {
-			_garrison = 4 + round(random 4);
+			_garrison = 1 + round(random 4);
 			_building = [_posTown, OT_crimHouses] call getRandomBuilding;
 			if(isNil "_building") then {
 				_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
@@ -78,7 +78,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 			if(_obdist > 1000 and _towndist > 400 and _cdist > 800 and _mdist > 700) then {
 				_t = _t + 1;
 				
-				_garrison = 6 + round(random 4);
+				_garrison = 4 + round(random 4);
 				
 				_mobsters pushback [_pos,_t];
 				server setVariable ["activemobsters",_mobsters,false];
@@ -128,7 +128,7 @@ while {true} do {
 								};								
 								
 								if(((random 100) < _chance) and _num < _max) then {
-									_numadd = round(random 4);																	
+									_numadd = round(random 2);																	
 									if(_leaderpos call inSpawnDistance) then {
 										[_leaderpos,_numadd,_x] spawn sendCrims;
 									}else{
@@ -149,7 +149,7 @@ while {true} do {
 																
 								server setVariable [format ["timecrims%1",_x],0,false];	
 
-								[2,_leaderpos,"Gang Hideout",format["Intelligence reports that this building was recently purchased by a known underworld figure, it's possible they will use this location as a base of operations for a new gang in %1.",_town],"target"] remoteExec ["intelEvent",0,false];
+								[3,_leaderpos,"Gang Hideout",format["Intelligence reports that this building was recently purchased by a known underworld figure, it's possible they will use this location as a base of operations for a new gang in %1.",_town],"target"] remoteExec ["intelEvent",0,false];
 							};
 						};
 					};
