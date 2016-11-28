@@ -61,23 +61,18 @@ OT_fnc_updateSpawnerPosition = {
 
 OT_allSpawned = [];
 
-_spawn = {
+_spawn = {	
 	params ["_i","_s","_e","_c","_p","_sp"];
-	private _g = _p call _c;		
-	{
-		if(typename _x == "GROUP") then {
-			_x call distributeAILoad;
-		};
-		_sp pushback _x;
-	}foreach(_g);			
+	
+	(_p + [_i]) spawn _c;
 };
 
 _despawn = {	
-	params ["_i","_s","_e","_c","_p","_sp"];
+	params ["_i","_s","_e","_c","_p"];
+	
 	{	
 		if(typename _x == "GROUP") then {
-			{
-				sleep 0.1;				
+			{								
 				if !(_x call hasOwner) then {
 					deleteVehicle _x;
 				};	
@@ -88,9 +83,8 @@ _despawn = {
 				deleteVehicle _x;
 			};	
 		};		
-		sleep 0.1;
-	}foreach(_sp);
-	_this set [5,[]];
+	}foreach(spawner getVariable [_i,[]]);
+	spawner setVariable [_i,[],false];
 };
 
 OT_activeClients = [];

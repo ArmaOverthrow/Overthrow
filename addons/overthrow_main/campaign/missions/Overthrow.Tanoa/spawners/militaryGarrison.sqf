@@ -1,4 +1,4 @@
-params ["_posTown","_name"];
+params ["_posTown","_name","_spawnid"];
 
 private _count = 0;
 private _groups = [];
@@ -180,4 +180,4 @@ _road = objNull;
 	_vgroup call initMilitaryPatrol;
 }foreach(_vehgarrison);
 
-_groups
+spawner setvariable [_spawnid,_groups,false];

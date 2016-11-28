@@ -295,19 +295,11 @@ while {true} do {
 	
 	
 	{
-		if(side _x == west and count (units _x) == 0) then {
+		if(count (units _x) == 0) then {
 			deleteGroup _x;
 		};
-	}foreach(allGroups);
-	
-	if(count alldeadmen > 50) then {
-		{
-			if !(_x call inSpawnDistance) then {
-				deleteVehicle _x;
-			};
-		}foreach(alldeadmen);
-	};
-	
+	}foreach(allGroups);	
+		
 	sleep OT_NATOwait + round(random OT_NATOwait);	
 };
 

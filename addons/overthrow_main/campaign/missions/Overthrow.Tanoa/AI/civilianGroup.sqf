@@ -1,6 +1,7 @@
 private _g = _this;
 
 private _start = getpos ((units _g) select 0);
+if(isNil "_start") exitWith {};
 
 _g setBehaviour "SAFE";
 
@@ -8,6 +9,9 @@ private _hour = date select 3;
 
 if(_hour > 6 and _hour < 19) then {
 	//Walk to a shop and back again
+	private _start = getpos ((units _g) select 0);
+	if(isNil "_start") exitWith {};
+	
 	private _dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
 		
 	private _wp = _g addWaypoint [_dest,0];

@@ -393,26 +393,26 @@ class OT_dialog_options
 		class RscButton_1603: RscButton
 		{
 			idc = 1600;
-			action = "{deleteVehicle _x} foreach(alldeadmen);""Cleaned dead bodies"" remoteExec [""notify_minor"",0,false];";
+			action = "{if (!(alive _x) or !(_x call canDrive)) then {deletevehicle _x}} foreach(vehicles);{deleteVehicle _x} foreach(alldeadmen);""Cleaned bodies/wrecks"" remoteExec [""notify_minor"",0,false];";
 
-			text = "Clean dead bodies"; //--- ToDo: Localize;
+			text = "Clean bodies/wrecks"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Will completely destroy all dead bodies, including your own"; //--- ToDo: Localize;
+			tooltip = "Will completely destroy all dead bodies, wrecks and vehicles that cannot move"; //--- ToDo: Localize;
 		};
 		class RscButton_1604: RscButton
 		{
 			idc = 1600;
-			action = "{if (!(alive _x) or !(_x call canDrive) or (side _x == civilian and !(_x call hasowner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call hasowner) and !(_x call inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call hasowner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""notify_minor"",0,false];";
+			action = "{if ((side _x == civilian and !(_x call hasowner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call hasowner) and !(_x call inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call hasowner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""notify_minor"",0,false];";
 
 			text = "Clean other"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Removes all wrecks, vehicles that cannot move, unowned civilian vehicles and civilians"; //--- ToDo: Localize;
+			tooltip = "Removes all unowned civilian vehicles and civilians"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

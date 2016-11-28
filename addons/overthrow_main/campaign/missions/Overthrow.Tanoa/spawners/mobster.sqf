@@ -1,5 +1,5 @@
 
-params ["_pos","_mobsterid"];
+params ["_pos","_mobsterid","_spawnid"];
 
 private _groups = [];
 private _group = createGroup east;
@@ -56,4 +56,4 @@ while {_count < _garrison} do {
 _wp = _group addWaypoint [_flagpos,0];
 _wp setWaypointType "GUARD";
 
-_groups
+spawner setvariable [_spawnid,_groups,false];

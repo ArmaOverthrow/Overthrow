@@ -141,7 +141,7 @@ if(typename _data != "ARRAY") exitWith {
 		}foreach(_val);
 	};
 	
-	if(_set) then {
+	if(_set and !(isNil "_val")) then {
 		server setvariable [_key,_val,true];
 	};	
 }foreach(_data);

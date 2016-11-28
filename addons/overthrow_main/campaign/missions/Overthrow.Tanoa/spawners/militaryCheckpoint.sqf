@@ -1,4 +1,4 @@
-params ["_start","_name"];
+params ["_start","_name","_spawnid"];
 
 private _count = 0;
 
@@ -64,4 +64,4 @@ while {_count < _numNATO} do {
 };
 _group spawn initCheckpoint;
 	
-_groups
+spawner setvariable [_spawnid,_groups,false];
