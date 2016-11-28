@@ -204,14 +204,16 @@ _handler = {
 			]; 
 		}foreach(OT_allActiveShops);
 		{
-			(_this select 0) drawIcon [
-				"ot\ui\markers\death.paa",
-				[1,1,1,0.5],
-				getpos _x,
-				0.2/ctrlMapScale (_this select 0),
-				0.2/ctrlMapScale (_this select 0),
-				0
-			]; 
+			if !(_x getVariable ["looted",false]) then {
+				(_this select 0) drawIcon [
+					"ot\ui\markers\death.paa",
+					[1,1,1,0.5],
+					getpos _x,
+					0.2/ctrlMapScale (_this select 0),
+					0.2/ctrlMapScale (_this select 0),
+					0
+				]; 
+			};
 		}foreach(alldeadmen);
 		{
 			if(((_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call hasOwner)) then {

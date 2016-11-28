@@ -37,7 +37,7 @@ if(!isNil "modeTarget") then {
 		};
 		_price = round(_baseprice + ((_baseprice * _stability * _population) * (1+OT_standardMarkup)));
 		_sell = round(_baseprice + (_baseprice * _stability * _population));
-		_lease = round((_stability * _population) * (_baseprice * _totaloccupants * 0.03));
+		_lease = round((_stability * _population) * (_baseprice * _totaloccupants * 0.06));
 		if !(_town in (server getvariable ["NATOabandoned",[]])) then {_lease = round(_lease * 0.4)};
 		if(_lease < 1) then {_lease = 1};
 		

@@ -55,12 +55,17 @@ if(_handled) then {
 			[_town,round(_price / 10000)] call standing;		
 		};
 	}else{
-		_building setVariable ["owner",nil,true];
-		_building setVariable ["leased",nil,true];
-		deleteMarker _mrkid;
-		_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
-		[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_sell]] call BIS_fnc_createLogRecord;
-		[_sell] call money;
+		if ((typeof _building) in OT_allRealEstate) then {
+			_building setVariable ["owner",nil,true];
+			_building setVariable ["leased",nil,true];
+			deleteMarker _mrkid;
+			_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
+			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_sell]] call BIS_fnc_createLogRecord;
+			[_sell] call money;
+		}else{
+			deleteVehicle _building;
+			_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
+		};		
 	};
 	
 	player setVariable ["owned",_owned,true];

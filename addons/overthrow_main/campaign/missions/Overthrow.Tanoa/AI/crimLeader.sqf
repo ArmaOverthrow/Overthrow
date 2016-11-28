@@ -25,6 +25,10 @@ removeAllWeapons _unit;
 removeVest _unit;
 removeAllAssignedItems _unit;
 
+if((random 100) < 15) then {
+	_unit addItem "OT_Ganja";
+};
+
 _unit addHeadgear "H_Bandanna_khk_hs";
 
 _unit linkItem "ItemMap";

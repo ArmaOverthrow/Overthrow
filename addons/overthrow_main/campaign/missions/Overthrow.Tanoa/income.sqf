@@ -3,32 +3,34 @@
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 private _lasthour = date select 3;
 while {true} do {
-	private _hour = 
-	waitUntil {sleep 600;(_hour != _lasthour) and ((_hour == 0) or (_hour == 6) or (_hour == 12) or (_hour == 18))}; //do actions on the hour
+	waitUntil {sleep 60;(date select 3) != _lasthour}; //do actions on the hour
 	_lasthour = date select 3;
-	private _total = 0;	
 	private _inf = 1;
-	{
-		private _town = _x;
-		_total = _total + 250;
-		if(_town in OT_allAirports) then {
-			_total = _total + ((server getVariable ["stabilityTanoa",100]) * 4); //Tourism income
-		};
-		_inf = _inf + 1;
-		if(_town in OT_allTowns) then {			
-			private _population = server getVariable format["population%1",_town];
-			private _stability = server getVariable format["stability%1",_town];
-			private _garrison = server getVariable [format['police%1',_town],0];
-			private _add = round(_population * (_stability/100));			
-			if(_stability > 49) then {
-				_add = round(_add * 4);
+	private _total = 0;	
+	
+	if((_lasthour == 0) or (_lasthour == 6) or (_lasthour == 12) or (_lasthour == 18)) then {
+		{
+			private _town = _x;
+			_total = _total + 250;
+			if(_town in OT_allAirports) then {
+				_total = _total + ((server getVariable ["stabilityTanoa",100]) * 4); //Tourism income
 			};
-			if(_garrison == 0) then {
-				_add = round(_add * 0.5);
+			_inf = _inf + 1;
+			if(_town in OT_allTowns) then {			
+				private _population = server getVariable format["population%1",_town];
+				private _stability = server getVariable format["stability%1",_town];
+				private _garrison = server getVariable [format['police%1',_town],0];
+				private _add = round(_population * (_stability/100));			
+				if(_stability > 49) then {
+					_add = round(_add * 4);
+				};
+				if(_garrison == 0) then {
+					_add = round(_add * 0.5);
+				};
+				_total = _total + _add;
 			};
-			_total = _total + _add;
-		};
-	}foreach(server getVariable ["NATOabandoned",[]]);
+		}foreach(server getVariable ["NATOabandoned",[]]);
+	};
 	
 	{
 		private _owned = _x getvariable ["owned",[]];

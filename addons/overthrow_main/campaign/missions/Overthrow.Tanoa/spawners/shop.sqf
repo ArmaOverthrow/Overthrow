@@ -43,10 +43,10 @@ if(count _activeshops > 0) exitWith {
 		_light setLightBrightness 0.13;
 		_light setLightAmbient[.9, .9, .6];
 		_light setLightColor[.5, .5, .4];
-		_vehs pushback _light;			
+		_groups pushback _light;			
 		
 	}foreach(_activeshops);
-	_groups + _vehs
+	_groups
 };
 
 []

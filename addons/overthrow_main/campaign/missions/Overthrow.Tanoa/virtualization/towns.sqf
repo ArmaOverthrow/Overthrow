@@ -14,13 +14,17 @@ OT_townSpawners = [
 	private _pos = server getVariable _x;
 	private _town = _x;
 	[_pos,{			
-			private _spawntown = _this;
+			params ["_spawntown","_spawnid"];
 			private _g = [];
 			{					
 				{
 					_g pushback _x;
-				}foreach(_spawntown call _x);									
+					if(typename _x == "GROUP") then {
+						_x call distributeAILoad;
+					};
+				}foreach(_spawntown call _x);	
+				sleep 0.2;
 			}foreach(OT_townSpawners);
-			_g;
-	},_town] call OT_fnc_registerSpawner;
+			spawner setvariable [_spawnid,_g,false];
+	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);

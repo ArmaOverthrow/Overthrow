@@ -48,8 +48,6 @@ if(_frompos distance _attackpos > 1200) then {
 	_tgroup call distributeAILoad;
 };
 
-_group call distributeAILoad;
-
 {
 	if(typename _tgroup == "GROUP") then {
 		_x moveInCargo _veh;
@@ -71,6 +69,8 @@ if !(_byair) then {
 		_x setVariable ["garrison","HQ",false];
 	}foreach(units _group2);	
 };
+
+_group1 call distributeAILoad;
 
 {
 	_x addCuratorEditableObjects [_allunits,true];

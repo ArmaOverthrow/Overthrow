@@ -20,7 +20,7 @@ if !(_type in OT_spawnHouses) then {
 };
 private _price = round(_baseprice + ((_baseprice * _stability * _population) * (1+OT_standardMarkup)));
 private _sell = round(_baseprice + (_baseprice * _stability * _population));
-private _lease = round((_stability * _population) * (_baseprice * _totaloccupants * 0.03));
+private _lease = round((_stability * _population) * (_baseprice * _totaloccupants * 0.06));
 if(_lease < 1) then {_lease = 1};
 if !(_town in (server getvariable ["NATOabandoned",[]])) then {_lease = round(_lease * 0.4)};
 [_price,_sell,_lease,_totaloccupants]

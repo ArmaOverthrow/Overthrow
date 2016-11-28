@@ -2,9 +2,20 @@ private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture
 waitUntil {!isNull player};
 waitUntil {player == player};
 
+[] spawn {
+	while {true} do {
+		sleep 30;
+		{
+			if(local _x and count (units _x) == 0) then {
+				deleteGroup _x;
+			};
+		}foreach(allGroups);
+	};
+};
+
 if (!hasInterface) exitWith {};
 
-if(isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
+if(count ([] call CBA_fnc_players) == 1 and bigboss != player) then {bigboss = player;publicVariable "bigboss";};
 
 removeAllWeapons player;
 removeAllAssignedItems player;

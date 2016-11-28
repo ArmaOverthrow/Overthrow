@@ -8,7 +8,7 @@ class EditorData
 	toggles=650;
 	class ItemIDProvider
 	{
-		nextID=1946;
+		nextID=1951;
 	};
 	class MarkerIDProvider
 	{
@@ -16,11 +16,11 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=152;
+		nextID=157;
 	};
 	class Camera
 	{
-		pos[]={8127.5801,24.982788,1113.0554};
+		pos[]={8258.6699,10.701405,1122.7441};
 		dir[]={0,-0.70710683,0.70710683};
 		up[]={0,0.70710677,0.70710677};
 		aside[]={0.99999994,0,-0};
@@ -34,6 +34,10 @@ addons[]=
 	"A3_Boat_F_Gamma_Boat_Civil_04",
 	"A3_Characters_F",
 	"A3_Weapons_F",
+	"A3_Characters_F_Heads",
+	"ace_goggles",
+	"ace_attach",
+	"ace_chemlights",
 	"A3_Weapons_F_Items",
 	"ace_medical",
 	"ace_cargo",
@@ -44,19 +48,19 @@ addons[]=
 	"ace_advanced_fatigue",
 	"ace_map",
 	"A3_Modules_F_Hc",
+	"ace_realisticnames",
 	"ace_rearm",
 	"ace_refuel",
 	"ace_repair",
 	"ace_respawn",
 	"ace_explosives",
-	"ace_parachute",
 	"ace_ui"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=20;
+		items=22;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -94,103 +98,117 @@ class AddonsMetaData
 		};
 		class Item5
 		{
+			className="ace_goggles";
+			name="ACE3 - Goggles";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item6
+		{
+			className="ace_attach";
+			name="ACE3 - Attach";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item7
+		{
+			className="ace_chemlights";
+			name="ace_chemlights";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item8
+		{
 			className="ace_medical";
 			name="ACE3 - Medical";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item6
+		class Item9
 		{
 			className="ace_cargo";
 			name="ACE3 - Cargo";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item7
+		class Item10
 		{
 			className="ace_captives";
 			name="ACE3 - Captives";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item8
+		class Item11
 		{
 			className="ace_switchunits";
 			name="ACE3 - Switch Units";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item9
+		class Item12
 		{
 			className="ace_weather";
 			name="ACE3 - Weather";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item10
+		class Item13
 		{
 			className="ace_vehiclelock";
 			name="ACE3 - Vehicle Lock";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item11
+		class Item14
 		{
 			className="ace_advanced_fatigue";
 			name="ACE3 - Advanced Fatigue";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item12
+		class Item15
 		{
 			className="ace_map";
 			name="ACE3 - Map";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item13
+		class Item16
 		{
 			className="ace_rearm";
 			name="ACE3 - Rearm";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item14
+		class Item17
 		{
 			className="ace_refuel";
 			name="ACE3 - Refuel";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item15
+		class Item18
 		{
 			className="ace_repair";
 			name="ACE3 - Repair";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item16
+		class Item19
 		{
 			className="ace_respawn";
 			name="ACE3 - Respawn";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item17
+		class Item20
 		{
 			className="ace_explosives";
 			name="ACE3 - Explosives";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item18
-		{
-			className="ace_parachute";
-			name="ACE3 - Parachute";
-			author="ACE-Team";
-			url="http://ace3mod.com/";
-		};
-		class Item19
+		class Item21
 		{
 			className="ace_ui";
 			name="ACE3 - UI";
@@ -656,7 +674,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=83;
+		items=82;
 		class Item0
 		{
 			dataType="Logic";
@@ -1186,21 +1204,34 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8257.9717,2.4828436,1132.2445};
-						angles[]={0,2.4981525,0};
+						position[]={8257.9717,2.4830487,1132.244};
+						angles[]={0,2.4981596,0};
 					};
 					side="Independent";
 					flags=2;
 					class Attributes
 					{
 						init="this setCaptive true;";
+						name="bigboss";
+						description="Host";
+						isPlayer=1;
 						isPlayable=1;
 						class Inventory
 						{
 							class uniform
 							{
-								typeName="U_IG_Guerilla1_1";
+								typeName="U_IG_Guerilla2_3";
 								isBackpack=0;
+								class MagazineCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="Chemlight_blue";
+										count=1;
+										ammoLeft=1;
+									};
+								};
 								class ItemCargo
 								{
 									items=1;
@@ -1212,11 +1243,17 @@ class Mission
 								};
 							};
 							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Shades_Black";
+							headgear="H_Watchcap_blk";
 						};
 					};
-					id=1719;
-					type="I_G_Soldier_F";
-					atlOffset=0.50870347;
+					id=1949;
+					type="I_G_officer_F";
+					atlOffset=0.50900006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1253,7 +1290,7 @@ class Mission
 											"SCALAR"
 										};
 									};
-									value=2;
+									value=-1;
 								};
 							};
 						};
@@ -1348,7 +1385,7 @@ class Mission
 											"SCALAR"
 										};
 									};
-									value=2;
+									value=-1;
 								};
 							};
 						};
@@ -1360,7 +1397,7 @@ class Mission
 			{
 			};
 			id=1718;
-			atlOffset=0.50870347;
+			atlOffset=0.50900006;
 		};
 		class Item28
 		{
@@ -2424,7 +2461,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8258.2617,2.3714542,1130.9398};
+						position[]={8258.2617,2.3715448,1130.9401};
 						angles[]={0,2.5596125,0};
 					};
 					side="Independent";
@@ -2454,7 +2491,7 @@ class Mission
 					};
 					id=1713;
 					type="I_G_Soldier_F";
-					atlOffset=0.54893744;
+					atlOffset=0.54900002;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2491,7 +2528,7 @@ class Mission
 											"SCALAR"
 										};
 									};
-									value=2;
+									value=-1;
 								};
 							};
 						};
@@ -2586,7 +2623,7 @@ class Mission
 											"SCALAR"
 										};
 									};
-									value=2;
+									value=-1;
 								};
 							};
 						};
@@ -2598,7 +2635,7 @@ class Mission
 			{
 			};
 			id=1712;
-			atlOffset=0.54893744;
+			atlOffset=0.54900002;
 		};
 		class Item40
 		{
@@ -2623,23 +2660,31 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8257.2109,1.8551255,1127.67};
-						angles[]={0,2.5596125,0};
+						position[]={8259.7568,3.9955592,1136.359};
+						angles[]={0,0.18221237,0};
 					};
 					side="Independent";
 					flags=2;
 					class Attributes
 					{
 						init="this setCaptive true;";
-						name="bigboss";
-						description="Host";
-						isPlayer=1;
+						isPlayable=1;
 						class Inventory
 						{
 							class uniform
 							{
 								typeName="U_IG_Guerilla1_1";
 								isBackpack=0;
+								class MagazineCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="Chemlight_blue";
+										count=1;
+										ammoLeft=1;
+									};
+								};
 								class ItemCargo
 								{
 									items=1;
@@ -2650,12 +2695,55 @@ class Mission
 									};
 								};
 							};
+							class vest
+							{
+								typeName="V_Chestrig_oli";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=5;
+									class Item0
+									{
+										name="HandGrenade";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item1
+									{
+										name="MiniGrenade";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="Chemlight_blue";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+							};
 							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							headgear="H_Shemag_olive";
 						};
 					};
-					id=1711;
+					id=1950;
 					type="I_G_Soldier_F";
-					atlOffset=0.43299997;
+					atlOffset=0.92199993;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2799,7 +2887,7 @@ class Mission
 			{
 			};
 			id=49;
-			atlOffset=0.43299997;
+			atlOffset=0.92199993;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -2836,8 +2924,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8256.9805,1.7166214,1129.9745};
-						angles[]={0,2.4981525,0};
+						position[]={8256.9805,1.7163028,1129.974};
+						angles[]={0,2.4981596,0};
 					};
 					side="Independent";
 					flags=6;
@@ -2866,7 +2954,7 @@ class Mission
 					};
 					id=1782;
 					type="I_G_Soldier_F";
-					atlOffset=0.055262446;
+					atlOffset=0.054999948;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2903,7 +2991,7 @@ class Mission
 											"SCALAR"
 										};
 									};
-									value=2;
+									value=-1;
 								};
 							};
 						};
@@ -2998,7 +3086,7 @@ class Mission
 											"SCALAR"
 										};
 									};
-									value=2;
+									value=-1;
 								};
 							};
 						};
@@ -3010,7 +3098,7 @@ class Mission
 			{
 			};
 			id=1781;
-			atlOffset=0.055262446;
+			atlOffset=0.054999948;
 		};
 		class Item43
 		{
@@ -5009,22 +5097,6 @@ class Mission
 		};
 		class Item70
 		{
-			dataType="Object";
-			class PositionInfo
-			{
-				position[]={10886.197,265.15662,-825.25891};
-				angles[]={0,0,6.2511969};
-			};
-			side="Empty";
-			class Attributes
-			{
-			};
-			id=1900;
-			type="ACE_NonSteerableParachute";
-			atlOffset=329.91495;
-		};
-		class Item71
-		{
 			dataType="Logic";
 			class PositionInfo
 			{
@@ -5036,7 +5108,7 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=24.025429;
 		};
-		class Item72
+		class Item71
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -5049,7 +5121,7 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=24.550648;
 		};
-		class Item73
+		class Item72
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -5729,7 +5801,7 @@ class Mission
 				nAttributes=35;
 			};
 		};
-		class Item74
+		class Item73
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -5991,7 +6063,7 @@ class Mission
 				nAttributes=13;
 			};
 		};
-		class Item75
+		class Item74
 		{
 			dataType="Group";
 			side="Independent";
@@ -6179,7 +6251,7 @@ class Mission
 			id=1808;
 			atlOffset=0.2501204;
 		};
-		class Item76
+		class Item75
 		{
 			dataType="Group";
 			side="Independent";
@@ -6367,7 +6439,7 @@ class Mission
 			id=1811;
 			atlOffset=0.07810235;
 		};
-		class Item77
+		class Item76
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -6378,7 +6450,7 @@ class Mission
 			type="HighCommand";
 			atlOffset=0.56763893;
 		};
-		class Item78
+		class Item77
 		{
 			dataType="Group";
 			side="Independent";
@@ -6566,7 +6638,7 @@ class Mission
 			id=1939;
 			atlOffset=-0.013695061;
 		};
-		class Item79
+		class Item78
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -6577,7 +6649,7 @@ class Mission
 			type="HighCommand";
 			atlOffset=0.56532121;
 		};
-		class Item80
+		class Item79
 		{
 			dataType="Group";
 			side="Independent";
@@ -6765,7 +6837,7 @@ class Mission
 			id=1942;
 			atlOffset=-0.039268434;
 		};
-		class Item81
+		class Item80
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -6778,7 +6850,7 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=23.441;
 		};
-		class Item82
+		class Item81
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -6804,7 +6876,7 @@ class Mission
 			class Item0
 			{
 				linkID=0;
-				item0=1719;
+				item0=1949;
 				item1=1778;
 				class CustomData
 				{

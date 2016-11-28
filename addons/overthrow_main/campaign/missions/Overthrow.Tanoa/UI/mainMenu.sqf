@@ -105,9 +105,13 @@ if(typename _b == "ARRAY") then {
 				",_ownername];
 			};
 			
-			if(_building getVariable ["leased",false]) then {
+			if(_building getVariable ["leased",false] or !((typeof _building) in OT_allRealEstate)) then {
 				ctrlEnable [1609,false];
 				ctrlEnable [1610,false];
+				if !((typeof _building) in OT_allRealEstate) then {
+					_lease = 0;
+					ctrlSetText [1608,"Remove"];
+				};
 			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
@@ -196,6 +200,17 @@ if(typename _b == "ARRAY") then {
 			<t align='left' size='0.8'>Workshop</t><br/>
 			<t align='left' size='0.65'>Built by %1</t>
 		",_ownername];
+	};
+	
+	if(!((typeof _building) in OT_allRealEstate)) then {
+		ctrlEnable [1609,false];
+		ctrlEnable [1610,false];
+		ctrlEnable [1608,false];
+		_lease = 0;
+		ctrlSetText [1608,"Buy"];
+		_buildingTxt = format["
+			<t align='left' size='0.8'>%1</t>
+		",_name];
 	};
 }else{
 	private _ob = (getpos player) call nearestObjective;

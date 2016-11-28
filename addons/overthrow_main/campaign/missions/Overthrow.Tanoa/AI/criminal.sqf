@@ -42,14 +42,18 @@ if(_hour < 8 or _hour > 15) then {
 };
 _unit linkItem "ItemWatch";
 
-_weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
+_weapon = (OT_CRIM_Weapons) call BIS_fnc_selectRandom;
 _unit addWeapon _weapon;
+
+if((random 100) < 15) then {
+	_unit addItem "OT_Ganja";
+};
 
 call {
 	if((random 100) > 70) exitWith {
 		//This guy has a launcher
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
-		_launcher = (OT_allRocketLaunchers) call BIS_fnc_SelectRandom;
+		_launcher = (OT_CRIM_Launchers) call BIS_fnc_SelectRandom;
 		_base = [_launcher] call BIS_fnc_baseWeapon;
 		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
 		_unit addMagazine _magazine;
@@ -84,6 +88,11 @@ call {
 			_unit addItemToBackpack "ACE_DeadManSwitch";
 		};
 		_unit addItemToBackpack "Toolkit";
+	};
+	if((random 100) > 97) exitWith {
+		//This guy just has a bit of weed
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		for "_i" from 1 to round(random 15) do {_unit addItemToBackpack "OT_Ganja";};
 	};
 };
 

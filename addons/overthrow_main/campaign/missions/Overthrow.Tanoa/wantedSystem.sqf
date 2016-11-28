@@ -12,6 +12,14 @@ _unit addEventHandler ["take", {
 	if (captive _me) then {		
 		_type = typeof _container;
 		if(_container isKindOf "Man") then {
+			_container setvariable ["looted",true,true];
+			[_container] spawn {
+				sleep 30;
+				_n = _this select 0;
+				if!(isNil "_n") then {
+					hideBody _n;
+				}
+			};			
 			if (!(_container call hasOwner) and (_me call unitSeen)) then {
 				//Looting dead bodies is illegal
 				_me setCaptive false;
