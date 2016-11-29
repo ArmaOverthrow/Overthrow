@@ -9,23 +9,27 @@ _posTown = server getVariable _town;
 _shopkeeper = objNULL;
 
 
-_group = createGroup civilian;	
-_group setBehaviour "CARELESS";
-_groups = [_group];
+
+private _groups = [];
 {	
 	_building = _x;		
 	_pos = getpos _building;
 	_t = _pos call nearestTown;
 	if(_t == _town) then {
+		_group = createGroup civilian;	
+		_group setBehaviour "CARELESS";
+		_groups pushback _group;
+		
 		_tracked = _building call spawnTemplate;
 		_vehs = _tracked select 0;
 		[_groups,_vehs] call BIS_fnc_arrayPushStack;
-		
+				
 		_cashdesk = _pos nearestObject OT_item_ShopRegister;
 		_dir = getDir _cashdesk;
 		_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;		
-		
-		_shopkeeper = _group createUnit [OT_civType_carDealer, _cashpos, [],0, "NONE"];
+		private _start = _building buildingPos 0;
+		_shopkeeper = _group createUnit [OT_civType_carDealer, _start, [],0, "NONE"];
+		_shopkeeper allowDamage false;
 		_shopkeeper disableAI "MOVE";
 		_shopkeeper disableAI "AUTOCOMBAT";
 		_shopkeeper setVariable ["NOAI",true,false];
