@@ -8,7 +8,7 @@ class EditorData
 	toggles=650;
 	class ItemIDProvider
 	{
-		nextID=1951;
+		nextID=1952;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=157;
+		nextID=158;
 	};
 	class Camera
 	{
 		pos[]={8258.6699,10.701405,1122.7441};
-		dir[]={0,-0.70710683,0.70710683};
-		up[]={0,0.70710677,0.70710677};
-		aside[]={0.99999994,0,-0};
+		dir[]={-0.086383395,-0.75434512,0.65077353};
+		up[]={-0.099260829,0.65647924,0.747787};
+		aside[]={0.99130821,4.1584281e-007,0.13158509};
 	};
 };
 binarizationWanted=0;
@@ -54,13 +54,14 @@ addons[]=
 	"ace_repair",
 	"ace_respawn",
 	"ace_explosives",
-	"ace_ui"
+	"ace_ui",
+	"A3_Modules_F_Curator_Curator"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=22;
+		items=23;
 		class Item0
 		{
 			className="A3_Modules_F";
@@ -214,6 +215,13 @@ class AddonsMetaData
 			name="ACE3 - UI";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
+		};
+		class Item22
+		{
+			className="A3_Modules_F_Curator";
+			name="Arma 3 Zeus Update - Scripted Modules";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
 		};
 	};
 };
@@ -674,7 +682,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=82;
+		items=83;
 		class Item0
 		{
 			dataType="Logic";
@@ -6862,6 +6870,115 @@ class Mission
 			id=1945;
 			type="HeadlessClient_F";
 			atlOffset=23.674997;
+		};
+		class Item82
+		{
+			dataType="Logic";
+			class PositionInfo
+			{
+				position[]={8263.0332,2.5051975,1132.3361};
+			};
+			id=1951;
+			type="ModuleCurator_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ModuleCurator_F_Owner";
+					expression="_this setVariable ['Owner',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"STRING"
+								};
+							};
+							value="zeus_guy";
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="ModuleCurator_F_Forced";
+					expression="_this setVariable ['Forced',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"SCALAR"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute2
+				{
+					property="ModuleCurator_F_Name";
+					expression="_this setVariable ['Name',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"STRING"
+								};
+							};
+							value="";
+						};
+					};
+				};
+				class Attribute3
+				{
+					property="ModuleInfo";
+					expression="false";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=1;
+						};
+					};
+				};
+				class Attribute4
+				{
+					property="ModuleCurator_F_Addons";
+					expression="_this setVariable ['Addons',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"SCALAR"
+								};
+							};
+							value=2;
+						};
+					};
+				};
+				nAttributes=5;
+			};
 		};
 	};
 	class Connections

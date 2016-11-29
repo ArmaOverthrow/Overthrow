@@ -1,4 +1,4 @@
-private ["_cansee","_position", "_Unit", "_weapon", "_leader", "_gunner", "_assistant", "_UnitGroups", "_CurrentBackPack", "_class", "_parents", "_rnd", "_dist", "_dir", "_positions", "_myNearestEnemy", "_StaticClassName", "_IsMortar", "_WeaponClassname", "_StaticCreated", "_dirTo"];_group = 		_this select 0;
+private ["_Vcom_Indoor","_cansee","_position", "_Unit", "_weapon", "_leader", "_gunner", "_assistant", "_UnitGroups", "_CurrentBackPack", "_class", "_parents", "_rnd", "_dist", "_dir", "_positions", "_myNearestEnemy", "_StaticClassName", "_IsMortar", "_WeaponClassname", "_StaticCreated", "_dirTo"];_group = 		_this select 0;
 _position =		_this select 1;
 _Unit = _this select 2;
 _VCOM_HASDEPLOYED = _this select 3;
@@ -12,6 +12,7 @@ _group = group _Unit;
 _UnitGroups = units _group;
 _gunner = 0;
 _cansee = 1;
+_Vcom_Indoor = false;
 
 _CurrentBackPack = backpack _Unit;
 
@@ -68,10 +69,17 @@ sleep 0.25;
 	} 
 	else 
 	{
+		_Position = getposATL _Unit;
+		_Array = lineIntersectsObjs [_Position,[_Position select 0,_Position select 1,(_Position select 2) + 10], objnull, objnull, true, 4];
+		{
+			if (_x isKindof "Building") then {_Vcom_Indoor = true;};
+		} foreach _Array;
+
 		_WeaponClassname = _WeaponClassname + "_F";
 	};
 
-	if !(_cansee > 0) exitwith {};	
+	
+	if (!(_cansee > 0) || (_Vcom_Indoor)) exitwith {};	
 	_StaticCreated = _WeaponClassname createvehicle [0,0,0];
 	_StaticCreated setposATL (getposATL _Unit);
 	

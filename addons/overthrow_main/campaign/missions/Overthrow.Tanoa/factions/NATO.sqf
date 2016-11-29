@@ -194,25 +194,6 @@ while {true} do {
 	_numplayers = count([] call CBA_fnc_players);
 	if(_numplayers > 0) then {
 		_abandoned = server getVariable "NATOabandoned";		
-
-		{
-			_pos = _x select 0;
-			_name = _x select 1;
-			if !(_name in _abandoned) then {	
-				_garrison = server getvariable format["garrison%1",_name];
-				_vehgarrison = server getvariable format["vehgarrison%1",_name];
-				
-				if(_garrison == 0) then {
-					_garrisoned = true;
-					_name spawn NATOcounter;				
-					_abandoned pushback _name;
-					server setVariable ["NATOabandoned",_abandoned,true];
-					_name setMarkerAlpha 1;				
-				};
-			};
-			if(_garrisoned) exitWith {};
-		}foreach(OT_NATOobjectives);
-
 		
 		{		
 			_town = _x;
@@ -229,14 +210,14 @@ while {true} do {
 				};
 				_need = _garrison - _current;
 				if(_need < 0) then {_need = 0};
-				if(_need > 1) then {
-					_garrisoned = true;					
+				if(_need > 1) then {				
 					_x spawn reGarrisonTown;
 				};			
 			}else{
 				server setVariable [format ["garrison%1",_town],0,true];
 				if(!(_town in _abandoned)) then {
 					_town spawn NATOattack;
+					server setVariable ["NATOattacking",_town,true];
 					_garrisoned = true;
 					_abandoned pushback _town;
 					server setVariable ["NATOabandoned",_abandoned,true];
@@ -246,6 +227,31 @@ while {true} do {
 			sleep 0.1;
 		}foreach (OT_allTowns);
 		
+		private _currentAttack = server getVariable ["NATOattacking",""];
+		if(_currentAttack != "") then {
+			_garrisoned = true;
+		};
+		
+		if !(_garrisoned) then {
+			{
+				_pos = _x select 0;
+				_name = _x select 1;
+				if !(_name in _abandoned) then {	
+					_garrison = server getvariable format["garrison%1",_name];
+					_vehgarrison = server getvariable format["vehgarrison%1",_name];
+					
+					if(_garrison < 4) then {
+						_garrisoned = true;
+						server setVariable ["NATOattacking",_name,true];
+						_name spawn NATOcounter;				
+						_abandoned pushback _name;
+						server setVariable ["NATOabandoned",_abandoned,true];
+						_name setMarkerAlpha 1;				
+					};
+				};
+				if(_garrisoned) exitWith {};
+			}foreach(OT_NATOobjectives);
+		};
 				
 		//Town counter-attacks
 		if (!(_garrisoned) and count(_abandoned) > 4 and (random 100) > 98) then {

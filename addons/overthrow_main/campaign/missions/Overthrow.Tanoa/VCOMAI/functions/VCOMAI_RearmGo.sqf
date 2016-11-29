@@ -3,7 +3,7 @@
 _RAU = _this select 0;
 _RL = _this select 1;
 
-while {_RAU distance _RL > 8} do
+while {(_RAU distance _RL) > 5 && (_RAU distance _RL) < 100} do
 {
 	_RAU domove (getpos _RL);
 	sleep 4;

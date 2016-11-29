@@ -35,7 +35,13 @@ player setVariable ["player_uid",getPlayerUID player,true];
 _closestcount = 0;
 
 while {alive player} do {
-	sleep 2;
+	sleep 2;	
+
+	{
+		[_x, -1, -0.2, 10, 1, 0, 2] spawn bis_fnc_dynamicText;
+		sleep 2;		
+	}foreach(OT_notifies);
+	OT_notifies = [];
 		
 	if(_closestcount <= 0) then {
 		_closest = (getPos player) call nearestTown;

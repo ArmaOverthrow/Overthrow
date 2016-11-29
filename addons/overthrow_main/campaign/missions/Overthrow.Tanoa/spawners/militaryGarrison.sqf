@@ -70,7 +70,7 @@ if(_name find "Comms" == 0) then {
 	_flag =  OT_flag_NATO createVehicle _posTown;
 	_groups pushback _flag;
 };			
-
+sleep 0.1;
 _range = 100;
 _groupcount = 0;
 while {_count < _numNATO} do {			
@@ -85,6 +85,9 @@ while {_count < _numNATO} do {
 	_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 	[_civ,_name] call initMilitary;
 	_civ setBehaviour "SAFE";
+	{
+		_x addCuratorEditableObjects[[_civ],false];
+	}foreach(allcurators);
 	
 	_count = _count + 1;
 	while {(_count < _numNATO) and (_groupcount < 8)} do {
@@ -96,7 +99,9 @@ while {_count < _numNATO} do {
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 		[_civ,_name] call initMilitary;
 		_civ setBehaviour "SAFE";
-		
+		{
+			_x addCuratorEditableObjects[[_civ],false];
+		}foreach(allcurators);
 							
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
@@ -142,6 +147,7 @@ _vehgarrison = server getVariable [format["vehgarrison%1",_name],[]];
 _pos = [];
 _road = objNull;
 {
+	sleep 0.1;
 	_vgroup = creategroup blufor;
 	_groups pushback _vgroup;
 	_vehtype = _x;

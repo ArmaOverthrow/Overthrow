@@ -1,5 +1,12 @@
 params ["_pos","_strength","_success","_fail","_params"];
-
+private _numPlayers = count([] call CBA_fnc_players);
+if(_numPlayers < 4) then {
+	_strength = round(_strength * 0.5);
+}else{
+	if(_numPlayers > 5) then {
+		_strength = round(_strength * 1.2);
+	};
+};
 
 //determine possible vectors for non-infantry assets and distribute strength to each
 
@@ -162,9 +169,9 @@ if(_airfieldIsControlled) then {
 
 _timeout = time + 800;
 
-waitUntil {sleep 5;(({(vehicle _x == _x) and (leader _x == _x) and (side _x == west)}count(_pos nearentities ["Man",50]) > 0) and ({side _x == resistance} count(_pos nearentities ["Man",250]) == 0)) or time > _timeout};
+waitUntil {sleep 5;(({(vehicle _x == _x) and (leader _x == _x) and (side _x == west) and (_x getvariable ["garrison",""] == "HQ")}count(_pos nearentities ["Man",50]) > 0) and ({(side _x == resistance) or (isPlayer _x)} count(_pos nearentities ["Man",250]) == 0)) or time > _timeout};
 
-_timeout = time + 120;
+_timeout = time + 600;
 _won = false;
 while {sleep 5;time < _timeout and !_won} do {
 
@@ -188,3 +195,5 @@ while {sleep 5;time < _timeout and !_won} do {
 if !(_won) then {
 	_params call _fail;
 };
+
+server setVariable ["NATOattacking","",true];

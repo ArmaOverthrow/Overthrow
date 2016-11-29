@@ -1,5 +1,8 @@
 //Helps the AI recognize people firing from a better distance
 _unit = (_this select 0) select 0;
+_weapon = (_this select 0) select 1;
+
+if (_weapon isEqualTo "Put" || {_weapon isEqualTo "Throw"}) exitwith {};
 
 //Check if unit has suppressor on weapon.
 _ItemList = weaponsitems _unit;

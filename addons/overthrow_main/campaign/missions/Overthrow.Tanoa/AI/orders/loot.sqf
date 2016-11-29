@@ -26,6 +26,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 		_car = objNull;
 		
 		_unit = _this select 0;
+		_unit setVariable ["NOAI",true,true];
 		_unit setBehaviour "SAFE";
 		[[_unit,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP;
 		
@@ -151,7 +152,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			
 			[_unit,_t] call dumpStuff;
 		};
-		
+		_unit setVariable ["NOAI",false,true];
 		if(_wasincar) then {
 			_unit assignAsCargo _car;
 			[_unit] orderGetIn true;

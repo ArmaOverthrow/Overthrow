@@ -26,19 +26,21 @@ call {
 		[_town,-1] call stability;
 	};
 	if(!isNil "_mobboss") exitWith {
-		_mobsterid = _me getVariable "garrison";	
+		_mobsterid = _garrison;	
 		server setVariable [format["mobleader%1",_mobsterid],false,true];
 		_active = server getVariable ["activemobsters",[]];
 		_t = 0;
-		{
+		{			
+			if((_x select 1) == _mobsterid) exitWith {};
 			_t = _t + 1;
-			if(_x select 1 == _mobsterid) exitWith {};
 		}foreach(_active);
 		_active deleteAt _t;
 		server setVariable ["activemobsters",_active,false];
 		
 		_standingChange = 50;
 		[_killer,1500] call rewardMoney;
+		
+		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["notify_minor",0,true];
 	};
 	if(!isNil "_mobster") exitWith {
 		_mobsterid = _me getVariable "garrison";

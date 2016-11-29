@@ -6,6 +6,7 @@ while {true} do
 	{
 		_ConsideringUnit = VcomAI_UnitQueue select 0;
 		_Disabled = _ConsideringUnit getVariable ["NOAI",false];
+		if ((vehicle _ConsideringUnit) isKindOf "Plane") then {_Disabled = 1;};
 		if (_Disabled isEqualTo 1) then {_Disabled = true;_ConsideringUnit setvariable ["NOAI",true];};
 		if (!(isNull _ConsideringUnit) && !(_Disabled)) then 
 		{
