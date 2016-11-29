@@ -6,17 +6,22 @@ private _town = _this;
 private _activeshops = server getVariable [format["activeshopsin%1",_town],[]];
 
 if(count _activeshops > 0) exitWith {
-	private _group = createGroup civilian;
-	_group setBehaviour "CARELESS";	
+	
 
-	private _groups = [_group];
+	private _groups = [];
 		
 	{
-		_pos = _x select 0;
+		private _pos = _x select 0;
 		_building = nearestBuilding _pos;
 		
-		_tracked = _building call spawnTemplate;
-		_vehs = _tracked select 0;
+		private _group = createGroup civilian;
+		_group setBehaviour "CARELESS";
+		_groups pushback _group;
+		private _start = _building buildingPos 0;
+		_shopkeeper = _group createUnit [OT_civType_shopkeeper, _start, [],0, "NONE"];
+		
+		private _tracked = _building call spawnTemplate;
+		private _vehs = _tracked select 0;
 		{
 			_groups pushback _x;
 		}foreach(_vehs);
@@ -26,7 +31,7 @@ if(count _activeshops > 0) exitWith {
 		_dir = getDir _cashdesk;
 		_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;		
 		
-		_shopkeeper = _group createUnit [OT_civType_shopkeeper, _cashpos, [],0, "NONE"];
+		_shopkeeper allowDamage false;
 		_shopkeeper disableAI "MOVE";
 		_shopkeeper disableAI "AUTOCOMBAT";
 		_shopkeeper setVariable ["NOAI",true,false];
@@ -38,8 +43,7 @@ if(count _activeshops > 0) exitWith {
 		[_shopkeeper] call initShopkeeper;	
 		
 		//Put a light on
-		_pos = getpos _building;
-		_light = "#lightpoint" createVehicle [_cashpos select 0,_cashpos select 1,(_cashpos select 2)+2.2];
+		_light = "#lightpoint" createVehicle [_pos select 0,_pos select 1,(_pos select 2)+2.2];
 		_light setLightBrightness 0.13;
 		_light setLightAmbient[.9, .9, .6];
 		_light setLightColor[.5, .5, .4];
