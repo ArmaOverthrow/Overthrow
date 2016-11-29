@@ -10,7 +10,8 @@ private _numCRIM = server getVariable [format ["numcrims%1",_town],0];
 
 if(_numCRIM > 0) then {
 	private _time = server getVariable [format ["timecrims%1",_town],0];
-	private _leaderpos = server getVariable [format["crimleader%1",_town],false];
+	private _leaderpos = server getVariable [format["crimleader%1",_town],_posTown];
+	if(typename _leaderpos != "ARRAY") then {_leaderpos = _posTown};
 	private _group = objNULL;
 	
 	_skill = 0.7;

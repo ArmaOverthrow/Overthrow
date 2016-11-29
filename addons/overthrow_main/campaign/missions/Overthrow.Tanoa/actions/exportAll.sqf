@@ -39,7 +39,9 @@ _total = 0;
 			if(_cls isKindOf "Bag_Base") exitWith {
 				[_target, _cls, _num] call CBA_fnc_removeBackpackCargoGlobal;
 			};
-			[_target, _cls, _num] call CBA_fnc_removeItemCargoGlobal;
+			if !([_target, _cls, _num] call CBA_fnc_removeItemCargoGlobal) then {
+				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
+			};			
 		};		
 	};
 }foreach(_target call unitStock);

@@ -7,9 +7,9 @@ _TimeShot = _unit getVariable "VCOM_FiredTime";
 if ((diag_tickTime - _TimeShot) > 10) then 
 {
 	
-	//If framerate is below 15 - exit this script.
+	//If framerate is below 20 - exit this script.
 	_FrameRateCheck = diag_fps;
-	if (_FrameRateCheck <= 15) exitWith {};
+	if (_FrameRateCheck <= 20) exitWith {};
 
 	
 	_unit setVariable ["VCOM_FiredTime",diag_tickTime,true];
@@ -45,9 +45,23 @@ if ((diag_tickTime - _TimeShot) > 10) then
 	{
 			_CheckDistance = (_pos distance _x);
 			_Kn = _unit knowsAbout _x;
-			if (_CheckDistance < 10 && (_Kn > 3.5)) then 
+			if (_CheckDistance < 4 && (_Kn > 3.5)) then 
 			{
 				_x setSuppression 1;
+				if (VCOM_Suppression) then
+				{
+					if (isPlayer _x) then {remoteExec ["PSup",_x];}
+					else
+					{
+						_x setCustomAimCoef VCOM_SuppressionVar;
+						_x spawn {sleep 8; _this setCustomAimCoef 1;};
+					};
+				};
+				if (VCOM_Adrenaline) then
+				{
+					_x setAnimSpeedCoef VCOM_AdrenalineVar;
+					_x spawn {sleep 8; _this setAnimSpeedCoef 1;};
+				};
 				if (VCOM_AIDEBUG isEqualTo 1) then
 				{
 					[_x,"I am suppressed!",30,20000] remoteExec ["3DText",0];

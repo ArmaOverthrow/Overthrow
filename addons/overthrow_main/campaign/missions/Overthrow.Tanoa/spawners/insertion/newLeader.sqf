@@ -10,7 +10,7 @@ _townPos = server getVariable _town;
 _region = server getVariable format["region_%1",_town];
 _mob = _townPos call nearestMobster;
 _mobpos = _mob select 0;
-if !([_mobpos,_region] call fnc_isInMarker) exitWith {};
+if !([_mobpos,_region] call fnc_isInMarker) exitWith {[_town,1] call stability};
 
 server setVariable [format["numcrims%1",_town],_numcrim,false];	
 server setVariable [format["crimleader%1",_town],_leaderpos,false];	

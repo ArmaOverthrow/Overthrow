@@ -19,7 +19,7 @@ _fail = {
 	};
 	format["Resistance has captured %1%2 (+100 Influence) %3",_o,_objective,_effect] remoteExec ["notify_good",0,false];
 	100 remoteExec ["influenceSilent",0,false];	
-	_flag = _attackpos nearobjects [OT_flag_NATO,500];
+	_flag = _posTown nearobjects [OT_flag_NATO,500];
 	if(count _flag > 0) then{
 		deleteVehicle (_flag select 0);
 	};
@@ -33,7 +33,7 @@ _success = {
 	_abandoned = server getVariable "NATOabandoned";
 	_abandoned deleteAt (_abandoned find _objective);
 	server setVariable ["NATOabandoned",_abandoned,true];
-	server setVariable [format["garrison%1",_objective],8 + random 12,true];
+	server setVariable [format["garrison%1",_objective],round(8 + random 12),true];
 };
 
 private _base = 150;

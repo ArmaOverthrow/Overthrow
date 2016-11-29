@@ -103,6 +103,7 @@ VCOMAI_ForceHeal = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_Fo
 VCOMAI_DebugText = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_DebugText.sqf";
 VCOMAI_RearmSelf = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_RearmSelf.sqf";
 VCOMAI_RearmGo = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_RearmGo.sqf";
+VCOMAI_SuppressedEffect = compile preprocessFileLineNumbers "VCOMAI\Functions\VCOMAI_SuppressedEffect.sqf";
 
 //Danger FSM
 VCOMAI_RecentEnemyDetected = compile preprocessFileLineNumbers "VCOMAI\functions\DangerCauses\VCOMAI_RecentEnemyDetected.sqf";
@@ -121,6 +122,7 @@ switchMoveEverywhere = compileFinal "(_this select 0) switchMove (_this select 1
 playActionNowEverywhere = compileFinal "(_this select 0) playActionNow (_this select 1);";
 DisableCollisionALL = compileFinal "(_this select 0) disableCollisionWith player";
 3DText = compile "[_this select 0,_this select 1,_this select 2,_this select 3] call VCOMAI_DebugText;";
+PSup = compile "[] spawn VCOMAI_SuppressedEffect;";
 
 //Below is loop to check for new AI spawning in to be added to the list
 if !(isDedicated) then 
@@ -141,7 +143,7 @@ while {true} do
 	if (Vcom_ActivateAI) then
 	{
 		{
-			if (local _x) then 
+			if (local _x && simulationEnabled _x) then 
 			{
 					if (!(_x in VcomAI_ActiveList) && {!(_x in VcomAI_UnitQueue)}) then
 					{

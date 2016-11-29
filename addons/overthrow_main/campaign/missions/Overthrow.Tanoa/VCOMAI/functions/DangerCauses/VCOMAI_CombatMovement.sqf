@@ -9,7 +9,8 @@ private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy"
 	_VCOM_MovedRecentlyCover = _this select 3;
 	
 	////systemchat format ["M %1",_Unit];	
-	_NearestEnemy = _Unit call VCOMAI_ClosestEnemy;
+	//_NearestEnemy = _Unit call VCOMAI_ClosestEnemy;
+	_NearestEnemy = _Unit findNearestEnemy _Unit;
 	_DistanceCheck = _NearestEnemy distance _Unit;
 	//if (isNil "_NearestEnemy" || {_VCOM_MovedRecentlyCover} || {(typeName _NearestEnemy isEqualTo "ARRAY")} || {isNil "_Unit"} || {!(alive _NearestEnemy)} || {(_NearestEnemy distance _Unit) > 5000}) exitWith {};
 	if (isNil "_NearestEnemy" || {(typeName _NearestEnemy isEqualTo "ARRAY")} || {isNil "_Unit"} || {!(alive _NearestEnemy)} || {(_DistanceCheck) > 2000}) exitWith {_Unit forcespeed -1;};

@@ -6,7 +6,15 @@ while {true} do {
 	waitUntil {sleep 60;(date select 3) != _lasthour}; //do actions on the hour
 	_lasthour = date select 3;
 	private _inf = 1;
-	private _total = 0;	
+	private _total = 0;
+
+	if(OT_fastTime) then {
+		if(_lasthour > 18 or _lasthour < 7) then {
+			setTimeMultiplier 8;
+		}else{
+			setTimeMultiplier 4;
+		};
+	};
 	
 	if((_lasthour == 0) or (_lasthour == 6) or (_lasthour == 12) or (_lasthour == 18)) then {
 		{

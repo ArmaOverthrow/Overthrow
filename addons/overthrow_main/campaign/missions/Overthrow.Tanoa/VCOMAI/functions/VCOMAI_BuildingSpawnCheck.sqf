@@ -2,7 +2,7 @@ private ["_dgn_returnvariable", "_Position", "_Array","_VCOMAI_StartedInside"];
 
 _dgn_returnvariable = false;
 
-_Position = getposASL _this;
+_Position = getposATL _this;
 _Array = lineIntersectsObjs [_Position,[_Position select 0,_Position select 1,(_Position select 2) + 10], objnull, objnull, true, 4];
 {
 	if (_x isKindof "Building") then {_dgn_returnvariable = true;};

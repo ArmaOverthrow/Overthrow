@@ -3,10 +3,11 @@ private ["_unit","_t"];
 _unit = _this select 0;
 _t = _this select 1;
 
-if(vest _unit != "") then {
-	if !(vest _unit in OT_illegalVests) then {
-		_t addVest vest _unit;
-	};
+if(vest _unit != "") then {	
+	_t addVest vest _unit;	
+};
+if(headgear _unit != "") then {	
+	_t addHeadgear headgear _unit;	
 };
 if(backpack _unit != "") then {
 	_t addBackpack backpack _unit;
@@ -17,22 +18,22 @@ if(backpack _unit != "") then {
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {	
 		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
-			_t addMagazine _cls;
 			_unit removeMagazine _cls;
-		}else{
-			_t addItem _cls;
+			_t addMagazine _cls;			
+		}else{			
 			_unit removeItem _cls;
+			_t addItem _cls;
 		};		
 		_count = _count + 1;
 	};
 }foreach(_unit call unitStock);
 
-if(vest _unit != "") then {
-	if !(vest _unit in OT_illegalVests) then {
-		removeVest _unit;
-	};
+if(vest _unit != "") then {	
+	removeVest _unit;	
 };
-
+if(headgear _unit != "") then {	
+	removeHeadgear _unit;
+};
 if(backpack _unit != "") then {
 	removeBackpackGlobal _unit;
 };
@@ -51,10 +52,10 @@ if(handgunWeapon _unit != "") then {
 };
 {
 	if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
-		_t addWeapon _x;
-		_t assignItem _x; 
 		_unit unassignItem _x;
 		_unit removeWeapon _x;
+		_t addWeapon _x;
+		_t assignItem _x; 		
 	}else{
 		_unit unlinkItem _x;
 		_t linkItem _x;

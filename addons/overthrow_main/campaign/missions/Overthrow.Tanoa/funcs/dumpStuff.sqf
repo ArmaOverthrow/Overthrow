@@ -84,6 +84,7 @@ if(secondaryWeapon _unit != "") then {
 };
 if(_full and !_istruck) exitWith {false};
 
+
 if(handgunWeapon _unit != "") then {
 	if !(_t canAdd handgunWeapon _unit) exitWith {
 		_full = true;

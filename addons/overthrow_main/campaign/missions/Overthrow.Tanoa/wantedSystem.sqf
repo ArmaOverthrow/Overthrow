@@ -13,9 +13,9 @@ _unit addEventHandler ["take", {
 		_type = typeof _container;
 		if(_container isKindOf "Man") then {
 			_container setvariable ["looted",true,true];
-			[_container] spawn {
-				sleep 30;
+			[_container] spawn {				
 				_n = _this select 0;
+				waitUntil {sleep 30;(isNil "_n") or !(getpos _n) call inSpawnDistance};
 				if!(isNil "_n") then {
 					hideBody _n;
 				}

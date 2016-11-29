@@ -1,14 +1,31 @@
 private _items = [];
 private _done = [];
 
-private _myitems = [];
-
-if(_this isKindOf "Man") then {
-	_myitems = (items _this) + (magazines _this);
-}else{
-	_myitems = (itemCargo _this) + (weaponCargo _this) + (magazineCargo _this) + (backpackCargo _this);	
+private _allCargo = {
+	private _myitems = [];
+	if(_this isKindOf "Man") then {
+		_myitems = (items _this) + (magazines _this);
+	}else{	
+		_myitems = (itemCargo _this) + (magazineCargo _this) + (backpackCargo _this);
+		{
+			{
+				if(typename _x == "STRING") then {
+					if !(_x isEqualTo "") then {
+						_myitems pushback _x;
+					};
+				};
+			}foreach(_x);
+		}foreach(weaponsItemsCargo _this);
+		{
+			_x params ["_itemcls","_item"];
+			_myitems = _myitems + (_item call _allCargo);
+		}foreach(everyContainer _this);
+	};
+	_myitems
 };
-if !(isNil "_myitems") then {
+
+private _theseitems = _this call _allCargo;
+if !(isNil "_theseitems") then {
 	{
 		private _cls = _x;
 		if(OT_hasTFAR) then {
@@ -33,6 +50,6 @@ if !(isNil "_myitems") then {
 				};
 			}foreach(_items);
 		};
-	}foreach(_myitems);
+	}foreach(_theseitems);
 };
 _items;

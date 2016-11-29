@@ -15,7 +15,7 @@ VCOM_STATICGARRISON = 1;
 //How far can the AI hear gunshots from?
 VCOM_HEARINGDISTANCE = 800;
 //Should AI be able to call for artillery. 1 = YES 0 = NO
-VCOM_Artillery = 1;
+VCOM_Artillery = 0;
 //Should we let AI use flanking manuevers? false means they can flank
 VCOM_NOPATHING = false;
 //Should AI use smoke grenades? Besides default A3 behavior?
@@ -30,6 +30,18 @@ VCOM_MineLayChance = 40;
 VCOM_AIDisembark = true;
 //How low should an AI's mag count be for them to consider finding more ammo? This DOES NOT include the mag loaded in the gun already.
 VCOM_AIMagLimit = 2;
+//Should the rain impact accuracy of AI? DEFAULT = true;
+VCOM_RainImpact = true;
+//How much should rain impact the accuracy of AI? Default = 3. Default formula is -> _WeatherCheck = (rain)/3; "rain" is on a scale from 0 to 1. 1 Being very intense rain.
+VCOM_RainPercent = 3;
+//Should AI and players have an additional layer of suppression that decreases aiming when suppressed? Default = true;
+VCOM_Suppression = true;
+//How much should suppression impact both AI and player aiming? Default is 5. Normal ArmA is 1.
+VCOM_SuppressionVar = 5;
+//Should AI/players be impacted by adrenaline? This provides players and AI with a small speed boost to animations to assist with cover seeking and positioning for a short time. Default = true;
+VCOM_Adrenaline = true;
+//How much of a speed boost should players/AI recieve? Default = 1.35; (1 is ArmA's normal speed).
+VCOM_AdrenalineVar = 1.35;
 
 
 //The longer an AI's target stays in 1 location, the more accurate and aware of the target the AI becomes.DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
@@ -39,7 +51,7 @@ VCOM_SideBasedMovement = [WEST,EAST];
 //VCOM_SideBasedExecution- Remove sides from the array below to remove that specific AI side from executing any of the VCOMAI scripts at all. DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
 VCOM_SideBasedExecution = [WEST,EAST,RESISTANCE];
 //Distance AI will respond to call of help from each other
-VCOM_Unit_AIWarnDistance = 800;
+VCOM_Unit_AIWarnDistance = 600;
 
 //The following commands are to be left alone, except under rare circumstances.
 MarkerArray = [];

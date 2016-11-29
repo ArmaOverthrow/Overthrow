@@ -37,7 +37,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Rautake","Tavu","Balavu","Muaceba","Katkoula","Savaka"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-OT_NATOwait = 400; //Half the Average time between NATO orders
+OT_NATOwait = 20; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -210,7 +210,7 @@ OT_NATO_Vehicle_Transport = "B_T_Truck_01_transport_F";
 OT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
 OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
-OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_armed_F"];
+OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F"];
 OT_NATO_Vehicles_GroundSupport = ["B_T_MRAP_01_gmg_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";

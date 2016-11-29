@@ -1,11 +1,17 @@
 
 params ["_pos","_mobsterid","_spawnid"];
 
+private _garrison = server getVariable [format["crimgarrison%1",_mobsterid],0];
+if(_garrison == 0) exitWith {[]};
+
+private _leader = server getVariable [format["mobleader%1",_mobsterid],false];
+if (typename _leader == "BOOL") exitWith {[]};
+
 private _groups = [];
 private _group = createGroup east;
 _groups pushback _group;
 _group setBehaviour "SAFE";
-_garrison = server getVariable [format["crimgarrison%1",_mobsterid],0];
+
 
 //the camp
 _veh = createVehicle ["Campfire_burning_F",_pos,[],0,"CAN_COLLIDE"];
@@ -38,7 +44,9 @@ _civ setRank "COLONEL";
 [_civ] joinSilent _group;
 _civ setVariable ["garrison",_mobsterid,true];
 _civ call initMobBoss;
-
+{
+	_x addCuratorEditableObjects[[_civ],false];
+}foreach(allcurators);
 
 //spawn in his protection
 _count = 0;
@@ -51,6 +59,9 @@ while {_count < _garrison} do {
 	_civ setVariable ["garrison",_mobsterid,true];
 	_civ call initMobster;
 	_count = _count + 1;
+	{
+		_x addCuratorEditableObjects[[_civ],false];
+	}foreach(allcurators);
 };
 
 _wp = _group addWaypoint [_flagpos,0];

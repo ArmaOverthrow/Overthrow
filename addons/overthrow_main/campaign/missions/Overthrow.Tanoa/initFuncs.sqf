@@ -474,30 +474,32 @@ KK_fnc_fileExists = {
     _fileExists
 };
 
+OT_notifies = [];
+
 notify = {
     _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
-    [_txt, 0.8, 0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+	OT_notifies pushback _txt;
 };
 
 notify_good = {
     playSound "3DEN_notificationDefault";
-    _txt = format ["<t size='0.6' color='#ffffff'>%1</t>",_this]; 
-    [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    _txt = format ["<t size='0.6' color='#ffffff'>%1</t>",_this];
+	OT_notifies pushback _txt;
 };
 
 notify_minor = {
-    _txt = format ["<t align='right' size='0.5' color='#ffffff'>%1</t>",_this]; 
-    [_txt, 0.6, -0.136, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+    _txt = format ["<t size='0.6' color='#ffffff'>%1</t>",_this]; 
+	OT_notifies pushback _txt;
 };
 
 notify_long = {
-    _txt = format ["<t align='right' size='0.5' color='#ffffff'>%1</t>",_this]; 
-    [_txt, 0.6, -0.136, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
+    _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this];
+    [_txt, 0, -0.136, 30, 1, 0, 2] spawn bis_fnc_dynamicText;
 };
 
 notify_talk = {
     _txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
-    [_txt, 0, -0.2, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+	OT_notifies pushback _txt;
 };
 
 [] execVM "funcs\info.sqf";
