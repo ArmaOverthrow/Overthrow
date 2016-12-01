@@ -1,9 +1,11 @@
-_group = _this;
+private _group = _this;
 
+private _garrison = ((units _group) select 0) getvariable ["garrison",""];
+private _start = position ((units _group) select 0);
 
-_start = server getvariable [((units _group) select 0) getvariable "garrison",getpos ((units _group) select 0)];
+if(isNil "_start") exitWith {};
 
-_wp = _group addWaypoint [getpos (nearestbuilding _start),5];
+_wp = _group addWaypoint [_start,5];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "LIMITED";

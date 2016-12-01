@@ -229,7 +229,32 @@ _handler = {
 		}foreach(vehicles);
 	};
 	
-	
+	if((vehicle player) isKindOf "Air") then {
+		_abandoned = server getVariable ["NATOabandoned",[]];
+		{
+			if !(_x in _abandoned) then {
+				(_this select 0) drawEllipse [					
+					server getvariable _x,
+					2000,
+					2000,
+					0,
+					[1, 0, 0, 1],
+					"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
+				];
+			};
+		}foreach(OT_allAirports);
+		private _attack = server getVariable ["NATOattacking",""];
+		if(_attack != "") then {
+			(_this select 0) drawEllipse [					
+				server getvariable _attack,
+				2000,
+				2000,
+				0,
+				[1, 0, 0, 1],
+				"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
+			];
+		};
+	};
 	mapCenter 
 };
 

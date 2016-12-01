@@ -27,6 +27,10 @@ if(!isMultiplayer) then {
     //SINGLE PLAYER init    
     waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
     [] execVM "initEconomyLoad.sqf";
+	
+	if(OT_fastTime) then {
+		setTimeMultiplier 4;
+	};
         
     //Init factions 
     [] execVM "factions\NATO.sqf";

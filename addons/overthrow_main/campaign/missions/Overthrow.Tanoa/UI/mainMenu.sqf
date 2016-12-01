@@ -150,26 +150,32 @@ if(typename _b == "ARRAY") then {
 			",_ownername];
 		};
 	}else{
-		ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
-		ctrlEnable [1609,false];
-		ctrlEnable [1610,false];
-		if(typeof _building == OT_warehouse) exitWith {
-			_buildingTxt = "<t align='left' size='0.8'>Warehouse</t>";
-		};
-		_buildingTxt = format["
-			<t align='left' size='0.8'>%1</t><br/>
-			<t align='left' size='0.65'>Lease Value: $%2/hr</t>
-		",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
-		
-		if(typeof _building == OT_barracks) then {			
-			ctrlSetText [1608,"Sell"];
+		if(isNil "_price") then {
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
 			ctrlEnable [1610,false];
-
+		}else{		
+			ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
+			ctrlEnable [1609,false];
+			ctrlEnable [1610,false];
+			if(typeof _building == OT_warehouse) exitWith {
+				_buildingTxt = "<t align='left' size='0.8'>Warehouse</t>";
+			};
 			_buildingTxt = format["
-				<t align='left' size='0.8'>Barracks</t><br/>
-			",_ownername];
+				<t align='left' size='0.8'>%1</t><br/>
+				<t align='left' size='0.65'>Lease Value: $%2/hr</t>
+			",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+			
+			if(typeof _building == OT_barracks) then {			
+				ctrlSetText [1608,"Sell"];
+				ctrlEnable [1608,false];
+				ctrlEnable [1609,false];
+				ctrlEnable [1610,false];
+
+				_buildingTxt = format["
+					<t align='left' size='0.8'>Barracks</t><br/>
+				",_ownername];
+			};
 		};
 	};	
 	
@@ -244,29 +250,14 @@ if(typename _b == "ARRAY") then {
 
 
 
-
+OT_interactingWith = objNull;
 _buildingtextctrl ctrlSetStructuredText parseText _buildingTxt;
 
 
 //Nearest Civ info
-_civs = player nearEntities ["Man", 10];
-_possible = [];
+_possible = (player nearEntities ["CAManBase", 20]) - [player];
 _civTxt = "";
 _civtxtctrl = (findDisplay 8001) displayCtrl 1101;
-{
-	if !(_x call hasOwner or _x == player or side _x == west or side _x == east) then {
-		//"self" returns true ie for shopkeepers, so double check this civ has no owner
-		if(isPlayer _x) then {
-			_possible pushBack _x;
-		}else{
-			_owner = _x getVariable "owner";
-			if(isNil "_owner" and _x in allunits) then {
-				_possible pushBack _x;
-			};
-		};			
-	};
-}foreach(_civs);
-
 if(count _possible > 0) then {
 	_possible = [_possible,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 	_civ = _possible select 0;
@@ -274,13 +265,43 @@ if(count _possible > 0) then {
 	_cls = typeof _civ;
 	
 	_name = name _civ;	
-
+	
+	OT_interactingWith = _civ;
 	player setVariable ["hiringciv",_civ,false];
 	_type = "Civilian";
 	if(!isplayer _civ) then {
-		[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',2,false];				
+		if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_type = "Shopkeeper"};
+		if (_civ getvariable ["carshop",false]) then {_type = "Car Dealer"};
+		if (_civ getvariable ["harbor",false]) then {_type = "Boat Dealer"};
+		if (_civ getvariable ["gundealer",false]) then {_type = "Gun Dealer"};
+		
+		if !((_civ getvariable ["garrison",""]) isEqualTo "") then {
+			if(side _civ == west) exitWith {
+				_type = (typeof _civ) call ISSE_Cfg_Vehicle_GetName;
+			};
+			if(side _civ == east) exitWith {
+				_type = "Bandit";
+			};
+			if(side _civ == resistance) exitWith {
+				_type = "Policeman";
+			};
+		};
+		
+		if(_civ call hasOwner) then {
+			call {
+				if(side _civ == resistance) exitWith {
+					_type = (typeof _civ) call ISSE_Cfg_Vehicle_GetName;
+				};				
+			};
+			ctrlEnable [1605,false];
+			ctrlEnable [1606,false];
+		}else{
+			if(side _civ == civilian) then {
+				[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',_civ,false];				
+			};
+		};		
 	}else{	
-		ctrlEnable [1605,false];
+		ctrlEnable [1605,true];
 		ctrlEnable [1606,false];
 		ctrlSetText [1605,"Give Money"];
 		_type = "Player";

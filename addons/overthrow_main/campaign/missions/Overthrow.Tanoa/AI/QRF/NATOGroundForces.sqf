@@ -6,14 +6,15 @@ private _group1 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU
 private _group2 = "";
 private _tgroup = false;
 if !(_byair) then {
+	sleep 0.2;
 	_squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
 	_spawnpos = [_spawnpos,[0,50]] call SHK_pos;
 	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 };
-sleep 0.1;
+sleep 0.5;
 private _allunits = [];
 private _veh = false;
-
+player globalchat "ground";
 if(_frompos distance _attackpos > 1200) then {
 	//Transport
 	_tgroup = creategroup blufor;
@@ -56,7 +57,9 @@ if(_frompos distance _attackpos > 1200) then {
 	_allunits pushback _x;
 	_x setVariable ["garrison","HQ",false];
 	_x setVariable ["VCOM_NOPATHING_Unit",true,false];
-}foreach(units _group1);	
+}foreach(units _group1);
+
+spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group1],false];	
 
 if !(_byair) then {
 	{

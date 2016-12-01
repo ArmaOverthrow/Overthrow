@@ -190,8 +190,8 @@ if(isMultiplayer or _startup == "LOAD") then {
 			if(typename _civ == "ARRAY") then {
 				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 				_civ setVariable ["owner",getplayeruid player,true];
-				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _civ];
-				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _civ];            
+				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];            
 				_civ setUnitLoadout _loadout;
 				_civ spawn wantedSystem;
 				_civ setName _name;

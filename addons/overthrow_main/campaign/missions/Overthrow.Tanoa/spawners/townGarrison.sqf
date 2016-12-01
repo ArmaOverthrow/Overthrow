@@ -2,7 +2,7 @@ private ["_town","_posTown","_groups","_group","_numNATO","_pop","_count","_rang
 if (!isServer) exitwith {};
 
 _count = 0;
-_town = _this;
+params ["_town","_spawnid"];
 
 private _abandoned = server getVariable ["NATOabandoned",[]];
 if (_town in _abandoned) exitWith {};
@@ -23,6 +23,7 @@ while {_count < _numNATO} do {
 	
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+	sleep 0.1;
 	_civ setVariable ["garrison",_town,false];
 	[_civ] joinSilent _group;
 	_civ setRank "CORPORAL";
@@ -43,7 +44,7 @@ while {_count < _numNATO} do {
 		
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-
+		sleep 0.1;
 	};				
 	_group call initGendarmPatrol;		
 	_range = _range + 50;
@@ -51,4 +52,4 @@ while {_count < _numNATO} do {
 
 
 
-_groups
+spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

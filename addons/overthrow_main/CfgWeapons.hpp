@@ -10,10 +10,20 @@ class CfgWeapons {
         scope = 2;        
         picture = "\ot\ui\items\ganja_x_ca.paa";
         displayName = "Ganja";
-        descriptionShort = "1/8 oz. of the finest bud around.";
+        descriptionShort = "1/2 oz. of the finest bud around.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 5;
+            mass = 10;
+        };
+    };
+	class OT_Blow: OT_ItemCore {
+        scope = 2;        
+        picture = "\ot\ui\items\blow_x_ca.paa";
+        displayName = "Blow";
+        descriptionShort = "A white powder that turns madmen into world leaders, or world leaders into madmen.";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 10;
         };
     };
 };

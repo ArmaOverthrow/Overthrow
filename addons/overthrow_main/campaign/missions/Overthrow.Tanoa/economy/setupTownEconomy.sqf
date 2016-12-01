@@ -1,10 +1,13 @@
 private ["_shops","_active","_posTown"];
 
-_town    = _this select 0;
-_posTown = server getVariable _town;
-_stability = server getVariable format["stability%1",_town];
-_shops   = 0;
-_active  = [];
+private _town    = _this select 0;
+
+private _posTown = server getVariable _town;
+private _stability = server getVariable format["stability%1",_town];
+private _shops   = 0;
+private _active  = [];
+private _activecar  = [];
+private _piers  = [];
 
 private _churches = nearestObjects [_posTown, OT_churches, 700];
 if(count _churches > 0) then {
@@ -48,8 +51,24 @@ if(count _churches > 0) then {
     };
 }foreach(nearestObjects [_posTown, OT_shops, 700]);
 
+{  	
+	private _po = getpos _x;
+    if !(_x call hasOwner or _po in _activecar) then {
+		_activecar pushback _po;        
+    };
+}foreach(nearestObjects [_posTown, OT_carShops, 900]);
+
+{  	
+	private _po = getpos _x;
+    if !(_po in _piers) then {
+		_piers pushback _po;        
+    };
+}foreach(nearestObjects [_posTown,OT_piers, 900]);
+
 server setVariable [format["shopsin%1",_town],_shops,true];
 server setVariable [format["activeshopsin%1",_town],_active,true];
+server setVariable [format["activecarshopsin%1",_town],_activecar,true];
+server setVariable [format["activepiersin%1",_town],_piers,true];
 _active = [];
 {   
     if !(_x call hasOwner) then {

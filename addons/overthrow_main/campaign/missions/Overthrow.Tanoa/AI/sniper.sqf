@@ -1,8 +1,5 @@
 private _unit = _this select 0;
 
-[_unit, (OT_faces_western call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _unit];
-[_unit, (OT_voices_western call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _unit];
-
 if(OT_hasACE) then {
 	_unit addItemToUniform "ACE_rangeCard";
 };

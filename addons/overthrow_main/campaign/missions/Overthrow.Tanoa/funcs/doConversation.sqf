@@ -3,9 +3,14 @@ private _personTwo = _this select 1;
 private _lines = _this select 2;
 
 private _onFinish = {};
+private _params = [];
 
 if((count _this) > 3) then {
 	_onFinish = _this select 3;
+};
+
+if((count _this) > 4) then {
+	_params = _this select 4;
 };
 
 private _person = _personOne;
@@ -22,4 +27,4 @@ private _person = _personOne;
 	
 }forEach(_lines);
 
-[] call _onFinish;
+_params call _onFinish;

@@ -15,13 +15,13 @@ if(count _sorted == 0) exitWith {};
 
 _target = _sorted select 0;
 
-_unit groupChat format["Opening %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName];
+_unit globalchat format["Opening %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName];
 if(((vehicle _unit) != _unit) and (vehicle _unit) != _target) then {
 	doGetOut _unit;
 };
 if(vehicle _unit != _target) then {
-	_unit doMove getpos _target;
-	waitUntil {sleep 1;!alive _unit or unitReady _unit};
+	_unit doMove position _target;
+	waitUntil {sleep 1;!alive _unit or (_unit distance _target < 5)};
 };
 
 if(alive _unit) then {

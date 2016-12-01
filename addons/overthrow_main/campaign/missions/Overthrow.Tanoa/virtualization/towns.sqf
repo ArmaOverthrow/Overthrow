@@ -15,16 +15,9 @@ OT_townSpawners = [
 	private _town = _x;
 	[_pos,{			
 			params ["_spawntown","_spawnid"];
-			private _g = [];
-			{					
-				{
-					_g pushback _x;
-					if(typename _x == "GROUP") then {
-						_x call distributeAILoad;
-					};
-				}foreach(_spawntown call _x);	
-				sleep 0.2;
+			{				
+				_hdl = [_spawntown,_spawnid] spawn _x;
+				waitUntil {sleep 0.2;scriptDone _hdl};			
 			}foreach(OT_townSpawners);
-			spawner setvariable [_spawnid,_g,false];
 	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);

@@ -55,12 +55,17 @@ if(typename _data != "ARRAY") exitWith {
 					_name = _x select 5;
 				};
 				_veh = _type createVehicle _pos;
-				_veh setPos _pos;
+				_veh setPosATL _pos;
 				if(_type isKindOf "Building") then {
-					createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
-					_veh setVectorDirAndUp [[0,0,-1],[0,1,0]];
+					createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];					
 				};
-				_veh setDir _dir;
+				if(typename _dir == "SCALAR") then {
+					//Pre 0.6.8 save, scalar direction
+					_veh setDir _dir;
+				}else{
+					_veh setVectorDirAndUp _dir;
+				};
+				
 				clearWeaponCargoGlobal _veh;
 				clearMagazineCargoGlobal _veh;
 				clearBackpackCargoGlobal _veh;
@@ -81,6 +86,9 @@ if(typename _data != "ARRAY") exitWith {
 					call {
 						if(_cls == "money") exitWith {
 							_veh setVariable ["money",_num,true];
+						};
+						if(_cls == "password") exitWith {
+							_veh setVariable ["password",_num,true];
 						};
 						if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 							_veh addWeaponCargoGlobal [_cls,_num];

@@ -33,6 +33,7 @@ while {_count < _numtents} do {
 	_veh setDir _d;
 	_groups pushback _veh;
 	_count = _count + 1;
+	sleep 0.1;
 };
 		
 
@@ -47,7 +48,7 @@ _civ call initMobBoss;
 {
 	_x addCuratorEditableObjects[[_civ],false];
 }foreach(allcurators);
-
+sleep 0.2;
 //spawn in his protection
 _count = 0;
 while {_count < _garrison} do {
@@ -62,6 +63,7 @@ while {_count < _garrison} do {
 	{
 		_x addCuratorEditableObjects[[_civ],false];
 	}foreach(allcurators);
+	sleep 0.2;
 };
 
 _wp = _group addWaypoint [_flagpos,0];

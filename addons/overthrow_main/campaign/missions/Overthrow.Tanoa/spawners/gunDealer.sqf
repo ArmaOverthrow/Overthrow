@@ -2,7 +2,7 @@ private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_
 if (!isServer) exitwith {};
 
 _count = 0;
-_town = _this;
+params ["_town","_spawnid"];
 _posTown = server getVariable _town;
 _pop = server getVariable format["population%1",_town];
 
@@ -32,5 +32,6 @@ _dealer remoteExec ["initGunDealerLocal",0,_dealer];
 
 _dealer setVariable ["gundealer",true,true];
 spawner setVariable [format ["gundealer%1",_town],_dealer,true];
+sleep 0.1;
 
-_groups
+spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

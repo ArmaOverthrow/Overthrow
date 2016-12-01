@@ -7,7 +7,7 @@ if(_numPlayers < 4) then {
 		_strength = round(_strength * 1.2);
 	};
 };
-
+spawner setVariable ["NATOattackforce",[],false];
 //determine possible vectors for non-infantry assets and distribute strength to each
 
 private _isCoastal = false;
@@ -169,7 +169,11 @@ if(_airfieldIsControlled) then {
 
 _timeout = time + 800;
 
-waitUntil {sleep 5;(({(vehicle _x == _x) and (leader _x == _x) and (side _x == west) and (_x getvariable ["garrison",""] == "HQ")}count(_pos nearentities ["Man",50]) > 0) and ({(side _x == resistance) or (isPlayer _x)} count(_pos nearentities ["Man",250]) == 0)) or time > _timeout};
+waitUntil {
+	sleep 5;
+	private _force = spawner getVariable["NATOattackforce",[]];
+	(({alive leader _x} count _force) == 0) or (time > _timeout)
+};
 
 _timeout = time + 600;
 _won = false;
@@ -190,8 +194,8 @@ while {sleep 5;time < _timeout and !_won} do {
 		_params call _success;
 		_won = true;
 	};
+	if(_alive == 0) exitWith{};
 };
-
 if !(_won) then {
 	_params call _fail;
 };

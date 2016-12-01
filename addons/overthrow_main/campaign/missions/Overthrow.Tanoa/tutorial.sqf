@@ -67,10 +67,11 @@ menuHandler = {
 							_targets = [];
 							_group = nil;
 							{
-								if(typeof _x == OT_NATO_Unit_PoliceCommander) exitWith {
-									_group = group _x;
+								_lead = leader _x;
+								if(typeof _lead == OT_NATO_Unit_PoliceCommander) exitWith {
+									_group = _x;
 								};
-							}foreach(player nearEntities["Man",1200]);
+							}foreach(allgroups);
 							if(!isNil "_group") then {
 								{
 									_targets pushback _x;

@@ -13,8 +13,8 @@ class CfgPatches
             "cba_jr"
 		};
 		requiredVersion=1.64;
-		units[] = {"OT_GanjaItem"};
-		weapons[] = {"OT_Ganja"};
+		units[] = {"OT_GanjaItem","OT_BlowItem"};
+		weapons[] = {"OT_Ganja","OT_Blow"};
 	};
 };
 
@@ -139,6 +139,14 @@ class CfgMarkers
 		shadow = true;
 		scope = 1;
 	};
+};
+
+class CfgWorlds
+{
+	class Tanoa
+	{
+		fogBeta0Max = 0;
+	}
 };
 
 #include "macros.hpp"

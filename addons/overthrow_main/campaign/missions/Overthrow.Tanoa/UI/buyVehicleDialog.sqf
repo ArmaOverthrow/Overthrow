@@ -1,4 +1,3 @@
-
 private _town = player call nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
@@ -10,12 +9,16 @@ if(_obpos distance player < 250) then {
 	if(_obname in (server getVariable ["NATOabandoned",[]])) then {
 		_town = "Tanoa";
 		_standing = 100;
-		if(_obname in OT_allAirports) then {
+		if((_obname in OT_allAirports) or OT_adminMode) then {
 			_items = OT_helis + OT_vehicles;
 		}else{
 			_items = OT_vehicles + OT_boats;
 		};
 	}
+};
+
+if(OT_adminMode) then {
+	_items = OT_helis + OT_vehicles + OT_boats;
 };
 
 createDialog "OT_dialog_buy";

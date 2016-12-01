@@ -14,7 +14,7 @@ if(isNil "_garrison") then {
 						
 	server setVariable [format['police%1',_town],2,true];
 	
-	_spawned = _town call (compileFinal preProcessFileLineNumbers "spawners\police.sqf");
+	_spawned = [_town,"_noid_"] spawn (compileFinal preProcessFileLineNumbers "spawners\police.sqf");
 	_despawn = spawner getVariable [format["despawn%1",_town],[]];
 	[_despawn,_spawned] call BIS_fnc_arrayPushStack;
 	spawner setVariable [format["despawn%1",_town],_despawn,false];

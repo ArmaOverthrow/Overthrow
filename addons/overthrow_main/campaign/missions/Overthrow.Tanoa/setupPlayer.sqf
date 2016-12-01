@@ -35,11 +35,11 @@ player setVariable ["player_uid",getPlayerUID player,true];
 _closestcount = 0;
 
 while {alive player} do {
-	sleep 2;	
+	sleep 1;	
 
 	{
-		[_x, -1, -0.2, 10, 1, 0, 2] spawn bis_fnc_dynamicText;
-		sleep 2;		
+		[_x, -1, -0.2, 10, 0.5, 0, 2] spawn bis_fnc_dynamicText;
+		sleep 1;		
 	}foreach(OT_notifies);
 	OT_notifies = [];
 		
@@ -51,6 +51,7 @@ while {alive player} do {
 				_closestcount = 60;		
 			};		
 		};
+		_closestcount = 0;
 	};	
 	_closestcount = _closestcount - 2;	
 };
