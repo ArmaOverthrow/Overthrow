@@ -3,15 +3,16 @@
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 private _lasthour = date select 3;
 while {true} do {
-	waitUntil {sleep 60;(date select 3) != _lasthour}; //do actions on the hour
+	waitUntil {sleep 3;(date select 3) != _lasthour}; //do actions on the hour
 	_lasthour = date select 3;
 	private _inf = 1;
 	private _total = 0;
 
 	if(OT_fastTime) then {
-		if(_lasthour > 18 or _lasthour < 7) then {
+		if(_lasthour == 19) then {
 			setTimeMultiplier 8;
-		}else{
+		};
+		if(_lasthour == 7) then {
 			setTimeMultiplier 4;
 		};
 	};

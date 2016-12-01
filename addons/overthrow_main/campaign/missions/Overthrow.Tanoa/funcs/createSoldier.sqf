@@ -26,7 +26,7 @@ private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_civ,_fullname] remoteExec ["setCivName",0,false];
 
 
-[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _civ];
+[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 
 if(_uniform != "") then {
 	_civ forceAddUniform _uniform;

@@ -2,6 +2,11 @@ private ["_unit","_numslots","_weapon","_magazine","_base","_config"];
 _unit = _this select 0;
 _town = _this select 1;
 
+private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
+private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
+private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
+[_unit,_fullname] remoteExecCall ["setName",0,_unit];
+
 _unit setVariable ["criminal",true,false];
 
 _unit addEventHandler ["HandleDamage", {
@@ -14,8 +19,8 @@ _unit addEventHandler ["HandleDamage", {
 	};	
 }];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExec ["setAIFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExec ["setAISpeaker", 0, _unit];
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
+[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
 _unit forceAddUniform (OT_CRIM_Clothes call BIS_fnc_selectRandom);
 
 removeAllItems _unit;

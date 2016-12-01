@@ -4,12 +4,15 @@ _unit = _this select 0;
 _t = _this select 1;
 
 _full = false;
-_istruck = (_t isKindOf "Truck_F") or (_t isKindOf "ReammoBox_F");
+_istruck = true;
+if(count _this == 2) then {
+	_istruck = (_t isKindOf "Truck_F") or (_t isKindOf "ReammoBox_F");
+};
 
 {
 	_count = 0;
 	_cls = _x select 0;
-	while {_count < (_x select 1)} do {		
+	while {_count < (_x select 1)} do {
 		if !(_t canAdd _cls) exitWith {
 			_full = true;
 		};
@@ -19,7 +22,7 @@ _istruck = (_t isKindOf "Truck_F") or (_t isKindOf "ReammoBox_F");
 		}else{
 			_t addItemCargoGlobal [_cls,1];
 			_unit removeItem _cls;
-		};		
+		};
 		_count = _count + 1;
 	};
 }foreach(_unit call unitStock);
@@ -91,25 +94,28 @@ if(handgunWeapon _unit != "") then {
 	};
 	{
 		_t addItemCargoGlobal [_x,1];
-	}foreach(handgunItems _unit);		
+	}foreach(handgunItems _unit);
 	removeAllHandgunItems _unit;
 	_t addWeaponCargoGlobal [handgunWeapon _unit,1];
 	_unit removeWeapon handgunWeapon _unit;
 };
 if(_full and !_istruck) exitWith {false};
 
-{
-	if !(_t canAdd _x) exitWith {
-		_full = true;
-	};
-	if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
-		_unit unassignItem _x;
-		_unit removeWeapon _x;
-	}else{
-		_unit unlinkItem _x;
-	};	
-	_t addItemCargoGlobal [_x,1];
-}foreach(assignedItems _unit);
+if(!isplayer _unit) then {
+	{
+		if !(_t canAdd _x) exitWith {
+			_full = true;
+		};
+		if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
+			_unit unassignItem _x;
+			_unit removeWeapon _x;
+		}else{
+			_unit unlinkItem _x;
+		};
+		_t addItemCargoGlobal [_x,1];
+	}foreach(assignedItems _unit);
+};
+
 if(_full and !_istruck) exitWith {false};
 
 true

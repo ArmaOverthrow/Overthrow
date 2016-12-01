@@ -9,7 +9,9 @@
     };
 }foreach (OT_airportData);
 
-_allActiveShops = [];
+private _allActiveShops = [];
+private _allActiveCarShops = [];
+private _allActivePiers = [];
 
 //Stability markers
 {
@@ -58,6 +60,12 @@ _allActiveShops = [];
 	_shops = server getVariable [format["activeshopsin%1",_x],[]];
 	[_allActiveShops,_shops] call BIS_fnc_arrayPushStack;
 	
+	_carshops = server getVariable [format["activecarshopsin%1",_x],[]];
+	[_allActiveCarShops,_carshops] call BIS_fnc_arrayPushStack;
+	
+	_piers = server getVariable [format["activepiersin%1",_x],[]];
+	[_allActivePiers,_piers] call BIS_fnc_arrayPushStack;
+	
 	//place animals
 	[nearestBuilding _posTown, OT_allTownAnimals, _mSize+400] call BIS_fnc_animalSiteSpawn;
 	private _church = server getVariable [format["churchin%1",_x],[]];
@@ -74,6 +82,12 @@ server setVariable ["EconomyVersion",OT_economyVersion,false];
 
 OT_allActiveShops = _allActiveShops;
 publicVariable "OT_allActiveShops";
+
+OT_allActiveCarShops = _allActiveCarShops;
+publicVariable "OT_allActiveCarShops";
+
+OT_allActivePiers = _allActivePiers;
+publicVariable "OT_allActivePiers";
 
 OT_economyLoadDone = true;
 publicVariable "OT_economyLoadDone";

@@ -2,7 +2,7 @@ if (!isServer) exitwith {};
 
 private _count = 0;
 
-private _town = _this;
+params ["_town","_spawnid"];
 private _posTown = server getVariable _town;
 private _groups = [];
 
@@ -66,6 +66,7 @@ while {(_count < _numVeh)} do {
 			};
 		};
 	};	
+	sleep 0.1;
 	_count = _count + 1;
 };
-_groups
+spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

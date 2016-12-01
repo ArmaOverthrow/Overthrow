@@ -104,7 +104,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 		10 setRain _this;
 	};
 	
-	_date = server getVariable ["timedate",[2025,6,6,10,30]];
+	_date = server getVariable ["timedate",[2025,7,27,8,00]];
 	setdate _date;
 	0 setfog 0; //Tanoa fog wtf	
 	forceWeatherChange;
@@ -126,8 +126,8 @@ while {true} do {
 	//This is a south pacific climate (or thereabouts)
 	//Dry season:
 	private _stormchance = 1;
-	private _rainchance = 3;
-	private _cloudychance = 10;
+	private _rainchance = 2;
+	private _cloudychance = 4;
 
 	if(_month < 5 or _month > 10) then {
 		//Wet season

@@ -1,7 +1,9 @@
 if(count allunits > 300) exitWith {[]}; //dont spawn civs at all when under load.. just no point
 
+params ["_town","_spawnid"];
+
 private _count = 0;
-private _town = _this;
+
 private _groups = [];
 			
 private _pop = server getVariable format["population%1",_town];
@@ -37,7 +39,8 @@ if !(_church isEqualTo []) then {
 	_groups pushback _group;
 	_pos = [[[_church,20]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_civType_priest, _pos, [],0, "NONE"];
-	[_civ] call initPriest;		
+	[_civ] call initPriest;	
+	sleep 0.1;
 };
 
 _count = 0;
@@ -72,8 +75,10 @@ while {_count < _numCiv} do {
 		_civ setBehaviour "SAFE";
 		[_civ] call initCivilian;		
 		_count = _count + 1;
-		_groupcount = _groupcount + 1;		
+		_groupcount = _groupcount + 1;	
+		sleep 0.1;
 	};
 	_group spawn civilianGroup;
 };	
-_groups
+
+spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

@@ -1,113 +1,122 @@
-private ["_inrange","_searching","_searched","_gone","_vehs"];
+private _group = _this;
 
-_group = _this;
+private _start = getpos ((units _group) select 0);
 
+private _outerRange = 100;
+private _innerRange = 20;
 
-_start = getpos ((units _group) select 0);
+private _inrange = [];
+private _searching = [];
+private _searched = [];
+private _gone = [];
+private _vehs = [];
 
-_wp = _group addWaypoint [_start,0];
-_wp setWaypointType "GUARD";
-_wp setWaypointBehaviour "SAFE";
-_wp setWaypointSpeed "LIMITED";
+private _bargates = _start nearobjects ["Land_BarGate_F",50];
 
-_outerRange = 80;
-_innerRange = 20;
+while {!(isNil "_group") and count (units _group) > 0} do {
+	_vehs = [];
 
-_inrange = [];
-_searching = [];
-_searched = [];
-_gone = [];
-_vehs = [];
-
-while {!(isNull _group) and count (units _group) > 0} do {
+	private _leader = leader _group;
 	{
 		_unit = _x;
 		_iscar = false;
-		if(_unit isKindOf "LandVehicle") then {
+		if(_unit isKindOf "LandVehicle" and !(side _x == west)) then {
 			_unit = driver _unit;
 			_iscar = true;
-			_vehs pushBack [_unit,_x];
+			_f = false;
+
+			if (_vehs find _x == -1) then {
+				_vehs pushBack _x;
+			};
 		};
-		if !(_unit in _inrange) then {
+		if !(_unit in _inrange or _unit in _searching or _unit in _searched) then {
 			if(_unit call unitSeenNATO) then {
-				_inrange pushback _unit;
+
 				if((isPlayer _unit) and (captive _unit)) then {
 					if(_iscar) then {
-						"Please approach the checkpoint slowly, do NOT exit your vehicle" remoteExec ["notify_talk",_unit,false];
+						_leader globalchat "Please approach the checkpoint slowly, do NOT exit your vehicle";
+						_inrange pushback _unit;
 					}else{
-						"Please approach the checkpoint for a search, citizen" remoteExec ["notify_talk",_unit,true];
-					};			
+						[_unit] spawn NATOsearch;
+						_searching pushback _unit;
+					};
 				};
 			};
-		};		
-	}foreach(_start nearentities [["Man","LandVehicle"],_outerRange]);
-	
+		};
+	}foreach(_start nearentities [["CaManBase","LandVehicle"],_outerRange]);
+
+	if((count _vehs) > 0) then {
+		{
+			_x animate ["Door_1_rot",1];
+		}foreach(_bargates);
+	}else{
+		{
+			_x animate ["Door_1_rot",0];
+		}foreach(_bargates);
+	};
+
 	_gone = [];
-	{		
-		
+	{
+		private _foundillegal = false;
+		private _foundweapons = false;
 		if(_x distance _start > _outerRange) then {
 			//Unit has left the area
-			_gone pushback _x;				
-			if(isPlayer _x and !(_x in _searched)) then {				
+			_gone pushback _x;
+			if(isPlayer _x and !(_x in _searched)) then {
 				_x setCaptive false;
 				_x spawn revealToNATO;
 			};
 		}else{
 			_iscar = false;
 			_veh = false;
-			if(isPlayer _x) then {
-				_unit = _x;				
-				{					
-					if(_x select 0 == _unit) then {
-						_veh = _x select 1;
-						_iscar = true;
-						if(vehicle _unit != _veh) then {
-							//Player exited the vehicle... sigh
-							_unit setCaptive false;
-							{
-								if(side _x == west) then {
-									_x reveal [_unit,1.5];
-									sleep 0.2;
-								};
-							}foreach(_start nearentities ["Man",500]);
-							_gone pushback _unit;
-						};
-					};
-				}foreach(_vehs);
-			};
+
 			if(_x distance _start < _innerRange) then {
 				if !(_x in _searching or _x in _searched) then {
 					if(isPlayer _x) then {
 						_searching pushback _x;
-						"Searching..." remoteExec ["notify_talk",_x,true];
+						_leader globalchat "Please wait... personal items will be stored in your vehicle";
+						if(vehicle _x != _x) then {
+							_v = vehicle _x;
+							_v setVelocity [0,0,0];
+							{
+								[_x,_v,true] call dumpStuff;
+							}foreach(units _v);
+						};
 					};
 				}else{
 					if(isPlayer _x and !(_x in _searched)) then {
 						_msg = "Search complete, be on your way";
 						_items = [];
 						_unit = _x;
-						_items = _veh call searchStock;
-						if(_iscar) then {							
-							_unit = driver _veh;
+						if(vehicle _x != _x) then {
+							_v = vehicle _x;
+							_v setVelocity [0,0,0];
 						};
-						{							
+
+						_items = (vehicle _x) call unitStock;
+
+						{
 							_cls = _x select 0;
 							if(_cls in OT_allWeapons + OT_allMagazines + OT_illegalHeadgear + OT_illegalVests + OT_allStaticBackpacks + OT_allOptics) then {
-								_count = _x select 1;
-								for "_i" from 1 to _count do {
-									_target removeItem _cls;
-								};
 								_foundweapons = true;
 							};
 							if(_cls in OT_illegalItems) then {
 								_count = _x select 1;
-								for "_i" from 1 to _count do {
-									_target removeItem _cls;
+								if(vehicle _unit != _unit) then {
+									[_unit,_cls,_count] call CBA_fnc_removeItemCargoGlobal;
+								}else{
+									for "_i" from 1 to _count do {
+										_unit removeItem _cls;
+									};
 								};
 								_foundillegal = true;
-							};		
-						}foreach(_items);						
-						
+							};
+						}foreach(_items);
+
+						if(primaryWeapon _unit != "") then {_foundweapons = true};
+						if(secondaryWeapon _unit != "") then {_foundweapons = true};
+						if(handgunWeapon _unit != "") then {_foundweapons = true};
+
 						if(_foundillegal or _foundweapons) then {
 							if(_foundweapons) then {
 								_msg = "What's this??!?";
@@ -117,7 +126,7 @@ while {!(isNull _group) and count (units _group) > 0} do {
 										_x reveal [_unit,1.5];
 										sleep 0.2;
 									};
-								}foreach(_unit nearentities ["Man",500]);	
+								}foreach(_unit nearentities ["Man",500]);
 							}else{
 								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
@@ -135,12 +144,12 @@ while {!(isNull _group) and count (units _group) > 0} do {
 			};
 		};
 	}foreach(_inrange);
-	
+
 	{
 		_inrange deleteAt (_inrange find _x);
 		if(_x in _searched) then {
 			_searched deleteAt (_searched find _x);
 		};
 	}foreach(_gone);
-	sleep 3;
+	sleep 2;
 };

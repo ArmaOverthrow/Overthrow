@@ -21,6 +21,7 @@ private _allCargo = {
 			_myitems = _myitems + (_item call _allCargo);
 		}foreach(everyContainer _this);
 	};
+	if(isnil "_myitems") then {_myitems = []};
 	_myitems
 };
 

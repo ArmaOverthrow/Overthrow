@@ -2,15 +2,15 @@ private _target = objNull;
 private _cop = objNull;
 
 if((count _this) == 3) then {
-	//its a position	
+	//its a position
 	{
 		_c = leader (group _x);
 		if(side _c == west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
-	}foreach(_this nearEntities ["Man",400]);
-	if(isNil "_cop") exitWith {};	
+	}foreach(_this nearEntities ["CAManBase",300]);
+	if(isNil "_cop") exitWith {};
 	{
-		if(side _x == civilian && !isplayer _x) exitWith{_target = _x};
-	}foreach(_cop nearEntities ["Man",50]);
+		if !(side _x == west or side _x == east) exitWith{_target = _x};
+	}foreach(_cop nearEntities ["CAManBase",50]);
 }else{
 	_target = _this select 0;
 	if((count _this) > 1) then {
@@ -19,20 +19,20 @@ if((count _this) == 3) then {
 		{
 			_c = leader (group _x);
 			if(side _c == west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
-		}foreach(_target nearEntities ["Man",150]);
+		}foreach(_target nearEntities ["CAManBase",150]);
 	};
 };
 if(isNil "_cop" or isNil "_target") exitWith{};
 
 _cop setVariable ["OT_searching",true,true];
 
-if(isplayer _target and !captive _target) exitWith{};
+if((isplayer _target) and !(captive _target)) exitWith{};
 
 private _group = group _cop;
 private _hdl = objNull;
 
 //delete all group waypoints
-while {(count(waypoints _group))>0} do 
+while {(count(waypoints _group))>0} do
 {
 	deletewaypoint ((waypoints _group) select 0);
 };
@@ -42,7 +42,7 @@ private _wp = _group addWaypoint [position _target,0];
 _wp setWaypointBehaviour "AWARE";
 _group setBehaviour "AWARE";
 if(isplayer _target) then {
-	"NATO: Stop right there!" remoteExec ["notify_talk",_target,false];	
+	_cop globalchat (["Stop right there!","Halt, citizen!","HALT!","Stay right there, citizen"] call BIS_fnc_selectRandom);
 	_wp setWaypointSpeed "FULL";
 	_hdl = _target addEventHandler ["InventoryOpened", {
 		hint "NATO search is in progress, you cannot open your inventory";
@@ -50,61 +50,76 @@ if(isplayer _target) then {
 	}];
 }else{
 	_target playMove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
-	_target disableAI "MOVE";	
+	_target disableAI "MOVE";
 };
 _posnow = position _target;
 _timenow = time;
 
 private _cleanup = {
-	private _group = _this select 0;
-	private _cop = _this select 1;
-	private _target = _this select 2;
-	_group setBehaviour "SAFE";
-	_group call initGendarmPatrol;
-	_cop setVariable ["OT_searching",false,true];
-	_cop switchMove "";
+	_target switchMove "";
+	params ["_group","_cop","_target","_handler"];
+	if(!isNil "_group") then {
+		_group setBehaviour "SAFE";
+		_group call initGendarmPatrol;
+	};
+	if(!isNil "_cop") then {
+		_cop setVariable ["OT_searching",false,true];
+		_cop switchMove "";
+	};
 	if(isplayer _target) then {
-		_target removeEventHandler ["InventoryOpened",_hdl];
+		_target removeEventHandler ["InventoryOpened",_handler];
 	}else{
 		_target enableAI "MOVE";
-		_target switchMove "";
 	};
 };
 _cop doMove (position _target);
-waitUntil {sleep 1;(_cop distance _target) < 2 or (_target distance _posnow) > 2 or (time - _timenow) > 120};
+waitUntil {sleep 1;(_cop distance _target) < 7 or (_target distance _posnow) > 2 or (time - _timenow) > 120};
 
-if((isplayer _target and !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith _cleanup;
+if((isplayer _target and !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
 if((_target distance _posnow) > 2) then {
 	if(isplayer _target) then {
-		"NATO: I said stop! move again and we WILL open fire" remoteExec ["notify_talk",_target,true];
-		_wp setWaypointPosition (position _target);
+		_cop globalchat "I said stop! move again and we WILL open fire";
+		playSound "sectorLost";
+		while {(count(waypoints _group))>0} do
+		{
+			deletewaypoint ((waypoints _group) select 0);
+		};
+		sleep 3;
+
+		private _wp = _group addWaypoint [position _target,0];
+		_wp setWaypointBehaviour "COMBAT";
+		_wp setWaypointSpeed "FULL";
+
 		_posnow = position _target;
 		_timenow = time;
 		_cop doMove (position _target);
-		waitUntil {sleep 1;(_cop distance _target) < 2 or (_target distance _posnow) > 2 or (time - _timenow) > 120};		
+		waitUntil {sleep 2;(_cop distance _target) < 7 or (_target distance _posnow) > 2 or (time - _timenow) > 120};
 		if((_target distance _posnow) > 2) then {
 			_target setCaptive false;
-			[_group,_cop,_target] call _cleanup;
+			[_group,_cop,_target,_hdl] call _cleanup;
 		};
 	};
 };
 _cop playMove "Amovpknlmstpsraswrfldnon_gear";
 if(isplayer _target) then {
-	"NATO: This is a random search, stay perfectly still" remoteExec ["notify_talk",_target,true];
+	_cop globalchat "This is a random search, stay perfectly still";
 	_target playMove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
 	sleep 5;
 }else{
 	sleep 15;
 };
 
-if((isplayer _target and !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith _cleanup;
+if((isplayer _target and !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
 if((_target distance _posnow) > 2) exitWith {
 	if(isplayer _target) then {
-		_target setCaptive false;	
-		[_group,_cop,_target] call _cleanup;
+		"You tried to escape a NATO search" remoteExecCall ["hint",_target,false];
 	};
+	[_group,_cop,_target,_hdl] call _cleanup;
+	_target setCaptive false;
+
+	_target spawn revealToNATO;
 };
 
 private _msg = "";
@@ -129,19 +144,27 @@ if(isplayer _target) then {
 				_cop addItem _cls;
 			};
 			_foundillegal = true;
-		};		
+		};
 	}foreach(_target call searchStock);
-	
+
 	if(_foundillegal or _foundweapons) then {
 		if(_foundweapons) then {
-			"NATO: What's this??!?" remoteExec ["notify_talk",_target,false];
+			_cop globalchat "What's this??!?";
+			if(isplayer _target) then {
+				"NATO found weapons" remoteExecCall ["hint",_target,false];
+			};
 			_target setCaptive false;
 			_target spawn revealToNATO;
 		}else{
-			"NATO: We found some illegal items and confiscated them, be on your way" remoteExec ["notify_talk",_target,false];
+			_cop globalchat "We found some illegal items and confiscated them, be on your way";
+			if(isplayer _target) then {
+				"NATO confiscated illegal items" remoteExecCall ["hint",_target,false];
+				private _town = (getpos _target) call nearestTown;
+				[_town,-10] remoteExecCall ["standing",_target,false];
+			};
 		};
 	}else{
-		"NATO: Thank you for your co-operation" remoteExec ["notify_talk",_target,false];
-	};	
+		_cop globalchat "Thank you for your co-operation";
+	};
 };
-[_group,_cop,_target] call _cleanup;
+[_group,_cop,_target,_hdl] call _cleanup;

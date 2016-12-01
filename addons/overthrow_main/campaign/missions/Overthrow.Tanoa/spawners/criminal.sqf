@@ -1,6 +1,6 @@
 if (!isServer) exitwith {};
 
-private _town = _this;
+params ["_town","_spawnid"];
 private _posTown = server getVariable _town;
 
 private _groups = [];
@@ -28,7 +28,8 @@ if(_numCRIM > 0) then {
 	if ((typeName _leaderpos) == "ARRAY") then {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 		
-		_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
+		_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];		
+		sleep 0.1;
 		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
 		_civ setskill _skill;
@@ -72,6 +73,7 @@ if(_numCRIM > 0) then {
 		_start = [[[_leaderpos,40]]] call BIS_fnc_randomPos;
 		
 		_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
+		sleep 0.1;
 		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
 		if(_time > 1200) then {
@@ -90,4 +92,4 @@ if(_numCRIM > 0) then {
 	};
 };
 
-_groups	
+spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

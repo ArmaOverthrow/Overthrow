@@ -1,58 +1,68 @@
 private ["_handled","_player","_civ","_pos","_rnd","_txt"];
 
-_player = _this select 0;
-_civ = _this select 1;
+private _player = _this select 0;
+private _civ = _this select 1;
 
-_pos = getpos _player;
+private _pos = getpos _player;
+private _town = _pos call nearestTown;
 
-_rnd = random 100;
-_txt = "";
-_handled = false;
-call {
-	if(_rnd > 80) exitWith {
-		//Release the vehicle garrison of a nearby objective
-		_objective = _pos call nearestObjective;
-		_loc = _objective select 0;
-		_name = _objective select 1;
-		_handled = true;
-		
-		_garrison = (server getvariable format["vehgarrison%1",_name]) + (server getvariable format["airgarrison%1",_name]);
-		if(count _garrison > 0) then{
-			_cls = _garrison call BIS_fnc_selectRandom;
-			_vehname = _cls call ISSE_Cfg_Vehicle_GetName;
-			_txt = format["I saw a %1 at %2.",_vehname,_name];
-		}else{
-			_txt = format["I don't know what happened to all the tanks they had over at %1.",_name];
-		};	
-		_name setMarkerAlpha 1;		
-	};
-	if(_rnd > 50) exitWith {
-		//Release the garrison size of a nearby objective
-		_objective = _pos call nearestObjective;
-		_loc = _objective select 0;
-		_name = _objective select 1;
-		
-		_handled = true;		
-		_garrison = server getvariable format["garrison%1",_name];
-		if(_name find "Comm" == 0) then {_name = "the radio tower nearby"};
-		
-		_txt = format["I saw %1 military guys over at %2.",_garrison,_name];
-		_name setMarkerAlpha 1;		
-	};	
-	//Release the garrison size of this town
-	_handled = true;
-	_town = _pos call nearestTown;
-	_garrison = server getvariable format["garrison%1",_town];
-	if(_garrison > 0) then {
-		_txt = format["I've seen about %1 Gendarmerie in %2 recently",_garrison,_town];
-	}else{
-		_txt = "I haven't seen any of those guys in blue for a while";
-	};
-	
+private _standing = (_player getvariable format["rep%1",_town]) + (_player getvariable "rep");
+private _stability = server getvariable format["stability%1",_town];
+private _crimleader = server getvariable format["crimleader%1",_town];
+private _gundealer = server getvariable [format["gundealer%1",_town],[]];
+private _nearestMob = _pos call nearestMobster;
+private _nearestMobId = _nearestMob select 1;//efdf
+private _nearestMobPos = _nearestMob select 0;
+
+private _garrison = _civ getvariable "garrison";
+private _criminal = _civ getvariable "criminal";
+private _crimleader = _civ getvariable "crimleader";
+private _mobster = _civ getvariable "mobster";
+private _mobboss = _civ getvariable "mobboss";
+
+if(side _civ == east) then {_standing = -_standing};
+private _rnd = random 100;
+private _mrkid = format["gundealer%1",_town];
+
+if((markerType _mrkid == "") and (count(_gundealer) > 0) and (_rnd > 60)) exitWith {
+	[_civ,player,["Who are you? and what's with the outfit?","Never you mind","Whatever, I saw a guy wearing similar, he's over there"],{
+		"Dealer added to map" call notify_minor;
+		private _town = player call nearestTown;
+		private _pos = server getvariable format["gundealer%1",_town];
+		_mrk = createMarkerLocal [format["gundealer%1",_town],_pos];
+		_mrk setMarkerType "ot_Shop";
+		_mrk setMarkerColor "ColorGUER";
+		_mrk setMarkerAlpha 1;
+		_mrk setMarkerShape "ICON";
+	}] spawn doConversation;
 };
 
-if !(_handled) then {
-	_txt = "I'd love to help you, but I just can't";
+_mrkid = format["mobster%1",_nearestMobId];
+
+if((markerType _mrkid == "") and (isNil "_mobboss") and (isNil "_mobster") and !(isNil "_crimleader") and (side _civ == east) and (_standing > 10)) exitWith {
+	[_civ,player,["This and that","Cool, I'm looking for a place to offload some... stuff","Go and speak to the boss I guess"],{
+		"Bandit camp added to map" call notify_minor;
+		params ["_mobid","_mobpos"];
+		_mrk = createMarkerLocal [format["mobster%1",_mobid],_mobpos];
+		_mrk setMarkerType "ot_Camp";
+		_mrk setMarkerColor "colorOPFOR";
+		_mrk setMarkerAlpha 1;
+		_mrk setMarkerShape "ICON";
+	},[_nearestMobId,_nearestMobPos]] spawn doConversation;
 };
 
-_civ globalChat _txt;
+if((markerType _mrkid == "") and (side _civ == civilian) and (_standing >= 0)) exitWith {
+	[_civ,player,["I heard there were some bandits camping in the jungle","Really? Where, exactly?"],{
+		"Bandit camp added to map" call notify_minor;
+		params ["_mobid","_mobpos"];
+		_mrk = createMarkerLocal [format["mobster%1",_mobid],_mobpos];
+		_mrk setMarkerType "ot_Camp";
+		_mrk setMarkerColor "colorOPFOR";
+		_mrk setMarkerAlpha 1;
+		_mrk setMarkerShape "ICON";
+	},[_nearestMobId,_nearestMobPos]] spawn doConversation;
+};
+
+[_civ,player,["Not much","Cool","k"],{
+	"No intel available" call notify_minor;
+}] spawn doConversation;

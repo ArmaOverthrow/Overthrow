@@ -91,7 +91,7 @@ OT_activeClients = [];
 OT_serverTakesLoad = false;
 
 while{true} do {
-    sleep 0.1; 	
+    sleep 0.5; 	
 	OT_activeClients = [];
 	//Get all headless clients
 	OT_serverTakesLoad = false;
@@ -124,13 +124,13 @@ while{true} do {
             if(_val) then {
                 if !(_start call inSpawnDistance) then {
 					OT_allSpawned deleteAt _spawnidx;
-					_x spawn _despawn;
+					_x call _despawn;
 					sleep 0.1;
                 };
             }else{
                 if (_start call inSpawnDistance) then {
                     OT_allSpawned pushback _id;
-					_x spawn _spawn;
+					_x call _spawn;
 					sleep 0.1;
                 };
             };
@@ -138,13 +138,13 @@ while{true} do {
             if(_val) then {
                 if !((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
                     OT_allSpawned deleteAt _spawnidx;
-					_x spawn _despawn;
+					_x call _despawn;
 					sleep 0.1;
                 };
             }else{
                 if ((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
                     OT_allSpawned pushback _id;
-					_x spawn _spawn;
+					_x call _spawn;
 					sleep 0.1;					
                 };
             };

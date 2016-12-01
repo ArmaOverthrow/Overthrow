@@ -78,6 +78,7 @@ playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sq
 //AI Orders
 openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";
 loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
+revivePlayer = compileFinal preProcessFileLineNumbers "AI\orders\revivePlayer.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
@@ -94,6 +95,7 @@ inputDialog = compileFinal preProcessFileLineNumbers "UI\inputDialog.sqf";
 importDialog = compileFinal preProcessFileLineNumbers "UI\importDialog.sqf";
 recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
+gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf";
 
 //QRF
 NATOQRF = compileFinal preProcessFileLineNumbers "AI\QRF\NATOQRF.sqf";
@@ -262,7 +264,7 @@ structureInit = {
 };
 
 blackFaded = {
-	_txt = format ["<t size='0.5' color='#000000'>Please wait... %1</t>",_this]; 
+	_txt = format ["<t size='0.5' color='#000000'>Please wait... %1</t>",_this];
     [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
@@ -275,7 +277,7 @@ canDrive = {
 	((_this getHitPointDamage "HitEngine") < 1)
 };
 
-distributeAILoad = {	
+distributeAILoad = {
 	private _send = true;
 	private _group = _this;
 	if(OT_serverTakesLoad) then {
@@ -283,8 +285,8 @@ distributeAILoad = {
 			_send = false;
 		};
 	};
-	if(_send) then {	
-		_group setGroupOwner owner(selectRandom OT_activeClients);	
+	if(_send) then {
+		_group setGroupOwner owner(selectRandom OT_activeClients);
 	};
 };
 
@@ -301,14 +303,6 @@ setupKeyHandler = {
     (findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
 };
 
-setAIFace = {
-	(_this select 0) setFace (_this select 1);
-};
-
-setAISpeaker = {
-	(_this select 0) setSpeaker (_this select 1);
-};
-
 assignedKey = {
 	(cba_keybinding_dikDecToStringTable select ((actionKeys _this) select 0)+1) select 1
 };
@@ -316,20 +310,15 @@ assignedKey = {
 standing = {
     _town = _this select 0;
     _rep = (player getVariable format["rep%1",_town])+(_this select 1);
-    player setVariable [format["rep%1",_town],_rep,true];    
+    player setVariable [format["rep%1",_town],_rep,true];
     _totalrep = (player getVariable "rep")+(_this select 1);
-    player setVariable ["rep",_totalrep,true];    
-	
+    player setVariable ["rep",_totalrep,true];
+
 	if(count _this > 2) then {
 		format["%1 (%2 Standing)",_this select 2,_this select 1] call notify_minor;
 	};
 };
 
-setCivName = {
-	if(typename (_this select 1) == "STRING") then {
-		(_this select 0) setName (_this select 1);
-	};
-};
 
 loadPlayerData = {
 	private _player = _this;
@@ -340,7 +329,7 @@ loadPlayerData = {
         _newplayer = false;
         {
             _key = _x select 0;
-            _val = _x select 1;  
+            _val = _x select 1;
 			if !(isNil "_val") then {
 				_player setVariable [_key,_val,true];
 			};
@@ -349,10 +338,10 @@ loadPlayerData = {
 				_count = 0;
 				sleep 0.1;
 			};
-        }foreach(_data);        
-		
+        }foreach(_data);
+
     };
-	
+
 	_loadout = server getvariable format["loadout%1",getplayeruid _player];
 	if !(isNil "_loadout") then {
 		_player setunitloadout _loadout;
@@ -363,22 +352,22 @@ loadPlayerData = {
 
 influence = {
     _totalrep = (player getVariable ["influence",0])+_this;
-    player setVariable ["influence",_totalrep,true]; 
+    player setVariable ["influence",_totalrep,true];
 	_plusmin = "";
     if(_this > 0) then {
         _plusmin = "+";
     };
-    format["%1%2 Influence",_plusmin,_this] call notify_minor;	
+    format["%1%2 Influence",_plusmin,_this] call notify_minor;
 };
 
 influenceSilent = {
     _totalrep = (player getVariable ["influence",0])+_this;
-    player setVariable ["influence",_totalrep,true]; 
+    player setVariable ["influence",_totalrep,true];
 };
 
-stopAndFace = {	
+stopAndFace = {
 	(_this select 0) disableAI "PATH";
-	(group (_this select 0)) setFormDir (_this select 1);	
+	(group (_this select 0)) setFormDir (_this select 1);
 	(_this select 0) spawn {
 		_ti = 0;
 		waitUntil {sleep 1;_ti = _ti + 1;(!(_this getVariable["OT_talking",false]) and isNull (findDisplay 8001) and isNull (findDisplay 8002)) or _ti > 20};
@@ -402,17 +391,17 @@ rewardMoney = {
 			if(_perPlayer > 0) then {
 				{
 					[_perPlayer] remoteExec ["money",_x,false];
-				}foreach([] call CBA_fnc_players);	
-			};		
+				}foreach([] call CBA_fnc_players);
+			};
 		};
-	};	
+	};
 };
 
 money = {
     _amount = _this select 0;
     _rep = (player getVariable "money")+_amount;
-    if(_rep < 0) then {     
-        _rep = 0;       
+    if(_rep < 0) then {
+        _rep = 0;
     };
     player setVariable ["money",_rep,true];
     playSound "3DEN_notificationDefault";
@@ -421,37 +410,37 @@ money = {
         _plusmin = "+";
     };
     format["%1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber] call notify_minor;
-    
+
 };
 
 stability = {
     _town = _this select 0;
-    
+
     _townmrk = format["%1-abandon",_town];
     _stability = (server getVariable format["stability%1",_town])+(_this select 1);
     if(_stability < 0) then {_stability = 0};
 	if(_stability > 100) then {_stability = 100};
     server setVariable [format["stability%1",_town],_stability,true];
-    
+
     _abandoned = server getVariable "NATOabandoned";
     if(_town in _abandoned) then {
         _townmrk setMarkerAlpha 1;
     }else{
         _townmrk setMarkerAlpha 0;
     };
-	
+
 	_garrison = server getVariable [format['police%1',_town],0];
 	if(_garrison > 0) then {
 		_townmrk setMarkerType "OT_Police";
 	}else{
 		_townmrk setMarkerType "OT_Anarchy";
-	};			
-    
+	};
+
     //update the markers
     if(_stability < 50) then {
         _town setMarkerColor "ColorRed";
         _town setMarkerAlpha 1.0 - (_stability / 50);
-        _townmrk setMarkerColor "ColorOPFOR";       
+        _townmrk setMarkerColor "ColorOPFOR";
     }else{
         _townmrk setMarkerColor "ColorGUER";
         if(_town in _abandoned) then {
@@ -461,7 +450,7 @@ stability = {
             _town setMarkerAlpha 0;
         };
     }
-    
+
 };
 
 KK_fnc_fileExists = {
@@ -477,7 +466,7 @@ KK_fnc_fileExists = {
 OT_notifies = [];
 
 notify = {
-    _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this]; 
+    _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this];
 	OT_notifies pushback _txt;
 };
 
@@ -488,7 +477,7 @@ notify_good = {
 };
 
 notify_minor = {
-    _txt = format ["<t size='0.6' color='#ffffff'>%1</t>",_this]; 
+    _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this];
 	OT_notifies pushback _txt;
 };
 
@@ -512,14 +501,14 @@ fn_MovingTarget =
 	_distance = _this select 2;
 	_speed = _this select 3;
 	_pause = _this select 4;
-	
-	
+
+
 	while {true} do
 	{
 		sleep _pause;
 		for "_i" from 0 to _distance/_speed do
 		{
-			_target setPos 
+			_target setPos
 			[
 				(position _target select 0) + ((sin (_dir)))*_speed,
 				(position _target select 1) + ((cos (_dir)))*_speed,
@@ -530,7 +519,7 @@ fn_MovingTarget =
 		sleep _pause;
 		for "_i" from 0 to _distance/_speed do
 		{
-			_target setPos 
+			_target setPos
 			[
 				(position _target select 0) - (sin (_dir))*_speed,
 				(position _target select 1) - ((cos (_dir)))*_speed,
@@ -543,10 +532,10 @@ fn_MovingTarget =
 
 fnc_isInMarker = {
     private ["_p","_m", "_px", "_py", "_mpx", "_mpy", "_msx", "_msy", "_rpx", "_rpy", "_xmin", "_xmax", "_ymin", "_ymax", "_ma", "_res", "_ret"];
-    
+
     _p = _this select 0; // object
     _m = _this select 1; // marker
-    
+
     if (typeName _p == "OBJECT") then {
       _px = position _p select 0;
       _py = position _p select 1;
@@ -560,7 +549,7 @@ fnc_isInMarker = {
             _py = _p select 1;
         };
     };
-    
+
     _mpx = getMarkerPos _m select 0;
     _mpy = getMarkerPos _m select 1;
     _msx = getMarkerSize _m select 0;

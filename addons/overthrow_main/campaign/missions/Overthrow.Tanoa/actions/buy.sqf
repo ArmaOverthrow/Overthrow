@@ -110,12 +110,9 @@ call {
 				if(_owner == getplayerUID player) exitWith {_box = _x};				
 			};
 		}foreach(nearestObjects [getpos player, [OT_item_Storage],1200]);
-		if(typename _box == "OBJECT") then {
-			_box addWeaponCargo [_cls,1];
-			"Delivered to your closest ammobox" call notify_minor;
-		}else{
-			player addWeapon _cls;
-		};	
+
+		player addWeapon _cls;
+		
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {	
@@ -135,6 +132,9 @@ call {
 		if (_cls in OT_illegalItems) exitWith {			
 			[-_price] call money;
 			player addItem _cls;
+			if(player call unitSeenNATO) then {
+				[player] remoteExec ["NATOsearch",2,false];
+			};
 		};
 		if (_cls in OT_allStaticBackpacks) exitWith {
 			[-_price] call money;

@@ -23,6 +23,7 @@ if(_name find "Comms" == 0) then {
 	_civ action ["ladderOnUp", _tower, 0, 0];
 					
 	_count = _count + 1;
+	sleep 0.2;
 	
 	if(_count < _numNATO) then {
 		_civ = _group createUnit [OT_NATO_Unit_Spotter, _posTown, [],0, "NONE"];
@@ -33,6 +34,7 @@ if(_name find "Comms" == 0) then {
 		_civ setBehaviour "SAFE";
 		_civ action ["ladderOnUp", _tower, 0, 0];
 		_count = _count + 1;
+		sleep 0.2;
 	};
 	
 	if(_count < _numNATO) then {
@@ -46,7 +48,7 @@ if(_name find "Comms" == 0) then {
 		[_civ,_name] call initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		
+		sleep 0.2;
 		_wp = _group addWaypoint [getpos _tower,0];
 		_wp setWaypointType "GUARD";
 		_wp setWaypointBehaviour "SAFE";
@@ -63,6 +65,7 @@ if(_name find "Comms" == 0) then {
 		[_civ,_name] call initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
+		sleep 0.2;
 	};
 	
 }else{
@@ -108,6 +111,7 @@ while {_count < _numNATO} do {
 	};
 	_group call initMilitaryPatrol;
 	_range = _range + 50;
+	sleep 0.2;
 };
 	
 
@@ -139,7 +143,7 @@ _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 	_veh setVariable ["airgarrison",_name,false];					
 	
 	_veh setDir _dir;
-	
+	sleep 0.2;
 	_groups pushback _veh;
 }foreach(_airgarrison);
 
@@ -147,7 +151,6 @@ _vehgarrison = server getVariable [format["vehgarrison%1",_name],[]];
 _pos = [];
 _road = objNull;
 {
-	sleep 0.1;
 	_vgroup = creategroup blufor;
 	_groups pushback _vgroup;
 	_vehtype = _x;
@@ -178,6 +181,7 @@ _road = objNull;
 	if(random 100 < 99) then {
 		createVehicleCrew _veh;
 	};
+	sleep 0.2;
 	_groups pushback _veh;
 	{
 		[_x] joinSilent _vgroup;

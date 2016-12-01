@@ -24,6 +24,10 @@ OT_choiceMade = {
 	_choice = OT_choices select _this;
 	_text = _choice select 0;
 	_code = _choice select 1;
-	[_text] spawn _code;
+	if(count _choice > 2) then {
+		(_choice select 2) spawn _code;
+	}else{
+		[_text] spawn _code;
+	};	
 };
 

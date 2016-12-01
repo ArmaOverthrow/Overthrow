@@ -4,7 +4,7 @@ private ["_allPrimaryWeapons","_allHandGuns","__allLaunchers"];
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 6;
+OT_economyVersion = 7;
 OT_NATOversion = 3;
 OT_CRIMversion = 1;
 OT_adminMode = false;
@@ -19,6 +19,8 @@ OT_hasTFAR = false;
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 	OT_hasTFAR = true;
 };
+
+OT_allIntel = [];
 
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
@@ -37,7 +39,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Rautake","Tavu","Balavu","Muaceba","Katkoula","Savaka"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn 
 
-OT_NATOwait = 20; //Half the Average time between NATO orders
+OT_NATOwait = 400; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -141,7 +143,7 @@ if(OT_hasAce) then {
 OT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F","H_HelmetB_TI_tna_F"];
 OT_illegalVests = ["V_TacVest_gen_F"];
 
-OT_allDrugs = ["OT_Ganja"];
+OT_allDrugs = ["OT_Ganja","OT_Blow"];
 OT_illegalItems = OT_allDrugs;
 
 OT_item_UAV = "I_UAV_01_F";
@@ -242,6 +244,8 @@ OT_CRIM_Goggles = ["G_Balaclava_blk","G_Balaclava_combat","G_Balaclava_lowprofil
 OT_CRIM_Weapons = ["arifle_AK12_F","arifle_AKM_F","arifle_AKM_F","arifle_AKM_F"];
 OT_CRIM_Launchers = ["launch_RPG32_F","launch_RPG7_F","launch_RPG7_F","launch_RPG7_F"];
 
+OT_interactingWith = objNull;
+
 //ECONOMY
 
 //This is the prices table, shops will only stock these items, any others must be imported or produced and will have their costs generated automatically
@@ -286,7 +290,8 @@ if(OT_hasAce) then {
 		["ACE_tourniquet",27,0,0,1],
 		["ACE_UAVBattery",14,0,0,1],
 		["ACE_wirecutter",4,0,0,1],
-		["ACE_MapTools",2,0,0,1]		
+		["ACE_MapTools",2,0,0,1],
+		["ACE_bloodIV",120,0,0,1]
 	]] call BIS_fnc_arrayPushStack;
 }else{
 	[OT_items,[
@@ -382,6 +387,7 @@ OT_allBackpacks = [];
 OT_allStaticBackpacks = [];
 OT_vehWeights_civ = [];
 _mostExpensive = 0;
+OT_mostExpensiveVehicle = "";
 
 private _allVehs = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
@@ -397,21 +403,23 @@ private _allVehs = "
 
 {
 	_cls = configName _x;
-	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower"));
+	_cost = round(getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + (getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower") * 2));
 	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * 0.1);
 	
 	if(_cls isKindOf "Truck_F") then {_cost = _cost * 2};
 	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") != "CIV_F") then {_cost = _cost * 1.5};
-	
-	if(_cost > _mostExpensive)then {
-		_mostExpensive = _cost;
-	};
+		
 	
 	OT_vehicles pushback [_cls,_cost,1,1,1];
 	OT_allVehicles pushback _cls;
 	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") == "CIV_F") then {
 		if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" and getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
 			OT_vehTypes_civ pushback _cls;
+			
+			if(_cost > _mostExpensive)then {
+				_mostExpensive = _cost;
+				OT_mostExpensiveVehicle = _cls;
+			};
 		};
 	};
 } foreach (_allVehs);
@@ -629,6 +637,7 @@ if(isServer) then {
 	
 	//Drug prices
 	cost setVariable ["OT_Ganja",[100,0,0,0],true];	
+	cost setVariable ["OT_Blow",[250,0,0,0],true];	
 };
 //populate the cost gamelogic with the above data so it can be accessed quickly
 {
@@ -727,6 +736,7 @@ OT_allEnterableHouses = ["Land_House_Small_02_F","Land_House_Big_02_F","Land_Hou
 
 OT_townData = [["Lami",[7941.7,7663.32,-7.3052]],["Lifou",[7080.21,8004.08,-2.67]],["Lobaka",[6028.08,8580.17,-26.4572]],["Lakatoro",[9213.6,8741.29,-220.615]],["La Foa",[8825.16,4778.34,0.205969]],["Savaka",[7211.97,4237.91,-1.39777]],["Regina",[4919.7,8728.68,-2.99988]],["Katkoula",[5684.68,3993.67,0.0045675]],["Moddergat",[9407.35,4133.13,-6.81528]],["Lösi",[10200.8,4964.28,-16.149]],["Tanouka",[9014.23,10214.2,-30.0952]],["Tobakoro",[8741.21,3556.31,0.0318844]],["Georgetown",[5396.22,10334.7,0.00964478]],["Kotomo",[10974.5,6232.58,-11.9053]],["Rautake",[3403.76,6836.13,0]],["Harcourt",[11122.5,5342.93,-0.0348662]],["Buawa",[8316.95,11132.2,-130.3]],["Saint-Julien",[5808.6,11213.3,-2.6792]],["Balavu",[2677.42,7441.56,0.00116708]],["Namuvaka",[2824.25,5700.17,-4.71091]],["Vagalala",[11069.2,9748.43,-112.357]],["Imone",[10487.6,10613.7,-163.045]],["Leqa",[2363.54,8236.87,-4.31921]],["Galili",[8114.07,11957.2,-216.278]],["Sosovu",[2686.79,9280.77,-4.71367]],["Blerick",[10255.9,2738.07,-9.01873]],["Yanukka",[3051.14,3448.56,-17.0524]],["Oua-Oué",[5752.39,12325.8,-26.058]],["Cerebu",[2131.95,4589.63,-6.61045]],["Laikoro",[1628.02,6190.57,0]],["Saioko",[12403.5,4569.93,-32.6168]],["Belfort",[3132.55,10977.1,0.0920983]],["Ouméré",[12984.3,7321.96,-0.00245522]],["Muaceba",[1556.43,8545.12,-0.733838]],["Nicolet",[6164.67,12864.7,0.0123867]],["Lailai",[3627.54,2208.85,-45.4752]],["Doodstil",[12861.9,4691.1,-2.63918]],["Tavu",[974.49,7654.05,-3.96532]],["Lijnhaven",[11802,2662.98,-0.0168395]],["Nani",[1954.62,10727,-5.50346]],["Petit Nicolet",[6813.05,13439.5,0.00345634]],["Port-Boisé",[12715.1,3309.17,-9.54124]],["Saint-Paul",[7829.41,13599.8,0.0181113]],["Nasua",[11417.6,12360.2,-105.833]],["Savu",[8393.35,13778.4,0.000719533]],["Luganville",[14040.9,8308.29,-1.57949]],["Momea",[10423.8,13252.2,-20.6373]],["La Rochelle",[9549.78,13673.4,0.0130114]],["Koumac",[1347.24,2968.37,0.0902042]],["Taga",[12255.2,1880.2,-121.022]],["Bua Bua",[13255.1,3019.73,-58.4955]],["Pénélo",[10966.2,13183.5,-16.9658]],["Vatukoulo",[14057.4,9955.55,-98.8908]],["Nandai",[14496.3,8877.4,-1.13811]],["Tuvanaka",[1579.49,11937.8,-0.253379]],["Rereki",[13069.4,2117.94,2.97365e-005]],["Ovau",[12401.7,12787.8,-1.56371]],["Blue Pearl industrial port",[13523,12134.8,0.26935]],["Ba",[14295.2,11680.3,-1.10196]],["Ipota",[12317.8,13929.5,-9.70543]]];
 OT_allTowns = [];
+OT_allTownPositions = [];
 
 //get all the templates we need
 
@@ -752,6 +762,7 @@ _allTemplates = ["Land_FuelStation_01_shop_F","Land_FuelStation_01_workshop_F","
 	_name = _x select 0;
 	_pos = _x select 1;
 	OT_allTowns pushBack _name;
+	OT_allTownPositions pushBack _pos;
 	if(isServer) then {
 		server setVariable [_name,_pos,true];
 	};

@@ -49,8 +49,9 @@ _count = 10001;
 		_s = _x call unitStock;
 		if(typeof _x == OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];
+			_s pushback ["password",_x getVariable ["password",""]];
 		};
-		_vehicles pushback [typeof _x,getpos _x,getdir _x,_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
+		_vehicles pushback [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
 	};
 	if(_count > 2000) then {
 		"Still persistent Saving... please wait" remoteExec ["notify_long",0,true];
