@@ -1,4 +1,5 @@
 [] execVM "income.sqf";
+addMissionEventHandler ["EntityKilled",compileFinal preprocessFileLineNumbers "events\somethingDied.sqf"];
 
 if (!isMultiplayer) exitWith {};
 
@@ -21,9 +22,9 @@ waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 
 [] execVM "factions\NATO.sqf";
 [] execVM "factions\GUER.sqf";
-[] execVM "factions\CRIM.sqf";  
+[] execVM "factions\CRIM.sqf";
 waitUntil {!isNil "OT_NATOInitDone"};
-waitUntil {!isNil "OT_CRIMInitDone"};  
+waitUntil {!isNil "OT_CRIMInitDone"};
 
 //Game systems
 [] execVM "bountySystem.sqf";
@@ -31,7 +32,7 @@ waitUntil {!isNil "OT_CRIMInitDone"};
 [] execVM "weather.sqf";
 
 //Init virtualization
-[] execVM "virtualization.sqf"; 
+[] execVM "virtualization.sqf";
 waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\towns.sqf";
 [] execVM "virtualization\military.sqf";
