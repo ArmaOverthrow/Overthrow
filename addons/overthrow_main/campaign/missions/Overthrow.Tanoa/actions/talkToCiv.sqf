@@ -49,9 +49,9 @@ if (_canBuy) then {
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call nearestTown;
 			private _standing = player getvariable format["rep%1",_town];
-			
+
 			_bp = _civ getVariable "shop";
-			_s = [];			
+			_s = [];
 			{
 				_pos = _x select 0;
 				if(format["%1",_pos] == _bp) exitWith {
@@ -88,7 +88,7 @@ if (_canBuyBoats) then {
 				_cls = _x select 0;
 				private _town = (getpos player) call nearestTown;
 				private _standing = player getvariable format["rep%1",_town];
-				
+
 				_price = [_town,_cls,_standing] call getPrice;
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
 					_price = round(_price * 0.5);
@@ -98,6 +98,73 @@ if (_canBuyBoats) then {
 				lbSetData [1500,_idx,_cls];
 				lbSetValue [1500,_idx,_price];
 			}foreach(OT_boats);
+		}
+	];
+	_options pushBack [
+		"Ferry Service",{
+			"Where do you want to go?" call notify_minor;
+			_ferryoptions = [];
+			{
+				private _p = markerPos(_x);
+				private _t = _p call nearestTown;
+				private _dist = (player distance _p);
+				private _cost = floor(_dist * 0.005);
+				private _go = {
+					private _destpos = _this;
+					private _desttown = _destpos call nearestTown;
+					private _pos = (getpos player) findEmptyPosition [5,100,OT_vehType_ferry];
+					if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+					private _cost = floor((player distance _destpos) * 0.005);
+					_money = player getVariable "money";
+					if(_money < _cost) exitWith {"You cannot afford that!" call notify_minor};
+
+					[-_cost] call money;
+					_veh = OT_vehType_ferry createVehicle _pos;
+
+					clearWeaponCargoGlobal _veh;
+					clearMagazineCargoGlobal _veh;
+					clearBackpackCargoGlobal _veh;
+					clearItemCargoGlobal _veh;
+
+					player reveal _veh;
+					createVehicleCrew _veh;
+					private _driver = driver _veh;
+					player moveInCargo _veh;
+
+					_driver globalchat format["Departing for %1 in 15 seconds",_desttown];
+
+					sleep 10;
+					_driver globalchat format["Departing in 5 seconds",_desttown];
+					sleep 5;
+
+					private _g = group (driver _veh);
+					private _wp = _g addWaypoint [_destpos,0];
+					_wp setWaypointType "MOVE";
+					_wp setWaypointSpeed "NORMAL";
+
+					waitUntil {!alive player or !alive _veh or !alive _driver or (vehicle player == player) or (player distance _destpos < 80)};
+
+					if(vehicle player == _veh and alive _driver) then {
+						_driver globalchat format["We've arrived in %1, enjoy your stay",_desttown];
+					};
+					sleep 30;
+					if(vehicle player == _veh and alive _driver) then {
+						moveOut player;
+					};
+					if(random 100 > 90) then {
+						[player] spawn NATOsearch;
+					};
+
+					_wp = _g addWaypoint [_pos,0];
+					_wp setWaypointType "MOVE";
+					_wp setWaypointSpeed "NORMAL";
+					_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
+				};
+				if(_dist > 1000) then {
+					_ferryoptions pushback [format["%1 (-$%2)",_t,_cost],_go,_p];
+				};
+			}foreach(OT_ferryDestinations);
+			_ferryoptions spawn playerDecision;
 		}
 	];
 };
@@ -120,8 +187,8 @@ if (_canSell) then {
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call nearestTown;
 			private _standing = player getvariable format["rep%1",_town];
-			
-			_bp = _civ getVariable "shop";	
+
+			_bp = _civ getVariable "shop";
 			_s = [];
 			{
 				_pos = _x select 0;
@@ -129,8 +196,8 @@ if (_canSell) then {
 					_s = _x select 1;
 				};
 			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
-			
-			_playerstock = player call unitStock;	
+
+			_playerstock = player call unitStock;
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_sell";
 			[_playerstock,_town,_standing,_s] call sellDialog;
@@ -156,31 +223,38 @@ if (_canSellDrugs) then {
 					if(_x select 0 == _drugcls) exitWith {_num = _x select 1};
 				}foreach(player call unitStock);
 				OT_drugQty = _num;
-				
+
 				private _town = (getpos player) call nearestTown;
 				private _price = [_town,_drugcls] call getDrugPrice;
 				private _civ = OT_interactingWith;
 				_civ setVariable["OT_askedDrugs",true,true];
-				
-				
+
+
 				player globalchat ([format["Would you like to buy some %1?",_drugname],format["Wanna buy some %1?",_drugname],format["Hey, want some %1?",_drugname],format["You wanna buy some %1?",_drugname],format["Pssst! %1?",_drugname],format["Hey you looking for any %1?",_drugname]] call BIS_fnc_selectRandom);
-				
+
 				if(side _civ == civilian) then {
 					_price = round(_price * 1.2);
 					if(player call unitSeenNATO) then {
-						[player] remoteExec ["NATOsearch",2,false];				
+						[player] remoteExec ["NATOsearch",2,false];
 					}else{
-						if((random 100) > 68) then {				
+						if((random 100) > 68) then {
 							[_civ,player,["How much?",format["$%1",_price],"OK"],
 							{
-								
+
 								[
 									round(
 										([(getpos player) call nearestTown,OT_drugSelling] call getDrugPrice)*1.2
 									)
 								] call money;
-								player removeItem OT_drugSelling;OT_interactingWith addItem OT_drugSelling;OT_interactingWith setVariable ["OT_Talking",false,true];															
-								
+								player removeItem OT_drugSelling;
+								OT_interactingWith addItem OT_drugSelling;
+								OT_interactingWith setVariable ["OT_Talking",false,true];
+								if(random 100 > 50) then {
+									[_town,-1] call stability;
+								};
+								if(random 100 > 80) then {
+									1 call influence;
+								};
 							}] spawn doConversation;
 						}else{
 							[_civ,player,["No, thank you"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn doConversation;
@@ -189,17 +263,18 @@ if (_canSellDrugs) then {
 				}else{
 					_price = ["Tanoa",_drugcls] call getDrugPrice;
 					if(player call unitSeenNATO) then {
-						[player] remoteExec ["NATOsearch",2,false];				
+						[player] remoteExec ["NATOsearch",2,false];
 					}else{
-						if((random 100) > 1) then {				
+						if((random 100) > 5) then {
 							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn doConversation;
+							[_town,-OT_drugQty] call stability;
 						}else{
 							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn doConversation;
+							if(player call unitSeenCRIM) then {
+								hint "You are dealing on enemy turf";
+								player setCaptive false;
+							};
 						};
-					};
-					if(player call unitSeenCRIM) then {
-						hint "You are dealing on enemy turf";
-						player setCaptive false;
 					};
 				};
 			},_drugcls];
@@ -208,9 +283,7 @@ if (_canSellDrugs) then {
 };
 
 _options pushBack ["Cancel",{
-	
+
 }];
 
 _options spawn playerDecision;
-
-					

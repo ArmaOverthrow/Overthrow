@@ -66,7 +66,7 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
     sleep 1;
     _nul = createDialog "OT_dialog_start";
 }else{
-	"Loading" call blackFaded;    
+	"Loading" call blackFaded;
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
@@ -81,13 +81,13 @@ if(isMultiplayer or _startup == "LOAD") then {
 	player remoteExec ["loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
-	
-	if(!_newplayer) then {		
-		_housepos = player getVariable "home";		
+
+	if(!_newplayer) then {
+		_housepos = player getVariable "home";
 		if(isNil "_housepos") exitWith {_newplayer = true};
 		_town = _housepos call nearestTown;
 		_pos = server getVariable _town;
-		
+
 		_owned = player getVariable ["owned",[]];
 		_nowowned = [];
 		_leased = player getVariable ["leased",[]];
@@ -98,7 +98,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 				_buildings = (_x nearObjects ["Building",8]);
 				if(count _buildings > 0) then {
 					_bdg = _buildings select 0;
-					_bdg setVariable ["owner",getplayeruid player,true];				
+					_bdg setVariable ["owner",getplayeruid player,true];
 					if((typeof _bdg) != OT_policeStation) then {
 						_mrkName = createMarkerLocal [_mrkName,_x];
 						_mrkName setMarkerShape "ICON";
@@ -117,29 +117,29 @@ if(isMultiplayer or _startup == "LOAD") then {
 				if (typename _x == "SCALAR") then {
 					_bdg = OT_centerPos nearestObject _x;
 					if !(isNil "_bdg") then {
-						_bdg setVariable ["owner",getplayeruid player,true];	
+						_bdg setVariable ["owner",getplayeruid player,true];
 						_mrkName = format["bdg-%1",_bdg];
 						if(_bdg isKindOf "Building") then {
-							if(typeof _bdg == OT_warehouse) then {								
+							if(typeof _bdg == OT_warehouse) then {
 								_mrkName = createMarker [_mrkName,getpos _bdg];
 								_mrkName setMarkerShape "ICON";
 								_mrkName setMarkerColor "ColorWhite";
 								_mrkName setMarkerType "OT_warehouse";
-								_mrkName setMarkerAlpha 1;								
+								_mrkName setMarkerAlpha 1;
 							}else{
 								if(typeof _bdg != OT_policeStation) then {
 									_mrkName = createMarkerLocal [_mrkName,getpos _bdg];
 									_mrkName setMarkerShape "ICON";
 									_mrkName setMarkerType "loc_Tourism";
-									_mrkName setMarkerColor "ColorWhite";									
-									_mrkName setMarkerAlpha 0;								
-									_mrkName setMarkerAlphaLocal 1;							
+									_mrkName setMarkerColor "ColorWhite";
+									_mrkName setMarkerAlpha 0;
+									_mrkName setMarkerAlphaLocal 1;
 								};
-							};							
+							};
 						};
 						if(_x in _leased) then {
 							_bdg setVariable ["leased",true,true];
-							_mrkName setMarkerAlphaLocal 0.3;				
+							_mrkName setMarkerAlphaLocal 0.3;
 						};
 					};
 				};
@@ -167,31 +167,31 @@ if(isMultiplayer or _startup == "LOAD") then {
 		if(count _nowowned > 0) then {
 			player setvariable ["owned",_nowowned,true];
 		};
-		
+
 		{
 			if(_x call hasOwner) then {
 				if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
-					_furniture pushback _x                  
+					_furniture pushback _x
 				};
-			};  
+			};
 		}foreach(_housepos nearObjects 50);
 	};
-	
+
 	_recruits = server getVariable ["recruits",[]];
 	_newrecruits = [];
 	{
 		_owner = _x select 0;
-		_name = _x select 1;    
-		_civ = _x select 2;                 
-		_rank = _x select 3;                
+		_name = _x select 1;
+		_civ = _x select 2;
+		_rank = _x select 3;
 		_loadout = _x select 4;
-		_type = _x select 5;    
-		if(_owner == (getplayeruid player)) then {                          
+		_type = _x select 5;
+		if(_owner == (getplayeruid player)) then {
 			if(typename _civ == "ARRAY") then {
 				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 				_civ setVariable ["owner",getplayeruid player,true];
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
-				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];            
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
 				_civ spawn wantedSystem;
 				_civ setName _name;
@@ -199,7 +199,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 				[_civ] joinSilent (group player);
 			}else{
 				[_civ] joinSilent (group player);
-			};              
+			};
 		};
 		_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
 	}foreach (_recruits);
@@ -229,12 +229,12 @@ if (_newplayer) then {
     player setVariable ["owner",getplayerUID player,true];
     if(!isMultiplayer) then {
         {
-            if(! (isPlayer _x) ) then {
-             deleteVehicle _x;
+            if(_x != player) then {
+             	deleteVehicle _x;
             };
         } foreach switchableUnits;
     };
-    
+
     player setVariable ["rep",0,true];
     {
         player setVariable [format["rep%1",_x],0,true];
@@ -255,14 +255,14 @@ if (_newplayer) then {
         _house = [_pos,OT_spawnHouses] call getRandomBuilding;
     };
     _housepos = getpos _house;
-    
+
     //Put a light on at home
     _light = "#lightpoint" createVehicle [_housepos select 0,_housepos select 1,(_housepos select 2)+2.2];
     _light setLightBrightness 0.11;
     _light setLightAmbient[.9, .9, .6];
     _light setLightColor[.5, .5, .4];
 
-    _house setVariable ["owner",getPlayerUID player,true];	
+    _house setVariable ["owner",getPlayerUID player,true];
     player setVariable ["home",_housepos,true];
 
     _furniture = (_house call spawnTemplate) select 0;
@@ -270,14 +270,14 @@ if (_newplayer) then {
     {
         if(typeof _x == OT_item_Map) then {
             _x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
-        };        
+        };
         if(typeof _x == OT_item_Desk) then {
             _deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
         };
         _x setVariable ["owner",getplayerUID player,true];
-    }foreach(_furniture);   
+    }foreach(_furniture);
     player setVariable ["owned",[[_house] call fnc_getBuildID],true];
-    
+
     _mrkName = format["home-%1",getPlayerUID player];
     if((markerpos _mrkName) select 0 == 0) then {
         _mrkName = createMarker [_mrkName,_housepos];
@@ -290,15 +290,15 @@ if (_newplayer) then {
 
 };
 _count = 0;
-{ 
+{
 	if !(_x isKindOf "Vehicle") then {
 		if(_x call hasOwner) then {
 			_x call initObjectLocal;
-		}; 
+		};
 	};
 	if(_count > 5000) then {
 		_count = 0;
-		titleText ["Loading... please wait", "BLACK FADED", 0];   
+		titleText ["Loading... please wait", "BLACK FADED", 0];
 	};
 	_count = _count + 1;
 }foreach((allMissionObjects "Building") + vehicles);
@@ -313,7 +313,7 @@ player addEventHandler ["WeaponAssembled",{
 	_me = _this select 0;
 	_wpn = _this select 1;
 	_pos = position _wpn;
-	if(typeof _wpn in OT_staticMachineGuns) then {		
+	if(typeof _wpn in OT_staticMachineGuns) then {
 		_wpn remoteExec["initStaticMGLocal",0,_wpn];
 	};
 	if(typeof _wpn in OT_staticWeapons) then {
@@ -326,16 +326,16 @@ player addEventHandler ["WeaponAssembled",{
 	};
 }];
 
-player addEventHandler ["GetInMan",{						
+player addEventHandler ["GetInMan",{
 	_unit = _this select 0;
 	_position = _this select 1;
 	_veh = _this select 2;
 	_notified = false;
-	
+
 	if(_position == "driver") then {
 		if !(_veh call hasOwner) then {
 			_veh setVariable ["owner",getplayeruid player,true];
-			_veh setVariable ["stolen",true,true];			
+			_veh setVariable ["stolen",true,true];
 		};
 	};
 	_g = _v getVariable ["vehgarrison",false];
@@ -359,7 +359,7 @@ player addEventHandler ["GetInMan",{
 			_x setCaptive false;
 		}foreach(units _veh);
 		_veh spawn revealToNATO;
-	};	
+	};
 }];
 
 if(_newplayer) then {

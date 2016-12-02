@@ -156,11 +156,20 @@ if(isplayer _target) then {
 			_target setCaptive false;
 			_target spawn revealToNATO;
 		}else{
-			_cop globalchat "We found some illegal items and confiscated them, be on your way";
 			if(isplayer _target) then {
-				"NATO confiscated illegal items" remoteExecCall ["hint",_target,false];
-				private _town = (getpos _target) call nearestTown;
-				[_town,-10] remoteExecCall ["standing",_target,false];
+				private _stealth = _target getVariable ["OT_stealth",1];
+				_chance = 100;
+				if(_stealth > 1) then {
+					_chance = 100 - (_stealth * 20);
+				};
+				if((random 100) < _chance) then {
+					_cop globalchat "We found some illegal items and confiscated them, be on your way";
+					"NATO confiscated illegal items" remoteExecCall ["hint",_target,false];
+					private _town = (getpos _target) call nearestTown;
+					[_town,-10] remoteExecCall ["standing",_target,false];
+				}else{
+					_cop globalchat "Thank you for your co-operation";
+				};
 			};
 		};
 	}else{

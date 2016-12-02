@@ -2,7 +2,7 @@ closedialog 0;
 createDialog "OT_dialog_char";
 openMap false;
 
-disableSerialization;	
+disableSerialization;
 
 private _fitness = player getVariable ["OT_fitness",1];
 
@@ -12,6 +12,10 @@ _ctrl ctrlSetStructuredText parseText format["<t size=""2"">Fitness</t><br/><t s
 private _trade = player getVariable ["OT_trade",1];
 _ctrl = (findDisplay 8003) displayCtrl 1101;
 _ctrl ctrlSetStructuredText parseText format["<t size=""2"">Trade</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Ability to negotiate better purchasing prices</t>",_trade];
+
+private _stealth = player getVariable ["OT_stealth",1];
+_ctrl = (findDisplay 8003) displayCtrl 1102;
+_ctrl ctrlSetStructuredText parseText format["<t size=""2"">Stealth</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Less chance of NATO finding illegal items</t>",_trade];
 
 getPerkPrice = {
 	private _perk = _this select 0;
@@ -45,36 +49,40 @@ if(_trade == 5) then {
 
 buyPerk = {
 	_perk = _this select 0;
-	disableSerialization;	
-	
+	disableSerialization;
+
 	private _fitness = player getVariable [format["OT_%1",_perk],1];
 	private _price = [_perk] call getPerkPrice;
 	private _inf = player getVariable ["influence",0];
-	
+
 	if(_inf < _price) exitWith {"You do not have enough influence" call notify_minor};
-	
+
 	_fitness = _fitness + 1;
 	player setVariable [format["OT_%1",_perk],_fitness,true];
 	_idc = 1600;
 	_idcc = 1100;
 	if(_perk == "trade") then {_idc = 1601;_idcc = 1101};
-	
-	if(_fitness == 5) then {		
+	if(_perk == "stealth") then {_idc = 1602;_idcc = 1102};
+
+	if(_fitness == 5) then {
 		ctrlEnable [_idc,false];
 	};
 	player setVariable ["influence",_inf - _price,true];
-	
+
 	private _ctrl = (findDisplay 8003) displayCtrl _idcc;
 	_txt = format["<t size=""2"">Fitness</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Increases the distance you can sprint</t>",_fitness];
 	if(_perk == "trade") then {
 		_txt = format["<t size=""2"">Trade</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Ability to negotiate better purchasing prices</t>",_fitness];
 	};
-	
+	if(_perk == "stealth") then {
+		_txt = format["<t size=""2"">Stealth</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Less chance of NATO finding illegal items</t>",_fitness];
+	};
+
 	_ctrl ctrlSetStructuredText parseText _txt;
 	_price = [_perk] call getPerkPrice;
 	ctrlSetText [_idc,format["Increase Level (-%1 Influence)",_price]];
 
 	if(_fitness == 5) then {
 		ctrlShow [_idc,false];
-	};	
+	};
 };

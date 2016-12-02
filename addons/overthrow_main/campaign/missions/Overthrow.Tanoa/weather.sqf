@@ -13,7 +13,7 @@ getWeather = {
 			_fogtarget = 0.01;
 			_wavetarget = 1;
 			_raintarget = 0.8 + (random 0.2);
-			_lightning = random 1;			
+			_lightning = random 1;
 		};
 		if(_forecast == "Rain") exitWith {
 			_overtarget = 0.7 + (random 0.1);
@@ -38,7 +38,7 @@ getWeather = {
 		};
 	};
 	if(_hour > 8 and _hour < 18) then {
-		_temp = 28 + round(random 5);		
+		_temp = 28 + round(random 5);
 	}else{
 		_temp = 16 + round(random 5);
 		if(_hour == 6) then {
@@ -66,20 +66,20 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 	skiptime -24;
 	86400 setOvercast _newOvercast;
 	86400 setFog 0;
-	86400 setWaves (_weather select 2);	
+	86400 setWaves (_weather select 2);
 	86400 setLightnings (_weather select 4);
 	86400 setWindForce (_newOvercast * 0.3);
 	86400 setGusts _newOvercast;
 	86400 setRain (_weather select 3);
 	86400 setWindDir (85 + random 10); //https://en.wikipedia.org/wiki/Trade_winds
 	skiptime 24;
-	
+
 	simulWeatherSync;
 	(_weather select 3) spawn {
 		sleep 2;
 		10 setRain _this;
 	};
-	
+
 	server setVariable ["temperature",(_weather select 5),true];
 	server setVariable ["forecast",_mode,true];
 	_forecast = _mode;
@@ -91,22 +91,22 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 	skiptime -24;
 	86400 setOvercast _newOvercast;
 	86400 setFog 0;
-	86400 setWaves (_weather select 2);	
+	86400 setWaves (_weather select 2);
 	86400 setLightnings (_weather select 4);
 	86400 setRain (_weather select 3);
 	86400 setWindForce (_newOvercast * 0.3);
 	86400 setGusts _newOvercast;
 	86400 setWindDir (85 + random 10); //https://en.wikipedia.org/wiki/Trade_winds
-	skiptime 24;		
-	
+	skiptime 24;
+
 	(_weather select 3) spawn {
 		sleep 2;
 		10 setRain _this;
 	};
-	
+
 	_date = server getVariable ["timedate",[2025,7,27,8,00]];
 	setdate _date;
-	0 setfog 0; //Tanoa fog wtf	
+	0 setfog 0; //Tanoa fog wtf
 	forceWeatherChange;
 	simulWeatherSync;
 };
@@ -118,11 +118,11 @@ private _nextchange = 350 + (random 600);
 
 while {true} do {
 	server setVariable ["forecast",_forecast,true];
-	
+
 	sleep _nextchange;
-		
+
 	private _month = date select 1;
-	
+
 	//This is a south pacific climate (or thereabouts)
 	//Dry season:
 	private _stormchance = 1;
@@ -136,7 +136,7 @@ while {true} do {
 		_cloudychance = 20;
 	};
 	//Yeh thats about it..
-	
+
 	private _mode = server getVariable ["forecast","Clear"];
 	_forecast = "Clear";
 	_count = 0;
@@ -144,10 +144,10 @@ while {true} do {
 		if(_mode == "Clear") exitWith {
 			if((random 100) < _cloudychance) exitWith {_forecast = "Cloudy"};
 		};
-		if(_mode == "Storm") exitWith {				
+		if(_mode == "Storm") exitWith {
 			_forecast = "Rain";
 		};
-		if(_mode == "Rain") exitWith {				
+		if(_mode == "Rain") exitWith {
 			if((random 100) < _stormchance) exitWith {_forecast = "Storm"};
 			if((random 100) < 50) exitWith {_forecast = "Cloudy"};
 		};
@@ -157,7 +157,7 @@ while {true} do {
 		};
 	};
 	_weather = _forecast call getWeather;
-	
+
 	_newOvercast = (_weather select 0);
 	120 setOvercast _newOvercast;
 	120 setFog 0;
@@ -167,7 +167,7 @@ while {true} do {
 	120 setWindForce (_newOvercast * 0.3);
 	120 setGusts _newOvercast;
 	120 setWindDir (85 + random 10);
-	
+
 	server setVariable ["temperature",(_weather select 5),true];
 	_nextchange = 350 + (random 600);
 };

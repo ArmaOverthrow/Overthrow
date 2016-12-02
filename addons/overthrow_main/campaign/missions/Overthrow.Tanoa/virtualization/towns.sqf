@@ -10,14 +10,15 @@ OT_townSpawners = [
 	compileFinal preProcessFileLineNumbers "spawners\harbor.sqf"
 ];
 
-{	
+{
 	private _pos = server getVariable _x;
 	private _town = _x;
-	[_pos,{			
+	[_pos,{
 			params ["_spawntown","_spawnid"];
-			{				
+			{
 				_hdl = [_spawntown,_spawnid] spawn _x;
-				waitUntil {sleep 0.2;scriptDone _hdl};			
+				waitUntil {sleep 0.2;scriptDone _hdl};
+				sleep 0.5;		
 			}foreach(OT_townSpawners);
 	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);

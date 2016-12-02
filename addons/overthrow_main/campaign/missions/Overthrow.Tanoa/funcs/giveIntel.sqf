@@ -13,6 +13,7 @@ private _gundealer = server getvariable [format["gundealer%1",_town],[]];
 private _nearestMob = _pos call nearestMobster;
 private _nearestMobId = _nearestMob select 1;//efdf
 private _nearestMobPos = _nearestMob select 0;
+private _nearestMobGarrison = server getvariable [format["crimgarrison%1",_nearestMobId],0];
 
 private _garrison = _civ getvariable "garrison";
 private _criminal = _civ getvariable "criminal";
@@ -39,7 +40,7 @@ if((markerType _mrkid == "") and (count(_gundealer) > 0) and (_rnd > 60)) exitWi
 
 _mrkid = format["mobster%1",_nearestMobId];
 
-if((markerType _mrkid == "") and (isNil "_mobboss") and (isNil "_mobster") and !(isNil "_crimleader") and (side _civ == east) and (_standing > 10)) exitWith {
+if((_nearestMobGarrison > 0) and (markerType _mrkid == "") and (isNil "_mobboss") and (isNil "_mobster") and !(isNil "_crimleader") and (side _civ == east) and (_standing > 10)) exitWith {
 	[_civ,player,["This and that","Cool, I'm looking for a place to offload some... stuff","Go and speak to the boss I guess"],{
 		"Bandit camp added to map" call notify_minor;
 		params ["_mobid","_mobpos"];
@@ -51,7 +52,7 @@ if((markerType _mrkid == "") and (isNil "_mobboss") and (isNil "_mobster") and !
 	},[_nearestMobId,_nearestMobPos]] spawn doConversation;
 };
 
-if((markerType _mrkid == "") and (side _civ == civilian) and (_standing >= 0)) exitWith {
+if((_nearestMobGarrison > 0) and (markerType _mrkid == "") and (side _civ == civilian) and (_standing >= 0)) exitWith {
 	[_civ,player,["I heard there were some bandits camping in the jungle","Really? Where, exactly?"],{
 		"Bandit camp added to map" call notify_minor;
 		params ["_mobid","_mobpos"];

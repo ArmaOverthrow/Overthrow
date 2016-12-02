@@ -1,5 +1,8 @@
 _me = _this select 0;
 _killer = _me getVariable "ace_medical_lastDamageSource";
+if(isNil "_killer") then {_killer = _this select 1};
+
+if(vehicle _killer != _killer) then {_killer = driver _killer};
 
 if(_killer call unitSeen) then {
 	_killer setVariable ["lastkill",time,true];
@@ -117,11 +120,11 @@ call {
 			if(_townpop < 350 and (random 100) > 50) then {
 				_stab = -2;
 			};
-			if(_garrison in OT_allObjectives) then {
-				format["%1 garrison now %2",_garrison,_pop - 1] remoteExec ["notify_minor",0,true];
+			if(_garrison in OT_allObjectives and _pop >= 0) then {
+				format["%1 garrison now %2",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
 			}else{
 				[_town,_stab] call stability;
-				format["%1 (%2 Stability)",_town,_stab] remoteExec ["notify_minor",0,false];
+				format["%1 (%2 Stability)",_town,_stab] remoteExec ["notify_minor",_killer,false];
 			};
 		};
 
@@ -146,8 +149,13 @@ call {
 	};
 };
 
-if(captive _killer and (_killer call unitSeen)) then {
+if((_killer call unitSeen) or (_standingChange < -9)) then {
 	_killer setCaptive false;
+	if(vehicle _killer != _killer) then {
+		{
+			_x setCaptive false;
+		}foreach(units vehicle _killer);
+	};
 };
 if(isPlayer _killer) then {
 	if (_standingChange == -10) then {

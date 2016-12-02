@@ -10,12 +10,12 @@ _townPos = server getVariable _town;
 _region = server getVariable format["region_%1",_town];
 _mob = _townPos call nearestMobster;
 _mobpos = _mob select 0;
-if !([_mobpos,_region] call fnc_isInMarker) exitWith {[_town,1] call stability};
+if (_mobpos distance _leaderpos > 5000) exitWith {[_town,1] call stability};
 
-server setVariable [format["numcrims%1",_town],_numcrim,false];	
-server setVariable [format["crimleader%1",_town],_leaderpos,false];	
+server setVariable [format["numcrims%1",_town],_numcrim,false];
+server setVariable [format["crimleader%1",_town],_leaderpos,false];
 
-if !(_leaderpos call inSpawnDistance) exitWith {};
+if !(_townPos call inSpawnDistance) exitWith {};
 
 _mob = _townPos call nearestMobster;
 _mobpos = _mob select 0;
@@ -34,17 +34,17 @@ _civ setRank "CAPTAIN";
 _count = 0;
 _start = [[[_mobpos,40]]] call BIS_fnc_randomPos;
 while{_count < _numcrim} do {
-	
+
 	_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
 	[_civ] joinSilent nil;
 	[_civ] joinSilent _group;
 	_civ setRank "LIEUTENANT";
 	_civ setCombatMode "RED";
-	
+
 	[_civ,_town] call initCriminal;
 	_count = _count + 1;
 	_start = [[[_mobpos,40]]] call BIS_fnc_randomPos;
-};	
+};
 
 _dir = [_leaderpos,_mobpos] call BIS_fnc_dirTo;
 _moveto = [_leaderpos,300,_dir] call SHK_pos;
