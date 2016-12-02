@@ -13,6 +13,7 @@ OT_NATOcomms = server getVariable ["NATOcomms",[]];
 OT_allObjectives = [];
 
 if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
+	diag_log "Overthrow: Generating NATO";
 	server setVariable ["NATOversion",OT_NATOversion,false];
 	_abandoned = server getVariable ["NATOabandoned",[]];
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0,false];
@@ -99,7 +100,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 
 	server setVariable ["NATOobjectives",OT_NATOobjectives,true];
 	server setVariable ["NATOcomms",OT_NATOcomms,true];
-
+	diag_log "Overthrow: Distributing NATO vehicles";
 	//Randomly distribute NATO's vehicles
 	{
 		_type = _x select 0;
@@ -127,7 +128,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			server setVariable [format ["airgarrison%1",_name],_garrison,true];
 		};
 	}foreach(OT_NATO_Vehicles_AirGarrison);
-
+	diag_log "Overthrow: Setting up NATO checkpoints";
 	{
 		_garrison = floor(8 + random(6));
 		if(_x in OT_NATO_priority) then {
@@ -139,7 +140,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		server setVariable [format ["garrison%1",_x],_garrison,true];
 		sleep 0.05;
 	}foreach (OT_NATO_control);
-
+	diag_log "Overthrow: Garrisoning towns";
 	{
 		_town = _x;
 		_garrison = 0;
@@ -157,7 +158,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		sleep 0.05;
 	}foreach (OT_allTowns);
 };
-
+diag_log "Overthrow: NATO Init Done";
 
 OT_NATOInitDone = true;
 publicVariable "OT_NATOInitDone";

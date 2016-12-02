@@ -2,7 +2,7 @@ class OT_dialog_start
 {
 	idd=-1;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1100: RscStructuredText
 		{
@@ -65,7 +65,7 @@ class OT_dialog_vehicle
 {
 	idd=-1;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1103: RscStructuredText
 		{
@@ -79,7 +79,7 @@ class OT_dialog_vehicle
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
 	};
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ class OT_dialog_vehiclewarehouse
 {
 	idd=-1;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1103: RscStructuredText
 		{
@@ -155,7 +155,7 @@ class OT_dialog_vehiclewarehouse
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
 	};
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -217,7 +217,7 @@ class OT_dialog_vehicleport
 {
 	idd=-1;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1103: RscStructuredText
 		{
@@ -231,7 +231,7 @@ class OT_dialog_vehicleport
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
 	};
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -282,7 +282,7 @@ class OT_dialog_command
 {
 	idd=-1;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1103: RscStructuredText
 		{
@@ -296,7 +296,7 @@ class OT_dialog_command
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
 	};
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@ class OT_dialog_options
 class OT_dialog_main
 {
 	idd=8001;
-	movingenable=false;	
+	movingenable=false;
 
 	class controlsBackground {
 		class RscStructuredText_1103: RscStructuredText
@@ -449,7 +449,7 @@ class OT_dialog_main
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
 	}
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -640,7 +640,7 @@ class OT_dialog_main
 class OT_dialog_char
 {
 	idd=8003;
-	movingenable=false;	
+	movingenable=false;
 
 	class controls
 	{
@@ -693,7 +693,7 @@ class OT_dialog_char
 		class RscStructuredText_1102: RscStructuredText
 		{
 			idc = 1102;
-			text = "<t size=""2"">TBC</t><br/><t size=""1.1"">Level 1</t><br/>More perks coming soon"; //--- ToDo: Localize;
+			text = ""; //--- ToDo: Localize;
 			x = 0.5825 * safezoneW + safezoneX;
 			y = 0.269 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
@@ -701,22 +701,32 @@ class OT_dialog_char
 			colorBackground[] = {0,0,0,0.3};
 			colorActive[] = {0,0,0,0.3};
 		};
+		class RscButton_1602: RscButton
+		{
+			idc = 1602;
+			text = "Increase Level (-10 Influence)"; //--- ToDo: Localize;
+			x = 0.5825 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.044 * safezoneH;
+			action="[""stealth""] call buyPerk;";
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 	}
-}	
+}
 
 
 class OT_dialog_tute
 {
 	idd=-1;
-	movingenable=false;	
-	
+	movingenable=false;
+
 	class controlsBackground {
 		class RscStructuredText_1101: RscStructuredText
 		{
-			idc = 1101;			
+			idc = 1101;
 			x = 0.324687 * safezoneW + safezoneX;
 			y = 0.313 * safezoneH + safezoneY;
 			w = 0.355781 * safezoneW;
@@ -774,8 +784,8 @@ class OT_dialog_tute
 class OT_dialog_choose
 {
 	idd=8002;
-	movingenable=false;	
-	
+	movingenable=false;
+
 	class controls
 	{
 				////////////////////////////////////////////////////////

@@ -5,18 +5,18 @@ private _population = server getVariable format["population%1",_town];
 if(_population > 1000) then {_population = 1000};
 _population = (_population / 1000);
 private _totaloccupants = 1;
-		
+
 private _baseprice = 400;
 private _type = typeof _this;
 if !(_type in OT_spawnHouses) then {
 	call {
-		if(_type in OT_lowPopHouses) exitWith {_baseprice = 1000;_totaloccupants=4};
-		if(_type in OT_mansions) exitWith {_baseprice = 25000;_totaloccupants=5;};
-		if(_type in OT_medPopHouses) exitWith {_baseprice = 2000;_totaloccupants=6};
-		if(_type in OT_highPopHouses) exitWith {_baseprice = 15000;_totaloccupants=12};
-		if(_type in OT_hugePopHouses) exitWith {_baseprice = 25000;_totaloccupants=50};
+		if(_type in OT_lowPopHouses) exitWith {_baseprice = 1000;_totaloccupants=6};
+		if(_type in OT_mansions) exitWith {_baseprice = 25000;_totaloccupants=8;};
+		if(_type in OT_medPopHouses) exitWith {_baseprice = 2000;_totaloccupants=10};
+		if(_type in OT_highPopHouses) exitWith {_baseprice = 15000;_totaloccupants=15};
+		if(_type in OT_hugePopHouses) exitWith {_baseprice = 50000;_totaloccupants=40};
 		if(_type == OT_warehouse) exitWith {_baseprice = 3000;_totaloccupants=0};
-	};				
+	};
 };
 private _price = round(_baseprice + ((_baseprice * _stability * _population) * (1+OT_standardMarkup)));
 private _sell = round(_baseprice + (_baseprice * _stability * _population));

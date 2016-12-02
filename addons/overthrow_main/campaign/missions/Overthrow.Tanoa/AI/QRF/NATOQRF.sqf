@@ -87,7 +87,7 @@ _numgroups = floor(_strength / 120);
 _count = 0;
 private _delay = 0;
 while {_count < _numgroups} do {
-	[[OT_NATO_HQPos,[0,100],random 360] call SHK_pos,_pos,_delay] spawn NATOAirSupport;		
+	[[OT_NATO_HQPos,[0,100],random 360] call SHK_pos,_pos,_delay] spawn NATOAirSupport;
 	_count = _count + 1;
 	_delay = _delay + 20;
 };
@@ -95,7 +95,7 @@ while {_count < _numgroups} do {
 //Ground units
 
 //Send main force via HQ by air
-private _dir = [_pos,OT_NATO_HQPos] call BIS_fnc_dirTo;	
+private _dir = [_pos,OT_NATO_HQPos] call BIS_fnc_dirTo;
 private _ao = [_pos,[500,800],(_dir - 45) + random 90] call SHK_pos;
 
 if(surfaceIsWater _ao) then {
@@ -122,17 +122,17 @@ while {_count < _numgroups} do {
 
 if(_objectiveIsControlled) then {
 	//send some units by ground from the closest objective
-	_dir = [_pos,_closestObjectivePos] call BIS_fnc_dirTo;	
+	_dir = [_pos,_closestObjectivePos] call BIS_fnc_dirTo;
 	_ao = [_pos,[500,800],(_dir - 45) + random 90] call SHK_pos;
-	
+
 	[_closestObjectivePos,_pos,_landStrength,0] spawn NATOGroundSupport;
-		
+
 	_numgroups = 1+floor(_landStrength / 250);
 	_count = 0;
 	_delay = 20;
 	while {_count < _numgroups} do {
 		[_closestObjectivePos,_ao,_pos,false,_delay] spawn NATOGroundForces;
-		_ao = [_pos,[500,800],(_dir - 45) + random 90] call SHK_pos;		
+		_ao = [_pos,[500,800],(_dir - 45) + random 90] call SHK_pos;
 		_count = _count + 1;
 		_delay = _delay + 10;
 	};
@@ -140,7 +140,7 @@ if(_objectiveIsControlled) then {
 
 if(_airfieldIsControlled) then {
 	//send some units by air from the closest airfield
-	_dir = [_pos,_closestAirfieldPos] call BIS_fnc_dirTo;	
+	_dir = [_pos,_closestAirfieldPos] call BIS_fnc_dirTo;
 	_ao = [_pos,[400,600],(_dir - 45) + random 90] call SHK_pos;
 	if(surfaceIsWater _ao) then {
 		_ao = [_pos,[400,600],-(_dir + 45) - random 90] call SHK_pos;
@@ -149,7 +149,7 @@ if(_airfieldIsControlled) then {
 	_count = 0;
 	_delay = 0;
 	while {_count < _numgroups} do {
-		[[_closestAirfieldPos,[0,100],random 360] call SHK_pos,_pos,_delay] spawn NATOAirSupport;			
+		[[_closestAirfieldPos,[0,100],random 360] call SHK_pos,_pos,_delay] spawn NATOAirSupport;
 		_count = _count + 1;
 		_delay = _delay + 20;
 	};
@@ -167,6 +167,8 @@ if(_airfieldIsControlled) then {
 	};
 };
 
+sleep 200; //Give NATO some time to get their shit together
+
 _timeout = time + 800;
 
 waitUntil {
@@ -183,12 +185,12 @@ while {sleep 5;time < _timeout and !_won} do {
 	_enemy = 0;
 	{
 		if((side _x == west) and (alive _x) and (_x getVariable ["garrison",""] == "HQ")) then {
-			_alive = _alive + 1;		
+			_alive = _alive + 1;
 		};
-		if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {		
-			_enemy = _enemy + 1;		
+		if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+			_enemy = _enemy + 1;
 		};
-	}foreach(_pos nearEntities ["Man",350]);
+	}foreach(_pos nearEntities ["CaManBase",350]);
 	if(_alive > 0 and _enemy == 0) then {
 		//Nato has won
 		_params call _success;

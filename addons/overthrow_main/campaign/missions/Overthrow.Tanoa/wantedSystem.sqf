@@ -61,7 +61,7 @@ while {alive _unit} do {
 			//Look for a medic
 			private _medic = objNull;
 			{
-				if(side _x == resistance or (_x call hasOwner)) then {
+				if((side _x == resistance or (_x call hasOwner)) and !(isPlayer _x)) then {
 					if((items _x) find "ACE_epinephrine" > -1) then {
 						_medic = _x;
 					};
@@ -71,8 +71,26 @@ while {alive _unit} do {
 			if(!isNull _medic) then {
 				_medic globalchat "On my way to help you";
 				[_medic,_unit] call revivePlayer;
-			};
-		}
+			}else{
+				if(isMultiplayer) then {
+					_numplayers = count([] call CBA_fnc_players);
+					if(_numplayers > 1) then {
+						format["%1 is unconscious",name player] remoteExec ["systemChat",0,false];
+						_unit setVariable ["OT_healed",true,true];
+					}else{
+						"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
+						sleep 5;
+						_unit setDamage 1; //rip
+					}
+				}else{
+					"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
+					sleep 5;
+					_unit setDamage 1; //rip
+				};
+			}
+		}else{
+			_unit setVariable ["OT_healed",false,true];
+		};
 	};
 
 	if !(captive _unit) then {
@@ -101,19 +119,8 @@ while {alive _unit} do {
 		_unit setVariable ["hiding",0,false];
 		private _playerpos = getpos _unit;
 		private _altitude = _playerpos select 2;
+
 		if(((vehicle player) isKindOf "Air") and _altitude > 5) then {
-			private _attack = server getVariable ["NATOattacking",""];
-			if(_attack != "") then {
-				_pos = server getVariable _attack;
-				if(_pos distance _playerpos < 2000) then {
-					if(isPlayer _unit) then {
-						"This is a no-fly zone" call notify_minor;
-					};
-					_unit setCaptive false;
-					(vehicle _unit) spawn revealToNATO;
-					_delay = 90;
-				};
-			};
 			if(captive _unit) then {
 				_base = (getpos player) call nearestObjective;
 				if !(isNil "_base") then {
@@ -265,6 +272,20 @@ while {alive _unit} do {
 					};
 				};
 			};
+		};
+	};
+	private _attack = server getVariable ["NATOattacking",""];
+	if(_attack != "") then {
+		_pos = server getVariable _attack;
+		private _playerpos = getpos _unit;
+		if(_pos distance _playerpos < 2000) then {
+			private _altitude = _playerpos select 2;
+			_unit setCaptive false;
+			if(_altitude > 5) then {
+				//Radar is active here
+				(vehicle _unit) spawn revealToNATO;
+			};
+			_delay = 200;
 		};
 	};
 };
