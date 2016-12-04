@@ -16,17 +16,17 @@ _numNATO = server getVariable [format["police%1",_town],0];
 _count = 0;
 _range = 15;
 _pergroup = 4;
-			
+
 while {_count < _numNATO} do {
 	_groupcount = 0;
-	_group = createGroup resistance;				
+	_group = createGroup resistance;
 	_groups pushBack _group;
-	
+
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
-	
-	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {							
+
+	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {
 		_pos = [[[_start,20]]] call BIS_fnc_randomPos;
-		
+
 		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
 		sleep 0.1;
 		_civ setVariable ["polgarrison",_town,false];
@@ -34,11 +34,11 @@ while {_count < _numNATO} do {
 		_civ setRank "SERGEANT";
 		[_civ,_town] spawn initPolice;
 		_civ setBehaviour "SAFE";
-		
+
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-	};				
-	_group spawn initPolicePatrol;		
+	};
+	_group spawn initPolicePatrol;
 	_range = _range + 50;
 };
 

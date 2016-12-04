@@ -8,7 +8,7 @@ private _active  = [];
 private _activecar  = [];
 private _piers  = [];
 
-private _churches = nearestObjects [_posTown, OT_churches, 700];
+private _churches = nearestObjects [_posTown, OT_churches, _dist,false];
 if(count _churches > 0) then {
 	server setVariable [format["churchin%1",_town],getpos (_churches select 0),true];
 };
@@ -48,21 +48,27 @@ if(count _churches > 0) then {
             _active pushback [(getpos _x),_stock];
         };
     };
-}foreach(nearestObjects [_posTown, OT_shops, _dist]);
+}foreach(nearestObjects [_posTown, OT_shops, _dist,false]);
 
 {
 	private _po = getpos _x;
     if !(_x call hasOwner or _po in _activecar) then {
 		_activecar pushback _po;
     };
-}foreach(nearestObjects [_posTown, OT_carShops, _dist]);
+}foreach(nearestObjects [_posTown, OT_carShops, _dist,false]);
 
 {
 	private _po = getpos _x;
     if !(_po in _piers) then {
-		_piers pushback _po;
+		_do = true;
+		{
+			if(_x distance _po < 80) exitWith {_do = false};
+		}foreach(_piers);
+		if(_do) then {
+			_piers pushback _po;
+		};
     };
-}foreach(nearestObjects [_posTown,OT_piers, _dist]);
+}foreach(nearestObjects [_posTown,OT_piers, _dist,false]);
 
 server setVariable [format["shopsin%1",_town],_shops,true];
 server setVariable [format["activeshopsin%1",_town],_active,true];
@@ -99,5 +105,5 @@ _active = [];
             _active pushback [(getpos _x),_stock];
         };
     };
-}foreach(nearestObjects [_posTown, OT_warehouses, _dist]);
+}foreach(nearestObjects [_posTown, OT_warehouses, _dist,false]);
 server setVariable [format["activedistin%1",_town],_active,true];

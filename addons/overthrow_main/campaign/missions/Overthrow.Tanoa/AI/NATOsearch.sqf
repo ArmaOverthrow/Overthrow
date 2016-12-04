@@ -49,14 +49,14 @@ if(isplayer _target) then {
 		true //<-- inventory override
 	}];
 }else{
-	_target playMove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
-	_target disableAI "MOVE";
+	[_target, "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon"] remoteExec ["playMove",_target,false];
+	[_target, "MOVE"] remoteExec ["disableAI",_target,false];
 };
 _posnow = position _target;
 _timenow = time;
 
 private _cleanup = {
-	_target switchMove "";
+	[_target, ""] remoteExec ["switchMove",_target,false];
 	params ["_group","_cop","_target","_handler"];
 	if(!isNil "_group") then {
 		_group setBehaviour "SAFE";
@@ -64,16 +64,18 @@ private _cleanup = {
 	};
 	if(!isNil "_cop") then {
 		_cop setVariable ["OT_searching",false,true];
-		_cop switchMove "";
+		[_cop, ""] remoteExec ["switchMove",_cop,false];
 	};
 	if(isplayer _target) then {
 		_target removeEventHandler ["InventoryOpened",_handler];
 	}else{
-		_target enableAI "MOVE";
+		[_target, "MOVE"] remoteExec ["enableAI",_target,false];
 	};
 };
-_cop doMove (position _target);
+[_cop,(position _target)] remoteExec["doMove",_cop,false];
 waitUntil {sleep 1;(_cop distance _target) < 7 or (_target distance _posnow) > 2 or (time - _timenow) > 120};
+if(isNil "_cop" or isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+if(!alive _cop or !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
 
 if((isplayer _target and !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
@@ -101,10 +103,12 @@ if((_target distance _posnow) > 2) then {
 		};
 	};
 };
-_cop playMove "Amovpknlmstpsraswrfldnon_gear";
+if(isNil "_cop" or isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+if(!alive _cop or !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+[_cop, "Amovpknlmstpsraswrfldnon_gear"] remoteExec ["playMove",_cop,false];
 if(isplayer _target) then {
 	_cop globalchat "This is a random search, stay perfectly still";
-	_target playMove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
+	[_target, "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon"] remoteExec ["playMove",_target,false];
 	sleep 5;
 }else{
 	sleep 15;

@@ -5,9 +5,9 @@ _type = _this select 1;
 
 _found = false;
 _range = 200;
-_pos = [];
-while {not _found} do {					
-	_houses = _search nearObjects [_type,_range];					
+_pos = _search;
+while {!_found and _range < 900} do {					
+	_houses = _search nearObjects [_type,_range];
 	if(count _houses > 0) then {
 		_house = _houses call BIS_fnc_selectRandom;
 		_pos = _house buildingPos round(random 6);
@@ -15,7 +15,7 @@ while {not _found} do {
 			_found = true;
 		};
 	};
-	_range = _range + 50;					
+	_range = _range + 50;
 };
 
 _pos

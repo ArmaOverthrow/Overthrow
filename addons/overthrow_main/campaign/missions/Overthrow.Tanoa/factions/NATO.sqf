@@ -50,11 +50,11 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 					_garrison = floor(4 + random(8));
 					if(_name in OT_NATO_priority or _name in OT_allAirports) then {
 						_garrison = floor(16 + random(8));
-						server setVariable [format ["vehgarrison%1",_name],["B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];
+						server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F"],true];
 					};
 					if(_name == OT_NATO_HQ) then {
 						_garrison = 48;
-						server setVariable [format ["vehgarrison%1",_name],["B_T_MBT_01_arty_F","B_T_MBT_01_arty_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_T_Mortar_01_F","B_T_Mortar_01_F"],true];
+						server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_T_APC_Tracked_01_AA_F","B_GMG_01_high_F","B_GMG_01_high_F","B_GMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];
 						server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
 					}else{
 						server setVariable [format ["airgarrison%1",_name],[],true];
@@ -194,13 +194,19 @@ publicVariable "OT_allObjectives";
 	OT_allObjectives pushback _name;
 }foreach(OT_NATOcomms);
 server setVariable ["NATOattacking","",true];
+server setVariable ["NATOattackstart",0,true];
 sleep 5;
 while {true} do {
 	_garrisoned = false;
 	_numplayers = count([] call CBA_fnc_players);
 	if(_numplayers > 0) then {
 		_abandoned = server getVariable "NATOabandoned";
-
+		private _currentAttack = server getVariable ["NATOattacking",""];
+		private _currentAttackStart = server getVariable ["NATOattackstart",0];
+		if(_currentAttack != "" and (time - _currentAttackStart) > 1200) then {
+			server setVariable ["NATOattacking","",true];
+			_currentAttack = "";
+		};
 		{
 			_town = _x;
 			_townPos = server getVariable _town;
@@ -227,9 +233,10 @@ while {true} do {
 				};
 			}else{
 				server setVariable [format ["garrison%1",_town],0,true];
-				if(!(_town in _abandoned)) then {
+				if(!(_town in _abandoned) and _currentAttack == "") then {
 					_town spawn NATOattack;
 					server setVariable ["NATOattacking",_town,true];
+					server setVariable ["NATOattackstart",time,true];
 					_garrisoned = true;
 					_abandoned pushback _town;
 					server setVariable ["NATOabandoned",_abandoned,true];
@@ -239,7 +246,7 @@ while {true} do {
 			sleep 0.1;
 		}foreach (OT_allTowns);
 
-		private _currentAttack = server getVariable ["NATOattacking",""];
+
 		if(_currentAttack != "") then {
 			_garrisoned = true;
 		};
@@ -255,6 +262,7 @@ while {true} do {
 					if(_garrison < 4) then {
 						_garrisoned = true;
 						server setVariable ["NATOattacking",_name,true];
+						server setVariable ["NATOattackstart",time,true];
 						_name spawn NATOcounter;
 						_abandoned pushback _name;
 						server setVariable ["NATOabandoned",_abandoned,true];

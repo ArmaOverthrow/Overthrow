@@ -15,8 +15,8 @@ _unit addEventHandler ["take", {
 			_container setvariable ["looted",true,true];
 			[_container] spawn {
 				_n = _this select 0;
-				waitUntil {sleep 30;(isNil "_n") or !(getpos _n) call inSpawnDistance};
-				if!(isNil "_n") then {
+				sleep 600;
+				if !(isNil "_n") then {
 					hideBody _n;
 				}
 			};
@@ -278,14 +278,14 @@ while {alive _unit} do {
 	if(_attack != "") then {
 		_pos = server getVariable _attack;
 		private _playerpos = getpos _unit;
-		if(_pos distance _playerpos < 2000) then {
+		if(_pos distance _playerpos < 1000) then {
 			private _altitude = _playerpos select 2;
 			_unit setCaptive false;
 			if(_altitude > 5) then {
 				//Radar is active here
 				(vehicle _unit) spawn revealToNATO;
 			};
-			_delay = 200;
+			_delay = 30;
 		};
 	};
 };

@@ -343,17 +343,6 @@ class OT_dialog_options
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Kawovy)
 		////////////////////////////////////////////////////////
 
-		class RscText_1001: RscText
-		{
-			idc = 1001;
-
-			text = "Overthrow.Tanoa"; //--- ToDo: Localize;
-			x = 14.5 * GUI_GRID_W + GUI_GRID_X;
-			y = -1 * GUI_GRID_H + GUI_GRID_Y;
-			w = 12.5 * GUI_GRID_W;
-			h = 4 * GUI_GRID_H;
-			sizeEx = 2 * GUI_GRID_H * GUI_GRID_H;
-		};
 		class RscButton_1600: RscButton
 		{
 			idc = 1600;

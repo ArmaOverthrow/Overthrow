@@ -13,14 +13,17 @@ _groups = [];
 
 _numNATO = server getVariable format["garrison%1",_town];
 _count = 0;
-_range = 300;
+private _range = 350;
+if(_town in OT_capitals) then {
+	_range = 900;
+};
 _pergroup = 4;
-			
+
 while {_count < _numNATO} do {
 	_groupcount = 0;
-	_group = createGroup west;				
+	_group = createGroup west;
 	_groups pushBack _group;
-	
+
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	sleep 0.1;
@@ -32,21 +35,21 @@ while {_count < _numNATO} do {
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
 
-	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {							
+	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {
 		_pos = [[[_start,50]]] call BIS_fnc_randomPos;
-		
+
 		_civ = _group createUnit [OT_NATO_Unit_Police, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison",_town,false];
 		[_civ] joinSilent _group;
 		_civ setRank "PRIVATE";
 		[_civ,_town] call initGendarm;
 		_civ setBehaviour "SAFE";
-		
+
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
 		sleep 0.1;
-	};				
-	_group call initGendarmPatrol;		
+	};
+	_group call initGendarmPatrol;
 	_range = _range + 50;
 };
 
