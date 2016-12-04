@@ -174,7 +174,7 @@ _timeout = time + 800;
 waitUntil {
 	sleep 5;
 	private _force = spawner getVariable["NATOattackforce",[]];
-	(({alive leader _x} count _force) == 0) or (time > _timeout)
+	(({({alive _x} count (units _x)) > 0} count _force) < 4) or (time > _timeout)
 };
 
 _timeout = time + 600;
@@ -184,18 +184,21 @@ while {sleep 5;time < _timeout and !_won} do {
 	_alive = 0;
 	_enemy = 0;
 	{
-		if((side _x == west) and (alive _x) and (_x getVariable ["garrison",""] == "HQ")) then {
-			_alive = _alive + 1;
+		if(_x distance _pos < 1000) then {
+			if((side _x == west) and (alive _x) and (_x getVariable ["garrison",""] == "HQ")) then {
+				_alive = _alive + 1;
+			};
+			if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+				_enemy = _enemy + 1;
+			};
 		};
-		if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
-			_enemy = _enemy + 1;
-		};
-	}foreach(_pos nearEntities ["CaManBase",350]);
+	}foreach(allunits);
 	if(_alive > 0 and _enemy == 0) then {
 		//Nato has won
 		_params call _success;
 		_won = true;
 	};
+	diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
 	if(_alive == 0) exitWith{};
 };
 if !(_won) then {

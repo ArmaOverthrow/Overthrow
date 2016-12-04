@@ -111,10 +111,12 @@ if (_canBuyBoats) then {
 				private _cost = floor(_dist * 0.005);
 				private _go = {
 					private _destpos = _this;
+					player setVariable ["OT_ferryDestination",_destpos,false];
 					private _desttown = _destpos call nearestTown;
-					private _pos = (getpos player) findEmptyPosition [5,100,OT_vehType_ferry];
+					private _pos = (getpos player) findEmptyPosition [10,100,OT_vehType_ferry];
 					if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 					private _cost = floor((player distance _destpos) * 0.005);
+					player setVariable ["OT_ferryCost",_cost,false];
 					_money = player getVariable "money";
 					if(_money < _cost) exitWith {"You cannot afford that!" call notify_minor};
 
@@ -126,8 +128,15 @@ if (_canBuyBoats) then {
 					clearBackpackCargoGlobal _veh;
 					clearItemCargoGlobal _veh;
 
+					private _dir = 0;
+					while {!(surfaceIsWater ([_pos,800,_dir] call BIS_fnc_relPos)) and _dir < 360} do {
+						_dir = _dir + 45;
+					};
+
+					_veh setDir _dir;
 					player reveal _veh;
 					createVehicleCrew _veh;
+					_veh lockDriver true;
 					private _driver = driver _veh;
 					player moveInCargo _veh;
 
@@ -138,9 +147,16 @@ if (_canBuyBoats) then {
 					sleep 5;
 
 					private _g = group (driver _veh);
-					private _wp = _g addWaypoint [_destpos,0];
+					private _wp = _g addWaypoint [_destpos,50];
 					_wp setWaypointType "MOVE";
 					_wp setWaypointSpeed "NORMAL";
+
+					_veh addEventHandler ["GetOut", {
+						params ["_vehicle","_position","_unit"];
+						_unit setVariable ["OT_ferryDestination",[],false];
+					}];
+
+					systemChat format["Departing for %1, press Y to skip (-$%2)",_desttown,_cost];
 
 					waitUntil {!alive player or !alive _veh or !alive _driver or (vehicle player == player) or (player distance _destpos < 80)};
 
@@ -150,15 +166,23 @@ if (_canBuyBoats) then {
 					sleep 30;
 					if(vehicle player == _veh and alive _driver) then {
 						moveOut player;
+						_driver globalchat "k, bye";
 					};
 					if(random 100 > 90) then {
 						[player] spawn NATOsearch;
 					};
+					if(!alive _driver) exitWith{};
+					_timeout = time + 800;
 
 					_wp = _g addWaypoint [_pos,0];
 					_wp setWaypointType "MOVE";
 					_wp setWaypointSpeed "NORMAL";
-					_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
+
+					waitUntil {_veh distance _pos < 100 or time > _timeout};
+					if(!alive _driver) exitWith{};
+
+					deleteVehicle _driver;
+					deleteVehicle _veh;
 				};
 				if(_dist > 1000) then {
 					_ferryoptions pushback [format["%1 (-$%2)",_t,_cost],_go,_p];
@@ -249,7 +273,8 @@ if (_canSellDrugs) then {
 								player removeItem OT_drugSelling;
 								OT_interactingWith addItem OT_drugSelling;
 								OT_interactingWith setVariable ["OT_Talking",false,true];
-								if(random 100 > 50) then {
+								private _town = (getpos player) call nearestTown;
+								if((random 100 > 50) and !isNil "_town") then {
 									[_town,-1] call stability;
 								};
 								if(random 100 > 80) then {

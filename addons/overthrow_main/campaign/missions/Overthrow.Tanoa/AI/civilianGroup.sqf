@@ -2,6 +2,7 @@ private _g = _this;
 
 private _start = getpos ((units _g) select 0);
 if(isNil "_start") exitWith {};
+if(typename _start == "BOOL") exitWith {};
 
 _g setBehaviour "SAFE";
 
@@ -11,25 +12,25 @@ if(_hour > 6 and _hour < 19) then {
 	//Walk to a shop and back again
 	private _start = getpos ((units _g) select 0);
 	if(isNil "_start") exitWith {};
-	
+
 	private _dest = getpos([_start,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call getRandomBuilding);
-		
+
 	private _wp = _g addWaypoint [_dest,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointSpeed "LIMITED";
 	_wp setWaypointCompletionRadius 40;
 	_wp setWaypointTimeout [0, 4, 8];
-	
-	_wp = _g addWaypoint [_start,0];	
+
+	_wp = _g addWaypoint [_start,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointSpeed "LIMITED";
-	_wp setWaypointCompletionRadius 10;	
+	_wp setWaypointCompletionRadius 10;
 	_wp setWaypointTimeout [20, 40, 80];
-	
+
 	_wp = _g addWaypoint [_start,0];
 	_wp setWaypointType "CYCLE";
 }else{
-	//Lull around home	
+	//Lull around home
 	private _end = false;
 	private _bdg = nearestBuilding _start;
 	private _c = 0;
@@ -42,7 +43,7 @@ if(_hour > 6 and _hour < 19) then {
 			_wp setWaypointTimeout [10, 20, 40];
 		}else{
 			_end = true;
-		};			
+		};
 		_c = _c + 1;
 		if(_c > 4) then {
 			_end = true;
@@ -52,4 +53,3 @@ if(_hour > 6 and _hour < 19) then {
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointTimeout [20, 40, 80];
 };
-

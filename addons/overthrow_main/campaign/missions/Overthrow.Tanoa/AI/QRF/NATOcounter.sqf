@@ -7,7 +7,7 @@ private _tskid = [resistance,[format["counter%1",_objective]],[format["NATO is s
 
 _fail = {
 	params ["_tskid","_objective"];
-	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;			
+	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 	_objective setMarkerType "flag_Tanoa";
 	_o = "";
 	if(_objective in OT_needsThe) then {
@@ -18,16 +18,17 @@ _fail = {
 		_efect = "(Vehicles are now cheaper)";
 	};
 	format["Resistance has captured %1%2 (+100 Influence) %3",_o,_objective,_effect] remoteExec ["notify_good",0,false];
-	100 remoteExec ["influenceSilent",0,false];	
+	100 remoteExec ["influenceSilent",0,false];
+	private _posTown = getMarkerPos _objective;
 	_flag = _posTown nearobjects [OT_flag_NATO,500];
 	if(count _flag > 0) then{
 		deleteVehicle (_flag select 0);
 	};
 };
-			
+
 _success = {
 	params ["_tskid","_objective"];
-	//NATO has won					
+	//NATO has won
 	[_tskid, "FAILED",true] spawn BIS_fnc_taskSetState;
 	_active = false;
 	_abandoned = server getVariable "NATOabandoned";

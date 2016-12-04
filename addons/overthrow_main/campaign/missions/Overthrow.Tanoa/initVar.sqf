@@ -4,8 +4,8 @@ private ["_allPrimaryWeapons","_allHandGuns","__allLaunchers"];
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 8;
-OT_NATOversion = 3;
+OT_economyVersion = 9;
+OT_NATOversion = 4;
 OT_CRIMversion = 1;
 OT_adminMode = false;
 OT_economyLoadDone = false;
@@ -188,7 +188,6 @@ OT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 OT_NATO_Vehicles_Garrison = [
 	["B_T_MRAP_01_hmg_F",5],
 	["B_T_MRAP_01_gmg_F",5],
-	["B_T_APC_Tracked_01_AA_F",3],
 	["B_T_Static_AT_F",7],
 	["B_HMG_01_high_F",10]
 ];
@@ -689,7 +688,7 @@ OT_markets = []; //buildings/objects that will spawn local markets (no templates
 OT_shops = ["Land_FuelStation_01_shop_F","Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Shop_City_02_F","Land_Supermarket_01_F"]; //buildings that will spawn the main shops (must have a template with a cash register)
 OT_warehouses = ["Land_Warehouse_03_F"]; //buildings that will spawn local distribution centers
 OT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F"]; //buildings that will spawn car salesmen (must have a template with a cash register)
-OT_piers = ["Land_PierConcrete_01_steps_F","Land_PierWooden_01_platform_F","Land_PierConcrete_01_end_F","Land_PierWooden_01_hut_F","Land_PierWooden_02_hut_F"]; //spawns dudes that sell boats n stuff
+OT_piers = ["Land_PierConcrete_01_4m_ladders_F","Land_PierWooden_01_platform_F","Land_PierWooden_01_hut_F","Land_PierWooden_02_hut_F"]; //spawns dudes that sell boats n stuff
 OT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 OT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 OT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F"];
