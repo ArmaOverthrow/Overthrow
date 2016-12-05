@@ -29,15 +29,17 @@ private _toname = (typeof _veh) call ISSE_Cfg_Vehicle_GetName;
 if(_iswarehouse) then {_toname = "Warehouse"};
 
 format["Transferring inventory to %1",_toname] call notify_minor;
-[5,false] call progressBar;	
+[5,false] call progressBar;
 sleep 5;
 if(_iswarehouse) then {
-	{	
+	{
 		_cls = _x select 0;
-		_d = warehouse getVariable [(_x select 0),[_cls,0]];		
-		_num = _x select 1;
-		_in =  _d select 1;
-		warehouse setVariable[_cls,[_cls,_in + _num],true];		
+		_d = warehouse getVariable [(_x select 0),[_cls,0]];
+		if(typename _d == "ARRAY") then {
+			_num = _x select 1;
+			_in =  _d select 1;
+			warehouse setVariable[_cls,[_cls,_in + _num],true];
+		};
 	}foreach(_target call unitStock);
 	clearMagazineCargoGlobal _target;
 	clearWeaponCargoGlobal _target;
@@ -48,7 +50,7 @@ if(_iswarehouse) then {
 		_count = 0;
 		_cls = _x select 0;
 		_full = false;
-		while {_count < (_x select 1)} do {	
+		while {_count < (_x select 1)} do {
 			if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd _cls)) exitWith {
 				_full = true;
 			};
@@ -70,7 +72,7 @@ if(_iswarehouse) then {
 					_veh addBackpackCargoGlobal [_cls,1];
 				};
 				_veh addItemCargoGlobal [_cls,1];
-			};		
+			};
 		};
 		call {
 			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
@@ -84,7 +86,7 @@ if(_iswarehouse) then {
 			};
 			if(_cls isKindOf "Bag_Base") exitWith {
 				[_target, _cls, _count] call CBA_fnc_removeBackpackCargoGlobal;
-			};			
+			};
 			if !([_target, _cls, _count] call CBA_fnc_removeItemCargoGlobal) then {
 				[_target, _cls, _count] call CBA_fnc_removeWeaponCargoGlobal;
 			};

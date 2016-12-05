@@ -14,8 +14,8 @@ waitUntil {player == player};
 };
 
 if (!hasInterface) exitWith {};
-
-if(count ([] call CBA_fnc_players) == 1 and bigboss != player) then {bigboss = player;publicVariable "bigboss";};
+if(isNil "bigboss" and typeof player == "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
+if(count ([] call CBA_fnc_players) == 1 and isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
 removeAllWeapons player;
 removeAllAssignedItems player;
@@ -247,7 +247,7 @@ if (_newplayer) then {
     _pos = server getVariable _town;
 
     _house = [_pos,OT_spawnHouses] call getRandomBuilding;
-    if(isNil "_house") then {
+    if(typename _house == "BOOL") then {
 		//Spawn town is full, make a new one
         _town = (OT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
         server setVariable ["spawntown",_town,true];

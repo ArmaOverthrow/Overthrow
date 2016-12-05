@@ -309,7 +309,7 @@ assignedKey = {
 
 standing = {
     _town = _this select 0;
-    _rep = (player getVariable format["rep%1",_town])+(_this select 1);
+    _rep = (player getVariable [format["rep%1",_town],0])+(_this select 1);
     player setVariable [format["rep%1",_town],_rep,true];
     _totalrep = (player getVariable "rep")+(_this select 1);
     player setVariable ["rep",_totalrep,true];
@@ -399,7 +399,7 @@ rewardMoney = {
 
 money = {
     _amount = _this select 0;
-    _rep = (player getVariable "money")+_amount;
+    _rep = (player getVariable ["money",0])+_amount;
     if(_rep < 0) then {
         _rep = 0;
     };
@@ -417,7 +417,7 @@ stability = {
     _town = _this select 0;
 
     _townmrk = format["%1-abandon",_town];
-    _stability = (server getVariable format["stability%1",_town])+(_this select 1);
+    _stability = (server getVariable [format["stability%1",_town],0])+(_this select 1);
     if(_stability < 0) then {_stability = 0};
 	if(_stability > 100) then {_stability = 100};
     server setVariable [format["stability%1",_town],_stability,true];
