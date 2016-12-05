@@ -30,6 +30,7 @@ if (_key == 21) then
 						};
 						[-_cost] call money;
 						cutText [format["Skipping ferry to %1",_town],"BLACK",2];
+						player setVariable ["OT_ferryDestination",[],false];
 						[_ferry,_veh] spawn {
 							params ["_pos","_veh"];
 							sleep 2;

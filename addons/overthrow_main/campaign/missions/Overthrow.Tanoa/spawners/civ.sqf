@@ -10,6 +10,8 @@ private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
 private _posTown = server getVariable _town;
 
+
+
 private _mSize = 350;
 if(_town in OT_capitals) then {
 	_mSize = 900;
@@ -25,8 +27,8 @@ if(_pop > 5) then {
 	_numCiv = _pop;
 };
 
-if(_numCiv > 20) then {
-	_numCiv = 20;
+if(_numCiv > 50) then {
+	_numCiv = 50;
 };
 
 _hour = date select 3;
@@ -57,8 +59,16 @@ while {_count < _numCiv} do {
 	_groups pushback _group;
 	_idd = _idd + 1;
 
-	_home = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
-
+	_home = [_posTown,[random 300,_mSize]] call SHK_pos;
+	_building = [_home,OT_allShops+OT_offices] call getRandomBuilding;
+	if(typename _building != "BOOL") then {
+		_building = [_home,OT_allHouses] call getRandomBuilding;
+		if(typename _building != "BOOL") then {
+			_home = position _building;
+		};
+	};
+	_roads = _home nearRoads 100;
+	if(count _roads > 0) then {_home = position (_roads select 0)};
 	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
 		_pos = [[[_home,50]]] call BIS_fnc_randomPos;
 		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];

@@ -1,9 +1,9 @@
 params ["_pos","_strength","_success","_fail","_params"];
 private _numPlayers = count([] call CBA_fnc_players);
-if(_numPlayers < 4) then {
+if(_numPlayers < 3) then {
 	_strength = round(_strength * 0.5);
 }else{
-	if(_numPlayers > 5) then {
+	if(_numPlayers > 7) then {
 		_strength = round(_strength * 1.2);
 	};
 };
@@ -83,7 +83,9 @@ if(_s > 0) then {
 };
 
 
-_numgroups = floor(_strength / 120);
+_numgroups = 1;
+if(_airStrength < 60) then {_numgroups = 0};
+if(_airStrength > 200) then {_numgroups = 2};
 _count = 0;
 private _delay = 0;
 while {_count < _numgroups} do {
@@ -105,7 +107,7 @@ if(surfaceIsWater _ao) then {
 if((_pos select 0) < 1000) then{
 	_ao = [_pos,[500,800],90] call SHK_pos;
 };
-private _numgroups = 1+floor(_strength / 150);
+private _numgroups = 1+floor(_strength / 100);
 private _count = 0;
 if(_delay > 0) then {
 	_delay = _delay + 10;
@@ -145,7 +147,8 @@ if(_airfieldIsControlled) then {
 	if(surfaceIsWater _ao) then {
 		_ao = [_pos,[400,600],-(_dir + 45) - random 90] call SHK_pos;
 	};
-	_numgroups = floor(_airStrength / 120);
+	_numgroups = 1;
+	if(_airStrength < 60) then {_numgroups = 0};
 	_count = 0;
 	_delay = 0;
 	while {_count < _numgroups} do {
@@ -153,7 +156,7 @@ if(_airfieldIsControlled) then {
 		_count = _count + 1;
 		_delay = _delay + 20;
 	};
-	_numgroups = floor(_airStrength / 200);
+	_numgroups = floor(_strength / 150);
 	_count = 0;
 	_delay = 0;
 	while {_count < _numgroups} do {
@@ -169,12 +172,18 @@ if(_airfieldIsControlled) then {
 
 sleep 200; //Give NATO some time to get their shit together
 
-_timeout = time + 800;
+private _timeout = time + 800;
 
 waitUntil {
 	sleep 5;
 	private _force = spawner getVariable["NATOattackforce",[]];
-	(({({alive _x} count (units _x)) > 0} count _force) < 4) or (time > _timeout)
+	private _numalive = 0;
+	private _numin = 0;
+	{
+		_numalive = _numalive + ({alive _x} count (units _x));
+		_numin = _numin + ({alive _x and _x distance _pos < 150} count (units _x));
+	}foreach(_force);
+	(_numalive < 4) or (time > _timeout) or (_numin > 4)
 };
 
 _timeout = time + 600;
@@ -185,7 +194,7 @@ while {sleep 5;time < _timeout and !_won} do {
 	_enemy = 0;
 	{
 		if(_x distance _pos < 1000) then {
-			if((side _x == west) and (alive _x) and (_x getVariable ["garrison",""] == "HQ")) then {
+			if((side _x == west) and (alive _x) and ((_x getVariable ["garrison",""]) == "HQ")) then {
 				_alive = _alive + 1;
 			};
 			if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
@@ -199,7 +208,7 @@ while {sleep 5;time < _timeout and !_won} do {
 		_won = true;
 	};
 	diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
-	if(_alive == 0) exitWith{};
+	if(_alive < 4) exitWith{};
 };
 if !(_won) then {
 	_params call _fail;

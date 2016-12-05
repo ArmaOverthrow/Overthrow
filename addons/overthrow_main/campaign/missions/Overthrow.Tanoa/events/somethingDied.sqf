@@ -107,7 +107,8 @@ call {
 		if(!isNil "_garrison") then {
 			_pop = server getVariable [format["garrison%1",_garrison],0];
 			if(_pop > 0) then {
-				server setVariable [format["garrison%1",_garrison],_pop - 1,true];
+				_pop = _pop -1;
+				server setVariable [format["garrison%1",_garrison],_pop,true];
 			};
 			if(_garrison in OT_allTowns) then {
 				_town = _garrison;
@@ -121,10 +122,21 @@ call {
 				_stab = -2;
 			};
 			if(_garrison in OT_allObjectives and _pop >= 0) then {
-				format["%1 garrison now %2",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
+				if(_pop > 4) then {
+					format["%1 garrison now %2",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
+				}else{
+					format["%1 garrison has lost radio contact, NATO response incoming",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
+				};
 			}else{
 				[_town,_stab] call stability;
-				format["%1 (%2 Stability)",_town,_stab] remoteExec ["notify_minor",_killer,false];
+				_stability = server getvariable [format["stability%1",_town],0];
+				if(_stability > 5) then{
+					if(_stability > 10) then {
+						format["%1 (%2 Stability)",_town,_stab] remoteExec ["notify_minor",_killer,false];
+					}else{
+						format["%1 has destabilized",_town,_stab] remoteExec ["notify_minor",_killer,false];
+					};
+				};
 			};
 		};
 

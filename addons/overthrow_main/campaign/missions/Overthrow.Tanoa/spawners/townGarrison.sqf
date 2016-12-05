@@ -24,8 +24,12 @@ while {_count < _numNATO} do {
 	_group = createGroup west;
 	_groups pushBack _group;
 
-	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
-	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
+	_home = [_posTown,[0,_range]] call SHK_pos;
+	_building = [_home,OT_allHouses+OT_allShops+OT_offices] call getRandomBuilding;
+	if(typename _building != "BOOL") then {_home = position _building};
+	_roads = _home nearRoads 100;
+	if(count _roads > 0) then {_home = position (_roads select 0)};
+	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _home, [],0, "NONE"];
 	sleep 0.1;
 	_civ setVariable ["garrison",_town,false];
 	[_civ] joinSilent _group;
@@ -36,7 +40,7 @@ while {_count < _numNATO} do {
 	_groupcount = _groupcount + 1;
 
 	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {
-		_pos = [[[_start,50]]] call BIS_fnc_randomPos;
+		_pos = [[[_home,50]]] call BIS_fnc_randomPos;
 
 		_civ = _group createUnit [OT_NATO_Unit_Police, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison",_town,false];

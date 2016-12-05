@@ -9,8 +9,8 @@ _baseprice = _cost select 0;
 
 _stability = (server getVariable format["stability%1",_town]) / 100;
 _population = server getVariable format["population%1",_town];
-if(_population > 500) then {_population = 500};
-_population = (_population / 500);
+if(_population > 1000) then {_population = 1000};
+_population = (_population / 1000);
 
 _price = _baseprice + _baseprice * (_stability * _population);
 

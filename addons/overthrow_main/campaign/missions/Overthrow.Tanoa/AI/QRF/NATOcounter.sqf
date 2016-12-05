@@ -40,6 +40,6 @@ _success = {
 private _base = 150;
 if(_objective in OT_allAirports) then {_base = 300};
 
-private _strength = 300 + (count(server getvariable ["NATOabandoned",[]]) * 20);
+private _strength = _base + (count(server getvariable ["NATOabandoned",[]]) * 20);
 
 [_posTown,_strength,_success,_fail,[_tskid,_objective]] spawn NATOQRF;

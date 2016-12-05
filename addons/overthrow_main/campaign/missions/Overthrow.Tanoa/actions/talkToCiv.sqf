@@ -24,14 +24,14 @@ private _canSell = false;
 private _canSellDrugs = true;
 private _canIntel = true;
 
-if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = false;_canRecruit = false;_canBuy=true;_canSell=true;_canBuyClothes=true};
-if (_civ getvariable ["carshop",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyVehicles=true};
-if (_civ getvariable ["harbor",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyBoats=true};
-if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true};
+if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true;_canBuyClothes=true};
+if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
+if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
+if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false};
 
 if (_civ call hasOwner) then {_canRecruit = false;_canIntel = false};
 
-if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false};
+if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false};
 
 if (_canRecruit) then {
 	_options pushBack [

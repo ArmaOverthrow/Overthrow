@@ -278,7 +278,7 @@ while {alive _unit} do {
 	if(_attack != "") then {
 		_pos = server getVariable _attack;
 		private _playerpos = getpos _unit;
-		if(_pos distance _playerpos < 1000) then {
+		if(_pos distance _playerpos < 500) then {
 			private _altitude = _playerpos select 2;
 			_unit setCaptive false;
 			if(_altitude > 5) then {

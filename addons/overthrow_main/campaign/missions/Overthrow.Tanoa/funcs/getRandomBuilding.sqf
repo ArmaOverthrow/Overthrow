@@ -6,7 +6,7 @@ private _types = _this select 1;
 private _found = false;
 private _range = 150;
 private _house = false;
-while {!_found and _range < 900} do {
+while {!_found and _range < 1200} do {
 	_houses = nearestObjects [_search, _types, _range,false];
 	_possible = [];
 	if(count _houses > 0) then {
@@ -17,7 +17,6 @@ while {!_found and _range < 900} do {
 		}
 	};
 	_range = _range + 100;
-	if(_range > 1200) exitWith {};
 };
 
 _house
