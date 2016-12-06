@@ -14,7 +14,7 @@ if(count _churches > 0) then {
 };
 
 {
-    if !(_x call hasOwner) then {
+    if !(_x call OT_fnc_hasOwner) then {
         //spawn any main shops
         if(_shops < 5) then {
             _shops        = _shops + 1;
@@ -52,7 +52,7 @@ if(count _churches > 0) then {
 
 {
 	private _po = getpos _x;
-    if !(_x call hasOwner or _po in _activecar) then {
+    if !(_x call OT_fnc_hasOwner or _po in _activecar) then {
 		_activecar pushback _po;
     };
 }foreach(nearestObjects [_posTown, OT_carShops, _dist,false]);
@@ -76,7 +76,7 @@ server setVariable [format["activecarshopsin%1",_town],_activecar,true];
 server setVariable [format["activepiersin%1",_town],_piers,true];
 _active = [];
 {
-    if !(_x call hasOwner) then {
+    if !(_x call OT_fnc_hasOwner) then {
         if((random 100) > 60) then {
 			_bdgid = [_x] call fnc_getBuildID;
             _pos   = getpos _x;

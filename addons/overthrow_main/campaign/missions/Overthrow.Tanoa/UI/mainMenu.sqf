@@ -7,7 +7,7 @@ openMap false;
 disableSerialization;		
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 
-_town = (getpos player) call nearestTown;
+_town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
 _weather = "Clear";
@@ -44,7 +44,7 @@ _ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t
 
 sleep 0.1;
 //Nearest building info
-_b = player call getNearestRealEstate;
+_b = player call OT_fnc_nearestRealEstate;
 _buildingTxt = "";
 
 if(typename _b == "ARRAY") then {
@@ -63,7 +63,7 @@ if(typename _b == "ARRAY") then {
 	};		
 	_txt = "";
 	
-	if(_building call hasOwner) then {
+	if(_building call OT_fnc_hasOwner) then {
 		_owner = _building getVariable "owner";
 		_ownername = server getVariable format["name%1",_owner];
 		if(_building getVariable ["leased",false]) then {
@@ -219,7 +219,7 @@ if(typename _b == "ARRAY") then {
 		",_name];
 	};
 }else{
-	private _ob = (getpos player) call nearestObjective;
+	private _ob = (getpos player) call OT_fnc_nearestObjective;
 	_ob params ["_obpos","_obname"];
 	if(_obpos distance player < 250) then {
 		if(_obname in (server getVariable ["NATOabandoned",[]])) then {
@@ -287,7 +287,7 @@ if(count _possible > 0) then {
 			};
 		};
 		
-		if(_civ call hasOwner) then {
+		if(_civ call OT_fnc_hasOwner) then {
 			call {
 				if(side _civ == resistance) exitWith {
 					_type = (typeof _civ) call ISSE_Cfg_Vehicle_GetName;

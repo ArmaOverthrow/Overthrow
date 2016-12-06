@@ -1,8 +1,8 @@
 private _civ = OT_interactingWith;
 
-private _town = (getpos player) call nearestTown;
+private _town = (getpos player) call OT_fnc_nearestTown;
 private _standing = player getvariable format["rep%1",_town];
-private _civprice = [_town,"CIV",_standing] call getPrice;
+private _civprice = [_town,"CIV",_standing] call OT_fnc_getPrice;
 private _influence = player getvariable "influence";
 private _money = player getvariable "money";
 
@@ -29,7 +29,7 @@ if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit =
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
 if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false};
 
-if (_civ call hasOwner) then {_canRecruit = false;_canIntel = false};
+if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false};
 
 if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false};
 
@@ -47,7 +47,7 @@ if (_canBuy) then {
 	_options pushBack [
 		"Buy",{
 			private _civ = OT_interactingWith;
-			private _town = (getpos player) call nearestTown;
+			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = player getvariable format["rep%1",_town];
 
 			_bp = _civ getVariable "shop";
@@ -70,7 +70,7 @@ if (_canBuyClothes) then {
 	_options pushBack [
 		"Buy Clothing",{
 			private _civ = OT_interactingWith;
-			private _town = (getpos player) call nearestTown;
+			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = player getvariable format["rep%1",_town];
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
@@ -86,10 +86,10 @@ if (_canBuyBoats) then {
 			{
 				private _civ = OT_interactingWith;
 				_cls = _x select 0;
-				private _town = (getpos player) call nearestTown;
+				private _town = (getpos player) call OT_fnc_nearestTown;
 				private _standing = player getvariable format["rep%1",_town];
 
-				_price = [_town,_cls,_standing] call getPrice;
+				_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
 					_price = round(_price * 0.5);
 				};
@@ -106,13 +106,13 @@ if (_canBuyBoats) then {
 			_ferryoptions = [];
 			{
 				private _p = markerPos(_x);
-				private _t = _p call nearestTown;
+				private _t = _p call OT_fnc_nearestTown;
 				private _dist = (player distance _p);
 				private _cost = floor(_dist * 0.005);
 				private _go = {
 					private _destpos = _this;
 					player setVariable ["OT_ferryDestination",_destpos,false];
-					private _desttown = _destpos call nearestTown;
+					private _desttown = _destpos call OT_fnc_nearestTown;
 					private _pos = (getpos player) findEmptyPosition [10,100,OT_vehType_ferry];
 					if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
 					private _cost = floor((player distance _destpos) * 0.005);
@@ -209,7 +209,7 @@ if (_canSell) then {
 	_options pushBack [
 		"Sell",{
 			private _civ = OT_interactingWith;
-			private _town = (getpos player) call nearestTown;
+			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = player getvariable format["rep%1",_town];
 
 			_bp = _civ getVariable "shop";
@@ -221,7 +221,7 @@ if (_canSell) then {
 				};
 			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
 
-			_playerstock = player call unitStock;
+			_playerstock = player call OT_fnc_unitStock;
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_sell";
 			[_playerstock,_town,_standing,_s] call sellDialog;
@@ -245,11 +245,11 @@ if (_canSellDrugs) then {
 				_num = 0;
 				{
 					if(_x select 0 == _drugcls) exitWith {_num = _x select 1};
-				}foreach(player call unitStock);
+				}foreach(player call OT_fnc_unitStock);
 				OT_drugQty = _num;
 
-				private _town = (getpos player) call nearestTown;
-				private _price = [_town,_drugcls] call getDrugPrice;
+				private _town = (getpos player) call OT_fnc_nearestTown;
+				private _price = [_town,_drugcls] call OT_fnc_getDrugPrice;
 				private _civ = OT_interactingWith;
 				_civ setVariable["OT_askedDrugs",true,true];
 
@@ -267,13 +267,13 @@ if (_canSellDrugs) then {
 
 								[
 									round(
-										([(getpos player) call nearestTown,OT_drugSelling] call getDrugPrice)*1.2
+										([(getpos player) call OT_fnc_nearestTown,OT_drugSelling] call OT_fnc_getDrugPrice)*1.2
 									)
 								] call money;
 								player removeItem OT_drugSelling;
 								OT_interactingWith addItem OT_drugSelling;
 								OT_interactingWith setVariable ["OT_Talking",false,true];
-								private _town = (getpos player) call nearestTown;
+								private _town = (getpos player) call OT_fnc_nearestTown;
 								if((random 100 > 50) and !isNil "_town") then {
 									[_town,-1] call stability;
 								};
@@ -286,12 +286,12 @@ if (_canSellDrugs) then {
 						};
 					};
 				}else{
-					_price = ["Tanoa",_drugcls] call getDrugPrice;
+					_price = ["Tanoa",_drugcls] call OT_fnc_getDrugPrice;
 					if(player call unitSeenNATO) then {
 						[player] remoteExec ["NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
-							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn doConversation;
+							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn doConversation;
 							[_town,-OT_drugQty] call stability;
 						}else{
 							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn doConversation;

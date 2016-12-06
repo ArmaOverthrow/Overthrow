@@ -378,7 +378,7 @@ class OT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Increases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
-		};
+		};		
 		class RscButton_1603: RscButton
 		{
 			idc = 1600;
@@ -394,7 +394,7 @@ class OT_dialog_options
 		class RscButton_1604: RscButton
 		{
 			idc = 1600;
-			action = "{if ((side _x == civilian and !(_x call hasowner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call hasowner) and !(_x call inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call hasowner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""notify_minor"",0,false];";
+			action = "{if ((side _x == civilian and !(_x call OT_fnc_hasOwner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call OT_fnc_hasOwner) and !(_x call OT_fnc_inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call OT_fnc_hasOwner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""notify_minor"",0,false];";
 
 			text = "Clean other"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;

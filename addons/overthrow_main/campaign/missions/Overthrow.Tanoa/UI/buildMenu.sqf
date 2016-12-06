@@ -1,5 +1,5 @@
 if !(captive player) exitWith {"You cannot build while wanted" call notify_minor};
-_base = (getpos player) call nearestBase;
+_base = (getpos player) call OT_fnc_nearestBase;
 _closest = "";
 _isbase = false;
 _isobj = false;
@@ -16,10 +16,10 @@ if !(isNil "_base") then {
 };
 
 if(!_isBase) then {
-	_obj = (getpos player) call nearestObjective;
+	_obj = (getpos player) call OT_fnc_nearestObjective;
 	_objpos = _obj select 0;
 
-	_town = (getpos player) call nearestTown;
+	_town = (getpos player) call OT_fnc_nearestTown;
 	_townpos = server getVariable _town;
 
 	_closest = _town;

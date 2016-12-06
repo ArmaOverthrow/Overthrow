@@ -60,9 +60,9 @@ while {_count < _numCiv} do {
 	_idd = _idd + 1;
 
 	_home = [_posTown,[random 300,_mSize]] call SHK_pos;
-	_building = [_home,OT_allShops+OT_offices] call getRandomBuilding;
+	_building = [_home,OT_allShops+OT_offices] call OT_fnc_getRandomBuilding;
 	if(typename _building != "BOOL") then {
-		_building = [_home,OT_allHouses] call getRandomBuilding;
+		_building = [_home,OT_allHouses] call OT_fnc_getRandomBuilding;
 		if(typename _building != "BOOL") then {
 			_home = position _building;
 		};

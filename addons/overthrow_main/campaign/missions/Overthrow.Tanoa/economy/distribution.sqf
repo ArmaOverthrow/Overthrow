@@ -67,7 +67,7 @@ while {_status != "finished"} do {
 			{
 				_shop = _x select 0;
 				_order = _x select 1;
-				_town = (getpos _shop) call nearestTown;
+				_town = (getpos _shop) call OT_fnc_nearestTown;
 				if([_towntotal,_town] call dict_exists) then {
 					_townorder = [_towntotal,_town] call dict_get;
 				}else{

@@ -28,7 +28,7 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 if(!isNil "_close") then {
 	_current = server getVariable [format ["garrison%1",_town],0];
 	server setVariable [format ["garrison%1",_town],_current+2,true];
-	if !(_townPos call inSpawnDistance) exitWith {};
+	if !(_townPos call OT_fnc_inSpawnDistance) exitWith {};
 
 	_start = [_close,0,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 	_group = creategroup blufor;
@@ -83,7 +83,7 @@ if(!isNil "_close") then {
 
 	_wp = _tgroup addWaypoint [_spawnpos,0];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
+	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 
 	_group call initGendarmPatrol;
 	_group call distributeAILoad;

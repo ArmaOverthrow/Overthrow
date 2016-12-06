@@ -11,7 +11,7 @@ _tracked = [];
 _seeded = false;
 _itemsToStock = [];
 _stock = [];
-_town = _pos call nearestTown;
+_town = _pos call OT_fnc_nearestTown;
 _region = server getVariable [format["region_%1",_town],"region_none"];
 
 _onorder = [];
@@ -19,52 +19,52 @@ _onorder = [];
 sleep (random 2);
 
 while {true} do {
-	
+
 	_tiempo = time;
-	
+
 	//check my stock levels
 	if (!_seeded) then {
 		//choose some random legal items
 		_seeded = true;
 		_numitems = floor(random 6) + 4;
 		_count = 0;
-		
+
 		while {_count < _numitems} do {
 			_item = (OT_allItems - OT_illegalItems - OT_consumableItems) call BIS_Fnc_selectRandom;
 			if!(_item in _itemsToStock) then {
 				_itemsToStock pushback _item;
 				_count = _count + 1;
-			};			
+			};
 		};
-		
+
 		//1 Backpack
 		_item = (OT_allBackpacks) call BIS_Fnc_selectRandom;
-		_itemsToStock pushback _item;		
-		
+		_itemsToStock pushback _item;
+
 		{
-			_num = floor(random 5) + 1;			
+			_num = floor(random 5) + 1;
 			_stock pushBack [_x,_num];
 		}foreach(_itemsToStock);
 		{
-			_num = floor(random 20) + 10;			
+			_num = floor(random 20) + 10;
 			_stock pushBack [_x,_num];
 		}foreach(OT_consumableItems);
-		
+
 		_building setVariable ["stock",_stock,true];
-	}else{		
+	}else{
 		_currentitems = [];
-		
+
 		//Find the closest distro center and check if I already have an order there
-		_closest = nearestBuilding([OT_activeDistribution,_building,_region] call nearestPositionRegion);
+		_closest = nearestBuilding([OT_activeDistribution,_building,_region] call OT_fnc_nearestPositionRegion);
 		if !(isNil "_closest") then {
 			_orders = _closest getVariable ["orders",[]];
 			_idx = -1;
 			_neworder = false;
 			_order = [];
-			{				
+			{
 				_idx = _idx + 1;
 				_b = _x select 0;
-				_o = _x select 1;				
+				_o = _x select 1;
 				if(_b == _building) exitWith {};
 			}foreach(_orders);
 			if(_idx > -1) then {
@@ -72,7 +72,7 @@ while {true} do {
 			}else{
 				_neworder = true;
 			};
-			
+
 			//check my current stock levels
 			_stock = _building getvariable "stock";
 			{
@@ -89,15 +89,15 @@ while {true} do {
 					_order pushback [_x,_num];
 				};
 			}foreach(_itemsToStock);
-			
+
 			if(_neworder and (count _order) > 0) then {
 				_orders pushback [_building,_order];
 			};
 			_closest setVariable ["orders",_orders,true];
-			
+
 			_stability = server getVariable format["stability%1",_town];
 			if(_stability > 50 and (random 1000 > 700)) then {
-				//Sell a random item			
+				//Sell a random item
 				_stock = _building getVariable "stock";
 				_idx = floor random((count _stock) - 1);
 				_item = _stock call BIS_fnc_selectRandom;

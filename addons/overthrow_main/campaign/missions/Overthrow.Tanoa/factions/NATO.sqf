@@ -82,7 +82,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	{
 		_name = format["Comms%1",_c];
 		_pos = getpos _x;
-		_near = _pos call nearestObjective;
+		_near = _pos call OT_fnc_nearestObjective;
 		_do = true;
 		if !(isNil "_near") then {
 			if((_pos distance (_near select 0)) < 500) then {
@@ -225,7 +225,7 @@ while {true} do {
 				if(_need > 1) then {
 					_x spawn reGarrisonTown;
 				}else{
-					if(_townPos call inSpawnDistance) then {
+					if(_townPos call OT_fnc_inSpawnDistance) then {
 						if(random 100 > 90) then {
 							_townPos spawn NATOsearch;
 						};
@@ -313,7 +313,7 @@ while {true} do {
 				_abandoned pushback _name;
 				server setVariable ["NATOabandoned",_abandoned,true];
 				_name setMarkerColor "ColorGUER";
-				_t = _pos call nearestTown;
+				_t = _pos call OT_fnc_nearestTown;
 				format["We have captured the radio tower near %1",_t] remoteExec ["notify_good",0,false];
 			};
 		};

@@ -169,7 +169,7 @@ if(isplayer _target) then {
 				if((random 100) < _chance) then {
 					_cop globalchat "We found some illegal items and confiscated them, be on your way";
 					"NATO confiscated illegal items" remoteExecCall ["hint",_target,false];
-					private _town = (getpos _target) call nearestTown;
+					private _town = (getpos _target) call OT_fnc_nearestTown;
 					[_town,-10] remoteExecCall ["standing",_target,false];
 				}else{
 					_cop globalchat "Thank you for your co-operation";

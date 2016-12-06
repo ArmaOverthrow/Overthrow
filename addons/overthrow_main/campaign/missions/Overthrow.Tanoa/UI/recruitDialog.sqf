@@ -1,10 +1,10 @@
 disableSerialization;
 
-_base = (getpos player) call nearestObjective;
+_base = (getpos player) call OT_fnc_nearestObjective;
 if (isNil "_base") exitWith {};
 if !((_base select 1) in (server getvariable "NATOabandoned")) exitWith {"This barracks is under NATO control" call notify_minor};
 
-private _price = floor((["Tanoa","CIV",0] call getPrice) * 1.5);
+private _price = floor((["Tanoa","CIV",0] call OT_fnc_getPrice) * 1.5);
 
 createDialog "OT_dialog_buy";
 ctrlSetText [1600,"Recruit"];

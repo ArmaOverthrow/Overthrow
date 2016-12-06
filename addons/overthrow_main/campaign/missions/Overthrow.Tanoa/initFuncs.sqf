@@ -1,50 +1,15 @@
-if(isServer) then {
-    server setVariable ["StartupType","",true];
-};
+
 //Helper functions
-townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
-randomPosition = compileFinal preProcessFileLineNumbers "funcs\randomPosition.sqf";
-spawnTemplate = compileFinal preProcessFileLineNumbers "funcs\spawnTemplate.sqf";
-spawnTemplateAttached = compileFinal preProcessFileLineNumbers "funcs\spawnTemplateAttached.sqf";
-inSpawnDistance = compileFinal preProcessFileLineNumbers "funcs\inSpawnDistance.sqf";
-nearestTown = compileFinal preProcessFileLineNumbers "funcs\nearestTown.sqf";
-getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
-getSellPrice = compileFinal preProcessFileLineNumbers "funcs\getSellPrice.sqf";
-getDrugPrice = compileFinal preProcessFileLineNumbers "funcs\getDrugPrice.sqf";
-canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
-unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
 searchStock = compileFinal preProcessFileLineNumbers "funcs\searchStock.sqf";
-hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
-getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
-getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
-getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestRealEstate.sqf";
-getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
-nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
-nearestComms = compileFinal preProcessFileLineNumbers "funcs\nearestComms.sqf";
-nearestCheckpoint = compileFinal preProcessFileLineNumbers "funcs\nearestCheckpoint.sqf";
-nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
-nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
-nearestMobster = compileFinal preProcessFileLineNumbers "funcs\nearestMobster.sqf";
 giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
-logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
-eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
 displayWarehousePic = compileFinal preProcessFileLineNumbers "funcs\displayWarehousePic.sqf";
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
-canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
 progressBar = compileFinal preProcessFileLineNumbers "funcs\progressBar.sqf";
-getRealEstateData = compileFinal preProcessFileLineNumbers "funcs\getRealEstateData.sqf";
 revealToNATO = compileFinal preProcessFileLineNumbers "funcs\revealToNATO.sqf";
 revealToCRIM = compileFinal preProcessFileLineNumbers "funcs\revealToCRIM.sqf";
-findScopeInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findScopeInWarehouse.sqf";
-findWeaponInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findWeaponInWarehouse.sqf";
-findVestInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findVestInWarehouse.sqf";
-findHelmetInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findHelmetInWarehouse.sqf";
-removeFromWarehouse = compileFinal preProcessFileLineNumbers "funcs\removeFromWarehouse.sqf";
-getSoldier = compileFinal preProcessFileLineNumbers "funcs\getSoldier.sqf";
-createSoldier = compileFinal preProcessFileLineNumbers "funcs\createSoldier.sqf";
 
 //AI init
 initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
@@ -71,7 +36,6 @@ initPriest = compileFinal preProcessFileLineNumbers "AI\priest.sqf";
 
 intelEvent = compileFinal preProcessFileLineNumbers "funcs\intelEvent.sqf";
 intelLevel = compileFinal preProcessFileLineNumbers "funcs\intelLevel.sqf";
-assignMission = compileFinal preProcessFileLineNumbers "funcs\assignMission.sqf";
 doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sqf";
 playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
 
@@ -121,7 +85,6 @@ illegalContainerOpened = compileFinal preProcessFileLineNumbers "events\illegalC
 reGarrisonTown = compileFinal preProcessFileLineNumbers "spawners\insertion\reGarrisonTown.sqf";
 sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims.sqf";
 newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
-logistics = compileFinal preProcessFileLineNumbers "spawners\insertion\logistics.sqf";
 
 //Local interactions
 initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
@@ -133,11 +96,6 @@ initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStat
 
 //Economy
 setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";
-
-//Math
-rotationMatrix = compileFinal preProcessFileLineNumbers "funcs\rotationMatrix.sqf";
-matrixMultiply = compileFinal preProcessFileLineNumbers "funcs\matrixMultiply.sqf";
-matrixRotate = compileFinal preProcessFileLineNumbers "funcs\matrixRotate.sqf";
 
 //Actions
 buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";

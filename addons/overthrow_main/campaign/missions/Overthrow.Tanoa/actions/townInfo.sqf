@@ -12,7 +12,7 @@ if(not visiblemap) exitWith{};
 while {visibleMap} do {
 	sleep 0.1;
 	if(gotone) then {
-		_town =  posTravel call nearestTown;
+		_town =  posTravel call OT_fnc_nearestTown;
 		if!(isNil "_town") then {
 			_pop = server getVariable format["population%1",_town];
 			_stability = server getVariable format["stability%1",_town];

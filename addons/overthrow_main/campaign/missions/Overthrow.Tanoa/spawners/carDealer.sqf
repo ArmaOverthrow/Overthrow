@@ -19,7 +19,7 @@ private _groups = [];
 	_group setBehaviour "CARELESS";
 	_groups pushback _group;
 	
-	_tracked = _building call spawnTemplate;
+	_tracked = _building call OT_fnc_spawnTemplate;
 	_vehs = _tracked select 0;
 	[_groups,_vehs] call BIS_fnc_arrayPushStack;
 			

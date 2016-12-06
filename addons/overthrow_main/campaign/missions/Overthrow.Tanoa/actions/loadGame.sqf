@@ -118,7 +118,7 @@ if(typename _data != "ARRAY") exitWith {
 				};
 				
 				if(_type == OT_policeStation) then {
-					_town = _pos call nearestTown;
+					_town = _pos call OT_fnc_nearestTown;
 					_mrkid = format["%1-police",_town];
 					createMarker [_mrkid,_pos];
 					_mrkid setMarkerShape "ICON";

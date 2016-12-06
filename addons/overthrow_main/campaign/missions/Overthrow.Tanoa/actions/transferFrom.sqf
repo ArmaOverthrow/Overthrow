@@ -76,7 +76,7 @@ _end = time + 5;
 		};
 	};
 	if(_full) exitWith {hint "This vehicle is full, use a truck for more storage"};
-}foreach(_target call unitStock);
+}foreach(_target call OT_fnc_unitStock);
 waitUntil {time > _end};
 "Inventory Transfer done" call notify_minor;
 

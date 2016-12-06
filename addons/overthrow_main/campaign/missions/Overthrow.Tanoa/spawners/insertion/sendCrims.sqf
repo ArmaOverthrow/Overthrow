@@ -6,7 +6,7 @@ _town = _this select 2;
 _townPos = server getVariable _town;
 
 _region = server getVariable format["region_%1",_town];
-_mob = _townPos call nearestMobster;
+_mob = _townPos call OT_fnc_nearestMobster;
 _mobpos = _mob select 0;
 if !([_mobpos,_region] call fnc_isInMarker) exitWith {[_town,1] call stability};
 

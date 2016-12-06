@@ -26,7 +26,7 @@ if(backpack _unit != "") then {
 		};		
 		_count = _count + 1;
 	};
-}foreach(_unit call unitStock);
+}foreach(_unit call OT_fnc_unitStock);
 
 if(vest _unit != "") then {	
 	removeVest _unit;	

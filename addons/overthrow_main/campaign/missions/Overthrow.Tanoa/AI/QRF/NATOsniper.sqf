@@ -6,7 +6,7 @@ private _close = nil;
 private _dist = 8000;
 private _closest = "";
 private _abandoned = server getVariable["NATOabandoned",[]];
-private _town = _posTown call nearestTown;
+private _town = _posTown call OT_fnc_nearestTown;
 private _region = server getVariable format["region_%1",_town];
 {
 	_pos = _x select 0;
@@ -75,7 +75,7 @@ if(_isHQ) then {
 	
 	_wp = _tgroup addWaypoint [_ao,0];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this,75] execVM 'funcs\addons\eject.sqf'"];	
+	_wp setWaypointStatements ["true","[vehicle this,75] spawn OT_fnc_parachuteAll"];	
 	_wp setWaypointTimeout [10,10,10];
 	
 	_wp = _tgroup addWaypoint [_ao,0];
@@ -93,7 +93,7 @@ if(_isHQ) then {
 	
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
+	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"]; 
 	
 	{
 		_x addCuratorEditableObjects [units _tgroup,true];

@@ -48,7 +48,7 @@ while {true} do {
 			private _bdg = OT_centerPos nearestObject _x;
 			if !(isNil "_bdg") then {
 				if(_bdg getVariable ["leased",false]) then {
-					private _data = _bdg call getRealEstateData;
+					private _data = _bdg call OT_fnc_getRealEstateData;
 					_lease = _lease + (_data select 2);
 				};
 			};

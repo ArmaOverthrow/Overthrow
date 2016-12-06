@@ -93,7 +93,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 							_v setVelocity [0,0,0];
 						};
 
-						_items = (vehicle _x) call unitStock;
+						_items = (vehicle _x) call OT_fnc_unitStock;
 
 						{
 							_cls = _x select 0;

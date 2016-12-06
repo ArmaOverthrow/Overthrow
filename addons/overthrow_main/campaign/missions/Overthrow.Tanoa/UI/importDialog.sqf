@@ -1,5 +1,5 @@
 if(count (player nearObjects [OT_portBuilding,30]) == 0) exitWith {};
-private _town = player call nearestTown;
+private _town = player call OT_fnc_nearestTown;
 _items = OT_allItems + OT_allBackpacks + ["V_RebreatherIA"];
 if(_town in (server getVariable ["NATOabandoned",[]])) then {
 	_items = OT_allItems + OT_allBackpacks + ["V_RebreatherIA"] + OT_allWeapons + OT_allMagazines + OT_allStaticBackpacks + OT_allOptics + OT_allVests + OT_allHelmets;
@@ -20,7 +20,7 @@ _numitems = 0;
 	
 	if !(_cls in _done) then {
 		_done pushback _cls;
-		_price = ["Tanoa",_cls,100] call getPrice;
+		_price = ["Tanoa",_cls,100] call OT_fnc_getPrice;
 		_name = "";
 		_pic = "";
 		

@@ -37,7 +37,7 @@ _group = createGroup blufor;
 {
 	_type = _x;
 	_civ = _group createUnit [_type, OT_NATO_HQPos, [],0, "NONE"];
-	_civ setRank "CAPTAIN";	
+	_civ setRank "CAPTAIN";
 }foreach(OT_NATO_Units_CTRGSupport);
 
 sleep 0.2;
@@ -46,7 +46,7 @@ sleep 0.2;
 _tgroup = creategroup blufor;
 _pos = [_pos,60,80,false,[0,0],[100,OT_NATO_Vehicle_CTRGTransport]] call SHK_pos;
 sleep 0.1;
-_veh = createVehicle [OT_NATO_Vehicle_CTRGTransport, _pos, [], 0,""];  		
+_veh = createVehicle [OT_NATO_Vehicle_CTRGTransport, _pos, [], 0,""];
 _vehs pushback _veh;
 
 
@@ -57,14 +57,14 @@ createVehicleCrew _veh;
 	[_x] joinSilent _tgroup;
 	_x setVariable ["NOAI",1,false];
 	_x setVariable ["garrison","HQ",false];
-}foreach(crew _veh);	
+}foreach(crew _veh);
 
 {
 	_x moveInCargo _veh;
 	_soldiers pushback _x;
 	_x setVariable ["garrison","HQ",false];
 	_x setVariable ["VCOM_NOPATHING_Unit",1,false];
-}foreach(units _group);	
+}foreach(units _group);
 
 sleep 1;
 
@@ -85,12 +85,12 @@ _wp setWaypointSpeed "FULL";
 
 _wp = _tgroup addWaypoint [_ao,0];
 _wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this,50] execVM 'funcs\addons\eject.sqf'"];	
+_wp setWaypointStatements ["true","[vehicle this,50] spawn OT_fnc_parachuteAll"];
 _wp setWaypointTimeout [10,10,10];
 
 _wp = _tgroup addWaypoint [_ao,0];
 _wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];	
+_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 _wp setWaypointTimeout [15,15,15];
 
 _moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
@@ -98,12 +98,12 @@ _moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "LOITER";
 _wp setWaypointBehaviour "SAFE";
-_wp setWaypointSpeed "FULL";	
+_wp setWaypointSpeed "FULL";
 _wp setWaypointCompletionRadius 100;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"]; 
+_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 
 _wp = _group addWaypoint [_attackpos,20];
 _wp setWaypointType "MOVE";
@@ -121,5 +121,3 @@ if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 {
 	_x addCuratorEditableObjects [_vehs+_soldiers,true];
 } forEach allCurators;
-
-

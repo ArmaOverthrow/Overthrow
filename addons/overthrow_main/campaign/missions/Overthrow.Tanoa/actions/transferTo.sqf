@@ -3,11 +3,11 @@ _target = vehicle player;
 if(_target == player) exitWith {};
 private _objects = [];
 
-private _b = player call getNearestRealEstate;
+private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b == "ARRAY") then {
 	_building = _b select 0;
-	if((typeof _building) == OT_warehouse and _building call hasOwner) then {
+	if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
 	};
 	_objects = [_building];
@@ -40,7 +40,7 @@ if(_iswarehouse) then {
 			_in =  _d select 1;
 			warehouse setVariable[_cls,[_cls,_in + _num],true];
 		};
-	}foreach(_target call unitStock);
+	}foreach(_target call OT_fnc_unitStock);
 	clearMagazineCargoGlobal _target;
 	clearWeaponCargoGlobal _target;
 	clearBackpackCargoGlobal _target;
@@ -92,7 +92,7 @@ if(_iswarehouse) then {
 			};
 		};
 		if(_full) exitWith {hint "The vehicle is full, use a truck or ammobox for more storage"};
-	}foreach(_target call unitStock);
+	}foreach(_target call OT_fnc_unitStock);
 };
 
 "Inventory Transfer done" call notify_minor;

@@ -1,9 +1,9 @@
 disableSerialization;
 _amt = _this;
 
-_town = (getpos player) call nearestTown; 
+_town = (getpos player) call OT_fnc_nearestTown; 
 _money = player getVariable ["money",0];
-_price = ([_town,"CIV",-50] call getPrice) + 250;
+_price = ([_town,"CIV",-50] call OT_fnc_getPrice) + 250;
 
 if(_money < (_amt * _price)) exitWith {"You cannot afford that" call notify_minor};
 	

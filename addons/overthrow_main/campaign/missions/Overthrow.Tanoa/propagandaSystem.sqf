@@ -10,7 +10,7 @@ while {true} do {
 	{
 		private _town = _x;
 		private _townPos = server getVariable _town;
-		private _commsAbandoned = ((_townPos call nearestComms) select 1) in _abandoned;
+		private _commsAbandoned = ((_townPos call OT_fnc_nearestComms) select 1) in _abandoned;
 		private _stability = server getVariable format["stability%1",_town];
 		private _pop = server getVariable format["population%1",_town];
 		_totalStability = _totalStability + _stability;

@@ -7,7 +7,7 @@ if(vehicle _killer != _killer) then {_killer = driver _killer};
 if(_killer call unitSeen) then {
 	_killer setVariable ["lastkill",time,true];
 };
-_town = (getpos _me) call nearestTown;
+_town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {};
 

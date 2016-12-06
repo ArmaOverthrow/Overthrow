@@ -29,7 +29,7 @@ waitUntil {sleep 0.1; (count attachedObjects _jugador == 0) or (vehicle _jugador
 {detach _x} forEach attachedObjects _jugador;
 _jugador removeAction OT_moveIdx;
 
-if!([(getpos player),"Misc"] call canPlace) exitWith {
+if!([(getpos player),"Misc"] call OT_fnc_canPlace) exitWith {
 	"You cannot move this too far from a building or camp that you own" call notify_minor;
 	_cosa setPosATL _originalpos;
 	_cosa setDir _originaldir;

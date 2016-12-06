@@ -8,16 +8,16 @@ _town = _this select 1;
 _townPos = server getVariable _town;
 
 _region = server getVariable format["region_%1",_town];
-_mob = _townPos call nearestMobster;
+_mob = _townPos call OT_fnc_nearestMobster;
 _mobpos = _mob select 0;
 if (_mobpos distance _leaderpos > 5000) exitWith {[_town,1] call stability};
 
 server setVariable [format["numcrims%1",_town],_numcrim,false];
 server setVariable [format["crimleader%1",_town],_leaderpos,false];
 
-if !(_townPos call inSpawnDistance) exitWith {};
+if !(_townPos call OT_fnc_inSpawnDistance) exitWith {};
 
-_mob = _townPos call nearestMobster;
+_mob = _townPos call OT_fnc_nearestMobster;
 _mobpos = _mob select 0;
 
 _group = creategroup east;

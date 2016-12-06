@@ -10,23 +10,23 @@ if((vehicle player) != player) then {
 openMap true;
 
 ["fastTravel", "onMapSingleClick", {
-	private _starttown = player call nearestTown;
+	private _starttown = player call OT_fnc_nearestTown;
 	private _region = server getVariable format["region_%1",_starttown];
-	
+
 	private _handled = false;
 
 	_buildings =  _pos nearObjects [OT_item_Tent,30];
 	if !(_buildings isEqualTo []) then {			
-		_handled = true;				
+		_handled = true;
 	};
 
 	if !(_handled) then {
-		if([_pos,"Misc"] call canPlace) then {
-			_handled = true;		
+		if([_pos,"Misc"] call OT_fnc_canPlace) then {
+			_handled = true;
 		};
 	};
-	
-	_ob = _pos call nearestObjective;
+
+	_ob = _pos call OT_fnc_nearestObjective;
 	_valid = true;
 	_ob params ["_obpos","_obname"];
 	_validob = (_obpos distance _pos < 50) and (_obname in OT_allAirports);
@@ -42,22 +42,22 @@ openMap true;
 		"You cannot fast travel less than 150m. Just walk!" call notify_minor;
 		openMap false;
 	};
-	
+
 	if(OT_adminMode) then {_handled = true};
 
 	if !(_handled) then {
-		
+
 		"You must click near a friendly base/camp or a building you own" call notify_minor;
 		openMap false;
 	}else{
 		player allowDamage false;
 		disableUserInput true;
-		
+
 		cutText ["Fast travelling","BLACK",2];
 		_pos spawn {
 			private _pos = _this;
 			sleep 2;
-			
+
 			if((vehicle player) != player) then {
 				if ((driver vehicle player) == player) then {
 					_tam = 10;
@@ -67,21 +67,21 @@ openMap true;
 						if (count _roads < 1) then {_tam = _tam + 10};
 						if (count _roads > 0) exitWith {};
 					};
-					{_x allowDamage false} foreach(crew vehicle player);					
+					{_x allowDamage false} foreach(crew vehicle player);
 					_road = _roads select 0;
 					_pos = position _road findEmptyPosition [1,120,typeOf (vehicle player)];
 					vehicle player setPos _pos;
-				};				
+				};
 			}else{
-				player setpos _pos;		
-			};				
+				player setpos _pos;
+			};
 
 			disableUserInput false;
 			cutText ["","BLACK IN",3];
-				
+
 			if((vehicle player) != player) then {
 				_crew = crew vehicle player;
-				{_x allowDamage true} foreach(_crew);		
+				{_x allowDamage true} foreach(_crew);
 			};
 			player allowDamage true;
 			openMap false;

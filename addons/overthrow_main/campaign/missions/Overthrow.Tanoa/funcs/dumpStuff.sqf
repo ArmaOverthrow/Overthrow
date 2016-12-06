@@ -25,7 +25,7 @@ if(count _this == 2) then {
 		};
 		_count = _count + 1;
 	};
-}foreach(_unit call unitStock);
+}foreach(_unit call OT_fnc_unitStock);
 
 if(_full and !_istruck) exitWith {false};
 

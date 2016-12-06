@@ -4,13 +4,13 @@ private _player = _this select 0;
 private _civ = _this select 1;
 
 private _pos = getpos _player;
-private _town = _pos call nearestTown;
+private _town = _pos call OT_fnc_nearestTown;
 
 private _standing = (_player getvariable format["rep%1",_town]) + (_player getvariable "rep");
 private _stability = server getvariable format["stability%1",_town];
 private _crimleader = server getvariable format["crimleader%1",_town];
 private _gundealer = server getvariable [format["gundealer%1",_town],[]];
-private _nearestMob = _pos call nearestMobster;
+private _nearestMob = _pos call OT_fnc_nearestMobster;
 private _nearestMobId = _nearestMob select 1;//efdf
 private _nearestMobPos = _nearestMob select 0;
 private _nearestMobGarrison = server getvariable [format["crimgarrison%1",_nearestMobId],0];
@@ -28,7 +28,7 @@ private _mrkid = format["gundealer%1",_town];
 if((markerType _mrkid == "") and (count(_gundealer) > 0) and (_rnd > 60)) exitWith {
 	[_civ,player,["Who are you? and what's with the outfit?","Never you mind","Whatever, I saw a guy wearing similar, he's over there"],{
 		"Dealer added to map" call notify_minor;
-		private _town = player call nearestTown;
+		private _town = player call OT_fnc_nearestTown;
 		private _pos = server getvariable format["gundealer%1",_town];
 		_mrk = createMarkerLocal [format["gundealer%1",_town],_pos];
 		_mrk setMarkerType "ot_Shop";

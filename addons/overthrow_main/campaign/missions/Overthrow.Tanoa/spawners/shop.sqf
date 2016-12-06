@@ -20,7 +20,7 @@ if(count _activeshops > 0) exitWith {
 		private _start = _building buildingPos 0;
 		_shopkeeper = _group createUnit [OT_civType_shopkeeper, _start, [],0, "NONE"];
 		
-		private _tracked = _building call spawnTemplate;
+		private _tracked = _building call OT_fnc_spawnTemplate;
 		private _vehs = _tracked select 0;
 		{
 			_groups pushback _x;

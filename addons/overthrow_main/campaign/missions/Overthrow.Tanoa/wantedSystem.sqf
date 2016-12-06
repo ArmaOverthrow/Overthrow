@@ -20,7 +20,7 @@ _unit addEventHandler ["take", {
 					hideBody _n;
 				}
 			};
-			if (!(_container call hasOwner) and (_me call unitSeen)) then {
+			if (!(_container call OT_fnc_hasOwner) and (_me call unitSeen)) then {
 				//Looting dead bodies is illegal
 				_me setCaptive false;
 				_me spawn revealToNATO;
@@ -61,7 +61,7 @@ while {alive _unit} do {
 			//Look for a medic
 			private _medic = objNull;
 			{
-				if((side _x == resistance or (_x call hasOwner)) and !(isPlayer _x)) then {
+				if((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x)) then {
 					if((items _x) find "ACE_epinephrine" > -1) then {
 						_medic = _x;
 					};
@@ -122,7 +122,7 @@ while {alive _unit} do {
 
 		if(((vehicle player) isKindOf "Air") and _altitude > 5) then {
 			if(captive _unit) then {
-				_base = (getpos player) call nearestObjective;
+				_base = (getpos player) call OT_fnc_nearestObjective;
 				if !(isNil "_base") then {
 					_base params ["_obpos","_obname"];
 					if(_obname in OT_allAirports) then {
@@ -192,7 +192,7 @@ while {alive _unit} do {
 			}else{
 				if(_unit call unitSeenNATO) then {
 					sleep 0.1;
-					_town = (getpos _unit) call nearestTown;
+					_town = (getpos _unit) call OT_fnc_nearestTown;
 					_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
 					if((_totalrep > 50) and (random 1000 < _totalrep)) exitWith {
 						_unit setCaptive false;
@@ -250,7 +250,7 @@ while {alive _unit} do {
 						_unit setCaptive false;
 						_unit spawn revealToNATO;
 					};
-					_base = (getpos player) call nearestObjective;
+					_base = (getpos player) call OT_fnc_nearestObjective;
 					if !(isNil "_base") then {
 						_base params ["_obpos","_obname"];
 						if !(_obname in (server getVariable ["NATOabandoned",[]])) then {

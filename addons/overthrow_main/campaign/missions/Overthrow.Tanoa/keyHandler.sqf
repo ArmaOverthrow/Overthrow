@@ -22,7 +22,7 @@ if (_key == 21) then
 						_veh = vehicle player;
 
 						disableUserInput true;
-						_town = _ferry call nearestTown;
+						_town = _ferry call OT_fnc_nearestTown;
 
 						private _cost = player getVariable ["OT_ferryCost",0];
 						if((player getVariable "money") < _cost) exitWith {
@@ -47,11 +47,11 @@ if (_key == 21) then
 							deleteVehicle _veh;
 						};
 					};
-					_b = player call getNearestRealEstate;
+					_b = player call OT_fnc_nearestRealEstate;
 					_iswarehouse = false;
 					if(typename _b == "ARRAY") then {
 						_building = _b select 0;
-						if((typeof _building) == OT_warehouse and _building call hasOwner) then {
+						if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
 							_iswarehouse = true;
 						};
 					};

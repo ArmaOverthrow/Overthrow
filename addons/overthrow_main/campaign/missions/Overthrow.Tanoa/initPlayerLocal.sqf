@@ -85,7 +85,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 	if(!_newplayer) then {
 		_housepos = player getVariable "home";
 		if(isNil "_housepos") exitWith {_newplayer = true};
-		_town = _housepos call nearestTown;
+		_town = _housepos call OT_fnc_nearestTown;
 		_pos = server getVariable _town;
 
 		_owned = player getVariable ["owned",[]];
@@ -169,7 +169,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 		};
 
 		{
-			if(_x call hasOwner) then {
+			if(_x call OT_fnc_hasOwner) then {
 				if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
 					_furniture pushback _x
 				};
@@ -246,13 +246,13 @@ if (_newplayer) then {
     };
     _pos = server getVariable _town;
 
-    _house = [_pos,OT_spawnHouses] call getRandomBuilding;
+    _house = [_pos,OT_spawnHouses] call OT_fnc_getRandomBuilding;
     if(typename _house == "BOOL") then {
 		//Spawn town is full, make a new one
         _town = (OT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
         server setVariable ["spawntown",_town,true];
         _pos = server getvariable _town;
-        _house = [_pos,OT_spawnHouses] call getRandomBuilding;
+        _house = [_pos,OT_spawnHouses] call OT_fnc_getRandomBuilding;
     };
     _housepos = getpos _house;
 
@@ -265,14 +265,11 @@ if (_newplayer) then {
     _house setVariable ["owner",getPlayerUID player,true];
     player setVariable ["home",_housepos,true];
 
-    _furniture = (_house call spawnTemplate) select 0;
+    _furniture = (_house call OT_fnc_spawnTemplate) select 0;
 
     {
         if(typeof _x == OT_item_Map) then {
             _x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
-        };
-        if(typeof _x == OT_item_Desk) then {
-            _deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
         };
         _x setVariable ["owner",getplayerUID player,true];
     }foreach(_furniture);
@@ -292,7 +289,7 @@ if (_newplayer) then {
 _count = 0;
 {
 	if !(_x isKindOf "Vehicle") then {
-		if(_x call hasOwner) then {
+		if(_x call OT_fnc_hasOwner) then {
 			_x call initObjectLocal;
 		};
 	};
@@ -333,7 +330,7 @@ player addEventHandler ["GetInMan",{
 	_notified = false;
 
 	if(_position == "driver") then {
-		if !(_veh call hasOwner) then {
+		if !(_veh call OT_fnc_hasOwner) then {
 			_veh setVariable ["owner",getplayeruid player,true];
 			_veh setVariable ["stolen",true,true];
 		};

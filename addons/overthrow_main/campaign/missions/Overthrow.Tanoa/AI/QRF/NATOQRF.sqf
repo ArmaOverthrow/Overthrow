@@ -24,7 +24,7 @@ if(surfaceIsWater ([_pos,500,0] call BIS_fnc_relPos) or surfaceIsWater ([_pos,50
 };
 
 //Land?
-private _town = _pos call nearestTown;
+private _town = _pos call OT_fnc_nearestTown;
 private _region = server getVariable format["region_%1",_town];
 private _closestObjectivePos = [];
 private _closestObjective = "";
@@ -32,7 +32,7 @@ private _dist = 20000;
 {
 	_p = _x select 0;
 	_name = _x select 1;
-	if([_p,_region] call CBA_fnc_inArea and !(_name in (server getvariable ["NATOabandoned",[]]))) then {
+	if(_p inArea _region and !(_name in (server getvariable ["NATOabandoned",[]]))) then {
 		_d = (_p distance _pos);
 		if(_d < _dist and _d > 500) then {
 			_dist = _d;

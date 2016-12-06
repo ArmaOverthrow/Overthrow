@@ -72,7 +72,7 @@ server setVariable ["spawntown",OT_spawnTowns call BIS_fnc_selectrandom,true];
 {
     private _region = _x;
 
-    private _towns = [_x] call townsInRegion;
+    private _towns = [_x] call OT_fnc_townsInRegion;
     server setVariable [format ["towns_%1",_x],_towns,true];
 }foreach(OT_regions);
 

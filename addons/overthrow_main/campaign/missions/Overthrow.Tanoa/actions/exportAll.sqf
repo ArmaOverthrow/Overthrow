@@ -4,7 +4,7 @@ if(_target == player) exitWith {};
 
 if(count (player nearObjects [OT_portBuilding,30]) == 0) exitWith {};
 
-private _town = player call nearestTown;
+private _town = player call OT_fnc_nearestTown;
 _doillegal = false;
 if(_town in (server getVariable ["NATOabandoned",[]])) then {
 	_doillegal = true;
@@ -21,7 +21,7 @@ _total = 0;
 	_cls = _x select 0;
 	_num = _x select 1;
 	if(_doillegal or _cls in (OT_allItems + OT_allBackpacks)) then {
-		_costprice = ["Tanoa",_cls,0] call getSellPrice;
+		_costprice = ["Tanoa",_cls,0] call OT_fnc_getSellPrice;
 		_total = _total + (_costprice * _num);
 		call {
 			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
@@ -44,6 +44,6 @@ _total = 0;
 			};			
 		};		
 	};
-}foreach(_target call unitStock);
+}foreach(_target call OT_fnc_unitStock);
 
 [_total] call money;

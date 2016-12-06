@@ -11,7 +11,7 @@ _groups = [];
 
 _gundealerpos = server getVariable format["gundealer%1",_town];
 if(isNil "_gundealerpos") then {
-	_building = [_posTown,OT_gunDealerHouses] call getRandomBuilding;
+	_building = [_posTown,OT_gunDealerHouses] call OT_fnc_getRandomBuilding;
 	_gundealerpos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
 	server setVariable [format["gundealer%1",_town],_gundealerpos,false];
 	_building setVariable ["owner","system",true];

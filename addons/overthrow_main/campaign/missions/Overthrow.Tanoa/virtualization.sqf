@@ -74,13 +74,13 @@ _despawn = {
 	{
 		if(typename _x == "GROUP") then {
 			{
-				if !(_x call hasOwner) then {
+				if !(_x call OT_fnc_hasOwner) then {
 					deleteVehicle _x;
 				};
 			}foreach(units _x);
 			deleteGroup _x;
 		}else{
-			if !(_x call hasOwner) then {
+			if !(_x call OT_fnc_hasOwner) then {
 				deleteVehicle _x;
 			};
 		};
@@ -124,7 +124,7 @@ while{true} do {
 
         if((_start select 0) == (_end select 0)) then {
             if(_val) then {
-                if !(_start call inSpawnDistance) then {
+                if !(_start call OT_fnc_inSpawnDistance) then {
                     if((time - _time) > 30) then { //Ensures it stays spawned for minimum 30 seconds
                         OT_allSpawned deleteAt _spawnidx;
     					_x call _despawn;
@@ -132,7 +132,7 @@ while{true} do {
                     };
                 };
             }else{
-                if (_start call inSpawnDistance) then {
+                if (_start call OT_fnc_inSpawnDistance) then {
                     OT_allSpawned pushback _id;
 					_x call _spawn;
 					sleep 0.1;
@@ -140,7 +140,7 @@ while{true} do {
             };
         }else{
             if(_val) then {
-                if !((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
+                if !((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
                     if((time - _time) > 30) then {
                         OT_allSpawned deleteAt _spawnidx;
     					_x call _despawn;
@@ -148,7 +148,7 @@ while{true} do {
                     };
                 };
             }else{
-                if ((_start call inSpawnDistance) || (_end call inSpawnDistance)) then {
+                if ((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
                     OT_allSpawned pushback _id;
 					_x call _spawn;
 					sleep 0.1;

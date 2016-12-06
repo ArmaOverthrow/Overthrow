@@ -44,9 +44,9 @@ _vehicles = [];
 
 _count = 10001;
 {
-	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != OT_item_Flag)) then {
+	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_item_Flag)) then {
 		_owner = _x getVariable ["owner",false];
-		_s = _x call unitStock;
+		_s = _x call OT_fnc_unitStock;
 		if(typeof _x == OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];
 			_s pushback ["password",_x getVariable ["password",""]];

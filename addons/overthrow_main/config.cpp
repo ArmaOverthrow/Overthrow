@@ -6,7 +6,7 @@ class CfgPatches
 		name="Overthrow";
 		url="https://github.com/armazac/overthrow";
 		requiredAddons[]=
-		{			
+		{
 			"a3_map_tanoabuka",
 			"cba_ui",
             "cba_xeh",
@@ -27,14 +27,14 @@ class RscDisplayStart: RscStandardDisplay
 	class controls
 	{
 		class LoadingStart: RscControlsGroup
-		{	
+		{
 			class controls {
 				class Logo: RscPictureKeepAspect
 				{
 					text = "\ot\ui\logo_overthrow.paa";
 					onLoad = "";
 				};
-			};			
+			};
 		};
 	};
 };
@@ -92,9 +92,9 @@ class CfgMissions
 	};
 };
 
-class CfgMarkers 
+class CfgMarkers
 {
-	class ot_Camp 
+	class ot_Camp
 	{
 		name = "Camp";
 		icon = "ot\ui\markers\camp.paa";
@@ -152,3 +152,4 @@ class CfgWorlds
 #include "macros.hpp"
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"
+#include "CfgFunctions.hpp"

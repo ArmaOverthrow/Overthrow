@@ -54,7 +54,7 @@ while {(_count < _numVeh)} do {
 
 					_region  = server getVariable format["region_%1",_town];
 					_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
-					_moveto = getpos([server getvariable _dest,OT_allHouses + OT_allShops + OT_offices] call getRandomBuilding);
+					_moveto = getpos([server getvariable _dest,OT_allHouses + OT_allShops + OT_offices] call OT_fnc_getRandomBuilding);
 					_wp = _group addWaypoint [_moveto,0];
 
 					_wp setWaypointType "MOVE";

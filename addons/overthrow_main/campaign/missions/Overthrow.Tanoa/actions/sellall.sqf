@@ -6,7 +6,7 @@ OT_selling = true;
 
 _b = player getVariable "shopping";
 _bp = _b getVariable "shop";
-_town = (getpos player) call nearestTown;
+_town = (getpos player) call OT_fnc_nearestTown;
 _s = [];
 _active = server getVariable [format["activeshopsin%1",_town],[]];
 {
@@ -22,7 +22,7 @@ _sellcls = lbData [1500,_idx];
 
 if(isNil "_sellcls" or _sellcls == "") exitWith {OT_selling = false};
 
-_price = [_town,_sellcls,_standing] call getSellPrice;
+_price = [_town,_sellcls,_standing] call OT_fnc_getSellPrice;
 _done = false;
 _mynum = 0;
 
@@ -32,7 +32,7 @@ _qty = 0;
 {
 	_c = _x select 0;
 	if(_c == _sellcls) exitWith {_qty = _x select 1};				
-}foreach(player call unitStock);
+}foreach(player call OT_fnc_unitStock);
 
 if(_qty == 0) exitWith {[_mystock,_town,_standing,_s] call sellDialog};
 
@@ -84,6 +84,6 @@ for "_i" from 0 to _qty do {
 
 
 OT_selling = false;
-_mystock = player call unitStock;
+_mystock = player call OT_fnc_unitStock;
 lbClear 1500;
 [_mystock,_town,_standing,_s] call sellDialog;

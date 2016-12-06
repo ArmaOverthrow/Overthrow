@@ -95,7 +95,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 
 	_wp = _tgroup addWaypoint [_ao,0];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this,75] execVM 'funcs\addons\eject.sqf'"];
+	_wp setWaypointStatements ["true","[vehicle this,75] spawn OT_fnc_parachuteAll"];
 	_wp setWaypointTimeout [5,5,5];
 
 	_wp = _tgroup addWaypoint [_ao,0];
@@ -113,7 +113,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 
 	_wp = _tgroup addWaypoint [_frompos,2000];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
+	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 }else{
 	if(typename _tgroup == "GROUP") then {
 		_veh setdamage 0;
@@ -133,7 +133,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 
 		_wp = _tgroup addWaypoint [_frompos,0];
 		_wp setWaypointType "SCRIPTED";
-		_wp setWaypointStatements ["true","[vehicle this] execVM 'funcs\cleanup.sqf'"];
+		_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 	};
 };
 sleep 10;
