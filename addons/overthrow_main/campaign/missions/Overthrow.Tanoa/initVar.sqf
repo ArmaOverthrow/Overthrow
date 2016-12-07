@@ -15,11 +15,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_ui")) then {
 	OT_hasAce = true;
 };
 
-OT_hasTFAR = false;
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-	OT_hasTFAR = true;
-};
-
 OT_allIntel = [];
 
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time

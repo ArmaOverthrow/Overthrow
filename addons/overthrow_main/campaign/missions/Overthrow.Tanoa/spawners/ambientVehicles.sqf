@@ -49,7 +49,7 @@ while {(_count < _numVeh)} do {
 					_groups pushback _group;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
-					[_civ] call initCivilian;
+					[_civ] call OT_fnc_initCivilian;
 					_civ moveInDriver _veh;
 
 					_region  = server getVariable format["region_%1",_town];

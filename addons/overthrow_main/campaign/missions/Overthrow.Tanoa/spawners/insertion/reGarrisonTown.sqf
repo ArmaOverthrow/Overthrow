@@ -51,7 +51,7 @@ if(!isNil "_close") then {
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _start, [],0, "NONE"];
 	_police pushBack _civ;
 	_civ moveInCargo _veh;
-	[_civ,_town] call initGendarm;
+	[_civ,_town] call OT_fnc_initGendarm;
 	_civ setBehaviour "SAFE";
 	sleep 0.01;
 
@@ -59,7 +59,7 @@ if(!isNil "_close") then {
 	_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
 
 	_police pushBack _civ;
-	[_civ,_town] call initGendarm;
+	[_civ,_town] call OT_fnc_initGendarm;
 	_civ setBehaviour "SAFE";
 	_civ moveInCargo _veh;
 
@@ -85,7 +85,7 @@ if(!isNil "_close") then {
 	_wp setWaypointType "SCRIPTED";
 	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 
-	_group call initGendarmPatrol;
+	_group call OT_fnc_initGendarmPatrol;
 	_group call distributeAILoad;
 	_tgroup call distributeAILoad;		
 }else{

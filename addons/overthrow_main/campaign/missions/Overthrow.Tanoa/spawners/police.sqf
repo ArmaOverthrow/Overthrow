@@ -32,13 +32,13 @@ while {_count < _numNATO} do {
 		_civ setVariable ["polgarrison",_town,false];
 		[_civ] joinSilent _group;		
 		_civ setRank "SERGEANT";
-		[_civ,_town] spawn initPolice;
+		[_civ,_town] spawn OT_fnc_initPolice;
 		_civ setBehaviour "SAFE";
 
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
 	};
-	_group spawn initPolicePatrol;
+	_group spawn OT_fnc_initPolicePatrol;
 	_range = _range + 50;
 };
 

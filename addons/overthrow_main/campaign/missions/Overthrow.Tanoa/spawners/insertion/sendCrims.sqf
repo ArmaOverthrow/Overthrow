@@ -25,7 +25,7 @@ while{_count < _numcrim} do {
 	_civ setRank "SERGEANT";
 	_civ setCombatMode "RED";
 	
-	[_civ,_town] call initCriminal;
+	[_civ,_town] call OT_fnc_initCriminal;
 	_count = _count + 1;
 	_start = [[[_mobpos,40]]] call BIS_fnc_randomPos;
 };	

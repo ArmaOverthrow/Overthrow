@@ -54,7 +54,7 @@ private _allActivePiers = [];
     };
     
     if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
-        [_x] call setupTownEconomy;
+        [_x] call OT_fnc_setupTownEconomy;
     };
 	
 	_shops = server getVariable [format["activeshopsin%1",_x],[]];

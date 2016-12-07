@@ -11,38 +11,10 @@ progressBar = compileFinal preProcessFileLineNumbers "funcs\progressBar.sqf";
 revealToNATO = compileFinal preProcessFileLineNumbers "funcs\revealToNATO.sqf";
 revealToCRIM = compileFinal preProcessFileLineNumbers "funcs\revealToCRIM.sqf";
 
-//AI init
-initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
-initGendarm = compileFinal preProcessFileLineNumbers "AI\gendarm.sqf";
-initPolice = compileFinal preProcessFileLineNumbers "AI\police.sqf";
-initSecurity = compileFinal preProcessFileLineNumbers "AI\security.sqf";
-initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
-initSniper = compileFinal preProcessFileLineNumbers "AI\sniper.sqf";
-initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
-initGendarmPatrol = compileFinal preProcessFileLineNumbers "AI\gendarmPatrol.sqf";
-initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
-initCheckpoint = compileFinal preProcessFileLineNumbers "AI\checkpoint.sqf";
-initCriminal = compileFinal preProcessFileLineNumbers "AI\criminal.sqf";
-initCrimLeader = compileFinal preProcessFileLineNumbers "AI\crimLeader.sqf";
-initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
-initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
-initHarbor = compileFinal preProcessFileLineNumbers "AI\harbor.sqf";
-initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
-civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
-initRecruit = compileFinal preProcessFileLineNumbers "AI\recruit.sqf";
-initMobster = compileFinal preProcessFileLineNumbers "AI\mobster.sqf";
-initMobBoss = compileFinal preProcessFileLineNumbers "AI\mobBoss.sqf";
-initPriest = compileFinal preProcessFileLineNumbers "AI\priest.sqf";
-
 intelEvent = compileFinal preProcessFileLineNumbers "funcs\intelEvent.sqf";
 intelLevel = compileFinal preProcessFileLineNumbers "funcs\intelLevel.sqf";
 doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sqf";
 playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
-
-//AI Orders
-openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";
-loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
-revivePlayer = compileFinal preProcessFileLineNumbers "AI\orders\revivePlayer.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
@@ -61,18 +33,6 @@ recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf";
 
-//QRF
-NATOQRF = compileFinal preProcessFileLineNumbers "AI\QRF\NATOQRF.sqf";
-NATOGroundForces = compileFinal preProcessFileLineNumbers "AI\QRF\NATOGroundForces.sqf";
-NATOAirSupport = compileFinal preProcessFileLineNumbers "AI\QRF\NATOAirSupport.sqf";
-NATOGroundSupport = compileFinal preProcessFileLineNumbers "AI\QRF\NATOGroundSupport.sqf";
-NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
-NATOcounter = compileFinal preProcessFileLineNumbers "AI\QRF\NATOcounter.sqf";
-CTRGSupport = compileFinal preProcessFileLineNumbers "AI\QRF\CTRGSupport.sqf";
-NATOretakeTown = compileFinal preProcessFileLineNumbers "AI\QRF\NATOretakeTown.sqf";
-NATOrecon = compileFinal preProcessFileLineNumbers "AI\QRF\NATOrecon.sqf";
-NATOsniper = compileFinal preProcessFileLineNumbers "AI\QRF\NATOsniper.sqf";
-
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
 
@@ -87,15 +47,8 @@ sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims
 newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
 
 //Local interactions
-initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
-initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarShopLocal.sqf";
-initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
-initHarborLocal = compileFinal preProcessFileLineNumbers "interaction\initHarborLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
-
-//Economy
-setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";
 
 //Actions
 buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
@@ -133,7 +86,6 @@ unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
 unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
 unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
-NATOsearch = compileFinal preProcessFileLineNumbers "AI\NATOsearch.sqf";
 
 //Other Systems
 perkSystem = compileFinal preProcessFileLineNumbers "perkSystem.sqf";
@@ -143,9 +95,6 @@ intelSystem = compileFinal preProcessFileLineNumbers "intelSystem.sqf";
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
-
-//Addons
-[] execVM "SHK_pos\shk_pos_init.sqf";
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
 
@@ -266,10 +215,11 @@ assignedKey = {
 };
 
 standing = {
+	if!(hasInterface) exitWith {};
     _town = _this select 0;
     _rep = (player getVariable [format["rep%1",_town],0])+(_this select 1);
     player setVariable [format["rep%1",_town],_rep,true];
-    _totalrep = (player getVariable "rep")+(_this select 1);
+    _totalrep = (player getVariable ["rep",0])+(_this select 1);
     player setVariable ["rep",_totalrep,true];
 
 	if(count _this > 2) then {
@@ -309,6 +259,7 @@ loadPlayerData = {
 };
 
 influence = {
+	if!(hasInterface) exitWith {};
     _totalrep = (player getVariable ["influence",0])+_this;
     player setVariable ["influence",_totalrep,true];
 	_plusmin = "";
@@ -319,6 +270,7 @@ influence = {
 };
 
 influenceSilent = {
+	if!(hasInterface) exitWith {};
     _totalrep = (player getVariable ["influence",0])+_this;
     player setVariable ["influence",_totalrep,true];
 };
@@ -356,6 +308,7 @@ rewardMoney = {
 };
 
 money = {
+	if!(hasInterface) exitWith {};
     _amount = _this select 0;
     _rep = (player getVariable ["money",0])+_amount;
     if(_rep < 0) then {
@@ -409,16 +362,6 @@ stability = {
         };
     }
 
-};
-
-KK_fnc_fileExists = {
-    private ["_ctrl", "_fileExists"];
-    disableSerialization;
-    _ctrl = findDisplay 0 ctrlCreate ["RscHTML", -1];
-    _ctrl htmlLoad _this;
-    _fileExists = ctrlHTMLLoaded _ctrl;
-    ctrlDelete _ctrl;
-    _fileExists
 };
 
 OT_notifies = [];

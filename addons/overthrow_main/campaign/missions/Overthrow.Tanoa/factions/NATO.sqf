@@ -227,14 +227,14 @@ while {true} do {
 				}else{
 					if(_townPos call OT_fnc_inSpawnDistance) then {
 						if(random 100 > 90) then {
-							_townPos spawn NATOsearch;
+							_townPos spawn OT_fnc_NATOsearch;
 						};
 					};
 				};
 			}else{
 				server setVariable [format ["garrison%1",_town],0,true];
 				if(!(_town in _abandoned) and _currentAttack == "") then {
-					_town spawn NATOattack;
+					_town spawn OT_fnc_NATOResponseTown;
 					server setVariable ["NATOattacking",_town,true];
 					server setVariable ["NATOattackstart",time,true];
 					_garrisoned = true;
@@ -263,7 +263,7 @@ while {true} do {
 						_garrisoned = true;
 						server setVariable ["NATOattacking",_name,true];
 						server setVariable ["NATOattackstart",time,true];
-						_name spawn NATOcounter;
+						_name spawn OT_fnc_NATOResponseObjective;
 						_abandoned pushback _name;
 						server setVariable ["NATOabandoned",_abandoned,true];
 						_name setMarkerAlpha 1;
@@ -285,7 +285,7 @@ while {true} do {
 				};
 			}foreach (_abandoned);
 			if(_high > 0) then {
-				_highest spawn NATOretakeTown;
+				_highest spawn OT_fnc_NATOCounterTown;
 			};
 		};
 
@@ -298,7 +298,7 @@ while {true} do {
 				_target = _abandoned call BIS_fnc_selectRandom;
 				_pos = server getvariable _target;
 				if !(isNil "_pos") then {
-					_pos spawn NATOsniper;
+					_pos spawn OT_fnc_NATOSupportSniper;
 				};
 			};
 		};

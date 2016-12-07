@@ -67,8 +67,8 @@ if(_iswarehouse) then {
 				_count = _count + 1;
 			};
 		};
-		if !([_target, _cls, _count] call CBA_fnc_removeItemCargoGlobal) then {
-			[_target, _cls, _count] call CBA_fnc_removeWeaponCargoGlobal;
+		if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
+			[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 		};
 		if(_full) exitWith {};
 	}foreach(_target call OT_fnc_unitStock);

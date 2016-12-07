@@ -169,7 +169,7 @@ if (_canBuyBoats) then {
 						_driver globalchat "k, bye";
 					};
 					if(random 100 > 90) then {
-						[player] spawn NATOsearch;
+						[player] spawn OT_fnc_NATOsearch;
 					};
 					if(!alive _driver) exitWith{};
 					_timeout = time + 800;
@@ -259,7 +259,7 @@ if (_canSellDrugs) then {
 				if(side _civ == civilian) then {
 					_price = round(_price * 1.2);
 					if(player call unitSeenNATO) then {
-						[player] remoteExec ["NATOsearch",2,false];
+						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 68) then {
 							[_civ,player,["How much?",format["$%1",_price],"OK"],
@@ -288,7 +288,7 @@ if (_canSellDrugs) then {
 				}else{
 					_price = ["Tanoa",_drugcls] call OT_fnc_getDrugPrice;
 					if(player call unitSeenNATO) then {
-						[player] remoteExec ["NATOsearch",2,false];
+						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
 							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn doConversation;

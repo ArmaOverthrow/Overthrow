@@ -41,7 +41,7 @@ if !(_church isEqualTo []) then {
 	_groups pushback _group;
 	_pos = [[[_church,20]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_civType_priest, _pos, [],0, "NONE"];
-	[_civ] call initPriest;
+	[_civ] call OT_fnc_initPriest;
 	sleep 0.1;
 };
 
@@ -73,12 +73,12 @@ while {_count < _numCiv} do {
 		_pos = [[[_home,50]]] call BIS_fnc_randomPos;
 		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
-		[_civ] call initCivilian;
+		[_civ] call OT_fnc_initCivilian;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 		sleep 0.1;
 	};
-	_group spawn civilianGroup;
+	_group spawn OT_fnc_initCivilianGroup;
 };
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

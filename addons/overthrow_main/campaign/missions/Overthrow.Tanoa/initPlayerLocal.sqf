@@ -4,7 +4,7 @@ waitUntil {player == player};
 
 [] spawn {
 	while {true} do {
-		sleep 30;
+		sleep 3;
 		{
 			if(local _x and count (units _x) == 0) then {
 				deleteGroup _x;
@@ -24,10 +24,6 @@ removeBackpack player;
 removeHeadgear player;
 removeVest player;
 
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-	call TFAR_fnc_sendVersionInfo;
-    "task_force_radio_pipe" callExtension "dummy";
-};
 
 player linkItem "ItemMap";
 
@@ -45,7 +41,7 @@ if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+if (OT_hasTFAR) then {
    player linkItem "tf_anprc148jem";
 };
 
@@ -204,21 +200,6 @@ if(isMultiplayer or _startup == "LOAD") then {
 		_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
 	}foreach (_recruits);
 	server setVariable ["recruits",_newrecruits,true];
-    //JIP interactions
-    {
-		if((typename(_x getVariable ["shop",false])) == "STRING") then {
-			_x call initShopLocal;
-		};
-		if(_x getVariable ["gundealer",false]) then {
-			_x call initGunDealerLocal;
-		};
-		if(_x getVariable ["carshop",false]) then {
-			_x call initCarShopLocal;
-		};
-		if(_x getVariable ["harbor",false]) then {
-			_x call initHarborLocal;
-		};
-	}foreach(allUnits);
 };
 
 if (_newplayer) then {
@@ -269,7 +250,7 @@ if (_newplayer) then {
 
     {
         if(typeof _x == OT_item_Map) then {
-            _x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+            _x setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
         };
         _x setVariable ["owner",getplayerUID player,true];
     }foreach(_furniture);

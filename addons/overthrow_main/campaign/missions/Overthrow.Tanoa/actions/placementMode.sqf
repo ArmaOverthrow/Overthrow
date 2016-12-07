@@ -80,7 +80,7 @@ if(_cost > 0) then {
 				};
 				modeTarget remoteExec ["enableSimulationGlobal false",2,false];
 				if(_cls == OT_item_Map) then {
-					modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+					modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 				};
 				clearWeaponCargoGlobal modeTarget;
 				clearMagazineCargoGlobal modeTarget;
@@ -109,7 +109,7 @@ if(_cost > 0) then {
 	modeTarget remoteExec ["enableSimulationGlobal false",2];
 	modeTarget enableSimulation false;
 	if(_cls == OT_item_Map) then {
-		modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+		modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 	};
 	modeTarget enableSimulationGlobal false;
 

@@ -29,7 +29,7 @@ _civ setRank "CAPTAIN";
 [_civ] joinSilent nil;
 [_civ] joinSilent _group;
 
-[_civ,_town] call initCrimLeader;
+[_civ,_town] call OT_fnc_initCrimLeader;
 
 _count = 0;
 _start = [[[_mobpos,40]]] call BIS_fnc_randomPos;
@@ -41,7 +41,7 @@ while{_count < _numcrim} do {
 	_civ setRank "LIEUTENANT";
 	_civ setCombatMode "RED";
 
-	[_civ,_town] call initCriminal;
+	[_civ,_town] call OT_fnc_initCriminal;
 	_count = _count + 1;
 	_start = [[[_mobpos,40]]] call BIS_fnc_randomPos;
 };

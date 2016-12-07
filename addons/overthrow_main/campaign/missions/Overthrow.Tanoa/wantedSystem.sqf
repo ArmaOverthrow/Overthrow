@@ -70,7 +70,7 @@ while {alive _unit} do {
 			}foreach(player nearentities["CAManBase",50]);
 			if(!isNull _medic) then {
 				_medic globalchat "On my way to help you";
-				[_medic,_unit] call revivePlayer;
+				[_medic,_unit] call OT_fnc_orderRevivePlayer;
 			}else{
 				if(isMultiplayer) then {
 					_numplayers = count([] call CBA_fnc_players);

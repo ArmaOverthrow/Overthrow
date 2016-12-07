@@ -37,7 +37,7 @@ _civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 _civ setVariable ["garrison",_name,false];
 _civ setRank "MAJOR";
 _soldiers pushBack _civ;
-[_civ,_name] call initMilitary;
+[_civ,_name] call OT_fnc_initMilitary;
 _civ setBehaviour "SAFE";
 
 {
@@ -58,7 +58,7 @@ while {_count < _numNATO} do {
 	_civ setVariable ["garrison",_name,false];
 	_soldiers pushBack _civ;
 	_civ setRank "CAPTAIN";
-	[_civ,_name] call initMilitary;
+	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	sleep 0.2;
 	_count = _count + 1;
@@ -67,7 +67,7 @@ while {_count < _numNATO} do {
 		_start = [_start,20,_dir+90] call BIS_fnc_relPos;
 	};
 };
-_group spawn initCheckpoint;
+_group spawn OT_fnc_initNATOCheckpoint;
 {
 	_x addCuratorEditableObjects [units _group];
 }foreach(allcurators);

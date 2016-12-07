@@ -18,7 +18,7 @@ if(_name find "Comms" == 0) then {
 	_civ = _group createUnit [OT_NATO_Unit_Sniper, _posTown, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
-	[_civ,_name] call initSniper;
+	[_civ,_name] call OT_fnc_initSniper;
 	_civ setBehaviour "SAFE";
 	_civ action ["ladderOnUp", _tower, 0, 0];
 					
@@ -30,7 +30,7 @@ if(_name find "Comms" == 0) then {
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		[_civ,_name] call initSniper;
+		[_civ,_name] call OT_fnc_initSniper;
 		_civ setBehaviour "SAFE";
 		_civ action ["ladderOnUp", _tower, 0, 0];
 		_count = _count + 1;
@@ -45,7 +45,7 @@ if(_name find "Comms" == 0) then {
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		[_civ,_name] call initMilitary;
+		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
 		sleep 0.2;
@@ -62,7 +62,7 @@ if(_name find "Comms" == 0) then {
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		[_civ,_name] call initMilitary;
+		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
 		sleep 0.2;
@@ -86,7 +86,7 @@ while {_count < _numNATO} do {
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
 	_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-	[_civ,_name] call initMilitary;
+	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	{
 		_x addCuratorEditableObjects[[_civ],false];
@@ -100,7 +100,7 @@ while {_count < _numNATO} do {
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "LIEUTENANT";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		[_civ,_name] call initMilitary;
+		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		{
 			_x addCuratorEditableObjects[[_civ],false];
@@ -109,7 +109,7 @@ while {_count < _numNATO} do {
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 	};
-	_group call initMilitaryPatrol;
+	_group call OT_fnc_initMilitaryPatrol;
 	_range = _range + 50;
 	sleep 0.2;
 };
@@ -187,7 +187,7 @@ _road = objNull;
 		[_x] joinSilent _vgroup;
 		_x setVariable ["garrison","HQ",false];
 	}foreach(crew _veh);
-	_vgroup call initMilitaryPatrol;
+	_vgroup call OT_fnc_initMilitaryPatrol;
 }foreach(_vehgarrison);
 
 spawner setvariable [_spawnid,_groups,false];

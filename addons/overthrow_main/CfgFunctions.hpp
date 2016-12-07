@@ -5,7 +5,6 @@ class CfgFunctions
 		class Base
 		{
 			file = "\ot\functions";
-			class preInit {preInit = 1};
 			class assignMission {};
 			class canPlace {};
 			class cleanup {};
@@ -13,6 +12,13 @@ class CfgFunctions
 			class spawnTemplate {};
 			class spawnTemplateAttached {};
 			class unitStock {};
+		};
+
+		class Events
+		{
+			file = "\ot\functions\events";
+			class preInit {preInit = 1};
+			class postInit {postInit = 1};
 		};
 
 		/*
@@ -38,7 +44,15 @@ class CfgFunctions
 		class Virtualization
 		{
 			file = "\ot\functions\virtualization";
+			class initVirtualization {};
+			class runVirtualization {};
+
+			class spawn {};
+			class despawn {};
 			class inSpawnDistance {};
+			class registerSpawner {};
+			class deregisterSpawner {};
+			class updateSpawnerPosition {};
 		};
 
 		/*
@@ -47,6 +61,7 @@ class CfgFunctions
 		class Economy
 		{
 			file = "\ot\functions\economy";
+			class setupTownEconomy {};
 			class getPrice {};
 			class getSellPrice {};
 			class getDrugPrice {};
@@ -76,7 +91,46 @@ class CfgFunctions
 			class createSoldier {};
 			class getSoldier {};
 			class parachuteAll {};
+			class NATOsearch {};
 		};
+
+		/*
+		* AI orders
+		*/
+		class Orders
+		{
+			file = "\ot\functions\AI\orders";
+			class orderLoot {};
+			class orderOpenInventory {};
+			class orderRevivePlayer {};
+		};
+
+		/*
+		* NPCs
+		*/
+		class NPC
+		{
+			file = "\ot\functions\AI\NPC";
+			class initCarDealer {};
+			class initCivilian {};
+			class initCivilianGroup {};
+			class initCriminal {};
+			class initCrimLeader {};
+			class initGendarm {};
+			class initGendarmPatrol {};
+			class initGunDealer {};
+			class initHarbor {};
+			class initMilitary {};
+			class initMilitaryPatrol {};
+			class initMobBoss {};
+			class initMobster {};
+			class initNATOCheckpoint {};
+			class initPolice {};
+			class initPolicePatrol {};
+			class initPriest {};
+			class initShopkeeper {};
+			class initSniper {};
+		}
 
 		/*
 		* Math.. how does it work?
@@ -87,6 +141,35 @@ class CfgFunctions
 			class rotationMatrix {};
 			class matrixMultiply {};
 			class matrixRotate {};
+		};
+
+		/*
+		* NATO
+		*/
+		class NATO
+		{
+			file = "\ot\functions\factions\NATO";
+			class NATOQRF {};
+			class NATOGroundForces {};
+			class CTRGSupport {};
+			class NATOAirSupport {};
+			class NATOGroundSupport {};
+
+			class NATOResponseObjective {};
+			class NATOResponseTown {};
+			class NATOCounterTown {};
+
+			class NATOSupportSniper {};
+			class NATOSupportRecon {};
+		};
+
+		/*
+		* Mod integration
+		*/
+		class Integration
+		{
+			file = "\ot\functions\integration";
+			class initTFAR {};
 		};
 	};
 };

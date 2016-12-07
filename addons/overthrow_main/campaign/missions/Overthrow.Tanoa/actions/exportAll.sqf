@@ -25,22 +25,22 @@ _total = 0;
 		_total = _total + (_costprice * _num);
 		call {
 			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
+				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
 			};
 			if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
+				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
 			};
 			if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
+				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
 			};
 			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeMagazineCargoGlobal;
+				[_target, _cls, _num] call CBA_fnc_removeMagazineCargo;
 			};
 			if(_cls isKindOf "Bag_Base") exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeBackpackCargoGlobal;
+				[_target, _cls, _num] call CBA_fnc_removeBackpackCargo;
 			};
-			if !([_target, _cls, _num] call CBA_fnc_removeItemCargoGlobal) then {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargoGlobal;
+			if !([_target, _cls, _num] call CBA_fnc_removeItemCargo) then {
+				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
 			};			
 		};		
 	};

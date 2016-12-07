@@ -57,7 +57,7 @@ if (!isServer) exitwith {};
     };
     server setVariable [format["stability%1",_name],_stability,true];
 
-    [_name] call setupTownEconomy;
+    [_name] call OT_fnc_setupTownEconomy;
 
     private _popVar=format["population%1",_name];
     server setVariable [_popVar,_pop,true];

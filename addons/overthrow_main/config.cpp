@@ -1,10 +1,18 @@
+#include "ui\dialogs\defines.hpp"
+#include "ui\dialogs\stats.hpp"
+#include "ui\dialogs\shop.hpp"
+#include "ui\dialogs\main.hpp"
+#include "ui\dialogs\place.hpp"
+#include "ui\dialogs\build.hpp"
+#include "ui\dialogs\recruits.hpp"
+
 class CfgPatches
 {
 	class OT_Overthrow_Main
 	{
 		author="ARMAzac";
 		name="Overthrow";
-		url="https://github.com/armazac/overthrow";
+		url="https://github.com/jabberzac/overthrow";
 		requiredAddons[]=
 		{
 			"a3_map_tanoabuka",
@@ -12,7 +20,7 @@ class CfgPatches
             "cba_xeh",
             "cba_jr"
 		};
-		requiredVersion=1.64;
+		requiredVersion=1.66;
 		units[] = {"OT_GanjaItem","OT_BlowItem"};
 		weapons[] = {"OT_Ganja","OT_Blow"};
 	};

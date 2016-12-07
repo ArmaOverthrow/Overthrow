@@ -26,14 +26,14 @@ if(_veh call unitSeen) then {
 disableUserInput true;
 
 format["Transferring inventory from %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
-[5,false] call progressBar;				
+[5,false] call progressBar;
 _end = time + 5;
 {
 	_count = 0;
 	_cls = _x select 0;
-	
+
 	_full = false;
-	while {_count < (_x select 1)} do {		
+	while {_count < (_x select 1)} do {
 		if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd _cls)) exitWith {
 			_full = true;
 		};
@@ -55,24 +55,24 @@ _end = time + 5;
 				_veh addBackpackCargoGlobal [_cls,1];
 			};
 			_veh addItemCargoGlobal [_cls,1];
-		};		
+		};
 	};
-	
+
 	call {
 		if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-			[_target, _cls, _count] call CBA_fnc_removeWeaponCargoGlobal;
+			[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 		};
 		if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-			[_target, _cls, _count] call CBA_fnc_removeWeaponCargoGlobal;
+			[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 		};
 		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-			[_target, _cls, _count] call CBA_fnc_removeMagazineCargoGlobal;
+			[_target, _cls, _count] call CBA_fnc_removeMagazineCargo;
 		};
 		if(_cls isKindOf "Bag_Base") exitWith {
-			[_target, _cls, _count] call CBA_fnc_removeBackpackCargoGlobal;
+			[_target, _cls, _count] call CBA_fnc_removeBackpackCargo;
 		};
-		if !([_target, _cls, _count] call CBA_fnc_removeItemCargoGlobal) then {
-			[_target, _cls, _count] call CBA_fnc_removeWeaponCargoGlobal;
+		if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
+			[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 		};
 	};
 	if(_full) exitWith {hint "This vehicle is full, use a truck for more storage"};
