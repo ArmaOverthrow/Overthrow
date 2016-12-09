@@ -1,7 +1,7 @@
 OT_hasTFAR = false;
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
     OT_hasTFAR = true;
-
+    tf_radio_channel_name = "TaskForceRadio";
     if(hasInterface) then {
         [] spawn {
             while {true} do {

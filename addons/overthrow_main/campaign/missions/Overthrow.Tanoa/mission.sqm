@@ -8,7 +8,7 @@ class EditorData
 	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=1960;
+		nextID=1979;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=172;
+		nextID=184;
 	};
 	class Camera
 	{
-		pos[]={8293.5313,20.082132,1174.4343};
-		dir[]={-0.0039740861,0.05769299,0.99833179};
-		up[]={0.00022952408,0.99833643,-0.057689};
-		aside[]={1.0000007,6.7434826e-008,0.0039809523};
+		pos[]={11076.261,130.85066,7954.9824};
+		dir[]={-0.80662727,-0.24414952,-0.53828722};
+		up[]={-0.20308381,0.9697383,-0.13552383};
+		aside[]={-0.55508566,-1.0768417e-008,0.83180016};
 	};
 };
 binarizationWanted=0;
@@ -54,13 +54,17 @@ addons[]=
 	"ace_respawn",
 	"ace_explosives",
 	"ace_ui",
-	"A3_Modules_F_Curator_Curator"
+	"A3_Modules_F_Curator_Curator",
+	"A3_Structures_F_Exp_Industrial_SugarCaneFactory_01",
+	"A3_Structures_F_Naval_Piers",
+	"A3_Structures_F_Civ_Constructions",
+	"A3_Structures_F_Exp_Industrial_Materials"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=23;
+		items=25;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -219,6 +223,20 @@ class AddonsMetaData
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item23
+		{
+			className="A3_Structures_F_Exp_Industrial";
+			name="Arma 3 Apex - Industrial Structures";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item24
+		{
+			className="A3_Structures_F";
+			name="Arma 3 - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="http://www.arma3.com";
 		};
@@ -681,7 +699,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=84;
+		items=91;
 		class Item0
 		{
 			dataType="Marker";
@@ -1061,7 +1079,7 @@ class Mission
 		class Item15
 		{
 			dataType="Marker";
-			position[]={3568.219,3.811222e+037,10426.109};
+			position[]={-19219.66,3.811222e+037,5984.8955};
 			name="tourist_6";
 			type="c_ship";
 			alpha=0;
@@ -6966,11 +6984,12 @@ class Mission
 		class Item82
 		{
 			dataType="Marker";
-			position[]={12980.813,-12480.324,7260.6577};
+			position[]={12980.813,-8.3146442e-018,7260.6582};
 			name="destination_5";
 			type="mil_triangle";
+			alpha=0;
 			id=1956;
-			atlOffset=-12474.712;
+			atlOffset=5.6122475;
 		};
 		class Item83
 		{
@@ -6981,6 +7000,124 @@ class Mission
 			alpha=0;
 			id=1957;
 			atlOffset=9.16751;
+		};
+		class Item84
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4260.0249,12.894197,8463.6885};
+				angles[]={0,0.05455333,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=1960;
+			type="Land_SCF_01_generalBuilding_F";
+			atlOffset=-1.3087754;
+		};
+		class Item85
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4255.6426,-0.9681859,8472.6367};
+				angles[]={0,1.6120018,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=1962;
+			type="Land_Pier_F";
+			atlOffset=-2.0691957;
+		};
+		class Item86
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4176.8071,8.2978001,8383.7256};
+				angles[]={0,2.8103263,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=1963;
+			type="Land_SCF_01_warehouse_F";
+			atlOffset=0.024163485;
+		};
+		class Item87
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4257.1362,4.395422,8486.8887};
+				angles[]={0,0,6.2815661};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=1964;
+			type="Land_IronPipes_F";
+			atlOffset=0.05078125;
+		};
+		class Item88
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4256.6587,4.5515013,8489.4189};
+				angles[]={0,0,6.2815661};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=1971;
+			type="Land_WoodenPlanks_01_messy_F";
+			atlOffset=0.012388945;
+		};
+		class Item89
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4253.1611,3.9778874,8488.7578};
+				angles[]={0,0,6.2815661};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=1972;
+			type="Land_Pallets_F";
+			atlOffset=0.0037994385;
+		};
+		class Item90
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4247.2495,4.5097284,8466.6719};
+				angles[]={0,4.7978544,0};
+			};
+			side="Empty";
+			class Attributes
+			{
+			};
+			id=1975;
+			type="Land_WoodenPlanks_01_messy_F";
+			atlOffset=0.71717787;
 		};
 	};
 	class Connections

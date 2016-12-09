@@ -147,14 +147,36 @@ class CfgMarkers
 		shadow = true;
 		scope = 1;
 	};
+	class ot_Business
+	{
+		name = "Business";
+		icon = "ot\ui\markers\business.paa";
+		color[] = {1, 0, 0, 1};
+		size = 32;
+		shadow = true;
+		scope = 1;
+	};
+	class ot_Factory
+	{
+		name = "Factory";
+		icon = "ot\ui\markers\factory.paa";
+		color[] = {1, 0, 0, 1};
+		size = 32;
+		shadow = true;
+		scope = 1;
+	};
 };
 
 class CfgWorlds
 {
 	class Tanoa
 	{
-		fogBeta0Max = 0;
-	}
+		class Names {
+			class RailwayDepot01 {
+				name = "factory";
+			};
+		};
+	};
 };
 
 #include "macros.hpp"

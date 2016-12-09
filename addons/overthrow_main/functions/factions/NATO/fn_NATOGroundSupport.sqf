@@ -8,25 +8,24 @@ private _count = 0;
 private _group = creategroup blufor;
 
 while {_count < _num} do {
-	private _vehtype = OT_NATO_Vehicles_GroundSupport call BIS_fnc_SelectRandom;	
+	private _vehtype = OT_NATO_Vehicles_GroundSupport call BIS_fnc_SelectRandom;
 
 	private _dir = [_frompos,_attackpos] call BIS_fnc_dirTo;
-	_pos = [_frompos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos;	
+	_pos = [_frompos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos;
 
-	
+
 	_veh = createVehicle [_vehtype, _pos, [], 0,""];
 
 	_veh setDir (_dir);
 	_group addVehicle _veh;
 	createVehicleCrew _veh;
 	{
-		[_x] joinSilent _group;		
+		[_x] joinSilent _group;
 		_x setVariable ["garrison","HQ",false];
 		_x setVariable ["NOAI",true,false];
-	}foreach(crew _veh);	
+	}foreach(crew _veh);
 	_count = _count + 1;
 	sleep 0.1;
-	_group call distributeAILoad;
 };
 
 _wp = _group addWaypoint [asltoatl _attackpos,20];
@@ -37,3 +36,5 @@ _wp setWaypointTimeout [600,600,600];
 _wp = _group addWaypoint [_frompos,500];
 _wp setWaypointType "SCRIPTED";
 _wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+
+_group call distributeAILoad;

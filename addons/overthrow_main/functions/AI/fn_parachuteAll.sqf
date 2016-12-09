@@ -17,12 +17,12 @@ paraLandSafe =
 	if(!alive _unit) then {
 		deleteVehicle _unit;
 	}else{
-		[_unit, "eject", vehicle _unit] remoteExec ["action",_unit,false];
+		_unit action ["eject",_unit];
 		sleep 1;
 		_inv = name _unit;
-
-		_unit setUnitLoadout (spawner getvariable [format["eject_%1",name _unit],[]]);
-		spawner setvariable [format["eject_%1",name _unit],nil,false];
+		_id = [_unit] call fnc_getBuildID;
+		_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
+		spawner setvariable [format["eject_%1",_id],nil,false];
 
 		_unit allowdamage true;// Now you can take damage.
 	};
@@ -34,17 +34,17 @@ OpenPlayerChute =
 	_paraPlayer = _this select 0;
 	_chuteheight = _this select 1;
 	waitUntil {(position _paraPlayer select 2) <= _chuteheight};
-	[_paraPlayer, "openParachute"] remoteExec ["action",_unit,false];
+	_paraPlayer action ["openParachute",_unit];
 };
 
 
 
 {
-	spawner setvariable [format["eject_%1",name _x],getUnitLoadout _x,false];
-	[_x] remoteExec ["removeBackpack",_x];
+	spawner setvariable [format["eject_%1",[_x] call fnc_getBuildID],getUnitLoadout _x,false];
+	removeBackpackGlobal _x;
 	_x disableCollisionWith _vehicle;// Sometimes units take damage when being ejected.
 	_x allowdamage false;// Trying to prevent damage.
-	[_x, "B_parachute"] remoteExec ["addBackPack",_x];
+	_x addBackpackGlobal "B_parachute";
 	unassignvehicle _x;
 	moveout _x;
 	_x setDir (_dir + 90);// Exit the chopper at right angles.

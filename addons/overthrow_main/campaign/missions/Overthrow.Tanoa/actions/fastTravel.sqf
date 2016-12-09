@@ -16,7 +16,7 @@ openMap true;
 	private _handled = false;
 
 	_buildings =  _pos nearObjects [OT_item_Tent,30];
-	if !(_buildings isEqualTo []) then {			
+	if !(_buildings isEqualTo []) then {
 		_handled = true;
 	};
 
@@ -31,7 +31,7 @@ openMap true;
 	_ob params ["_obpos","_obname"];
 	_validob = (_obpos distance _pos < 50) and (_obname in OT_allAirports);
 	if !(_validob) then {
-		if (!OT_adminMode and !([_pos,_region] call fnc_isInMarker)) then {
+		if (!OT_adminMode and !(_pos inArea _region)) then {
 			_valid = false;
 			"You cannot fast travel between islands unless your destination is a controlled airfield" call notify_minor;
 			openMap false;

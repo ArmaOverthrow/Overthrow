@@ -1,4 +1,3 @@
-
 //Helper functions
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 searchStock = compileFinal preProcessFileLineNumbers "funcs\searchStock.sqf";
@@ -32,6 +31,10 @@ importDialog = compileFinal preProcessFileLineNumbers "UI\importDialog.sqf";
 recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf";
+
+OT_fnc_mapInfoDialog = compileFinal preprocessFileLineNumbers "actions\townInfo.sqf";
+
+OT_fnc_newGameDialog = compileFinal preProcessFileLineNumbers "UI\fn_newGameDialog.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -135,7 +138,7 @@ AUG_UpdateState = {
 };
 AUG_UpdateGetInState = {
 	//Update Action
-	(_this select 0) setUserActionText [(_this select 0) getVariable "AUG_Act_GetIn",(_this select 1),(_this select 2)];
+	(_this select 0) setUserActionText [(_this select 0) getVariable ["AUG_Act_GetIn",""],(_this select 1),(_this select 2)];
 };
 AUG_Action = {
 	_veh = (_this select 0);
@@ -157,11 +160,10 @@ AUG_AddAction = {
 };
 
 mpSetDir = {
-	private["_obj","_dir"];
-	_obj = _this select 0;
-	_dir = _this select 1;
-
-	_obj setDir _dir;
+	params ["_obj","_dir"];
+	if !(isNil "_dir") then {
+		_obj setDir _dir;
+	};
 };
 
 structureInit = {
@@ -197,7 +199,8 @@ distributeAILoad = {
 	};
 };
 
-newGame = {
+OT_fnc_newGame = {
+	closeDialog 0;
     "Generating economy" remoteExec['blackFaded',0,false];
     [] execVM "initEconomy.sqf";
     waitUntil {!isNil "OT_economyInitDone"};
@@ -360,8 +363,11 @@ stability = {
         }else{
             _town setMarkerAlpha 0;
         };
-    }
-
+    };
+	if !(_town in _abandoned) then {
+		_townmrk setMarkerAlpha 0;
+		_townmrk setMarkerAlphaLocal 0;
+	};
 };
 
 OT_notifies = [];
@@ -393,76 +399,3 @@ notify_talk = {
 };
 
 [] execVM "funcs\info.sqf";
-
-fn_MovingTarget =
-{
-	private ["_target","_distance","_speed","_dir"];
-	_target = _this select 0;
-	_dir = _this select 1;
-	_distance = _this select 2;
-	_speed = _this select 3;
-	_pause = _this select 4;
-
-
-	while {true} do
-	{
-		sleep _pause;
-		for "_i" from 0 to _distance/_speed do
-		{
-			_target setPos
-			[
-				(position _target select 0) + ((sin (_dir)))*_speed,
-				(position _target select 1) + ((cos (_dir)))*_speed,
-				0
-			];
-			sleep 0.01;
-		};
-		sleep _pause;
-		for "_i" from 0 to _distance/_speed do
-		{
-			_target setPos
-			[
-				(position _target select 0) - (sin (_dir))*_speed,
-				(position _target select 1) - ((cos (_dir)))*_speed,
-				0
-			];
-			sleep 0.01;
-		};
-	};
-};
-
-fnc_isInMarker = {
-    private ["_p","_m", "_px", "_py", "_mpx", "_mpy", "_msx", "_msy", "_rpx", "_rpy", "_xmin", "_xmax", "_ymin", "_ymax", "_ma", "_res", "_ret"];
-
-    _p = _this select 0; // object
-    _m = _this select 1; // marker
-
-    if (typeName _p == "OBJECT") then {
-      _px = position _p select 0;
-      _py = position _p select 1;
-    }else {
-        if(typeName _p == "ARRAY") then {
-          _px = _p select 0;
-          _py = _p select 1;
-        }else{
-            _p = server getVariable _p;
-            _px = _p select 0;
-            _py = _p select 1;
-        };
-    };
-
-    _mpx = getMarkerPos _m select 0;
-    _mpy = getMarkerPos _m select 1;
-    _msx = getMarkerSize _m select 0;
-    _msy = getMarkerSize _m select 1;
-    _ma = -markerDir _m;
-    _rpx = ( (_px - _mpx) * cos(_ma) ) + ( (_py - _mpy) * sin(_ma) ) + _mpx;
-    _rpy = (-(_px - _mpx) * sin(_ma) ) + ( (_py - _mpy) * cos(_ma) ) + _mpy;
-    if ((markerShape _m) == "RECTANGLE") then {
-      _xmin = _mpx - _msx;_xmax = _mpx + _msx;_ymin = _mpy - _msy;_ymax = _mpy + _msy;
-      if (((_rpx > _xmin) && (_rpx < _xmax)) && ((_rpy > _ymin) && (_rpy < _ymax))) then { _ret=true; } else { _ret=false; };
-    } else {
-      _ret = false; //Who's passing ellipses in?
-    };
-    _ret;
-  };

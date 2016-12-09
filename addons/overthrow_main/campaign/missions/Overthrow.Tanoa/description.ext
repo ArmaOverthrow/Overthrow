@@ -17,7 +17,7 @@ class Header
 
 overviewText = "This is Tanoa, a small island nation in the South Pacific with a history of British and French colonialism. Tanoa is currently under occupation by NATO forces and has been at the center of international attention since the Vunakece regime was ousted in 2020. The Tanoan population is currently in dissaray and there are many conspiracy theories as to the economic and political future of this small but strategically valuable archipelago. A massive protest against the NATO occupation recently took place in the nation's capital of Georgetown, where the spokesperson for the 'Free Tanoa' movement was assassinated by an unknown assailant. In response, NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.";
 
-allowFunctionsLog = 0;
+allowFunctionsLog = 1;
 enableDebugConsole = 1;
 
 respawn = "BASE";
@@ -34,12 +34,19 @@ showMap=1;
 showBinocular=1;
 showNotepad=1;
 showWatch=1;
-debriefing=1;
+debriefing=0;
 
 //Disable ACE blood (just too much of it in a heavy game)
 class Params {
+	class ace_medical_level { //This needs to match an ace_setting, this one is a "SCALAR"(number)
+        title = "ACE Medical Level"; // Name that is shown
+        ACE_setting = 1; //Marks param to be read as an ace setting, without this nothing will happen!
+        values[] = {1, 2}; //Values that ace_medical_level can be set to
+        texts[] =  {"Basic", "Advanced"}; //Text names to show for values (Basic will set level to 1, Advanced will set level to 2)
+        default = 1; //Default value used - Value should be in the values[] list
+    };
     class ace_medical_blood_enabledFor {
-        title = "Blood";
+        title = "ACE Blood";
         ACE_setting = 1;
         values[] = {0, 1, 2};
         texts[] =  {"None", "Players Only", "All"};

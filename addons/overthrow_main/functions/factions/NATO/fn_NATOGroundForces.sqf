@@ -14,7 +14,7 @@ if !(_byair) then {
 sleep 0.5;
 private _allunits = [];
 private _veh = false;
-if(_frompos distance _attackpos > 1200) then {
+if(_frompos distance _attackpos > 600) then {
 	//Transport
 	_tgroup = creategroup blufor;
 	_vehtype = OT_NATO_Vehicle_Transport call BIS_fnc_selectRandom;
@@ -44,8 +44,6 @@ if(_frompos distance _attackpos > 1200) then {
 	}foreach(crew _veh);
 	_allunits = (units _tgroup);
 	sleep 1;
-
-	_tgroup call distributeAILoad;
 };
 
 {
@@ -72,7 +70,7 @@ if !(_byair) then {
 	}foreach(units _group2);
 };
 
-_group1 call distributeAILoad;
+
 
 {
 	_x addCuratorEditableObjects [_allunits,true];
@@ -117,7 +115,8 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 }else{
 	if(typename _tgroup == "GROUP") then {
 		_veh setdamage 0;
-		_roads = (_attackpos nearRoads 500);
+		_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
+		_roads = ([_attackpos,200,_dir] call BIS_fnc_relPos) nearRoads 200;
 		private _dropos = _ao;
 		if(count _roads > 0) then {
 			_dropos = getpos(_roads select (count _roads - 1));
@@ -145,3 +144,8 @@ _wp setWaypointSpeed "FULL";
 _wp = _group1 addWaypoint [asltoatl _attackpos,0];
 _wp setWaypointType "GUARD";
 _wp setWaypointBehaviour "COMBAT";
+
+_group1 call distributeAILoad;
+if(typename _tgroup == "GROUP") then {
+	_tgroup call distributeAILoad;
+};

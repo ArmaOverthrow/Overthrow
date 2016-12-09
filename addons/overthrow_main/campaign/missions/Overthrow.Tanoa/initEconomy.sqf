@@ -63,7 +63,7 @@ if (!isServer) exitwith {};
     server setVariable [_popVar,_pop,true];
 
     {
-        if([_pos,_x] call fnc_isInMarker) exitWith {server setVariable [format["region_%1",_name],_x,true]};
+        if(_pos inArea _x) exitWith {server setVariable [format["region_%1",_name],_x,true]};
     }foreach(OT_regions);
     sleep 0.1;
 }foreach (OT_allTowns);

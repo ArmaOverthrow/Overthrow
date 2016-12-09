@@ -18,8 +18,7 @@ if(!isMultiplayer) then {
     //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
     [] execVM "funcs\fn_advancedTowingInit.sqf";
 
-    call compile preprocessFileLineNumbers "initFuncs.sqf";
-	call compile preprocessFileLineNumbers "data\names_local.sqf";
+    call compile preprocessFileLineNumbers "initFuncs.sqf";	
     call compile preprocessFileLineNumbers "initVar.sqf";
 
     //SINGLE PLAYER init

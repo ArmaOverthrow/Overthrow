@@ -17,6 +17,8 @@ if (!hasInterface) exitWith {};
 if(isNil "bigboss" and typeof player == "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
 if(count ([] call CBA_fnc_players) == 1 and isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
+if(isNil {server getVariable "generals"}) then {server setVariable ["generals",[getplayeruid player]]};
+
 removeAllWeapons player;
 removeAllAssignedItems player;
 removeGoggles player;
@@ -33,11 +35,6 @@ spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
-	call compile preprocessFileLineNumbers "data\names_local.sqf";
-	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-		call TFAR_fnc_sendVersionInfo;
-		"task_force_radio_pipe" callExtension "dummy";
-	};
     call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
@@ -206,7 +203,15 @@ if (_newplayer) then {
     _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
 	player forceAddUniform _clothes;
     player setVariable ["uniform",_clothes,true];
-    player setVariable ["money",100,true];
+	private _money = 100;
+	private _diff = server getVariable ["OT_difficulty",1];
+	if(_diff == 0) then {
+		_money = 1000;
+	};
+	if(_diff == 2) then {
+		_money = 0;
+	};
+    player setVariable ["money",_money,true];
     player setVariable ["owner",getplayerUID player,true];
     if(!isMultiplayer) then {
         {

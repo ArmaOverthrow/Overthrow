@@ -31,11 +31,13 @@ class CfgFunctions
 			class nearestBase {};
 			class nearestCheckpoint {};
 			class nearestComms {};
+			class nearestLocation {};
 			class nearestMobster {};
 			class nearestObjective {};
 			class nearestPositionRegion {};
 			class nearestTown {};
 			class townsInRegion {};
+			class getAO {};
 		}
 
 		/*
@@ -158,6 +160,7 @@ class CfgFunctions
 			class NATOResponseObjective {};
 			class NATOResponseTown {};
 			class NATOCounterTown {};
+			class NATOCounterObjective {};
 
 			class NATOSupportSniper {};
 			class NATOSupportRecon {};

@@ -13,9 +13,9 @@ _unit addEventHandler ["HandleDamage", {
 	_src = _this select 3;
 	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenNATO)) then {
-			_src setCaptive false;				
-		};		
-	};	
+			_src setCaptive false;
+		};
+	};
 }];
 
 _skill = 0.5;
@@ -52,7 +52,7 @@ if(_skill > 0.8) then {
 		_unit addItemToUniform "ACE_rangeCard";
 		_unit addItem "ACE_morphine";
 	};
-}else{	
+}else{
 	if(_skill > 0.7) then {
 		_idx = _numweap - 2;
 	}else{
@@ -71,12 +71,12 @@ if(OT_hasACE) then {
 _weapon = OT_NATO_weapons_Police select round(random(_idx));
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addWeapon _weapon;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addWeaponGlobal _weapon;
 
 if(_hour > 17 or _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
@@ -85,12 +85,12 @@ if(_hour > 17 or _hour < 6) then {
 _weapon = OT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addWeapon _weapon;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addWeaponGlobal _weapon;
 
 if(_skill > 0.8) then {
 	_unit addPrimaryWeaponItem "optic_Holosight_blk_F";
-}else{	
+}else{
 	_unit addPrimaryWeaponItem "optic_Aco";
 };

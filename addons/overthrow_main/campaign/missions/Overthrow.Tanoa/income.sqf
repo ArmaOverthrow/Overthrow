@@ -40,6 +40,11 @@ while {true} do {
 			};
 		}foreach(server getVariable ["NATOabandoned",[]]);
 	};
+	_totax = 0;
+	_tax = server getVariable ["taxrate",0];
+	if(_tax > 0) then {
+		_totax = round(_total * (_tax / 100));
+	};
 
 	{
 		private _owned = _x getvariable ["owned",[]];
@@ -54,11 +59,18 @@ while {true} do {
 			};
 		}foreach(_owned);
 		if(_lease > 0) then {
-			private _money = _x getVariable ["money",0];
-			_x setVariable ["money",_money+_lease,true];
+			_tt = 0;
+			if(_tax > 0) then {
+				_tt = round(_lease * (_tax / 100));
+			};
+			_totax = _totax + _tt;
+			[_lease-_tt] remoteExec ["money",_x,false];
 		};
 	}foreach([] call CBA_fnc_players);
 
+	_funds = server getVariable ["money",0];
+	server setVariable ["money",_funds+_totax];
+	_total = _total - _totax;
 
 	_numPlayers = count([] call CBA_fnc_players);
 	if(_numPlayers > 0) then {

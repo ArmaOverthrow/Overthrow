@@ -4,7 +4,7 @@ _region = _this select 2;
 _ret = [];
 {
 
-	if([getpos _x,_region] call fnc_isInMarker) then {
+	if(_x inArea _region) then {
 		_ret pushBack _x;
 	};
 }foreach (_things);

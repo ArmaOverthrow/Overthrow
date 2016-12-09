@@ -105,6 +105,7 @@ call {
 	};
 	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") then {
 		if(!isNil "_garrison") then {
+			server setVariable ["NATOresourceGain",server getVariable ["NATOresourceGain",0]+1,true];
 			_pop = server getVariable [format["garrison%1",_garrison],0];
 			if(_pop > 0) then {
 				_pop = _pop -1;
@@ -125,7 +126,7 @@ call {
 				if(_pop > 4) then {
 					format["%1 garrison now %2",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
 				}else{
-					format["%1 garrison has lost radio contact, NATO response incoming",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
+					format["%1 has lost radio contact",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
 				};
 			}else{
 				[_town,_stab] call stability;

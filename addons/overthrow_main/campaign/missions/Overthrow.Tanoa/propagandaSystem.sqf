@@ -30,10 +30,19 @@ while {true} do {
 			};
 		}else{
 			if(_commsAbandoned) then {
-				//Resistance controls tower but not town, stability goes down, but will not trigger a battle
-				
-				if(_stability > 20) then {
-					if((random 100) > 40) then {
+				//Resistance controls tower but not town, stability goes down
+				_police = server getVariable [format["garrison%1",_town],0];
+				_chance = 20;
+				if(_police < 4) then {
+					_chance = 50;
+				};
+				if(_police < 2) then {
+					_chance = 80;
+				};
+				if((random 100) < _chance) then {
+					[_town,-2] call stability;
+				}else{
+					if((random 100) > 50) then {
 						[_town,-1] call stability;
 					};
 				};
@@ -44,4 +53,3 @@ while {true} do {
 	server setVariable ["populationTanoa",_totalPop,true];
 	waitUntil {sleep 5;(date select 3) != _lasthour}; //do actions on the hour
 };
-

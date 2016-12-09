@@ -6,8 +6,6 @@ while{true} do {
 	{
 		if (_x in allPlayers) then {
 			OT_activeClients pushback _x;
-			OT_activeClients pushback _x;
-			OT_activeClients pushback _x;//Thrice for weight in random sel
 		};
 	} forEach (entities "HeadlessClient_F");
 	//If no headless clients and less than 6 players, server will take load

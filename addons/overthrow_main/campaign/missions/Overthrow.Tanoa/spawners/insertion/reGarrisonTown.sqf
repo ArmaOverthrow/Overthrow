@@ -15,7 +15,7 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 {
 	_pos = _x select 0;
 	_name = _x select 1;
-	if([_pos,_region] call fnc_isInMarker and !(_name in _abandoned)) then {
+	if(_pos inArea _region and !(_name in _abandoned)) then {
 		_d = (_pos distance _townPos);
 		if(_d < _dist) then {
 			_dist = _d;
@@ -27,7 +27,7 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 
 if(!isNil "_close") then {
 	_current = server getVariable [format ["garrison%1",_town],0];
-	server setVariable [format ["garrison%1",_town],_current+2,true];
+	server setVariable [format ["garrison%1",_town],_current+4,true];
 	if !(_townPos call OT_fnc_inSpawnDistance) exitWith {};
 
 	_start = [_close,0,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
@@ -63,6 +63,22 @@ if(!isNil "_close") then {
 	_civ setBehaviour "SAFE";
 	_civ moveInCargo _veh;
 
+	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+	_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
+
+	_police pushBack _civ;
+	[_civ,_town] call OT_fnc_initGendarm;
+	_civ setBehaviour "SAFE";
+	_civ moveInCargo _veh;
+
+	_start = [_start, 0, 20, 1, 0, 0, 0] call BIS_fnc_findSafePos;
+	_civ = _group createUnit [OT_NATO_Unit_Police, _start, [],0, "NONE"];
+
+	_police pushBack _civ;
+	[_civ,_town] call OT_fnc_initGendarm;
+	_civ setBehaviour "SAFE";
+	_civ moveInCargo _veh;
+
 	_group setVariable ["veh",_veh];
 	_group setVariable ["transport",_police];
 	sleep 5;
@@ -87,9 +103,7 @@ if(!isNil "_close") then {
 
 	_group call OT_fnc_initGendarmPatrol;
 	_group call distributeAILoad;
-	_tgroup call distributeAILoad;		
-}else{
-	[_town,-10] call stability;
+	_tgroup call distributeAILoad;
 };
 
 

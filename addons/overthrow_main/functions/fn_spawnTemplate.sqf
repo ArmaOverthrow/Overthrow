@@ -1,6 +1,22 @@
 private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template","_objects","_type"];
 
 _building = _this;
+private _type = typeOf(_building);
+if(isNil {templates getVariable _type}) then {
+	_filename = format["templates\houses\%1.sqf",_type];
+
+	_template = call(compileFinal preProcessFileLineNumbers _filename);
+	{
+		if((_x select 0) in OT_items_Simulate) then {
+			_x set [8,true];
+		}else{
+			_x set [8,false];
+		};
+	}forEach(_template);
+
+	templates setVariable [_type,_template,true];
+};
+
 _template = templates getVariable typeOf(_building);
 
 if(isNil "_template") exitWith {};

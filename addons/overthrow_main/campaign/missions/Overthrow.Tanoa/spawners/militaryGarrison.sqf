@@ -11,20 +11,20 @@ _count = 0;
 if(_name find "Comms" == 0) then {
 	_tower = nearestObjects [_posTown,OT_NATO_CommTowers,100] select 0;
 	_posTown = getpos _tower;
-	
-	_group = createGroup blufor;							
+
+	_group = createGroup blufor;
 	_groups pushBack _group;
-	
+
 	_civ = _group createUnit [OT_NATO_Unit_Sniper, _posTown, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
 	[_civ,_name] call OT_fnc_initSniper;
 	_civ setBehaviour "SAFE";
 	_civ action ["ladderOnUp", _tower, 0, 0];
-					
+
 	_count = _count + 1;
 	sleep 0.2;
-	
+
 	if(_count < _numNATO) then {
 		_civ = _group createUnit [OT_NATO_Unit_Spotter, _posTown, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
@@ -36,11 +36,11 @@ if(_name find "Comms" == 0) then {
 		_count = _count + 1;
 		sleep 0.2;
 	};
-	
+
 	if(_count < _numNATO) then {
-		_group = createGroup blufor;							
+		_group = createGroup blufor;
 		_groups pushBack _group;
-		_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
+		_start = [_posTown,[0,200]] call SHK_pos;
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -53,11 +53,11 @@ if(_name find "Comms" == 0) then {
 		_wp setWaypointType "GUARD";
 		_wp setWaypointBehaviour "SAFE";
 		_wp setWaypointSpeed "LIMITED";
-		
+
 	};
-	
+
 	if(_count < _numNATO) then {
-		_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
+		_start = [_posTown,[0,200]] call SHK_pos;
 		_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -67,21 +67,21 @@ if(_name find "Comms" == 0) then {
 		_count = _count + 1;
 		sleep 0.2;
 	};
-	
+
 }else{
 	//put up a flag
 	_flag =  OT_flag_NATO createVehicle _posTown;
 	_groups pushback _flag;
-};			
+};
 sleep 0.1;
 _range = 100;
 _groupcount = 0;
-while {_count < _numNATO} do {			
-	_start = [[[_posTown,150]]] call BIS_fnc_randomPos;
-	_group = createGroup blufor;							
-	_groups pushBack _group;	
+while {_count < _numNATO} do {
+	_start = [_posTown,[0,200]] call SHK_pos;
+	_group = createGroup blufor;
+	_groups pushBack _group;
 	_groupcount = 1;
-	
+
 	_civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
@@ -91,11 +91,11 @@ while {_count < _numNATO} do {
 	{
 		_x addCuratorEditableObjects[[_civ],false];
 	}foreach(allcurators);
-	
+
 	_count = _count + 1;
 	while {(_count < _numNATO) and (_groupcount < 8)} do {
-		_start = [_start,0,40, 1, 0, 0, 0] call BIS_fnc_findSafePos;		
-		
+		_start = [_start,[0,50]] call SHK_pos;
+
 		_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "LIEUTENANT";
@@ -105,7 +105,7 @@ while {_count < _numNATO} do {
 		{
 			_x addCuratorEditableObjects[[_civ],false];
 		}foreach(allcurators);
-							
+
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 	};
@@ -113,7 +113,7 @@ while {_count < _numNATO} do {
 	_range = _range + 50;
 	sleep 0.2;
 };
-	
+
 
 _pos = [];
 _dir = 0;
@@ -134,14 +134,14 @@ if(count _terminal > 0) then {
 	_pos = [_pos,130,_dir-90] call BIS_fnc_relPos;
 };
 _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
-{				
+{
 	_vehtype = _x;
-	
+
 	_pos = [_pos,42,_dir+90] call BIS_fnc_relPos;
-									
+
 	_veh =  _vehtype createVehicle _pos;
-	_veh setVariable ["airgarrison",_name,false];					
-	
+	_veh setVariable ["airgarrison",_name,false];
+
 	_veh setDir _dir;
 	sleep 0.2;
 	_groups pushback _veh;
@@ -155,28 +155,28 @@ _road = objNull;
 	_groups pushback _vgroup;
 	_vehtype = _x;
 	_dir = 0;
-	_got = false;				
+	_got = false;
 	if(_vehtype in OT_staticWeapons) then {
-		_pos = _posTown findEmptyPosition [10,50,_vehtype];					
+		_pos = _posTown findEmptyPosition [10,50,_vehtype];
 		_dir = [_posTown,_pos] call BIS_fnc_dirTo;
 		_p = [_pos,1.5,_dir] call BIS_fnc_relPos;
-		_veh =  "Land_BagFence_Round_F" createVehicle _p;	
+		_veh =  "Land_BagFence_Round_F" createVehicle _p;
 		_veh setpos _p;
-		_veh setDir (_dir-180);				
-		_groups pushback _veh;	
+		_veh setDir (_dir-180);
+		_groups pushback _veh;
 		_p = [_pos,-1.5,_dir] call BIS_fnc_relPos;
-		_veh =  "Land_BagFence_Round_F" createVehicle _p;	
-		_veh setpos _p;					
-		_veh setDir (_dir);				
-		_groups pushback _veh;					
-	}else{						
+		_veh =  "Land_BagFence_Round_F" createVehicle _p;
+		_veh setpos _p;
+		_veh setDir (_dir);
+		_groups pushback _veh;
+	}else{
 		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 		_dir = random 360;
 	};
 	_veh =  _vehtype createVehicle _pos;
 	_veh setpos _pos;
 	_veh setVariable ["vehgarrison",_name,false];
-	
+
 	_veh setDir _dir;
 	if(random 100 < 99) then {
 		createVehicleCrew _veh;

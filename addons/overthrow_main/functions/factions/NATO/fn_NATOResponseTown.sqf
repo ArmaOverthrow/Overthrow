@@ -1,6 +1,4 @@
-private _town = _this;
-
-private _townpop = server getVariable format["population%1",_town];
+params ["_town","_strength"];
 private _posTown = server getVariable _town;
 
 private _tskid = [resistance,[format["assault%1",_town]],[format["NATO is assaulting %1.",_town],format["Battle for %1",_town],format["assault%1",_town]],_posTown,1,2,true,"Defend",true] call BIS_fnc_taskCreate;
@@ -21,8 +19,5 @@ private _fail = {
 	format["NATO has abandoned %1 (+%2 Influence)",_town,_townpop] remoteExec ["notify_good",0,false];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 };
-		
-private _strength = _townpop + (count(server getvariable ["NATOabandoned",[]]) * 20);
-
 
 [_posTown,_strength,_success,_fail,[_tskid,_town]] spawn OT_fnc_NATOQRF;

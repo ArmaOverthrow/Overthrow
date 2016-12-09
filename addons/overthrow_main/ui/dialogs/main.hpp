@@ -37,7 +37,7 @@ class OT_dialog_start
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1601;
-			action = "closeDialog 0;[] remoteExec ['newGame',2,false];";
+			action = "closeDialog 0;createDialog ""OT_dialog_newgame"";";
 
 			text = "New Game"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;
@@ -378,7 +378,7 @@ class OT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Increases the amount of civilians that spawn in towns"; //--- ToDo: Localize;
-		};		
+		};
 		class RscButton_1603: RscOverthrowButton
 		{
 			idc = 1600;
@@ -444,7 +444,17 @@ class OT_dialog_main
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Mucomo)
 		////////////////////////////////////////////////////////
+		class RscButton_1699: RscOverthrowButton
+		{
+			idc = 1699;
+			action = "closeDialog 0;[] spawn OT_fnc_mapInfoDialog";
 
+			text = "Map Info"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.203 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
@@ -589,6 +599,17 @@ class OT_dialog_main
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "if(player == bigboss) then {closedialog 0;_nul = createDialog ""OT_dialog_options""};";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		class RscPicture_1200: RscOverthrowPicture
 		{
 			idc = 1200;
@@ -597,17 +618,6 @@ class OT_dialog_main
 			y = 0.016 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.149531 * safezoneW;
-		};
-		class RscStructuredText_1105: RscOverthrowStructuredText
-		{
-			idc = 1105;
-
-			x = 0.00499997 * safezoneW + safezoneX;
-			y = 0.115 * safezoneH + safezoneY;
-			w = 0.149531 * safezoneW;
-			h = 0.154 * safezoneH;
-			colorBackground[] = {0,0,0,0};
-			colorActive[] = {0,0,0,0};
 		};
 		class RscStructuredText_1106: RscOverthrowStructuredText
 		{
@@ -757,7 +767,7 @@ class OT_dialog_tute
 		{
 			idc = 1100;
 
-			text = "Would you like a quick tutorial?"; //--- ToDo: Localize;
+			text = "Would you like a quick tutorial? (You will receive free items)"; //--- ToDo: Localize;
 			x = 0.340156 * safezoneW + safezoneX;
 			y = 0.346 * safezoneH + safezoneY;
 			w = 0.324844 * safezoneW;
@@ -852,3 +862,126 @@ class OT_dialog_choose
 		////////////////////////////////////////////////////////
 	}
 }
+
+
+class OT_dialog_newgame
+{
+	idd=8099;
+	movingenable=false;
+
+	class controlsBackground {
+		class RscStructuredText_1100: RscOverthrowStructuredText
+		{
+			idc = 1100;
+            x = 0.324687 * safezoneW + safezoneX;
+            y = 0.269 * safezoneH + safezoneY;
+            w = 0.345469 * safezoneW;
+            h = 0.495 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+			colorActive[] = {0.1,0.1,0.1,1};
+		};
+	}
+
+	class controls
+	{
+        ////////////////////////////////////////////////////////
+        // GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Zosiwi)
+        ////////////////////////////////////////////////////////
+
+        class RscButton_1600: RscOverthrowButton
+        {
+            idc = 1600;
+            text = "Easy"; //--- ToDo: Localize;
+            x = 0.329844 * safezoneW + safezoneX;
+            y = 0.313 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			action = "server setvariable [""OT_difficulty"",0,true];call OT_fnc_newGameDialog;"
+        };
+        class RscButton_1601: RscOverthrowButton
+        {
+            idc = 1601;
+            text = "Normal"; //--- ToDo: Localize;
+            x = 0.453594 * safezoneW + safezoneX;
+            y = 0.313 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			action = "server setvariable [""OT_difficulty"",1,true];call OT_fnc_newGameDialog;"
+            color[] = {0,0.8,0,1};
+        };
+        class RscButton_1602: RscOverthrowButton
+        {
+            idc = 1602;
+            text = "Hard"; //--- ToDo: Localize;
+            x = 0.577344 * safezoneW + safezoneX;
+            y = 0.313 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			action = "server setvariable [""OT_difficulty"",2,true];call OT_fnc_newGameDialog;"
+        };
+        class RscStructuredText_1101: RscOverthrowStructuredText
+        {
+            idc = 1101;
+            text = "<t size=""1.5"">Difficulty</t>"; //--- ToDo: Localize;
+            x = 0.329844 * safezoneW + safezoneX;
+            y = 0.269 * safezoneH + safezoneY;
+            w = 0.159844 * safezoneW;
+            h = 0.033 * safezoneH;
+            colorBackground[] = {0,0,0,0};
+        };/*
+        class RscStructuredText_1102: RscOverthrowStructuredText
+        {
+            idc = 1102;
+            text = "<t size=""1.5"">Medical</t>"; //--- ToDo: Localize;
+            x = 0.329844 * safezoneW + safezoneX;
+            y = 0.423 * safezoneH + safezoneY;
+            w = 0.159844 * safezoneW;
+            h = 0.033 * safezoneH;
+            colorBackground[] = {0,0,0,0};
+        };
+        class RscButton_1603: RscOverthrowButton
+        {
+            idc = 1603;
+            text = "Vanilla"; //--- ToDo: Localize;
+            x = 0.329844 * safezoneW + safezoneX;
+            y = 0.467 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			action = "server setvariable [""OT_medical"",0,true];call OT_fnc_newGameDialog;"
+        };
+        class RscButton_1604: RscOverthrowButton
+        {
+            idc = 1604;
+            text = "Basic"; //--- ToDo: Localize;
+            x = 0.453594 * safezoneW + safezoneX;
+            y = 0.467 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			color[] = {0,0.8,0,1};
+			action = "server setvariable [""OT_medical"",1,true];call OT_fnc_newGameDialog;"
+        };
+        class RscButton_1605: RscOverthrowButton
+        {
+            idc = 1605;
+            text = "Advanced"; //--- ToDo: Localize;
+            x = 0.577344 * safezoneW + safezoneX;
+            y = 0.467 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			action = "server setvariable [""OT_medical"",2,true];call OT_fnc_newGameDialog;"
+        };*/
+        class RscButton_1606: RscOverthrowButton
+        {
+            idc = 1606;
+            text = "Start Game"; //--- ToDo: Localize;
+            x = 0.577344 * safezoneW + safezoneX;
+            y = 0.676 * safezoneH + safezoneY;
+            w = 0.0876563 * safezoneW;
+            h = 0.077 * safezoneH;
+			action = "closeDialog 0;[] remoteExec [""OT_fnc_newGame"",2,false]";
+        };
+        ////////////////////////////////////////////////////////
+        // GUI EDITOR OUTPUT END
+        ////////////////////////////////////////////////////////
+    };
+};

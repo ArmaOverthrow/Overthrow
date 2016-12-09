@@ -802,7 +802,7 @@ class RscOverthrowButton
 	h = 0.039216;
 	shadow = 2;
 	font = "RobotoCondensed";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	offsetX = 0;
 	offsetY = 0;
 	offsetPressedX = 0;

@@ -13,14 +13,14 @@ if(_town in (server getVariable ["NATOabandoned",[]])) then {
 };
 
 "Exporting inventory" call notify_minor;
-[5,false] call progressBar;	
+[5,false] call progressBar;
 sleep 5;
 _total = 0;
 {
 	_count = 0;
 	_cls = _x select 0;
 	_num = _x select 1;
-	if(_doillegal or _cls in (OT_allItems + OT_allBackpacks)) then {
+	if(_doillegal or _cls in (OT_allItems + OT_allBackpacks + OT_Resources + OT_allClothing)) then {
 		_costprice = ["Tanoa",_cls,0] call OT_fnc_getSellPrice;
 		_total = _total + (_costprice * _num);
 		call {
@@ -41,8 +41,8 @@ _total = 0;
 			};
 			if !([_target, _cls, _num] call CBA_fnc_removeItemCargo) then {
 				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
-			};			
-		};		
+			};
+		};
 	};
 }foreach(_target call OT_fnc_unitStock);
 

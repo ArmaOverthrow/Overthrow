@@ -150,6 +150,14 @@ if(typename _data != "ARRAY") exitWith {
 	};
 
 	if(_set and !(isNil "_val")) then {
+		if(typename _val == "ARRAY") then {
+			//make a copy
+			_orig = _val;
+			_val = [];
+			{
+				_val pushback _x;
+			}foreach(_orig);
+		};
 		server setvariable [_key,_val,true];
 	};
 }foreach(_data);

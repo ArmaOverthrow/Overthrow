@@ -1,13 +1,21 @@
 diag_log "Overthrow: Pre-Init";
 
-private _center = createCenter sideLogic;
-private _group = createGroup _center;
+if(isServer) then {
+    private _center = createCenter sideLogic;
+    private _group = createGroup _center;
 
-server = _group createUnit ["LOGIC",[0,0,0] , [], 0, ""];
-cost = _group createUnit ["LOGIC",[1,0,0] , [], 0, ""];
-warehouse = _group createUnit ["LOGIC",[2,0,0] , [], 0, ""];
-spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
-templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
+    server = _group createUnit ["LOGIC",[0,0,0] , [], 0, ""];
+    cost = _group createUnit ["LOGIC",[1,0,0] , [], 0, ""];
+    warehouse = _group createUnit ["LOGIC",[2,0,0] , [], 0, ""];
+    spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
+    templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
+
+    publicVariable "server";
+    publicVariable "cost";
+    publicVariable "warehouse";
+    publicVariable "spawner";
+    publicVariable "templates";
+};
 
 //VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less
 [] call OT_fnc_initVCOMAI;
