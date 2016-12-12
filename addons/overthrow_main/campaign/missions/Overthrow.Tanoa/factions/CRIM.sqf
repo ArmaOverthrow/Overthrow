@@ -22,7 +22,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 		server setVariable [format["crimadd%1",_town],0,false];
 		if(_stability < 30) then {
 			_garrison = 1 + round(random 4);
-			_building = [_posTown, OT_crimHouses] call getRandomBuilding;
+			_building = [_posTown, OT_crimHouses] call OT_fnc_getRandomBuilding;
 			if(isNil "_building") then {
 				_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
 			}else{
@@ -47,8 +47,8 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 			_pos = _x select 0;
 			_pos set [2,0];
 			if !(_pos isFlatEmpty  [-1, -1, 0.5, 10] isEqualTo []) then {
-				_ob = _pos call nearestObjective;
-				_town = _pos call nearestTown;
+				_ob = _pos call OT_fnc_nearestObjective;
+				_town = _pos call OT_fnc_nearestTown;
 
 				_obpos = _ob select 0;
 				_obdist = _obpos distance _pos;
@@ -71,12 +71,12 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 					};
 				};
 
-				_control = _pos call nearestCheckpoint;
+				_control = _pos call OT_fnc_nearestCheckpoint;
 				_cdist = (getmarkerpos _control) distance _pos;
 
 				_mdist = 2000;
 				if(count _mobsters > 0) then {
-					_mdist = _pos distance ((_pos call nearestMobster) select 0);
+					_mdist = _pos distance ((_pos call OT_fnc_nearestMobster) select 0);
 				};
 
 				if(_obdist > 1000 and _towndist > 400 and _cdist > 800 and _mdist > 700) then {
@@ -121,7 +121,7 @@ while {true} do {
 
 				if(_stability < 60) then {
 					_leaderpos = server getVariable [format["crimleader%1",_town],false];
-					_mob = _posTown call nearestMobster;
+					_mob = _posTown call OT_fnc_nearestMobster;
 					_mobpos = _mob select 0;
 
 					if ((typeName _leaderpos) == "ARRAY") then {
@@ -140,7 +140,7 @@ while {true} do {
 					}else{
 						//New leader spawn
 
-						_building = [_posTown, OT_crimHouses] call getRandomBuilding;
+						_building = [_posTown, OT_crimHouses] call OT_fnc_getRandomBuilding;
 						if(isNil "_building") then {
 							_leaderpos = [[[_posTown,50]]] call BIS_fnc_randomPos;
 						}else{

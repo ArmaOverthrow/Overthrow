@@ -11,7 +11,7 @@ lbClear 1500;
 	_c = _cls splitString "_";
 	_side = _c select 1;
 	if((_cls == "V_RebreatherIA" or _side == "C" or _side == "I") and _cls != "U_I_Soldier_VR") then {
-		_price = [_town,_cls,_standing] call getPrice;
+		_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 		_name = "";
 		_pic = "";
 		_name = _cls call ISSE_Cfg_Weapons_GetName;

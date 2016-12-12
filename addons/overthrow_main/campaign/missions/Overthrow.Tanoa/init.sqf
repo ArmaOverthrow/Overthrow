@@ -14,14 +14,11 @@ inGameUISetEventHandler ["Action", ""];
 inGameUISetEventHandler ["NextAction", ""];
 
 if(!isMultiplayer) then {
-    //VCOM AI, huge credits to Genesis, without VCOM this mission would be so much less
-    [] execVM "VCOMAI\init.sqf";
 
     //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
     [] execVM "funcs\fn_advancedTowingInit.sqf";
 
-    call compile preprocessFileLineNumbers "initFuncs.sqf";
-	call compile preprocessFileLineNumbers "data\names_local.sqf";
+    call compile preprocessFileLineNumbers "initFuncs.sqf";	
     call compile preprocessFileLineNumbers "initVar.sqf";
 
     //SINGLE PLAYER init
@@ -45,7 +42,7 @@ if(!isMultiplayer) then {
 	[] execVM "weather.sqf";
 
     //Init virtualization
-    [] execVM "virtualization.sqf";
+    [] spawn OT_fnc_runVirtualization;
     waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
     [] execVM "virtualization\towns.sqf";
     [] execVM "virtualization\military.sqf";

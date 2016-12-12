@@ -11,25 +11,24 @@ _posTown = server getVariable _town;
 _shopkeeper = objNULL;
 
 
-_group = createGroup civilian;	
+_group = createGroup civilian;
 _group setBehaviour "CARELESS";
 _groups = [_group];
-{	
+{
 	private _pos = _x;
 	_building = nearestBuilding _pos;
-	
-	_dir = getDir _building;		
+
+	_dir = getDir _building;
 	_shopkeeper = _group createUnit [OT_civType_carDealer, [_pos,[0,0,2]] call BIS_fnc_vectorAdd, [],0, "NONE"];
 	_shopkeeper disableAI "MOVE";
 	_shopkeeper disableAI "AUTOCOMBAT";
 	_shopkeeper setVariable ["NOAI",true,false];
 
-	_shopkeeper setDir (_dir-180);			
+	_shopkeeper setDir (_dir-180);
 
-	_shopkeeper remoteExec ["initHarborLocal",0,_shopkeeper];
-	[_shopkeeper] call initHarbor;
+	[_shopkeeper] call OT_fnc_initHarbor;
 	_shopkeeper setVariable ["harbor",true,true];
 	sleep 0.1;
 }foreach(_activeshops);
-	
+
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

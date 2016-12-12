@@ -1,84 +1,19 @@
-if(isServer) then {
-    server setVariable ["StartupType","",true];
-};
 //Helper functions
-townsInRegion = compileFinal preProcessFileLineNumbers "funcs\townsInRegion.sqf";
-randomPosition = compileFinal preProcessFileLineNumbers "funcs\randomPosition.sqf";
-spawnTemplate = compileFinal preProcessFileLineNumbers "funcs\spawnTemplate.sqf";
-spawnTemplateAttached = compileFinal preProcessFileLineNumbers "funcs\spawnTemplateAttached.sqf";
-inSpawnDistance = compileFinal preProcessFileLineNumbers "funcs\inSpawnDistance.sqf";
-nearestTown = compileFinal preProcessFileLineNumbers "funcs\nearestTown.sqf";
-getPrice = compileFinal preProcessFileLineNumbers "funcs\getPrice.sqf";
-getSellPrice = compileFinal preProcessFileLineNumbers "funcs\getSellPrice.sqf";
-getDrugPrice = compileFinal preProcessFileLineNumbers "funcs\getDrugPrice.sqf";
-canFit = compileFinal preProcessFileLineNumbers "funcs\canFit.sqf";
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
-unitStock = compileFinal preProcessFileLineNumbers "funcs\unitStock.sqf";
 searchStock = compileFinal preProcessFileLineNumbers "funcs\searchStock.sqf";
-hasOwner = compileFinal preProcessFileLineNumbers "funcs\hasOwner.sqf";
-getRandomBuildingPosition = compileFinal preProcessFileLineNumbers "funcs\getRandomBuildingPosition.sqf";
-getRandomBuilding = compileFinal preProcessFileLineNumbers "funcs\getRandomBuilding.sqf";
-getNearestRealEstate = compileFinal preProcessFileLineNumbers "funcs\getNearestRealEstate.sqf";
-getNearestOwned = compileFinal preProcessFileLineNumbers "funcs\getNearestOwned.sqf";
-nearestPositionRegion = compileFinal preProcessFileLineNumbers "funcs\nearestPositionRegion.sqf";
-nearestComms = compileFinal preProcessFileLineNumbers "funcs\nearestComms.sqf";
-nearestCheckpoint = compileFinal preProcessFileLineNumbers "funcs\nearestCheckpoint.sqf";
-nearestBase = compileFinal preProcessFileLineNumbers "funcs\nearestBase.sqf";
-nearestObjective = compileFinal preProcessFileLineNumbers "funcs\nearestObjective.sqf";
-nearestMobster = compileFinal preProcessFileLineNumbers "funcs\nearestMobster.sqf";
 giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
-logisticsUnload = compileFinal preProcessFileLineNumbers "funcs\logisticsUnload.sqf";
-eject = compileFinal preProcessFileLineNumbers "funcs\addons\eject.sqf";
 displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
 displayWarehousePic = compileFinal preProcessFileLineNumbers "funcs\displayWarehousePic.sqf";
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
-canPlace = compileFinal preProcessFileLineNumbers "funcs\canPlace.sqf";
 progressBar = compileFinal preProcessFileLineNumbers "funcs\progressBar.sqf";
-getRealEstateData = compileFinal preProcessFileLineNumbers "funcs\getRealEstateData.sqf";
 revealToNATO = compileFinal preProcessFileLineNumbers "funcs\revealToNATO.sqf";
 revealToCRIM = compileFinal preProcessFileLineNumbers "funcs\revealToCRIM.sqf";
-findScopeInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findScopeInWarehouse.sqf";
-findWeaponInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findWeaponInWarehouse.sqf";
-findVestInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findVestInWarehouse.sqf";
-findHelmetInWarehouse = compileFinal preProcessFileLineNumbers "funcs\findHelmetInWarehouse.sqf";
-removeFromWarehouse = compileFinal preProcessFileLineNumbers "funcs\removeFromWarehouse.sqf";
-getSoldier = compileFinal preProcessFileLineNumbers "funcs\getSoldier.sqf";
-createSoldier = compileFinal preProcessFileLineNumbers "funcs\createSoldier.sqf";
-
-//AI init
-initCivilian = compileFinal preProcessFileLineNumbers "AI\civilian.sqf";
-initGendarm = compileFinal preProcessFileLineNumbers "AI\gendarm.sqf";
-initPolice = compileFinal preProcessFileLineNumbers "AI\police.sqf";
-initSecurity = compileFinal preProcessFileLineNumbers "AI\security.sqf";
-initMilitary = compileFinal preProcessFileLineNumbers "AI\military.sqf";
-initSniper = compileFinal preProcessFileLineNumbers "AI\sniper.sqf";
-initPolicePatrol = compileFinal preProcessFileLineNumbers "AI\policePatrol.sqf";
-initGendarmPatrol = compileFinal preProcessFileLineNumbers "AI\gendarmPatrol.sqf";
-initMilitaryPatrol = compileFinal preProcessFileLineNumbers "AI\militaryPatrol.sqf";
-initCheckpoint = compileFinal preProcessFileLineNumbers "AI\checkpoint.sqf";
-initCriminal = compileFinal preProcessFileLineNumbers "AI\criminal.sqf";
-initCrimLeader = compileFinal preProcessFileLineNumbers "AI\crimLeader.sqf";
-initShopkeeper = compileFinal preProcessFileLineNumbers "AI\shopkeeper.sqf";
-initCarDealer = compileFinal preProcessFileLineNumbers "AI\carDealer.sqf";
-initHarbor = compileFinal preProcessFileLineNumbers "AI\harbor.sqf";
-initGunDealer = compileFinal preProcessFileLineNumbers "AI\gunDealer.sqf";
-civilianGroup = compileFinal preProcessFileLineNumbers "AI\civilianGroup.sqf";
-initRecruit = compileFinal preProcessFileLineNumbers "AI\recruit.sqf";
-initMobster = compileFinal preProcessFileLineNumbers "AI\mobster.sqf";
-initMobBoss = compileFinal preProcessFileLineNumbers "AI\mobBoss.sqf";
-initPriest = compileFinal preProcessFileLineNumbers "AI\priest.sqf";
 
 intelEvent = compileFinal preProcessFileLineNumbers "funcs\intelEvent.sqf";
 intelLevel = compileFinal preProcessFileLineNumbers "funcs\intelLevel.sqf";
-assignMission = compileFinal preProcessFileLineNumbers "funcs\assignMission.sqf";
 doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sqf";
 playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
-
-//AI Orders
-openInventory = compileFinal preProcessFileLineNumbers "AI\orders\openInventory.sqf";
-loot = compileFinal preProcessFileLineNumbers "AI\orders\loot.sqf";
-revivePlayer = compileFinal preProcessFileLineNumbers "AI\orders\revivePlayer.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
@@ -97,17 +32,9 @@ recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf";
 
-//QRF
-NATOQRF = compileFinal preProcessFileLineNumbers "AI\QRF\NATOQRF.sqf";
-NATOGroundForces = compileFinal preProcessFileLineNumbers "AI\QRF\NATOGroundForces.sqf";
-NATOAirSupport = compileFinal preProcessFileLineNumbers "AI\QRF\NATOAirSupport.sqf";
-NATOGroundSupport = compileFinal preProcessFileLineNumbers "AI\QRF\NATOGroundSupport.sqf";
-NATOattack = compileFinal preProcessFileLineNumbers "AI\QRF\NATOattack.sqf";
-NATOcounter = compileFinal preProcessFileLineNumbers "AI\QRF\NATOcounter.sqf";
-CTRGSupport = compileFinal preProcessFileLineNumbers "AI\QRF\CTRGSupport.sqf";
-NATOretakeTown = compileFinal preProcessFileLineNumbers "AI\QRF\NATOretakeTown.sqf";
-NATOrecon = compileFinal preProcessFileLineNumbers "AI\QRF\NATOrecon.sqf";
-NATOsniper = compileFinal preProcessFileLineNumbers "AI\QRF\NATOsniper.sqf";
+OT_fnc_mapInfoDialog = compileFinal preprocessFileLineNumbers "actions\townInfo.sqf";
+
+OT_fnc_newGameDialog = compileFinal preProcessFileLineNumbers "UI\fn_newGameDialog.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -121,23 +48,10 @@ illegalContainerOpened = compileFinal preProcessFileLineNumbers "events\illegalC
 reGarrisonTown = compileFinal preProcessFileLineNumbers "spawners\insertion\reGarrisonTown.sqf";
 sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims.sqf";
 newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
-logistics = compileFinal preProcessFileLineNumbers "spawners\insertion\logistics.sqf";
 
 //Local interactions
-initShopLocal = compileFinal preProcessFileLineNumbers "interaction\initShopLocal.sqf";
-initCarShopLocal = compileFinal preProcessFileLineNumbers "interaction\initCarShopLocal.sqf";
-initGunDealerLocal = compileFinal preProcessFileLineNumbers "interaction\initGunDealerLocal.sqf";
-initHarborLocal = compileFinal preProcessFileLineNumbers "interaction\initHarborLocal.sqf";
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
-
-//Economy
-setupTownEconomy = compileFinal preProcessFileLineNumbers "economy\setupTownEconomy.sqf";
-
-//Math
-rotationMatrix = compileFinal preProcessFileLineNumbers "funcs\rotationMatrix.sqf";
-matrixMultiply = compileFinal preProcessFileLineNumbers "funcs\matrixMultiply.sqf";
-matrixRotate = compileFinal preProcessFileLineNumbers "funcs\matrixRotate.sqf";
 
 //Actions
 buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
@@ -175,7 +89,6 @@ unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
 unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
 unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
-NATOsearch = compileFinal preProcessFileLineNumbers "AI\NATOsearch.sqf";
 
 //Other Systems
 perkSystem = compileFinal preProcessFileLineNumbers "perkSystem.sqf";
@@ -185,9 +98,6 @@ intelSystem = compileFinal preProcessFileLineNumbers "intelSystem.sqf";
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
-
-//Addons
-[] execVM "SHK_pos\shk_pos_init.sqf";
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
 
@@ -228,7 +138,7 @@ AUG_UpdateState = {
 };
 AUG_UpdateGetInState = {
 	//Update Action
-	(_this select 0) setUserActionText [(_this select 0) getVariable "AUG_Act_GetIn",(_this select 1),(_this select 2)];
+	(_this select 0) setUserActionText [(_this select 0) getVariable ["AUG_Act_GetIn",""],(_this select 1),(_this select 2)];
 };
 AUG_Action = {
 	_veh = (_this select 0);
@@ -250,11 +160,10 @@ AUG_AddAction = {
 };
 
 mpSetDir = {
-	private["_obj","_dir"];
-	_obj = _this select 0;
-	_dir = _this select 1;
-
-	_obj setDir _dir;
+	params ["_obj","_dir"];
+	if !(isNil "_dir") then {
+		_obj setDir _dir;
+	};
 };
 
 structureInit = {
@@ -290,7 +199,8 @@ distributeAILoad = {
 	};
 };
 
-newGame = {
+OT_fnc_newGame = {
+	closeDialog 0;
     "Generating economy" remoteExec['blackFaded',0,false];
     [] execVM "initEconomy.sqf";
     waitUntil {!isNil "OT_economyInitDone"};
@@ -308,10 +218,11 @@ assignedKey = {
 };
 
 standing = {
+	if!(hasInterface) exitWith {};
     _town = _this select 0;
     _rep = (player getVariable [format["rep%1",_town],0])+(_this select 1);
     player setVariable [format["rep%1",_town],_rep,true];
-    _totalrep = (player getVariable "rep")+(_this select 1);
+    _totalrep = (player getVariable ["rep",0])+(_this select 1);
     player setVariable ["rep",_totalrep,true];
 
 	if(count _this > 2) then {
@@ -351,6 +262,7 @@ loadPlayerData = {
 };
 
 influence = {
+	if!(hasInterface) exitWith {};
     _totalrep = (player getVariable ["influence",0])+_this;
     player setVariable ["influence",_totalrep,true];
 	_plusmin = "";
@@ -361,6 +273,7 @@ influence = {
 };
 
 influenceSilent = {
+	if!(hasInterface) exitWith {};
     _totalrep = (player getVariable ["influence",0])+_this;
     player setVariable ["influence",_totalrep,true];
 };
@@ -398,6 +311,7 @@ rewardMoney = {
 };
 
 money = {
+	if!(hasInterface) exitWith {};
     _amount = _this select 0;
     _rep = (player getVariable ["money",0])+_amount;
     if(_rep < 0) then {
@@ -449,18 +363,11 @@ stability = {
         }else{
             _town setMarkerAlpha 0;
         };
-    }
-
-};
-
-KK_fnc_fileExists = {
-    private ["_ctrl", "_fileExists"];
-    disableSerialization;
-    _ctrl = findDisplay 0 ctrlCreate ["RscHTML", -1];
-    _ctrl htmlLoad _this;
-    _fileExists = ctrlHTMLLoaded _ctrl;
-    ctrlDelete _ctrl;
-    _fileExists
+    };
+	if !(_town in _abandoned) then {
+		_townmrk setMarkerAlpha 0;
+		_townmrk setMarkerAlphaLocal 0;
+	};
 };
 
 OT_notifies = [];
@@ -492,76 +399,3 @@ notify_talk = {
 };
 
 [] execVM "funcs\info.sqf";
-
-fn_MovingTarget =
-{
-	private ["_target","_distance","_speed","_dir"];
-	_target = _this select 0;
-	_dir = _this select 1;
-	_distance = _this select 2;
-	_speed = _this select 3;
-	_pause = _this select 4;
-
-
-	while {true} do
-	{
-		sleep _pause;
-		for "_i" from 0 to _distance/_speed do
-		{
-			_target setPos
-			[
-				(position _target select 0) + ((sin (_dir)))*_speed,
-				(position _target select 1) + ((cos (_dir)))*_speed,
-				0
-			];
-			sleep 0.01;
-		};
-		sleep _pause;
-		for "_i" from 0 to _distance/_speed do
-		{
-			_target setPos
-			[
-				(position _target select 0) - (sin (_dir))*_speed,
-				(position _target select 1) - ((cos (_dir)))*_speed,
-				0
-			];
-			sleep 0.01;
-		};
-	};
-};
-
-fnc_isInMarker = {
-    private ["_p","_m", "_px", "_py", "_mpx", "_mpy", "_msx", "_msy", "_rpx", "_rpy", "_xmin", "_xmax", "_ymin", "_ymax", "_ma", "_res", "_ret"];
-
-    _p = _this select 0; // object
-    _m = _this select 1; // marker
-
-    if (typeName _p == "OBJECT") then {
-      _px = position _p select 0;
-      _py = position _p select 1;
-    }else {
-        if(typeName _p == "ARRAY") then {
-          _px = _p select 0;
-          _py = _p select 1;
-        }else{
-            _p = server getVariable _p;
-            _px = _p select 0;
-            _py = _p select 1;
-        };
-    };
-
-    _mpx = getMarkerPos _m select 0;
-    _mpy = getMarkerPos _m select 1;
-    _msx = getMarkerSize _m select 0;
-    _msy = getMarkerSize _m select 1;
-    _ma = -markerDir _m;
-    _rpx = ( (_px - _mpx) * cos(_ma) ) + ( (_py - _mpy) * sin(_ma) ) + _mpx;
-    _rpy = (-(_px - _mpx) * sin(_ma) ) + ( (_py - _mpy) * cos(_ma) ) + _mpy;
-    if ((markerShape _m) == "RECTANGLE") then {
-      _xmin = _mpx - _msx;_xmax = _mpx + _msx;_ymin = _mpy - _msy;_ymax = _mpy + _msy;
-      if (((_rpx > _xmin) && (_rpx < _xmax)) && ((_rpy > _ymin) && (_rpy < _ymax))) then { _ret=true; } else { _ret=false; };
-    } else {
-      _ret = false; //Who's passing ellipses in?
-    };
-    _ret;
-  };

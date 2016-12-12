@@ -1,9 +1,9 @@
 if !(captive player) exitWith {"You cannot recruit while wanted" call notify_minor};
 
-_town = (getpos player) call nearestTown;
+_town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
-_price = [_town,"CIV",_standing] call getPrice;
+_price = [_town,"CIV",_standing] call OT_fnc_getPrice;
 _money = player getVariable ["money",0];
 
 if(_money < _price) exitWith {"You cannot afford that" call notify_minor};

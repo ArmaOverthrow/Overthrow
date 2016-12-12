@@ -6,7 +6,7 @@ _civ = player getvariable "hiringciv";
 
 _handled = false;
 
-_town = (getpos player) call nearestTown;
+_town = (getpos player) call OT_fnc_nearestTown;
 _rep = player getVariable format["rep%1",_town];
 if(_rep > 100) then {_rep = 100};
 if(_rep < -100) then {_rep = -100};

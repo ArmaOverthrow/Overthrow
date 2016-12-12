@@ -5,9 +5,9 @@ while {true} do {
 	{
 		private _town = _x;
 		private _townPos = server getVariable _town;
-		private _commsAbandoned = ((_townPos call nearestComms) select 1) in _abandoned;
+		private _commsAbandoned = ((_townPos call OT_fnc_nearestComms) select 1) in _abandoned;
 		private _stability = server getVariable format["stability%1",_town];
-		if(_townPos call inSpawnDistance) then {
+		if(_townPos call OT_fnc_inSpawnDistance) then {
 			if(_town in _abandoned) then {
 				
 			}else{

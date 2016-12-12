@@ -1,9 +1,9 @@
 disableSerialization;
 _amt = _this;
 
-_town = (getpos player) call nearestTown; 
+_town = (getpos player) call OT_fnc_nearestTown; 
 _money = player getVariable ["money",0];
-_price = ([_town,"CIV",-50] call getPrice) + 250;
+_price = ([_town,"CIV",-50] call OT_fnc_getPrice) + 250;
 
 if(_money < (_amt * _price)) exitWith {"You cannot afford that" call notify_minor};
 	
@@ -40,12 +40,12 @@ while {_count < _amt} do {
 	_civ setVariable ["polgarrison",_town,false];
 	[_civ] joinSilent _group;
 	_civ setRank "SERGEANT";
-	[_civ,_town] call initPolice;
+	[_civ,_town] call OT_fnc_initPolice;
 	_civ setBehaviour "SAFE";
 	
 	_count = _count + 1;			
 };
-_group call initPolicePatrol;
+_group call OT_fnc_initPolicePatrol;
 
 _despawn = spawner getVariable [format["despawn%1",_town],[]];
 [_despawn,_spawned] call BIS_fnc_arrayPushStack;

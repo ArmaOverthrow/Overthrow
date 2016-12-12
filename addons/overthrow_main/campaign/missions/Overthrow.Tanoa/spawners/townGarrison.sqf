@@ -25,7 +25,7 @@ while {_count < _numNATO} do {
 	_groups pushBack _group;
 
 	_home = [_posTown,[0,_range]] call SHK_pos;
-	_building = [_home,OT_allHouses+OT_allShops+OT_offices] call getRandomBuilding;
+	_building = [_home,OT_allHouses+OT_allShops+OT_offices] call OT_fnc_getRandomBuilding;
 	if(typename _building != "BOOL") then {_home = position _building};
 	_roads = _home nearRoads 100;
 	if(count _roads > 0) then {_home = position (_roads select 0)};
@@ -35,7 +35,7 @@ while {_count < _numNATO} do {
 	[_civ] joinSilent _group;
 	_civ setRank "CORPORAL";
 	_civ setBehaviour "SAFE";
-	[_civ,_town] call initGendarm;
+	[_civ,_town] call OT_fnc_initGendarm;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
 
@@ -46,14 +46,14 @@ while {_count < _numNATO} do {
 		_civ setVariable ["garrison",_town,false];
 		[_civ] joinSilent _group;
 		_civ setRank "PRIVATE";
-		[_civ,_town] call initGendarm;
+		[_civ,_town] call OT_fnc_initGendarm;
 		_civ setBehaviour "SAFE";
 
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
 		sleep 0.1;
 	};
-	_group call initGendarmPatrol;
+	_group call OT_fnc_initGendarmPatrol;
 	_range = _range + 50;
 };
 

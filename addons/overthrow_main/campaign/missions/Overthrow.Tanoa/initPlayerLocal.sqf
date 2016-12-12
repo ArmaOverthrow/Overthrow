@@ -4,7 +4,7 @@ waitUntil {player == player};
 
 [] spawn {
 	while {true} do {
-		sleep 30;
+		sleep 3;
 		{
 			if(local _x and count (units _x) == 0) then {
 				deleteGroup _x;
@@ -17,6 +17,8 @@ if (!hasInterface) exitWith {};
 if(isNil "bigboss" and typeof player == "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
 if(count ([] call CBA_fnc_players) == 1 and isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
+if(isNil {server getVariable "generals"}) then {server setVariable ["generals",[getplayeruid player]]};
+
 removeAllWeapons player;
 removeAllAssignedItems player;
 removeGoggles player;
@@ -24,10 +26,6 @@ removeBackpack player;
 removeHeadgear player;
 removeVest player;
 
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-	call TFAR_fnc_sendVersionInfo;
-    "task_force_radio_pipe" callExtension "dummy";
-};
 
 player linkItem "ItemMap";
 
@@ -37,15 +35,10 @@ spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
     call compile preprocessFileLineNumbers "initFuncs.sqf";
-	call compile preprocessFileLineNumbers "data\names_local.sqf";
-	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-		call TFAR_fnc_sendVersionInfo;
-		"task_force_radio_pipe" callExtension "dummy";
-	};
     call compile preprocessFileLineNumbers "initVar.sqf";
 };
 
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+if (OT_hasTFAR) then {
    player linkItem "tf_anprc148jem";
 };
 
@@ -85,7 +78,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 	if(!_newplayer) then {
 		_housepos = player getVariable "home";
 		if(isNil "_housepos") exitWith {_newplayer = true};
-		_town = _housepos call nearestTown;
+		_town = _housepos call OT_fnc_nearestTown;
 		_pos = server getVariable _town;
 
 		_owned = player getVariable ["owned",[]];
@@ -169,7 +162,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 		};
 
 		{
-			if(_x call hasOwner) then {
+			if(_x call OT_fnc_hasOwner) then {
 				if ((_x getVariable "owner" == getPlayerUID player) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
 					_furniture pushback _x
 				};
@@ -204,28 +197,21 @@ if(isMultiplayer or _startup == "LOAD") then {
 		_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
 	}foreach (_recruits);
 	server setVariable ["recruits",_newrecruits,true];
-    //JIP interactions
-    {
-		if((typename(_x getVariable ["shop",false])) == "STRING") then {
-			_x call initShopLocal;
-		};
-		if(_x getVariable ["gundealer",false]) then {
-			_x call initGunDealerLocal;
-		};
-		if(_x getVariable ["carshop",false]) then {
-			_x call initCarShopLocal;
-		};
-		if(_x getVariable ["harbor",false]) then {
-			_x call initHarborLocal;
-		};
-	}foreach(allUnits);
 };
 
 if (_newplayer) then {
     _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
 	player forceAddUniform _clothes;
     player setVariable ["uniform",_clothes,true];
-    player setVariable ["money",100,true];
+	private _money = 100;
+	private _diff = server getVariable ["OT_difficulty",1];
+	if(_diff == 0) then {
+		_money = 1000;
+	};
+	if(_diff == 2) then {
+		_money = 0;
+	};
+    player setVariable ["money",_money,true];
     player setVariable ["owner",getplayerUID player,true];
     if(!isMultiplayer) then {
         {
@@ -246,13 +232,13 @@ if (_newplayer) then {
     };
     _pos = server getVariable _town;
 
-    _house = [_pos,OT_spawnHouses] call getRandomBuilding;
+    _house = [_pos,OT_spawnHouses] call OT_fnc_getRandomBuilding;
     if(typename _house == "BOOL") then {
 		//Spawn town is full, make a new one
         _town = (OT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
         server setVariable ["spawntown",_town,true];
         _pos = server getvariable _town;
-        _house = [_pos,OT_spawnHouses] call getRandomBuilding;
+        _house = [_pos,OT_spawnHouses] call OT_fnc_getRandomBuilding;
     };
     _housepos = getpos _house;
 
@@ -265,14 +251,11 @@ if (_newplayer) then {
     _house setVariable ["owner",getPlayerUID player,true];
     player setVariable ["home",_housepos,true];
 
-    _furniture = (_house call spawnTemplate) select 0;
+    _furniture = (_house call OT_fnc_spawnTemplate) select 0;
 
     {
         if(typeof _x == OT_item_Map) then {
-            _x setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
-        };
-        if(typeof _x == OT_item_Desk) then {
-            _deskobjects = [_x,template_playerDesk] call spawnTemplateAttached;
+            _x setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
         };
         _x setVariable ["owner",getplayerUID player,true];
     }foreach(_furniture);
@@ -292,7 +275,7 @@ if (_newplayer) then {
 _count = 0;
 {
 	if !(_x isKindOf "Vehicle") then {
-		if(_x call hasOwner) then {
+		if(_x call OT_fnc_hasOwner) then {
 			_x call initObjectLocal;
 		};
 	};
@@ -333,7 +316,7 @@ player addEventHandler ["GetInMan",{
 	_notified = false;
 
 	if(_position == "driver") then {
-		if !(_veh call hasOwner) then {
+		if !(_veh call OT_fnc_hasOwner) then {
 			_veh setVariable ["owner",getplayeruid player,true];
 			_veh setVariable ["stolen",true,true];
 		};

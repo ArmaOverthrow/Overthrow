@@ -12,7 +12,7 @@ class Campaign
 	class MissionDefault
 	{
 		lives = -1;
-		
+
 		lost = ;
 		end1 = ;
 		end2 = ;
@@ -36,11 +36,10 @@ class Campaign
 		lost = ;
 
 		#define _CAMPAIGN 1
-		
+
 		class Tanoa: MissionDefault
 		{
 			template = Overthrow.Tanoa;
 		};
 	};
 };
-	

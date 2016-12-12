@@ -49,19 +49,19 @@ while {(_count < _numVeh)} do {
 					_groups pushback _group;
 					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 					_civ setBehaviour "SAFE";
-					[_civ] call initCivilian;
+					[_civ] call OT_fnc_initCivilian;
 					_civ moveInDriver _veh;
 
 					_region  = server getVariable format["region_%1",_town];
 					_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
-					_moveto = getpos([server getvariable _dest,OT_allHouses + OT_allShops + OT_offices] call getRandomBuilding);
+					_moveto = getpos([server getvariable _dest,OT_allHouses + OT_allShops + OT_offices] call OT_fnc_getRandomBuilding);
 					_wp = _group addWaypoint [_moveto,0];
 
 					_wp setWaypointType "MOVE";
 					_wp setWaypointSpeed "LIMITED";
 					_wp setWaypointBehaviour "SAFE";
 					_wp setWaypointCompletionRadius 60;
-					_wp setWaypointStatements ["true","unassignvehicle this;moveout this;"];
+					_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 				};
 				_groups pushBack _veh;
 			};

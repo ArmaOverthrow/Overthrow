@@ -10,7 +10,7 @@ lbClear 1500;
 {			
 	_cls = _x select 0;
 	_num = _x select 1;
-	_price = [_town,_cls,_standing] call getPrice;
+	_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 	_name = "";
 	_pic = "";
 	if(_cls isKindOf "Bag_Base") then {	

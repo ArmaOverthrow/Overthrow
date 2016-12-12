@@ -7,7 +7,7 @@ while {true} do {
 		if(_x getVariable ["spawntrack",false]) then {
 			_track pushback _x;
 		}else{
-			if((_x call hasOwner) and (alive _x) and (!isPlayer _x)) then {_track pushback _x};
+			if((_x call OT_fnc_hasOwner) and (alive _x) and (!isPlayer _x)) then {_track pushback _x};
 		};
 		sleep 0.01;
 	}foreach(allunits);

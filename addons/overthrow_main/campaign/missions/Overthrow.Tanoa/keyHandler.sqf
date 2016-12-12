@@ -22,7 +22,7 @@ if (_key == 21) then
 						_veh = vehicle player;
 
 						disableUserInput true;
-						_town = _ferry call nearestTown;
+						_town = _ferry call OT_fnc_nearestTown;
 
 						private _cost = player getVariable ["OT_ferryCost",0];
 						if((player getVariable "money") < _cost) exitWith {
@@ -47,11 +47,11 @@ if (_key == 21) then
 							deleteVehicle _veh;
 						};
 					};
-					_b = player call getNearestRealEstate;
+					_b = player call OT_fnc_nearestRealEstate;
 					_iswarehouse = false;
 					if(typename _b == "ARRAY") then {
 						_building = _b select 0;
-						if((typeof _building) == OT_warehouse and _building call hasOwner) then {
+						if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
 							_iswarehouse = true;
 						};
 					};
@@ -85,26 +85,6 @@ else
 		};
 		_handled = true;
 	};
-
-	if(_key in actionKeys "GetOver") then {
-		private ["_r","_key_delay","_max_height"] ;
-		_key_delay  = 0.3;// MAX TIME BETWEEN KEY PRESSES
-		_max_height = 4.3;// SET MAX JUMP HEIGHT
-		// VARIOUS CHECKS
-		if  (player == vehicle player and isTouchingGround player ) then  {
-			//Credit to progamer: https://forums.bistudio.com/topic/150917-realistic-jumping-script/
-
-			_height = 6-((load player)*10);// REDUCE HEIGHT BASED ON WEIGHT
-			_vel = velocity player;
-			_dir = direction player;
-			_speed = 0.4;
-			If (_height > _max_height) then {_height = _max_height};// MAXIMUM HEIGHT OF JUMP
-			player setVelocity [(_vel select 0)+(sin _dir*_speed),(_vel select 1)+(cos _dir*_speed),(_vel select 2)+_height];
-
-			[[player,"AovrPercMrunSrasWrflDf"],"fn_Animation",nil,false] spawn BIS_fnc_MP; //BROADCAST ANIMATION
-			_handled = true;
-		};
-	}
 };
 _handled
 

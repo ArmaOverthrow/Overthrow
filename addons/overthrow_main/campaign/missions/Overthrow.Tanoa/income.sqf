@@ -40,6 +40,11 @@ while {true} do {
 			};
 		}foreach(server getVariable ["NATOabandoned",[]]);
 	};
+	_totax = 0;
+	_tax = server getVariable ["taxrate",0];
+	if(_tax > 0) then {
+		_totax = round(_total * (_tax / 100));
+	};
 
 	{
 		private _owned = _x getvariable ["owned",[]];
@@ -48,23 +53,34 @@ while {true} do {
 			private _bdg = OT_centerPos nearestObject _x;
 			if !(isNil "_bdg") then {
 				if(_bdg getVariable ["leased",false]) then {
-					private _data = _bdg call getRealEstateData;
+					private _data = _bdg call OT_fnc_getRealEstateData;
 					_lease = _lease + (_data select 2);
 				};
 			};
 		}foreach(_owned);
 		if(_lease > 0) then {
-			private _money = _x getVariable ["money",0];
-			_x setVariable ["money",_money+_lease,true];
+			_tt = 0;
+			if(_tax > 0) then {
+				_tt = round(_lease * (_tax / 100));
+			};
+			_totax = _totax + _tt;
+			[_lease-_tt] remoteExec ["money",_x,false];
 		};
 	}foreach([] call CBA_fnc_players);
 
+	_funds = server getVariable ["money",0];
+	server setVariable ["money",_funds+_totax];
+	_total = _total - _totax;
 
 	_numPlayers = count([] call CBA_fnc_players);
 	if(_numPlayers > 0) then {
 		if(isNil "_total") then {_total = 0};
 		_perPlayer = round(_total / _numPlayers);
 		if(_perPlayer > 0) then {
+			private _diff = server getVariable ["OT_difficulty",1];
+			if(_diff == 0) then {_perPlayer = round(_perPlayer * 1.2)};
+			if(_diff == 2) then {_perPlayer = round(_perPlayer * 0.8)};
+
 			_inf remoteExec ["influenceSilent",0,false];
 			{
 				_money = _x getVariable ["money",0];

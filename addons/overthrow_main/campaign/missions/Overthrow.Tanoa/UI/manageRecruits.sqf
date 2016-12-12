@@ -22,7 +22,7 @@ refreshRecruits = {
 recruitSelected = {
 	ctrlEnable [1600,true];
 	_recruit = (units group player) select (lbValue[1500,lbCurSel 1500]-1);
-	_town = (getpos _recruit) call nearestTown;
+	_town = (getpos _recruit) call OT_fnc_nearestTown;
 	disableSerialization;	
 	_ctrl = (findDisplay 8004) displayCtrl 1100;
 	_ctrl ctrlSetStructuredText parseText format["

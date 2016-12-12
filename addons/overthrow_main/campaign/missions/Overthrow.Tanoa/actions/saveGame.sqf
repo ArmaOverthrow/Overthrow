@@ -28,11 +28,8 @@ _data = [];
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
-				if(typename _val != "CODE") then {					
-					if(_x == "camp") then {
-						_val = getpos _val;
-					};					
-					_d pushback [_x,_val];											
+				if(typename _val != "CODE") then {
+					_d pushback [_x,_val];
 				};
 			};
 		};
@@ -44,14 +41,14 @@ _vehicles = [];
 
 _count = 10001;
 {
-	if(!(_x isKindOf "Man") and (alive _x) and (_x call hasOwner) and (typeof _x != OT_item_Flag)) then {
+	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_item_Flag)) then {
 		_owner = _x getVariable ["owner",false];
-		_s = _x call unitStock;
+		_s = _x call OT_fnc_unitStock;
 		if(typeof _x == OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];
 			_s pushback ["password",_x getVariable ["password",""]];
 		};
-		_vehicles pushback [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];	
+		_vehicles pushback [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
 	};
 	if(_count > 2000) then {
 		"Still persistent Saving... please wait" remoteExec ["notify_long",0,true];
@@ -77,7 +74,7 @@ _recruits = [];
 {
 	_do = true;
 	_unitorpos = _x select 2;
-	if(typename _unitorpos == "OBJECT") then {		
+	if(typename _unitorpos == "OBJECT") then {
 		if(alive _unitorpos) then {
 			_p = getpos _unitorpos;
 			_x set [4,getUnitLoadout _unitorpos];
@@ -86,7 +83,7 @@ _recruits = [];
 			_do = false;
 		};
 	};
-	if(_do) then {		
+	if(_do) then {
 		_recruits pushback _x;
 	};
 }foreach(server getVariable ["recruits",[]]);
@@ -94,7 +91,7 @@ _recruits = [];
 _data pushback ["recruits",_recruits];
 _data pushback ["timedate",date];
 
-{	
+{
 	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
 }foreach([] call CBA_fnc_players);
 

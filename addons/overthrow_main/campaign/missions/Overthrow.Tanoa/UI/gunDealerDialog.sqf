@@ -1,4 +1,4 @@
-private _town = (getpos player) call nearestTown; 
+private _town = (getpos player) call OT_fnc_nearestTown; 
 
 _stock = server getVariable format["gunstock%1",_town];
 if(isNil "_stock") then {		
@@ -59,7 +59,7 @@ if(isNil "_stock") then {
 	}foreach(OT_allStaticBackpacks);
 	
 	{			
-		_price = round (([_town,_x] call getDrugPrice) * 0.9);
+		_price = round (([_town,_x] call OT_fnc_getDrugPrice) * 0.9);
 		_stock pushBack [_x,_price];
 	}foreach(OT_allDrugs);		
 	

@@ -1,4 +1,4 @@
-_b = player call getNearestRealEstate;
+_b = player call OT_fnc_nearestRealEstate;
 _building = objNull;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);	
@@ -8,7 +8,7 @@ if(typeof _building == OT_barracks) exitWith {[] call recruitDialog};
 if(typeof _building == OT_warehouse) exitWith {[] call buyVehicleDialog};
 
 if(typename _b != "ARRAY") exitWith {
-	private _ob = (getpos player) call nearestObjective;
+	private _ob = (getpos player) call OT_fnc_nearestObjective;
 	_ob params ["_obpos","_obname"];
 	if(_obpos distance player < 250) then {
 		if(_obname in (server getVariable ["NATOabandoned",[]])) then {
@@ -26,7 +26,7 @@ _err = false;
 _building = objNull;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);
-	if !(_building call hasOwner) then {
+	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
 		_owner = _building getVariable "owner";

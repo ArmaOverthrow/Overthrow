@@ -83,7 +83,7 @@ while {true} do {
 					_upos = "MIDDLE";
 					_group reveal [_lead,4];
 				}else{
-					if(([_post, "VIEW"] checkVisibility [_lospos,getposasl _x]) > 0) then {
+					if(([_post, "VIEW"] checkVisibility [_lospos,getposasl _lead]) > 0) then {
 						_group reveal [_lead,4];
 					};
 				};

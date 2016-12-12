@@ -11,7 +11,7 @@ private _numitems = 0;
 	_cls = _x select 0;
 	if(_cls in OT_allItems) then {
 		_num = _x select 1;			
-		_price = [_town,_cls,_standing] call getSellPrice;
+		_price = [_town,_cls,_standing] call OT_fnc_getSellPrice;
 		_mynum = 0;
 		{
 			_c = _x select 0;

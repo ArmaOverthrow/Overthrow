@@ -21,7 +21,7 @@ call {
 _money = player getVariable "money";
 if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call notify_minor};
 
-if !([getpos player,_typecls] call canPlace) exitWith {
+if !([getpos player,_typecls] call OT_fnc_canPlace) exitWith {
 	call {
 		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call notify_minor};
 		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call notify_minor};
@@ -80,7 +80,7 @@ if(_cost > 0) then {
 				};
 				modeTarget remoteExec ["enableSimulationGlobal false",2,false];
 				if(_cls == OT_item_Map) then {
-					modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+					modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 				};
 				clearWeaponCargoGlobal modeTarget;
 				clearMagazineCargoGlobal modeTarget;
@@ -109,7 +109,7 @@ if(_cost > 0) then {
 	modeTarget remoteExec ["enableSimulationGlobal false",2];
 	modeTarget enableSimulation false;
 	if(_cls == OT_item_Map) then {
-		modeTarget setObjectTextureGlobal [0,"dialogs\maptanoa.paa"];
+		modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 	};
 	modeTarget enableSimulationGlobal false;
 
@@ -142,7 +142,7 @@ if(_cost > 0) then {
 		detach modeTarget;
 		deleteVehicle modeTarget;
 	}else{
-		if ([getpos player,_typecls] call canPlace) then {
+		if ([getpos player,_typecls] call OT_fnc_canPlace) then {
 			[-_cost] call money;
 			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
 			modeTarget remoteExec ["enableSimulationGlobal true",2];

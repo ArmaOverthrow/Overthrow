@@ -44,7 +44,7 @@ _civ setRank "COLONEL";
 [_civ] joinSilent nil;
 [_civ] joinSilent _group;
 _civ setVariable ["garrison",_mobsterid,true];
-_civ call initMobBoss;
+_civ call OT_fnc_initMobBoss;
 {
 	_x addCuratorEditableObjects[[_civ],false];
 }foreach(allcurators);
@@ -58,7 +58,7 @@ while {_count < _garrison} do {
 	[_civ] joinSilent nil;
 	[_civ] joinSilent _group;
 	_civ setVariable ["garrison",_mobsterid,true];
-	_civ call initMobster;
+	_civ call OT_fnc_initMobster;
 	_count = _count + 1;
 	{
 		_x addCuratorEditableObjects[[_civ],false];

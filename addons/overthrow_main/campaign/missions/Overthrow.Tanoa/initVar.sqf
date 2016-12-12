@@ -1,23 +1,38 @@
 //Here is where you can change stuff to suit your liking or support mods/another map
-private ["_allPrimaryWeapons","_allHandGuns","__allLaunchers"];
+
+//To-DO:
+/*
+
+WOrkshop should come with a toolkit
+NATO limits
+Shop warning when sell price low
+Raise chance of NATO
+Work out why support vehicle does full repair
+
+
+*/
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
+call compileFinal preprocessFileLineNumbers "data\names.sqf";
+call compileFinal preprocessFileLineNumbers "data\towns.sqf";
+call compileFinal preprocessFileLineNumbers "data\airports.sqf";
+call compileFinal preprocessFileLineNumbers "data\objectives.sqf";
+call compileFinal preprocessFileLineNumbers "data\economy.sqf";
+call compileFinal preprocessFileLineNumbers "data\comms.sqf";
+
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 9;
-OT_NATOversion = 4;
+OT_NATOversion = 6;
 OT_CRIMversion = 1;
 OT_adminMode = false;
 OT_economyLoadDone = false;
 
+OT_deepDebug = false;
+
 OT_hasAce = false;
 if (isClass (configFile >> "CfgPatches" >> "ace_ui")) then {
 	OT_hasAce = true;
-};
-
-OT_hasTFAR = false;
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-	OT_hasTFAR = true;
 };
 
 OT_allIntel = [];
@@ -25,7 +40,7 @@ OT_allIntel = [];
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
 OT_spawnCivPercentage = 0.1;
-OT_spawnVehiclePercentage = 0.03;
+OT_spawnVehiclePercentage = 0.04;
 OT_standardMarkup = 0.2; //Markup in shops is calculated from this
 OT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 OT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
@@ -39,7 +54,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Rautake","Tavu","Balavu","Muaceba","Katkoula","Savaka"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn
 
-OT_NATOwait = 400; //Half the Average time between NATO orders
+OT_NATOwait = 300; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -118,6 +133,8 @@ OT_faces_western = ["WhiteHead_1","WhiteHead_2","WhiteHead_3","WhiteHead_4","Whi
 OT_faces_eastern = ["AsianHead_A3_01","AsianHead_A3_02","AsianHead_A3_03","AsianHead_A3_04","AsianHead_A3_05","AsianHead_A3_06","AsianHead_A3_07"];
 OT_face_localBoss = "TanoanBossHead";
 
+OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar"];
+
 OT_civType_gunDealer = "C_man_p_fugitive_F";
 OT_civType_local = "C_man_1";
 OT_civType_carDealer = "C_man_w_worker_F";
@@ -175,13 +192,7 @@ OT_clothes_mob = "U_I_C_Soldier_Camo_F";
 OT_ammo_50cal = "100Rnd_127x99_mag";
 
 //NATO stuff
-OT_NATOregion = "island_5"; //where NATO lives
-OT_NATOwhitelist = ["Comms Alpha","Comms Bravo","port","fuel depot","railway depot"]; //NameLocal/Airport place names to definitely occupy with military personnel
-OT_NATOblacklist = ["Forbidden Village","training base","Comms Whiskey","GSM station"];
-OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
-OT_needsThe = ["fuel depot","maze","firing range","vehicle range","camp remnants","railway depot"];
 OT_NATO_control = ["control_1","control_2","control_3","control_4","control_5","control_6","control_7","control_8","control_9","control_10","control_11","control_12","control_13","control_14","control_15","control_16","control_17","control_18"]; //NATO checkpoints, create markers in editor
-OT_NATO_HQ = "Tuvanaka Airbase";
 OT_NATO_AirSpawn = "NATO_airspawn";
 OT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
@@ -220,6 +231,7 @@ OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = ["B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_F"];
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
+OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
 
 OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
 
@@ -329,10 +341,10 @@ if(OT_hasTFAR) then {
 ]] call BIS_fnc_arrayPushStack;
 
 OT_staticBackpacks = [
-	["I_HMG_01_high_weapon_F",500,1,0,1],
-	["I_GMG_01_high_weapon_F",1000,1,0,1],
+	["I_HMG_01_high_weapon_F",600,1,0,1],
+	["I_GMG_01_high_weapon_F",2500,1,0,1],
 	["I_HMG_01_support_high_F",50,1,0,0],
-	["I_Mortar_01_weapon_F",1500,1,0,1],
+	["I_Mortar_01_weapon_F",5000,1,0,1],
 	["I_Mortar_01_support_F",100,1,0,0],
 	["I_AT_01_weapon_F",2500,1,0,1],
 	["I_AA_01_weapon_F",2500,1,0,1]
@@ -360,6 +372,12 @@ OT_backpacks = [
 if(OT_hasAce) then {
 	OT_backpacks pushback ["ACE_TacticalLadder_Pack",40,0,0,1];
 };
+
+cost setVariable ["OT_Wood",[10,0,0,0],true];
+cost setVariable ["OT_Steel",[30,0,0,0],true];
+cost setVariable ["OT_Plastic",[20,0,0,0],true];
+cost setVariable ["OT_Sugarcane",[15,0,0,0],true];
+cost setVariable ["OT_Sugar",[25,0,0,0],true];
 
 if(OT_hasTFAR) then {
 	[OT_backpacks,[
@@ -708,9 +726,9 @@ OT_Buildables = [
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"],
 	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
 	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
-	["Guard Tower",10000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need? besides 2 x Static MGs maybe but it comes with those."],
+	["Guard Tower",10000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need?."],
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
-	["Workshop",2500,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"A place to repair and rearm your vehicles"],
+	["Workshop",2500,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"Attach weapons to vehicles"],
 	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
 	["Police Station",3500,[OT_policeStation],"structures\policeStation.sqf",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."],
 	["Warehouse",5000,[OT_warehouse],"structures\warehouse.sqf",false,"A house that you put wares in."]
@@ -734,35 +752,12 @@ OT_workshop = [
 }foreach(OT_Buildables);
 
 OT_allHouses = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_touristHouses;
-OT_allEnterableHouses = ["Land_House_Small_02_F","Land_House_Big_02_F","Land_House_Small_03_F","Land_House_Small_06_F","Land_House_Big_01_F","Land_Slum_05_F","Land_Slum_01_F","Land_GarageShelter_01_F","Land_House_Small_01_F","Land_Slum_03_F","Land_House_Big_04_F","Land_House_Small_04_F","Land_House_Small_05_F"];
 
-OT_townData = [["Lami",[7941.7,7663.32,-7.3052]],["Lifou",[7080.21,8004.08,-2.67]],["Lobaka",[6028.08,8580.17,-26.4572]],["Lakatoro",[9213.6,8741.29,-220.615]],["La Foa",[8825.16,4778.34,0.205969]],["Savaka",[7211.97,4237.91,-1.39777]],["Regina",[4919.7,8728.68,-2.99988]],["Katkoula",[5684.68,3993.67,0.0045675]],["Moddergat",[9407.35,4133.13,-6.81528]],["Lösi",[10200.8,4964.28,-16.149]],["Tanouka",[9014.23,10214.2,-30.0952]],["Tobakoro",[8741.21,3556.31,0.0318844]],["Georgetown",[5396.22,10334.7,0.00964478]],["Kotomo",[10974.5,6232.58,-11.9053]],["Rautake",[3403.76,6836.13,0]],["Harcourt",[11122.5,5342.93,-0.0348662]],["Buawa",[8316.95,11132.2,-130.3]],["Saint-Julien",[5808.6,11213.3,-2.6792]],["Balavu",[2677.42,7441.56,0.00116708]],["Namuvaka",[2824.25,5700.17,-4.71091]],["Vagalala",[11069.2,9748.43,-112.357]],["Imone",[10487.6,10613.7,-163.045]],["Leqa",[2363.54,8236.87,-4.31921]],["Galili",[8114.07,11957.2,-216.278]],["Sosovu",[2686.79,9280.77,-4.71367]],["Blerick",[10255.9,2738.07,-9.01873]],["Yanukka",[3051.14,3448.56,-17.0524]],["Oua-Oué",[5752.39,12325.8,-26.058]],["Cerebu",[2131.95,4589.63,-6.61045]],["Laikoro",[1628.02,6190.57,0]],["Saioko",[12403.5,4569.93,-32.6168]],["Belfort",[3132.55,10977.1,0.0920983]],["Ouméré",[12984.3,7321.96,-0.00245522]],["Muaceba",[1556.43,8545.12,-0.733838]],["Nicolet",[6164.67,12864.7,0.0123867]],["Lailai",[3627.54,2208.85,-45.4752]],["Doodstil",[12861.9,4691.1,-2.63918]],["Tavu",[974.49,7654.05,-3.96532]],["Lijnhaven",[11802,2662.98,-0.0168395]],["Nani",[1954.62,10727,-5.50346]],["Petit Nicolet",[6813.05,13439.5,0.00345634]],["Port-Boisé",[12715.1,3309.17,-9.54124]],["Saint-Paul",[7829.41,13599.8,0.0181113]],["Nasua",[11417.6,12360.2,-105.833]],["Savu",[8393.35,13778.4,0.000719533]],["Luganville",[14040.9,8308.29,-1.57949]],["Momea",[10423.8,13252.2,-20.6373]],["La Rochelle",[9549.78,13673.4,0.0130114]],["Koumac",[1347.24,2968.37,0.0902042]],["Taga",[12255.2,1880.2,-121.022]],["Bua Bua",[13255.1,3019.73,-58.4955]],["Pénélo",[10966.2,13183.5,-16.9658]],["Vatukoulo",[14057.4,9955.55,-98.8908]],["Nandai",[14496.3,8877.4,-1.13811]],["Tuvanaka",[1579.49,11937.8,-0.253379]],["Rereki",[13069.4,2117.94,2.97365e-005]],["Ovau",[12401.7,12787.8,-1.56371]],["Blue Pearl industrial port",[13523,12134.8,0.26935]],["Ba",[14295.2,11680.3,-1.10196]],["Ipota",[12317.8,13929.5,-9.70543]]];
 OT_allTowns = [];
 OT_allTownPositions = [];
 
-//get all the templates we need
-
-_allTemplates = ["Land_FuelStation_01_shop_F","Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F","Land_GarageShelter_01_F","Land_House_Native_02_F","Land_House_Small_03_F","Land_Shop_City_02_F","Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Slum_01_F","Land_Slum_02_F","Land_Supermarket_01_F"];
-
 {
-	_filename = format["templates\houses\%1.sqf",_x];
-
-	_template = call(compileFinal preProcessFileLineNumbers _filename);
-	{
-		if((_x select 0) in OT_items_Simulate) then {
-			_x set [8,true];
-		}else{
-			_x set [8,false];
-		};
-	}forEach(_template);
-
-	templates setVariable [_x,_template,true];
-
-} foreach(_allTemplates);
-
-{
-	_name = _x select 0;
-	_pos = _x select 1;
+	_x params ["_pos","_name"];
 	OT_allTowns pushBack _name;
 	OT_allTownPositions pushBack _pos;
 	if(isServer) then {
@@ -770,10 +765,10 @@ _allTemplates = ["Land_FuelStation_01_shop_F","Land_FuelStation_01_workshop_F","
 	};
 }foreach (OT_townData);
 
-OT_airportData = [["Aéroport de Tanoa",[6952.61,7400.35,-2.66]],["Saint-George Airstrip",[11570,3150.79,-5.56791]],["Bala Airstrip",[2089.06,3523.68,-12.95]],["La Rochelle Aerodrome",[11650.3,13135.4,-6.95]],["Tuvanaka Airbase",[1953.34,13173.8,-13.45]]];
+
 OT_allAirports = [];
 {
-		OT_allAirports pushBack (_x select 0);
+		OT_allAirports pushBack (_x select 1);
 }foreach (OT_airportData);
 
 if(isServer) then {

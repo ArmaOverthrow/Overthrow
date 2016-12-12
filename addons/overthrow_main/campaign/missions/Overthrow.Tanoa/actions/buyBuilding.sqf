@@ -1,12 +1,12 @@
 if !(captive player) exitWith {"You cannot buy buildings while wanted" call notify_minor};
 
-_b = player call getNearestRealEstate;
+_b = player call OT_fnc_nearestRealEstate;
 _handled = false;
 _type = "buy";
 _err = false;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);
-	if !(_building call hasOwner) then {
+	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
 		_owner = _building getVariable "owner";
@@ -50,7 +50,7 @@ if(_handled) then {
 		};
 		
 		_owned pushback ([_building] call fnc_getBuildID);
-		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_price]] call BIS_fnc_createLogRecord;
+		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {
 			[_town,round(_price / 10000)] call standing;		
 		};
@@ -60,7 +60,7 @@ if(_handled) then {
 			_building setVariable ["leased",nil,true];
 			deleteMarker _mrkid;
 			_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
-			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call nearestTown,_sell]] call BIS_fnc_createLogRecord;
+			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_sell]] call BIS_fnc_createLogRecord;
 			[_sell] call money;
 		}else{
 			deleteVehicle _building;

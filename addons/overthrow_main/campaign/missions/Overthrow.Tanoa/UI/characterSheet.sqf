@@ -15,7 +15,7 @@ _ctrl ctrlSetStructuredText parseText format["<t size=""2"">Trade</t><br/><t siz
 
 private _stealth = player getVariable ["OT_stealth",1];
 _ctrl = (findDisplay 8003) displayCtrl 1102;
-_ctrl ctrlSetStructuredText parseText format["<t size=""2"">Stealth</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Less chance of NATO finding illegal items</t>",_trade];
+_ctrl ctrlSetStructuredText parseText format["<t size=""2"">Stealth</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Less chance of NATO finding illegal items</t>",_stealth];
 
 getPerkPrice = {
 	private _perk = _this select 0;
@@ -39,12 +39,19 @@ ctrlSetText [1600,format["Increase Level (-%1 Influence)",_price]];
 _price = ["trade"] call getPerkPrice;
 ctrlSetText [1601,format["Increase Level (-%1 Influence)",_price]];
 
+_price = ["stealth"] call getPerkPrice;
+ctrlSetText [1602,format["Increase Level (-%1 Influence)",_price]];
+
 if(_fitness == 5) then {
 	ctrlShow [1600,false];
 };
 
 if(_trade == 5) then {
 	ctrlShow [1601,false];
+};
+
+if(_stealth == 5) then {
+	ctrlShow [1602,false];
 };
 
 buyPerk = {
