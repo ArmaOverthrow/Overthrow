@@ -8,7 +8,7 @@ if(_name in (server getVariable ["NATOabandoned",[]])) exitWith {[]};
 
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 _count = 0;
-if(_name find "Comms" == 0) then {
+if(_name in OT_allComms) then {
 	_tower = nearestObjects [_posTown,OT_NATO_CommTowers,100] select 0;
 	_posTown = getpos _tower;
 
@@ -157,37 +157,41 @@ _road = objNull;
 	_dir = 0;
 	_got = false;
 	if(_vehtype in OT_staticWeapons) then {
-		_pos = _posTown findEmptyPosition [10,50,_vehtype];
-		_dir = [_posTown,_pos] call BIS_fnc_dirTo;
-		_p = [_pos,1.5,_dir] call BIS_fnc_relPos;
-		_veh =  "Land_BagFence_Round_F" createVehicle _p;
-		_veh setpos _p;
-		_veh setDir (_dir-180);
-		_groups pushback _veh;
-		_p = [_pos,-1.5,_dir] call BIS_fnc_relPos;
-		_veh =  "Land_BagFence_Round_F" createVehicle _p;
-		_veh setpos _p;
-		_veh setDir (_dir);
-		_groups pushback _veh;
+		_pos = _posTown findEmptyPosition [10,100,_vehtype];
+		if(count _pos > 0) then {
+			_dir = [_posTown,_pos] call BIS_fnc_dirTo;
+			_p = [_pos,1.5,_dir] call BIS_fnc_relPos;
+			_veh =  "Land_BagFence_Round_F" createVehicle _p;
+			_veh setpos _p;
+			_veh setDir (_dir-180);
+			_groups pushback _veh;
+			_p = [_pos,-1.5,_dir] call BIS_fnc_relPos;
+			_veh =  "Land_BagFence_Round_F" createVehicle _p;
+			_veh setpos _p;
+			_veh setDir (_dir);
+			_groups pushback _veh;
+		};
 	}else{
 		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 		_dir = random 360;
 	};
-	_veh =  _vehtype createVehicle _pos;
-	_veh setpos _pos;
-	_veh setVariable ["vehgarrison",_name,false];
+	if(count _pos > 0) then {
+		_veh =  _vehtype createVehicle _pos;
+		_veh setpos _pos;
+		_veh setVariable ["vehgarrison",_name,false];
 
-	_veh setDir _dir;
-	if(random 100 < 99) then {
-		createVehicleCrew _veh;
+		_veh setDir _dir;
+		if(random 100 < 99) then {
+			createVehicleCrew _veh;
+		};
+		sleep 0.2;
+		_groups pushback _veh;
+		{
+			[_x] joinSilent _vgroup;
+			_x setVariable ["garrison","HQ",false];
+		}foreach(crew _veh);
+		_vgroup call OT_fnc_initMilitaryPatrol;
 	};
-	sleep 0.2;
-	_groups pushback _veh;
-	{
-		[_x] joinSilent _vgroup;
-		_x setVariable ["garrison","HQ",false];
-	}foreach(crew _veh);
-	_vgroup call OT_fnc_initMilitaryPatrol;
 }foreach(_vehgarrison);
 
 spawner setvariable [_spawnid,_groups,false];

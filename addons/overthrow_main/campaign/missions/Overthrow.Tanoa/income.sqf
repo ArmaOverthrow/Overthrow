@@ -77,6 +77,10 @@ while {true} do {
 		if(isNil "_total") then {_total = 0};
 		_perPlayer = round(_total / _numPlayers);
 		if(_perPlayer > 0) then {
+			private _diff = server getVariable ["OT_difficulty",1];
+			if(_diff == 0) then {_perPlayer = round(_perPlayer * 1.2)};
+			if(_diff == 2) then {_perPlayer = round(_perPlayer * 0.8)};
+
 			_inf remoteExec ["influenceSilent",0,false];
 			{
 				_money = _x getVariable ["money",0];

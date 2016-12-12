@@ -11,6 +11,7 @@ private _abandoned = [];
 OT_NATOobjectives = server getVariable ["NATOobjectives",[]];
 OT_NATOcomms = server getVariable ["NATOcomms",[]];
 OT_allObjectives = [];
+OT_allComms = [];
 
 if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
 	diag_log "Overthrow: Generating NATO";
@@ -168,6 +169,7 @@ publicVariable "OT_allObjectives";
 		_mrk setMarkerColor "ColorBLUFOR";
 	};
 	server setVariable [_name,_pos,true];
+	OT_allComms pushback _name;
 	OT_allObjectives pushback _name;
 }foreach(OT_NATOcomms);
 server setVariable ["NATOattacking","",true];
@@ -393,6 +395,7 @@ while {true} do {
 			deleteGroup _x;
 		};
 	}foreach(allGroups);
+	if(_resources > 2500) then {_resources = 2500};
 	server setVariable ["NATOresources",_resources,true];
 	server setVariable ["NATOabandoned",_abandoned,true];
 	sleep OT_NATOwait + round(random OT_NATOwait);

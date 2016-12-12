@@ -35,6 +35,10 @@ if(surfaceIsWater ([_pos,500,0] call BIS_fnc_relPos) or surfaceIsWater ([_pos,50
 	_isCoastal = true;
 };
 
+if(OT_NATO_Navy_HQ in (server getvariable ["NATOabandoned",[]])) then {
+	_isCoastal = false;
+};
+
 //Land?
 private _town = _pos call OT_fnc_nearestTown;
 private _region = server getVariable format["region_%1",_town];
@@ -95,7 +99,22 @@ if(_s > 0 and _objectiveIsControlled) then {
 if(_s > 0) then {
 	_airStrength = _s;
 };
-diag_log format["Overthrow: Attack start %1",_pos];
+diag_log format["Overthrow: Attack start on %1 (sea:%2 land:%3 air:%4)",_pos,_seaStrength,_landStrength,_airStrength];
+
+if(_seaStrength > 0) then {
+	private _numgroups = 1;
+	if(_seaStrength > 50) then {_numgroups = 2};
+	if(_seaStrength > 150) then {_numgroups = 3};
+	private _delay = 0;
+	private _p = getMarkerPos OT_NATO_Navy_HQ;
+	private _count = 0;
+	while {_count < _numgroups} do {
+		diag_log format["Overthrow: Sending sea support %1",_p];
+		[[_p,[0,100],random 360] call SHK_pos,_pos,_delay] spawn OT_fnc_NATOSeaSupport;
+		_count = _count + 1;
+		_delay = _delay + 20;
+	};
+};
 
 _numgroups = 1;
 if(_airStrength < 60) then {_numgroups = 0};
@@ -116,6 +135,9 @@ private _dir = [_pos,OT_NATO_HQPos] call BIS_fnc_dirTo;
 private _ao = [_pos,_dir] call OT_fnc_getAO;
 
 private _numgroups = 1+floor(_strength / 100);
+if(_numgroups > 6) then {
+	_numgroups = 6;
+};
 private _count = 0;
 if(_delay > 0) then {
 	_delay = _delay + 10;
@@ -136,6 +158,9 @@ if(_objectiveIsControlled) then {
 	[_closestObjectivePos,_pos,_landStrength,0] spawn OT_fnc_NATOGroundSupport;
 
 	_numgroups = 1+floor(_landStrength / 250);
+	if(_numgroups > 2) then {
+		_numgroups = 2;
+	};
 	_count = 0;
 	_delay = 20;
 	while {_count < _numgroups} do {
@@ -162,6 +187,9 @@ if(_airfieldIsControlled) then {
 		_delay = _delay + 20;
 	};
 	_numgroups = floor(_strength / 150);
+	if(_numgroups > 2) then {
+		_numgroups = 2;
+	};
 	_count = 0;
 	_delay = 0;
 	while {_count < _numgroups} do {

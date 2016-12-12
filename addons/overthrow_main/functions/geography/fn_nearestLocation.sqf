@@ -1,5 +1,5 @@
 private _pos = _this;
-private _search = OT_objectiveData + OT_economicData + OT_townData + OT_commsData + OT_airportData;
+private _search = OT_objectiveData + OT_townData + OT_commsData + OT_airportData;
 private _closest = ([_search,[],{(_x select 0) distance _pos},"ASCEND"] call BIS_fnc_SortBy) select 0;
 _type = "Objective";
 call {

@@ -1,5 +1,16 @@
 //Here is where you can change stuff to suit your liking or support mods/another map
 
+//To-DO:
+/*
+
+WOrkshop should come with a toolkit
+NATO limits
+Shop warning when sell price low
+Raise chance of NATO
+Work out why support vehicle does full repair
+
+
+*/
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
@@ -12,7 +23,7 @@ call compileFinal preprocessFileLineNumbers "data\comms.sqf";
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 9;
-OT_NATOversion = 5;
+OT_NATOversion = 6;
 OT_CRIMversion = 1;
 OT_adminMode = false;
 OT_economyLoadDone = false;
@@ -29,7 +40,7 @@ OT_allIntel = [];
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
 OT_spawnCivPercentage = 0.1;
-OT_spawnVehiclePercentage = 0.03;
+OT_spawnVehiclePercentage = 0.04;
 OT_standardMarkup = 0.2; //Markup in shops is calculated from this
 OT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
 OT_distroThreshold = 500; //Size a towns order must be before a truck is sent (in dollars)
@@ -220,6 +231,7 @@ OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = ["B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_F"];
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
+OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
 
 OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
 

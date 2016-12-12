@@ -156,6 +156,7 @@ class CfgFunctions
 			class CTRGSupport {};
 			class NATOAirSupport {};
 			class NATOGroundSupport {};
+			class NATOSeaSupport {};
 
 			class NATOResponseObjective {};
 			class NATOResponseTown {};

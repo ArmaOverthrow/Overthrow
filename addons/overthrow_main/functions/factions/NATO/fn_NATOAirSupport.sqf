@@ -20,11 +20,29 @@ createVehicleCrew _veh;
 _allunits = (units _group);
 sleep 1;
 
-_wp = _group addWaypoint [asltoatl _attackpos,20];
+_wp = _group addWaypoint [_attackpos,200];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [600,600,600];
+_wp setWaypointTimeout [100,150,200];
+
+_wp = _group addWaypoint [_attackpos,200];
+_wp setWaypointType "SAD";
+_wp setWaypointBehaviour "COMBAT";
+_wp setWaypointSpeed "FULL";
+_wp setWaypointTimeout [100,150,200];
+
+_wp = _group addWaypoint [_attackpos,200];
+_wp setWaypointType "SAD";
+_wp setWaypointBehaviour "COMBAT";
+_wp setWaypointSpeed "FULL";
+_wp setWaypointTimeout [100,150,200];
+
+_wp = _group addWaypoint [_attackpos,200];
+_wp setWaypointType "SAD";
+_wp setWaypointBehaviour "COMBAT";
+_wp setWaypointSpeed "FULL";
+_wp setWaypointTimeout [100,150,200];
 
 _wp = _group addWaypoint [_frompos,2000];
 _wp setWaypointType "SCRIPTED";

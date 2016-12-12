@@ -105,7 +105,7 @@ call {
 	};
 	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") then {
 		if(!isNil "_garrison") then {
-			server setVariable ["NATOresourceGain",server getVariable ["NATOresourceGain",0]+1,true];
+			server setVariable ["NATOresourceGain",(server getVariable ["NATOresourceGain",0])+1,true];
 			_pop = server getVariable [format["garrison%1",_garrison],0];
 			if(_pop > 0) then {
 				_pop = _pop -1;
