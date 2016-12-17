@@ -34,12 +34,14 @@ server setVariable [format["uid%1",name player],getplayeruid player,true];
 spawner setVariable [format["%1",getplayeruid player],player,true];
 
 if(isMultiplayer and (!isServer)) then {
+	//TFAR Support, thanks to Dedmen for the help
+	[] call OT_fnc_initTFAR;
+	if (OT_hasTFAR) then {
+	   player linkItem "tf_anprc148jem";
+	};
+
     call compile preprocessFileLineNumbers "initFuncs.sqf";
     call compile preprocessFileLineNumbers "initVar.sqf";
-};
-
-if (OT_hasTFAR) then {
-   player linkItem "tf_anprc148jem";
 };
 
 _start = [1385.17,505.453,1.88826];
@@ -197,6 +199,27 @@ if(isMultiplayer or _startup == "LOAD") then {
 		_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];
 	}foreach (_recruits);
 	server setVariable ["recruits",_newrecruits,true];
+
+	_squads = server getVariable ["squads",[]];
+	_newsquads = [];
+	{
+		_x params ["_owner","_cls","_group","_units"];
+		if(_owner == (getplayeruid player)) then {
+			if(typename _group != "GROUP") then {
+				_group = creategroup resistance;
+				{
+					_x params ["_type","_pos","_loadout"];
+					_civ = _group createUnit [_type,_pos,[],0,"NONE"];
+					_civ setUnitLoadout _loadout;
+					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];					
+				}foreach(_units);
+			};
+			player hcSetGroup [_group];
+		};
+		_newsquads pushback [_owner,_cls,_group,[]];
+	}foreach (_squads);
+	server setVariable ["squads",_newsquads,true];
 };
 
 if (_newplayer) then {

@@ -1,3 +1,6 @@
+/* ----------------------------------------------------------------------------
+Function: incomeSystem
+---------------------------------------------------------------------------- */
 //Manages passive income for all players (Lease + taxes)
 
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};

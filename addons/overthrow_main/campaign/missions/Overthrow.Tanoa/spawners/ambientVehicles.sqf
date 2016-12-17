@@ -61,7 +61,7 @@ while {(_count < _numVeh)} do {
 					_wp setWaypointSpeed "LIMITED";
 					_wp setWaypointBehaviour "SAFE";
 					_wp setWaypointCompletionRadius 60;
-					_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
+					_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 				};
 				_groups pushBack _veh;
 			};

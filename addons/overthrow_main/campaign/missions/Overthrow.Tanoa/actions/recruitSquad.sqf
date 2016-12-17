@@ -14,7 +14,7 @@ _soldiers = [];
 private _cost = 0;
 {
 	_s = OT_recruitables select _x;
-	
+
 	_soldier = (_s select 0) call OT_fnc_getSoldier;
 	_cost = _cost + (_soldier select 0);
 	_soldiers pushback _soldier;
@@ -27,12 +27,12 @@ if(_money < _cost) exitWith {format ["You need $%1",_cost] call notify_minor};
 
 _group = creategroup resistance;
 _leader = false;
-{		
+{
 	_civ = [_x,_pos,_group] call OT_fnc_createSoldier;
-	player reveal [_civ,4];	
+	player reveal [_civ,4];
 	if(!_leader) then {_group selectLeader _civ;_civ setVariable ["owner",getplayeruid player,true],_leader=true};
 }foreach(_soldiers);
-player hcSetGroup [_group,_cls];
+player hcSetGroup [_group];
 
 _recruits = server getVariable ["squads",[]];
 _recruits pushback [getplayeruid player,_cls,_group,[]];

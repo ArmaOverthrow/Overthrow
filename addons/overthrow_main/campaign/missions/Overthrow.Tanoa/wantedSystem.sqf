@@ -51,6 +51,10 @@ _unit addEventHandler ["Fired", {
 
 private _delay = 3;
 
+/*
+["ace_medical_peripheralresistance","ace_medical_painsuppress","ace_advanced_fatigue_ae1reserve","ace_hearing_deaf","reppénélo","repovau","saved3deninventory","ace_isunconscious","ace_medical_alllogs","cba_statemachine_state0","ace_movement_loadcoef","ace_parachute_hasreserve","repregina","repluganville","tute","influence"]
+*/
+
 while {alive _unit} do {
 	sleep _delay;
 	//check wanted status
@@ -60,9 +64,11 @@ while {alive _unit} do {
 		if(_unit getVariable ["ACE_isUnconscious", false]) then {
 			//Look for a medic
 			private _medic = objNull;
+			private _havepi = false;
+			if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
 			{
-				if((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x)) then {
-					if((items _x) find "ACE_epinephrine" > -1) then {
+				if(_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x))) then {
+					if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
 						_medic = _x;
 					};
 				};
@@ -84,8 +90,36 @@ while {alive _unit} do {
 					}
 				}else{
 					"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
+					player setCaptive true;
 					sleep 5;
-					_unit setDamage 1; //rip
+					player setpos (player getVariable "home");
+					removeAllWeapons player;
+					removeAllItems player;
+					removeAllAssignedItems player;
+					removeBackpack player;
+					removeVest player;
+					removeGoggles player;
+					removeHeadgear player;
+
+					{
+						if((_x select [0,11]) == "ace_medical") then {
+							player setVariable [_x,nil];
+						};
+					}foreach(allvariables player);
+
+					player setVariable ["ACE_isUnconscious", false];
+					player setVariable ["ACE_advanced_fatigue_ae1reserve", nil];
+					player setVariable ["ACE_advanced_fatigue_ae2reserve", nil];
+					player setVariable ["ACE_advanced_fatigue_anreserve", nil];
+					player setVariable ["ACE_advanced_fatigue_anfatigue", nil];
+					player setVariable ["ACE_advanced_fatigue_muscleDamage", nil];
+					player setVariable ["ACE_hearing_deaf", false];
+
+					-1 call influence;
+					titleText ["Respawing...", "BLACK FADED", 2];
+					sleep 2;
+					player switchMove "";
+					titleText ["", "BLACK IN", 5];
 				};
 			}
 		}else{

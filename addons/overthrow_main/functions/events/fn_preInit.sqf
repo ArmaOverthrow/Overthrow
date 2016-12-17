@@ -20,9 +20,6 @@ if(isServer) then {
 //VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less
 [] call OT_fnc_initVCOMAI;
 
-//TFAR Support, thanks to Dedmen for the help
-[] call OT_fnc_initTFAR;
-
 [] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
 
 if(isServer) then {

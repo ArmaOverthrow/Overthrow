@@ -6,6 +6,8 @@ if (!isMultiplayer) exitWith {};
 //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
 [] execVM "funcs\fn_advancedTowingInit.sqf";
 
+[] call OT_fnc_initTFAR;
+
 call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
 

@@ -45,7 +45,7 @@ if ((!_isbase) and !(_closest in (server getVariable ["NATOabandoned",[]]))) exi
 		format ["NATO does not allow construction this close to %1.",_closest] call notify_minor;
 	}else{
 		format ["NATO is currently not allowing any construction in %1",_closest] call notify_minor;
-	};	
+	};
 };
 
 if((player distance _center) > modeMax) exitWith {format ["You need to be within %1m of the %2.",modeMax,_buildlocation] call notify_minor};
@@ -58,7 +58,7 @@ _start = [position player select 0, position player select 1, 2];
 buildcam = "camera" camCreate _start;
 
 buildFocus = createVehicle ["Sign_Sphere10cm_F", [_start,1000,getDir player] call BIS_fnc_relPos, [], 0, "NONE"];
-buildFocus setObjectTexture [0,"dialogs\clear.paa"];
+buildFocus setObjectTexture [0,"\ot\ui\clear.paa"];
 
 buildcam camSetTarget buildFocus;
 buildcam cameraEffect ["internal", "BACK"];
@@ -69,7 +69,7 @@ waitUntil {camCommitted buildcam};
 
 if(currentVisionMode player > 0) then {
 	camUseNVG true;
-}; 
+};
 
 buildFocus setPos _playerpos;
 buildcam camSetTarget buildFocus;
@@ -80,7 +80,7 @@ waitUntil {camCommitted buildcam};
 modeFinished = false;
 modeCancelled = false;
 
-cancelBuild = {		
+cancelBuild = {
 	modeCancelled = true;
 };
 modeValue = [0,0,0];
@@ -99,8 +99,8 @@ buildOnMouseMove = {
 	if(!isNull modeTarget) then {
 		modeTarget setPos modeValue;
 		modeVisual setPos modeValue;
-		modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];	
-		
+		modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];
+
 		if(modeMode == 0) then {
 			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_item_Flag) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
@@ -127,13 +127,13 @@ buildOnMouseMove = {
 			};
 		};
 	};
-	if(buildCamRotating and buildCamMoving) exitWith {			
+	if(buildCamRotating and buildCamMoving) exitWith {
 		_pos = getpos buildcam;
 		buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)+_relY,(_pos select 2)];
 		buildcam camSetTarget buildFocus;
 		buildcam camCommit 0;
 	};
-	if(buildCamMoving) exitWith {	
+	if(buildCamMoving) exitWith {
 		_pos = getpos buildcam;
 		buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)];
 		_pos = getpos buildFocus;
@@ -141,14 +141,14 @@ buildOnMouseMove = {
 		buildcam camSetTarget buildFocus;
 		buildcam camCommit 0;
 	};
-	
+
 };
 
 buildMoveCam = {
 	_relX = _this select 0;
 	_relY = _this select 1;
 	_relZ = _this select 2;
-	
+
 	_pos = getpos buildcam;
 	buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)+_relZ];
 	_pos = getpos buildFocus;
@@ -169,7 +169,7 @@ buildOnKeyDown = {
 	if(_this select 2) then {
 		buildCamRotating = true;
 	};
-	call {		
+	call {
 		if (_key == 17) exitWith {
 			//W
 			_handled = true;
@@ -194,10 +194,10 @@ buildOnKeyDown = {
 			_rel = [[0,0,0],2,(getDir buildCam)] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		
+
 		if(isNull modeTarget) exitWith {};
 		_dir = getDir modeTarget;
-		
+
 		if(_key == 57 and modeMode == 1) exitWith {
 			//Space
 			_handled = true;
@@ -209,7 +209,7 @@ buildOnKeyDown = {
 
 			modeTarget = createVehicle [_cls, modeValue, [], 0, "CAN_COLLIDE"];
 			modeTarget remoteExec ["enableSimulationGlobal false",2,false];
-			modeTarget setDir _dir;			
+			modeTarget setDir _dir;
 		};
 		_amt = 5;
 		if(_this select 2) then {
@@ -217,7 +217,7 @@ buildOnKeyDown = {
 		};
 		if (_key == 16) exitWith {
 			//Q
-			_handled = true;	
+			_handled = true;
 			_newdir = _dir - _amt;
 			if(_newdir < 0) then {_newdir = 359};
 			modeTarget setDir (_newdir);
@@ -240,7 +240,7 @@ buildOnMouseDown = {
 	};
 };
 
-buildOnMouseUp = {	
+buildOnMouseUp = {
 	_btn = _this select 1;
 	_sx = _this select 2;
 	if(_btn == 1) then {
@@ -265,9 +265,9 @@ buildOnMouseUp = {
 						clearWeaponCargoGlobal _x;
 						clearMagazineCargoGlobal _x;
 						clearBackpackCargoGlobal _x;
-						clearItemCargoGlobal _x;	
+						clearItemCargoGlobal _x;
 						_x setVariable ["owner",getplayeruid player,true];
-						_x call initObjectLocal;							
+						_x call initObjectLocal;
 					}foreach(_objects);
 					_created = _objects select 0;
 					deleteVehicle modeTarget;
@@ -277,15 +277,15 @@ buildOnMouseUp = {
 					modeTarget enableSimulationGlobal true;
 					modeTarget = objNull;
 				};
-				
+
 				if(modeCode != "") then {
 					_created setVariable ["OT_init",modeCode,true];
-					[modeValue,modeCode] remoteExec ["structureInit",2];					
+					[modeValue,modeCode] remoteExec ["structureInit",2];
 				};
 				createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
-			};			
+			};
 			deleteVehicle modeVisual;
-			
+
 		};
 		if(!isNull modeTarget and !canBuildHere) then {
 			"You cannot build that there" call notify_minor;
@@ -296,7 +296,7 @@ buildOnMouseUp = {
 buildOnMouseWheel = {
 	_z = _this select 1;
 	_pos = position buildcam;
-	
+
 	if(_z < 0) then {
 		if((_pos select 2) < 30) exitWith {
 			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)+5];
@@ -304,7 +304,7 @@ buildOnMouseWheel = {
 		if((_pos select 2) < 200) exitWith {
 			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)+20];
 		};
-	}else{	
+	}else{
 		if((_pos select 2) > 30) exitWith {
 			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)-20];
 		};
@@ -358,8 +358,8 @@ build = {
 		modeTarget disableCollisionWith _x;
 		modeVisual disableCollisionWith _x;
 	}foreach(vehicles + allUnits);
-	
-	modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];	
+
+	modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];
 	modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
 	modeTarget remoteExec ["enableSimulationGlobal false",2];
 	modeTarget enableSimulation false;
@@ -368,7 +368,7 @@ build = {
 	modeVisual setMass 0;
 	modeTarget setDir (getDir buildCam);
 	modeTarget allowDamage false;
-	
+
 	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom</t>",_name,[modePrice, 1, 0, true] call CBA_fnc_formatNumber,_description];
 	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
@@ -396,4 +396,3 @@ modeValues = nil;
 modeSelected = nil;
 modeMode = nil;
 modeCode = nil;
-

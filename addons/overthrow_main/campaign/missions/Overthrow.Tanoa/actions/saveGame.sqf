@@ -1,5 +1,3 @@
-private ["_data","_done","_recruits","_vehicles"];
-
 if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,false]};
 OT_saving = true;
 publicVariable "OT_saving";
@@ -8,10 +6,10 @@ publicVariable "OT_saving";
 sleep 0.1;
 waitUntil {!isNil "OT_NATOInitDone"};
 
-_data = [];
+private _data = [];
 //get all server data
 {
-	if !(_x == "StartupType" or _x == "recruits") then {
+	if !(_x == "StartupType" or _x == "recruits" or _x == "squads") then {
 		_data pushback [_x,server getVariable _x];
 	};
 }foreach(allVariables server);
@@ -37,7 +35,7 @@ _data = [];
 	_data pushback [_uid,_d];
 }foreach([] call CBA_fnc_players);
 
-_vehicles = [];
+private _vehicles = [];
 
 _count = 10001;
 {
@@ -61,7 +59,7 @@ _count = 10001;
 sleep 0.2;
 _data pushback ["vehicles",_vehicles];
 
-_warehouse = [];
+private _warehouse = [];
 {
 	_var = warehouse getVariable _x;
 	if (!isNil "_var") then {
@@ -70,7 +68,7 @@ _warehouse = [];
 }foreach(allvariables warehouse);
 _data pushback ["warehouse",_warehouse];
 
-_recruits = [];
+private _recruits = [];
 {
 	_do = true;
 	_unitorpos = _x select 2;
@@ -89,6 +87,26 @@ _recruits = [];
 }foreach(server getVariable ["recruits",[]]);
 
 _data pushback ["recruits",_recruits];
+
+private _squads = [];
+{
+	_do = true;
+	_x params ["_owner","_cls","_group"];
+	if(count units _group == 0) then {_do = false};
+	if(({alive _x} count units _group) == 0) then {_do = false};
+	if(_do) then {
+		_units = [];
+		{
+			if(alive _x) then {
+				_units pushback [typeof _x,position _x,getUnitLoadout _x];
+			};
+		}foreach(units _group);
+		_squads pushback [getplayeruid player,_cls,"",_units];
+	};
+}foreach(server getVariable ["squads",[]]);
+
+_data pushback ["squads",_squads];
+
 _data pushback ["timedate",date];
 
 {
