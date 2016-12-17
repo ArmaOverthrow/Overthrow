@@ -1,7 +1,7 @@
 class OT_dialog_buildbase
 {
 	idd=-1;
-	movingenable=false;	
+	movingenable=false;
 	onMouseMoving = "_this call buildOnMouseMove";
 	onMouseButtonDown = "_this call buildOnMouseDown";
 	onMouseButtonUp = "_this call buildOnMouseUp";
@@ -83,7 +83,7 @@ class OT_dialog_buildbase
 class OT_dialog_buildobjective
 {
 	idd=-1;
-	movingenable=false;	
+	movingenable=false;
 	onMouseMoving = "_this call buildOnMouseMove";
 	onMouseButtonDown = "_this call buildOnMouseDown";
 	onMouseButtonUp = "_this call buildOnMouseUp";
@@ -176,7 +176,7 @@ class OT_dialog_buildobjective
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Repair, rearm and modify vehicles"; //--- ToDo: Localize;
+			tooltip = "Modify vehicles"; //--- ToDo: Localize;
 		};
 		class RscButton_1607: RscOverthrowButton
 		{
@@ -200,7 +200,7 @@ class OT_dialog_buildobjective
 			y = 0.588 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Sometimes you need to get above the trees to see what's happening. Comes with 2 x Static MGs."; //--- ToDo: Localize;
+			tooltip = "Sometimes you need to get above the trees to see what's happening."; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -214,7 +214,7 @@ class OT_dialog_buildobjective
 class OT_dialog_buildtown
 {
 	idd=-1;
-	movingenable=false;	
+	movingenable=false;
 	onMouseMoving = "_this call buildOnMouseMove";
 	onMouseButtonDown = "_this call buildOnMouseDown";
 	onMouseButtonUp = "_this call buildOnMouseUp";
@@ -248,7 +248,7 @@ class OT_dialog_buildtown
 			y = 0.588 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Repair, rearm and modify vehicles"; //--- ToDo: Localize;
+			tooltip = "Modify vehicles"; //--- ToDo: Localize;
 		};
 		class RscButton_1602: RscOverthrowButton
 		{
@@ -296,7 +296,7 @@ class OT_dialog_buildtown
 class OT_dialog_police
 {
 	idd=9000;
-	movingenable=false;	
+	movingenable=false;
 	class controlsBackground
 	{
 		class RscStructuredText_1100: RscOverthrowStructuredText

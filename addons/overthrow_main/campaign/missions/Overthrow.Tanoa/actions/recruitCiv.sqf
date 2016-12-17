@@ -19,7 +19,7 @@ _civ setVariable ["owner",getPlayerUID player,true];
 _civ removeAllEventHandlers "FiredNear";
 [_civ] joinSilent grpNull;
 [_civ] joinSilent (group player);
-[_civ] spawn initRecruit;
+[_civ] spawn OT_fnc_initRecruit;
 
 [player,format["New Recruit: %1",name _civ],format["Recruited: %1 for $%2",name _civ,_price]] call BIS_fnc_createLogRecord;
 format["%1 has been recruited",name _civ] call notify_minor;

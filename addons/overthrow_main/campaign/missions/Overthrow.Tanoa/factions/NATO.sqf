@@ -182,6 +182,7 @@ while {true} do {
 	_resourceGain = server getVariable ["NATOresourceGain",0];
 
 	if(_numplayers > 0) then {
+		diag_log format["Overthrow: NATO turn @ %1",time];
 		_abandoned = server getVariable "NATOabandoned";
 
 
@@ -197,7 +198,7 @@ while {true} do {
 						if(vehicle _lead != _lead) then {
 							[vehicle _lead] spawn OT_fnc_cleanup;
 						};
-						[_x] call OT_fnc_cleanup;
+						[_x] spawn OT_fnc_cleanup;
 					};
 				}
 			}foreach(allgroups);
@@ -205,6 +206,9 @@ while {true} do {
 
 		if(_currentAttack == "") then {
 			_resources = _resources + _resourceGain + ((count _abandoned) * 100);
+			diag_log format["Overthrow: NATO resources @ %1",_resources];
+		}else{
+			diag_log format["Overthrow: NATO still attacking %1",_currentAttack];
 		};
 
 		{
@@ -253,6 +257,7 @@ while {true} do {
 						_garrisoned = true;
 						server setVariable ["NATOattacking",_name,true];
 						server setVariable ["NATOattackstart",time,true];
+						diag_log format["Overthrow: NATO responding to %1",_name];
 						[_name,_resources] spawn OT_fnc_NATOResponseObjective;
 						_abandoned pushback _name;
 						server setVariable ["NATOabandoned",_abandoned,true];
@@ -273,6 +278,7 @@ while {true} do {
 				_population = server getVariable format ["population%1",_town];
 				if(_stability < 10 and !(_town in _abandoned) and (_resources >= _population)) exitWith {
 					server setVariable [format ["garrison%1",_town],0,true];
+					diag_log format["Overthrow: NATO responding to %1",_town];
 					[_town,_population] spawn OT_fnc_NATOResponseTown;
 					server setVariable ["NATOattacking",_town,true];
 					server setVariable ["NATOattackstart",time,true];
@@ -292,6 +298,7 @@ while {true} do {
 			{
 				_x params ["_pos","_name"];
 				if(_name in _abandoned) exitWith {
+					diag_log format["Overthrow: NATO beginning attack on %1",_name];
 					[_name,_resources] spawn OT_fnc_NATOCounterObjective;
 					server setVariable ["NATOattacking",_name,true];
 					server setVariable ["NATOattackstart",time,true];
@@ -313,6 +320,7 @@ while {true} do {
 				};
 			}foreach (_abandoned);
 			if(_high > 0) then {
+				diag_log format["Overthrow: NATO beginning attack on %1",_highest];
 				[_highest,_resources] spawn OT_fnc_NATOCounterTown;
 				server setVariable ["NATOattacking",_highest,true];
 				server setVariable ["NATOattackstart",time,true];
@@ -329,6 +337,7 @@ while {true} do {
 			{
 				_x params ["_pos","_name"];
 				if(_pos in _abandoned) exitWith {
+					diag_log format["Overthrow: NATO sending recon team to %1",_name];
 					_pos spawn OT_fnc_NATOSupportRecon;
 					_resources = _resources - 200;
 					_garrisoned = true;

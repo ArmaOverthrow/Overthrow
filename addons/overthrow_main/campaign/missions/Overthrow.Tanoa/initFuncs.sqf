@@ -101,6 +101,28 @@ menuHandler = {};
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
 
+OT_fnc_initRecruit = {
+	private ["_civ"];
+
+	_civ = _this select 0;
+
+	removeAllActions _civ;
+	_civ removeAllEventHandlers "FiredNear";
+
+	[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+
+	_civ setSkill 1.0;
+	_civ setRank "PRIVATE";
+
+	_civ spawn wantedSystem;
+
+	_recruits = server getVariable ["recruits",[]];
+	_nameparts = (name _civ) splitString " ";
+
+	_recruits pushback [getplayeruid player,[name _civ]+_nameparts,_civ,"PRIVATE",[],typeof _civ];
+	server setVariable ["recruits",_recruits,true];
+};
+
 //Credit to John681611: http://www.armaholic.com/page.php?id=25720
 mpAddEventHand = {
 private["_obj","_type","_code"];
@@ -129,10 +151,10 @@ AUG_UpdateState = {
 				"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
 				"speed _target <= 1 AND speed _target >= -1 AND _target distance _this < 5 AND vehicle _this == _this AND ( typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' OR typeNAME (_target getVariable 'AUG_Local') != 'BOOL')",
 				"true",
-					{(_this select 1) playMoveNow  "Acts_carFixingWheel";}
+					(_this select 1),"Acts_carFixingWheel"] remoteExec ["playMoveNow",(_this select 1),false]
 					,{},
-					{(_this select 1) switchmove "";[(_this select 0)] Call AUG_Action;},
-					{(_this select 1) switchmove "";},[],13,1.5,false,false] Call BIS_fnc_holdActionAdd;
+					{[(_this select 1),""] remoteExec ["switchMove",(_this select 1),false];[(_this select 0)] Call AUG_Action;},
+					[{[(_this select 1),""] remoteExec ["switchMove",(_this select 1),false];},[],13,1.5,false,false] Call BIS_fnc_holdActionAdd;
 	(_this select 0) setVariable ["AUG_Act",_ls,false];
 
 };

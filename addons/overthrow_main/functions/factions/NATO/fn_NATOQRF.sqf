@@ -134,9 +134,16 @@ while {_count < _numgroups} do {
 private _dir = [_pos,OT_NATO_HQPos] call BIS_fnc_dirTo;
 private _ao = [_pos,_dir] call OT_fnc_getAO;
 
+private _max = 5;
+if(_numPlayers < 3 or _diff == 0) then {
+	_max = 3;
+};
+if(_numPlayers > 10 or _diff > 1) then {
+	_max = 7;
+};
 private _numgroups = 1+floor(_strength / 100);
-if(_numgroups > 6) then {
-	_numgroups = 6;
+if(_numgroups > _max) then {
+	_numgroups = _max;
 };
 private _count = 0;
 if(_delay > 0) then {
@@ -247,7 +254,7 @@ while {sleep 5;time < _timeout and !_won} do {
 					if(vehicle _lead != _lead) then {
 						[vehicle _lead] spawn OT_fnc_cleanup;
 					};
-					[_x] call OT_fnc_cleanup;
+					[_x] spawn OT_fnc_cleanup;
 				};
 			}
 		}foreach(allgroups);

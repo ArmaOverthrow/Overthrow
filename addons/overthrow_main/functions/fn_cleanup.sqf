@@ -16,7 +16,7 @@ _vehicle setVariable ["OT_cleanup",true,false];
 waitUntil {sleep 5;!(_vehicle call OT_fnc_inSpawnDistance) and ((resistance knowsabout _vehicle) < 1.4)};
 
 if(_vehicle isKindOf "CAManBase") then {
-	if(vehicle _vehicle != _vehicle) then {[(vehicle _vehicle)] call OT_fnc_cleanup};
+	if(vehicle _vehicle != _vehicle) then {[(vehicle _vehicle)] spawn OT_fnc_cleanup};
 }else{
 	{
 		if !(_x call OT_fnc_hasOwner) then {

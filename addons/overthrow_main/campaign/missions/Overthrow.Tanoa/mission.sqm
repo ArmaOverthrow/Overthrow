@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=186;
+		nextID=188;
 	};
 	class Camera
 	{
@@ -522,8 +522,7 @@ class Mission
 	class Intel
 	{
 		briefingName="Overthrow.Tanoa";
-		resistanceWest=0;
-		timeOfChanges=28800;
+		resistanceWest=0;		
 		startWeather=0.29173625;
 		startWind=0;
 		startWaves=0.16261242;
