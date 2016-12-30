@@ -225,23 +225,32 @@ waitUntil {
 
 _timeout = time + 1200;
 _won = false;
-while {sleep 5;time < _timeout and !_won} do {
 
-	_alive = 0;
-	_enemy = 0;
+private _alive = 0;
+private _enemy = 0;
+private _alivein = 0;
+private _enemyin = 0;
+
+while {sleep 5;time < _timeout and !_won} do {
 	{
+		_g = (_x getVariable ["garrison",""]);
+		if(typename _g != "STRING") then {_g = "HQ"};
 		if(_x distance _pos < 1000) then {
-			_g = (_x getVariable ["garrison",""]);
-			if(typename _g != "STRING") then {_g = "HQ"};
 			if((side _x == west) and (alive _x) and (_g == "HQ")) then {
 				_alive = _alive + 1;
+				if(_x distance _pos < 400) then {
+					_alivein = _alivein + 1;
+				};
 			};
 			if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
 				_enemy = _enemy + 1;
+				if(_x distance _pos < 400) then {
+					_enemyin = _enemyin + 1;
+				};
 			};
 		};
 	}foreach(allunits);
-	if(_alive > 0 and _enemy == 0) exitWith {
+	if(_alivein > 0 and _enemy == 0) exitWith {
 		//Nato has won
 		_params call _success;
 
@@ -261,7 +270,7 @@ while {sleep 5;time < _timeout and !_won} do {
 		_won = true;
 	};
 	diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
-	if(_alive < 4) exitWith{};
+	if(_alive < 4 or (_enemyin > 4 and _alivein == 0)) exitWith{};
 };
 if !(_won) then {
 	_params call _fail;

@@ -337,7 +337,9 @@ if(OT_hasTFAR) then {
 	["ItemMap",1,0,0,0],
 	["ItemWatch",30,0,0,1],
 	["Binocular",70,0,0,1],
-	["Rangefinder",130,0,0,1]
+	["Rangefinder",130,0,0,1],
+	["I_UAVTerminal",100,0,0,1],
+	["NVGoggles_INDEP",800,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 
 OT_staticBackpacks = [
@@ -347,7 +349,8 @@ OT_staticBackpacks = [
 	["I_Mortar_01_weapon_F",5000,1,0,1],
 	["I_Mortar_01_support_F",100,1,0,0],
 	["I_AT_01_weapon_F",2500,1,0,1],
-	["I_AA_01_weapon_F",2500,1,0,1]
+	["I_AA_01_weapon_F",2500,1,0,1],
+	["I_HMG_01_support_F",50,1,0,0]
 ];
 
 OT_backpacks = [
@@ -486,6 +489,12 @@ private _allWeapons = "
     { getText ( _x >> ""simulation"" ) isEqualTo ""Weapon""})
 " configClasses ( configFile >> "cfgWeapons" );
 
+private _allAttachments = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { _t = getNumber ( _x >> ""ItemInfo"" >> ""type"" ); _t isEqualTo 301 or _t isEqualTo 302 or _t isEqualTo 101})
+" configClasses ( configFile >> "cfgWeapons" );
+
 private _allOptics = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
@@ -504,6 +513,12 @@ private _allHelmets = "
     { getNumber ( _x >> ""ItemInfo"" >> ""type"" ) isEqualTo 605})
 " configClasses ( configFile >> "cfgWeapons" );
 
+private _allShells = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getNumber ( _x >> ""type"" ) isEqualTo 16})
+" configClasses ( configFile >> "cfgMagazines" );
+
 OT_allSubMachineGuns = [];
 OT_allAssaultRifles = [];
 OT_allMachineGuns = [];
@@ -521,6 +536,7 @@ OT_allClothing = [];
 OT_allOptics = [];
 OT_allHelmets = [];
 OT_allHats = [];
+OT_allAttachments = [];
 
 {
 	_name = configName _x;
@@ -629,6 +645,43 @@ OT_allHats = [];
 		cost setVariable [_name,[_cost,0,0,1],true];
 	};
 } foreach (_allHelmets);
+
+{
+	_name = configName _x;
+	_m = getNumber(_x >> "mass");
+	_cost = round(_m * 1.5);
+	_desc = getText(_x >> "descriptionShort");
+	if((_desc find "Smoke") > -1) then {
+		_cost = round(_m * 0.5);
+	};
+	if((_desc find "Flare") > -1) then {
+		_cost = round(_m * 0.6);
+	};
+	if(isServer) then {
+		cost setVariable [_name,[_cost,0,0,1],true];
+	};
+	OT_allMagazines pushback _name;
+} foreach (_allShells);
+
+OT_attachments = [];
+{
+	_name = configName _x;
+	_cost = 75;
+	_t = getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "type");
+	if(_t == 302) then {
+		//Bipods
+		_cost = 150;
+	};
+	if(_t == 101) then {
+		//Suppressors
+		_cost = 350;
+	};
+	if(isServer) then {
+		cost setVariable [_name,[_cost,0,0,1],true];
+	};
+	OT_allAttachments pushback _name;
+	OT_attachments pushback [_name,[_cost,0,0,1]];
+} foreach (_allAttachments);
 
 {
 	_name = configName _x;

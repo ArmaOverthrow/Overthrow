@@ -29,6 +29,11 @@ removeVest player;
 
 player linkItem "ItemMap";
 
+private _aplayers = server getVariable ["OT_allplayers",[]];
+if ((_aplayers find (getplayeruid player)) == -1) then {
+	_aplayers pushback (getplayeruid player);
+	server setVariable ["OT_allplayers",_aplayers,true];
+};
 server setVariable [format["name%1",getplayeruid player],name player,true];
 server setVariable [format["uid%1",name player],getplayeruid player,true];
 spawner setVariable [format["%1",getplayeruid player],player,true];
@@ -93,7 +98,6 @@ if(isMultiplayer or _startup == "LOAD") then {
 				_buildings = (_x nearObjects ["Building",8]);
 				if(count _buildings > 0) then {
 					_bdg = _buildings select 0;
-					_bdg setVariable ["owner",getplayeruid player,true];
 					if((typeof _bdg) != OT_policeStation) then {
 						_mrkName = createMarkerLocal [_mrkName,_x];
 						_mrkName setMarkerShape "ICON";
@@ -112,7 +116,6 @@ if(isMultiplayer or _startup == "LOAD") then {
 				if (typename _x == "SCALAR") then {
 					_bdg = OT_centerPos nearestObject _x;
 					if !(isNil "_bdg") then {
-						_bdg setVariable ["owner",getplayeruid player,true];
 						_mrkName = format["bdg-%1",_bdg];
 						if(_bdg isKindOf "Building") then {
 							if(typeof _bdg == OT_warehouse) then {
@@ -212,7 +215,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 					_civ = _group createUnit [_type,_pos,[],0,"NONE"];
 					_civ setUnitLoadout _loadout;
 					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
-					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];					
+					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				}foreach(_units);
 			};
 			player hcSetGroup [_group];
