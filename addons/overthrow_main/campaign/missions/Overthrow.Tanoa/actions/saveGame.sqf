@@ -10,6 +10,18 @@ private _data = [];
 //get all server data
 {
 	if !(_x == "StartupType" or _x == "recruits" or _x == "squads") then {
+		_val = server getVariable _x;
+		if(typename _val == "ARRAY") then {
+			//Copy the array
+			_old = _val;
+			_val = [];
+			{
+				_val pushback _x;
+			}foreach(_old);
+			if(_x == "natoabandoned") then {
+				_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
+			};
+		};
 		_data pushback [_x,server getVariable _x];
 	};
 }foreach(allVariables server);

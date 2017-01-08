@@ -48,10 +48,11 @@ if (_Unit in ArtilleryArray) then {ArtilleryArray = ArtilleryArray - [_Unit];};
 //Check to see if this unit is garrisoned. If so, don't do anything
 //Check to see if unit has radio. If the unit does not have a radio, then it will not move to support
 _NoFlanking = _Unit getVariable ["VCOM_NOPATHING_Unit",false];
+_NoAI = _Unit getVariable ["NOAI",false];
 _GrabVariable = _Unit getVariable ["VCOM_GARRISONED",false];;
 _CheckStatus = assignedItems _Unit;
 
-if (_NoFlanking || {_GrabVariable} || {!("ItemRadio" in _CheckStatus)}) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn2..: %1",_UnitGroup];};};
+if (_NoFlanking || {_GrabVariable} || {_NoAI} || {!("ItemRadio" in _CheckStatus)}) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn2..: %1",_UnitGroup];};};
 
 _Array1 = _Unit call VCOMAI_FriendlyArray;
 _Array1 = _Array1 - ArtilleryArray;

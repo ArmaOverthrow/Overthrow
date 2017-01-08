@@ -144,6 +144,8 @@ OT_civType_priest = "C_man_w_worker_F";
 OT_vehTypes_civ = []; //populated automatically, but you can add more here and they will appear in streets
 OT_vehType_distro = "C_Van_01_box_F";
 OT_vehType_ferry = "C_Boat_Transport_02_F";
+OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F"]; //Civs cannot drive these vehicles for whatever reason
+
 
 OT_activeDistribution = [];
 OT_activeShops = [];

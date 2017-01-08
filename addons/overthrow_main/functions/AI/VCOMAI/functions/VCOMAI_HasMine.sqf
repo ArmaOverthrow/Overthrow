@@ -7,17 +7,17 @@ _magazinesAmmo = magazinesAmmo _Unit;
 
 //Set all values to false!
 _VCOM_HASSATCHEL = false;
-if(isNil "_magazinesAmmo") then {_magazinesAmmo=[]};
+
 {
 	_Magazine = _x select 0;
 	_value = (configfile >> "CfgMagazines" >> _Magazine >> "nameSound") call BIS_fnc_getCfgData;
-	if (_value isEqualTo "satchelcharge") then
+	if (_value isEqualTo "satchelcharge") then 
 	{
 
 		_SubtractAmount = 0;
 		_DemoCharge = ["DemoCharge",_Magazine,false] call BIS_fnc_inString;
 		_SatchelCharge = ["SatchelCharge",_Magazine,false] call BIS_fnc_inString;
-
+		
 		if (_DemoCharge || {_SatchelCharge}) then
 		{
 			_Bomb = "Democharge_F";

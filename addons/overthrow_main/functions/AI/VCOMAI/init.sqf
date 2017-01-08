@@ -138,6 +138,9 @@ if !(isDedicated) then
 VcomAI_UnitQueue = [];
 VcomAI_ActiveList = [];
 Vcom_ActivateAI = true;
+VCOM_CurrentlyMoving = 0;
+VCOM_CurrentlySuppressing = 0;
+
 while {true} do 
 {
 	if (Vcom_ActivateAI) then
