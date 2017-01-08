@@ -76,6 +76,11 @@ if (_WType isEqualTo "DESTROY") exitWith {};
 _EnemyGroup = count (units (group _myNearestEnemy));
 _GroupCount = count units _GroupUnit;
 _myEnemyPos = (getposATL _myNearestEnemy);
+if (_myEnemyPos isEqualTo [0,0,0]) exitWith
+{
+	sleep 30;
+	_this spawn VCOMAI_FlankManeuver;	
+};
 
 _RandomChance = random 100;
 if (_RandomChance < 25) then

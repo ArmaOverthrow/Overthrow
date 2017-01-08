@@ -26,6 +26,7 @@ private _rnd = random 100;
 private _mrkid = format["gundealer%1",_town];
 
 if((markerType _mrkid == "") and (count(_gundealer) > 0) and (_rnd > 60)) exitWith {
+	-1 call influence;
 	[_civ,player,["Who are you? and what's with the outfit?","Never you mind","Whatever, I saw a guy wearing similar, he's over there"],{
 		"Dealer added to map" call notify_minor;
 		private _town = player call OT_fnc_nearestTown;
@@ -41,6 +42,7 @@ if((markerType _mrkid == "") and (count(_gundealer) > 0) and (_rnd > 60)) exitWi
 _mrkid = format["mobster%1",_nearestMobId];
 
 if((_nearestMobGarrison > 0) and (markerType _mrkid == "") and (isNil "_mobboss") and (isNil "_mobster") and !(isNil "_crimleader") and (side _civ == east) and (_standing > 10)) exitWith {
+	-1 call influence;
 	[_civ,player,["This and that","Cool, I'm looking for a place to offload some... stuff","Go and speak to the boss I guess"],{
 		"Bandit camp added to map" call notify_minor;
 		params ["_mobid","_mobpos"];
@@ -53,6 +55,7 @@ if((_nearestMobGarrison > 0) and (markerType _mrkid == "") and (isNil "_mobboss"
 };
 
 if((_nearestMobGarrison > 0) and (markerType _mrkid == "") and (side _civ == civilian) and (_standing >= 0)) exitWith {
+	-1 call influence;
 	[_civ,player,["I heard there were some bandits camping in the jungle","Really? Where, exactly?"],{
 		"Bandit camp added to map" call notify_minor;
 		params ["_mobid","_mobpos"];

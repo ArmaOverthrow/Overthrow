@@ -76,15 +76,7 @@ if(_numCRIM > 0) then {
 		sleep 0.1;
 		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
-		if(_time > 1200) then {
-			_civ setRank "LIEUTENANT";
-		}else{
-			if(_time > 600) then {
-				_civ setRank "SERGEANT";
-			}else{
-				_civ setRank "CORPORAL";
-			};
-		};
+		_civ setRank "PRIVATE";		
 		[_civ,_town] call OT_fnc_initCriminal;
 		_civ setBehaviour "SAFE";
 

@@ -10,9 +10,9 @@ if(_obpos distance player < 250) then {
 		_town = "Tanoa";
 		_standing = 100;
 		if((_obname in OT_allAirports) or OT_adminMode) then {
-			_items = OT_helis + OT_vehicles;
+			_items = OT_helis + OT_vehicles + OT_staticBackpacks;
 		}else{
-			_items = OT_vehicles + OT_boats;
+			_items = OT_vehicles + OT_boats + OT_staticBackpacks;
 		};
 	}
 };
@@ -22,7 +22,7 @@ if(OT_adminMode) then {
 };
 
 createDialog "OT_dialog_buy";
-{			
+{
 	_cls = _x select 0;
 	_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 	if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {

@@ -32,11 +32,13 @@ if(typename _data != "ARRAY") exitWith {
 			_mrkid setMarkerText _name;
 		}foreach(_val);
 	};
-	if(_key == "warehouse" and typename _val == "ARRAY") then {
+	if((_key == "warehouse") and (typename _val) == "ARRAY") then {
 		_set = false;
 		{
-			_cls = _x select 0;
-			warehouse setVariable [_cls,_x,true];
+			if(typename _x == "ARRAY") then {
+				_cls = _x select 0;
+				warehouse setVariable [_cls,_x,true];
+			};
 		}foreach(_val);
 	};
 	if(_key == "vehicles") then {
@@ -162,6 +164,32 @@ if(typename _data != "ARRAY") exitWith {
 		server setvariable [_key,_val,true];
 	};
 }foreach(_data);
+sleep 0.1;
+{
+	_uid = _x;
+	_vars = server getVariable [_uid,[]];
+	{
+		_x params ["_name","_val"];
+		if(_name == "owned") exitWith {
+			{
+				if(typename _x == "ARRAY") then {
+					//old save with positions
+					_buildings = (_x nearObjects ["Building",8]);
+					if(count _buildings > 0) then {
+						_bdg = _buildings select 0;
+						_bdg setVariable ["owner",getplayeruid player,true];
+					};
+				}else{
+					//new save with IDs
+					if (typename _x == "SCALAR") then {
+						_bdg = OT_centerPos nearestObject _x;
+						_bdg setVariable ["owner",getplayeruid player,true];
+					};
+				};
+			}foreach(_val);
+		};
+	}foreach(_vars);
+}foreach(server getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
 hint "Persistent Save Loaded";

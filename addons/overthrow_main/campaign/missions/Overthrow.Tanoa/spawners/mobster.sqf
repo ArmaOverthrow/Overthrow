@@ -35,12 +35,12 @@ while {_count < _numtents} do {
 	_count = _count + 1;
 	sleep 0.1;
 };
-		
+
 
 //spawn in the crime boss
-_start = [_pos,[0,30]] call SHK_pos;			
+_start = [_pos,[0,30]] call SHK_pos;
 _civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
-_civ setRank "COLONEL";
+_civ setRank "MAJOR";
 [_civ] joinSilent nil;
 [_civ] joinSilent _group;
 _civ setVariable ["garrison",_mobsterid,true];
@@ -54,7 +54,7 @@ _count = 0;
 while {_count < _garrison} do {
 	_start = [_pos,[0,60]] call SHK_pos;
 	_civ = _group createUnit [OT_CRIM_Unit, _start, [],0, "NONE"];
-	_civ setRank "MAJOR";
+	_civ setRank "PRIVATE";
 	[_civ] joinSilent nil;
 	[_civ] joinSilent _group;
 	_civ setVariable ["garrison",_mobsterid,true];

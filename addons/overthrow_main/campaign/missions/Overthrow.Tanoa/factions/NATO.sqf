@@ -205,7 +205,7 @@ while {true} do {
 		};
 
 		if(_currentAttack == "") then {
-			_resources = _resources + _resourceGain + ((count _abandoned) * 100);
+			_resources = _resources + _resourceGain + ((count _abandoned) * 25);
 			diag_log format["Overthrow: NATO resources @ %1",_resources];
 		}else{
 			diag_log format["Overthrow: NATO still attacking %1",_currentAttack];
@@ -297,13 +297,16 @@ while {true} do {
 			private _sorted = [OT_NATOobjectives,[],{(_x select 0) distance OT_NATO_HQPos},"ASCEND"] call BIS_fnc_SortBy;
 			{
 				_x params ["_pos","_name"];
-				if(_name in _abandoned) exitWith {
-					diag_log format["Overthrow: NATO beginning attack on %1",_name];
-					[_name,_resources] spawn OT_fnc_NATOCounterObjective;
-					server setVariable ["NATOattacking",_name,true];
-					server setVariable ["NATOattackstart",time,true];
-					_resources = 0;
-					_garrisoned = true;
+				if(_name != server getVariable ["NATOlastcounter",""]) then {
+					if(_name in _abandoned) exitWith {
+						diag_log format["Overthrow: NATO beginning attack on %1",_name];
+						[_name,_resources] spawn OT_fnc_NATOCounterObjective;
+						server setVariable ["NATOlastcounter",_name,true];
+						server setVariable ["NATOattacking",_name,true];
+						server setVariable ["NATOattackstart",time,true];
+						_resources = 0;
+						_garrisoned = true;
+					};
 				};
 			}foreach (_sorted);
 		};
@@ -313,15 +316,18 @@ while {true} do {
 			_highest = 0;
 			_high = 0;
 			{
-				_pop = server getVariable[format["population%1",_x],0];
-				if(_pop > 0 and _pop > _high) then {
-					_high = _pop;
-					_highest = _x;
+				if(_x != server getVariable ["NATOlastcounter",""]) then {
+					_pop = server getVariable[format["population%1",_x],0];
+					if(_pop > 0 and _pop > _high) then {
+						_high = _pop;
+						_highest = _x;
+					};
 				};
 			}foreach (_abandoned);
 			if(_high > 0) then {
 				diag_log format["Overthrow: NATO beginning attack on %1",_highest];
 				[_highest,_resources] spawn OT_fnc_NATOCounterTown;
+				server setVariable ["NATOlastcounter",_name,true];
 				server setVariable ["NATOattacking",_highest,true];
 				server setVariable ["NATOattackstart",time,true];
 				_resources = 0;

@@ -27,43 +27,45 @@ while {(_count < _numVeh)} do {
 		_pos = getPos _road;
 		_vehtype = "";
 		if(_pop > 600) then {
-			_vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
+			_vehtype = (OT_vehTypes_civ - OT_vehTypes_civignore) call BIS_Fnc_selectRandom;
 		}else{
 			_vehtype = [OT_vehTypes_civ,OT_vehWeights_civ] call BIS_Fnc_selectRandomWeighted;
 		};
-		_dirveh = 0;
-		_roadscon = roadsConnectedto _road;
-		if (count _roadscon == 2) then {
-			_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
-			if(isNil "_dirveh") then {_dirveh = random 359};
-			_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,15,_vehtype];
+		if !(_vehtype in OT_vehTypes_civignore) then {
+			_dirveh = 0;
+			_roadscon = roadsConnectedto _road;
+			if (count _roadscon == 2) then {
+				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
+				if(isNil "_dirveh") then {_dirveh = random 359};
+				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,15,_vehtype];
 
-			if(count _posVeh > 0) then {
-				_veh = _vehtype createVehicle _posVeh;
-				clearItemCargoGlobal _veh;
+				if(count _posVeh > 0) then {
+					_veh = _vehtype createVehicle _posVeh;
+					clearItemCargoGlobal _veh;
 
-				_veh setDir _dirveh;
+					_veh setDir _dirveh;
 
-				if((random 100) > 90 and (count allunits < 300)) then {
-					_group = createGroup CIVILIAN;
-					_groups pushback _group;
-					_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
-					_civ setBehaviour "SAFE";
-					[_civ] call OT_fnc_initCivilian;
-					_civ moveInDriver _veh;
+					if((random 100) > 90 and (count allunits < 300)) then {
+						_group = createGroup CIVILIAN;
+						_groups pushback _group;
+						_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
+						_civ setBehaviour "SAFE";
+						[_civ] call OT_fnc_initCivilian;
+						_civ moveInDriver _veh;
 
-					_region  = server getVariable format["region_%1",_town];
-					_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
-					_moveto = getpos([server getvariable _dest,OT_allHouses + OT_allShops + OT_offices] call OT_fnc_getRandomBuilding);
-					_wp = _group addWaypoint [_moveto,0];
+						_region  = server getVariable format["region_%1",_town];
+						_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
+						_moveto = getpos([server getvariable _dest,OT_allHouses + OT_allShops + OT_offices] call OT_fnc_getRandomBuilding);
+						_wp = _group addWaypoint [_moveto,0];
 
-					_wp setWaypointType "MOVE";
-					_wp setWaypointSpeed "LIMITED";
-					_wp setWaypointBehaviour "SAFE";
-					_wp setWaypointCompletionRadius 60;
-					_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+						_wp setWaypointType "MOVE";
+						_wp setWaypointSpeed "LIMITED";
+						_wp setWaypointBehaviour "SAFE";
+						_wp setWaypointCompletionRadius 60;
+						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+					};
+					_groups pushBack _veh;
 				};
-				_groups pushBack _veh;
 			};
 		};
 	};

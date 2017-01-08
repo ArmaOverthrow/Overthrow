@@ -65,16 +65,6 @@ private _allActivePiers = [];
 	_piers = server getVariable [format["activepiersin%1",_x],[]];
 	[_allActivePiers,_piers] call BIS_fnc_arrayPushStack;
 
-	//place animals
-	[nearestBuilding _posTown, OT_allTownAnimals, _mSize+400] call BIS_fnc_animalSiteSpawn;
-	private _church = server getVariable [format["churchin%1",_x],[]];
-	if !(_church isEqualTo []) then {
-		_c = nearestBuilding _church;
-		if(typeof _c == "Land_Temple_Native_01_F") then {
-			[_c, OT_allVillageAnimals, 150] call BIS_fnc_animalSiteSpawn;
-		};
-	};
-
 }foreach(OT_allTowns);
 
 OT_allEconomic = [];

@@ -1,8 +1,8 @@
 if(count (player nearObjects [OT_portBuilding,30]) == 0) exitWith {};
 private _town = player call OT_fnc_nearestTown;
 _items = OT_Resources + OT_allItems + OT_allBackpacks + ["V_RebreatherIA"];
-if(_town in (server getVariable ["NATOabandoned",[]])) then {
-	_items = OT_Resources + OT_allItems + OT_allBackpacks + ["V_RebreatherIA"] + OT_allWeapons + OT_allMagazines + OT_allStaticBackpacks + OT_allOptics + OT_allVests + OT_allHelmets;
+if(_town in (server getVariable ["NATOabandoned",[]]) or OT_adminMode) then {
+	_items = OT_Resources + OT_allItems + OT_allBackpacks + ["V_RebreatherIA"] + OT_allWeapons + OT_allMagazines + OT_allAttachments + OT_allStaticBackpacks + OT_allOptics + OT_allVests + OT_allHelmets + OT_allClothing;
 }else{
 	hint format ["Only legal items may be imported while NATO controls %1",_town];
 };

@@ -1,0 +1,7 @@
+GOGO = true;
+while {GOGO} do 
+{
+hintsilent format ["%1 - CS: %2",time,VCOM_CurrentlySuppressing];
+
+sleep 0.01;
+};

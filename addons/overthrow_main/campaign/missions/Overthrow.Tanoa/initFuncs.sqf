@@ -405,6 +405,11 @@ notify_good = {
 	OT_notifies pushback _txt;
 };
 
+notify_big = {
+    _txt = format ["<t size='0.7' color='#ffffff'>%1</t>",_this];
+	OT_notifies pushback _txt;
+};
+
 notify_minor = {
     _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this];
 	OT_notifies pushback _txt;
