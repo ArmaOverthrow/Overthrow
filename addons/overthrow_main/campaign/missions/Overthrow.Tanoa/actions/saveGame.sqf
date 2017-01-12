@@ -58,7 +58,11 @@ _count = 10001;
 			_s pushback ["money",_x getVariable ["money",0]];
 			_s pushback ["password",_x getVariable ["password",""]];
 		};
-		_vehicles pushback [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
+		_params = [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
+		if(_x isKindOf "AllVehicles") then {
+			_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel];
+		};
+		_vehicles pushback _params;
 	};
 	if(_count > 2000) then {
 		"Still persistent Saving... please wait" remoteExec ["notify_long",0,true];

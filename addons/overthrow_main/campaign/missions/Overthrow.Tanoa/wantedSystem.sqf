@@ -116,8 +116,9 @@ while {alive _unit} do {
 					player setVariable ["ACE_hearing_deaf", false];
 
 					-1 call influence;
-					titleText ["Respawing...", "BLACK FADED", 2];
+					titleText ["Respawning...", "BLACK FADED", 2];
 					sleep 2;
+					player addItem "ItemMap";
 					player switchMove "";
 					titleText ["", "BLACK IN", 5];
 				};

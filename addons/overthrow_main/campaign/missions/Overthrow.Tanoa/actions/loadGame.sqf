@@ -57,6 +57,18 @@ if(typename _data != "ARRAY") exitWith {
 						_name = _x select 5;
 					};
 					_veh = _type createVehicle _pos;
+
+					if(count _x > 7) then {
+						(_x select 7) params ["_fuel","_dmg"];
+						_veh setFuel _fuel;
+						{
+							_veh setHitPointDamage [_x, (_dmg select 2) select _forEachIndex]
+						}foreach(_dmg select 0);
+						if(count (_x select 7) > 2) then {
+							[_veh, (_x select 7) select 2] call ace_refuel_fnc_setFuel;
+						};
+					};
+
 					_veh setPosATL _pos;
 					if(_type isKindOf "Building") then {
 						createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];

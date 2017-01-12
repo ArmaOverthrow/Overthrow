@@ -58,6 +58,12 @@ if(!isMultiplayer) then {
     if(OT_hasAce) then {
         //ACE events
         ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
+		["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
+
+		//Setup fuel pumps for interaction
+		{
+			[_x,0] call ace_interact_menu_fnc_addMainAction;
+		}foreach(OT_fuelPumps);
     };
 
     OT_serverInitDone = true;

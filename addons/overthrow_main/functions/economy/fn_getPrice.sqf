@@ -21,6 +21,11 @@ if((_town in OT_allTowns) and _cls in (OT_allWeapons + OT_allMagazines + OT_ille
 	_baseprice = _cost select 0;
 
 	_stability = 1.0 - ((server getVariable [format["stability%1",_town],100]) / 100);
+
+	if(_cls == "FUEL") exitWith {
+		_price = _baseprice - (_stability * 0.2);
+	};
+
 	_population = server getVariable [format["population%1",_town],1000];
 	if(_population > 1000) then {_population = 1000};
 	_population = 1-(_population / 1000);
@@ -33,5 +38,7 @@ if((_town in OT_allTowns) and _cls in (OT_allWeapons + OT_allMagazines + OT_ille
 
 	_price = _baseprice + (_baseprice + (_baseprice * _stability * _population) * (1+OT_standardMarkup));
 };
+
+if(_cls == "FUEL") exitWith {_price * _discount};
 
 round(_price - (_price * _discount))

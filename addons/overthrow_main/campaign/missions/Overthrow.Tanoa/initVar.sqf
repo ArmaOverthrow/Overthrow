@@ -73,6 +73,8 @@ OT_allFarmAnimals = ["Hen_random_F","Cock_random_F","Sheep_random_F"];
 OT_allVillageAnimals = ["Hen_random_F","Cock_random_F"];
 OT_allTownAnimals = ["Alsatian_Random_F","Fin_random_F"];
 
+OT_fuelPumps = ["Land_FuelStation_02_pump_F","Land_FuelStation_01_pump_F","Land_fs_feed_F","Land_FuelStation_Feed_F"];
+
 OT_ferryDestinations = ["destination_1","destination_2","destination_3","destination_4","destination_5","destination_6"];
 
 _miscables = ["Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"];
@@ -709,6 +711,7 @@ OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns +
 if(isServer) then {
 	cost setVariable ["CIV",[100,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
+	cost setVariable ["FUEL",[1,0,0,0],true];
 
 	//Drug prices
 	cost setVariable ["OT_Ganja",[100,0,0,0],true];
