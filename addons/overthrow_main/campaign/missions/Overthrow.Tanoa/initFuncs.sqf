@@ -32,8 +32,14 @@ recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf";
 
+resistanceScreen = compileFinal preprocessFileLineNumbers "UI\fn_resistanceDialog.sqf";
 OT_fnc_mapInfoDialog = compileFinal preprocessFileLineNumbers "actions\townInfo.sqf";
-
+OT_fnc_showMemberInfo = compileFinal preprocessFileLineNumbers "UI\actions\fn_showMemberInfo.sqf";
+OT_fnc_showBusinessInfo = compileFinal preprocessFileLineNumbers "UI\actions\fn_showBusinessInfo.sqf";
+OT_fnc_factoryDialog = compileFinal preProcessFileLineNumbers "UI\fn_factoryDialog.sqf";
+OT_fnc_vehicleDialog = compileFinal preProcessFileLineNumbers "UI\fn_vehicleDialog.sqf";
+OT_fnc_factoryRefresh = compileFinal preProcessFileLineNumbers "UI\actions\fn_factoryRefresh.sqf";
+OT_fnc_factorySet = compileFinal preProcessFileLineNumbers "UI\actions\fn_factorySet.sqf";
 OT_fnc_newGameDialog = compileFinal preProcessFileLineNumbers "UI\fn_newGameDialog.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
@@ -100,6 +106,102 @@ keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
+
+OT_fnc_getTaxIncome = {
+	private _total = 0;
+	private _inf = 0;
+	{
+		private _town = _x;
+		_total = _total + 250;
+		if(_town in OT_allAirports) then {
+			_total = _total + ((server getVariable ["stabilityTanoa",100]) * 2); //Tourism income
+		};
+		_inf = _inf + 1;
+		if(_town in OT_allTowns) then {
+			private _population = server getVariable format["population%1",_town];
+			private _stability = server getVariable format["stability%1",_town];
+			private _garrison = server getVariable [format['police%1',_town],0];
+			private _add = round(_population * (_stability/100));
+			if(_stability > 49) then {
+				_add = round(_add * 4);
+			};
+			if(_garrison == 0) then {
+				_add = round(_add * 0.5);
+			};
+			_total = _total + _add;
+		};
+	}foreach(server getVariable ["NATOabandoned",[]]);
+	[_total,_inf];
+};
+
+OT_fnc_getOfflinePlayerAttribute = {
+	params ["_uid","_attr"];
+	private _val = "";
+	{
+		_x params ["_k","_v"];
+		if(_k == _attr) exitWith {_val=_v};
+	}foreach(server getVariable [_uid,[]]);
+	_val;
+};
+
+OT_fnc_getEconomicData = {
+	private _name = _this;
+	if(_name == "Factory") exitWith {[OT_factoryPos,"Factory"]};
+	_data = [];
+	{
+		if((_x select 1) == _name) exitWith {_data = _x};
+	}foreach(OT_economicData);
+	_data;
+};
+
+OT_fnc_getBusinessPrice = {
+	private _data = _this call OT_fnc_getEconomicData;
+	private _baseprice = 600000;
+	if(count _data == 2) then {
+		//turns nothing into money
+		_baseprice = round(_baseprice * 1.8);
+	};
+	if(count _data == 3) then {
+		//turns something into money
+		_baseprice = round(_baseprice * 1.3);
+	};
+	if(count _data == 4) then {
+		if((_data select 2) != "" and (_data select 3) != "") then {
+			//turns something into something
+			_baseprice = round(_baseprice * 1.2);
+		};
+	};
+	private _stability = 1.0 - ((server getVariable ["stabilityTanoa",100]) / 100);
+
+	_baseprice + (_baseprice * _stability)
+};
+
+OT_fnc_resetSpawn = {
+	_pars = _this;
+	{
+		_p = _x select 1;
+		if(_p isEqualTo _pars) exitWith {
+			_id = _x select 0;
+			OT_allSpawned deleteAt (OT_allSpawned find _id);
+		};
+	}foreach(OT_allSpawners);
+};
+
+OT_fnc_resistanceFunds = {
+	_funds = player getVariable ["money",0];
+	if(isMultiplayer) then {
+		_funds = server getVariable ["money",0];
+	};
+	if(count _this > 0) then {
+		_funds = _funds + (_this select 0);
+		if(isMultiplayer) then {
+			server setVariable ["money",_funds,true];
+		}else{
+			player setVariable ["money",_funds,true];
+		}
+	};
+	_funds;
+};
 
 OT_fnc_initRecruit = {
 	private ["_civ"];

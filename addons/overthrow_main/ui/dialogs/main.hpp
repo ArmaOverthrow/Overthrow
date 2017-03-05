@@ -130,6 +130,17 @@ class OT_dialog_vehicle
 			tooltip = "Transfers only legal (sellable) items from the closest container into this vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn transferLegit;";
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "if(player == bigboss) then {closedialog 0;_nul = createDialog ""OT_dialog_options""};";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -206,6 +217,17 @@ class OT_dialog_vehiclewarehouse
 			tooltip = "Takes all legal (sellable) items from the warehouse"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn transferLegit;";
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "if(player == bigboss) then {closedialog 0;_nul = createDialog ""OT_dialog_options""};";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -271,6 +293,17 @@ class OT_dialog_vehicleport
 			tooltip = "Exports the contents of this vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn exportAll;";
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "if(player == bigboss) then {closedialog 0;_nul = createDialog ""OT_dialog_options""};";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -324,6 +357,17 @@ class OT_dialog_command
 			h = 0.077 * safezoneH;
 			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn OT_fnc_orderOpenInventory;";
+		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "if(player == bigboss) then {closedialog 0;_nul = createDialog ""OT_dialog_options""};";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -462,6 +506,17 @@ class OT_dialog_main
 
 			text = "Fast Travel"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+		class RscButton_1613: RscOverthrowButton
+		{
+			idc = 1613;
+			action = "closeDialog 0;[] spawn resistanceScreen";
+
+			text = "Resistance"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
@@ -473,7 +528,7 @@ class OT_dialog_main
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.28 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
-			h = 0.209 * safezoneH;
+			h = 0.132 * safezoneH;
 			colorBackground[] = {0,0,0,0.4};
 		};
 		class RscButton_1601: RscOverthrowButton

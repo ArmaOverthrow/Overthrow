@@ -67,6 +67,8 @@ OT_item_Tent = "Land_TentDome_F";
 OT_item_Flag = "Flag_HorizonIslands_F";
 OT_item_Safe = "Land_MetalCase_01_small_F";
 
+OT_item_DefaultBlueprints = [];
+
 OT_allLowAnimals = ["Rabbit_F","Turtle_F"];
 OT_allHighAnimals = ["Goat_random_F"];
 OT_allFarmAnimals = ["Hen_random_F","Cock_random_F","Sheep_random_F"];
@@ -148,6 +150,7 @@ OT_vehType_distro = "C_Van_01_box_F";
 OT_vehType_ferry = "C_Boat_Transport_02_F";
 OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F"]; //Civs cannot drive these vehicles for whatever reason
 
+OT_item_CargoContainer = "B_Slingload_01_Cargo_F";
 
 OT_activeDistribution = [];
 OT_activeShops = [];
@@ -275,6 +278,8 @@ OT_interactingWith = objNull;
 //NB: the local markup can be negative, making buy prices lower and sell prices higher, in certain situations (high stability and/or player rep)
 OT_items = [];
 if(OT_hasAce) then {
+	OT_item_DefaultBlueprints pushback "ACE_fieldDressing";
+	OT_item_DefaultBlueprints pushback "ACE_elasticBandage";
 	[OT_items,[
 		["ACE_fieldDressing",2,0,0,0.1],
 		["ACE_elasticBandage",3,0,0,0.2],
@@ -312,6 +317,8 @@ if(OT_hasAce) then {
 		["ACE_bloodIV",120,0,0,1]
 	]] call BIS_fnc_arrayPushStack;
 }else{
+	OT_item_DefaultBlueprints pushback "FirstAidKit";
+	OT_item_DefaultBlueprints pushback "Medikit";
 	[OT_items,[
 		["FirstAidKit",10,0,0,0.1],
 		["Medikit",40,0,0,0.5]
@@ -329,6 +336,8 @@ if(OT_hasTFAR) then {
 }else{
 	OT_items pushback ["ItemRadio",20,0,0,1];
 };
+
+OT_item_DefaultBlueprints pushback "ToolKit";
 
 [OT_items,[
 	["Laserdesignator",220,1,0,0],
@@ -710,6 +719,7 @@ OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns +
 
 if(isServer) then {
 	cost setVariable ["CIV",[100,0,0,0],true];
+	cost setVariable ["WAGE",[15,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
 	cost setVariable ["FUEL",[1,0,0,0],true];
 

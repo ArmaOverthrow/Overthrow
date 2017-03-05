@@ -108,16 +108,18 @@ private _squads = [];
 {
 	_do = true;
 	_x params ["_owner","_cls","_group"];
-	if(count units _group == 0) then {_do = false};
-	if(({alive _x} count units _group) == 0) then {_do = false};
-	if(_do) then {
-		_units = [];
-		{
-			if(alive _x) then {
-				_units pushback [typeof _x,position _x,getUnitLoadout _x];
-			};
-		}foreach(units _group);
-		_squads pushback [getplayeruid player,_cls,"",_units];
+	if(typeName _group == "GROUP") then {
+		if(count units _group == 0) then {_do = false};
+		if(({alive _x} count units _group) == 0) then {_do = false};
+		if(_do) then {
+			_units = [];
+			{
+				if(alive _x) then {
+					_units pushback [typeof _x,position _x,getUnitLoadout _x];
+				};
+			}foreach(units _group);
+			_squads pushback [getplayeruid player,_cls,"",_units];
+		};
 	};
 }foreach(server getVariable ["squads",[]]);
 

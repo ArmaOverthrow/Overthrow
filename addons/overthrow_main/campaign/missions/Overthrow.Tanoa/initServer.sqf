@@ -35,6 +35,7 @@ waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\towns.sqf";
 [] execVM "virtualization\military.sqf";
 [] execVM "virtualization\mobsters.sqf";
+[] execVM "virtualization\economy.sqf";
 
 if(OT_hasAce) then {
     //ACE events

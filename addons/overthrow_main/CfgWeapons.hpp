@@ -33,7 +33,7 @@ class CfgWeapons {
         descriptionShort = "A porous and fibrous structural tissue found in the stems and roots of trees and other woody plants.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 400;
+            mass = 100;
         };
     };
 	class OT_Steel: OT_ItemCore {
@@ -43,7 +43,7 @@ class CfgWeapons {
         descriptionShort = "An alloy of iron and other elements, primarily carbon, that is widely used in construction and other applications because of its high tensile strength and low cost.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 400;
+            mass = 200;
         };
     };
 	class OT_Plastic: OT_ItemCore {
@@ -53,7 +53,7 @@ class CfgWeapons {
         descriptionShort = "A material consisting of any of a wide range of synthetic or semi-synthetic organic compounds that are malleable and can be molded into solid objects.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 400;
+            mass = 50;
         };
     };
 	class OT_Sugarcane: OT_ItemCore {
@@ -63,7 +63,7 @@ class CfgWeapons {
         descriptionShort = "A perennial grass of the genus Saccharum used to produce Sugar.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 400;
+            mass = 50;
         };
     };
 	class OT_Sugar: OT_ItemCore {
@@ -73,7 +73,7 @@ class CfgWeapons {
         descriptionShort = "The generalized name for sweet, short-chain, soluble carbohydrates, many of which are used in food.";
         descriptionUse = "";
         class ItemInfo: InventoryItem_Base_F {
-            mass = 200;
+            mass = 30;
         };
     };
 };

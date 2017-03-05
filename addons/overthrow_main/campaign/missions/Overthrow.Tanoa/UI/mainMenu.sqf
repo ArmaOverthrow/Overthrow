@@ -256,9 +256,63 @@ if(typename _b == "ARRAY") then {
 		ctrlSetText [1609,"Procurement"];
 		ctrlEnable [1610,false];
 	}else{
-		ctrlEnable [1608,false];
-		ctrlEnable [1609,false];
-		ctrlEnable [1610,false];
+		private _ob = (getpos player) call OT_fnc_nearestLocation;
+		if((_ob select 1) == "Business") then {
+			_obpos = (_ob select 2) select 0;
+			_obname = (_ob select 0);
+
+			if(_obpos distance player < 250) then {
+				if(_obname in (server getVariable ["GEURowned",[]])) then {
+					ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Operational</t>
+					",_obname];
+					ctrlEnable [1608,false];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				}else{
+					_price = _obname call OT_fnc_getBusinessPrice;
+					ctrlSetText [1201,"\ot\ui\closed.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Out Of Operation</t><br/>
+						<t align='left' size='0.65'>$%2</t>
+					",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				};
+			};
+		}else{
+			if((getpos player) distance OT_factoryPos < 150) then {
+				_obname = "Factory";
+				if(_obname in (server getVariable ["GEURowned",[]])) then {
+					ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Operational</t>
+					",_obname];
+					ctrlEnable [1608,true];
+					ctrlSetText [1608,"Manage"];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				}else{
+					_price = _obname call OT_fnc_getBusinessPrice;
+					ctrlSetText [1201,"\ot\ui\closed.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Out Of Operation</t><br/>
+						<t align='left' size='0.65'>$%2</t>
+					",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				};
+			}else{
+				ctrlEnable [1608,false];
+				ctrlEnable [1609,false];
+				ctrlEnable [1610,false];
+			};
+		};
 	};
 };
 

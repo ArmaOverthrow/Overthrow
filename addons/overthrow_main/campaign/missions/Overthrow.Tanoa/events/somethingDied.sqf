@@ -13,6 +13,7 @@ if(isPlayer _me) exitWith {};
 
 _civ = _me getvariable "civ";
 _garrison = _me getvariable "garrison";
+_employee = _me getvariable "employee";
 _vehgarrison = _me getvariable "vehgarrison";
 _polgarrison = _me getvariable "polgarrison";
 _airgarrison = _me getvariable "airgarrison";
@@ -45,6 +46,13 @@ call {
 
 		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["notify_minor",0,true];
 		deleteMarker format ["mobster%1",_mobsterid];
+	};
+	if(!isNil "_employee") exitWith {
+		_pop = server getVariable format["employ%1",_employee];
+		if(_pop > 0) then {
+			server setVariable [format["employ%1",_mobsterid],_pop - 1,true];
+		};
+		format["An employee of %1 has died",_employee] remoteExec ["notify_minor",0,false];
 	};
 	if(!isNil "_mobster") exitWith {
 		_mobsterid = _me getVariable "garrison";

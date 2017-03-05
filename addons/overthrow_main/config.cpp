@@ -5,6 +5,8 @@
 #include "ui\dialogs\place.hpp"
 #include "ui\dialogs\build.hpp"
 #include "ui\dialogs\recruits.hpp"
+#include "UI\dialogs\resistance.hpp"
+#include "UI\dialogs\factory.hpp"
 
 class CfgPatches
 {

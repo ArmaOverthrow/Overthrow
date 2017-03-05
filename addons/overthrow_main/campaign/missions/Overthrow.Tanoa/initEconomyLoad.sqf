@@ -70,10 +70,11 @@ private _allActivePiers = [];
 OT_allEconomic = [];
 {
 	_x params ["_pos","_name"];
-	//_mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
-	//_mrk setMarkerShape "ICON";
-    //_mrk setMarkerType "ot_Business";
-    //_mrk setMarkerColor "ColorWhite";
+	_mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
+	_mrk setMarkerShape "ICON";
+    _mrk setMarkerType "ot_Business";
+    _mrk setMarkerColor "ColorWhite";
+    _mrk setMarkerAlpha 0.8;
 	OT_allEconomic pushback _name;
     server setVariable [_name,_pos,true];
     cost setVariable [_name,_x,true];
