@@ -35,6 +35,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_ui")) then {
 	OT_hasAce = true;
 };
 
+OT_hasPlaceables = false;
+if (isClass (configFile >> "CfgPatches" >> "KKA3_ACE_Extension_Placeables")) then {
+	OT_hasPlaceables = true;
+};
+
 OT_allIntel = [];
 
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
@@ -326,6 +331,21 @@ if(OT_hasTFAR) then {
 	]] call BIS_fnc_arrayPushStack;
 }else{
 	OT_items pushback ["ItemRadio",20,0,0,1];
+};
+
+if(OT_hasPlaceables) then {
+	[OT_items,[
+		["kka3_ace_extension_roadbarrier_f",1,0,0,0.1],
+		["kka3_ace_extension_roadbarrier_small_f", 1,0,0,0.1],
+		["kka3_ace_extension_roadcone_f",1,0,0,0.1],
+		["kka3_ace_extension_roadcone_l_f",1,0,0,0.1],
+		["kka3_ace_extension_Land_Pallet_vertical_F",1,0,0,0.1],
+		["kka3_ace_extension_Land_BagFence_Long_F",1,0,0,0.1],
+		["kka3_ace_extension_Land_BagFence_Round_F",1,0,0,0.1],
+		["kka3_ace_extension_Land_PortableLight_single_F",1,0,0,0.1],
+		["kka3_ace_extension_Land_DrillAku_F",1,0,0,0.1],
+		["kka3_ace_extension_Land_Wrench_F",1,0,0,0.1]
+	]] call BIS_fnc_arrayPushStack;
 };
 
 [OT_items,[
