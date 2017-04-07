@@ -1,9 +1,10 @@
-if !(captive player) exitWith {"You cannot buy buildings while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot buy or manage real estate while wanted" call notify_minor};
 
 _b = player call OT_fnc_nearestRealEstate;
-_handled = false;
-_type = "buy";
-_err = false;
+private _handled = false;
+private _type = "buy";
+private _err = false;
+private _isfactory = false;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);
 	if !(_building call OT_fnc_hasOwner) then {
@@ -20,45 +21,52 @@ if(typename _b == "ARRAY") then {
 }else{
 	_b = (position player) call OT_fnc_nearestLocation;
 	if((_b select 1) == "Business") then {
-		_name = (_b select 0);
-		_pos = (_b select 2) select 0;
-		_price = _name call OT_fnc_getBusinessPrice;
-		_err = true;
-		_money = [] call OT_fnc_resistanceFunds;
-		if(_money >= _price) then {
-			[-_price] call OT_fnc_resistanceFunds;
-			_owned = server getVariable ["GEURowned",[]];
-			if(_owned find _name == -1) then {
-				server setVariable ["GEURowned",_owned + [_name],true];
-				server setVariable [format["%1employ",_name],2];
-				_pos remoteExec ["OT_fnc_resetSpawn",2,false];
-				format["%1 is now operational",_name] remoteExec ["notify_minor",0,true];
-			};
-		}else{
-			"The resistance cannot afford this" call notify_minor;
-		};
-	}else{
-		if((getpos player) distance OT_factoryPos < 150) then {
-			_name = "Factory";
-
-			_owned = server getVariable ["GEURowned",[]];
-			if(_owned find _name == -1) then {
-				_pos = OT_factoryPos;
-				_price = _name call OT_fnc_getBusinessPrice;
-				_err = true;
-				_money = [] call OT_fnc_resistanceFunds;
-				if(_money >= _price) then {
-					[-_price] call OT_fnc_resistanceFunds;
+		if (call OT_fnc_playerIsGeneral) then {
+			_name = (_b select 0);
+			_pos = (_b select 2) select 0;
+			_price = _name call OT_fnc_getBusinessPrice;
+			_err = true;
+			_money = [] call OT_fnc_resistanceFunds;
+			if(_money >= _price) then {
+				[-_price] call OT_fnc_resistanceFunds;
+				_owned = server getVariable ["GEURowned",[]];
+				if(_owned find _name == -1) then {
 					server setVariable ["GEURowned",_owned + [_name],true];
 					server setVariable [format["%1employ",_name],2];
 					_pos remoteExec ["OT_fnc_resetSpawn",2,false];
 					format["%1 is now operational",_name] remoteExec ["notify_minor",0,true];
-				}else{
-					"The resistance cannot afford this" call notify_minor;
+					_name setMarkerColor "ColorGUER";
 				};
 			}else{
-				//Manage
-				[] spawn OT_fnc_factoryDialog;
+				"The resistance cannot afford this" call notify_minor;
+			};
+		};
+	}else{
+		if((getpos player) distance OT_factoryPos < 150) then {
+			if (call OT_fnc_playerIsGeneral) then {
+				_name = "Factory";
+
+				_owned = server getVariable ["GEURowned",[]];
+				if(_owned find _name == -1) then {
+					_pos = OT_factoryPos;
+					_price = _name call OT_fnc_getBusinessPrice;
+					_err = true;
+					_money = [] call OT_fnc_resistanceFunds;
+					if(_money >= _price) then {
+						[-_price] call OT_fnc_resistanceFunds;
+						server setVariable ["GEURowned",_owned + [_name],true];
+						server setVariable [format["%1employ",_name],2];
+						_pos remoteExec ["OT_fnc_resetSpawn",2,false];
+						format["%1 is now operational",_name] remoteExec ["notify_minor",0,true];
+						_name setMarkerColor "ColorGUER";
+					}else{
+						"The resistance cannot afford this" call notify_minor;
+					};
+				}else{
+					//Manage
+					[] spawn OT_fnc_factoryDialog;
+					_isfactory = true;
+				};
 			};
 		};
 	};
@@ -118,5 +126,7 @@ if(_handled) then {
 
 
 }else{
-	"There are no buildings for sale nearby" call notify_minor;
+	if !(_isfactory) then {
+		"There are no buildings for sale nearby" call notify_minor;
+	};
 };

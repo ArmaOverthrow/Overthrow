@@ -259,8 +259,6 @@ while {true} do {
 						server setVariable ["NATOattackstart",time,true];
 						diag_log format["Overthrow: NATO responding to %1",_name];
 						[_name,_resources] spawn OT_fnc_NATOResponseObjective;
-						_abandoned pushback _name;
-						server setVariable ["NATOabandoned",_abandoned,true];
 						_name setMarkerAlpha 1;
 						_resources = 0;
 					};
@@ -283,8 +281,6 @@ while {true} do {
 					server setVariable ["NATOattacking",_town,true];
 					server setVariable ["NATOattackstart",time,true];
 					_garrisoned = true;
-					_abandoned pushback _town;
-					server setVariable ["NATOabandoned",_abandoned,true];
 					_resources = _resources - _population;
 				};
 			}foreach (_sorted);

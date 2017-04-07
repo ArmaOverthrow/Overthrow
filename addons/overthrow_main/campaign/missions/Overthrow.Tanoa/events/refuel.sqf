@@ -10,7 +10,7 @@ if((typeof _source) in OT_fuelPumps) then {
     private _cargoCap = getNumber (configFile >> "CfgVehicles" >> typeof _sink >> "ace_refuel_fuelCargo");
     private _cargo = [_sink] call ace_refuel_fnc_getFuel;
 
-    private _pricePer = ["Tanoa","FUEL",0] call OT_fnc_getPrice;
+    private _pricePer = ["Tanoa","FUEL",100] call OT_fnc_getPrice;
     private _total = round(_pricePer * _litresFueled);
 
     //take money from nearest player

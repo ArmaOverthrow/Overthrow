@@ -4,9 +4,15 @@ if(isMultiplayer) then {
 	onEachFrame {
 		{
 			if !(_x isEqualTo player) then {
-				drawIcon3D ["a3\ui_f\data\map\groupicons\selector_selectable_ca.paa", [1,1,1,0.5], getPos _x, 1, 1, 0, format["%1 (%2m)",name _x,round(_x distance player)], 0, 0.02, "TahomaB", "center", true];
+				private _dis = round(_x distance player);
+				private _t = "m";
+				if(_dis > 999) then {
+					_dis = round(_dis / 1000);
+					_t = "km";
+				};
+				drawIcon3D ["a3\ui_f\data\map\groupicons\selector_selectable_ca.paa", [1,1,1,0.3], getPosATLVisual _x, 1, 1, 0, format["%1 (%2%3)",name _x,_dis,_t], 0, 0.02, "TahomaB", "center", true];
 			};
-		}foreach([] call CBA_fnc_players);	
+		}foreach([] call CBA_fnc_players);
 	};
 };
 
@@ -16,7 +22,7 @@ _handler = {
 	_vehs = [];
 	if(isMultiplayer) then {
 		{
-			_veh = vehicle _x;			
+			_veh = vehicle _x;
 			if(_veh == _x) then {
 				_color = [0,0.5,0,1];
 				if!(captive _x) then {
@@ -30,7 +36,7 @@ _handler = {
 					24,
 					getdir _x,
 					name _x
-				]; 
+				];
 			}else{
 				if !(_veh in _vehs) then {
 					_vehs pushback _veh;
@@ -57,7 +63,7 @@ _handler = {
 						24,
 						24,
 						0
-					]; 
+					];
 				};
 				if ((_dest select 1)== "LEADER PLANNED") then {
 					(_this select 0) drawLine [
@@ -72,10 +78,10 @@ _handler = {
 						24,
 						24,
 						0
-					]; 
+					];
 				};
-				
-				
+
+
 				(_this select 0) drawIcon [
 					"iconMan",
 					_color,
@@ -93,17 +99,17 @@ _handler = {
 		};
 		_t = _t + 1;
 	}foreach(units (group player));
-	
+
 	{
 		_passengers = "";
 		_color = [0,0.5,0,1];
 		{
 			if(isPlayer _x and _x != player) then {
-				_passengers = format["%1 %2",_passengers,name _x];				
+				_passengers = format["%1 %2",_passengers,name _x];
 			};
 			if !(captive _x) then {_color = [0.5,0,0,1]};
 		}foreach(crew _x);
-		
+
 		(_this select 0) drawIcon [
 			getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 			_color,
@@ -112,9 +118,9 @@ _handler = {
 			24,
 			getdir _x,
 			_passengers
-		]; 
+		];
 	}foreach(_vehs);
-	
+
 	{
 		if(side _x == west) then {
 			_u = leader _x;
@@ -131,7 +137,7 @@ _handler = {
 				if(_ka > 1.4) then {
 					_opacity = (_ka-1.4) / 1;
 					if(_opacity > 1) then {_opacity = 1};
-					_pos = visiblePosition  _u;					
+					_pos = visiblePosition  _u;
 					(_this select 0) drawIcon [
 						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
 						[0,0.3,0.59,_opacity],
@@ -139,11 +145,11 @@ _handler = {
 						30,
 						30,
 						0
-					]; 
+					];
 				};
 			}
 		};
-		
+
 		if(side _x == east) then {
 			_u = leader _x;
 			_alive = false;
@@ -167,30 +173,19 @@ _handler = {
 						30,
 						30,
 						0
-					]; 
+					];
 				};
 			}
 		};
-		
-	}foreach(allGroups);	
-	
+
+	}foreach(allGroups);
+
 	{
 		if(side _x == resistance) then {
-			if(_x isKindOf "StaticWeapon" and isNull attachedTo _x) then {
-				_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";	
-				if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
-				(_this select 0) drawIcon [
-					_i,
-					[0,0.5,0,1],
-					position _x,
-					30,
-					30,
-					0
-				]; 
-			};
+
 		};
 	}foreach(vehicles);
-	
+
 	_scale = ctrlMapScale (_this select 0);
 	if(_scale <= 0.14) then {
 		{
@@ -201,8 +196,21 @@ _handler = {
 				0.4/ctrlMapScale (_this select 0),
 				0.4/ctrlMapScale (_this select 0),
 				0
-			]; 
+			];
 		}foreach(OT_allActiveShops);
+		{
+			_pos = server getVariable [format["gundealer%1",_x],[]];
+			if(count _pos > 0) then {
+				(_this select 0) drawIcon [
+					"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa",
+					[1,1,1,1],
+					_pos,
+					0.4/ctrlMapScale (_this select 0),
+					0.4/ctrlMapScale (_this select 0),
+					0
+				];
+			}
+		}foreach(OT_allTowns);
 		{
 			if !(_x getVariable ["looted",false]) then {
 				(_this select 0) drawIcon [
@@ -212,11 +220,11 @@ _handler = {
 					0.2/ctrlMapScale (_this select 0),
 					0.2/ctrlMapScale (_this select 0),
 					0
-				]; 
+				];
 			};
 		}foreach(alldeadmen);
 		{
-			if(((_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
+			if(((typeof _x == OT_item_CargoContainer) or (_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
 				(_this select 0) drawIcon [
 					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 					[1,1,1,1],
@@ -224,16 +232,40 @@ _handler = {
 					0.4/ctrlMapScale (_this select 0),
 					0.4/ctrlMapScale (_this select 0),
 					getdir _x
-				]; 
+				];
+			};
+			if(_x isKindOf "StaticWeapon" and isNull attachedTo _x) then {
+				_do = false;
+				_color = [0,0.5,0,1];
+				if(side _x == resistance) then {
+					_do = true;
+				}else{
+					if(resistance knowsAbout _x > 0) then {
+						_do = true;
+						_color = [0.5,0,0,1]
+					};
+				};
+				if(_do) then {
+					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";
+					if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
+					(_this select 0) drawIcon [
+						_i,
+						_color,
+						position _x,
+						30,
+						30,
+						0
+					];
+				};
 			};
 		}foreach(vehicles);
 	};
-	
+
 	if((vehicle player) isKindOf "Air") then {
 		_abandoned = server getVariable ["NATOabandoned",[]];
 		{
 			if !(_x in _abandoned) then {
-				(_this select 0) drawEllipse [					
+				(_this select 0) drawEllipse [
 					server getvariable _x,
 					2000,
 					2000,
@@ -245,7 +277,7 @@ _handler = {
 		}foreach(OT_allAirports);
 		private _attack = server getVariable ["NATOattacking",""];
 		if(_attack != "") then {
-			(_this select 0) drawEllipse [					
+			(_this select 0) drawEllipse [
 				server getvariable _attack,
 				2000,
 				2000,
@@ -255,7 +287,7 @@ _handler = {
 			];
 		};
 	};
-	mapCenter 
+	mapCenter
 };
 
 if(!isNil "OT_OnDraw") then {
@@ -265,7 +297,7 @@ if(!isNil "OT_OnDraw") then {
 OT_OnDraw = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _handler];
 
 //GPS
-[_handler] spawn {	
+[_handler] spawn {
 	private ['_gps',"_handler"];
 	_handler = _this select 0;
 	disableSerialization;
@@ -278,7 +310,7 @@ OT_OnDraw = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _hand
 		} foreach(uiNamespace getVariable "IGUI_Displays");
 		uiSleep 1;
 		if (!isNull _gps) exitWith {
-			if(!isNil "OT_GPSOnDraw") then {			
+			if(!isNil "OT_GPSOnDraw") then {
 				_gps ctrlRemoveEventHandler ['Draw',OT_GPSOnDraw];
 			};
 			OT_GPSOnDraw = _gps ctrlAddEventHandler ['Draw',_handler];

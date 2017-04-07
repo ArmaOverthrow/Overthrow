@@ -10,7 +10,7 @@ class OT_dialog_factory
             x = 0.29375 * safezoneW + safezoneX;
         	y = 0.214 * safezoneH + safezoneY;
         	w = 0.4125 * safezoneW;
-        	h = 0.561 * safezoneH;
+        	h = 0.566 * safezoneH;
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
@@ -65,7 +65,7 @@ class OT_dialog_factory
         class RscStructuredText_1102: RscOverthrowStructuredText
         {
             idc = 1102;
-            text = "<t size='0.65' align='center'>Bandage (Elastic)</t>"; //--- ToDo: Localize;
+            text = "<t size='0.65' align='center'></t>"; //--- ToDo: Localize;
             x = 0.29375 * safezoneW + safezoneX;
             y = 0.434 * safezoneH + safezoneY;
             w = 0.4125 * safezoneW;
@@ -129,5 +129,54 @@ class OT_dialog_factory
 
 
 
+	};
+};
+
+class OT_dialog_reverse
+{
+	idd=-1;
+	movingenable=false;
+
+	class controls
+	{
+				////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Fylaby)
+		////////////////////////////////////////////////////////
+
+		class RscListbox_1500: RscOverthrowListBox
+		{
+			idc = 1500;
+
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.4125 * safezoneW;
+			h = 0.55 * safezoneH;
+			colorBackground[] = {0,0,0,0.9};
+		};
+		class RscButton_1601: RscOverthrowButton
+		{
+			idc = 1601;
+			action = "closeDialog 0;";
+
+			text = "Close"; //--- ToDo: Localize;
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.786 * safezoneH + safezoneY;
+			w = 0.0928125 * safezoneW;
+			h = 0.055 * safezoneH;
+		};
+		class RscButton_1600: RscOverthrowButton
+		{
+			idc = 1600;
+			action = "[] call OT_fnc_reverseEngineer;";
+
+			text = "Reverse-Engineer"; //--- ToDo: Localize;
+			x = 0.613437 * safezoneW + safezoneX;
+			y = 0.786 * safezoneH + safezoneY;
+			w = 0.0928125 * safezoneW;
+			h = 0.055 * safezoneH;
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
 	};
 };

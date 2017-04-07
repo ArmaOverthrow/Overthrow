@@ -1,9 +1,17 @@
-params ["_ctrl","_index"];
 
 disableSerialization;
+private _name = "";
+private _data = [];
+if(count _this == 0) then {
+    private _idx = lbCurSel 1501;
+    _name = lbData [1501,_idx];
 
-private _name = _ctrl lbData _index;
-private _data = _name call OT_fnc_getEconomicData;
+}else{
+    params ["_ctrl","_index"];
+    _name = _ctrl lbData _index;
+    _data = _name call OT_fnc_getEconomicData;
+};
+_data = _name call OT_fnc_getEconomicData;
 
 private _anum = server getVariable [format["%1employ",_name],0];
 private _num = _anum;
@@ -22,9 +30,11 @@ _amgen = (getPlayerUID player) in (server getVariable ["generals",[]]);
 
 _text = format["<t size='0.8'>%1</t><br/>",_name];
 _text = _text + format["<t size='0.65'>Employees: %1</t><br/>",_anum];
-_text = _text + format["<t size='0.65'>Wages: $%1</t><br/>",_wages];
+_text = _text + format["<t size='0.65'>Wages: $%1 /hr</t><br/>",_wages];
 
 _amgen = (getPlayerUID player) in (server getVariable ["generals",[]]);
+private _nexthr = ((date select 3) + 1);
+if(_nexthr < 10) then {_nexthr = "0"+_nexthr};
 
 if(_amgen) then {
     ctrlEnable [1602,true];
@@ -35,12 +45,18 @@ if(count _data > 2) then {
     _input = _data select 2;
     _output = _data select 3;
     if(_input != "") then {
-        _text = _text + format["<t size='0.65'>Input: %1 x %2</t><br/>",_innum, _input call ISSE_Cfg_Weapons_GetName];
+        _text = _text + format["<t size='0.65'>Input: %1 x %2 /hr</t><br/>",_innum, _input call ISSE_Cfg_Weapons_GetName];
     };
     if(_output != "") then {
-        _text = _text + format["<t size='0.65'>Output: %1 x %2</t><br/>",_outnum, _output call ISSE_Cfg_Weapons_GetName];
+        _text = _text + format["<t size='0.65'>Output: %1 x %2 /hr</t><br/>",_outnum, _output call ISSE_Cfg_Weapons_GetName];
+    }else{
+        _sellprice = round((["Tanoa",_input,0] call OT_fnc_getSellPrice) * 1.2);
+        _text = _text + format["<t size='0.65'>Income: $%1 /hr</t><br/>",round(_innum * _sellprice)];
     };
+}else{
+    _text = _text + format["<t size='0.65'>Income: $%1 /hr</t><br/>",round(_num * 200)];
 };
+_text = _text + format["<t size='0.65'>Next cycle: %1:00</t><br/>",_nexthr];
 
 _textctrl = (findDisplay 8000) displayCtrl 1104;
 _textctrl ctrlSetStructuredText parseText _text;

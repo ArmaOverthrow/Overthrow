@@ -3,13 +3,14 @@ createDialog 'OT_dialog_resistance';
 
 ctrlEnable [1600,false];
 ctrlEnable [1601,false];
-ctrlEnable [1602,false];
-ctrlEnable [1603,false];
 
-_amgen = (getPlayerUID player) in (server getVariable ["generals",[]]);
+private _amgen = (getPlayerUID player) in (server getVariable ["generals",[]]);
+if(!isMultiplayer) then {_amgen = true};
 
 if(!_amgen) then {
     ctrlEnable [1605,false];
+    ctrlEnable [1602,false];
+    ctrlEnable [1603,false];
 };
 
 if(!isMultiplayer) then {
@@ -41,7 +42,7 @@ lbClear 1501;
 
     _name = _x select 1;
     if(_name in (server getVariable ["GEURowned",[]])) then {
-        _idx = lbAdd [1501,format["%1 (%2)",_name, server getVariable [format["%1employ",_name],0]]];
+        _idx = lbAdd [1501,format["%1",_name]];
         lbSetData [1501,_idx,_name];
     };
 }foreach(OT_economicData);
@@ -69,11 +70,13 @@ _numPlayers = count([] call CBA_fnc_players);
 _taxper = round(_taxtotal / _numPlayers);
 _totaxper = round(_totax / _numPlayers);
 
-private _perhr = ["Tanoa","WAGE",0] call OT_fnc_getPrice;
+private _perhr = (["Tanoa","WAGE",0] call OT_fnc_getPrice)*6;
 private _wages = 0;
 {
-    _num = server getVariable [format["%1employ",_x],0];
-    _wages = _wages + (_num * _perhr);
+    if(_x != "Factory") then {
+        _num = server getVariable [format["%1employ",_x],0];
+        _wages = _wages + (_num * _perhr);
+    };
 }foreach(server getVariable ["GEURowned",[]]);
 
 if(!isMultiplayer) then {
@@ -81,17 +84,27 @@ if(!isMultiplayer) then {
 };
 
 _balance = _totax - _wages;
-
-_text = format["<t size='0.65'>Lease Income: $%1</t><br/>",[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+_text = "";
 
 if(isMultiplayer) then {
-    _text = _text + format["<t size='0.65'>Civilian Income: $%1 ($%2 per player)</t><br/>",[_taxtotal, 1, 0, true] call CBA_fnc_formatNumber,[_taxper, 1, 0, true] call CBA_fnc_formatNumber];
-    _text = _text + format["<t size='0.65'>Resistance Tax (%1%2): $%3 ($%4 per player)</t><br/>",_tax,"%",[_totax, 1, 0, true] call CBA_fnc_formatNumber,[_totaxper, 1, 0, true] call CBA_fnc_formatNumber];
+	if((getplayeruid player) in (server getVariable ["generals",[]])) then {
+		_text = _text + format["<t align='left' size='0.65'>Resistance Funds: $%1</t><br/>",[server getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber];
+	};
+};
+
+_text = _text + format["<t size='0.65'>Lease Income: $%1</t><br/>",[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+
+if(isMultiplayer) then {
+    _text = _text + format["<t size='0.65'>Civilian Income: $%1 ($%2 per player)</t><br/>",[_taxtotal-_totax, 1, 0, true] call CBA_fnc_formatNumber,[_taxper-_totaxper, 1, 0, true] call CBA_fnc_formatNumber];
+    if((getplayeruid player) in (server getVariable ["generals",[]])) then {
+        _text = _text + format["<t size='0.65'>Resistance Tax (%1%2): $%3 ($%4 per player)</t><br/>",_tax,"%",[_totax, 1, 0, true] call CBA_fnc_formatNumber,[_totaxper, 1, 0, true] call CBA_fnc_formatNumber];
+    };
 }else{
     _text = _text + format["<t size='0.65'>Tax Income: $%1</t><br/>",[_taxtotal, 1, 0, true] call CBA_fnc_formatNumber];
 };
-
-_text = _text + format["<t size='0.65'>Wages: $-%1</t><br/><br/>",[_wages, 1, 0, true] call CBA_fnc_formatNumber];
+private _minus = "";
+if(_wages > 0) then {_minus = "-"};
+_text = _text + format["<t size='0.65'>Wages: $%1%2</t><br/>",_minus,[_wages, 1, 0, true] call CBA_fnc_formatNumber];
 _text = _text + format["<t size='0.8'>Balance: $%1</t><br/>",[_balance, 1, 0, true] call CBA_fnc_formatNumber];
 
 disableSerialization;

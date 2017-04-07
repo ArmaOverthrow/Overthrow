@@ -110,6 +110,7 @@ class OT_dialog_resistance
             y = 0.566 * safezoneH + safezoneY;
             w = 0.0721875 * safezoneW;
             h = 0.044 * safezoneH;
+			action = "[] call OT_fnc_fireEmployee;";
         };
         class RscButton_1603: RscOverthrowButton
         {
@@ -119,6 +120,7 @@ class OT_dialog_resistance
             y = 0.566 * safezoneH + safezoneY;
             w = 0.0721875 * safezoneW;
             h = 0.044 * safezoneH;
+			action = "[] call OT_fnc_hireEmployee;";
         };
 		class RscStructuredText_1106: RscOverthrowStructuredText
 		{

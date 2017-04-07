@@ -173,7 +173,7 @@ if(_cost > 0) then {
 						_mrkid = format["%1-base",getpos _base];
 						createMarker [_mrkid,getpos _base];
 						_mrkid setMarkerShape "ICON";
-						_mrkid setMarkerType "ot_FOB";
+						_mrkid setMarkerType "mil_Flag";
 						_mrkid setMarkerColor "ColorWhite";
 						_mrkid setMarkerAlpha 1;
 						_mrkid setMarkerText _name;

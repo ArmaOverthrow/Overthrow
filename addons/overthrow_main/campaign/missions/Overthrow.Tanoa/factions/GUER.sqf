@@ -6,8 +6,11 @@ if(count _blueprints == 0) then {
 };
 //Keeps track of all entities that should trigger the spawner
 private _lastmin = date select 4;
+private _lasthr = date select 3;
+private _currentProduction = "";
+
 while {true} do {
-	sleep 10;
+	sleep 1;
 	_track = [];
 	{
 		if(_x getVariable ["spawntrack",false]) then {
@@ -35,11 +38,226 @@ while {true} do {
 		};
 	}foreach(spawner getVariable ["_noid_",[]]);
 
+	if ((date select 3) != _lasthr) then {
+		//Do production/wages
+		_lasthr = date select 3;
+		private _wages = 0;
+		{
+			if(_x != "Factory") then {
+				private _perhr = ["Tanoa","WAGE",0] call OT_fnc_getPrice;
+				_num = server getVariable [format["%1employ",_x],0];
+				_enum = _num;
+				if(_enum > 20) then {
+					_enum = 20;
+				};
+				_funds = [] call OT_fnc_resistanceFunds;
+				_towage = (_num * _perhr);
+				if(_funds >= _towage) then {
+					[-_towage] call OT_fnc_resistanceFunds;
+					_wages = _wages + (_num * _perhr);
+					_data = _x call OT_fnc_getEconomicData;
 
-	if {(date select 4) != _lastmin} then {
+					_pos = _data select 0;
+					_outnum = 2 * _num;
+					_innum = 2 * _num;
+					_intotal = _innum;
+					if(_num > 0) then {
+						if(count _data == 2 and _x != "Factory") then {
+							//Just passive income
+							_income = _enum * 200;
+							[_income] call OT_fnc_resistanceFunds;
+						};
+						if(count _data == 3) then {
+							//Turns something into money
+							_input = _data select 2;
+							_income = 0;
+							_sellprice = round((["Tanoa",_input,0] call OT_fnc_getSellPrice) * 1.2);
+							_container = _pos nearestObject OT_item_CargoContainer;
+							if(_container isEqualTo objNull) then {
+								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
+								_container = OT_item_CargoContainer createVehicle _p;
+								_container setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								clearWeaponCargoGlobal _container;
+								clearMagazineCargoGlobal _container;
+								clearBackpackCargoGlobal _container;
+								clearItemCargoGlobal _container;
+							};
+							{
+								_stock = _x call OT_fnc_unitStock;
+								_c = _x;
+								{
+									_x params ["_cls","_amt"];
+									if(_cls == _input) exitWith {
+										if(_amt >= _innum) then {
+											[_c, _cls, _innum] call CBA_fnc_removeItemCargo;
+											_income = _income + (_sellprice * _innum);
+										}else{
+											[_c, _cls, _amt] call CBA_fnc_removeItemCargo;
+											_innum = _innum - _amt;
+											_income = _income + (_sellprice * _amt);
+										};
+									};
+								}foreach(_stock);
+							}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
+							[_income] call OT_fnc_resistanceFunds;
+						};
+						if(count _data == 4) then {
+							//Turns something into something (or creates something from nothing)
+							_input = _data select 2;
+							_output = _data select 3;
+							_container = _pos nearestObject OT_item_CargoContainer;
+							if(_container isEqualTo objNull) then {
+								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
+								_container = OT_item_CargoContainer createVehicle _p;
+								_container setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								clearWeaponCargoGlobal _container;
+								clearMagazineCargoGlobal _container;
+								clearBackpackCargoGlobal _container;
+								clearItemCargoGlobal _container;
+							};
+							if(_input != "") then {
+								_inputnum = 0;
+								{
+									_c = _x;
+									{
+										_x params ["_cls","_amt"];
+										if(_cls == _input) exitWith {
+											if(_amt >= _innum) then {
+												[_c, _cls, _innum] call CBA_fnc_removeItemCargo;
+												_inputnum = _inputnum + _innum;
+											}else{
+												[_c, _cls, _amt] call CBA_fnc_removeItemCargo;
+												_innum = _innum - _amt;
+												_inputnum = _inputnum + _amt;
+											};
+										};
+									}foreach(_c call OT_fnc_unitStock);
+								}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
+								_outnum = round (_outnum * (_inputnum / _intotal));
+							};
+							if(_output != "" and _outnum > 0) then {
+								_container addItemCargoGlobal [_output,_outnum];
+							};
+						};
+					};
+				};
+			};
+		}foreach(server getVariable ["GEURowned",[]]);
+	};
+
+	if ((date select 4) != _lastmin) then {
 		_lastmin = date select 4;
 
-		
+		//do factory
+		if("Factory" in (server getVariable ["GEURowned",[]])) then {
+			private _currentCls = server getVariable ["GEURproducing",""];
+			if(_currentCls != "") then {
+				_cost = cost getVariable[_currentCls,[]];
+				if(count _cost > 0) then {
+					_cost params ["_base","_wood","_steel","_plastic"];
+					if(isNil "_plastic") then {
+						_plastic = 0;
+					};
+					_timetoproduce = _base + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
+					if(_timetoproduce > 2880) then {_timetoproduce = 2880};
+					if(_timetoproduce < 10) then {_timetoproduce = 10};
+					_timespent = server getVariable ["GEURproducetime",0];
+
+					_numtoproduce = 1;
+					if(_wood < 1 and _wood > 0) then {
+						_numtoproduce = round (1 / _wood);
+					};
+					if(_steel < 1 and _steel > 0) then {
+						_numtoproduce = round (1 / _steel);
+					};
+					if(_plastic < 1 and _plastic > 0) then {
+						_numtoproduce = round (1 / _plastic);
+					};
+					_costtoproduce = round((_base * _numtoproduce) * 0.8);
+
+					if(_timespent == 0) then {
+						//take items
+						private _veh = OT_factoryPos nearestObject OT_item_CargoContainer;
+						if(_veh isEqualTo objNull) then {
+							_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
+							if(count _p > 0) then {
+								_veh = OT_item_CargoContainer createVehicle _p;
+								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								clearWeaponCargoGlobal _veh;
+								clearMagazineCargoGlobal _veh;
+								clearBackpackCargoGlobal _veh;
+								clearItemCargoGlobal _veh;
+							}else{
+								format["Factory has no room to place container, please clear marker area"] remoteExec["notify_minor",0,false];
+							};
+						};
+						_dowood = ["OT_wood",_wood,OT_factoryPos] call OT_fnc_hasFromContainers;
+						_dosteel = ["OT_steel",_steel,OT_factoryPos] call OT_fnc_hasFromContainers;
+						_doplastic = ["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_hasFromContainers;
+						_domoney = ([] call OT_fnc_resistanceFunds >= _costtoproduce);
+						if(_dowood and _dosteel and _doplastic and _domoney) then {
+							["OT_wood",_wood,OT_factoryPos] call OT_fnc_takeFromContainers;
+							["OT_steel",_steel,OT_factoryPos] call OT_fnc_takeFromContainers;
+							["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_takeFromContainers;
+							[-_costtoproduce] call OT_fnc_resistanceFunds;
+							_timespent = _timespent + 1;
+						};
+					}else{
+						_timespent = _timespent + 1;
+					};
+					if(_timespent >= _timetoproduce) then {
+						_timespent = 0;
+
+						if(!(_currentCls isKindOf "Bag_Base") and _currentCls isKindOf "AllVehicles") then {
+							_p = OT_factoryVehicleSpawn findEmptyPosition [0,100,_currentCls];
+							if(count _p > 0) then {
+								_veh = _currentCls createVehicle _p;
+								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								clearWeaponCargoGlobal _veh;
+								clearMagazineCargoGlobal _veh;
+								clearBackpackCargoGlobal _veh;
+								clearItemCargoGlobal _veh;
+								_veh setDir OT_factoryVehicleDir;
+								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["notify_minor",0,false];
+							}else{
+								format["Factory has no room to produce %1, please clear the road",_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["notify_minor",0,false];
+								_timespent = _timetoproduce;
+							};
+						}else{
+							private _veh = OT_factoryPos nearestObject OT_item_CargoContainer;
+							if(_veh isEqualTo objNull) then {
+								_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
+								_veh = OT_item_CargoContainer createVehicle _p;
+								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								clearWeaponCargoGlobal _veh;
+								clearMagazineCargoGlobal _veh;
+								clearBackpackCargoGlobal _veh;
+								clearItemCargoGlobal _veh;
+							};
+							call {
+								if(_currentCls isKindOf "Bag_Base") exitWith {
+									_veh addBackpackCargoGlobal [_currentCls,_numtoproduce];
+								};
+								if(_currentCls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+									_veh addWeaponCargoGlobal [_currentCls,_numtoproduce];
+								};
+								if(_currentCls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+									_veh addWeaponCargoGlobal [_currentCls,_numtoproduce];
+								};
+								if(_currentCls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+									_veh addWeaponCargoGlobal [_currentCls,_numtoproduce];
+								};
+								if(_currentCls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+									_veh addMagazineCargoGlobal [_currentCls,_numtoproduce];
+								};
+								_veh addItemCargoGlobal [_currentCls,_numtoproduce];
+							};
+						}
+					};
+					server setVariable ["GEURproducetime",_timespent,true];
+				};
+			};
+		};
 	}
 
 };

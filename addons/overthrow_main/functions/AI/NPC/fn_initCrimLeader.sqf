@@ -9,15 +9,14 @@ _unit addEventHandler ["HandleDamage", {
 	_src = _this select 3;
 	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
-			_src setCaptive false;				
-		};		
-	};	
+			_src setCaptive false;
+		};
+	};
 }];
 
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
 [_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
 _unit forceAddUniform (OT_CRIM_Clothes call BIS_fnc_selectRandom);
-
 
 removeAllItems _unit;
 removeHeadgear _unit;
@@ -57,7 +56,7 @@ _unit addWeapon _weapon;
 _config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";
 _numslots = count(_config);
 for "_i" from 0 to (_numslots-1) do {
-	if (isClass (_config select _i)) then {		
+	if (isClass (_config select _i)) then {
 		_slot = configName(_config select _i);
 		if(_slot != "MuzzleSlot") then {
 			_com = _config >> _slot >> "compatibleItems";
@@ -68,9 +67,9 @@ for "_i" from 0 to (_numslots-1) do {
 				};
 			}else{
 				_items = getArray(_com);
-			};		
-			if(count _items > 0) then {			
-				_cls = _items call BIS_fnc_selectRandom;			
+			};
+			if(count _items > 0) then {
+				_cls = _items call BIS_fnc_selectRandom;
 				_unit addPrimaryWeaponItem _cls;
 			};
 		};
@@ -85,4 +84,4 @@ if !(isNil "_magazine") then {
 	_unit addItem _magazine;
 };
 
-_unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);	
+_unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);

@@ -189,13 +189,13 @@ sleep 0.1;
 					_buildings = (_x nearObjects ["Building",8]);
 					if(count _buildings > 0) then {
 						_bdg = _buildings select 0;
-						_bdg setVariable ["owner",getplayeruid player,true];
+						_bdg setVariable ["owner",_uid,true];
 					};
 				}else{
 					//new save with IDs
 					if (typename _x == "SCALAR") then {
 						_bdg = OT_centerPos nearestObject _x;
-						_bdg setVariable ["owner",getplayeruid player,true];
+						_bdg setVariable ["owner",_uid,true];
 					};
 				};
 			}foreach(_val);

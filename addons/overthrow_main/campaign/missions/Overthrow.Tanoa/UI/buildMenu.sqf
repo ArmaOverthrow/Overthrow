@@ -249,7 +249,7 @@ buildOnMouseUp = {
 	if(_btn == 2) then {
 		buildCamRotating = false;
 	};
-	if(_btn == 0 and _sx > (safezoneX + (0.1 * safezoneW))) then {
+	if(_btn == 0 and _sx > (safezoneX + (0.1 * safezoneW)) and _sx < (safezoneX + (0.9 * safezoneW))) then {
 		//Click LMB
 		if(!isNull modeTarget and canBuildHere) then {
 			_money = player getVariable "money";

@@ -18,7 +18,7 @@ if(_obpos distance player < 250) then {
 };
 
 if(OT_adminMode) then {
-	_items = OT_helis + OT_vehicles + OT_boats;
+	_items = OT_helis + OT_vehicles + OT_boats + OT_staticBackpacks;
 };
 
 createDialog "OT_dialog_buy";

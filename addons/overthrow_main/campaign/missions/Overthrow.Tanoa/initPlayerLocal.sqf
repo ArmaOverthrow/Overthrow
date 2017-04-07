@@ -29,15 +29,6 @@ removeVest player;
 
 player linkItem "ItemMap";
 
-private _aplayers = server getVariable ["OT_allplayers",[]];
-if ((_aplayers find (getplayeruid player)) == -1) then {
-	_aplayers pushback (getplayeruid player);
-	server setVariable ["OT_allplayers",_aplayers,true];
-};
-server setVariable [format["name%1",getplayeruid player],name player,true];
-server setVariable [format["uid%1",name player],getplayeruid player,true];
-spawner setVariable [format["%1",getplayeruid player],player,true];
-
 if(isMultiplayer and (!isServer)) then {
 	//TFAR Support, thanks to Dedmen for the help
 	[] call OT_fnc_initTFAR;
@@ -69,6 +60,23 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
 	"Loading" call blackFaded;
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
+
+private _aplayers = server getVariable ["OT_allplayers",[]];
+if ((_aplayers find (getplayeruid player)) == -1) then {
+	_aplayers pushback (getplayeruid player);
+	server setVariable ["OT_allplayers",_aplayers,true];
+};
+if(!isMultiplayer) then {
+	private _generals = server getVariable ["generals",[]];
+	if ((_generals find (getplayeruid player)) == -1) then {
+		_generals pushback (getplayeruid player);
+		server setVariable ["generals",_generals,true];
+	};
+};
+server setVariable [format["name%1",getplayeruid player],name player,true];
+server setVariable [format["uid%1",name player],getplayeruid player,true];
+spawner setVariable [format["%1",getplayeruid player],player,true];
+
 player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 _startup = server getVariable "StartupType";
 _newplayer = true;

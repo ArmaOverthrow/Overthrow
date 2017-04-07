@@ -18,6 +18,7 @@ while {_count < _numCiv} do {
 	_count = _count + 1;
 	sleep 0.1;
 };
+spawner setVariable [format["employees%1",_name],_group,false];
 
 private _dest = [_pos,[0,100]] call SHK_pos;
 private _bdg = [_pos,["Building"]] call OT_fnc_getRandomBuilding;

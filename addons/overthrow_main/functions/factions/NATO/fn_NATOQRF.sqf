@@ -100,12 +100,13 @@ if(_s > 0) then {
 	_airStrength = _s;
 };
 diag_log format["Overthrow: Attack start on %1 (sea:%2 land:%3 air:%4)",_pos,_seaStrength,_landStrength,_airStrength];
+private _delay = 0;
 
 if(_seaStrength > 0) then {
 	private _numgroups = 1;
 	if(_seaStrength > 50) then {_numgroups = 2};
 	if(_seaStrength > 150) then {_numgroups = 3};
-	private _delay = 0;
+
 	private _p = getMarkerPos OT_NATO_Navy_HQ;
 	private _count = 0;
 	while {_count < _numgroups} do {
@@ -114,18 +115,6 @@ if(_seaStrength > 0) then {
 		_count = _count + 1;
 		_delay = _delay + 20;
 	};
-};
-
-_numgroups = 1;
-if(_airStrength < 60) then {_numgroups = 0};
-if(_airStrength > 1000) then {_numgroups = 2};
-_count = 0;
-private _delay = 0;
-while {_count < _numgroups} do {
-	diag_log format["Overthrow: Sending HQ air support %1",OT_NATO_HQPos];
-	[[OT_NATO_HQPos,[0,100],random 360] call SHK_pos,_pos,_delay] spawn OT_fnc_NATOAirSupport;
-	_count = _count + 1;
-	_delay = _delay + 20;
 };
 
 //Ground units
@@ -150,7 +139,7 @@ if(_delay > 0) then {
 	_delay = _delay + 10;
 };
 while {_count < _numgroups} do {
-	diag_log format["Overthrow: Sending HQ ground forces %1",_ao];
+	//diag_log format["Overthrow: Sending HQ ground forces %1",_ao];
 	[OT_NATO_HQPos,_ao,_pos,true,_delay] spawn OT_fnc_NATOGroundForces;
 	_ao = [_pos,_dir] call OT_fnc_getAO;
 	_count = _count + 1;
@@ -171,7 +160,7 @@ if(_objectiveIsControlled) then {
 	_count = 0;
 	_delay = 20;
 	while {_count < _numgroups} do {
-		diag_log format["Overthrow: Sending ground forces %1",_closestObjectivePos];
+		//diag_log format["Overthrow: Sending ground forces %1",_closestObjectivePos];
 		[_closestObjectivePos,_ao,_pos,false,_delay] spawn OT_fnc_NATOGroundForces;
 		_ao = [_pos,_dir] call OT_fnc_getAO;
 		_count = _count + 1;
@@ -188,7 +177,7 @@ if(_airfieldIsControlled) then {
 	_count = 0;
 	_delay = 0;
 	while {_count < _numgroups} do {
-		diag_log format["Overthrow: Sending Air support %1",_closestAirfieldPos];
+		//diag_log format["Overthrow: Sending Air support %1",_closestAirfieldPos];
 		[[_closestAirfieldPos,[0,100],random 360] call SHK_pos,_pos,_delay] spawn OT_fnc_NATOAirSupport;
 		_count = _count + 1;
 		_delay = _delay + 20;
@@ -232,6 +221,10 @@ private _alivein = 0;
 private _enemyin = 0;
 
 while {sleep 5;time < _timeout and !_won} do {
+	_alive = 0;
+	_enemy = 0;
+	_alivein = 0;
+	_enemyin = 0;
 	{
 		_g = (_x getVariable ["garrison",""]);
 		if(typename _g != "STRING") then {_g = "HQ"};
@@ -258,18 +251,22 @@ while {sleep 5;time < _timeout and !_won} do {
 		server setVariable ["NATOresources",round(_strength * 0.5),true];
 		{
 			if(side _x == west) then {
-				_lead = (units _x) select 0;
-				if(_lead getVariable ["garrison",""] == "HQ") then {
-					if(vehicle _lead != _lead) then {
-						[vehicle _lead] spawn OT_fnc_cleanup;
+				if(count (units _x) > 0) then {
+					_lead = (units _x) select 0;
+					if(_lead getVariable ["garrison",""] == "HQ") then {
+						if(vehicle _lead != _lead) then {
+							[vehicle _lead] spawn OT_fnc_cleanup;
+						};
+						[_x] spawn OT_fnc_cleanup;
 					};
-					[_x] spawn OT_fnc_cleanup;
+				}else{
+					deleteGroup _x;
 				};
 			}
 		}foreach(allgroups);
 		_won = true;
 	};
-	diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
+	//diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
 	if(_alive < 4 or (_enemyin > 4 and _alivein == 0)) exitWith{};
 };
 if !(_won) then {
