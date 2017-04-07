@@ -21,6 +21,9 @@ _fail = {
 	if(count _flag > 0) then{
 		deleteVehicle (_flag select 0);
 	};
+	_abandoned = server getVariable "NATOabandoned";
+	_abandoned pushback _objective;
+	server setVariable ["NATOabandoned",_abandoned,true];
 };
 
 _success = {

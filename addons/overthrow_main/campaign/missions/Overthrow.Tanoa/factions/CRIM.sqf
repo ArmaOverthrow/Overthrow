@@ -21,7 +21,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 		server setVariable [format["crimnew%1",_town],false,false];
 		server setVariable [format["crimadd%1",_town],0,false];
 		if(_stability < 30) then {
-			_garrison = 1 + round(random 4);
+			_garrison = 1 + round(random 2);
 			_building = [_posTown, OT_crimHouses] call OT_fnc_getRandomBuilding;
 			if(isNil "_building") then {
 				_leaderpos = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
@@ -130,7 +130,7 @@ while {true} do {
 						_max = 4;
 						if(_town in (server getVariable ["NATOabandoned",[]])) then {
 							_chance = 80;
-							_max = 10;
+							_max = 6;
 						};
 
 						if(((random 100) < _chance) and _num < _max) then {

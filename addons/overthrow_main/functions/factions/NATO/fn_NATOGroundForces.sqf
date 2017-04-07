@@ -1,5 +1,5 @@
 params ["_frompos","_ao","_attackpos","_byair","_delay"];
-sleep _delay;
+if !(isNil "_delay") then {sleep _delay};
 private _squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
 private _spawnpos = [_frompos,[50,75]] call SHK_pos;
 private _group1 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;

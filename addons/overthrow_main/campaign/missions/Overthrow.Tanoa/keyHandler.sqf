@@ -59,6 +59,7 @@ if (_key == 21) then
 						createDialog "OT_dialog_vehiclewarehouse";
 					}else{
 						createDialog "OT_dialog_vehicle";
+						[] spawn OT_fnc_vehicleDialog;
 					};
 				};
 				[] spawn mainMenu;

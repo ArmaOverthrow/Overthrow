@@ -67,11 +67,15 @@ OT_item_Tent = "Land_TentDome_F";
 OT_item_Flag = "Flag_HorizonIslands_F";
 OT_item_Safe = "Land_MetalCase_01_small_F";
 
+OT_item_DefaultBlueprints = [];
+
 OT_allLowAnimals = ["Rabbit_F","Turtle_F"];
 OT_allHighAnimals = ["Goat_random_F"];
 OT_allFarmAnimals = ["Hen_random_F","Cock_random_F","Sheep_random_F"];
 OT_allVillageAnimals = ["Hen_random_F","Cock_random_F"];
 OT_allTownAnimals = ["Alsatian_Random_F","Fin_random_F"];
+
+OT_fuelPumps = ["Land_FuelStation_02_pump_F","Land_FuelStation_01_pump_F","Land_fs_feed_F","Land_FuelStation_Feed_F"];
 
 OT_ferryDestinations = ["destination_1","destination_2","destination_3","destination_4","destination_5","destination_6"];
 
@@ -146,6 +150,7 @@ OT_vehType_distro = "C_Van_01_box_F";
 OT_vehType_ferry = "C_Boat_Transport_02_F";
 OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F"]; //Civs cannot drive these vehicles for whatever reason
 
+OT_item_CargoContainer = "B_Slingload_01_Cargo_F";
 
 OT_activeDistribution = [];
 OT_activeShops = [];
@@ -258,6 +263,7 @@ OT_CRIM_Unit = "C_man_p_fugitive_F";
 OT_CRIM_Clothes = ["U_I_C_Soldier_Bandit_3_F","U_BG_Guerilla3_1","U_C_HunterBody_grn","U_I_G_Story_Protagonist_F"];
 OT_CRIM_Goggles = ["G_Balaclava_blk","G_Balaclava_combat","G_Balaclava_lowprofile","G_Balaclava_oli","G_Bandanna_blk","G_Bandanna_khk","G_Bandanna_oli","G_Bandanna_shades","G_Bandanna_sport","G_Bandanna_tan"];
 OT_CRIM_Weapons = ["arifle_AK12_F","arifle_AKM_F","arifle_AKM_F","arifle_AKM_F"];
+OT_CRIM_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 OT_CRIM_Launchers = ["launch_RPG32_F","launch_RPG7_F","launch_RPG7_F","launch_RPG7_F"];
 
 OT_interactingWith = objNull;
@@ -273,6 +279,8 @@ OT_interactingWith = objNull;
 //NB: the local markup can be negative, making buy prices lower and sell prices higher, in certain situations (high stability and/or player rep)
 OT_items = [];
 if(OT_hasAce) then {
+	OT_item_DefaultBlueprints pushback "ACE_fieldDressing";
+	OT_item_DefaultBlueprints pushback "ACE_elasticBandage";
 	[OT_items,[
 		["ACE_fieldDressing",2,0,0,0.1],
 		["ACE_elasticBandage",3,0,0,0.2],
@@ -296,7 +304,7 @@ if(OT_hasAce) then {
 		["ACE_IR_Strobe_Item",10,0,0,1],
 		["ACE_packingBandage",3,0,0,1],
 		["ACE_personalAidKit",4,0,0,1],
-		["ACE_RangeCard",1,0,0,1],
+		["ACE_RangeCard",1,0,0,0.1],
 		["ACE_salineIV",5,0,0,1],
 		["ACE_salineIV_250",7,0,0,1],
 		["ACE_salineIV_500",10,0,0,1],
@@ -310,6 +318,8 @@ if(OT_hasAce) then {
 		["ACE_bloodIV",120,0,0,1]
 	]] call BIS_fnc_arrayPushStack;
 }else{
+	OT_item_DefaultBlueprints pushback "FirstAidKit";
+	OT_item_DefaultBlueprints pushback "Medikit";
 	[OT_items,[
 		["FirstAidKit",10,0,0,0.1],
 		["Medikit",40,0,0,0.5]
@@ -328,12 +338,14 @@ if(OT_hasTFAR) then {
 	OT_items pushback ["ItemRadio",20,0,0,1];
 };
 
+OT_item_DefaultBlueprints pushback "ToolKit";
+
 [OT_items,[
 	["Laserdesignator",220,1,0,0],
 	["Laserdesignator_01_khk_F",220,1,0,0],
 	["Laserdesignator_02_ghex_F",200,1,0,0],
 	["MineDetector",10,1,0,0],
-	["ToolKit",25,1,0,0],
+	["ToolKit",25,0,0.5,0],
 	["ItemGPS",60,0,0,1],
 	["ItemCompass",5,0.1,0,0],
 	["ItemMap",1,0,0,0],
@@ -435,7 +447,7 @@ private _allVehs = "
 	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") != "CIV_F") then {_cost = _cost * 1.5};
 
 
-	OT_vehicles pushback [_cls,_cost,1,1,1];
+	OT_vehicles pushback [_cls,_cost,0,getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"),2];
 	OT_allVehicles pushback _cls;
 	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") == "CIV_F") then {
 		if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" and getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
@@ -464,14 +476,29 @@ private _allHelis = "
 	_cls = configName _x;
 	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower"));
 	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * 3);
-
-	if(isServer) then {
-		cost setVariable [_cls,[_cost,1,1,1],true];
+	_steel = round(getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"));
+	_numturrets = count(configFile >> "cfgVehicles" >> _cls >> "Turrets");
+	_plastic = 2;
+	if(_numturrets > 0) then {
+		_cost = _cost + (_numturrets * _cost);
+		_steel = _steel * 3;
+		_plastic = 6;
 	};
 
-	OT_helis pushback [_cls,_cost,1,1,1];
+	if(isServer) then {
+		cost setVariable [_cls,[_cost,0,_steel,_plastic],true];
+	};
+
+	OT_helis pushback [_cls,[_cost,0,_steel,_plastic],true];
 	OT_allVehicles pushback _cls;
 } foreach (_allHelis);
+
+if(isServer) then {
+	//Chinook (unarmed) special case for production logistics
+	cost setVariable ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
+	OT_helis pushback ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
+	OT_allVehicles pushback "B_Heli_Transport_03_unarmed_F";
+};
 
 {
 	_cls = _x select 0;
@@ -515,11 +542,13 @@ private _allHelmets = "
     { getNumber ( _x >> ""ItemInfo"" >> ""type"" ) isEqualTo 605})
 " configClasses ( configFile >> "cfgWeapons" );
 
-private _allShells = "
-    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
-    &&
-    { getNumber ( _x >> ""type"" ) isEqualTo 16})
+private _allAmmo = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
 " configClasses ( configFile >> "cfgMagazines" );
+
+private _allVehicles = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
+" configClasses ( configFile >> "cfgVehicles" );
 
 OT_allSubMachineGuns = [];
 OT_allAssaultRifles = [];
@@ -554,13 +583,6 @@ OT_allAttachments = [];
 		_caliber = _s select 0;
 	};
 
-	_magazines = getArray (configFile >> "CfgWeapons" >> _name >> "magazines");
-	{
-		if !(_x in OT_allMagazines) then {
-			OT_allMagazines pushback _x;
-		};
-	}foreach(_magazines);
-
 	_weapon = [_name] call BIS_fnc_itemType;
 	_weaponType = _weapon select 1;
 
@@ -572,8 +594,9 @@ OT_allAttachments = [];
 	}foreach(_muzzles);
 
 	_cost = 500;
+	_steel = 1;
 	switch (_weaponType) do	{
-		case "SubmachineGun": {_cost = 250;OT_allSubMachineGuns pushBack _name};
+		case "SubmachineGun": {_steel = 0.5;_cost = 250;OT_allSubMachineGuns pushBack _name};
 
 		case "AssaultRifle": {
 			call {
@@ -600,7 +623,7 @@ OT_allAttachments = [];
 		};
 		case "MachineGun": {_cost = 1500;OT_allMachineGuns pushBack _name};
 		case "SniperRifle": {_cost = 2000;OT_allSniperRifles pushBack _name};
-		case "Handgun": {_cost = 100;OT_allHandGuns pushBack _name};
+		case "Handgun": {_steel = 0.2;_cost = 100; if(_short != "Metal Detector") then {OT_allHandGuns pushBack _name}};
 		case "MissileLauncher": {_cost=2500;OT_allMissileLaunchers pushBack _name};
 		case "RocketLauncher": {_cost = 1500;OT_allRocketLaunchers pushBack _name};
 		case "Vest": {
@@ -620,7 +643,7 @@ OT_allAttachments = [];
 		};
 	};
 	if(isServer) then {
-		cost setVariable [_name,[_cost,1,0,1],true];
+		cost setVariable [_name,[_cost,0,_steel,0],true];
 	};
 } foreach (_allWeapons);
 
@@ -644,26 +667,52 @@ OT_allAttachments = [];
 		OT_allHats pushback _name;
 	};
 	if(isServer) then {
-		cost setVariable [_name,[_cost,0,0,1],true];
+		cost setVariable [_name,[_cost,0,1,0],true];
 	};
 } foreach (_allHelmets);
 
 {
 	_name = configName _x;
 	_m = getNumber(_x >> "mass");
-	_cost = round(_m * 1.5);
-	_desc = getText(_x >> "descriptionShort");
-	if((_desc find "Smoke") > -1) then {
-		_cost = round(_m * 0.5);
+	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
+		_cost = round(_m * 1.5);
+		_desc = getText(_x >> "descriptionShort");
+		if((_desc find "Smoke") > -1) then {
+			_cost = round(_m * 0.5);
+		};
+		if((_desc find "Flare") > -1) then {
+			_cost = round(_m * 0.6);
+		};
+		if((_desc find "Grenade") > -1) then {
+			_cost = round(_m * 2);
+		};
+		if(isServer) then {
+			cost setVariable [_name,[_cost,0,0.1,0],true];
+		};
+		OT_allMagazines pushback _name;
 	};
-	if((_desc find "Flare") > -1) then {
-		_cost = round(_m * 0.6);
-	};
-	if(isServer) then {
-		cost setVariable [_name,[_cost,0,0,1],true];
-	};
-	OT_allMagazines pushback _name;
-} foreach (_allShells);
+} foreach (_allAmmo);
+
+if(isServer) then {
+	//Remainding vehicle costs
+	{
+		_name = configName _x;
+		if(_name isKindOf "AllVehicles" and !(_name in OT_allVehicles)) then {
+			_cost = (getNumber (configFile >> "cfgVehicles" >> _name >> "armor") + getNumber (configFile >> "cfgVehicles" >> _name >> "enginePower"));
+			_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _name >> "maximumLoad") * 3);
+			_steel = round(getNumber (configFile >> "cfgVehicles" >> _name >> "armor"));
+			_numturrets = count(configFile >> "cfgVehicles" >> _name >> "Turrets");
+			_plastic = 2;
+			if(_numturrets > 0) then {
+				_cost = _cost + (_numturrets * _cost);
+				_steel = _steel * 3;
+				_plastic = 6;
+			};
+
+			cost setVariable [_name,[_cost,0,_steel,_plastic],true];
+		};
+	} foreach (_allVehicles);
+};
 
 OT_attachments = [];
 {
@@ -679,10 +728,10 @@ OT_attachments = [];
 		_cost = 350;
 	};
 	if(isServer) then {
-		cost setVariable [_name,[_cost,0,0,1],true];
+		cost setVariable [_name,[_cost,0,0,0.25],true];
 	};
 	OT_allAttachments pushback _name;
-	OT_attachments pushback [_name,[_cost,0,0,1]];
+	OT_attachments pushback [_name,[_cost,0,0,0.25]];
 } foreach (_allAttachments);
 
 {
@@ -700,7 +749,7 @@ OT_attachments = [];
 
 	OT_allOptics pushback _name;
 	if(isServer) then {
-		cost setVariable [_name,[_cost,0,0,1],true];
+		cost setVariable [_name,[_cost,0,0,0.5],true];
 	};
 } foreach (_allOptics);
 
@@ -708,7 +757,9 @@ OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns +
 
 if(isServer) then {
 	cost setVariable ["CIV",[100,0,0,0],true];
+	cost setVariable ["WAGE",[5,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
+	cost setVariable ["FUEL",[5,0,0,0],true];
 
 	//Drug prices
 	cost setVariable ["OT_Ganja",[100,0,0,0],true];

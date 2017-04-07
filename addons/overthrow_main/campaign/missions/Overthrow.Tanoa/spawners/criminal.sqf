@@ -4,8 +4,6 @@ params ["_town","_spawnid"];
 private _posTown = server getVariable _town;
 
 private _groups = [];
-
-
 private _numCRIM = server getVariable [format ["numcrims%1",_town],0];
 
 if(_numCRIM > 0) then {
@@ -34,12 +32,12 @@ if(_numCRIM > 0) then {
 		[_civ] joinSilent _group;
 		_civ setskill _skill;
 		if(_time > 1200) then {
-			_civ setRank "MAJOR";
+			_civ setRank "SERGEANT";
 		}else{
 			if(_time > 600) then {
-				_civ setRank "CAPTAIN";
+				_civ setRank "CORPORAL";
 			}else{
-				_civ setRank "LIEUTENANT";
+				_civ setRank "PRIVATE";
 			};
 		};
 
@@ -76,7 +74,7 @@ if(_numCRIM > 0) then {
 		sleep 0.1;
 		[_civ] joinSilent nil;
 		[_civ] joinSilent _group;
-		_civ setRank "PRIVATE";		
+		_civ setRank "PRIVATE";
 		[_civ,_town] call OT_fnc_initCriminal;
 		_civ setBehaviour "SAFE";
 

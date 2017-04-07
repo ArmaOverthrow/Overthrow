@@ -17,7 +17,7 @@ class RscTitles {
         fadeout      =  0;
 		name = "OT_stashHUD";
 		onLoad = "with uiNameSpace do { OT_stashHUD = _this select 0 }";
-			
+
 		class controls
 		{
 			////////////////////////////////////////////////////////
@@ -50,8 +50,8 @@ class RscTitles {
 				x = 0.752656 * safezoneW + safezoneX;
 				y = 0.676 * safezoneH + safezoneY;
 				w = 0.139219 * safezoneW;
-				h = 0.099 * safezoneH;	
-				colorBackground[] = {0,0,0,0.8};			
+				h = 0.099 * safezoneH;
+				colorBackground[] = {0,0,0,0.8};
 				action = "[] call buy;";
 			};
 			class RscStructuredText_1100: RscOverthrowStructuredText
@@ -87,10 +87,10 @@ class RscTitles {
 				x = safezoneX + (0.8 * safezoneW);
 				y = safezoneY + (0.15 * safezoneH);
 				w = 0.19 * safezoneW;
-				h = 0.3 * safezoneH;
+				h = 0.4 * safezoneH;
                 colorBackground[] = {0,0,0,0.2};
                 colorText[] = {0.34,0.33,0.33,0};//{1,1,1,1}
-                text = "";                
+                text = "";
             };
 		};
 	};

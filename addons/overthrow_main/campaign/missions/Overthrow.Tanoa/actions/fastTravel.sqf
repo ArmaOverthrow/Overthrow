@@ -20,11 +20,29 @@ openMap true;
 		_handled = true;
 	};
 
+	_exit = false;
+
 	if !(_handled) then {
 		if([_pos,"Misc"] call OT_fnc_canPlace) then {
 			_handled = true;
 		};
+
+		_ob = _pos call OT_fnc_nearestLocation;
+
+		_ob params ["_obpos","_obtype","_data"];
+		if (_obtype == "Business") then {
+			_p = _data select 0;
+			if(_pos distance _p < 50) then {
+				_name = _data select 1;
+				if(_name in (server getvariable ["GEURowned",[]])) then {
+					_handled = true;
+				};
+			};
+		};
 	};
+
+
+	if(_exit) exitWith {};
 
 	_ob = _pos call OT_fnc_nearestObjective;
 	_valid = true;

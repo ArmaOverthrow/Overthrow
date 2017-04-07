@@ -18,6 +18,9 @@ private _fail = {
 	_townpop remoteExec ["influenceSilent",0,false];
 	format["NATO has abandoned %1 (+%2 Influence)",_town,_townpop] remoteExec ["notify_good",0,false];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
+	_abandoned = server getVariable "NATOabandoned";
+	_abandoned pushback _town;
+	server setVariable ["NATOabandoned",_abandoned,true];
 };
 
 [_posTown,_strength,_success,_fail,[_tskid,_town]] spawn OT_fnc_NATOQRF;

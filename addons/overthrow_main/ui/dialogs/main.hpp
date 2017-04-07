@@ -130,6 +130,17 @@ class OT_dialog_vehicle
 			tooltip = "Transfers only legal (sellable) items from the closest container into this vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn transferLegit;";
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "call OT_fnc_optionsDialog";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -206,6 +217,17 @@ class OT_dialog_vehiclewarehouse
 			tooltip = "Takes all legal (sellable) items from the warehouse"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn transferLegit;";
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "call OT_fnc_optionsDialog";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -271,6 +293,17 @@ class OT_dialog_vehicleport
 			tooltip = "Exports the contents of this vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn exportAll;";
 		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "call OT_fnc_optionsDialog";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -324,6 +357,17 @@ class OT_dialog_command
 			h = 0.077 * safezoneH;
 			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn OT_fnc_orderOpenInventory;";
+		};
+		class RscButton_1612: RscOverthrowButton
+		{
+			idc = 1612;
+			action = "call OT_fnc_optionsDialog";
+
+			text = "Options"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.885 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -381,8 +425,32 @@ class OT_dialog_options
 		};
 		class RscButton_1603: RscOverthrowButton
 		{
-			idc = 1600;
-			action = "{if (!(alive _x) or !(_x call canDrive)) then {deletevehicle _x}} foreach(vehicles);{deleteVehicle _x} foreach(alldeadmen);""Cleaned bodies/wrecks"" remoteExec [""notify_minor"",0,false];";
+			idc = 1603;
+			action = "call OT_fnc_decreaseTax";
+
+			text = "Tax % --"; //--- ToDo: Localize;
+			x = 0.386562 * safezoneW + safezoneX;
+			y = 0.61 * safezoneH + safezoneY;
+			w = 0.118594 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Decreases the resistance tax rate"; //--- ToDo: Localize;
+		};
+		class RscButton_1604: RscOverthrowButton
+		{
+			idc = 1604;
+			action = "call OT_fnc_increaseTax";
+
+			text = "Tax % ++"; //--- ToDo: Localize;
+			x = 0.515469 * safezoneW + safezoneX;
+			y = 0.61 * safezoneH + safezoneY;
+			w = 0.118594 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Decreases the resistance tax rate"; //--- ToDo: Localize;
+		};
+		class RscButton_1605: RscOverthrowButton
+		{
+			idc = 1605;
+			action = "{if !(alive _x) then {deletevehicle _x}} foreach(vehicles);{if !(_x call canDrive) then {deletevehicle _x}} foreach(vehicles);{deleteVehicle _x} foreach(alldeadmen);""Cleaned bodies/wrecks"" remoteExec [""notify_minor"",0,false];";
 
 			text = "Clean bodies/wrecks"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
@@ -391,9 +459,9 @@ class OT_dialog_options
 			h = 0.077 * safezoneH;
 			tooltip = "Will completely destroy all dead bodies, wrecks and vehicles that cannot move"; //--- ToDo: Localize;
 		};
-		class RscButton_1604: RscOverthrowButton
+		class RscButton_1606: RscOverthrowButton
 		{
-			idc = 1600;
+			idc = 1606;
 			action = "{if ((side _x == civilian and !(_x call OT_fnc_hasOwner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call OT_fnc_hasOwner) and !(_x call OT_fnc_inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call OT_fnc_hasOwner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""notify_minor"",0,false];";
 
 			text = "Clean other"; //--- ToDo: Localize;
@@ -462,6 +530,17 @@ class OT_dialog_main
 
 			text = "Fast Travel"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+		class RscButton_1613: RscOverthrowButton
+		{
+			idc = 1613;
+			action = "closeDialog 0;[] spawn resistanceScreen";
+
+			text = "Resistance"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
@@ -473,7 +552,7 @@ class OT_dialog_main
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.28 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
-			h = 0.209 * safezoneH;
+			h = 0.132 * safezoneH;
 			colorBackground[] = {0,0,0,0.4};
 		};
 		class RscButton_1601: RscOverthrowButton
@@ -602,7 +681,7 @@ class OT_dialog_main
 		class RscButton_1612: RscOverthrowButton
 		{
 			idc = 1612;
-			action = "if(player == bigboss) then {closedialog 0;_nul = createDialog ""OT_dialog_options""};";
+			action = "call OT_fnc_optionsDialog";
 
 			text = "Options"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
@@ -630,6 +709,26 @@ class OT_dialog_main
 			colorBackground[] = {0,0,0,0};
 			colorActive[] = {0,0,0,0};
 		};
+		class RscPicture_1202: RscOverthrowPicture
+		{
+			idc = 1202;
+			text = "#(argb,8,8,3)color(1,1,1,1)";
+			x = 0.45875 * safezoneW + safezoneX;
+			y = 0.643 * safezoneH + safezoneY;
+			w = 0.0928125 * safezoneW;
+			h = 0.121 * safezoneH;
+		};
+		class RscButton_1614: RscOverthrowButton
+		{
+			idc = 1614;
+			text = "Remove"; //--- ToDo: Localize;
+			x = 0.422656 * safezoneW + safezoneX;
+			y = 0.775 * safezoneH + safezoneY;
+			w = 0.159844 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "deleteVehicle cursorTarget;ctrlShow [1614,false];ctrlShow [1202,false];"
+		};
+
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////

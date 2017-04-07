@@ -28,6 +28,7 @@ if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_ca
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
 if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false};
+if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=true};
 
 if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false};
 

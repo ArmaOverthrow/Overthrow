@@ -35,10 +35,12 @@ waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\towns.sqf";
 [] execVM "virtualization\military.sqf";
 [] execVM "virtualization\mobsters.sqf";
+[] execVM "virtualization\economy.sqf";
 
 if(OT_hasAce) then {
     //ACE events
     ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
+    ["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
 };
 
 addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];

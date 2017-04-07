@@ -11,6 +11,26 @@ openMap false;
 disableSerialization;
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 
+private _donerem = false;
+if !(isNull cursorObject) then {
+	if (cursorObject in (entities "")) then {
+		private _type = typeof cursorObject;
+		if !(cursorObject isKindOf "CAManBase") then {
+			if((call OT_fnc_playerIsGeneral) or (cursorObject getVariable ["owner",""]) == (getplayeruid player)) then {
+				_donerem = true;
+				_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
+				ctrlSetText [1202,_pic];
+			};
+		};
+	};
+};
+
+if !(_donerem) then {
+	ctrlShow [1614,false];
+	ctrlShow [1202,false];
+};
+
+
 _town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
@@ -38,18 +58,17 @@ _extra = "";
 
 if(isMultiplayer) then {
 	if((getplayeruid player) in (server getVariable ["generals",[]])) then {
-		_extra = format["<t align='left' size='0.65'>Resistance Funds: $%1</t>",[server getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber];
+		_extra = format["<t align='left' size='0.65'>Resistance Funds: $%1 (Tax Rate %2%3)</t>",[server getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber,server getVariable ["taxrate",0],"%"];
 	};
 };
 
 _ctrl ctrlSetStructuredText parseText format["
-	<t align='left' size='1.2'>%1</t><br/>
-	<t align='left' size='0.9'>%2</t><br/>
-	<t align='left' size='0.65'>Standing: %3%4 (Tanoa: %5%6)</t><br/>
+	<t align='left' size='0.65'>Standing: %2 (%3%4) Tanoa (%5%6)</t><br/>
 	<t align='left' size='0.65'>Influence: %9</t><br/>
 	<t align='left' size='0.65'>Weather: %7 (Forecast: %8)</t><br/>
+	<t align='left' size='0.65'>Fuel Price: $%11/L</t><br/>
 	%10
-",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0],_extra];
+",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0],_extra,["Tanoa","FUEL",100] call OT_fnc_getPrice];
 
 _ctrl = (findDisplay 8001) displayCtrl 1106;
 _ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber];
@@ -255,9 +274,68 @@ if(typename _b == "ARRAY") then {
 		ctrlSetText [1609,"Procurement"];
 		ctrlEnable [1610,false];
 	}else{
-		ctrlEnable [1608,false];
-		ctrlEnable [1609,false];
-		ctrlEnable [1610,false];
+		private _ob = (getpos player) call OT_fnc_nearestLocation;
+		if((_ob select 1) == "Business") then {
+			_obpos = (_ob select 2) select 0;
+			_obname = (_ob select 0);
+
+			if(_obpos distance player < 250) then {
+				if(_obname in (server getVariable ["GEURowned",[]])) then {
+					ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Operational</t><br/>
+						<t align='left' size='0.65'>(see resistance screen)</t><br/>
+					",_obname];
+
+					ctrlEnable [1608,false];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				}else{
+					_price = _obname call OT_fnc_getBusinessPrice;
+					ctrlSetText [1201,"\ot\ui\closed.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Out Of Operation</t><br/>
+						<t align='left' size='0.65'>$%2</t>
+					",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+					if !(call OT_fnc_playerIsGeneral) then {
+						ctrlEnable [1608,false];
+					}
+				};
+			};
+		}else{
+			if((getpos player) distance OT_factoryPos < 150) then {
+				_obname = "Factory";
+				if(_obname in (server getVariable ["GEURowned",[]])) then {
+					ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Operational</t>
+					",_obname];
+					ctrlEnable [1608,true];
+					ctrlSetText [1608,"Manage"];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				}else{
+					_price = _obname call OT_fnc_getBusinessPrice;
+					ctrlSetText [1201,"\ot\ui\closed.paa"];
+					_buildingTxt = format["
+						<t align='left' size='0.8'>%1</t><br/>
+						<t align='left' size='0.65'>Out Of Operation</t><br/>
+						<t align='left' size='0.65'>$%2</t>
+					",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+				};
+			}else{
+				ctrlEnable [1608,false];
+				ctrlEnable [1609,false];
+				ctrlEnable [1610,false];
+			};
+		};
 	};
 };
 

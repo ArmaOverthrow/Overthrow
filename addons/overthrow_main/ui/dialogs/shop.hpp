@@ -2,7 +2,7 @@ class OT_dialog_buy
 {
 	idd=8000;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1199: RscOverthrowStructuredText
 		{
@@ -15,7 +15,7 @@ class OT_dialog_buy
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
 	}
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -49,8 +49,8 @@ class OT_dialog_buy
 			x = 0.752656 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.139219 * safezoneW;
-			h = 0.099 * safezoneH;	
-			colorBackground[] = {0,0,0,0.8};			
+			h = 0.099 * safezoneH;
+			colorBackground[] = {0,0,0,0.8};
 			action = "[] call buy;";
 		};
 		class RscStructuredText_1100: RscOverthrowStructuredText
@@ -62,6 +62,16 @@ class OT_dialog_buy
 			h = 0.265 * safezoneH;
 			colorBackground[] = {0,0,0,0.3};
 		};
+		class RscButton_1699: RscOverthrowButton
+        {
+            idc = 1699;
+            text = "X"; //--- ToDo: Localize;
+			action = "closeDialog 0";
+            x = 0.732031 * safezoneW + safezoneX;
+            y = 0.181 * safezoneH + safezoneY;
+            w = 0.0257812 * safezoneW;
+            h = 0.044 * safezoneH;
+        };
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
@@ -135,7 +145,7 @@ class OT_dialog_workshop
 {
 	idd=8000;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1199: RscOverthrowStructuredText
 		{
@@ -148,7 +158,7 @@ class OT_dialog_workshop
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
 	}
-	
+
 	class controls
 	{
 				////////////////////////////////////////////////////////
@@ -239,7 +249,7 @@ class OT_dialog_warehouse
 {
 	idd=8000;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1199: RscOverthrowStructuredText
 		{
@@ -252,7 +262,7 @@ class OT_dialog_warehouse
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
 	}
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -348,7 +358,7 @@ class OT_dialog_import
 {
 	idd=8000;
 	movingenable=false;
-	
+
 	class controlsBackground {
 		class RscStructuredText_1199: RscOverthrowStructuredText
 		{
@@ -361,7 +371,7 @@ class OT_dialog_import
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
 	}
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////
@@ -445,7 +455,7 @@ class OT_dialog_loadout
 {
 	idd=8000;
 	movingenable=false;
-	
+
 	class controls
 	{
 		////////////////////////////////////////////////////////

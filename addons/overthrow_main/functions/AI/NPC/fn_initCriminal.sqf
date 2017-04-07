@@ -14,9 +14,9 @@ _unit addEventHandler ["HandleDamage", {
 	_src = _this select 3;
 	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
-			_src setCaptive false;				
-		};		
-	};	
+			_src setCaptive false;
+		};
+	};
 }];
 
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
@@ -47,7 +47,19 @@ if(_hour < 8 or _hour > 15) then {
 };
 _unit linkItem "ItemWatch";
 
-_weapon = (OT_CRIM_Weapons) call BIS_fnc_selectRandom;
+_weapon = (OT_allHandguns) call BIS_fnc_selectRandom;
+_base = [_weapon] call BIS_fnc_baseWeapon;
+_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+if (isNil "_magazine") then {_weapon = (OT_allHandguns) call BIS_fnc_selectRandom;_base = [_weapon] call BIS_fnc_baseWeapon;_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;};
+
+if !(isNil "_magazine") then {
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+};
+
 _unit addWeapon _weapon;
 
 if((random 100) < 15) then {
@@ -55,20 +67,9 @@ if((random 100) < 15) then {
 };
 
 call {
-	if((random 100) > 70) exitWith {
-		//This guy has a launcher
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
-		_launcher = (OT_CRIM_Launchers) call BIS_fnc_SelectRandom;
-		_base = [_launcher] call BIS_fnc_baseWeapon;
-		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
-		_unit addMagazine _magazine;
-		_unit addMagazine _magazine;
-		_unit addMagazine _magazine;	
-		_unit addWeapon _launcher;
-	};
 	if((random 100) > 80) exitWith {
 		//This is a medic
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		if(OT_hasACE) then {
 			for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
 			for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
@@ -80,12 +81,12 @@ call {
 	};
 	if((random 100) > 90) exitWith {
 		//This is an engineer
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
 		_unit addItemToBackpack "APERSBoundingMine_Range_Mag";
 		_unit addItemToBackpack "ClaymoreDirectionalMine_Remote_Mag";
 		_unit addItemToBackpack "IEDUrbanSmall_Remote_Mag";
-		
+
 		if(OT_hasACE) then {
 			_unit addItemToBackpack "ACE_DefusalKit";
 			_unit addItemToBackpack "ACE_M26_Clacker";
@@ -96,18 +97,12 @@ call {
 	};
 	if((random 100) > 97) exitWith {
 		//This guy just has a bit of weed
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to round(random 15) do {_unit addItemToBackpack "OT_Ganja";};
 	};
 };
 
-_base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
+
 
 if((random 100) > 80) then {
 	_unit addItem "SmokeShell";
@@ -123,35 +118,4 @@ if(OT_hasACE and ((random 100) > 90)) then {
 	_unit addItem "ACE_M84";
 };
 
-_config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";
-_numslots = count(_config);
-for "_i" from 0 to (_numslots-1) do {
-	if (isClass (_config select _i)) then {		
-		_slot = configName(_config select _i);
-		if(_slot != "MuzzleSlot") then {
-			_com = _config >> _slot >> "compatibleItems";
-			_items = [];
-			if (isClass (_com)) then {
-				for "_t" from 0 to (count(_com)-1) do {
-					_items pushback (configName(_com select _t));
-				};
-			}else{
-				_items = getArray(_com);
-			};		
-			if(count _items > 0) then {			
-				_cls = _items call BIS_fnc_selectRandom;			
-				_unit addPrimaryWeaponItem _cls;
-			};
-		};
-	};
-};
-
-_weapon = OT_allHandguns call BIS_fnc_selectRandom;
-_unit addWeapon _weapon;
-_base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-if !(isNil "_magazine") then {
-	_unit addItem _magazine;
-};
-
-_unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);	
+_unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);
