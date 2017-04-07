@@ -38,7 +38,7 @@ if((_town in OT_allTowns) and _cls in (OT_allWeapons + OT_allMagazines + OT_ille
 	_discount = _discount + (_standing * 0.2);
 
 	_price = _baseprice + (_baseprice + (_baseprice * _stability * _population) * (1+OT_standardMarkup));
-	if(_cls == "WAGE") then {
+	if(_cls == "FUEL") then {
 		_price = _price - 9;
 	};
 };
