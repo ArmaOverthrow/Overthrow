@@ -757,9 +757,9 @@ OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns +
 
 if(isServer) then {
 	cost setVariable ["CIV",[100,0,0,0],true];
-	cost setVariable ["WAGE",[6,0,0,0],true];
+	cost setVariable ["WAGE",[5,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
-	cost setVariable ["FUEL",[4,0,0,0],true];
+	cost setVariable ["FUEL",[5,0,0,0],true];
 
 	//Drug prices
 	cost setVariable ["OT_Ganja",[100,0,0,0],true];
