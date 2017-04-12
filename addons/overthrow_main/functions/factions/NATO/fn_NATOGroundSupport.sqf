@@ -15,6 +15,7 @@ while {_count < _num} do {
 
 
 	_veh = createVehicle [_vehtype, _pos, [], 0,""];
+	_veh setVariable ["garrison","HQ",false];
 
 	_veh setDir (_dir);
 	_group addVehicle _veh;

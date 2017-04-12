@@ -33,6 +33,7 @@ if(_frompos distance _attackpos > 600) then {
 	};
 
 	_veh = createVehicle [_vehtype, _pos, [], 0,""];
+	_veh setVariable ["garrison","HQ",false];
 
 	_veh setDir (_dir);
 	_tgroup addVehicle _veh;

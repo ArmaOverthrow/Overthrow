@@ -118,7 +118,7 @@ while {alive _unit} do {
 					-1 call influence;
 					titleText ["Respawning...", "BLACK FADED", 2];
 					sleep 2;
-					player addItem "ItemMap";
+					player linkItem "ItemMap";
 					player switchMove "";
 					titleText ["", "BLACK IN", 5];
 				};

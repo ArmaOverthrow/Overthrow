@@ -21,9 +21,21 @@ call compileFinal preprocessFileLineNumbers "data\objectives.sqf";
 call compileFinal preprocessFileLineNumbers "data\economy.sqf";
 call compileFinal preprocessFileLineNumbers "data\comms.sqf";
 
+OT_missions = [];
+OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\transportvip.sqf");
+OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\fugitive.sqf");
+
+OT_localMissions = [];
+OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\recon.sqf");
+OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\medicalsupplies.sqf");
+OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\informant.sqf");
+OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\kill.sqf");
+
+OT_currentMissionFaction = "";
+
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 9;
-OT_NATOversion = 6;
+OT_economyVersion = 10;
+OT_NATOversion = 7;
 OT_CRIMversion = 1;
 OT_adminMode = false;
 OT_economyLoadDone = false;
@@ -233,6 +245,7 @@ OT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_L
 OT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
 OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
 OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F"];
+OT_NATO_Vehicles_AirSupport_Small = ["B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_GroundSupport = ["B_T_MRAP_01_gmg_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
@@ -251,6 +264,9 @@ OT_NATO_Unit_Sniper = "B_T_Sniper_F";
 OT_NATO_Unit_Spotter = "B_T_Spotter_F";
 OT_NATO_Unit_AA_spec = "B_T_Soldier_AA_F";
 OT_NATO_Unit_AA_ass = "B_T_Soldier_AAA_F";
+
+OT_NATO_Unit_HVT = "B_T_Officer_F";
+OT_NATO_Vehicle_HVT = "B_MRAP_01_F";
 
 OT_NATO_Units_CTRGSupport = ["B_CTRG_Soldier_TL_tna_F","B_CTRG_Soldier_tna_F","B_CTRG_Soldier_M_tna_F","B_CTRG_Soldier_Medic_tna_F"];
 OT_NATO_Vehicle_CTRGTransport = "B_CTRG_Heli_Transport_01_tropic_F";
@@ -474,13 +490,15 @@ private _allHelis = "
 
 {
 	_cls = configName _x;
-	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower"));
-	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * 3);
+	_multiply = 3;
+	if(_cls isKindOf "Plane") then {_multiply = 6};
+	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower")) * _multiply;
+	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * _multiply);
 	_steel = round(getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"));
-	_numturrets = count(configFile >> "cfgVehicles" >> _cls >> "Turrets");
+	_numturrets = count("" configClasses(configFile >> "cfgVehicles" >> _cls >> "Turrets"));
 	_plastic = 2;
 	if(_numturrets > 0) then {
-		_cost = _cost + (_numturrets * _cost);
+		_cost = _cost + (_numturrets * _cost * _multiply);
 		_steel = _steel * 3;
 		_plastic = 6;
 	};
@@ -550,6 +568,11 @@ private _allVehicles = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
 " configClasses ( configFile >> "cfgVehicles" );
 
+private _allFactions = "
+    ( getNumber ( _x >> ""side"" ) < 3 )
+" configClasses ( configFile >> "cfgFactionClasses" );
+
+OT_allFactions = [];
 OT_allSubMachineGuns = [];
 OT_allAssaultRifles = [];
 OT_allMachineGuns = [];
@@ -568,6 +591,56 @@ OT_allOptics = [];
 OT_allHelmets = [];
 OT_allHats = [];
 OT_allAttachments = [];
+
+{
+	_name = configName _x;
+	_title = getText (configFile >> "cfgFactionClasses" >> _name >> "displayName");
+	_side = getNumber (configFile >> "cfgFactionClasses" >> _name >> "side");
+	_flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
+	if(_side > -1) then {
+		OT_allFactions pushback [_name,_title,_side,_flag];
+	};
+
+	if(isServer) then {
+		//Get vehicles and weapons
+		private _vehicles = [];
+		private _weapons = [];
+		private _blacklist = ["Throw","Put","NLAW_F"];
+
+		private _all = "
+		    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
+			and ( getText ( _x >> ""faction"" ) isEqualTo """ + _name + """ )
+		" configClasses ( configFile >> "cfgVehicles" );
+		{
+			_cls = configName _x;
+			if(_cls isKindOf "CAManBase") then {
+				//Get weapons;
+				{
+					_x = [_x] call BIS_fnc_baseWeapon;
+					if !(_x in _blacklist) then {
+						if !(_x in _weapons) then {_weapons pushback _x};
+					};
+				}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
+				//Get ammo
+				{
+					if !(_x in _blacklist) then {
+						if !(_x in _weapons) then {_weapons pushback _x};
+					};
+				}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
+			}else{
+				//It's a vehicle
+				if !(_cls isKindOf "Bag_Base" or _cls isKindOf "StaticWeapon") then {
+					if(_cls isKindOf "LandVehicle" or _cls isKindOf "Air") then {
+						_vehicles pushback _cls;
+					};
+				};
+			};
+		}foreach(_all);
+
+		spawner setVariable [format["facweapons%1",_name],_weapons,true];
+		spawner setVariable [format["facvehicles%1",_name],_vehicles,true];
+	};
+}foreach(_allFactions);
 
 {
 	_name = configName _x;
@@ -625,7 +698,7 @@ OT_allAttachments = [];
 		case "SniperRifle": {_cost = 2000;OT_allSniperRifles pushBack _name};
 		case "Handgun": {_steel = 0.2;_cost = 100; if(_short != "Metal Detector") then {OT_allHandGuns pushBack _name}};
 		case "MissileLauncher": {_cost=2500;OT_allMissileLaunchers pushBack _name};
-		case "RocketLauncher": {_cost = 1500;OT_allRocketLaunchers pushBack _name};
+		case "RocketLauncher": {_cost = 1000;if(_name == "launch_NLAW_F") then {_cost=400};OT_allRocketLaunchers pushBack _name};
 		case "Vest": {
 			if !(_name in (OT_illegalVests + ["V_RebreatherB","V_RebreatherIA","V_RebreatherIR","V_Rangemaster_belt"])) then {
 				_cost = 40 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 20);
@@ -674,7 +747,7 @@ OT_allAttachments = [];
 {
 	_name = configName _x;
 	_m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
+	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and _name != "NLAW_F") then {
 		_cost = round(_m * 1.5);
 		_desc = getText(_x >> "descriptionShort");
 		if((_desc find "Smoke") > -1) then {
@@ -698,10 +771,13 @@ if(isServer) then {
 	{
 		_name = configName _x;
 		if(_name isKindOf "AllVehicles" and !(_name in OT_allVehicles)) then {
-			_cost = (getNumber (configFile >> "cfgVehicles" >> _name >> "armor") + getNumber (configFile >> "cfgVehicles" >> _name >> "enginePower"));
-			_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _name >> "maximumLoad") * 3);
+			_multiply = 15;
+			if(_name isKindOf "Plane") then {_multiply = 50}; //Planes are light
+
+			_cost = (getNumber (configFile >> "cfgVehicles" >> _name >> "armor") + getNumber (configFile >> "cfgVehicles" >> _name >> "enginePower")) * _multiply;
+			_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _name >> "maximumLoad") * _multiply);
 			_steel = round(getNumber (configFile >> "cfgVehicles" >> _name >> "armor"));
-			_numturrets = count(configFile >> "cfgVehicles" >> _name >> "Turrets");
+			_numturrets = count("" configClasses(configFile >> "cfgVehicles" >> _name >> "Turrets"));
 			_plastic = 2;
 			if(_numturrets > 0) then {
 				_cost = _cost + (_numturrets * _cost);

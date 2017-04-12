@@ -37,7 +37,7 @@ if(count _activeshops > 0) exitWith {
 		_shopkeeper setVariable ["NOAI",true,false];
 
 		_shopkeeper setDir (_dir-180);
-		
+
 		_shopkeeper setVariable ["shop",format["%1",_pos],true];
 		[_shopkeeper] call OT_fnc_initShopkeeper;
 

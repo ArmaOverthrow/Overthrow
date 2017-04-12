@@ -8,8 +8,10 @@ OT_NATOcomms = [];
 
 private _NATObusy = false;
 private _abandoned = [];
+private _diff = server getVariable ["OT_difficulty",1];
 OT_NATOobjectives = server getVariable ["NATOobjectives",[]];
 OT_NATOcomms = server getVariable ["NATOcomms",[]];
+OT_NATOhvts = server getVariable ["NATOhvts",[]];
 OT_allObjectives = [];
 OT_allComms = [];
 
@@ -30,8 +32,14 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	server setVariable ["garrisonHQ",1000,false];
 	OT_NATOobjectives = [];
 	OT_NATOcomms = [];
+	OT_NATOhvts = [];
 	server setVariable ["NATOobjectives",OT_NATOobjectives,false];
 	server setVariable ["NATOcomms",OT_NATOcomms,false];
+	server setVariable ["NATOhvts",OT_NATOhvts,false];
+
+	_numHVTs = 6;
+	if(_diff == 0) then {_numHVTs = 4};
+	if(_diff == 2) then {_numHVTs = 8};
 
 	//Find military objectives
 	{
@@ -64,6 +72,18 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			OT_NATOobjectives pushBack [_pos,_name];
 		};
 	}foreach (OT_objectiveData + OT_airportData);
+
+	_count = 0;
+	_done = [];
+	while {_count < _numHVTs} do {
+		_ob = selectRandom (OT_NATOobjectives - ([[OT_NATO_HQ,OT_NATO_HQPos]] + _done));
+		_name = _ob select 1;
+		_done pushback _ob;
+		_id = format["%1%2",_name,round(random 99999)];
+		OT_NATOhvts pushback [_id,_name,""];
+		_count = _count + 1;
+	};
+
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
 	sleep 0.1;
 	//Add comms towers
@@ -76,6 +96,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 
 	server setVariable ["NATOobjectives",OT_NATOobjectives,true];
 	server setVariable ["NATOcomms",OT_NATOcomms,true];
+	server setVariable ["NATOhvts",OT_NATOhvts,true];
 	diag_log "Overthrow: Distributing NATO vehicles";
 	//Randomly distribute NATO's vehicles
 	{
@@ -287,7 +308,7 @@ while {true} do {
 		};
 
 		//Objective counter-attacks
-		if (!(_garrisoned) and count(_abandoned) > 2 and (_resources > 1000) and (random 100) > 90) then {
+		if (!(_garrisoned) and count(_abandoned) > 2 and (_resources > 1000) and (random 100) > 95) then {
 			_highest = 0;
 			_high = 0;
 			private _sorted = [OT_NATOobjectives,[],{(_x select 0) distance OT_NATO_HQPos},"ASCEND"] call BIS_fnc_SortBy;
@@ -308,7 +329,7 @@ while {true} do {
 		};
 
 		//Town counter-attacks
-		if (!(_garrisoned) and count(_abandoned) > 5 and (_resources > 500) and (random 100) > 90) then {
+		if (!(_garrisoned) and count(_abandoned) > 5 and (_resources > 1000) and (random 100) > 98) then {
 			_highest = 0;
 			_high = 0;
 			{
@@ -328,6 +349,32 @@ while {true} do {
 				server setVariable ["NATOattackstart",time,true];
 				_resources = 0;
 				_garrisoned = true;
+			};
+		};
+
+		//HVT Convoys
+		if (!(_garrisoned) and (_resources > 400) and (random 100) > 90) then {
+			_highest = 0;
+			_high = 0;
+			//Move a random HVT somewhere
+			_hvt = selectRandom OT_NATOhvts;
+			_hvt params ["_id","_loc","_status"];
+			_dest = selectRandom OT_NATOobjectives;
+			if(_status == "" and (_dest select 1) != _loc) then {
+				_frompos = server getVariable _loc;
+				_times = 0;
+				_do = true;
+				while {!([_frompos,_dest select 0] call OT_fnc_regionIsConnected)} do {
+					_dest = selectRandom OT_NATOobjectives;
+					_times = _times + 1;
+					if(_times > 50) exitWith {_do = false};
+				};
+				if (_do) then {
+					diag_log format["Overthrow: NATO moving a HVT from %1 to %2",_loc,_dest select 1];
+					[[],[_hvt],_loc,_dest select 1] spawn OT_fnc_NATOConvoy;
+					_resources = _resources - 400;
+					_garrisoned = true;
+				};
 			};
 		};
 

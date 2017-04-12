@@ -180,9 +180,11 @@ sleep 0.1;
 {
 	_uid = _x;
 	_vars = server getVariable [_uid,[]];
+	_leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
+	_leasedata = [];
 	{
 		_x params ["_name","_val"];
-		if(_name == "owned") exitWith {
+		if(_name == "owned") then {
 			{
 				if(typename _x == "ARRAY") then {
 					//old save with positions
@@ -196,11 +198,16 @@ sleep 0.1;
 					if (typename _x == "SCALAR") then {
 						_bdg = OT_centerPos nearestObject _x;
 						_bdg setVariable ["owner",_uid,true];
+						if(_x in _leased) then {
+							_bdg setVariable ["leased",true,true];
+							_leasedata pushback [_x,typeof _bdg,getpos _bdg,(getpos _bdg) call OT_fnc_nearestTown];
+						};
 					};
 				};
 			}foreach(_val);
 		};
 	}foreach(_vars);
+	[_uid,"leasedata",_leasedata] call OT_fnc_setOfflinePlayerAttribute;
 }foreach(server getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];

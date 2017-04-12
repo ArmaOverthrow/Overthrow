@@ -47,22 +47,28 @@ lbClear 1501;
     };
 }foreach(OT_economicData);
 
-private _owned = player getvariable ["owned",[]];
-_lease = 0;
+_tax = server getVariable ["taxrate",0];
+
+private _lease = 0;
 {
-    private _bdg = OT_centerPos nearestObject _x;
-    if !(isNil "_bdg") then {
-        if(_bdg getVariable ["leased",false]) then {
-            private _data = _bdg call OT_fnc_getRealEstateData;
-            _lease = _lease + (_data select 2);
-        };
+    _x params ["_id","_cls","_pos","_town"];
+    private _data = [_cls,_town] call OT_fnc_getRealEstateData;
+    _tl = (_data select 2);
+    _lease = _lease + _tl;
+}foreach(player getVariable ["leasedata",[]]);
+
+if(_lease > 0) then {
+    _tt = 0;
+    if(_tax > 0) then {
+        _tt = round(_lease * (_tax / 100));
     };
-}foreach(_owned);
+    _lease = _lease - _tt;
+};
 
 _t = call OT_fnc_getTaxIncome;
 _taxtotal = _t select 0;
 _totax = 0;
-_tax = server getVariable ["taxrate",0];
+
 if(_tax > 0) then {
     _totax = round(_taxtotal * (_tax / 100));
 };
@@ -79,12 +85,8 @@ private _wages = 0;
     };
 }foreach(server getVariable ["GEURowned",[]]);
 
-if(!isMultiplayer) then {
-    _totax = _taxtotal + _lease;
-};
-
 _balance = _totax - _wages;
-_text = "";
+_text = "<t align='center' size='0.7'>Balance Sheet (per 6 hrs)</t><br/>";
 
 if(isMultiplayer) then {
 	if((getplayeruid player) in (server getVariable ["generals",[]])) then {
@@ -105,7 +107,12 @@ if(isMultiplayer) then {
 private _minus = "";
 if(_wages > 0) then {_minus = "-"};
 _text = _text + format["<t size='0.65'>Wages: $%1%2</t><br/>",_minus,[_wages, 1, 0, true] call CBA_fnc_formatNumber];
-_text = _text + format["<t size='0.8'>Balance: $%1</t><br/>",[_balance, 1, 0, true] call CBA_fnc_formatNumber];
+if(isMultiplayer) then {
+    _text = _text + format["<t size='0.8'>Balance (Resistance): $%1</t><br/>",[_balance, 1, 0, true] call CBA_fnc_formatNumber];
+    _text = _text + format["<t size='0.8'>Balance (You): $%1</t><br/>",[_lease + (_taxper-_totaxper), 1, 0, true] call CBA_fnc_formatNumber];
+}else{
+    _text = _text + format["<t size='0.8'>Balance: $%1</t><br/>",[_lease + (_taxper-_totaxper) + _balance, 1, 0, true] call CBA_fnc_formatNumber];
+};
 
 disableSerialization;
 _textctrl = (findDisplay 8000) displayCtrl 1106;

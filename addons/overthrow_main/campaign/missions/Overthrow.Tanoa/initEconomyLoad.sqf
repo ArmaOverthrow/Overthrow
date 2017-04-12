@@ -12,6 +12,33 @@ private _allActiveShops = [];
 private _allActiveCarShops = [];
 private _allActivePiers = [];
 
+if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
+    {
+        _x params ["_cls","_name","_side"];
+        if(_side == 1) then {
+            server setVariable [format["standing%1",_cls],-100,true];
+        }else{
+            _town = selectRandom OT_allTowns;
+            if(_name == "AAF") then {_town = server getvariable "spawntown"};
+            _posTown = server getVariable _town;
+            _building = [_posTown,OT_lowPopHouses] call OT_fnc_getRandomBuilding;
+            while {isNil "_building"} do {
+                _town = selectRandom OT_allTowns;
+                _posTown = server getVariable _town;
+                _building = [_posTown,OT_lowPopHouses] call OT_fnc_getRandomBuilding;
+            };
+
+            _pos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
+            if(isNil "_pos") then {
+                _pos = [[[getpos _building,50]]] call BIS_fnc_randomPos;
+            };
+        	server setVariable [format["factionrep%1",_cls],_pos,false];
+        	_building setVariable ["owner","system",true];
+
+        };
+    }foreach(OT_allFactions);
+};
+
 //Stability markers
 {
     _stability = server getVariable format["stability%1",_x];

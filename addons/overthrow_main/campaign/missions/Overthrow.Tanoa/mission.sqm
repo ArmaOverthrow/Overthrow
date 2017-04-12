@@ -8,7 +8,7 @@ class EditorData
 	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=1985;
+		nextID=1995;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=207;
+		nextID=215;
 	};
 	class Camera
 	{
-		pos[]={8027.147,42.328758,8944.8945};
-		dir[]={-0.1914169,-0.87981373,0.43525106};
-		up[]={-0.35417876,0.47535658,0.80534357};
-		aside[]={0.91547519,-1.3192912e-006,0.40261304};
+		pos[]={3845.7085,35.597588,13385.739};
+		dir[]={0.54356921,-0.62621081,0.55896169};
+		up[]={0.43657812,0.77963877,0.44893953};
+		aside[]={0.7169202,3.0512456e-007,-0.69718111};
 	};
 };
 binarizationWanted=0;
@@ -702,7 +702,7 @@ class Mission
 		class Item0
 		{
 			dataType="Marker";
-			position[]={9456.0127,-1.6063939e-014,10045.463};
+			position[]={9456.0127,0,10045.463};
 			name="island_1";
 			markerType="RECTANGLE";
 			type="mil_box";
@@ -717,7 +717,7 @@ class Mission
 		class Item1
 		{
 			dataType="Marker";
-			position[]={10653.594,-7.4653022e-013,3599.8821};
+			position[]={10653.594,0,3599.8821};
 			name="island_2";
 			markerType="RECTANGLE";
 			type="mil_box";
@@ -731,7 +731,7 @@ class Mission
 		class Item2
 		{
 			dataType="Marker";
-			position[]={4227.0801,-1.6063939e-014,3495.281};
+			position[]={4227.0801,0,3495.281};
 			name="island_3";
 			markerType="RECTANGLE";
 			type="mil_box";
@@ -745,7 +745,7 @@ class Mission
 		class Item3
 		{
 			dataType="Marker";
-			position[]={2362.061,-7.3046528e-025,7032.438};
+			position[]={2362.061,0,7032.438};
 			name="island_4";
 			markerType="RECTANGLE";
 			type="mil_box";

@@ -15,6 +15,8 @@ intelLevel = compileFinal preProcessFileLineNumbers "funcs\intelLevel.sqf";
 doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sqf";
 playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
 
+OT_fnc_NATOConvoy = compileFinal preProcessFileLineNumbers "AI\fn_NATOConvoy.sqf";
+
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
 buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
@@ -89,11 +91,15 @@ exportAll = compileFinal preProcessFileLineNumbers "actions\exportAll.sqf";
 import = compileFinal preProcessFileLineNumbers "actions\import.sqf";
 restoreLoadout = compileFinal preProcessFileLineNumbers "actions\restoreLoadout.sqf";
 removeLoadout = compileFinal preProcessFileLineNumbers "actions\removeLoadout.sqf";
+OT_fnc_getMission = compileFinal preProcessFileLineNumbers "actions\fn_getMission.sqf";
+OT_fnc_getLocalMission = compileFinal preProcessFileLineNumbers "actions\fn_getLocalMission.sqf";
+OT_fnc_salvageWreck = compileFinal preProcessFileLineNumbers "actions\fn_salvageWreck.sqf";
 
 OT_fnc_takeFunds = compileFinal preProcessFileLineNumbers "UI\actions\fn_takeFunds.sqf";
 OT_fnc_giveFunds = compileFinal preProcessFileLineNumbers "UI\actions\fn_giveFunds.sqf";
 OT_fnc_transferFunds = compileFinal preProcessFileLineNumbers "UI\actions\fn_transferFunds.sqf";
 OT_fnc_makeGeneral = compileFinal preProcessFileLineNumbers "UI\actions\fn_makeGeneral.sqf";
+
 
 //Modes
 placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
@@ -114,6 +120,38 @@ keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
+
+OT_fnc_regionIsConnected = {
+	params ["_f","_t"];
+	private _por = "";
+	private _region = "";
+	if((typename _f) == "ARRAY") then {
+		_por = _f call OT_fnc_getRegion;
+	};
+	if((typename _t) == "ARRAY") then {
+		_region = _t call OT_fnc_getRegion;
+	};
+	if(_por == _region) exitWith {true};
+	private _ret = false;
+	{
+		if(((_x select 0) == _por) and ((_x select 1) == _region)) exitWith {_ret = true};
+	}foreach(OT_connectedRegions);
+	_ret;
+};
+
+OT_fnc_getRegion = {
+	_pos = _this;
+	_region = "";
+	{
+		if(_pos inArea _x) exitWith {_region = _x};
+	}foreach(OT_regions);
+	_region;
+};
+
+OT_fnc_missionSuccess = {
+	player globalchat "Mission success";
+	player setVariable [format["MissionData",_this],[],false];
+};
 
 OT_fnc_increaseTax = {
 	private _rate = server getVariable ["taxrate",0];
@@ -255,6 +293,9 @@ OT_fnc_hasFromContainers = {
 OT_fnc_getOfflinePlayerAttribute = {
 	params ["_uid","_attr"];
 	private _val = "";
+	if(count _this > 2) then {
+		_val = _this select 2;
+	};
 	{
 		_x params ["_k","_v"];
 		if(_k == _attr) exitWith {_val=_v};
@@ -264,10 +305,14 @@ OT_fnc_getOfflinePlayerAttribute = {
 OT_fnc_setOfflinePlayerAttribute = {
 	params ["_uid","_attr","_value"];
 	private _params = server getVariable [_uid,[]];
+	private _done = false;
 	{
 		_x params ["_k","_v"];
-		if(_k == _attr) exitWith {_x set [1,_value]};
+		if(_k == _attr) exitWith {_done=true;_x set [1,_value]};
 	}foreach(_params);
+	if(!_done) then {
+		_params pushback [_attr,_value];
+	};
 	server setVariable [_uid,_params,true];
 };
 
@@ -585,6 +630,7 @@ money = {
 
 stability = {
     _town = _this select 0;
+	if !(_town in OT_allTowns) exitWith{};
 
     _townmrk = format["%1-abandon",_town];
     _stability = (server getVariable [format["stability%1",_town],0])+(_this select 1);

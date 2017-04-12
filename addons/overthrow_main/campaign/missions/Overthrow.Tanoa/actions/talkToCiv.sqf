@@ -23,12 +23,16 @@ private _canBuyGuns = false;
 private _canSell = false;
 private _canSellDrugs = true;
 private _canIntel = true;
+private _canMission = false;
+private _canLocMission = false;
 
 if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true;_canBuyClothes=true};
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
-if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false};
-if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=true};
+if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canLocMission=true};
+if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
+if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
+if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
 
 if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false};
 
@@ -42,6 +46,79 @@ if (_canRecruit) then {
 
 if (_canIntel) then {
 	_options pushBack ["Probe for intel (-1 Influence)", getIntel];
+};
+
+if (_canLocMission) then {
+	_options pushBack [format["Request Mission"], {
+		[] call OT_fnc_getLocalMission;
+	}];
+	_missions = player getVariable ["mytasks",[]];
+	if(count _missions > 0) then {
+		_options pushBack [format["Cancel All Missions"], {
+			player setVariable ["mytasks",[],true];
+		}];
+	};
+};
+
+if (_canMission) then {
+	_factionName = _civ getvariable ["factionrepname",""];
+	_faction = _civ getvariable ["faction",""];
+	_standing = server getvariable[format["standing%1",_faction],0];
+	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
+	_options pushBack [format["Request Mission"], {
+		private _civ = OT_interactingWith;
+		[_civ getvariable ["faction",""],_civ getvariable ["factionrepname",""]] call OT_fnc_getMission;
+	}];
+	_options pushBack [format["Buy Gear"], {
+		private _civ = OT_interactingWith;
+		_faction = _civ getvariable ["faction",""];
+		_standing = server getvariable[format["standing%1",_faction],0];
+
+		_gear = spawner getvariable[format["facweapons%1",_faction],[]];
+		_s = [];
+		{
+			_s pushback [_x,-1];
+		}foreach(_gear);
+		createDialog "OT_dialog_buy";
+		["Tanoa",_standing,_s,1.2] call buyDialog;
+	}];
+	_options pushBack [format["Buy Blueprints"], {
+		private _civ = OT_interactingWith;
+		_faction = _civ getvariable ["faction",""];
+		_factionName = _civ getvariable ["factionrepname",""];
+		_standing = server getvariable[format["standing%1",_faction],0];
+
+		_gear = spawner getvariable[format["facvehicles%1",_faction],[]];
+		_s = [];
+		_blueprints = server getVariable ["GEURblueprints",[]];
+
+		{
+			if !(_x in _blueprints) then {
+				_cost = cost getVariable[_x,[100,0,0,0]];
+				_req = 0;
+				_base = _cost select 0;
+				if(_base > 1000) then {_req = 10};
+				if(_base > 5000) then {_req = 20};
+				if(_base > 10000) then {_req = 40};
+				if(_base > 20000) then {_req = 50};
+				if(_base > 30000) then {_req = 60};
+				if(_base > 40000) then {_req = 70};
+				if(_base > 50000) then {_req = 80};
+				if(_base > 60000) then {_req = 90};
+				if(_base > 100000) then {_req = 95};
+
+				_s pushback [_x,-1,_standing >= _req,format["+%1 standing to %2 required for this blueprint",_req,_factionName]];
+			};
+		}foreach(_gear);
+		createDialog "OT_dialog_buy";
+		["Tanoa",_standing,_s,10] call buyDialog;
+	}];
+	_missions = player getVariable ["mytasks",[]];
+	if(count _missions > 0) then {
+		_options pushBack [format["Cancel All Missions"], {
+			player setVariable ["mytasks",[],true];
+		}];
+	};
 };
 
 if (_canBuy) then {

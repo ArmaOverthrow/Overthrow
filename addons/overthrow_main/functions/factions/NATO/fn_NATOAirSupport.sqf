@@ -8,6 +8,7 @@ _pos = [_frompos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos;
 
 _group = creategroup blufor;
 _veh = createVehicle [_vehtype, _pos, [], 0,""];
+_veh setVariable ["garrison","HQ",false];
 
 _veh setDir (_dir);
 _group addVehicle _veh;
