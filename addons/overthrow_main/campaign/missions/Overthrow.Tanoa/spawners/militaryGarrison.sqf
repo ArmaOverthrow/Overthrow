@@ -212,6 +212,8 @@ _road = objNull;
 		_veh setpos _vpos;
 		_veh setVariable ["vehgarrison","HQ",false];
 
+		_groups pushback _veh;
+
 		_wp = _group addWaypoint [_pos, 50];
 		_wp setWaypointType "GUARD";
 	};

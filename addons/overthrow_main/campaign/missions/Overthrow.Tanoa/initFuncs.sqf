@@ -527,7 +527,7 @@ standing = {
     player setVariable ["rep",_totalrep,true];
 
 	if(count _this > 2) then {
-		format["%1 (%2 Standing)",_this select 2,_this select 1] call notify_minor;
+		format["%1 (%2 %3)",_this select 2,_this select 1,_town] call notify_minor;
 	};
 };
 

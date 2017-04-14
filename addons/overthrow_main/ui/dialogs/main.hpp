@@ -896,7 +896,7 @@ class OT_dialog_choose
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.269 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
-			h = 0.154 * safezoneH;
+			h = 0.184 * safezoneH;
 			colorBackground[] = {0.2,0.2,0.2,1};
 		};
 

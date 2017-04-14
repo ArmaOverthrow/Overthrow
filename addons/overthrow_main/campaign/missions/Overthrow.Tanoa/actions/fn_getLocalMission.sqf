@@ -18,12 +18,12 @@ if(isNil "OT_currentMissionData") then {
     _data = OT_currentMissionData;
 };
 private _difficulty = _data select 7;
-private _rewardMoney = round(_difficulty * 150);
+private _rewardMoney = round(_difficulty * 500);
 if(_rewardMoney < 250) then {_rewardMoney = 250};
 OT_currentMissionRewards = [0,_rewardMoney];
 
 private _txt = _data select 0;
-private _description = format["<t size='0.9' align='center'>%3<br/><br/></t><t size='0.7'>%1<br/><br/></t><t size='0.8'>Reward: $%2<br/>Influence: +5</t>",_txt select 1,_rewardMoney,_txt select 0];
+private _description = format["<t size='0.8' align='center'>%3<br/><br/></t><t size='0.65'>%1<br/><br/></t><t size='0.8'>Reward: $%2<br/>Influence: +5</t>",_txt select 1,_rewardMoney,_txt select 0];
 
 private _options = [_description];
 

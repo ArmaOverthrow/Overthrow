@@ -51,7 +51,7 @@ _description = format["Our intelligence operative %1 is in need of transport fro
 _title = format["Operative %1",_type];
 
 //This next number multiplies the reward
-_difficulty = 1;
+_difficulty = 1.5;
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
 [[_title,_description],_markerPos,{
@@ -97,5 +97,7 @@ _difficulty = 1;
     player setVariable [format["vip%1",_faction],nil,false];
     _group = createGroup civilian;
     [_group] spawn OT_fnc_cleanup;
+    [_civ] joinSilent grpNull;
     [_civ] joinSilent _group;
+
 },_params,_difficulty];

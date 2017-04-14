@@ -250,12 +250,6 @@ while {true} do {
 				if(_need > 1 and _resources >= 20) then {
 					_resources = _resources - 20;
 					_x spawn reGarrisonTown;
-				}else{
-					if(_townPos call OT_fnc_inSpawnDistance) then {
-						if(random 100 > 90) then {
-							_townPos spawn OT_fnc_NATOsearch;
-						};
-					};
 				};
 			};
 		}foreach (OT_allTowns);
@@ -353,7 +347,7 @@ while {true} do {
 		};
 
 		//HVT Convoys
-		if (!(_garrisoned) and (_resources > 400) and (random 100) > 90) then {
+		if (!(_garrisoned) and (_resources > 200) and (random 100) > 96) then {
 			_highest = 0;
 			_high = 0;
 			//Move a random HVT somewhere
@@ -372,7 +366,7 @@ while {true} do {
 				if (_do) then {
 					diag_log format["Overthrow: NATO moving a HVT from %1 to %2",_loc,_dest select 1];
 					[[],[_hvt],_loc,_dest select 1] spawn OT_fnc_NATOConvoy;
-					_resources = _resources - 400;
+					_resources = _resources - 200;
 					_garrisoned = true;
 				};
 			};

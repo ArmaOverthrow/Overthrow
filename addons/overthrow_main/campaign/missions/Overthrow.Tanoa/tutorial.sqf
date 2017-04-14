@@ -64,22 +64,11 @@ menuHandler = {
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
 							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you, so best to keep it where it is until you uh... 'need' it", "Gear" call assignedKey];
-							_targets = [];
-							_group = nil;
-							{
-								_lead = leader _x;
-								if(typeof _lead == OT_NATO_Unit_PoliceCommander) exitWith {
-									_group = _x;
-								};
-							}foreach(allgroups);
-							if(!isNil "_group") then {
-								{
-									_targets pushback _x;
-								}foreach(units _group);
-								[player,waypointPosition [_group, currentWaypoint _group],"Greeting the local Gendarmerie","Well I have a gun and a location where some NATO Gendarmerie were spotted. I guess if you want something done you just got to do it yourself.",{},_targets,0,2] spawn OT_fnc_assignMission;
-							};
+							[] call OT_fnc_getLocalMission;
+							sleep 20;
+							hint "Press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
-						[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, I saw some NATO Gendarmerie nearby recently why don't you go say hi?"],_end] spawn doConversation;
+						[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, I also have this mission if you want it."],_end] spawn doConversation;
 						player addItemToUniform OT_item_BasicGun;
 						player addItemToUniform OT_item_BasicAmmo;
 						player addItemToUniform OT_item_BasicAmmo;
@@ -92,22 +81,8 @@ menuHandler = {
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
 							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you.", "Gear" call assignedKey];
-							_target = nil;
-							_group = nil;
-							_bounties = [];
-							{
-								_bounty = server getVariable [format["CRIMbounty%1",_x],0];
-								if(_bounty > 0) then {
-									_bounties pushback [_x,_bounty];
-								};
-							}foreach(OT_allTowns);
-							if(count _bounties > 0) then {
-								_sorted = [_bounties,[],{(server getvariable (_x select 0)) distance player},"ASCEND"] call BIS_fnc_sortBy;
-								_first = _sorted select 0;
-								_town = _first select 0;
-
-								[player,server getVariable [format["CRIMleader%1",_town],0],format["Kill the gang leader in %1",_town],format["There is a gang causing trouble in %1 and a bounty on the leader's head. I should go and take care of that considering NATO doesn't seem to be.",_town],{},format["CRIMleader%1",_town]] spawn OT_fnc_assignMission;
-							};
+							sleep 20;
+							hint "Press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
 						[player,_gundealer,[(_this select 0),"I agree. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","Local businessmen are always setting bounties on the gang leaders around Tanoa, go and claim a few!","Alright.. thanks","No problem, just come back if you need more ammunition or anything else the stores won't sell you."],_end] spawn doConversation;
 						player addItemToUniform OT_item_BasicGun;
@@ -121,18 +96,22 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
-							hint format["The drugs are in your pocket, you can see it in your inventory (%1 key). Try selling it to the civilians, larger towns fetch higher prices. But be careful, if NATO searches you and finds any they will confiscate it.", "Gear" call assignedKey]
+							hint format["The drugs are in your pocket, you can see it in your inventory (%1 key). Try selling it to the civilians, larger towns fetch higher prices. But be careful, if NATO searches you and finds any they will confiscate it.", "Gear" call assignedKey];
+							sleep 20;
+							hint "You can also press 'Y' and talk to the gun dealer at any time to request a mission that will help the resistance";
 						};
 						[player,_gundealer,[(_this select 0),"Probably a good idea with everything that's happening. I tell you what, take this spare bud I have laying around.","What am I supposed to do with this?","Sell it to some of the civilians round here, maybe it will calm them down","Um.. thanks I guess","No problem, just come back if you need more, or anything else the stores won't sell you."],_end] spawn doConversation;
 						player addItemToUniform "OT_Ganja";
 					}
 				],
 				[
-					"I want to make some cash, legally",
+					"I just need some cash",
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
-							hint format["The items are in your pocket, you can see it in your inventory (%1 key). Balavu, Rautake and Tavu have shops that will buy them from you as well as locations all over Tanoa. Towns with lower stability will pay higher prices for all items.", "Gear" call assignedKey]
+							hint format["The items are in your pocket, you can see it in your inventory (%1 key). Balavu, Rautake and Tavu have shops that will buy them from you as well as locations all over Tanoa. Towns with lower stability will pay higher prices for all items.", "Gear" call assignedKey];
+							sleep 10;
+							hint "You can also press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
 						[player,_gundealer,[(_this select 0),"Well I'm not really the guy to help you there, but I have these items laying around","What am I supposed to do with these?","Take them to a shop and sell them I guess"],_end] spawn doConversation;
 						if(OT_hasTFAR) then {

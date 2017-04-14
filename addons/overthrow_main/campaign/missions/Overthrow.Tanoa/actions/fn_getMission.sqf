@@ -20,7 +20,7 @@ if(isNil "OT_currentMissionData") then {
 private _difficulty = _data select 7;
 private _rewardStanding = round((((100 - _standing) / 50) * _difficulty) * 100) / 100;
 if(_rewardStanding < 0.1) then {_rewardStanding = 0.1}; //minimum standing 0.1
-private _rewardMoney = round(_standing * 15);
+private _rewardMoney = round(_standing * 20);
 if(_rewardMoney < 250) then {_rewardMoney = 250}; //minimum reward 250
 _rewardMoney = _rewardMoney * _difficulty;
 OT_currentMissionRewards = [_rewardStanding,_rewardMoney];

@@ -11,10 +11,20 @@ private _difficulty = 1;
 //Here is where we might randomize the parameters a bit
 private _nearestOb = (getpos player) call OT_fnc_nearestObjective;
 _destinationName = _nearestOb select 1;
+private _known = 0;
+{
+    if(side _x == west) then {
+        if(_x getVariable ["garrison",""] == _destinationName) then {
+            if((resistance knowsAbout _x) > 0) then {
+                _known = _known + 1;
+            };
+        };
+    };
+}foreach(allunits);
 
-if((_destinationName in (server getVariable ["NATOabandoned",[]])) or (random 100) > 90) then {
+if(_known > 0 or (_destinationName in (server getVariable ["NATOabandoned",[]])) or (random 100) > 90) then {
     _destinationName = selectRandom OT_allObjectives;
-    _difficulty = 1.5;
+    _difficulty = 1;
 }else{
     _destination = _nearestOb select 0;
 };

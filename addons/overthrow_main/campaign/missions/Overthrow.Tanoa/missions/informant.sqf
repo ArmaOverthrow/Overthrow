@@ -19,7 +19,8 @@ _description = format["Intelligence reports that a member of the resistance is p
 _title = format["NATO Informant in %1",_destinationName];
 
 //This next number multiplies the reward
-_difficulty = 2.1;
+_difficulty = 2 + random(0.5);
+if(random(100)>99) then {_difficulty = _difficulty + 1}; //random chance of a bigger payout
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
 [[_title,_description],_markerPos,{
@@ -60,7 +61,6 @@ _difficulty = 2.1;
     _count = 0;
     _bgroup = creategroup blufor;
     while {(_count < _numGoons)} do {
-        player globalchat format["%1 goon",_count+1];
 		_start = [[[_destination,40]]] call BIS_fnc_randomPos;
 
         _civ = _bgroup createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];

@@ -6,7 +6,7 @@ private _title = "";
 
 //Here is where we might randomize the parameters a bit
 _destinationName = (getpos player) call OT_fnc_nearestTown;
-private _abandoned = server getVariable ["NATOabandoned",[]];
+private _abandoned = (server getVariable ["NATOabandoned",[]]) + [(server getVariable ["NATOattacking",""])];
 if(_destinationName in _abandoned) then {
     _destinationName = selectRandom (OT_allTowns - _abandoned);
 };
@@ -16,11 +16,11 @@ private _params = [_destination,_destinationName];
 private _markerPos = _destination;
 
 //Build a mission description and title
-_description = format["%1 is in need of medical supplies. NATO has not been fulfilling the demands of the population so delivering these supplies will drop the stability there as the public warms to our cause. Deliver as many bandages of any type to the marker using a vehicle, the more you have in your vehicle inventory the more effect it will have.",_destinationName];
+_description = format["%1 is in need of medical supplies. NATO has not been fulfilling the demands of the population so delivering these supplies will drop the stability there and raise your standing as the public warms to our cause. Deliver as many bandages of any type to the marker using a vehicle, the more you have in your vehicle inventory the more effect it will have.",_destinationName];
 _title = format["Medical supplies for %1",_destinationName];
 
 //This next number multiplies the reward
-_difficulty = 1.5;
+_difficulty = 0.5;
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
 [[_title,_description],_markerPos,{
@@ -85,7 +85,8 @@ _difficulty = 1.5;
         };
         _town = _pos call OT_fnc_nearestTown;
 
-        //apply stability
+        //apply stability and standing
+        [_town,round(_effect*0.5),format["Delivered %1 medical supplies",_numavailable]] call standing;
         [_town,-_effect] call stability;
     }else{
         //slight positive effect on stability
