@@ -40,7 +40,7 @@ if(_name in OT_allComms) then {
 	if(_count < _numNATO) then {
 		_group = createGroup blufor;
 		_groups pushBack _group;
-		_start = [_posTown,[0,200]] call SHK_pos;
+		_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -57,7 +57,7 @@ if(_name in OT_allComms) then {
 	};
 
 	if(_count < _numNATO) then {
-		_start = [_posTown,[0,200]] call SHK_pos;
+		_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
 		_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -77,7 +77,7 @@ sleep 0.1;
 _range = 100;
 _groupcount = 0;
 while {_count < _numNATO} do {
-	_start = [_posTown,[0,200]] call SHK_pos;
+	_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
 	_group = createGroup blufor;
 	_groups pushBack _group;
 	_groupcount = 1;
@@ -94,7 +94,7 @@ while {_count < _numNATO} do {
 
 	_count = _count + 1;
 	while {(_count < _numNATO) and (_groupcount < 8)} do {
-		_start = [_start,[0,50]] call SHK_pos;
+		_start = [[[_start,50]]] call BIS_fnc_randomPos;
 
 		_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
@@ -102,9 +102,6 @@ while {_count < _numNATO} do {
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
-		{
-			_x addCuratorEditableObjects[[_civ],false];
-		}foreach(allcurators);
 
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
@@ -193,5 +190,33 @@ _road = objNull;
 		_vgroup call OT_fnc_initMilitaryPatrol;
 	};
 }foreach(_vehgarrison);
+
+//HVTs
+{
+	_x params ["_id","_loc","_status"];
+	if(_loc == _name and _status == "") then {
+		_group = createGroup blufor;
+		_groups pushBack _group;
+		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+		_civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
+		_civ setVariable ["garrison","HQ",false];
+		_civ setVariable ["hvt",true,true];
+		_civ setVariable ["hvt_id",_id,true];
+		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+		_civ setRank "COLONEL";
+		_civ setBehaviour "SAFE";
+
+		//His empty APC
+		_vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];
+		_veh =  OT_NATO_Vehicle_HVT createVehicle _vpos;
+		_veh setpos _vpos;
+		_veh setVariable ["vehgarrison","HQ",false];
+
+		_groups pushback _veh;
+
+		_wp = _group addWaypoint [_pos, 50];
+		_wp setWaypointType "GUARD";
+	};
+}foreach(OT_NATOhvts);
 
 spawner setvariable [_spawnid,_groups,false];

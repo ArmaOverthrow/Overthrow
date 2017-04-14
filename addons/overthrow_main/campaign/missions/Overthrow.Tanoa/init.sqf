@@ -52,8 +52,9 @@ if(!isMultiplayer) then {
     waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
     [] execVM "virtualization\towns.sqf";
     [] execVM "virtualization\military.sqf";
-    [] execVM "virtualization\mobsters.sqf";	
+    [] execVM "virtualization\mobsters.sqf";
 	[] execVM "virtualization\economy.sqf";
+	[] execVM "virtualization\factions.sqf";
 
     missionNamespace setVariable [getplayeruid player,player,true];
     if(OT_hasAce) then {

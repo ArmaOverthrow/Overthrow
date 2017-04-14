@@ -8,10 +8,13 @@ private _text = _this select 2;
 private _desc = _this select 3;
 private _onFinish = {};
 private _condition = {(_target distance _pos) < 4};
+private _start = date;
+private _fail = {time > (_start + 7200)};
 private _targets = [];
 private _string = "";
 private _reward = 0;
 private _infreward = 0;
+private _params = [];
 
 if((count _this) > 4) then {
 	_onFinish = _this select 4;
@@ -24,6 +27,12 @@ if((count _this) > 6) then {
 };
 if((count _this) > 7) then {
 	_infreward = _this select 7;
+};
+if((count _this) > 8) then {
+	_fail = _this select 8;
+};
+if((count _this) > 9) then {
+	_params = _this select 9;
 };
 
 if(typename _condition == "ARRAY") then {
@@ -39,19 +48,30 @@ if(typename _condition == "STRING") then {
 	_condition = {typename(server getvariable [_string,false]) != "ARRAY"};
 };
 
-_name = format["%1%2%3",_pos,_text,_desc];
+private _start = time;
+
+_name = format["%1%2%3",_pos,_text,time];//unique task id
 [_target,_name,[_desc,_text,_name],_pos,0,1,true,"move",true] call BIS_fnc_taskCreate;
 
-waitUntil {sleep 1;[] call _condition};
+_missions = _target getVariable ["mytasks",[]];
+_missions pushback _name;
+_target setVariable ["mytasks",_missions,true];
 
-if(_reward > 0) then {
-	_reward remoteExec ["money",_target];
+waitUntil {sleep 1;!(_name in (_target getvariable ["mytasks",[]])) or ((time - _start) > 7200) or (_params call _condition) or (_params call _fail)};
+_success = false;
+if(((time - _start) > 7200) or (_params call _fail) or !(_name in (_target getvariable ["mytasks",[]]))) then {
+	[_name, "FAILED",true] spawn BIS_fnc_taskSetState;
+}else{
+	if(_reward > 0) then {
+		[_reward] remoteExec ["money",_target];
+	};
+
+	if(_infreward > 0) then {
+		[_infreward] remoteExec ["influence",_target];
+	};
+	_success = true;
+	[_name, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
+
 };
 
-if(_infreward > 0) then {
-	_infreward remoteExec ["influence",_target];
-};
-
-[_name, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-
-[_target,_pos] spawn _onFinish;
+[_target,_pos,_params,_success] spawn _onFinish;

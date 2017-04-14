@@ -445,7 +445,7 @@ class OT_dialog_options
 			y = 0.61 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Decreases the resistance tax rate"; //--- ToDo: Localize;
+			tooltip = "Increases the resistance tax rate"; //--- ToDo: Localize;
 		};
 		class RscButton_1605: RscOverthrowButton
 		{
@@ -889,6 +889,16 @@ class OT_dialog_choose
 				////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Humesu)
 		////////////////////////////////////////////////////////
+
+		class RscStructuredText_1100: RscOverthrowStructuredText
+		{
+			idc = 1100;
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.269 * safezoneH + safezoneY;
+			w = 0.4125 * safezoneW;
+			h = 0.184 * safezoneH;
+			colorBackground[] = {0.2,0.2,0.2,1};
+		};
 
 		class RscButton_1600: RscOverthrowButton
 		{

@@ -6,11 +6,22 @@ _town = (getPos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
 _price = lbValue [1500,_idx];
+if(_price == -1) exitWith {};
 
 _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
 
 call {
+	if(OT_interactingWith getVariable ["factionrep",false] and ((_cls isKindOf "Land") or (_cls isKindOf "Air"))) exitWith {
+		_blueprints = server getVariable ["GEURblueprints",[]];
+		if !(_cls in _blueprints) then {
+			_blueprints pushback _cls;
+			server setVariable ["GEURblueprints",_blueprints,true];
+			_factionName = OT_interactingWith getVariable ["factionrepname",""];
+			format["%1 has bought %2 blueprint from %3",name player,_cls call ISSE_Cfg_Vehicle_GetName,_factionName] remoteExec ["notify_minor",0,false];
+			closeDialog 0;
+		};
+	};
 	if(_cls isKindOf "Man") exitWith {
 		[_cls,getpos player,group player] call recruitSoldier;
 	};

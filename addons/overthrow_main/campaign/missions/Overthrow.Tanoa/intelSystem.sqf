@@ -26,7 +26,7 @@ _handler = {
 			if(_veh == _x) then {
 				_color = [0,0.5,0,1];
 				if!(captive _x) then {
-					_color = [0.5,0,0,1];
+					_color = [0,0.2,0,1];
 				};
 				(_this select 0) drawIcon [
 					"iconMan",
@@ -53,7 +53,7 @@ _handler = {
 				_destpos = _dest select 0;
 				_color = [0,0.5,0,1];
 				if !(captive _x) then {
-					_color = [0.5,0,0,1];
+					_color = [0,0.2,0,1];
 				};
 				if(_x in groupSelectedUnits player) then {
 					(_this select 0) drawIcon [
@@ -107,7 +107,7 @@ _handler = {
 			if(isPlayer _x and _x != player) then {
 				_passengers = format["%1 %2",_passengers,name _x];
 			};
-			if !(captive _x) then {_color = [0.5,0,0,1]};
+			if !(captive _x) then {_color = [0,0.2,0,1];};
 		}foreach(crew _x);
 
 		(_this select 0) drawIcon [
@@ -187,7 +187,22 @@ _handler = {
 	}foreach(vehicles);
 
 	_scale = ctrlMapScale (_this select 0);
-	if(_scale <= 0.14) then {
+	if(_scale <= 0.16) then {
+		{
+		    _x params ["_cls","_name","_side","_flag"];
+		    if(_side != 1) then {
+		        _pos = server getVariable [format["factionrep%1",_cls],[0,0,0]];
+				(_this select 0) drawIcon [
+					_flag,
+					[1,1,1,1],
+					_pos,
+					0.6/ctrlMapScale (_this select 0),
+					0.5/ctrlMapScale (_this select 0),
+					0
+				];
+		    };
+		}foreach(OT_allFactions);
+
 		{
 			(_this select 0) drawIcon [
 				"ot\ui\markers\shop.paa",
@@ -205,8 +220,8 @@ _handler = {
 					"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa",
 					[1,1,1,1],
 					_pos,
-					0.4/ctrlMapScale (_this select 0),
-					0.4/ctrlMapScale (_this select 0),
+					0.6/ctrlMapScale (_this select 0),
+					0.5/ctrlMapScale (_this select 0),
 					0
 				];
 			}

@@ -116,6 +116,12 @@ publicVariable "OT_SystemInitDone";
 
 private _nextchange = 350 + (random 600);
 
+//Fog killer
+[] spawn {
+	sleep 10;
+	0 setfog 0;
+};
+
 while {true} do {
 	server setVariable ["forecast",_forecast,true];
 

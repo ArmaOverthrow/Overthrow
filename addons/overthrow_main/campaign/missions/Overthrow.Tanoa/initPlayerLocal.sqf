@@ -90,6 +90,13 @@ if(isMultiplayer or _startup == "LOAD") then {
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
 
+	if(isMultiplayer) then {
+		//ensure player is in own group, not one someone else left
+		_group = creategroup resistance;
+		[player] joinSilent grpNull;
+		[player] joinSilent _group;
+	};
+
 	if(!_newplayer) then {
 		_housepos = player getVariable "home";
 		if(isNil "_housepos") exitWith {_newplayer = true};
@@ -151,24 +158,6 @@ if(isMultiplayer or _startup == "LOAD") then {
 				};
 			};
 		}foreach(_owned);
-		/*
-		{
-			if((_x getVariable ["owner",""]) == (getplayeruid player)) then {
-				if(_x isKindOf "Building") then {
-					_mrkName = format["bdg-%1",_x];
-					_mrkName = createMarkerLocal [_mrkName,getpos _x];
-					_mrkName setMarkerShape "ICON";
-					_mrkName setMarkerType "loc_Tourism";
-					_mrkName setMarkerColor "ColorWhite";
-					_mrkName setMarkerAlpha 0;
-					_mrkName setMarkerAlphaLocal 1;
-				};
-				if(_x in _leased) then {
-					_x setVariable ["leased",true,true];
-				};
-			};
-		}foreach(allMissionObjects "Building");
-		*/
 
 		if(count _nowowned > 0) then {
 			player setvariable ["owned",_nowowned,true];
@@ -203,8 +192,12 @@ if(isMultiplayer or _startup == "LOAD") then {
 				_civ setName _name;
 				[_civ] joinSilent grpNull;
 				[_civ] joinSilent (group player);
+
+				commandStop _civ;
 			}else{
-				[_civ] joinSilent (group player);
+				if((_civ getVariable "owner") == (getplayeruid player)) then {
+					[_civ] joinSilent (group player);
+				};
 			};
 		};
 		_newrecruits pushback [_owner,_name,_civ,_rank,_loadout,_type];

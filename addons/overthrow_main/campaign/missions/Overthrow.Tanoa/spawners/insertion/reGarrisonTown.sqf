@@ -83,7 +83,7 @@ if(!isNil "_close") then {
 	_group setVariable ["transport",_police];
 	sleep 5;
 
-	_drop = (([_townPos, 50, 350, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 200) select 0;
+	_drop = (([_townPos, 50, 350, 1, 0, 0, 0] call BIS_fnc_findSafePos) nearRoads 500) select 0;
 
 	_move = _tgroup addWaypoint [_drop,0];
 	_move setWaypointType "MOVE";

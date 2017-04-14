@@ -6,7 +6,7 @@ _pos = _frompos findEmptyPosition [50,200,OT_NATO_Vehicle_Boat_Small];
 
 _group = creategroup blufor;
 _veh = createVehicle [OT_NATO_Vehicle_Boat_Small, _pos, [], 0,""];
-
+_veh setVariable ["garrison","HQ",false];
 _veh setDir (_dir);
 _group addVehicle _veh;
 createVehicleCrew _veh;

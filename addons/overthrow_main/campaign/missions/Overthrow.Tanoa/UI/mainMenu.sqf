@@ -3,23 +3,36 @@
 closedialog 0;
 createDialog "OT_dialog_main";
 
-if(player != bigboss) then {
-	ctrlEnable [1612,false];
-};
-
 openMap false;
 disableSerialization;
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 
 private _donerem = false;
 if !(isNull cursorObject) then {
-	if (cursorObject in (entities "")) then {
-		private _type = typeof cursorObject;
-		if !(cursorObject isKindOf "CAManBase") then {
-			if((call OT_fnc_playerIsGeneral) or (cursorObject getVariable ["owner",""]) == (getplayeruid player)) then {
-				_donerem = true;
-				_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
-				ctrlSetText [1202,_pic];
+	if((player distance cursorObject) < 20) then {
+		if (cursorObject in (entities "")) then {
+			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west) then {
+				call {
+					if(((cursorObject isKindOf "Land") or (cursorObject isKindOf "Air")) and ("ToolKit" in (items player)) and (damage cursorObject) == 1) exitWith {
+						_donerem = true;
+						private _type = typeof cursorObject;
+						_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
+						ctrlSetText [1202,_pic];
+						if(player distance cursorObject < 5) then {
+							ctrlSetText [1614,"Salvage"];
+							buttonSetAction [1614, "[] spawn OT_fnc_salvageWreck"];
+						}else{
+							ctrlSetText [1614,"Salvage (too far)"];
+							ctrlEnable [1614,false];
+						};
+					};
+					if((call OT_fnc_playerIsGeneral) or (cursorObject getVariable ["owner",""]) == (getplayeruid player)) exitWith {
+						_donerem = true;
+						private _type = typeof cursorObject;
+						_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
+						ctrlSetText [1202,_pic];
+					};
+				};
 			};
 		};
 	};
@@ -98,6 +111,7 @@ if(typename _b == "ARRAY") then {
 	if(_building call OT_fnc_hasOwner) then {
 		_owner = _building getVariable "owner";
 		_ownername = server getVariable format["name%1",_owner];
+		if(isNil "_ownername") then {_ownername = "Someone"};
 		if(_building getVariable ["leased",false]) then {
 			_ownername = format["%1 (Leased)",_ownername];
 		};
@@ -148,7 +162,7 @@ if(typename _b == "ARRAY") then {
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
 				<t align='left' size='0.65'>Owned by %2</t><br/>
-				<t align='left' size='0.65'>Lease Value: $%3/hr</t>
+				<t align='left' size='0.65'>Lease Value: $%3/6hrs</t>
 			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
 
 		}else{
@@ -376,6 +390,10 @@ if(count _possible > 0) then {
 			if(side _civ == resistance) exitWith {
 				_type = "Policeman";
 			};
+		};
+
+		if (_civ getvariable ["factionrep",false]) then {
+			_type = format["Representative (%1)",_civ getvariable ["factionrepname",false]];
 		};
 
 		if(_civ call OT_fnc_hasOwner) then {

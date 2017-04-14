@@ -1,8 +1,9 @@
 _me = _this select 0;
 _killer = _me getVariable "ace_medical_lastDamageSource";
+
 if(isNil "_killer") then {_killer = _this select 1};
 
-if(vehicle _killer != _killer) then {_killer = driver _killer};
+if((vehicle _killer) != _killer) then {_killer = driver _killer};
 
 if(_killer call unitSeen) then {
 	_killer setVariable ["lastkill",time,true];
@@ -21,6 +22,7 @@ _criminal = _me getvariable "criminal";
 _crimleader = _me getvariable "crimleader";
 _mobster = _me getvariable "mobster";
 _mobboss = _me getvariable "mobboss";
+_hvt = _me getvariable "hvt_id";
 
 _standingChange = 0;
 
@@ -29,7 +31,18 @@ call {
 		_standingChange = -10;
 		[_town,-1] call stability;
 	};
+	if(!isNil "_hvt") exitWith {
+		_idx = 0;
+		{
+			if((_x select 0) == _hvt) exitWith {};
+			_idx = _idx + 1;
+		}foreach(OT_NATOhvts);
+		OT_NATOhvts deleteAt _idx;
+		format["A high-ranking NATO officer has been killed"] remoteExec ["notify_minor",0,false];
+		server setvariable ["NATOresources",0,true];
+	};
 	if(!isNil "_mobboss") exitWith {
+		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
 		_mobsterid = _garrison;
 		server setVariable [format["mobleader%1",_mobsterid],false,true];
 		_active = server getVariable ["activemobsters",[]];
@@ -55,6 +68,7 @@ call {
 		format["An employee of %1 has died",_employee] remoteExec ["notify_minor",0,false];
 	};
 	if(!isNil "_mobster") exitWith {
+		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
 		_mobsterid = _me getVariable "garrison";
 		_pop = server getVariable format["crimgarrison%1",_mobsterid];
 		if(_pop > 0) then {
@@ -64,6 +78,7 @@ call {
 		[_killer,150] call rewardMoney;
 	};
 	if(!isNil "_criminal") exitWith {
+		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
 		_pop = server getVariable format["numcrims%1",_town];
 		if(_pop > 0) then {
 			server setVariable [format["numcrims%1",_town],_pop - 1,true];
@@ -76,6 +91,7 @@ call {
 		[_killer,10] call rewardMoney;
 	};
 	if(!isNil "_crimleader") exitWith {
+		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
 		[_town,10] call stability;
 		format["%1 (+10 Stability)",_town] remoteExec ["notify_minor",0,false];
 
@@ -112,6 +128,7 @@ call {
 		[_town,-1] call stability;
 	};
 	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") then {
+		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
 		if(!isNil "_garrison") then {
 			server setVariable ["NATOresourceGain",(server getVariable ["NATOresourceGain",0])+1,true];
 			_pop = server getVariable [format["garrison%1",_garrison],0];

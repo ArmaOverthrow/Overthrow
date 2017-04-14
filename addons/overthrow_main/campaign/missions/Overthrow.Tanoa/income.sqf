@@ -33,16 +33,12 @@ while {true} do {
 		};
 
 		{
-			private _owned = _x getvariable ["owned",[]];
+			private _owned = _x getvariable ["leasedata",[]];
 			_lease = 0;
 			{
-				private _bdg = OT_centerPos nearestObject _x;
-				if !(isNil "_bdg") then {
-					if(_bdg getVariable ["leased",false]) then {
-						private _data = _bdg call OT_fnc_getRealEstateData;
-						_lease = _lease + (_data select 2);
-					};
-				};
+				_x params ["_id","_cls","_pos","_town"];
+				private _data = [_cls,_town] call OT_fnc_getRealEstateData;
+				_lease = _lease + (_data select 2);
 			}foreach(_owned);
 			if(_lease > 0) then {
 				_tt = 0;

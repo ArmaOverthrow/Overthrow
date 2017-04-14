@@ -212,6 +212,15 @@ waitUntil {
 	(_numalive < 4) or (time > _timeout) or (_numin > 4)
 };
 
+{
+	_target = leader _x;
+	{
+		if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+			_x reveal [_target,3];
+		};
+	}foreach(allunits);
+}foreach(_force);
+
 _timeout = time + 1200;
 _won = false;
 
@@ -264,10 +273,17 @@ while {sleep 5;time < _timeout and !_won} do {
 				};
 			}
 		}foreach(allgroups);
+		{
+			if(side _x == west) then {
+				if(_x getVariable ["garrison",""] == "HQ") then {
+					[_x] spawn OT_fnc_cleanup;
+				};
+			}
+		}foreach(vehicles);
 		_won = true;
 	};
 	//diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
-	if(_alive < 4 or (_enemyin > 4 and _alivein == 0)) exitWith{};
+	if(_alive < 4 or (_enemyin > 0 and _alivein < 4)) exitWith{};
 };
 if !(_won) then {
 	_params call _fail;

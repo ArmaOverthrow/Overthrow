@@ -89,6 +89,7 @@ while {alive _unit} do {
 						_unit setDamage 1; //rip
 					}
 				}else{
+					player allowdamage false;
 					"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
 					player setCaptive true;
 					sleep 5;
@@ -102,25 +103,21 @@ while {alive _unit} do {
 					removeHeadgear player;
 
 					{
-						if((_x select [0,11]) == "ace_medical") then {
+						if((_x select [0,4]) == "ace_") then {
 							player setVariable [_x,nil];
 						};
 					}foreach(allvariables player);
-
-					player setVariable ["ACE_isUnconscious", false];
-					player setVariable ["ACE_advanced_fatigue_ae1reserve", nil];
-					player setVariable ["ACE_advanced_fatigue_ae2reserve", nil];
-					player setVariable ["ACE_advanced_fatigue_anreserve", nil];
-					player setVariable ["ACE_advanced_fatigue_anfatigue", nil];
-					player setVariable ["ACE_advanced_fatigue_muscleDamage", nil];
-					player setVariable ["ACE_hearing_deaf", false];
+					player setDamage 0;
 
 					-1 call influence;
 					titleText ["Respawning...", "BLACK FADED", 2];
 					sleep 2;
-					player addItem "ItemMap";
+					player setDamage 0;
+					player linkItem "ItemMap";
 					player switchMove "";
 					titleText ["", "BLACK IN", 5];
+					sleep 10;
+					player allowdamage true;
 				};
 			}
 		}else{

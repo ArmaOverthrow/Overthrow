@@ -1,7 +1,7 @@
 private ["_sorted","_target","_deadguys","_wasincar","_unit","_t","_got","_timeout","_weapon","_myunits"];
 
 _sorted = [];
-_myunits = groupSelectedUnits player;
+private _myunits = groupSelectedUnits player;
 
 _tt = _myunits select 0;
 if(vehicle _tt != _tt) then {
@@ -15,17 +15,17 @@ if(vehicle _tt != _tt) then {
 };
 
 if(count _sorted == 0) exitWith {};
-_target = _sorted select 0;
+private _target = _sorted select 0;
 
 format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 
 {
 	[_x,_target] spawn {
-		_active = true;
-		_wasincar = false;
-		_car = objNull;
+		private _active = true;
+		private _wasincar = false;
+		private _car = objNull;
 
-		_unit = _this select 0;
+		private _unit = _this select 0;
 		_unit setVariable ["NOAI",true,true];
 		_unit setBehaviour "SAFE";
 		[[_unit,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP;
@@ -52,7 +52,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 		while {true and _active} do {
 			_deadguys = [];
 			{
-				if !((_x distance player > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
+				if !((_x distance _unit > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");

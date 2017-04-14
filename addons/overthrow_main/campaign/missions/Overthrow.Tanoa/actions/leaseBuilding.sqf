@@ -1,7 +1,7 @@
 _b = player call OT_fnc_nearestRealEstate;
 _building = objNull;
 if(typename _b == "ARRAY") then {
-	_building = (_b select 0);	
+	_building = (_b select 0);
 };
 if(typeof _building == OT_policeStation) exitWith {[] call policeDialog};
 if(typeof _building == OT_barracks) exitWith {[] call recruitDialog};
@@ -34,17 +34,23 @@ if(typename _b == "ARRAY") then {
 			_home = player getVariable "home";
 			if((_home distance _building) < 5) exitWith {"You cannot lease your home" call notify_minor;_err = true};
 			_handled = true;
-		};		
+		};
 	};
 };
 if(_err) exitWith {};
 if(_handled) then {
+	private _id = ([_building] call fnc_getBuildID);
 	_leased = player getvariable ["leased",[]];
-	_leased pushback ([_building] call fnc_getBuildID);
+	_leased pushback _id;
 	player setvariable ["leased",_leased,true];
+
+	_leasedata = player getvariable ["leasedata",[]];
+	_leasedata pushback [_id,typeof _building,getpos _building,(getpos _building) call OT_fnc_nearestTown];
+	player setvariable ["leasedata",_leasedata,true];
+
 	_building setVariable ["leased",true,true];
 	_mrkid = format["bdg-%1",_building];
-	_mrkid setMarkerAlphaLocal 0.3;	
+	_mrkid setMarkerAlphaLocal 0.3;
 	playSound "3DEN_notificationDefault";
 	"Building leased" call notify_minor;
 };
