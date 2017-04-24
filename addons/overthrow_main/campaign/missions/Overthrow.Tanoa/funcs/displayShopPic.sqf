@@ -12,7 +12,12 @@ if(_price > -1) then {
     _price = "$" + ([_ctrl lbValue _index, 1, 0, true] call CBA_fnc_formatNumber);
     ctrlEnable [1600,true];
     call {
-    	if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
+        if(_cls == "Set_HMG") exitWith {
+            _pic = getText(configFile >> "cfgVehicles" >> "C_Quadbike_01_F" >> "editorPreview");
+            _desc = "A Quad-bike containing the backpacks required to set up a Static HMG";
+            _txt = "Quad Bike w/ HMG Backpacks";
+        };
+    	if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
     		_txt = _cls call ISSE_Cfg_Magazine_GetName;
     		_pic = _cls call ISSE_Cfg_Magazine_GetPic;
     		_desc = _cls call ISSE_Cfg_Magazine_GetDesc;
@@ -25,6 +30,10 @@ if(_price > -1) then {
     		_txt = _cls call ISSE_Cfg_Vehicle_GetName;
     		_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
     		_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");
+
+            if(_cls == "C_Quadbike_01_F") then {
+                _desc = "Gets you from A to B, not guaranteed to stay upright.";
+            };
     	};
     	if(_cls isKindOf "Bag_Base") exitWith {
     		_txt = _cls call ISSE_Cfg_Vehicle_GetName;

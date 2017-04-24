@@ -19,6 +19,7 @@ _success = {
 	[_tskid, "FAILED",true] spawn BIS_fnc_taskSetState;
 	_abandoned = server getVariable "NATOabandoned";
 	_abandoned deleteAt (_abandoned find _objective);
-	server setVariable [format["garrison%1",_objective],floor(4 + random(8)),true];
+	_count = {(_x getVariable ["garrison",""]) == _objective} count (allunits);
+	server setVariable [format["garrison%1",_objective],_count,true];
 };
-[_posObjective,_strength,_success,_fail,[_tskid,_objective]] spawn OT_fnc_NATOQRF;
+[_posObjective,_strength,_success,_fail,[_tskid,_objective],_objective] spawn OT_fnc_NATOQRF;

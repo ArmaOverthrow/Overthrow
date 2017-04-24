@@ -29,11 +29,13 @@ while{true} do {
 
         if((_start select 0) == (_end select 0)) then {
             if(_val) then {
-                if !(_start call OT_fnc_inSpawnDistance) then {
-                    if((time - _time) > 30) then { //Ensures it stays spawned for minimum 30 seconds
-                        OT_allSpawned deleteAt _spawnidx;
-    					_x call OT_fnc_despawn;
-    					sleep 0.1;
+                if !(OT_useDynamicSimulation) then {
+                    if !(_start call OT_fnc_inSpawnDistance) then {
+                        if((time - _time) > 30) then { //Ensures it stays spawned for minimum 30 seconds
+                            OT_allSpawned deleteAt _spawnidx;
+        					_x call OT_fnc_despawn;
+        					sleep 0.1;
+                        };
                     };
                 };
             }else{
@@ -45,11 +47,13 @@ while{true} do {
             };
         }else{
             if(_val) then {
-                if !((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
-                    if((time - _time) > 30) then {
-                        OT_allSpawned deleteAt _spawnidx;
-    					_x call OT_fnc_despawn;
-    					sleep 0.1;
+                if !(OT_useDynamicSimulation) then {
+                    if !((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
+                        if((time - _time) > 30) then {
+                            OT_allSpawned deleteAt _spawnidx;
+        					_x call OT_fnc_despawn;
+        					sleep 0.1;
+                        };
                     };
                 };
             }else{

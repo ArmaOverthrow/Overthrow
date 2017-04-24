@@ -51,15 +51,9 @@ _unit addEventHandler ["Fired", {
 
 private _delay = 3;
 
-/*
-["ace_medical_peripheralresistance","ace_medical_painsuppress","ace_advanced_fatigue_ae1reserve","ace_hearing_deaf","reppénélo","repovau","saved3deninventory","ace_isunconscious","ace_medical_alllogs","cba_statemachine_state0","ace_movement_loadcoef","ace_parachute_hasreserve","repregina","repluganville","tute","influence"]
-*/
-
 while {alive _unit} do {
-	sleep _delay;
+	sleep 3;
 	//check wanted status
-	_delay = 3;
-
 	if(isplayer _unit and !(_unit getVariable["OT_healed",false])) then {
 		if(_unit getVariable ["ACE_isUnconscious", false]) then {
 			//Look for a medic
@@ -90,7 +84,13 @@ while {alive _unit} do {
 					}
 				}else{
 					player allowdamage false;
-					"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
+					titleText ["You are unconscious, there is no one nearby with Epinephrine to revive you. Respawning...", "BLACK FADED", 2];
+					{
+						if((_x select [0,4]) == "ace_") then {
+							player setVariable [_x,nil];
+						};
+					}foreach(allvariables player);
+					player setdamage 0;
 					player setCaptive true;
 					sleep 5;
 					player setpos (player getVariable "home");
@@ -110,7 +110,6 @@ while {alive _unit} do {
 					player setDamage 0;
 
 					-1 call influence;
-					titleText ["Respawning...", "BLACK FADED", 2];
 					sleep 2;
 					player setDamage 0;
 					player linkItem "ItemMap";
@@ -287,8 +286,8 @@ while {alive _unit} do {
 						_base params ["_obpos","_obname"];
 						if !(_obname in (server getVariable ["NATOabandoned",[]])) then {
 							_dist = 200;
-							if((_obname find "Comm") == 0) then {
-								_dist = 20;
+							if (_obname in OT_allComms) then {
+								_dist = 60;
 							};
 							if(_obname in OT_NATO_priority) then {
 								_dist = 500;
@@ -313,11 +312,11 @@ while {alive _unit} do {
 		if(_pos distance _playerpos < 500) then {
 			private _altitude = _playerpos select 2;
 			_unit setCaptive false;
+			_unit setVariable ["hiding",30,false];
 			if(_altitude > 5) then {
 				//Radar is active here
 				(vehicle _unit) spawn revealToNATO;
 			};
-			_delay = 30;
 		};
 	};
 };

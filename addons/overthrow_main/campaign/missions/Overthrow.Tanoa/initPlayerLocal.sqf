@@ -181,10 +181,13 @@ if(isMultiplayer or _startup == "LOAD") then {
 		_rank = _x select 3;
 		_loadout = _x select 4;
 		_type = _x select 5;
+		_xp = _x select 6;
 		if(_owner == (getplayeruid player)) then {
 			if(typename _civ == "ARRAY") then {
 				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 				_civ setVariable ["owner",getplayeruid player,true];
+				_civ setVariable ["OT_xp",_xp,true];
+				_civ setRank _rank;
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
@@ -284,6 +287,11 @@ if (_newplayer) then {
         if(typeof _x == OT_item_Map) then {
             _x setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
         };
+		if(typeof _x == OT_item_Storage) then {
+            _x addItemCargoGlobal ["ToolKit", 1];
+			_x addBackpackCargoGlobal ["B_AssaultPack_khk", 1];
+			_x addItemCargoGlobal ["NVGoggles_INDEP", 1];
+        };
         _x setVariable ["owner",getplayerUID player,true];
     }foreach(_furniture);
     player setVariable ["owned",[[_house] call fnc_getBuildID],true];
@@ -346,6 +354,7 @@ player addEventHandler ["GetInMan",{
 		if !(_veh call OT_fnc_hasOwner) then {
 			_veh setVariable ["owner",getplayeruid player,true];
 			_veh setVariable ["stolen",true,true];
+			[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call standing;
 		};
 	};
 	_g = _v getVariable ["vehgarrison",false];

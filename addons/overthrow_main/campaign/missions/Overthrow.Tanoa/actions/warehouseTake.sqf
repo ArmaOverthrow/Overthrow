@@ -13,8 +13,23 @@ if(_num > _in or _num == -1) then {
 
 _count = 0;
 private _veh = (vehicle player);
+private	_iswarehouse = false;
+if(_veh == player) then {
+	_b = OT_warehouseTarget call OT_fnc_nearestRealEstate;
+	if(typename _b == "ARRAY") then {
+		_building = _b select 0;
+		if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+			_iswarehouse = true;
+			_veh = OT_warehouseTarget;
+		};
+	};
+};
+if(_veh == player) exitWith {
+	"No warehouse within range" call notify_minor;
+};
+
 while {_count < _num} do {
-	if ((!(_veh isKindOf "Truck_F")) and (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};	
+	if ((!(_veh isKindOf "Truck_F")) and (!(_veh isKindOf OT_item_Storage)) and (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
 	call {
 		if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 			_veh addWeaponCargoGlobal [_cls,1];
@@ -36,9 +51,11 @@ while {_count < _num} do {
 	_count = _count + 1;
 };
 
+
+
 private _newnum = _in - _num;
 if(_newnum > 0) then {
-	warehouse setVariable [_cls,[_cls,_newnum],true];	
+	warehouse setVariable [_cls,[_cls,_newnum],true];
 }else{
 	warehouse setVariable [_cls,nil,true];
 };

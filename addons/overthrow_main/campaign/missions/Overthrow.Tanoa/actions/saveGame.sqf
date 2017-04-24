@@ -34,7 +34,7 @@ private _data = [];
 	_d = [];
 	_all = [];
 	{
-		if(_x != "ot_loaded" and _x != "owner" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		if(_x != "ot_loaded" and _x != "owner" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,11]) != "MissionData" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
@@ -88,17 +88,23 @@ private _recruits = [];
 {
 	_do = true;
 	_unitorpos = _x select 2;
+	_d = [_x select 0,_x select 1,_x select 2,_x select 3,_x select 4,_x select 5];
+	if(count _x > 6) then {
+		_d set [6,_x select 6];
+	}else{
+		_d set [6,0];
+	};
 	if(typename _unitorpos == "OBJECT") then {
 		if(alive _unitorpos) then {
-			_p = getpos _unitorpos;
-			_x set [4,getUnitLoadout _unitorpos];
-			_x set [2,[_p select 0,_p select 1,_p select 2]];
+			_d set [4,getUnitLoadout _unitorpos];
+			_d set [2,getpos _unitorpos];
+			_d set [6,_unitorpos getVariable ["OT_xp",0]];
 		}else{
 			_do = false;
 		};
 	};
 	if(_do) then {
-		_recruits pushback _x;
+		_recruits pushback _d;
 	};
 }foreach(server getVariable ["recruits",[]]);
 

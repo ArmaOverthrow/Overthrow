@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=217;
+		nextID=219;
 	};
 	class Camera
 	{
@@ -242,6 +242,20 @@ class AddonsMetaData
 		};
 	};
 };
+class DynamicSimulation
+{
+	class EnableRadiuses
+	{
+		Prop=1000;
+		EmptyVehicle=1000;
+		Vehicle=800;
+		Group=1200;
+	};
+	class EnableRadiuseCoefs
+	{
+		IsMoving=2.5;
+	};
+};
 randomSeed=2938931;
 class ScenarioData
 {
@@ -256,6 +270,7 @@ class ScenarioData
 		gameType="Coop";
 	};
 	wreckRemovalMinTime=1800.0009;
+	wreckRemovalMaxTime=3600;
 	corpseLimit=150;
 };
 class CustomAttributes

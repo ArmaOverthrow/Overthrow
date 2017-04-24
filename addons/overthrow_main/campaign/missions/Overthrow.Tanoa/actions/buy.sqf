@@ -12,6 +12,24 @@ _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
 
 call {
+	if(_cls == "Set_HMG") exitWith {
+		_pos = (getpos player) findEmptyPosition [5,100,"C_Quadbike_01_F"];
+		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+
+		player setVariable ["money",_money-_price,true];
+		_veh = "C_Quadbike_01_F" createVehicle _pos;
+		_veh setVariable ["owner",getPlayerUID player,true];
+		clearWeaponCargoGlobal _veh;
+		clearMagazineCargoGlobal _veh;
+		clearBackpackCargoGlobal _veh;
+		clearItemCargoGlobal _veh;
+		_veh addBackpackCargoGlobal ["I_HMG_01_high_weapon_F", 1];
+		_veh addBackpackCargoGlobal ["I_HMG_01_support_high_F", 1];
+
+		player reveal _veh;
+		format["You bought a Quad Bike w/ HMG for $%1",_price] call notify_minor;
+		playSound "3DEN_notificationDefault";
+	};
 	if(OT_interactingWith getVariable ["factionrep",false] and ((_cls isKindOf "Land") or (_cls isKindOf "Air"))) exitWith {
 		_blueprints = server getVariable ["GEURblueprints",[]];
 		if !(_cls in _blueprints) then {

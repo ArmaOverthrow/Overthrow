@@ -32,7 +32,7 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
             if(isNil "_pos") then {
                 _pos = [[[getpos _building,50]]] call BIS_fnc_randomPos;
             };
-        	server setVariable [format["factionrep%1",_cls],_pos,false];
+        	server setVariable [format["factionrep%1",_cls],_pos,true];
         	_building setVariable ["owner","system",true];
 
         };

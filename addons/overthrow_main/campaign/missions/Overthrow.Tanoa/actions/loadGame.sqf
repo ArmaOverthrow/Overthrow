@@ -20,8 +20,10 @@ if(typename _data != "ARRAY") exitWith {
 			_owner = _x select 2;
 
 			_veh = createVehicle [OT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
+			_veh enableDynamicSimulation true;
 			_veh setVariable ["owner",_owner,true];
 			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
+			_veh enableDynamicSimulation true;
 
 			_mrkid = format["%1-base",_pos];
 			createMarker [_mrkid,_pos];
@@ -57,6 +59,7 @@ if(typename _data != "ARRAY") exitWith {
 						_name = _x select 5;
 					};
 					_veh = _type createVehicle _pos;
+					_veh enableDynamicSimulation true;
 
 					if(count _x > 7) then {
 						(_x select 7) params ["_fuel","_dmg"];
@@ -71,7 +74,8 @@ if(typename _data != "ARRAY") exitWith {
 
 					_veh setPosATL _pos;
 					if(_type isKindOf "Building") then {
-						createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
+						_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
+						_clu enableDynamicSimulation true;
 					};
 					if(typename _dir == "SCALAR") then {
 						//Pre 0.6.8 save, scalar direction
@@ -151,7 +155,7 @@ if(typename _data != "ARRAY") exitWith {
 					};
 
 					if(_type == OT_item_tent) then {
-						_mrkid = format["%1-camp",_pos];
+						_mrkid = format["%1-camp",_owner];
 						createMarker [_mrkid,_pos];
 						_mrkid setMarkerShape "ICON";
 						_mrkid setMarkerType "ot_Camp";

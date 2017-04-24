@@ -102,7 +102,7 @@ class OT_dialog_vehicle
 			idc = 1601;
 			text = "Transfer From"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
-			y = 0.654 * safezoneH + safezoneY;
+			y = 0.566 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Transfers the contents of the closest container into this vehicle"; //--- ToDo: Localize;
@@ -124,11 +124,22 @@ class OT_dialog_vehicle
 			idc = 1603;
 			text = "Transfer Legit"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
-			y = 0.566 * safezoneH + safezoneY;
+			y = 0.654 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Transfers only legal (sellable) items from the closest container into this vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn transferLegit;";
+		};
+		class RscButton_1604: RscOverthrowButton
+		{
+			idc = 1604;
+			text = "Take Legit"; //--- ToDo: Localize;
+			x = 0.0204687 * safezoneW + safezoneX;
+			y = 0.742 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Takes legal (sellable) items from the vehicle into your inventory"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn takeLegit;";
 		};
 		class RscButton_1612: RscOverthrowButton
 		{
@@ -209,7 +220,7 @@ class OT_dialog_vehiclewarehouse
 		class RscButton_1603: RscOverthrowButton
 		{
 			idc = 1603;
-			text = "Take Legit"; //--- ToDo: Localize;
+			text = "Transfer Legit"; //--- ToDo: Localize;
 			x = 0.0204687 * safezoneW + safezoneX;
 			y = 0.566 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;

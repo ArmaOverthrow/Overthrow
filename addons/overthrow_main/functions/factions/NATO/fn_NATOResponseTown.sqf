@@ -23,4 +23,4 @@ private _fail = {
 	server setVariable ["NATOabandoned",_abandoned,true];
 };
 
-[_posTown,_strength,_success,_fail,[_tskid,_town]] spawn OT_fnc_NATOQRF;
+[_posTown,_strength,_success,_fail,[_tskid,_town],_town] spawn OT_fnc_NATOQRF;

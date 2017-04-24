@@ -75,6 +75,7 @@ if(_cost > 0) then {
 				_cls = modeValues select modeValue;
 
 				modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
+				modeTarget enableDynamicSimulation true;
 				if(_cls == "B_Boat_Transport_01_F") then {
 					_dir = _dir + 90;
 				};
