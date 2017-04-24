@@ -19,7 +19,7 @@ private _target = _sorted select 0;
 
 format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 
-{
+{	
 	[_x,_target] spawn {
 		private _active = true;
 		private _wasincar = false;
@@ -64,6 +64,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			_deadguy setVariable ["looted",true,true];
 
 			_unit doMove getpos _deadguy;
+			[_unit,1] call OT_fnc_experience;
+
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _deadguy < 2) or (_timeOut < time) or (unitReady _unit)};
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 

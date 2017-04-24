@@ -8,6 +8,7 @@ if(count _blueprints == 0) then {
 private _lastmin = date select 4;
 private _lasthr = date select 3;
 private _currentProduction = "";
+private _stabcounter = 0;
 
 while {true} do {
 	sleep 1;
@@ -148,6 +149,23 @@ while {true} do {
 	if ((date select 4) != _lastmin) then {
 		_lastmin = date select 4;
 
+		_stabcounter = _stabcounter + 1;
+
+		if(_stabcounter >= 10) then {
+			private _abandoned = server getVariable ["NATOabandoned",[]];
+			_stabcounter = 0;
+			{
+				_town = _x;
+				if !(_town in _abandoned) then {
+					_townpos = server getvariable _x;
+					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
+					if(_numcops == 0) then {
+						[_town,-1] call stability;
+					};
+				};
+			}foreach(OT_allTowns);
+		};
+
 		//do factory
 		if("Factory" in (server getVariable ["GEURowned",[]])) then {
 			private _currentCls = server getVariable ["GEURproducing",""];
@@ -258,6 +276,40 @@ while {true} do {
 				};
 			};
 		};
+
+		//Do ranking
+		{
+			_x params ["_owner","_name","_unit","_rank"];
+			if(typename _unit == "OBJECT") then {
+				_xp = _unit getVariable ["OT_xp",0];
+				_player = spawner getvariable [_owner,objNULL];
+				if(_rank == "PRIVATE" and _xp > (OT_rankXP select 0)) then {
+					_x set [3,"CORPORAL"];
+					_unit setRank "CORPORAL";
+					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["notify_minor",_player,false];
+				};
+				if(_rank == "CORPORAL" and _xp > (OT_rankXP select 1)) then {
+					_x set [3,"SERGEANT"];
+					_unit setRank "SERGEANT";
+					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["notify_minor",_player,false];
+				};
+				if(_rank == "SERGEANT" and _xp > (OT_rankXP select 2)) then {
+					_x set [3,"LIEUTENANT"];
+					_unit setRank "LIEUTENANT";
+					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["notify_minor",_player,false];
+				};
+				if(_rank == "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
+					_x set [3,"CAPTAIN"];
+					_unit setRank "CAPTAIN";
+					format["%1 has been promoted to Captain",_name select 0] remoteExec ["notify_minor",_player,false];
+				};
+				if(_rank == "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
+					_x set [3,"MAJOR"];
+					_unit setRank "MAJOR";
+					format["%1 has been promoted to Major",_name select 0] remoteExec ["notify_minor",_player,false];
+				};
+			};
+		}foreach(server getVariable ["recruits",[]]);
 	}
 
 };

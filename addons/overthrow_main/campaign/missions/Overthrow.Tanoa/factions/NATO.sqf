@@ -195,7 +195,9 @@ publicVariable "OT_allObjectives";
 }foreach(OT_NATOcomms);
 server setVariable ["NATOattacking","",true];
 server setVariable ["NATOattackstart",0,true];
-sleep 5;
+
+sleep OT_NATOwait + round(random OT_NATOwait);
+
 while {true} do {
 	_garrisoned = false;
 	_numplayers = count([] call CBA_fnc_players);
@@ -282,6 +284,20 @@ while {true} do {
 			}foreach(OT_NATOobjectives);
 		};
 
+		{
+			_town = _x;
+			_stability = server getVariable format ["stability%1",_town];
+			_population = server getVariable format ["population%1",_town];
+			if(_population < 80) then {
+				if(_stability < 10 and !(_town in _abandoned)) then {
+					_abandoned pushback _town;
+					server setVariable [format ["garrison%1",_town],0,true];
+					format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+					[_town,15] call stability;
+				};
+			};
+		}foreach (OT_allTowns);
+
 		//Town response
 		if !(_garrisoned) then {
 			_sorted = [OT_allTowns,[],{server getvariable format["population%1",_x]},"DESCEND"] call BIS_fnc_SortBy;
@@ -289,7 +305,7 @@ while {true} do {
 				_town = _x;
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
-				if(_stability < 10 and !(_town in _abandoned) and (_resources >= _population)) exitWith {
+				if(_population > 80 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) exitWith {
 					server setVariable [format ["garrison%1",_town],0,true];
 					diag_log format["Overthrow: NATO responding to %1",_town];
 					[_town,_population] spawn OT_fnc_NATOResponseTown;

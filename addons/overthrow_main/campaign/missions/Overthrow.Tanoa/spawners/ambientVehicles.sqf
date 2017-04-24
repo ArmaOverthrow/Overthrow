@@ -18,6 +18,9 @@ private _numVeh = 4;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
+if(_town == (server getVariable "spawntown")) then {
+	_numVeh = 12;
+};
 if(_numVeh > 12) then {_numVeh = 12};
 if(count(vehicles) > 200) then {_numVeh = 3};
 while {(_count < _numVeh)} do {
@@ -64,6 +67,10 @@ while {(_count < _numVeh)} do {
 						_wp setWaypointBehaviour "SAFE";
 						_wp setWaypointCompletionRadius 60;
 						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+					}else{
+						if(_town == (server getVariable "spawntown") and (random 100) > 75) then {
+							_veh setDamage [1,false]; //salvage wreck
+						};
 					};
 					_groups pushBack _veh;
 				};

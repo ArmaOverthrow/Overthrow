@@ -208,6 +208,7 @@ buildOnKeyDown = {
 			_cls = modeValues select modeIndex;
 
 			modeTarget = createVehicle [_cls, modeValue, [], 0, "CAN_COLLIDE"];
+			modeTarget enableDynamicSimulation true;
 			modeTarget remoteExec ["enableSimulationGlobal false",2,false];
 			modeTarget setDir _dir;
 		};
@@ -282,7 +283,8 @@ buildOnMouseUp = {
 					_created setVariable ["OT_init",modeCode,true];
 					[modeValue,modeCode] remoteExec ["structureInit",2];
 				};
-				createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
+				_clu = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
+				_clu enableDynamicSimulation true;
 			};
 			deleteVehicle modeVisual;
 

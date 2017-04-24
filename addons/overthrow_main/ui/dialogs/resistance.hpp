@@ -10,7 +10,7 @@ class OT_dialog_resistance
             x = 0.237031 * safezoneW + safezoneX;
             y = 0.17 * safezoneH + safezoneY;
             w = 0.525937 * safezoneW;
-            h = 0.671 * safezoneH;
+            h = 0.7 * safezoneH;
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
@@ -129,7 +129,7 @@ class OT_dialog_resistance
 			x = 0.298906 * safezoneW + safezoneX;
 			y = 0.698 * safezoneH + safezoneY;
 			w = 0.402187 * safezoneW;
-			h = 0.121 * safezoneH;
+			h = 0.151 * safezoneH;
 			colorBackground[] = {0,0,0,0.2};
 			colorActive[] = {0,0,0,0};
 		};

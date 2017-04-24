@@ -1,10 +1,13 @@
 if !(captive player) exitWith {"You cannot fast travel while wanted" call notify_minor};
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call notify_minor};
 
+
 if((vehicle player) != player) then {
 	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call notify_minor};
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
 };
+
+if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call notify_minor};
 
 "Click near a friendly base/camp or a building you own" call notify_minor;
 openMap true;

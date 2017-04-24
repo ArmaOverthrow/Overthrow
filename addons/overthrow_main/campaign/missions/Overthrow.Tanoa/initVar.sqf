@@ -1,17 +1,5 @@
 //Here is where you can change stuff to suit your liking or support mods/another map
 
-//To-DO:
-/*
-
-WOrkshop should come with a toolkit
-NATO limits
-Shop warning when sell price low
-Raise chance of NATO
-Work out why support vehicle does full repair
-
-
-*/
-
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 call compileFinal preprocessFileLineNumbers "data\names.sqf";
@@ -20,6 +8,8 @@ call compileFinal preprocessFileLineNumbers "data\airports.sqf";
 call compileFinal preprocessFileLineNumbers "data\objectives.sqf";
 call compileFinal preprocessFileLineNumbers "data\economy.sqf";
 call compileFinal preprocessFileLineNumbers "data\comms.sqf";
+
+OT_useDynamicSimulation = false; //Experimental new dynamic sim mode
 
 OT_missions = [];
 OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\transportvip.sqf");
@@ -33,8 +23,10 @@ OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\kill
 
 OT_currentMissionFaction = "";
 
+OT_rankXP = [100,250,500,1000,4000,10000,100000];
+
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 10;
+OT_economyVersion = 11;
 OT_NATOversion = 7;
 OT_CRIMversion = 1;
 OT_adminMode = false;
@@ -175,9 +167,9 @@ OT_item_BasicGun = "hgun_P07_F";//Player starts with this weapon in their ammobo
 OT_item_BasicAmmo = "16Rnd_9x21_Mag";
 
 if(OT_hasAce) then {
-	OT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty","ACE_elasticBandage"]; //Shops will try to stock more of these
+	OT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty","ACE_elasticBandage","ItemMap","ToolKit","ACE_epinephrine"]; //Shops will try to stock more of these
 }else{
-	OT_consumableItems = ["FirstAidKit","Medikit"];
+	OT_consumableItems = ["FirstAidKit","Medikit","ItemMap","ToolKit"];
 };
 OT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F","H_HelmetB_TI_tna_F"];
 OT_illegalVests = ["V_TacVest_gen_F"];

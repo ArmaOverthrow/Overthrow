@@ -46,9 +46,11 @@ while {true} do {
 					_tt = round(_lease * (_tax / 100));
 				};
 				_totax = _totax + _tt;
-				[_lease-_tt] remoteExec ["money",_x,false];
+				[_lease-_tt,"Lease Income"] remoteExec ["money",_x,false];
 			};
 		}foreach([] call CBA_fnc_players);
+
+		sleep 5;
 
 		_funds = server getVariable ["money",0];
 		server setVariable ["money",_funds+_totax];

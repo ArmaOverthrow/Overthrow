@@ -84,6 +84,7 @@ getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
 transferFrom = compileFinal preProcessFileLineNumbers "actions\transferFrom.sqf";
 transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
 transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
+takeLegit = compileFinal preProcessFileLineNumbers "actions\takeLegit.sqf";
 talkToCiv = compileFinal preProcessFileLineNumbers "actions\talkToCiv.sqf";
 addPolice = compileFinal preProcessFileLineNumbers "actions\addPolice.sqf";
 warehouseTake = compileFinal preProcessFileLineNumbers "actions\warehouseTake.sqf";
@@ -213,19 +214,16 @@ OT_fnc_getTaxIncome = {
 		private _town = _x;
 		_total = _total + 250;
 		if(_town in OT_allAirports) then {
-			_total = _total + ((server getVariable ["stabilityTanoa",100]) * 2); //Tourism income
+			_total = _total + ((server getVariable ["stabilityTanoa",100]) * 3); //Tourism income
 		};
 		_inf = _inf + 1;
 		if(_town in OT_allTowns) then {
 			private _population = server getVariable format["population%1",_town];
 			private _stability = server getVariable format["stability%1",_town];
 			private _garrison = server getVariable [format['police%1',_town],0];
-			private _add = round(_population * (_stability/100));
+			private _add = round(_population * 2 * (_stability/100));
 			if(_stability > 49) then {
 				_add = round(_add * 4);
-			};
-			if(_garrison == 0) then {
-				_add = round(_add * 0.5);
 			};
 			_total = _total + _add;
 		};
@@ -490,6 +488,9 @@ canDrive = {
 distributeAILoad = {
 	private _send = true;
 	private _group = _this;
+	if(OT_useDynamicSimulation) then {
+		_group enableDynamicSimulation true;
+	};
 	if(OT_serverTakesLoad) then {
 		if(random 100 > (100 / ((count OT_activeClients) + 1))) then {
 			_send = false;
@@ -611,6 +612,17 @@ rewardMoney = {
 	};
 };
 
+OT_fnc_experience = {
+	_who = _this select 0;
+	_amount = _this select 1;
+	if(isPlayer _who) then {
+		[_amount] remoteExec ["experience",_who,false];
+	}else{
+		_xp = _who getVariable ["OT_xp",0];
+		_who setVariable ["OT_xp",_xp + _amount,true];
+	};
+};
+
 money = {
 	if!(hasInterface) exitWith {};
     _amount = _this select 0;
@@ -624,8 +636,11 @@ money = {
     if(_amount > 0) then {
         _plusmin = "+";
     };
-    format["%1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber] call notify_minor;
-
+	if(count _this > 1) then {
+		format["%3: %1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber,_this select 1] call notify_minor;
+	}else{
+		format["%1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber] call notify_minor;
+	};
 };
 
 stability = {
@@ -654,7 +669,11 @@ stability = {
 
     //update the markers
     if(_stability < 50) then {
-        _town setMarkerColor "ColorRed";
+		if(_town in _abandoned) then {
+        	_town setMarkerColor "ColorRed";
+		}else{
+			_town setMarkerColor "ColorYellow";
+		};
         _town setMarkerAlpha 1.0 - (_stability / 50);
         _townmrk setMarkerColor "ColorOPFOR";
     }else{

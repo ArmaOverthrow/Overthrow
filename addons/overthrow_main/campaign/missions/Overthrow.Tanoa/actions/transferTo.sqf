@@ -1,9 +1,16 @@
 _target = vehicle player;
 
-if(_target == player) exitWith {};
+private _notvehicle = false;
+if(_target == player) then {
+	_target = OT_warehouseTarget;
+	_notvehicle = true;
+};
+
+if(isNull _target or isNil "_target") exitWith {};
+
 private _objects = [];
 
-private _b = player call OT_fnc_nearestRealEstate;
+private _b = _target call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b == "ARRAY") then {
 	_building = _b select 0;
@@ -13,14 +20,19 @@ if(typename _b == "ARRAY") then {
 	};
 };
 
-if(!_iswarehouse) then {
+if(!_iswarehouse and !_notvehicle) then {
 	{
 		if(_x != _target) then {_objects pushback _x};
 	}foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 };
 
-if(count _objects == 0) exitWith {
+
+if(!_notvehicle  and count _objects == 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call notify_minor;
+};
+
+if(_notvehicle and count _objects == 0) exitWith {
+	"No warehouse within range" call notify_minor;
 };
 
 private _doTransfer = {

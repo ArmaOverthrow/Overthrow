@@ -181,14 +181,14 @@ class OT_dialog_buildobjective
 		class RscButton_1607: RscOverthrowButton
 		{
 			idc = 1603;
-			action = "'Hangar' call build";
+			action = "'Helipad' call build";
 
-			text = "Hangar"; //--- ToDo: Localize;
+			text = "Helipad"; //--- ToDo: Localize;
 			x = 0.891875 * safezoneW + safezoneX;
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Keep planes out of the rain"; //--- ToDo: Localize;
+			tooltip = "Apparently helicopters need a place to land"; //--- ToDo: Localize;
 		};
 		class RscButton_1608: RscOverthrowButton
 		{

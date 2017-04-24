@@ -67,7 +67,7 @@ if(((time - _start) > 7200) or (_params call _fail) or !(_name in (_target getva
 	};
 
 	if(_infreward > 0) then {
-		[_infreward] remoteExec ["influence",_target];
+		_infreward remoteExec ["influence",_target,false];
 	};
 	_success = true;
 	[_name, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;

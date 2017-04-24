@@ -35,6 +35,7 @@ _success = {
 	_abandoned deleteAt (_abandoned find _objective);
 	server setVariable ["NATOabandoned",_abandoned,true];
 	server setVariable [format["garrison%1",_objective],round(8 + random 12),true];
+
 };
 
-[_posTown,_strength,_success,_fail,[_tskid,_objective]] spawn OT_fnc_NATOQRF;
+[_posTown,_strength,_success,_fail,[_tskid,_objective],_objective] spawn OT_fnc_NATOQRF;

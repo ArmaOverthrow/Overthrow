@@ -40,6 +40,7 @@ call {
 		OT_NATOhvts deleteAt _idx;
 		format["A high-ranking NATO officer has been killed"] remoteExec ["notify_minor",0,false];
 		server setvariable ["NATOresources",0,true];
+		[_killer,250] call OT_fnc_experience;
 	};
 	if(!isNil "_mobboss") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
@@ -56,6 +57,7 @@ call {
 
 		_standingChange = 50;
 		[_killer,1500] call rewardMoney;
+		[_killer,100] call OT_fnc_experience;
 
 		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["notify_minor",0,true];
 		deleteMarker format ["mobster%1",_mobsterid];
@@ -76,6 +78,7 @@ call {
 		};
 		_standingChange = 10;
 		[_killer,150] call rewardMoney;
+		[_killer,25] call OT_fnc_experience;
 	};
 	if(!isNil "_criminal") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
@@ -89,6 +92,7 @@ call {
 		};
 		_standingChange = 1;
 		[_killer,10] call rewardMoney;
+		[_killer,10] call OT_fnc_experience;
 	};
 	if(!isNil "_crimleader") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
@@ -119,6 +123,7 @@ call {
 		if (typename _leader == "ARRAY") then {
 			server setVariable [format["crimleader%1",_town],false,true];
 		};
+		[_killer,50] call OT_fnc_experience;
 	};
 	if(!isNil "_polgarrison") exitWith {
 		_pop = server getVariable format["police%1",_polgarrison];
@@ -138,6 +143,9 @@ call {
 			};
 			if(_garrison in OT_allTowns) then {
 				_town = _garrison;
+				[_killer,10] call OT_fnc_experience;
+			}else{
+				[_killer,25] call OT_fnc_experience;
 			};
 			if(isPlayer _killer) then {
 				_standingChange = -1;
@@ -147,22 +155,11 @@ call {
 			if(_townpop < 350 and (random 100) > 50) then {
 				_stab = -2;
 			};
-			if(_garrison in OT_allObjectives and _pop >= 0) then {
-				if(_pop > 4) then {
-					format["%1 garrison now %2",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
-				}else{
-					format["%1 has lost radio contact",_garrison,_pop] remoteExec ["notify_minor",_killer,true];
-				};
-			}else{
-				[_town,_stab] call stability;
-				_stability = server getvariable [format["stability%1",_town],0];
-				if(_stability > 5) then{
-					if(_stability > 10) then {
-						format["%1 (%2 Stability)",_town,_stab] remoteExec ["notify_minor",_killer,false];
-					}else{
-						format["%1 has destabilized",_town,_stab] remoteExec ["notify_minor",_killer,false];
-					};
-				};
+			if(_townpop < 100) then {
+				_stab = -3;
+			};
+			if (_garrison in OT_allTowns) then {
+				[_garrison,_stab] call stability;
 			};
 		};
 

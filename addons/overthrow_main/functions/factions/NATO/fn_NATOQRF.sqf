@@ -1,4 +1,4 @@
-params ["_pos","_strength","_success","_fail","_params"];
+params ["_pos","_strength","_success","_fail","_params","_garrison"];
 private _numPlayers = count([] call CBA_fnc_players);
 if(_numPlayers < 3) then {
 	_strength = round(_strength * 0.4);
@@ -265,8 +265,15 @@ while {sleep 5;time < _timeout and !_won} do {
 					if(_lead getVariable ["garrison",""] == "HQ") then {
 						if(vehicle _lead != _lead) then {
 							[vehicle _lead] spawn OT_fnc_cleanup;
+						}else{
+							if((getpos _lead) call OT_fnc_inSpawnDistance) then {
+								{
+									_x setVariable ["garrison",_garrison,true];
+								}foreach(units _x);
+							}else{
+								[_x] call OT_fnc_cleanup;
+							};
 						};
-						[_x] spawn OT_fnc_cleanup;
 					};
 				}else{
 					deleteGroup _x;

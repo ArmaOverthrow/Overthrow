@@ -209,7 +209,7 @@ if(typename _b == "ARRAY") then {
 			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
-				<t align='left' size='0.65'>Lease Value: $%2/hr</t>
+				<t align='left' size='0.65'>Lease Value: $%2/6hrs</t>
 			",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
 
 			if(typeof _building == OT_barracks) then {

@@ -42,7 +42,7 @@ menuHandler = {
 	sleep 3;
 
 	_txt = "<t align='center'><t size='0.6' color='#ffffff'>Interaction</t><br/>";
-	_txt = format ["%1<t size='0.5' color='#ffffff'>Most interactions will be done via the 'Y' menu. However some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards one of them and using your scroll wheel or pressing %2 to open the action menu. Select an item with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call assignedKey];
+	_txt = format ["%1<t size='0.5' color='#ffffff'>Most interactions will be done via the 'Y' menu. However some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your scroll wheel or pressing %2 to open the action menu. Select 'inventory' with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call assignedKey];
 
 	[_txt, 0, 0.2, 20, 1, 0, 2] spawn bis_fnc_dynamicText;
 

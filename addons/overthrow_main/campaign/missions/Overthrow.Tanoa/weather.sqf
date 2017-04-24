@@ -118,7 +118,7 @@ private _nextchange = 350 + (random 600);
 
 //Fog killer
 [] spawn {
-	sleep 10;
+	sleep 100;
 	0 setfog 0;
 };
 
