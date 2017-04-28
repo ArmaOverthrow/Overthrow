@@ -2,6 +2,7 @@ if !(captive player) exitWith {"You cannot recruit while wanted" call notify_min
 
 private _cls = _this select 0;
 private _pos = _this select 1;
+private _cc = player getVariable ["OT_squadcount",0];
 
 _d = [];
 {
@@ -10,6 +11,7 @@ _d = [];
 }foreach(OT_squadables);
 
 _comp = _d select 1;
+_shortname = _d select 2;
 _soldiers = [];
 private _cost = 0;
 {
@@ -32,8 +34,15 @@ _leader = false;
 	player reveal [_civ,4];
 	if(!_leader) then {_group selectLeader _civ;_civ setVariable ["owner",getplayeruid player,true],_leader=true};
 }foreach(_soldiers);
-player hcSetGroup [_group];
+
+_group setGroupIdGlobal [format["%1-%2",_shortname,_cc]];
+_cc = _cc + 1;
+player hcSetGroup [_group,groupId _group,"teamgreen"];
+
+player setVariable ["OT_squadcount",_cc,true];
 
 _recruits = server getVariable ["squads",[]];
 _recruits pushback [getplayeruid player,_cls,_group,[]];
 server setVariable ["squads",_recruits,true];
+
+hcShowBar true;

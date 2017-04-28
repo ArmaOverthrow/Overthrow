@@ -158,9 +158,11 @@ while {true} do {
 				_town = _x;
 				if !(_town in _abandoned) then {
 					_townpos = server getvariable _x;
-					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
-					if(_numcops == 0) then {
-						[_town,-1] call stability;
+					if(_townpos call OT_fnc_inSpawnDistance) then {
+						_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
+						if(_numcops == 0) then {
+							[_town,-1] call stability;
+						};
 					};
 				};
 			}foreach(OT_allTowns);
@@ -176,7 +178,20 @@ while {true} do {
 					if(isNil "_plastic") then {
 						_plastic = 0;
 					};
-					_timetoproduce = _base + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
+					_b = _base;
+					if(_base > 240) then {
+						_b = 240;
+					};
+					if(_base > 10000) then {
+						_b = 360;
+					};
+					if(_base > 20000) then {
+						_b = 480;
+					};
+					if(_base > 50000) then {
+						_b = 600;
+					};
+					_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
 					if(_timetoproduce > 2880) then {_timetoproduce = 2880};
 					if(_timetoproduce < 10) then {_timetoproduce = 10};
 					_timespent = server getVariable ["GEURproducetime",0];

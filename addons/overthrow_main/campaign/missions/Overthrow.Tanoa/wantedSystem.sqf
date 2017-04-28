@@ -213,24 +213,42 @@ while {alive _unit} do {
 					_unit spawn revealToNATO;
 				};
 				_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
-				if((_totalrep > 50) and (random 1000 < _totalrep)) exitWith {
-					_unit setCaptive false;
-					if(isPlayer _unit) then {
-						"A gang has recognized you" call notify_minor;
+				_replim = 50;
+				_skill = _unit getVariable ["OT_stealth",0];
+				if(_skill == 1) then {_replim = 75};
+				if(_skill == 2) then {_replim = 100};
+				if(_skill == 3) then {_replim = 150};
+				if(_skill == 4) then {_replim = 200};
+				if(_skill < 5) then {
+					if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
+						_unit setCaptive false;
+						if(isPlayer _unit) then {
+							"A gang has recognized you" call notify_minor;
+						};
+						_unit spawn revealToCRIM;
 					};
-					_unit spawn revealToCRIM;
 				};
 			}else{
 				if(_unit call unitSeenNATO) then {
 					sleep 0.1;
 					_town = (getpos _unit) call OT_fnc_nearestTown;
 					_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
-					if((_totalrep > 50) and (random 1000 < _totalrep)) exitWith {
-						_unit setCaptive false;
-						if(isPlayer _unit) then {
-							"NATO has recognized you" call notify_minor;
-						};
-						_unit spawn revealToNATO;
+
+					_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
+					_replim = 50;
+					_skill = _unit getVariable ["OT_stealth",0];
+					if(_skill == 1) then {_replim = 75};
+					if(_skill == 2) then {_replim = 100};
+					if(_skill == 3) then {_replim = 150};
+					if(_skill == 4) then {_replim = 200};
+					if(_skill < 5) then {
+						if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
+							_unit setCaptive false;
+							if(isPlayer _unit) then {
+								"NATO has recognized you" call notify_minor;
+							};
+							_unit spawn revealToNATO;
+						}
 					};
 					if(count attachedObjects _unit > 0) exitWith {
 						{

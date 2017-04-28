@@ -82,7 +82,7 @@ buyPerk = {
 		_txt = format["<t size=""2"">Trade</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Ability to negotiate better purchasing prices</t>",_fitness];
 	};
 	if(_perk == "stealth") then {
-		_txt = format["<t size=""2"">Stealth</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Less chance of NATO finding illegal items</t>",_fitness];
+		_txt = format["<t size=""2"">Stealth</t><br/><t size=""1.1"">Level %1</t><br/><t size=""0.7"">Less chance of people recognizing you or finding illegal items</t>",_fitness];
 	};
 
 	_ctrl ctrlSetStructuredText parseText _txt;

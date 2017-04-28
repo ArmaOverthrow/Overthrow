@@ -1,6 +1,10 @@
 _sorted = [];
 _unit = (groupSelectedUnits player) select 0;
 
+{
+    player groupSelectUnit [_x, false];
+} forEach (groupSelectedUnits player);
+
 if((vehicle _unit) != _unit) then {
 	_sorted = [vehicle _unit];
 }else{

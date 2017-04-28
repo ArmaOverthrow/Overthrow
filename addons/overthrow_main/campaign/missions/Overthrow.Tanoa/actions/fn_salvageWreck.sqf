@@ -4,6 +4,12 @@ private _doSalvage = {
     private _steel = 3;
     private _plastic = 0;
     private _cost = cost getVariable [typeof _wreck,[100,0,0,0]];
+    if((_cost select 2) > 10) then {
+        _steel = 4;
+    };
+    if((_cost select 2) > 20) then {
+        _steel = 5;
+    };
     if((_cost select 2) > 40) then {
         _steel = 6;
     };
@@ -31,7 +37,7 @@ private _doSalvage = {
     }else{
         format["Salvaged: %1 x Steel",_steel] call notify_minor;
     };
-
+    deleteVehicle _wreck;
 };
 
 private _objects = player nearEntities [["Car","ReammoBox_F","Air","Ship"],20];

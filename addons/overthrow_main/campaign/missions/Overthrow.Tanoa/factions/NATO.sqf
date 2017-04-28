@@ -234,29 +234,6 @@ while {true} do {
 			diag_log format["Overthrow: NATO still attacking %1",_currentAttack];
 		};
 
-		{
-			_town = _x;
-			_townPos = server getVariable _town;
-			_current = server getVariable format ["garrison%1",_town];;
-			_stability = server getVariable format ["stability%1",_town];
-			_population = server getVariable format ["population%1",_town];
-			if(_stability > 10 and !(_town in _abandoned)) then {
-				_max = round(_population / 40);
-				if(_max < 4) then {_max = 4};
-				_garrison = 2+round((1-(_stability / 100)) * _max);
-				if(_town in OT_NATO_priority) then {
-					_garrison = round(_garrison * 2);
-				};
-				_need = _garrison - _current;
-				if(_need < 0) then {_need = 0};
-				if(_need > 1 and _resources >= 20) then {
-					_resources = _resources - 20;
-					_x spawn reGarrisonTown;
-				};
-			};
-		}foreach (OT_allTowns);
-
-
 		if(_currentAttack != "") then {
 			_garrisoned = true;
 		};
@@ -267,28 +244,52 @@ while {true} do {
 				_pos = _x select 0;
 				_name = _x select 1;
 				if !(_name in _abandoned) then {
-					_garrison = server getvariable format["garrison%1",_name];
-					_vehgarrison = server getvariable format["vehgarrison%1",_name];
-
-					if(_garrison < 4 and _resources > 0) then {
-						_garrisoned = true;
-						server setVariable ["NATOattacking",_name,true];
-						server setVariable ["NATOattackstart",time,true];
-						diag_log format["Overthrow: NATO responding to %1",_name];
-						[_name,_resources] spawn OT_fnc_NATOResponseObjective;
-						_name setMarkerAlpha 1;
-						_resources = 0;
+					if(_pos call OT_fnc_inSpawnDistance) then {
+						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
+						_numres = {side _x == resistance} count (_pos nearObjects ["CAManBase",200]);
+						if(_nummil < 3 and _numres > 0) then {
+							_garrisoned = true;
+							server setVariable ["NATOattacking",_name,true];
+							server setVariable ["NATOattackstart",time,true];
+							diag_log format["Overthrow: NATO responding to %1",_name];
+							[_name,_resources] spawn OT_fnc_NATOResponseObjective;
+							_name setMarkerAlpha 1;
+							_resources = 0;
+						};
 					};
 				};
 				if(_garrisoned) exitWith {};
 			}foreach(OT_NATOobjectives);
+		};
+		if !(_garrisoned) then {
+			{
+				_town = _x;
+				_townPos = server getVariable _town;
+				_current = server getVariable format ["garrison%1",_town];;
+				_stability = server getVariable format ["stability%1",_town];
+				_population = server getVariable format ["population%1",_town];
+				if(_stability > 10 and !(_town in _abandoned)) then {
+					_max = round(_population / 40);
+					if(_max < 4) then {_max = 4};
+					_garrison = 2+round((1-(_stability / 100)) * _max);
+					if(_town in OT_NATO_priority) then {
+						_garrison = round(_garrison * 2);
+					};
+					_need = _garrison - _current;
+					if(_need < 0) then {_need = 0};
+					if(_need > 1 and _resources >= 20) then {
+						_resources = _resources - 20;
+						_x spawn reGarrisonTown;
+					};
+				};
+			}foreach (OT_allTowns);
 		};
 
 		{
 			_town = _x;
 			_stability = server getVariable format ["stability%1",_town];
 			_population = server getVariable format ["population%1",_town];
-			if(_population < 80) then {
+			if(_population < 50) then {
 				if(_stability < 10 and !(_town in _abandoned)) then {
 					_abandoned pushback _town;
 					server setVariable [format ["garrison%1",_town],0,true];
@@ -305,7 +306,7 @@ while {true} do {
 				_town = _x;
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
-				if(_population > 80 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) exitWith {
+				if(_population > 50 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) exitWith {
 					server setVariable [format ["garrison%1",_town],0,true];
 					diag_log format["Overthrow: NATO responding to %1",_town];
 					[_town,_population] spawn OT_fnc_NATOResponseTown;

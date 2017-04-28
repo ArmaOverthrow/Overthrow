@@ -60,7 +60,7 @@ _count = 10001;
 		};
 		_params = [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
 		if(_x isKindOf "AllVehicles") then {
-			_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel];
+			_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false]];
 		};
 		_vehicles pushback _params;
 	};
@@ -124,7 +124,7 @@ private _squads = [];
 					_units pushback [typeof _x,position _x,getUnitLoadout _x];
 				};
 			}foreach(units _group);
-			_squads pushback [getplayeruid player,_cls,"",_units];
+			_squads pushback [getplayeruid player,_cls,"",_units,groupId _group];
 		};
 	};
 }foreach(server getVariable ["squads",[]]);

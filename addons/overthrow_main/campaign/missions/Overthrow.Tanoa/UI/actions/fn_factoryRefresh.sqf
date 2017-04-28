@@ -31,7 +31,20 @@ if(_currentCls != "") then {
 		if(isNil "_plastic") then {
 			_plastic = 0;
 		};
-		_timetoproduce = _base + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
+		_b = _base;
+		if(_base > 240) then {
+			_b = 240;
+		};
+		if(_base > 10000) then {
+			_b = 360;
+		};
+		if(_base > 20000) then {
+			_b = 480;
+		};
+		if(_base > 50000) then {
+			_b = 600;
+		};
+		_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
 		if(_timetoproduce > 2880) then {_timetoproduce = 2880};
 		if(_timetoproduce < 10) then {_timetoproduce = 10};
 

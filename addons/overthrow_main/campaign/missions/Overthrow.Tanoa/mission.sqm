@@ -8,7 +8,7 @@ class EditorData
 	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=1995;
+		nextID=2092;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=219;
+		nextID=234;
 	};
 	class Camera
 	{
-		pos[]={5143.8984,5.8088961,8668.6758};
-		dir[]={0.6219331,0.050239999,-0.78158259};
-		up[]={-0.031212972,0.99872321,0.039224286};
-		aside[]={-0.78258783,-3.1622621e-006,-0.62272549};
+		pos[]={12818.754,4.0914273,1638.0454};
+		dir[]={0.59407037,0.033020224,0.80378884};
+		up[]={-0.019614713,0.99946028,-0.026539376};
+		aside[]={0.80424064,1.7185812e-007,-0.59440583};
 	};
 };
 binarizationWanted=0;
@@ -713,7 +713,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=91;
+		items=95;
 		class Item0
 		{
 			dataType="Marker";
@@ -7132,6 +7132,34 @@ class Mission
 			id=1975;
 			type="Land_WoodenPlanks_01_messy_F";
 			atlOffset=0.71717787;
+		};
+		class Item91
+		{
+			dataType="Layer";
+			name="Check Point (Large)";
+			id=2001;
+			atlOffset=60.779999;
+		};
+		class Item92
+		{
+			dataType="Layer";
+			name="Camp Bear";
+			id=2044;
+			atlOffset=60.779999;
+		};
+		class Item93
+		{
+			dataType="Layer";
+			name="Hasty Roadblock";
+			id=2052;
+			atlOffset=60.779999;
+		};
+		class Item94
+		{
+			dataType="Layer";
+			name="Roadblock";
+			id=2064;
+			atlOffset=60.779999;
 		};
 	};
 	class Connections

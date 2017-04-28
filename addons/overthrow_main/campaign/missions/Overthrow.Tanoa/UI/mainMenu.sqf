@@ -410,9 +410,8 @@ if(count _possible > 0) then {
 			};
 		};
 	}else{
-		ctrlEnable [1605,true];
+		ctrlEnable [1605,false];
 		ctrlEnable [1606,false];
-		ctrlSetText [1605,"Give Money"];
 		_type = "Player";
 	};
 	_civTxt = format["

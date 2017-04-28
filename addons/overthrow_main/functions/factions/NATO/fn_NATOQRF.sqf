@@ -228,6 +228,7 @@ private _alive = 0;
 private _enemy = 0;
 private _alivein = 0;
 private _enemyin = 0;
+private _natowin = false;
 
 while {sleep 5;time < _timeout and !_won} do {
 	_alive = 0;
@@ -240,7 +241,7 @@ while {sleep 5;time < _timeout and !_won} do {
 		if(_x distance _pos < 1000) then {
 			if((side _x == west) and (alive _x) and (_g == "HQ")) then {
 				_alive = _alive + 1;
-				if(_x distance _pos < 400) then {
+				if(_x distance _pos < 300) then {
 					_alivein = _alivein + 1;
 				};
 			};
@@ -252,7 +253,11 @@ while {sleep 5;time < _timeout and !_won} do {
 			};
 		};
 	}foreach(allunits);
-	if(_alivein > 0 and _enemy == 0) exitWith {
+	if(_natowin and (_alivein == 0 or _enemy > 0)) then {
+		_natowin = false;
+	};
+
+	if(_natowin) exitWith {
 		//Nato has won
 		_params call _success;
 
@@ -288,6 +293,10 @@ while {sleep 5;time < _timeout and !_won} do {
 			}
 		}foreach(vehicles);
 		_won = true;
+	};
+	if(_alivein > 0 and _enemy == 0) then {
+		sleep 30; //Buffer zone
+		_natowin = true;
 	};
 	//diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
 	if(_alive < 4 or (_enemyin > 0 and _alivein < 4)) exitWith{};

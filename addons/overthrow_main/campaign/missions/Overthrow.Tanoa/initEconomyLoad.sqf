@@ -53,7 +53,13 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
     _mrk = createMarker [_x,_pos];
     _mrk setMarkerShape "ELLIPSE";
     _mrk setMarkerSize[_mSize,_mSize];
-    _mrk setMarkerColor "ColorRed";
+
+    _abandoned = server getVariable ["NATOabandoned",[]];
+    if(_mrk in _abandoned) then {
+        _mrk setMarkerColor "ColorRed";
+    }else{
+        _mrk setMarkerColor "ColorYellow";
+    };
 
     if(_stability < 50) then {
         _mrk setMarkerAlpha 1.0 - (_stability / 50);

@@ -39,63 +39,34 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["CRIMvers
 
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
 
-	_mobsters = [];
+	_count = 0;
+	_camps = 20;
+
+	server setVariable ["activemobsters",[],false];
+	_mobsters = server getVariable "activemobsters";
 	_t = 0;
-	for "_i" from 0 to 45 do {
-		_pp = [OT_centerPos,[0,20000]] call SHK_pos;
-		{
-			_pos = _x select 0;
-			_pos set [2,0];
-			if !(_pos isFlatEmpty  [-1, -1, 0.5, 10] isEqualTo []) then {
-				_ob = _pos call OT_fnc_nearestObjective;
-				_town = _pos call OT_fnc_nearestTown;
 
-				_obpos = _ob select 0;
-				_obdist = _obpos distance _pos;
+	private _positions = call compileFinal preprocessFileLineNumbers "data\bandits.sqf";
+	if((server getvariable ["OT_difficulty",1]) == 0) then {_camps = 10};
+	while {_count < _camps} do {
+		_pos = selectRandom _positions;
+		_mdist = 2000;
+		if(count _mobsters > 0) then {
+			_mdist = _pos distance ((_pos call OT_fnc_nearestMobster) select 0);
+		};
+		if(_mdist > 500) then {
+			_t = _t + 1;
+			_count = _count + 1;
+			_garrison = 4 + round(random 4);
 
-				_towndist = 500;
-				if (!isNil "_town") then {
-					if !(_town in (server getVariable ["NATOabandoned",[]])) then {
-						_stability = server getVariable format ["stability%1",_town];
-						_population = server getVariable format ["population%1",_town];
-						_towndist = (server getVariable _town) distance _pos;
-						if(_stability < 20) then {
-							_towndist = _towndist * 2;
-						};
-						if(_stability > 60) then {
-							_towndist = _towndist * 0.5;
-						};
-						if(_population < 160) then {
-							_towndist = _towndist * 2;
-						};
-					};
-				};
-
-				_control = _pos call OT_fnc_nearestCheckpoint;
-				_cdist = (getmarkerpos _control) distance _pos;
-
-				_mdist = 2000;
-				if(count _mobsters > 0) then {
-					_mdist = _pos distance ((_pos call OT_fnc_nearestMobster) select 0);
-				};
-
-				if(_obdist > 1000 and _towndist > 400 and _cdist > 800 and _mdist > 700) then {
-					_t = _t + 1;
-
-					_garrison = 4 + round(random 4);
-
-					_mobsters pushback [_pos,_t];
-					server setVariable ["activemobsters",_mobsters,false];
-					server setVariable [format["crimgarrison%1",_t],_garrison];
-					server setVariable [format["mobleader%1",_t],_pos];
-				};
-			};
-		}foreach (selectBestPlaces [_pp, 1200,"(1 + forest + trees) * (1 - houses) * (1 - sea)",10,600]);
-		if(_i == 20) then {
-			(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
+			_mobsters pushback [_pos,_t];
+			server setVariable [format["crimgarrison%1",_t],_garrison];
+			server setVariable [format["mobleader%1",_t],_pos];
 		};
 	};
-	diag_log format ["Overthrow: Generated %1 bandit camps",_t];
+	_positions = [];
+
+	diag_log format ["Overthrow: Generated %1 bandit camps",_count];
 	server setVariable ["activemobsters",_mobsters,true];
 };
 OT_CRIMInitDone = true;
@@ -126,11 +97,11 @@ while {true} do {
 
 					if ((typeName _leaderpos) == "ARRAY") then {
 						server setVariable [format ["timecrims%1",_x],_time+_sleeptime,false];
-						_chance = 20;
-						_max = 4;
+						_chance = 10;
+						_max = 3;
 						if(_town in (server getVariable ["NATOabandoned",[]])) then {
-							_chance = 80;
-							_max = 6;
+							_chance = 15;
+							_max = 5;
 						};
 
 						if(((random 100) < _chance) and _num < _max) then {

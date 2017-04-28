@@ -19,7 +19,7 @@ while {alive player} do {
 			_wanted = format["(%1) WANTED",_hiding];
 		}else{
 			_wanted = "WANTED";
-		};		
+		};
 	};
 	_standing = "";
 	_rep = player getVariable "rep";
@@ -32,18 +32,36 @@ while {alive player} do {
 	_seen = "";
 	if(player call unitSeenNATO) then {
 		_seen = "<t color='#5D8AA8'>o_o</t>";
-		if(_rep < -50) then {
-			_seen = "<t color='#5D8AA8'>O_O</t>";
+
+		_replim = 50;
+		_skill = player getVariable ["OT_stealth",0];
+		if(_skill == 1) then {_replim = 75};
+		if(_skill == 2) then {_replim = 100};
+		if(_skill == 3) then {_replim = 150};
+		if(_skill == 4) then {_replim = 200};
+		if(_skill < 5) then {
+			if(_rep < -_replim) then {
+				_seen = "<t color='#5D8AA8'>O_O</t>";
+			};
 		};
 	}else{
 		if(player call unitSeenCRIM) then {
 			_seen = "<t color='#B2282f'>o_o</t>";
-			if((abs _rep) > 50) then {
-				_seen = "<t color='#B2282f'>O_O</t>";
+			_totalrep = (abs _rep);
+			_replim = 50;
+			_skill = player getVariable ["OT_stealth",0];
+			if(_skill == 1) then {_replim = 75};
+			if(_skill == 2) then {_replim = 100};
+			if(_skill == 3) then {_replim = 150};
+			if(_skill == 4) then {_replim = 200};
+			if(_skill < 5) then {
+				if(_totalrep > _replim) then {
+					_seen = "<t color='#B2282f'>O_O</t>";
+				};
 			};
 		};
 	};
-	_txt = format ["<t size='0.9' align='right'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];		
+	_txt = format ["<t size='0.9' align='right'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];
 	_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
 	_setText ctrlCommit 0;
 	_currentTxt = _txt;

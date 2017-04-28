@@ -13,7 +13,15 @@ if (_key == 21) then
 				createDialog "OT_dialog_vehicleport";
 			}else{
 				[] spawn menuHandler;
-				if(count (groupSelectedUnits player) > 0) exitWith {
+				if(hcShownBar and count (hcSelected player) > 0) exitWith {
+					createDialog "OT_dialog_squad";
+				};
+				if(!hcShownBar and ({!isplayer _x} count (groupSelectedUnits player) > 0)) exitWith {
+					{
+						if(isPlayer _x) then {
+							player groupSelectUnit [_x,false];
+						};
+					}foreach(groupSelectedUnits player);
 					createDialog "OT_dialog_command";
 				};
 				if(vehicle player != player) exitWith {

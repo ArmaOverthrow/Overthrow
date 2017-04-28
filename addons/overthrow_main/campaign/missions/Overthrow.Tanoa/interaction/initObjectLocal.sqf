@@ -17,15 +17,31 @@ if(typeof _this == OT_item_Storage) then {
 	_this addAction ["Save Loadout", "actions\saveLoadout.sqf",nil,0,false,true,"",""];
 	_this addAction ["Restore Loadout", "UI\loadoutDialog.sqf",nil,0,false,true,"",""];
 	_this addAction ["Take From Warehouse", {
-		OT_warehouseTarget = _target;
+		private _iswarehouse = call OT_fnc_playerAtWarehouse;
+
+		if !(_iswarehouse) exitWith {
+			"No warehouse within range" call notify_minor;
+		};
+
+		OT_warehouseTarget = _this select 0;
 		closeDialog 0;
 		createDialog "OT_dialog_warehouse";
 		[] call warehouseDialog;
-	},nil,0,false,true,"",""];
+	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
 	_this addAction ["Store In Warehouse", {
-		OT_warehouseTarget = _target;
+		OT_warehouseTarget = _this select 0;
 		[] spawn transferTo;
-	},nil,0,false,true,"",""];
+	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
+	if(_this call OT_fnc_playerIsOwner) then {
+		_this addAction ["Lock", {
+			(_this select 0) setVariable ["OT_locked",true,true];
+			"Ammobox locked" call notify_minor;
+		},nil,0,false,true,"","!(_target getVariable ['OT_locked',false])"];
+		_this addAction ["Unlock", {
+			(_this select 0) setVariable ["OT_locked",false,true];
+			"Ammobox unlocked" call notify_minor;
+		},nil,0,false,true,"","(_target getVariable ['OT_locked',false])"];
+	};
 };
 if(typeof _this == OT_item_Safe) then {
 	_this addAction ["Put Money", "actions\putMoney.sqf",nil,0,false,true,"",""];

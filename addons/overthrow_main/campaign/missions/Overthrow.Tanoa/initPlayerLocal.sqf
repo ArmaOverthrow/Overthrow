@@ -209,11 +209,23 @@ if(isMultiplayer or _startup == "LOAD") then {
 
 	_squads = server getVariable ["squads",[]];
 	_newsquads = [];
+	_cc = 1;
 	{
 		_x params ["_owner","_cls","_group","_units"];
 		if(_owner == (getplayeruid player)) then {
 			if(typename _group != "GROUP") then {
+				_name = _cls;
+				if(count _x > 4) then {
+					_name = _x select 4;
+				}else{
+					{
+						if((_x select 0) == _cls) then {
+							_name = _x select 2;
+						};
+					}foreach(OT_Squadables);
+				};
 				_group = creategroup resistance;
+				_group setGroupIdGlobal [format["%1-%2",_name,_cc]];
 				{
 					_x params ["_type","_pos","_loadout"];
 					_civ = _group createUnit [_type,_pos,[],0,"NONE"];
@@ -222,10 +234,12 @@ if(isMultiplayer or _startup == "LOAD") then {
 					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				}foreach(_units);
 			};
-			player hcSetGroup [_group];
+			player hcSetGroup [_group,groupId _group,"teamgreen"];
+			_cc = _cc + 1;
 		};
 		_newsquads pushback [_owner,_cls,_group,[]];
 	}foreach (_squads);
+	player setVariable ["OT_squadcount",_cc,true];
 	server setVariable ["squads",_newsquads,true];
 };
 
@@ -344,17 +358,39 @@ player addEventHandler ["WeaponAssembled",{
 	};
 }];
 
+player addEventHandler ["InventoryOpened", {
+	_veh = _this select 1;
+	_ret = false;
+	if((_veh getVariable ["owner",""]) != (getplayeruid player)) then {
+		if(_veh getVariable ["OT_locked",false]) then {
+			_ret = true;
+			format["This inventory has been locked by %1",server getVariable "name"+(_veh getVariable ["owner",""])] call notify_minor;
+		};
+	};
+	_ret;
+}];
+
 player addEventHandler ["GetInMan",{
 	_unit = _this select 0;
 	_position = _this select 1;
 	_veh = _this select 2;
 	_notified = false;
 
+	call notify_vehicle;
+	private _isgen = call OT_fnc_playerIsGeneral;
+
 	if(_position == "driver") then {
 		if !(_veh call OT_fnc_hasOwner) then {
 			_veh setVariable ["owner",getplayeruid player,true];
 			_veh setVariable ["stolen",true,true];
 			[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call standing;
+		}else{
+			if((_veh getVariable ["owner",""]) != (getplayeruid player)) then {
+				if(!_isgen and (_veh getVariable ["OT_locked",false])) then {
+					moveOut player;
+					format["This vehicle has been locked by %1",server getVariable "name"+(_veh getVariable ["owner",""])] call notify_minor;
+				};
+			};
 		};
 	};
 	_g = _v getVariable ["vehgarrison",false];

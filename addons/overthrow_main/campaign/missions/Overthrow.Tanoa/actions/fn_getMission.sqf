@@ -54,14 +54,15 @@ _options pushback ["Accept",{
     [OT_currentMissionData select 6,OT_currentMissionFaction,OT_currentMissionFactionName] spawn (OT_currentMissionData select 2);
 }];
 
-_options pushback ["I'll get back to you",{
-    //Do nothing really
-}];
-
 _options pushback ["Decline",{
     //clear this mission so a new one will generate
     OT_currentMissionData = nil;
-    [] call OT_fnc_getMission;
+    _civ = OT_interactingWith;
+    [_civ getvariable ["faction",""],_civ getvariable ["factionrepname",""]] call OT_fnc_getMission;
+}];
+
+_options pushback ["Cancel",{
+    OT_currentMissionData = nil;
 }];
 
 _options spawn playerDecision;
