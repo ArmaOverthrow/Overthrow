@@ -9,6 +9,8 @@ if(typename _data != "ARRAY") exitWith {
 	"No save found, starting new game" remoteExec ["hint",bigboss,true];
 };
 
+private _cc = 0;
+
 {
 	_key = _x select 0;
 	_val = _x select 1;
@@ -46,6 +48,7 @@ if(typename _data != "ARRAY") exitWith {
 	if(_key == "vehicles") then {
 		if(typename _val == "ARRAY") then {
 			_set = false;
+			_ccc = 0;
 			{
 				_type = _x select 0;
 
@@ -69,6 +72,9 @@ if(typename _data != "ARRAY") exitWith {
 						}foreach(_dmg select 0);
 						if(count (_x select 7) > 2) then {
 							[_veh, (_x select 7) select 2] call ace_refuel_fnc_setFuel;
+						};
+						if(count (_x select 7) > 3) then {
+							_veh setVariable ["OT_locked",(_x select 7) select 3,true];
 						};
 					};
 
@@ -164,6 +170,10 @@ if(typename _data != "ARRAY") exitWith {
 						_mrkid setMarkerText format ["Camp %1",server getvariable [format["name%1",_owner],""]];
 					};
 				};
+				if(_ccc == 10) then {
+					_ccc = 0;
+					sleep 0.1;
+				};
 			}foreach(_val);
 		};
 	};
@@ -178,6 +188,11 @@ if(typename _data != "ARRAY") exitWith {
 			}foreach(_orig);
 		};
 		server setvariable [_key,_val,true];
+	};
+	_cc = _cc + 1;
+	if(_cc == 100) then {
+		_cc = 0;
+		sleep 0.1;
 	};
 }foreach(_data);
 sleep 0.1;

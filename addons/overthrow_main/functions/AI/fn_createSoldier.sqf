@@ -24,7 +24,7 @@ private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
 private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_civ,_fullname] remoteExec ["setCivName",0,false];
-
+_civ setRank "LIEUTENANT";
 
 [_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 

@@ -100,6 +100,7 @@ buildOnMouseMove = {
 		modeTarget setPos modeValue;
 		modeVisual setPos modeValue;
 		modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];
+		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
 
 		if(modeMode == 0) then {
 			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_item_Flag) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
@@ -158,10 +159,19 @@ buildMoveCam = {
 };
 
 buildOnKeyUp = {
+	_key = _this select 1;
+	if (_key == 42 or _key == 54) then {
+		//Shift
+		OT_shiftHeld = false;
+	};
 	if(_this select 2) then {
 		buildCamRotating = false;
 	};
 };
+
+OT_shiftHeld = false;
+
+buildRotation = 0;
 
 buildOnKeyDown = {
 	_key = _this select 1;
@@ -170,6 +180,10 @@ buildOnKeyDown = {
 		buildCamRotating = true;
 	};
 	call {
+		if (_key == 42 or _key == 54) exitWith {
+			//Shift
+			OT_shiftHeld = true;
+		};
 		if (_key == 17) exitWith {
 			//W
 			_handled = true;
@@ -196,7 +210,7 @@ buildOnKeyDown = {
 		};
 
 		if(isNull modeTarget) exitWith {};
-		_dir = getDir modeTarget;
+		_dir = buildRotation;
 
 		if(_key == 57 and modeMode == 1) exitWith {
 			//Space
@@ -222,6 +236,7 @@ buildOnKeyDown = {
 			_newdir = _dir - _amt;
 			if(_newdir < 0) then {_newdir = 359};
 			modeTarget setDir (_newdir);
+			buildRotation = _newDir;
 		};
 		if (_key == 18) exitWith {
 			//E
@@ -229,6 +244,7 @@ buildOnKeyDown = {
 			_newdir = _dir + _amt;
 			if(_newdir > 359) then {_newdir = 0};
 			modeTarget setDir (_newdir);
+			buildRotation = _newDir;
 		};
 	};
 	_handled
@@ -287,9 +303,11 @@ buildOnMouseUp = {
 				_clu enableDynamicSimulation true;
 			};
 			deleteVehicle modeVisual;
-
+			if(OT_shiftHeld) then {
+				modeSelected call build;
+			};
 		};
-		if(!isNull modeTarget and !canBuildHere) then {
+		if(!canBuildHere) then {
 			"You cannot build that there" call notify_minor;
 		};
 	};
@@ -368,10 +386,10 @@ build = {
 	modeVisual allowDamage false;
 	modeTarget setMass 0;
 	modeVisual setMass 0;
-	modeTarget setDir (getDir buildCam);
+	modeTarget setDir buildRotation;
 	modeTarget allowDamage false;
 
-	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom</t>",_name,[modePrice, 1, 0, true] call CBA_fnc_formatNumber,_description];
+	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom<br/>Shift = Build multiple</t>",_name,[modePrice, 1, 0, true] call CBA_fnc_formatNumber,_description];
 	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 

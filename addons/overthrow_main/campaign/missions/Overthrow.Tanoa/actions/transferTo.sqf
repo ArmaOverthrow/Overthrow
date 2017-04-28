@@ -45,10 +45,13 @@ private _doTransfer = {
 	};
 
 	_target = vehicle player;
+	if(_target == player) then {
+		_target = OT_warehouseTarget;
+	};
+
 	format["Transferring inventory to %1",_toname] call notify_minor;
 	[5,false] call progressBar;
 	sleep 5;
-	if(vehicle player != _target) exitWith {"You exited the vehicle" call notify_minor};
 	if(_iswarehouse) then {
 		{
 			_cls = _x select 0;

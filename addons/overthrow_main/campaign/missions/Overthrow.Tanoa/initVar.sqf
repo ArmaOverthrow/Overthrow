@@ -16,7 +16,7 @@ OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\transport
 OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\fugitive.sqf");
 
 OT_localMissions = [];
-OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\recon.sqf");
+//OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\recon.sqf");
 OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\medicalsupplies.sqf");
 OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\informant.sqf");
 OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\kill.sqf");
@@ -83,11 +83,14 @@ OT_fuelPumps = ["Land_FuelStation_02_pump_F","Land_FuelStation_01_pump_F","Land_
 
 OT_ferryDestinations = ["destination_1","destination_2","destination_3","destination_4","destination_5","destination_6"];
 
-_miscables = ["Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F","PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F"];
+OT_miscables = ["Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F",
+"PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F","ArrowDesk_L_F",
+"ArrowDesk_R_F","ArrowMarker_L_F","ArrowMarker_R_F","Pole_F","Land_RedWhitePole_F","RoadBarrier_F","RoadBarrier_small_F","RoadCone_F","RoadCone_L_F","Land_VergePost_01_F",
+"TapeSign_F","Land_WheelChock_01_F","Land_Sleeping_bag_F","Land_Sleeping_bag_blue_F","Land_WoodenLog_F","FlagChecked_F","FlagSmall_F","Land_LandMark_F","Land_Bollard_01_F"];
 
 if(OT_hasACE) then {
-	_miscables pushback "ACE_Wheel";
-	_miscables pushback "ACE_Track";
+	OT_miscables pushback "ACE_Wheel";
+	OT_miscables pushback "ACE_Track";
 };
 
 //Items you can place
@@ -97,7 +100,7 @@ OT_Placeables = [
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2],"Really big sandbags, basically."],
 	["Map",30,[OT_item_Map],[0,2,1.2],"Use these to save your game, change options or check town info."],
 	["Safe",50,[OT_item_Safe],[0,2,0.5],"Store and retrieve money"],
-	["Misc",30,_miscables,[0,3,1.2],"Various other items, including lights"]
+	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including lights"]
 ];
 
 //People you can recruit, and squads are composed of
@@ -118,12 +121,12 @@ OT_Recruitables = [
 ];
 
 OT_Squadables = [
-	["Sentry",[6,0]],
-	["Sniper Squad",[4,5]],
-	["AT Squad",[6,9,11,8]],
-	["AA Squad",[6,10,12,8]],
-	["Fire Team",[7,0,1,2,3,8]],
-	["Infantry Team",[7,0,1,2,3,8,9,10]]
+	["Sentry",[6,0],"SEN"],
+	["Sniper Squad",[4,5],"SNI"],
+	["AT Squad",[6,9,11,8],"AT"],
+	["AA Squad",[6,10,12,8],"AA"],
+	["Fire Team",[7,0,1,2,3,8],"FIR"],
+	["Infantry Team",[7,0,1,2,3,8,9,10],"INF"]
 ];
 OT_allSquads = [];
 {
@@ -740,7 +743,7 @@ OT_allAttachments = [];
 	_name = configName _x;
 	_m = getNumber(_x >> "mass");
 	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and _name != "NLAW_F") then {
-		_cost = round(_m * 1.5);
+		_cost = round(_m * 4);
 		_desc = getText(_x >> "descriptionShort");
 		if((_desc find "Smoke") > -1) then {
 			_cost = round(_m * 0.5);
@@ -751,6 +754,7 @@ OT_allAttachments = [];
 		if((_desc find "Grenade") > -1) then {
 			_cost = round(_m * 2);
 		};
+		if(_name == OT_ammo_50cal) then {_cost = 50};
 		if(isServer) then {
 			cost setVariable [_name,[_cost,0,0.1,0],true];
 		};

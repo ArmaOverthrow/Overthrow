@@ -29,12 +29,18 @@ if !([getpos player,_typecls] call OT_fnc_canPlace) exitWith {
 	};
 };
 
-modeValue = 0;
-modeTarget = objNULL;
+if(isNil "modeValue") then {
+	modeValue = 0;
+};
 
+modeTarget = objNULL;
+modeRedo = false;
+if(isNil "modeRotation") then {
+	modeRotation = 180;
+};
 
 if(_cost > 0) then {
-	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate<br/>Space = Change Type<br/>Enter = Done<br/>Esc = Cancel</t>",_typecls,[_cost, 1, 0, true] call CBA_fnc_formatNumber,_description];
+	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate<br/>Space = Change Type<br/>Enter = Done<br/>Shift = Rotate faster/Place multiple<br/>Esc = Cancel</t>",_typecls,[_cost, 1, 0, true] call CBA_fnc_formatNumber,_description];
 	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 
 
@@ -42,27 +48,32 @@ if(_cost > 0) then {
 		_handled = false;
 		_key = _this select 1;
 
-		_p = getDir modeTarget;
-		_v = getDir player;
-		_c = 360;
-
-		_dir = _c-((_c-_p)-(_c-_v));
-		if(_dir >= 360) then {_dir = _dir - 360};
+		_dir = modeRotation;
 
 		call {
+			if(_key == 19) exitWith {
+				//R
+
+			};
 			if (_key == 16) exitWith {
 				//Q
 				_handled = true;
-				_newdir = _dir - 1;
-				if(_newdir < 0) then {_newdir = 359};
+				_amt = 1;
+				if(_this select 2) then {_amt = 45};
+				_newdir = _dir - _amt;
+				if(_newdir < 0) then {_newdir = _newdir + 360};
 				modeTarget setDir (_newdir);
+				modeRotation = _newDir;
 			};
 			if (_key == 18) exitWith {
 				//E
 				_handled = true;
-				_newdir = _dir + 1;
-				if(_newdir > 359) then {_newdir = 0};
+				_amt = 1;
+				if(_this select 2) then {_amt = 45};
+				_newdir = _dir + _amt;
+				if(_newdir > 359) then {_newdir = _newdir - 360};
 				modeTarget setDir (_newdir);
+				modeRotation = _newDir;
 			};
 			if(_key == 57) exitWith {
 				//Space
@@ -79,7 +90,7 @@ if(_cost > 0) then {
 				if(_cls == "B_Boat_Transport_01_F") then {
 					_dir = _dir + 90;
 				};
-				modeTarget remoteExec ["enableSimulationGlobal false",2,false];
+				[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
 				if(_cls == OT_item_Map) then {
 					modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 				};
@@ -95,6 +106,9 @@ if(_cost > 0) then {
 				//Enter
 				_handled = true;
 				modeFinished = true;
+				if(_this select 2) then {
+					modeRedo = true;
+				};
 			};
 			if(_key == 1) exitWith {
 				//ESC
@@ -107,21 +121,17 @@ if(_cost > 0) then {
 	_cls = modeValues select modeValue;
 	_handlerId = (findDisplay 46) displayAddEventHandler ["KeyDown",_keyhandler];
 	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
-	modeTarget remoteExec ["enableSimulationGlobal false",2];
-	modeTarget enableSimulation false;
+	[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
 	if(_cls == OT_item_Map) then {
 		modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 	};
-	modeTarget enableSimulationGlobal false;
-
-
 	clearWeaponCargoGlobal modeTarget;
 	clearMagazineCargoGlobal modeTarget;
 	clearBackpackCargoGlobal modeTarget;
 	clearItemCargoGlobal modeTarget;
 
 	modeTarget attachTo [player,attachAt];
-
+	modeTarget setDir modeRotation;
 	if(_cls == "B_Boat_Transport_01_F") then {
 		_p = getDir modeTarget;
 		_v = getDir player;
@@ -146,8 +156,11 @@ if(_cost > 0) then {
 		if ([getpos player,_typecls] call OT_fnc_canPlace) then {
 			[-_cost] call money;
 			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
-			modeTarget remoteExec ["enableSimulationGlobal true",2];
-			modeTarget enableSimulation true;
+			if !((typeof modeTarget) in OT_miscables) then {
+				[modeTarget,true] remoteExec ["enableSimulationGlobal",2];
+			}else{
+				[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
+			};
 			modeTarget setVariable ["owner",getPlayerUID player,true];
 			modeTarget remoteExec["initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {
@@ -241,4 +254,8 @@ if(_cost > 0) then {
 modeTarget = nil;
 modeCancelled = nil;
 modeFinished = nil;
-modeValue = nil;
+if(modeRedo) then {
+	_typecls call placementMode;
+}else{
+	modeValue = nil;
+}

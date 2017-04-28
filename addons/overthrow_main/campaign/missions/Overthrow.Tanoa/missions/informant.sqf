@@ -50,9 +50,6 @@ if(random(100)>99) then {_difficulty = _difficulty + 1}; //random chance of a bi
     [_civ] joinSilent grpNull;
     [_civ] joinSilent _group;
 
-    //And not wanted
-    _civ setCaptive true;
-
     //Save him for access later
     player setVariable [format["informant%1",_faction],_civ,false];
 

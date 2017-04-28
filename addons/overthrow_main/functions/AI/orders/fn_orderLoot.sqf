@@ -3,6 +3,10 @@ private ["_sorted","_target","_deadguys","_wasincar","_unit","_t","_got","_timeo
 _sorted = [];
 private _myunits = groupSelectedUnits player;
 
+{
+    player groupSelectUnit [_x, false];
+} forEach (groupSelectedUnits player);
+
 _tt = _myunits select 0;
 if(vehicle _tt != _tt) then {
 	_sorted = [vehicle _tt];
@@ -19,7 +23,7 @@ private _target = _sorted select 0;
 
 format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
 
-{	
+{
 	[_x,_target] spawn {
 		private _active = true;
 		private _wasincar = false;
@@ -41,7 +45,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 		_unit doMove getpos _t;
 
 		_timeout = time + 120;
-		waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 2) or (_timeOut < time) or (unitReady _unit)};
+		waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 3) or (_timeOut < time) or (unitReady _unit)};
 		if(!alive _unit or (isNull _t) or (_timeOut < time)) exitWith {};
 
 		if !([_unit,_t] call dumpStuff) then {
@@ -66,7 +70,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			_unit doMove getpos _deadguy;
 			[_unit,1] call OT_fnc_experience;
 
-			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _deadguy < 2) or (_timeOut < time) or (unitReady _unit)};
+			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _deadguy < 3) or (_timeOut < time)};
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 
 			[_deadguy,_unit] call takeStuff;
@@ -88,7 +92,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 				}foreach(_unit nearentities ["WeaponHolderSimulated",10]);
 				if !(isNull _weapon) then {
 					_unit doMove getpos _weapon;
-					waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 2) or (_timeOut < time) or (unitReady _unit)};
+					waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 3) or (_timeOut < time)};
 					if(alive _unit and (_timeOut > time)) then {
 						_s = (weaponsItems _weapon) select 0;
 
@@ -107,7 +111,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			if(!alive _unit) exitWith {};
 			_timeout = time + 120;
 			_unit doMove getpos _t;
-			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 2) or (_timeOut < time) or (unitReady _unit)};
+			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 3) or (_timeOut < time)};
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 
 			if !([_unit,_t] call dumpStuff) exitWith {

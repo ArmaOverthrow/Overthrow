@@ -122,6 +122,110 @@ menuHandler = {};
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
 
+OT_fnc_generateBanditPositions = {
+	_num = 10;
+	_mobsters = [];
+	_t = 0;
+	for "_i" from 0 to _num do {
+		_pp = [OT_centerPos,[0,20000]] call SHK_pos;
+		{
+			_pos = _x select 0;
+			_pos set [2,0];
+			if !(_pos isFlatEmpty  [-1, -1, 0.5, 10] isEqualTo []) then {
+				_ob = _pos call OT_fnc_nearestObjective;
+				_town = _pos call OT_fnc_nearestTown;
+
+				_obpos = _ob select 0;
+				_obdist = _obpos distance _pos;
+
+				_towndist = 500;
+				if (!isNil "_town") then {
+					if !(_town in (server getVariable ["NATOabandoned",[]])) then {
+						_stability = server getVariable format ["stability%1",_town];
+						_population = server getVariable format ["population%1",_town];
+						_towndist = (server getVariable _town) distance _pos;
+						if(_stability < 20) then {
+							_towndist = _towndist * 2;
+						};
+						if(_stability > 60) then {
+							_towndist = _towndist * 0.5;
+						};
+						if(_population < 160) then {
+							_towndist = _towndist * 2;
+						};
+					};
+				};
+
+				_control = _pos call OT_fnc_nearestCheckpoint;
+				_cdist = (getmarkerpos _control) distance _pos;
+
+				_mdist = 2000;
+				if(_obdist > 1000 and _towndist > 400 and _cdist > 800 and _mdist > 700) then {
+					_mobsters pushback _pos;
+				};
+			};
+		}foreach (selectBestPlaces [_pp, 1200,"(1 + forest + trees) * (1 - houses) * (1 - sea)",10,600]);
+		hint format["Generated %1 positions",count _mobsters];
+	};
+	copyToClipboard format["%1",_mobsters];
+	hint format["Done! Generated %1 positions",count _mobsters];
+};
+
+OT_fnc_playerIsOwner = {
+	(_this getVariable ["owner",""]) == (getplayeruid player)
+};
+
+OT_fnc_playerAtWarehouse = {
+	private _iswarehouse = false;
+	_b = (position player) call OT_fnc_nearestRealEstate;
+	if(typename _b == "ARRAY") then {
+		_building = _b select 0;
+		if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+			_iswarehouse = true;
+		};
+	};
+	_iswarehouse
+};
+
+OT_fnc_lockVehicle = {
+	private _veh = vehicle player;
+	if((_veh getVariable ["owner",""]) != (getplayeruid player)) exitWith {};
+	if(_veh getVariable ["OT_locked",false]) then {
+		_veh setVariable ["OT_locked",false,true];
+		"Vehicle unlocked" call notify_minor;
+	}else{
+		_veh setVariable ["OT_locked",true,true];
+		"Vehicle locked" call notify_minor;
+	};
+};
+
+OT_fnc_squadAssignVehicle = {
+	_squad = (hcselected player) select 0;
+	_veh = cursorObject;
+	if((_veh isKindOf "Air") or (_veh isKindOf "Land") or (_veh isKindOf "Ship")) then {
+		_squad addVehicle _veh;
+		[] call OT_fnc_squadGetIn;
+		player hcSelectGroup [_squad,false];
+		format["%1 assigned to %2",(typeof _veh) call ISSE_Cfg_Vehicle_GetName,groupId _squad] call notify_minor;
+	};
+};
+
+OT_fnc_squadGetIn = {
+	{
+		_squad = _x;
+		(units _squad) orderGetIn true;
+		player hcSelectGroup [_squad,false];
+	}foreach(hcSelected player);
+};
+
+OT_fnc_squadGetOut = {
+	{
+		_squad = _x;
+		(units _squad) orderGetIn false;
+		player hcSelectGroup [_squad,false];
+	}foreach(hcSelected player);
+};
+
 OT_fnc_regionIsConnected = {
 	params ["_f","_t"];
 	private _por = "";
@@ -326,7 +430,7 @@ OT_fnc_getEconomicData = {
 
 OT_fnc_getBusinessPrice = {
 	private _data = _this call OT_fnc_getEconomicData;
-	private _baseprice = 400000;
+	private _baseprice = 300000;
 	if(count _data == 2) then {
 		//turns nothing into money
 		_baseprice = round(_baseprice * 1.8);
@@ -343,6 +447,9 @@ OT_fnc_getBusinessPrice = {
 		if((_data select 2) == "" and (_data select 3) != "") then {
 			if((_data select 3) == "OT_Steel") then {
 				_baseprice = round(_baseprice * 2.4);
+			};
+			if((_data select 3) == "OT_Sugarcane") then {
+				_baseprice = round(_baseprice * 0.4);
 			};
 		};
 	};
@@ -712,6 +819,11 @@ notify_big = {
 notify_minor = {
     _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this];
 	OT_notifies pushback _txt;
+};
+
+notify_vehicle = {
+	_txt = format["<t align='left' size='1.2' color='#ffffff'>%1</t><br/><t size='0.5' color='#bbbbbb' align='left'>Owner: %2</t>",(typeof vehicle player) call ISSE_Cfg_Vehicle_GetName,server getVariable "name"+((vehicle player) getVariable ["owner",""])];
+    [_txt, -0.5, 1, 5, 1, 0, 5] spawn bis_fnc_dynamicText;
 };
 
 notify_long = {
