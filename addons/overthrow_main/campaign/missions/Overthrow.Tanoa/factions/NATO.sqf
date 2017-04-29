@@ -246,7 +246,7 @@ while {true} do {
 				if !(_name in _abandoned) then {
 					if(_pos call OT_fnc_inSpawnDistance) then {
 						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-						_numres = {side _x == resistance} count (_pos nearObjects ["CAManBase",200]);
+						_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",200]);
 						if(_nummil < 3 and _numres > 0) then {
 							_garrisoned = true;
 							server setVariable ["NATOattacking",_name,true];

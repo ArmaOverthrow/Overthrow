@@ -10,6 +10,8 @@ if (!isMultiplayer) exitWith {};
 
 call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
+OT_varInitDone = true;
+publicVariable "OT_varInitDone";
 
 if(OT_fastTime) then {
     setTimeMultiplier 4;
