@@ -38,6 +38,8 @@ if(isMultiplayer and (!isServer)) then {
 
     call compile preprocessFileLineNumbers "initFuncs.sqf";
     call compile preprocessFileLineNumbers "initVar.sqf";
+}else{
+	OT_varInitDone = true;
 };
 
 _start = [1385.17,505.453,1.88826];
@@ -53,7 +55,7 @@ introcam = _introcam;
 
 
 if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
-    waitUntil {!(isnull (findDisplay 46))};
+    waitUntil {!(isnull (findDisplay 46)) and OT_varInitDone};
     sleep 1;
     _nul = createDialog "OT_dialog_start";
 }else{
