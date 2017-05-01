@@ -58,7 +58,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Katkoula","Lailai","Taga","Bua Bua","Blerick","Moddergat","Tobakoro"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn
 
-OT_NATOwait = 30; //Half the Average time between NATO orders
+OT_NATOwait = 300; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house

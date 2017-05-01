@@ -19,27 +19,23 @@ if(_typecls != "Base") then {
 			};
 		};
 	};
-	if !(_canplace) then {
-		if(_pos distance OT_factoryPos < 250) then {
-			if("Factory" in (server getVariable ["GEURowned",[]])) then {
-				_isbase = true;
-				_canplace = true;
-			};
+	if(_pos distance OT_factoryPos < 250) then {
+		if("Factory" in (server getVariable ["GEURowned",[]])) then {
+			_isbase = true;
+			_canplace = true;
 		};
 	};
-	if !(_canplace) then {
-		_base = _pos call OT_fnc_nearestBase;
-		if !(isNil "_base") then {
-			if((_base select 0) distance _pos < 100) then {
-				_isbase = true;
-			};
+	_base = _pos call OT_fnc_nearestBase;
+	if !(isNil "_base") then {
+		if((_base select 0) distance _pos < 100) then {
+			_isbase = true;
 		};
-		if(!_isbase) then {
-			_base = _pos call OT_fnc_nearestObjective;
-			if !(isNil "_base") then {
-				if(((_base select 1) in (server getvariable "NATOabandoned")) and ((_base select 0) distance _pos) < 100) then {
-					_isbase = true;
-				};
+	};
+	if(!_isbase) then {
+		_base = _pos call OT_fnc_nearestObjective;
+		if !(isNil "_base") then {
+			if(((_base select 1) in (server getvariable "NATOabandoned")) and ((_base select 0) distance _pos) < 100) then {
+				_isbase = true;
 			};
 		};
 	};
