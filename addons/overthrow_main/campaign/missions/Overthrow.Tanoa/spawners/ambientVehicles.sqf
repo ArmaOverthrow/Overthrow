@@ -65,13 +65,18 @@ while {(_count < _numVeh)} do {
 						}else{
 							_moveto = getpos(_bdg);
 						};
-						_wp = _group addWaypoint [_moveto,0];
+						if(!isNil "_moveto") then {
+							_wp = _group addWaypoint [_moveto,0];
 
-						_wp setWaypointType "MOVE";
-						_wp setWaypointSpeed "LIMITED";
-						_wp setWaypointBehaviour "SAFE";
-						_wp setWaypointCompletionRadius 60;
-						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+							_wp setWaypointType "MOVE";
+							_wp setWaypointSpeed "LIMITED";
+							_wp setWaypointBehaviour "SAFE";
+							_wp setWaypointCompletionRadius 60;
+							_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+						}else{
+							_group spawn OT_fnc_cleanup;
+							_veh spawn OT_fnc_cleanup;
+						};
 					}else{
 						if(_town == (server getVariable "spawntown") and (random 100) > 75) then {
 							_veh setDamage [1,false]; //salvage wreck
