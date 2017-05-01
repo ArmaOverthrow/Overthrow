@@ -217,8 +217,8 @@ while {true} do {
 			{
 				if(side _x == west) then {
 					_lead = (units _x) select 0;
-					if(_lead getVariable ["garrison",""] == "HQ") then {
-						if(vehicle _lead != _lead) then {
+					if((_lead getVariable ["garrison",""]) == "HQ") then {
+						if((vehicle _lead) != _lead) then {
 							[vehicle _lead] spawn OT_fnc_cleanup;
 						};
 						[_x] spawn OT_fnc_cleanup;
@@ -446,14 +446,17 @@ while {true} do {
 		_pos = _x select 0;
 		_name = _x select 1;
 		if !(_name in _abandoned) then {
-			_garrison = server getvariable format["garrison%1",_name];
-			if(_garrison < 2) then {
-				_abandoned pushback _name;
-				server setVariable ["NATOabandoned",_abandoned,true];
-				_name setMarkerColor "ColorGUER";
-				_t = _pos call OT_fnc_nearestTown;
-				format["We have captured the %1 tower",_name] remoteExec ["notify_good",0,false];
-				_resources = _resources - 100;
+			if(_pos call OT_fnc_inSpawnDistance) then {
+				_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
+				_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
+				if(_nummil < 3 and _numres > 0) then {
+					_abandoned pushback _name;
+					server setVariable ["NATOabandoned",_abandoned,true];
+					_name setMarkerColor "ColorGUER";
+					_t = _pos call OT_fnc_nearestTown;
+					format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
+					_resources = _resources - 100;
+				};
 			};
 		};
 	}foreach(OT_NATOcomms);

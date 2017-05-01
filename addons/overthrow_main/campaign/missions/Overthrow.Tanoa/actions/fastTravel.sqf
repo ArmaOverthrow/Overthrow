@@ -29,19 +29,6 @@ openMap true;
 		if([_pos,"Misc"] call OT_fnc_canPlace) then {
 			_handled = true;
 		};
-
-		_ob = _pos call OT_fnc_nearestLocation;
-
-		_ob params ["_obpos","_obtype","_data"];
-		if (_obtype == "Business") then {
-			_p = _data select 0;
-			if(_pos distance _p < 50) then {
-				_name = _data select 1;
-				if(_name in (server getvariable ["GEURowned",[]])) then {
-					_handled = true;
-				};
-			};
-		};
 	};
 
 
@@ -53,9 +40,11 @@ openMap true;
 	_validob = (_obpos distance _pos < 50) and (_obname in OT_allAirports);
 	if !(_validob) then {
 		if (!OT_adminMode and !(_pos inArea _region)) then {
-			_valid = false;
-			"You cannot fast travel between islands unless your destination is a controlled airfield" call notify_minor;
-			openMap false;
+			if !([_region,_pos] call OT_fnc_regionIsConnected) then {
+				_valid = false;
+				"You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield" call notify_minor;
+				openMap false;
+			};
 		};
 	};
 	if(!_valid) exitWith {};

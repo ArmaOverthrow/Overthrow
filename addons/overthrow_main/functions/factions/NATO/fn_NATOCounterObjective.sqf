@@ -21,5 +21,6 @@ _success = {
 	_abandoned deleteAt (_abandoned find _objective);
 	_count = {(_x getVariable ["garrison",""]) == _objective} count (allunits);
 	server setVariable [format["garrison%1",_objective],_count,true];
+	_objective setMarkerType "flag_NATO";
 };
 [_posObjective,_strength,_success,_fail,[_tskid,_objective],_objective] spawn OT_fnc_NATOQRF;

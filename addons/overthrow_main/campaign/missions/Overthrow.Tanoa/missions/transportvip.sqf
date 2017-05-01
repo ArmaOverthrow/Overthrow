@@ -17,8 +17,8 @@ if((random 100) > 50) then { // 50/50 chance of either
     _pickup = [[[getMarkerPos format["port_%1", ceil(random 2)],80]]] call BIS_fnc_randomPos;
     _pickupTown = _pickup call OT_fnc_nearestTown;
 
-    //Destination is the town closest to the player right now
-    _destinationTown = (getpos player) call OT_fnc_nearestTown;
+    //Destination is a random town
+    _destinationTown = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
     _posTown = server getVariable _destinationTown;
 
     //Pick a random small house as the dropoff
@@ -27,8 +27,8 @@ if((random 100) > 50) then { // 50/50 chance of either
     _type = "insertion";
 }else{
     //Extraction
-    //Pickup will be the closest town to the player right now
-    _pickupTown = (getpos player) call OT_fnc_nearestTown;
+    //Pickup will be a random town
+    _pickupTown = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
     _posTown = server getVariable _pickupTown;
     _pickup = [[[_posTown,200]]] call BIS_fnc_randomPos;
 
