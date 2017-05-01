@@ -212,6 +212,7 @@ waitUntil {
 	(_numalive < 4) or (time > _timeout) or (_numin > 4)
 };
 
+private _force = spawner getVariable["NATOattackforce",[]];
 {
 	_target = leader _x;
 	{
@@ -267,8 +268,8 @@ while {sleep 5;time < _timeout and !_won} do {
 			if(side _x == west) then {
 				if(count (units _x) > 0) then {
 					_lead = (units _x) select 0;
-					if(_lead getVariable ["garrison",""] == "HQ") then {
-						if(vehicle _lead != _lead) then {
+					if((_lead getVariable ["garrison",""]) == "HQ") then {
+						if((vehicle _lead) != _lead) then {
 							[vehicle _lead] spawn OT_fnc_cleanup;
 						}else{
 							if((getpos _lead) call OT_fnc_inSpawnDistance) then {

@@ -209,6 +209,7 @@ if(_cost > 0) then {
 			if(_typecls == "Camp") then {
 				_mrkid = format["%1-camp",getplayeruid player];
 				createMarker [_mrkid,getpos modeTarget];
+				_mrkid setMarkerPos (getpos modeTarget);
 				_camp = player getVariable["camp",[]];
 				if(count _camp > 0) then {
 					{

@@ -12,7 +12,8 @@ OT_economicData = [
     [[11921.1,10206.5,0],"Red Spring Surface Mine","","OT_Steel"],
     [[12383,14135.3,0],"Ravi-ta Island Resort"],
     [[4687.63,3590.75,0],"Katkoula Sugar Plantations","","OT_Sugarcane"],
-    [[8026.38,8946.16,0],"Lifou Sugar Plantations","","OT_Sugarcane"]
+    [[8026.38,8946.16,0],"Lifou Sugar Plantations","","OT_Sugarcane"],
+    [[12445.6,3982.46,0],"Saioko Lumberyard","","OT_Wood"]
 ];
 OT_factoryPos = [4226.49,8370.82,0];
 OT_factoryVehicleSpawn = [4265.64,8400.65,0];

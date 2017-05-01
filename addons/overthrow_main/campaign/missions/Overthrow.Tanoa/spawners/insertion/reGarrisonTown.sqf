@@ -2,7 +2,7 @@ private _town = _this;
 private _townPos = server getVariable _town;
 
 private _stability = server getVariable format["stability%1",_town];
-private _region = server getVariable format["region_%1",_town];
+private _region = server getVariable [format["region_%1",_town],"fake_region"];
 
 private _police = [];
 private _support = [];
@@ -30,6 +30,14 @@ private _attacking = server getVariable["NATOattacking",""];
 }foreach(OT_NATOobjectives);
 
 if(!isNil "_close") then {
+	if((_close distance _townPos) > 2000) then {
+		_closestTown = [_townPos,true] call OT_fnc_nearestTown;
+		if !(_closestTown in _abandoned) then {
+			_close = server getVariable _closestTown;
+			_closest = _closestTown;
+		};
+	};
+
 	_current = server getVariable [format ["garrison%1",_town],0];
 	server setVariable [format ["garrison%1",_town],_current+4,true];
 	if !(_townPos call OT_fnc_inSpawnDistance) exitWith {};
@@ -65,7 +73,7 @@ if(!isNil "_close") then {
 	[_civ,_town] call OT_fnc_initGendarm;
 	_civ setBehaviour "SAFE";
 
-	sleep 5;
+	sleep 1;
 
 	_group call OT_fnc_initGendarmPatrol;
 	_group call distributeAILoad;

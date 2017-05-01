@@ -25,6 +25,7 @@ _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
 
 _doTransfer = {
+	private _veh = vehicle player;
 	private _target = _this;
 	private _toname = (typeof _target) call ISSE_Cfg_Vehicle_GetName;
 	private _iswarehouse = (_target isKindOf "OT_warehouse");

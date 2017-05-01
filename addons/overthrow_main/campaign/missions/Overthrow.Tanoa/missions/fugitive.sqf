@@ -6,7 +6,7 @@ private _title = "";
 
 //Here is where we might randomize the parameters a bit
 private _abandoned = server getVariable ["NATOabandoned",[]];
-_destinationName = selectRandom (OT_allTowns - _abandoned);
+_destinationName = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
 private _posTown = server getVariable [_destinationName,[]];
 
 _building = [_posTown,OT_gunDealerHouses] call OT_fnc_getRandomBuilding;

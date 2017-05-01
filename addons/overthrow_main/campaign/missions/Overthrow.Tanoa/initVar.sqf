@@ -26,7 +26,7 @@ OT_currentMissionFaction = "";
 OT_rankXP = [100,250,500,1000,4000,10000,100000];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 11;
+OT_economyVersion = 12;
 OT_NATOversion = 7;
 OT_CRIMversion = 1;
 OT_adminMode = false;
@@ -55,10 +55,10 @@ OT_flag_CRIM = "Flag_Syndikat_F";
 
 OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck_F","Land_Wreck_Car2_F","Land_Wreck_Car_F","Land_Wreck_Hunter_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad2_F","Land_Wreck_UAZ_F","Land_Wreck_Truck_dropside_F"]; //rekt
 
-OT_spawnTowns = ["Rautake","Tavu","Balavu","Muaceba","Katkoula","Savaka"]; //Towns where new players will spawn
+OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Katkoula","Lailai","Taga","Bua Bua","Blerick","Moddergat","Tobakoro"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn
 
-OT_NATOwait = 300; //Half the Average time between NATO orders
+OT_NATOwait = 30; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house

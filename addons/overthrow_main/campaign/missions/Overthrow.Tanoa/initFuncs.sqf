@@ -232,9 +232,13 @@ OT_fnc_regionIsConnected = {
 	private _region = "";
 	if((typename _f) == "ARRAY") then {
 		_por = _f call OT_fnc_getRegion;
+	}else{
+		_por = _f;
 	};
 	if((typename _t) == "ARRAY") then {
 		_region = _t call OT_fnc_getRegion;
+	}else{
+		_region = _t;
 	};
 	if(_por == _region) exitWith {true};
 	private _ret = false;
@@ -497,6 +501,7 @@ OT_fnc_initRecruit = {
 
 	_civ setSkill 1.0;
 	_civ setRank "PRIVATE";
+	_civ setVariable ["NOAI",false,true];
 
 	_civ spawn wantedSystem;
 
