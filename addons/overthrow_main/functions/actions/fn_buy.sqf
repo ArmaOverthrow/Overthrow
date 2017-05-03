@@ -9,12 +9,12 @@ _price = lbValue [1500,_idx];
 if(_price == -1) exitWith {};
 
 _money = player getVariable "money";
-if(_money < _price) exitWith {"You cannot afford that!" call notify_minor};
+if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
 call {
 	if(_cls == "Set_HMG") exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,"C_Quadbike_01_F"];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 		_veh = "C_Quadbike_01_F" createVehicle _pos;
@@ -27,7 +27,7 @@ call {
 		_veh addBackpackCargoGlobal ["I_HMG_01_support_high_F", 1];
 
 		player reveal _veh;
-		format["You bought a Quad Bike w/ HMG for $%1",_price] call notify_minor;
+		format["You bought a Quad Bike w/ HMG for $%1",_price] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 	};
 	if(OT_interactingWith getVariable ["factionrep",false] and ((_cls isKindOf "Land") or (_cls isKindOf "Air"))) exitWith {
@@ -36,7 +36,7 @@ call {
 			_blueprints pushback _cls;
 			server setVariable ["GEURblueprints",_blueprints,true];
 			_factionName = OT_interactingWith getVariable ["factionrepname",""];
-			format["%1 has bought %2 blueprint from %3",name player,_cls call ISSE_Cfg_Vehicle_GetName,_factionName] remoteExec ["notify_minor",0,false];
+			format["%1 has bought %2 blueprint from %3",name player,_cls call ISSE_Cfg_Vehicle_GetName,_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
 			closeDialog 0;
 		};
 	};
@@ -48,7 +48,7 @@ call {
 	};
 	if(_cls == OT_item_UAV) exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 
@@ -71,13 +71,13 @@ call {
 		player connectTerminalToUAV _veh;
 
 		player reveal _veh;
-		format["You bought a Quadcopter",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+		format["You bought a Quadcopter",_cls call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
 	};
 	if(_cls in OT_allVehicles) exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 		_veh = _cls createVehicle _pos;
@@ -88,12 +88,12 @@ call {
 		clearItemCargoGlobal _veh;
 
 		player reveal _veh;
-		format["You bought a %1 for $%2",_cls call ISSE_Cfg_Vehicle_GetName,_price] call notify_minor;
+		format["You bought a %1 for $%2",_cls call ISSE_Cfg_Vehicle_GetName,_price] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls isKindOf "Ship") exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 		_veh = _cls createVehicle _pos;
@@ -104,7 +104,7 @@ call {
 		clearItemCargoGlobal _veh;
 
 		player reveal _veh;
-		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls in OT_allClothing) exitWith {
@@ -112,7 +112,7 @@ call {
 
 		if((backpack player != "") and (player canAdd _cls)) then {
 			player addItemToBackpack _cls;
-			"Clothing added to your backpack" call notify_minor;
+			"Clothing added to your backpack" call OT_fnc_notifyMinor;
 		}else{
 			player forceAddUniform _cls;
 		};
@@ -123,7 +123,7 @@ call {
 
 		if((backpack player != "") and (player canAdd _cls)) then {
 			player addItemToBackpack _cls;
-			"Rebreather added to your backpack" call notify_minor;
+			"Rebreather added to your backpack" call OT_fnc_notifyMinor;
 		}else{
 			player addVest _cls;
 		};
@@ -151,9 +151,9 @@ call {
 	};
 	_handled = true;
 	if(_cls isKindOf "Bag_Base") then {
-		if(backpack player != "") exitWith {"You already have a backpack" call notify_minor;_handled = false};
+		if(backpack player != "") exitWith {"You already have a backpack" call OT_fnc_notifyMinor;_handled = false};
 	}else{
-		if !(player canAdd [_cls,1]) exitWith {"There is not enough room in your inventory" call notify_minor;_handled = false};
+		if !(player canAdd [_cls,1]) exitWith {"There is not enough room in your inventory" call OT_fnc_notifyMinor;_handled = false};
 	};
 
 	if(_handled) then {

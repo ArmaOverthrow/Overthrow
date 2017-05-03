@@ -25,7 +25,7 @@ if(_veh == player) then {
 	};
 };
 if(_veh == player) exitWith {
-	"No warehouse within range" call notify_minor;
+	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 
 while {_count < _num} do {

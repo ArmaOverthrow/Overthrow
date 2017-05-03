@@ -15,15 +15,15 @@ if !(_wpn getVariable ["actioned",false]) then {
 			_p removeMagazineGlobal OT_ammo_50cal;
 			_p removeMagazineGlobal OT_ammo_50cal;
 			_w spawn {					
-				"Rearming MG..." call notify_minor;
+				"Rearming MG..." call OT_fnc_notifyMinor;
 				[15,false] call progressBar;
 				sleep 15;
 				[_this,1] remoteExec ["setVehicleAmmoDef",_this,_this];
-				"MG rearmed" call notify_minor;
+				"MG rearmed" call OT_fnc_notifyMinor;
 				disableUserInput false;
 			};				
 		}else{
-			"You need 4 x 12.7mm M2 HMG Belts to rearm this MG" call notify_minor;
+			"You need 4 x 12.7mm M2 HMG Belts to rearm this MG" call OT_fnc_notifyMinor;
 		};			
 	},[],1.5,false,true,"","(alive _target)",5];
 	_wpn setVariable ["actioned",true,false];

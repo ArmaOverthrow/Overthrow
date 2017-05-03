@@ -37,13 +37,9 @@ gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf
 resistanceScreen = compileFinal preprocessFileLineNumbers "UI\fn_resistanceDialog.sqf";
 OT_fnc_resistanceDialog = resistanceScreen;
 OT_fnc_mapInfoDialog = compileFinal preprocessFileLineNumbers "actions\townInfo.sqf";
-OT_fnc_showMemberInfo = compileFinal preprocessFileLineNumbers "UI\actions\fn_showMemberInfo.sqf";
-OT_fnc_showBusinessInfo = compileFinal preprocessFileLineNumbers "UI\actions\fn_showBusinessInfo.sqf";
 OT_fnc_factoryDialog = compileFinal preProcessFileLineNumbers "UI\fn_factoryDialog.sqf";
 OT_fnc_reverseEngineerDialog = compileFinal preProcessFileLineNumbers "UI\fn_reverseEngineerDialog.sqf";
 OT_fnc_vehicleDialog = compileFinal preProcessFileLineNumbers "UI\fn_vehicleDialog.sqf";
-OT_fnc_factoryRefresh = compileFinal preProcessFileLineNumbers "UI\actions\fn_factoryRefresh.sqf";
-OT_fnc_factorySet = compileFinal preProcessFileLineNumbers "UI\actions\fn_factorySet.sqf";
 OT_fnc_newGameDialog = compileFinal preProcessFileLineNumbers "UI\fn_newGameDialog.sqf";
 OT_fnc_optionsDialog = compileFinal preProcessFileLineNumbers "UI\fn_optionsDialog.sqf";
 
@@ -65,41 +61,16 @@ initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObject
 initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
 
 //Actions
-buy = compileFinal preProcessFileLineNumbers "actions\buy.sqf";
-sell = compileFinal preProcessFileLineNumbers "actions\sell.sqf";
-sellall = compileFinal preProcessFileLineNumbers "actions\sellall.sqf";
-workshopAdd = compileFinal preProcessFileLineNumbers "actions\workshopAdd.sqf";
-buyBuilding = compileFinal preProcessFileLineNumbers "actions\buyBuilding.sqf";
 leaseBuilding = compileFinal preProcessFileLineNumbers "actions\leaseBuilding.sqf";
-recruitCiv = compileFinal preProcessFileLineNumbers "actions\recruitCiv.sqf";
-rearmGroup = compileFinal preProcessFileLineNumbers "actions\rearmGroup.sqf";
 recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
 recruitSquad = compileFinal preProcessFileLineNumbers "actions\recruitSquad.sqf";
-fastTravel = compileFinal preProcessFileLineNumbers "actions\fastTravel.sqf";
 setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
-giveMoney = compileFinal preProcessFileLineNumbers "actions\giveMoney.sqf";
-saveGamePersistent = compileFinal preProcessFileLineNumbers "actions\saveGame.sqf";
-loadGamePersistent = compileFinal preProcessFileLineNumbers "actions\loadGame.sqf";
 getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
-transferFrom = compileFinal preProcessFileLineNumbers "actions\transferFrom.sqf";
-transferTo = compileFinal preProcessFileLineNumbers "actions\transferTo.sqf";
-transferLegit = compileFinal preProcessFileLineNumbers "actions\transferLegit.sqf";
-takeLegit = compileFinal preProcessFileLineNumbers "actions\takeLegit.sqf";
-talkToCiv = compileFinal preProcessFileLineNumbers "actions\talkToCiv.sqf";
 addPolice = compileFinal preProcessFileLineNumbers "actions\addPolice.sqf";
-warehouseTake = compileFinal preProcessFileLineNumbers "actions\warehouseTake.sqf";
 exportAll = compileFinal preProcessFileLineNumbers "actions\exportAll.sqf";
 import = compileFinal preProcessFileLineNumbers "actions\import.sqf";
 restoreLoadout = compileFinal preProcessFileLineNumbers "actions\restoreLoadout.sqf";
 removeLoadout = compileFinal preProcessFileLineNumbers "actions\removeLoadout.sqf";
-OT_fnc_getMission = compileFinal preProcessFileLineNumbers "actions\fn_getMission.sqf";
-OT_fnc_getLocalMission = compileFinal preProcessFileLineNumbers "actions\fn_getLocalMission.sqf";
-OT_fnc_salvageWreck = compileFinal preProcessFileLineNumbers "actions\fn_salvageWreck.sqf";
-
-OT_fnc_takeFunds = compileFinal preProcessFileLineNumbers "UI\actions\fn_takeFunds.sqf";
-OT_fnc_giveFunds = compileFinal preProcessFileLineNumbers "UI\actions\fn_giveFunds.sqf";
-OT_fnc_transferFunds = compileFinal preProcessFileLineNumbers "UI\actions\fn_transferFunds.sqf";
-OT_fnc_makeGeneral = compileFinal preProcessFileLineNumbers "UI\actions\fn_makeGeneral.sqf";
 
 
 //Modes
@@ -192,10 +163,10 @@ OT_fnc_lockVehicle = {
 	if((_veh getVariable ["owner",""]) != (getplayeruid player)) exitWith {};
 	if(_veh getVariable ["OT_locked",false]) then {
 		_veh setVariable ["OT_locked",false,true];
-		"Vehicle unlocked" call notify_minor;
+		"Vehicle unlocked" call OT_fnc_notifyMinor;
 	}else{
 		_veh setVariable ["OT_locked",true,true];
-		"Vehicle locked" call notify_minor;
+		"Vehicle locked" call OT_fnc_notifyMinor;
 	};
 };
 
@@ -206,7 +177,7 @@ OT_fnc_squadAssignVehicle = {
 		_squad addVehicle _veh;
 		[] call OT_fnc_squadGetIn;
 		player hcSelectGroup [_squad,false];
-		format["%1 assigned to %2",(typeof _veh) call ISSE_Cfg_Vehicle_GetName,groupId _squad] call notify_minor;
+		format["%1 assigned to %2",(typeof _veh) call ISSE_Cfg_Vehicle_GetName,groupId _squad] call OT_fnc_notifyMinor;
 	};
 };
 
@@ -267,7 +238,7 @@ OT_fnc_increaseTax = {
 	_rate = _rate + 5;
 	if(_rate > 100) then {_rate = 100};
 	server setVariable ["taxrate",_rate,true];
-	format["Tax rate is now %1%2",_rate,"%"] call notify_minor;
+	format["Tax rate is now %1%2",_rate,"%"] call OT_fnc_notifyMinor;
 };
 
 OT_fnc_decreaseTax = {
@@ -275,7 +246,7 @@ OT_fnc_decreaseTax = {
 	_rate = _rate - 5;
 	if(_rate < 0) then {_rate = 0};
 	server setVariable ["taxrate",_rate,true];
-	format["Tax rate is now %1%2",_rate,"%"] call notify_minor;
+	format["Tax rate is now %1%2",_rate,"%"] call OT_fnc_notifyMinor;
 };
 
 OT_fnc_hireEmployee = {
@@ -366,7 +337,7 @@ OT_fnc_reverseEngineer = {
 		_blueprints pushBack _cls;
 		server setVariable ["GEURblueprints",_blueprints,true];
 		closeDialog 0;
-		"Item is now available for production" call notify_minor;
+		"Item is now available for production" call OT_fnc_notifyMinor;
 
 		if(!(_cls isKindOf "Bag_Base") and _cls isKindOf "AllVehicles") then {
 			private _veh = OT_factoryPos nearestObject _cls;
@@ -375,7 +346,7 @@ OT_fnc_reverseEngineer = {
 			player removeItem _cls;
 		};
 	}else{
-		"Cannot reverse-engineer this item, please contact Overthrow Devs on Discord" call notify_minor;
+		"Cannot reverse-engineer this item, please contact Overthrow Devs on Discord" call OT_fnc_notifyMinor;
 	};
 };
 
@@ -640,7 +611,7 @@ standing = {
     player setVariable ["rep",_totalrep,true];
 
 	if(count _this > 2) then {
-		format["%1 (%2 %3)",_this select 2,_this select 1,_town] call notify_minor;
+		format["%1 (%2 %3)",_this select 2,_this select 1,_town] call OT_fnc_notifyMinor;
 	};
 };
 
@@ -683,7 +654,7 @@ influence = {
     if(_this > 0) then {
         _plusmin = "+";
     };
-    format["%1%2 Influence",_plusmin,_this] call notify_minor;
+    format["%1%2 Influence",_plusmin,_this] call OT_fnc_notifyMinor;
 };
 
 influenceSilent = {
@@ -749,9 +720,9 @@ money = {
         _plusmin = "+";
     };
 	if(count _this > 1) then {
-		format["%3: %1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber,_this select 1] call notify_minor;
+		format["%3: %1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber,_this select 1] call OT_fnc_notifyMinor;
 	}else{
-		format["%1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber] call notify_minor;
+		format["%1$%2",_plusmin,[_amount, 1, 0, true] call CBA_fnc_formatNumber] call OT_fnc_notifyMinor;
 	};
 };
 
@@ -801,44 +772,6 @@ stability = {
 		_townmrk setMarkerAlpha 0;
 		_townmrk setMarkerAlphaLocal 0;
 	};
-};
-
-OT_notifies = [];
-
-notify = {
-    _txt = format ["<t size='0.8' color='#ffffff'>%1</t>",_this];
-	OT_notifies pushback _txt;
-};
-
-notify_good = {
-    playSound "3DEN_notificationDefault";
-    _txt = format ["<t size='0.6' color='#ffffff'>%1</t>",_this];
-	OT_notifies pushback _txt;
-};
-
-notify_big = {
-    _txt = format ["<t size='0.7' color='#ffffff'>%1</t>",_this];
-	OT_notifies pushback _txt;
-};
-
-notify_minor = {
-    _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this];
-	OT_notifies pushback _txt;
-};
-
-notify_vehicle = {
-	_txt = format["<t align='left' size='1.2' color='#ffffff'>%1</t><br/><t size='0.5' color='#bbbbbb' align='left'>Owner: %2</t>",(typeof vehicle player) call ISSE_Cfg_Vehicle_GetName,server getVariable "name"+((vehicle player) getVariable ["owner",""])];
-    [_txt, -0.5, 1, 5, 1, 0, 5] spawn bis_fnc_dynamicText;
-};
-
-notify_long = {
-    _txt = format ["<t size='0.5' color='#ffffff'>%1</t>",_this];
-    [_txt, 0, -0.136, 30, 1, 0, 2] spawn bis_fnc_dynamicText;
-};
-
-notify_talk = {
-    _txt = format ["<t size='0.5' color='#dddddd'>%1</t>",_this];
-	OT_notifies pushback _txt;
 };
 
 [] execVM "funcs\info.sqf";

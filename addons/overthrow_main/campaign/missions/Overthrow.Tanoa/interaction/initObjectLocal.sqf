@@ -20,7 +20,7 @@ if(typeof _this == OT_item_Storage) then {
 		private _iswarehouse = call OT_fnc_playerAtWarehouse;
 
 		if !(_iswarehouse) exitWith {
-			"No warehouse within range" call notify_minor;
+			"No warehouse within range" call OT_fnc_notifyMinor;
 		};
 
 		OT_warehouseTarget = _this select 0;
@@ -30,16 +30,16 @@ if(typeof _this == OT_item_Storage) then {
 	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
 	_this addAction ["Store In Warehouse", {
 		OT_warehouseTarget = _this select 0;
-		[] spawn transferTo;
+		[] spawn OT_fnc_transferTo;
 	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
 	if(_this call OT_fnc_playerIsOwner) then {
 		_this addAction ["Lock", {
 			(_this select 0) setVariable ["OT_locked",true,true];
-			"Ammobox locked" call notify_minor;
+			"Ammobox locked" call OT_fnc_notifyMinor;
 		},nil,0,false,true,"","!(_target getVariable ['OT_locked',false])"];
 		_this addAction ["Unlock", {
 			(_this select 0) setVariable ["OT_locked",false,true];
-			"Ammobox unlocked" call notify_minor;
+			"Ammobox unlocked" call OT_fnc_notifyMinor;
 		},nil,0,false,true,"","(_target getVariable ['OT_locked',false])"];
 	};
 };
@@ -63,6 +63,4 @@ if(OT_hasACE) then {
 		_dir = 90;
 	};
 	[_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
-}else{
-	_this addAction ["Move this", "actions\move.sqf",nil,0,false,true,"",""];
 };

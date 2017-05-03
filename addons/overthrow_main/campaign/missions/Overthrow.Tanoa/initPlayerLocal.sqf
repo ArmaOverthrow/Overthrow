@@ -368,7 +368,7 @@ player addEventHandler ["InventoryOpened", {
 	if((_veh getVariable ["owner",""]) != (getplayeruid player)) then {
 		if(_veh getVariable ["OT_locked",false]) then {
 			_ret = true;
-			format["This inventory has been locked by %1",server getVariable "name"+(_veh getVariable ["owner",""])] call notify_minor;
+			format["This inventory has been locked by %1",server getVariable "name"+(_veh getVariable ["owner",""])] call OT_fnc_notifyMinor;
 		};
 	};
 	_ret;
@@ -380,7 +380,7 @@ player addEventHandler ["GetInMan",{
 	_veh = _this select 2;
 	_notified = false;
 
-	call notify_vehicle;
+	call OT_fnc_notifyVehicle;
 	private _isgen = call OT_fnc_playerIsGeneral;
 
 	if(_position == "driver") then {
@@ -392,7 +392,7 @@ player addEventHandler ["GetInMan",{
 			if((_veh getVariable ["owner",""]) != (getplayeruid player)) then {
 				if(!_isgen and (_veh getVariable ["OT_locked",false])) then {
 					moveOut player;
-					format["This vehicle has been locked by %1",server getVariable "name"+(_veh getVariable ["owner",""])] call notify_minor;
+					format["This vehicle has been locked by %1",server getVariable "name"+(_veh getVariable ["owner",""])] call OT_fnc_notifyMinor;
 				};
 			};
 		};

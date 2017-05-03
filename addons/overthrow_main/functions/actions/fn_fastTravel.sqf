@@ -1,15 +1,15 @@
-if !(captive player) exitWith {"You cannot fast travel while wanted" call notify_minor};
-if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call notify_minor};
+if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
+if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
 
 
 if((vehicle player) != player) then {
-	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call notify_minor};
-	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call notify_minor};
+	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call OT_fnc_notifyMinor};
+	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call OT_fnc_notifyMinor};
 };
 
-if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call notify_minor};
+if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
 
-"Click near a friendly base/camp or a building you own" call notify_minor;
+"Click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 openMap true;
 
 ["fastTravel", "onMapSingleClick", {
@@ -42,14 +42,14 @@ openMap true;
 		if (!OT_adminMode and !(_pos inArea _region)) then {
 			if !([_region,_pos] call OT_fnc_regionIsConnected) then {
 				_valid = false;
-				"You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield" call notify_minor;
+				"You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield" call OT_fnc_notifyMinor;
 				openMap false;
 			};
 		};
 	};
 	if(!_valid) exitWith {};
 	if(_pos distance player < 150) exitWith {
-		"You cannot fast travel less than 150m. Just walk!" call notify_minor;
+		"You cannot fast travel less than 150m. Just walk!" call OT_fnc_notifyMinor;
 		openMap false;
 	};
 
@@ -57,7 +57,7 @@ openMap true;
 
 	if !(_handled) then {
 
-		"You must click near a friendly base/camp or a building you own" call notify_minor;
+		"You must click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 		openMap false;
 	}else{
 		player allowDamage false;

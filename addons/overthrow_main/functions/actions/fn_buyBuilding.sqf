@@ -1,4 +1,4 @@
-if !(captive player) exitWith {"You cannot buy or manage real estate while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot buy or manage real estate while wanted" call OT_fnc_notifyMinor};
 
 _b = player call OT_fnc_nearestRealEstate;
 private _handled = false;
@@ -13,7 +13,7 @@ if(typename _b == "ARRAY") then {
 		_owner = _building getVariable "owner";
 		if(_owner == getplayeruid player) then {
 			_home = player getVariable "home";
-			if(_home distance _building < 5) exitWith {"You cannot sell your home" call notify_minor;_err = true};
+			if(_home distance _building < 5) exitWith {"You cannot sell your home" call OT_fnc_notifyMinor;_err = true};
 			_type = "sell";
 			_handled = true;
 		};
@@ -34,11 +34,11 @@ if(typename _b == "ARRAY") then {
 					server setVariable ["GEURowned",_owned + [_name],true];
 					server setVariable [format["%1employ",_name],2];
 					_pos remoteExec ["OT_fnc_resetSpawn",2,false];
-					format["%1 is now operational",_name] remoteExec ["notify_minor",0,true];
+					format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,true];
 					_name setMarkerColor "ColorGUER";
 				};
 			}else{
-				"The resistance cannot afford this" call notify_minor;
+				"The resistance cannot afford this" call OT_fnc_notifyMinor;
 			};
 		};
 	}else{
@@ -57,10 +57,10 @@ if(typename _b == "ARRAY") then {
 						server setVariable ["GEURowned",_owned + [_name],true];
 						server setVariable [format["%1employ",_name],2];
 						_pos remoteExec ["OT_fnc_resetSpawn",2,false];
-						format["%1 is now operational",_name] remoteExec ["notify_minor",0,true];
+						format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,true];
 						_name setMarkerColor "ColorGUER";
 					}else{
-						"The resistance cannot afford this" call notify_minor;
+						"The resistance cannot afford this" call OT_fnc_notifyMinor;
 					};
 				}else{
 					//Manage
@@ -82,7 +82,7 @@ if(_handled) then {
 
 	_money = player getVariable "money";
 
-	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call notify_minor};
+	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
 
 
 	_mrkid = format["bdg-%1",_building];
@@ -127,6 +127,6 @@ if(_handled) then {
 
 }else{
 	if !(_isfactory) then {
-		"There are no buildings for sale nearby" call notify_minor;
+		"There are no buildings for sale nearby" call OT_fnc_notifyMinor;
 	};
 };

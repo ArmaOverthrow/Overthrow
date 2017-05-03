@@ -12,7 +12,7 @@ if(_town in (server getVariable ["NATOabandoned",[]])) then {
 	hint format ["Only legal items may be exported while NATO controls %1",_town];
 };
 
-"Exporting inventory" call notify_minor;
+"Exporting inventory" call OT_fnc_notifyMinor;
 [5,false] call progressBar;
 sleep 5;
 _total = 0;

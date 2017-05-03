@@ -40,7 +40,7 @@ if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false;
 
 if (_canRecruit) then {
 	_options pushBack [
-		format["Recruit Civilian (-$%1)",_civprice],recruitCiv
+		format["Recruit Civilian (-$%1)",_civprice],OT_fnc_recruitCiv
 	];
 };
 
@@ -180,7 +180,7 @@ if (_canBuyBoats) then {
 	];
 	_options pushBack [
 		"Ferry Service",{
-			"Where do you want to go?" call notify_minor;
+			"Where do you want to go?" call OT_fnc_notifyMinor;
 			_ferryoptions = [];
 			{
 				private _p = markerPos(_x);
@@ -192,11 +192,11 @@ if (_canBuyBoats) then {
 					player setVariable ["OT_ferryDestination",_destpos,false];
 					private _desttown = _destpos call OT_fnc_nearestTown;
 					private _pos = (getpos player) findEmptyPosition [10,100,OT_vehType_ferry];
-					if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call notify_minor};
+					if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 					private _cost = floor((player distance _destpos) * 0.005);
 					player setVariable ["OT_ferryCost",_cost,false];
 					_money = player getVariable "money";
-					if(_money < _cost) exitWith {"You cannot afford that!" call notify_minor};
+					if(_money < _cost) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
 					[-_cost] call money;
 					_veh = OT_vehType_ferry createVehicle _pos;

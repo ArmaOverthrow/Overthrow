@@ -78,7 +78,7 @@ while {alive _unit} do {
 						format["%1 is unconscious",name player] remoteExec ["systemChat",0,false];
 						_unit setVariable ["OT_healed",true,true];
 					}else{
-						"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
+						"You are unconscious, there is no one nearby with Epinephrine to revive you" call OT_fnc_notifyMinor;
 						sleep 5;
 						_unit setDamage 1; //rip
 					}
@@ -160,7 +160,7 @@ while {alive _unit} do {
 						if !(_obname in (server getVariable ["NATOabandoned",[]])) then {
 							if(_obpos distance _playerpos < 2000) exitWith {
 								if(isPlayer _unit) then {
-									"This is a no-fly zone" call notify_minor;
+									"This is a no-fly zone" call OT_fnc_notifyMinor;
 								};
 								_unit setCaptive false;
 								(vehicle _unit) spawn revealToNATO;
@@ -180,7 +180,7 @@ while {alive _unit} do {
 							_unit setCaptive false;
 							_unit spawn revealToNATO;
 							if(isPlayer _unit) then {
-								"A gang has seen the static weapon" call notify_minor;
+								"A gang has seen the static weapon" call OT_fnc_notifyMinor;
 							};
 						};
 					}foreach(attachedObjects _unit);
@@ -207,7 +207,7 @@ while {alive _unit} do {
 				};
 				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {
 					if(isPlayer _unit) then {
-						"A gang has seen your weapon" call notify_minor;
+						"A gang has seen your weapon" call OT_fnc_notifyMinor;
 					};
 					_unit setCaptive false;
 					_unit spawn revealToNATO;
@@ -223,7 +223,7 @@ while {alive _unit} do {
 					if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
 						_unit setCaptive false;
 						if(isPlayer _unit) then {
-							"A gang has recognized you" call notify_minor;
+							"A gang has recognized you" call OT_fnc_notifyMinor;
 						};
 						_unit spawn revealToCRIM;
 					};
@@ -245,7 +245,7 @@ while {alive _unit} do {
 						if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
 							_unit setCaptive false;
 							if(isPlayer _unit) then {
-								"NATO has recognized you" call notify_minor;
+								"NATO has recognized you" call OT_fnc_notifyMinor;
 							};
 							_unit spawn revealToNATO;
 						}
@@ -256,7 +256,7 @@ while {alive _unit} do {
 								_unit setCaptive false;
 								_unit spawn revealToNATO;
 								if(isPlayer _unit) then {
-									"NATO has seen the static weapon" call notify_minor;
+									"NATO has seen the static weapon" call OT_fnc_notifyMinor;
 								};
 							};
 						}foreach(attachedObjects _unit);
@@ -294,7 +294,7 @@ while {alive _unit} do {
 					};
 					if ((headgear _unit in OT_illegalHeadgear) or (vest _unit in OT_illegalVests)) exitWith {
 						if(isPlayer _unit) then {
-							"You are wearing Gendarmerie gear" call notify_minor;
+							"You are wearing Gendarmerie gear" call OT_fnc_notifyMinor;
 						};
 						_unit setCaptive false;
 						_unit spawn revealToNATO;
@@ -312,7 +312,7 @@ while {alive _unit} do {
 							};
 							if(_obpos distance (getpos player) < _dist) exitWith {
 								if(isPlayer _unit) then {
-									"You are in a restricted area" call notify_minor;
+									"You are in a restricted area" call OT_fnc_notifyMinor;
 								};
 								_unit setCaptive false;
 								_unit spawn revealToNATO;

@@ -24,7 +24,7 @@ while {true} do {
 	spawner setVariable ["track",_track,false];
 	private _dead = count alldeadmen;
 	if(_dead > 150) then {
-		format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["notify_minor",0,false];
+		format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];
 	};
 
 	{
@@ -221,7 +221,7 @@ while {true} do {
 								clearBackpackCargoGlobal _veh;
 								clearItemCargoGlobal _veh;
 							}else{
-								format["Factory has no room to place container, please clear marker area"] remoteExec["notify_minor",0,false];
+								format["Factory has no room to place container, please clear marker area"] remoteExec["OT_fnc_notifyMinor",0,false];
 							};
 						};
 						_dowood = ["OT_wood",_wood,OT_factoryPos] call OT_fnc_hasFromContainers;
@@ -251,9 +251,9 @@ while {true} do {
 								clearBackpackCargoGlobal _veh;
 								clearItemCargoGlobal _veh;
 								_veh setDir OT_factoryVehicleDir;
-								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["notify_minor",0,false];
+								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["OT_fnc_notifyMinor",0,false];
 							}else{
-								format["Factory has no room to produce %1, please clear the road",_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["notify_minor",0,false];
+								format["Factory has no room to produce %1, please clear the road",_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["OT_fnc_notifyMinor",0,false];
 								_timespent = _timetoproduce;
 							};
 						}else{
@@ -301,27 +301,27 @@ while {true} do {
 				if(_rank == "PRIVATE" and _xp > (OT_rankXP select 0)) then {
 					_x set [3,"CORPORAL"];
 					_unit setRank "CORPORAL";
-					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 				};
 				if(_rank == "CORPORAL" and _xp > (OT_rankXP select 1)) then {
 					_x set [3,"SERGEANT"];
 					_unit setRank "SERGEANT";
-					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 				};
 				if(_rank == "SERGEANT" and _xp > (OT_rankXP select 2)) then {
 					_x set [3,"LIEUTENANT"];
 					_unit setRank "LIEUTENANT";
-					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 				};
 				if(_rank == "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
 					_x set [3,"CAPTAIN"];
 					_unit setRank "CAPTAIN";
-					format["%1 has been promoted to Captain",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Captain",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 				};
 				if(_rank == "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
 					_x set [3,"MAJOR"];
 					_unit setRank "MAJOR";
-					format["%1 has been promoted to Major",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Major",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 				};
 			};
 		}foreach(server getVariable ["recruits",[]]);

@@ -13,7 +13,7 @@ if(vehicle _tt != _tt) then {
 }else{
 	_objects = _tt nearEntities [["Car","ReammoBox_F","Air","Ship"],20];
 	if(count _objects == 0) exitWith {
-		"Cannot find any containers or vehicles within 20m of first selected unit" call notify_minor;
+		"Cannot find any containers or vehicles within 20m of first selected unit" call OT_fnc_notifyMinor;
 	};
 	_sorted = [_objects,[],{_x distance _tt},"ASCEND"] call BIS_fnc_SortBy;
 };
@@ -21,7 +21,7 @@ if(vehicle _tt != _tt) then {
 if(count _sorted == 0) exitWith {};
 private _target = _sorted select 0;
 
-format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
 
 {
 	[_x,_target] spawn {

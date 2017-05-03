@@ -28,11 +28,11 @@ if(!_iswarehouse and !_notvehicle) then {
 
 
 if(!_notvehicle  and count _objects == 0) exitWith {
-	"Cannot find any containers or other vehicles within 20m of this vehicle" call notify_minor;
+	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 
 if(_notvehicle and count _objects == 0) exitWith {
-	"No warehouse within range" call notify_minor;
+	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 
 private _doTransfer = {
@@ -49,7 +49,7 @@ private _doTransfer = {
 		_target = OT_warehouseTarget;
 	};
 
-	format["Transferring inventory to %1",_toname] call notify_minor;
+	format["Transferring inventory to %1",_toname] call OT_fnc_notifyMinor;
 	[5,false] call progressBar;
 	sleep 5;
 	if(_iswarehouse) then {
@@ -116,7 +116,7 @@ private _doTransfer = {
 		}foreach(_target call OT_fnc_unitStock);
 	};
 
-	"Inventory Transfer done" call notify_minor;
+	"Inventory Transfer done" call OT_fnc_notifyMinor;
 
 };
 
@@ -129,6 +129,6 @@ if(count _objects == 1) then {
 	{
 		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
-	"Transfer to which container?" call notify_big;
+	"Transfer to which container?" call OT_fnc_notifyBig;
 	_options spawn playerDecision;
 };

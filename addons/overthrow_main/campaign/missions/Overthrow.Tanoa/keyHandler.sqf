@@ -34,7 +34,7 @@ if (_key == 21) then
 
 						private _cost = player getVariable ["OT_ferryCost",0];
 						if((player getVariable "money") < _cost) exitWith {
-							"You cannot afford that!" call notify_minor;
+							"You cannot afford that!" call OT_fnc_notifyMinor;
 						};
 						[-_cost] call money;
 						cutText [format["Skipping ferry to %1",_town],"BLACK",2];

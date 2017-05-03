@@ -17,7 +17,7 @@ if(typename _b != "ARRAY") exitWith {
 	};
 };
 
-if !(captive player) exitWith {"You cannot lease buildings while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot lease buildings while wanted" call OT_fnc_notifyMinor};
 
 
 _handled = false;
@@ -32,7 +32,7 @@ if(typename _b == "ARRAY") then {
 		_owner = _building getVariable "owner";
 		if(_owner == getplayeruid player) then {
 			_home = player getVariable "home";
-			if((_home distance _building) < 5) exitWith {"You cannot lease your home" call notify_minor;_err = true};
+			if((_home distance _building) < 5) exitWith {"You cannot lease your home" call OT_fnc_notifyMinor;_err = true};
 			_handled = true;
 		};
 	};
@@ -52,5 +52,5 @@ if(_handled) then {
 	_mrkid = format["bdg-%1",_building];
 	_mrkid setMarkerAlphaLocal 0.3;
 	playSound "3DEN_notificationDefault";
-	"Building leased" call notify_minor;
+	"Building leased" call OT_fnc_notifyMinor;
 };

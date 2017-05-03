@@ -293,7 +293,7 @@ while {true} do {
 				if(_stability < 10 and !(_town in _abandoned)) then {
 					_abandoned pushback _town;
 					server setVariable [format ["garrison%1",_town],0,true];
-					format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+					format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
 					[_town,15] call stability;
 				};
 			};
@@ -419,7 +419,7 @@ while {true} do {
 			}foreach(_pos nearEntities ["CAManBase",50]);
 			if(_alive > 1 and _enemy == 0) then {
 				_abandoned deleteAt (_abandoned find _name);
-				format["NATO has retaken control of the %1 tower",_name] remoteExec ["notify_good",0,false];
+				format["NATO has retaken control of the %1 tower",_name] remoteExec ["OT_fnc_notifyGood",0,false];
 				_name setMarkerColor "ColorBLUFOR";
 				_resources = _resources + 50;
 				server setVariable [format["garrison%1",_name],floor(4 + random(8)),true];
@@ -454,7 +454,7 @@ while {true} do {
 					server setVariable ["NATOabandoned",_abandoned,true];
 					_name setMarkerColor "ColorGUER";
 					_t = _pos call OT_fnc_nearestTown;
-					format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
+					format["Resistance has captured the %1 tower",_name] remoteExec ["OT_fnc_notifyGood",0,false];
 					_resources = _resources - 100;
 				};
 			};

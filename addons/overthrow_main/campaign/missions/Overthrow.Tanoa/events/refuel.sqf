@@ -27,7 +27,7 @@ if((typeof _source) in OT_fuelPumps) then {
     if(_money < _total) then {
         _nozzle setVariable ["ace_refuel_lastTickMissionTime", nil];
         _nozzle setVariable ["ace_refuel_isRefueling", false, true];
-        "You cannot afford fuel" remoteExec ["notify_minor",_player];
+        "You cannot afford fuel" remoteExec ["OT_fnc_notifyMinor",_player];
         _sink setFuel _last;
     }else{
         [-_total] remoteExec ["money",_player];

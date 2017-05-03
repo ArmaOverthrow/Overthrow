@@ -8,7 +8,7 @@ _objects = [];
 }foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 
 if(count _objects == 0) exitWith {
-	"Cannot find any containers or other vehicles within 20m of this vehicle" call notify_minor;
+	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
@@ -25,9 +25,10 @@ if(_veh call unitSeen) then {
 
 _doTransfer = {
 	private _target = _this;
+	private _veh = vehicle player;
 	disableUserInput true;
 
-	format["Transferring inventory from %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call notify_minor;
+	format["Transferring inventory from %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
 	[5,false] call progressBar;
 	_end = time + 5;
 	{
@@ -80,7 +81,7 @@ _doTransfer = {
 		if(_full) exitWith {hint "This vehicle is full, use a truck for more storage"};
 	}foreach(_target call OT_fnc_unitStock);
 	waitUntil {time > _end};
-	"Inventory Transfer done" call notify_minor;
+	"Inventory Transfer done" call OT_fnc_notifyMinor;
 
 	disableUserInput false;
 };
@@ -92,6 +93,6 @@ if(count _objects == 1) then {
 	{
 		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
-	"Transfer from which container?" call notify_big;
+	"Transfer from which container?" call OT_fnc_notifyBig;
 	_options spawn playerDecision;
 };

@@ -2,7 +2,7 @@ _veh = vehicle player;
 
 if(_veh == player) exitWith {};
 
-format["Taking legal inventory from vehicle"] call notify_minor;
+format["Taking legal inventory from vehicle"] call OT_fnc_notifyMinor;
 
 [5,false] call progressBar;
 sleep 5;
@@ -25,4 +25,4 @@ sleep 5;
 	};
 }foreach(_veh call OT_fnc_unitStock);
 
-"Inventory Transfer done" call notify_minor;
+"Inventory Transfer done" call OT_fnc_notifyMinor;

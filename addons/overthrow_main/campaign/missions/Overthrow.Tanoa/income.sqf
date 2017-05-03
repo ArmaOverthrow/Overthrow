@@ -70,7 +70,7 @@ while {true} do {
 					_money = _x getVariable ["money",0];
 					_x setVariable ["money",_money+_perPlayer,true];
 				}foreach([] call CBA_fnc_players);
-				format ["Tax income: $%1 (+%2 Influence)",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber,_inf] remoteExec ["notify_good",0,true];
+				format ["Tax income: $%1 (+%2 Influence)",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber,_inf] remoteExec ["OT_fnc_notifyGood",0,true];
 			}else{
 				_inf remoteExec ["influence",0,false];
 			};

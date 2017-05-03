@@ -131,14 +131,14 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
 						};
-						_msg remoteExec ["notify_talk",_x,true];
+						_msg remoteExec ["OT_fnc_notifyMinor",_x,true];
 						_searched pushback _x;
 						_searching deleteAt(_searching find _x);
 					};
 				};
 			}else{
 				if (_x in _searching and isPlayer _x) then {
-					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["notify_talk",_x,true];
+					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,true];
 					_searching deleteAt(_searching find _x);
 				}
 			};

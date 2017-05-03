@@ -1,4 +1,4 @@
-if !(captive player) exitWith {"You cannot place objects while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot place objects while wanted" call OT_fnc_notifyMinor};
 private ["_typecls","_types","_cost","_attach","_idx","_money"];
 
 _typecls = _this;
@@ -19,13 +19,13 @@ call {
 };
 //Price check (on aisle 3)
 _money = player getVariable "money";
-if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call notify_minor};
+if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call OT_fnc_notifyMinor};
 
 if !([getpos player,_typecls] call OT_fnc_canPlace) exitWith {
 	call {
-		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call notify_minor};
-		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call notify_minor};
-		"You must be near a base or owned structure" call notify_minor
+		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call OT_fnc_notifyMinor};
+		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call OT_fnc_notifyMinor};
+		"You must be near a base or owned structure" call OT_fnc_notifyMinor
 	};
 };
 
@@ -235,9 +235,9 @@ if(_cost > 0) then {
 			};
 		}else{
 			call {
-				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call notify_minor};
-				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
-				"You must be near a base or owned building" call notify_minor
+				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call OT_fnc_notifyMinor};
+				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call OT_fnc_notifyMinor};
+				"You must be near a base or owned building" call OT_fnc_notifyMinor
 			};
 			detach modeTarget;
 			deleteVehicle modeTarget;
@@ -245,9 +245,9 @@ if(_cost > 0) then {
 	};
 }else{
 	if(_typecls != "Camp" and _typecls != "Base") then {
-		"To place this item you must be near a base or a building that you own" call notify_minor;
+		"To place this item you must be near a base or a building that you own" call OT_fnc_notifyMinor;
 	}else{
-		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call notify_minor;
+		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call OT_fnc_notifyMinor;
 	};
 };
 

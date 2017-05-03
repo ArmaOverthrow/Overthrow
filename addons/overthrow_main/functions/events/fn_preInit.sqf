@@ -28,3 +28,5 @@ if(isServer) then {
     server setVariable ["StartupType","",true];
     call OT_fnc_initVirtualization;
 };
+
+OT_notifies = [];

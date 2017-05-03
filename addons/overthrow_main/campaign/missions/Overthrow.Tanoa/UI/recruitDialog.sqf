@@ -2,7 +2,7 @@ disableSerialization;
 
 _base = (getpos player) call OT_fnc_nearestObjective;
 if (isNil "_base") exitWith {};
-if !((_base select 1) in (server getvariable "NATOabandoned")) exitWith {"This barracks is under NATO control" call notify_minor};
+if !((_base select 1) in (server getvariable "NATOabandoned")) exitWith {"This barracks is under NATO control" call OT_fnc_notifyMinor};
 
 private _price = floor((["Tanoa","CIV",0] call OT_fnc_getPrice) * 1.5);
 

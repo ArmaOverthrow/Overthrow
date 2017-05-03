@@ -12,6 +12,8 @@ class CfgFunctions
 			class spawnTemplate {};
 			class spawnTemplateAttached {};
 			class unitStock {};
+			class saveGame {};
+			class loadGame {};
 		};
 
 		class Events
@@ -20,6 +22,61 @@ class CfgFunctions
 			class preInit {preInit = 1};
 			class postInit {postInit = 1};
 		};
+
+		class UI
+		{
+			file = "\ot\functions\UI";
+			class notifyMinor {};
+			class notifyBig {};
+			class notifyGood {};
+			class notifyVehicle {};
+		};
+
+		/*
+		* User actions
+		*/
+		class Actions
+		{
+			file = "\ot\functions\actions";
+
+			/* Main Menu */
+			class salvageWreck {};
+			class buyBuilding {};
+			class fastTravel {};
+			class talkToCiv {};
+			class recruitCiv {};
+
+			/* Vehicle */
+			class transferTo {};
+			class transferFrom {};
+			class transferLegit {};
+			class takeLegit {};
+			class warehouseTake {};
+
+			/* Workshop */
+			class workshopAdd {};
+
+			/* Shop */
+			class buy {};
+			class sell {};
+			class sellAll {};
+
+			/* Gun Dealer */
+			class getLocalMission {};
+			class getMission {};
+
+			/* Factory */
+			class factoryRefresh {};
+			class factorySet {};
+
+			/* Resistance Screen */
+			class showMemberInfo {};
+			class showBusinessInfo {};
+			class makeGeneral {};
+			class giveFunds {};
+			class takeFunds {};
+			class transferFunds {};
+		}
 
 		/*
 		* Locations, positions etc.

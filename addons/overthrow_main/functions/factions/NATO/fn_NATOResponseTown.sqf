@@ -16,7 +16,7 @@ private _fail = {
 	params ["_tskid","_town"];
 	private _townpop = server getVariable format["population%1",_town];
 	_townpop remoteExec ["influenceSilent",0,false];
-	format["NATO has abandoned %1 (+%2 Influence)",_town,_townpop] remoteExec ["notify_good",0,false];
+	format["NATO has abandoned %1 (+%2 Influence)",_town,_townpop] remoteExec ["OT_fnc_notifyGood",0,false];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
 	_abandoned = server getVariable "NATOabandoned";
 	_abandoned pushback _town;

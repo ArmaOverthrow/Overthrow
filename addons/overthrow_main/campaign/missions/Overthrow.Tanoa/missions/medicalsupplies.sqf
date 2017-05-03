@@ -51,7 +51,7 @@ _difficulty = 0.5;
 
     if((time - _lastwarning) > 5) then {
         if((_numavailable > 0) and _numavailable < _threshold) then {
-            "At least 10 bandages required to complete mission" call notify_minor;
+            "At least 10 bandages required to complete mission" call OT_fnc_notifyMinor;
         };
         _p set [2,time];
     };
