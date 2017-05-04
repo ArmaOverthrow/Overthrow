@@ -208,6 +208,14 @@ waitUntil {
 	{
 		_numalive = _numalive + ({alive _x} count (units _x));
 		_numin = _numin + ({alive _x and _x distance _pos < 150} count (units _x));
+		{
+			if(vehicle _x != _x) then {
+				if(((vehicle _x) isKindOf "Air") and (position _x select 2) < 4) then {
+					//Downed heli
+					doGetout _x;
+				}
+			};
+		}foreach(units _x);
 	}foreach(_force);
 	(_numalive < 4) or (time > _timeout) or (_numin > 4)
 };
@@ -216,7 +224,7 @@ private _force = spawner getVariable["NATOattackforce",[]];
 {
 	_target = leader _x;
 	{
-		if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+		if((side _x == resistance or captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
 			_x reveal [_target,3];
 		};
 	}foreach(allunits);
@@ -246,7 +254,7 @@ while {sleep 5;time < _timeout and !_won} do {
 					_alivein = _alivein + 1;
 				};
 			};
-			if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+			if((side _x == resistance or captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
 				_enemy = _enemy + 1;
 				if(_x distance _pos < 400) then {
 					_enemyin = _enemyin + 1;

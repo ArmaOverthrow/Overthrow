@@ -20,6 +20,7 @@ if(OT_fastTime) then {
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "initEconomyLoad.sqf";
 
+[] call OT_fnc_initNATO;
 [] execVM "factions\NATO.sqf";
 [] execVM "factions\GUER.sqf";
 [] execVM "factions\CRIM.sqf";

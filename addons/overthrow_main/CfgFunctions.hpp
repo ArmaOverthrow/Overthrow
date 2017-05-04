@@ -208,6 +208,8 @@ class CfgFunctions
 		class NATO
 		{
 			file = "\ot\functions\factions\NATO";
+			class initNATO {};
+
 			class NATOQRF {};
 			class NATOGroundForces {};
 			class CTRGSupport {};

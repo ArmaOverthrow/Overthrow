@@ -36,6 +36,7 @@ if(!isMultiplayer) then {
 	};
 
     //Init factions
+	[] call OT_fnc_initNATO;
     [] execVM "factions\NATO.sqf";
 	[] execVM "factions\GUER.sqf";
     [] execVM "factions\CRIM.sqf";

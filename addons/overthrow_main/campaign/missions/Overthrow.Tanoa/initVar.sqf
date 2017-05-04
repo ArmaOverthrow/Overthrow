@@ -58,7 +58,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Katkoula","Lailai","Taga","Bua Bua","Blerick","Moddergat","Tobakoro"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn
 
-OT_NATOwait = 300; //Half the Average time between NATO orders
+OT_NATOwait = 30; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -212,9 +212,7 @@ OT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 OT_NATO_Vehicles_Garrison = [
 	["B_T_MRAP_01_hmg_F",5],
-	["B_T_MRAP_01_gmg_F",5],
-	["B_T_Static_AT_F",7],
-	["B_HMG_01_high_F",10]
+	["B_T_MRAP_01_gmg_F",5]
 ];
 
 OT_NATO_Vehicles_AirGarrison = [
@@ -227,6 +225,10 @@ OT_NATO_Vehicles_AirGarrison = [
 	["B_Heli_Transport_01_F",2],
 	["B_Plane_CAS_01_F",1]
 ];
+
+OT_NATO_StaticGarrison_LevelOne = ["B_HMG_01_high_F"];
+OT_NATO_StaticGarrison_LevelTwo = ["B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F"];
+OT_NATO_StaticGarrison_LevelThree = ["B_T_Static_AT_F","B_T_Static_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F"];
 
 OT_NATO_CommTowers = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F"];
 

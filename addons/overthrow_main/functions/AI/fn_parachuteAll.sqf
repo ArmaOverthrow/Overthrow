@@ -11,18 +11,19 @@ paraLandSafe =
 	_unit = _this select 0;
 	_chuteheight = _this select 1;
 	if (isPlayer _unit) then {[_unit,_chuteheight] spawn OpenPlayerchute};
+	waitUntil { !(alive _unit) or isTouchingGround _unit or (position _unit select 2) < 20 };
+
+	_unit allowDamage false; //So they dont hit trees or die on ground impact
+
 	waitUntil { !(alive _unit) or isTouchingGround _unit or (position _unit select 2) < 1 };
 
-	if(!alive _unit) then {
-		deleteVehicle _unit;
-	}else{
-		_unit action ["eject",_unit];
-		sleep 1;
-		_inv = name _unit;
-		_id = [_unit] call fnc_getBuildID;
-		_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
-		spawner setvariable [format["eject_%1",_id],nil,false];
-	};
+	_unit action ["eject",_unit];
+	sleep 1;
+	_inv = name _unit;
+	_id = [_unit] call fnc_getBuildID;
+	_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
+	spawner setvariable [format["eject_%1",_id],nil,false];
+	_unit allowDamage true;
 };
 
 OpenPlayerChute =
