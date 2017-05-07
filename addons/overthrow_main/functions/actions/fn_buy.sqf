@@ -18,7 +18,7 @@ call {
 
 		player setVariable ["money",_money-_price,true];
 		_veh = "C_Quadbike_01_F" createVehicle _pos;
-		_veh setVariable ["owner",getPlayerUID player,true];
+		[_veh,getPlayerUID player] call OT_fnc_setOwner;
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
 		clearBackpackCargoGlobal _veh;
@@ -55,10 +55,10 @@ call {
 		_veh = createVehicle [_cls, _pos, [], 0,""];
 		_crew = createVehicleCrew _veh;
 		{
-			_x setVariable ["owner",getplayeruid player,true];
+			[_x,getPlayerUID player] call OT_fnc_setOwner;
 		}foreach(crew _veh);
 
-		_veh setVariable ["owner",getPlayerUID player,true];
+		[_veh,getPlayerUID player] call OT_fnc_setOwner;
 
 		if("ItemGPS" in (assignedItems player)) then {
 			player addItem OT_item_UAVterminal;
@@ -81,7 +81,7 @@ call {
 
 		player setVariable ["money",_money-_price,true];
 		_veh = _cls createVehicle _pos;
-		_veh setVariable ["owner",getPlayerUID player,true];
+		[_veh,getPlayerUID player] call OT_fnc_setOwner;
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
 		clearBackpackCargoGlobal _veh;
@@ -97,7 +97,7 @@ call {
 
 		player setVariable ["money",_money-_price,true];
 		_veh = _cls createVehicle _pos;
-		_veh setVariable ["owner",getPlayerUID player,true];
+		[_veh,getPlayerUID player] call OT_fnc_setOwner;
 		clearWeaponCargoGlobal _veh;
 		clearMagazineCargoGlobal _veh;
 		clearBackpackCargoGlobal _veh;
@@ -134,7 +134,7 @@ call {
 
 		_box = false;
 		{
-			_owner = _x getVariable "owner";
+			_owner = _x call OT_fnc_getOwner;
 			if(!isNil "_owner") then {
 				if(_owner == getplayerUID player) exitWith {_box = _x};
 			};

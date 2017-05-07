@@ -13,9 +13,9 @@ _unit addEventHandler ["HandleDamage", {
 	_src = _this select 3;
 	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
-			_src setCaptive false;				
-		};		
-	};	
+			_src setCaptive false;
+		};
+	};
 }];
 
 [_unit, OT_face_localBoss] remoteExecCall ["setFace", 0, _unit];
@@ -49,7 +49,7 @@ if(OT_hasACE) then {
 }else{
 	_unit linkItem "ItemWatch";
 };
-
+_unit linkItem "ACE_Cellphone";
 
 _weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
@@ -66,7 +66,7 @@ _unit addWeapon _weapon;
 _config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";
 _numslots = count(_config);
 for "_i" from 0 to (_numslots-1) do {
-	if (isClass (_config select _i)) then {		
+	if (isClass (_config select _i)) then {
 		_slot = configName(_config select _i);
 		_com = _config >> _slot >> "compatibleItems";
 		_items = [];
@@ -76,9 +76,9 @@ for "_i" from 0 to (_numslots-1) do {
 			};
 		}else{
 			_items = getArray(_com);
-		};		
-		if(count _items > 0) then {			
-			_cls = _items call BIS_fnc_selectRandom;			
+		};
+		if(count _items > 0) then {
+			_cls = _items call BIS_fnc_selectRandom;
 			_unit addPrimaryWeaponItem _cls;
 		};
 	};
@@ -91,4 +91,3 @@ _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 
 if !(isNil "_magazine") then {
 	_unit addItem _magazine;
 };
-

@@ -10,7 +10,7 @@ _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 private _donerem = false;
 if !(isNull cursorObject) then {
 	if((player distance cursorObject) < 20) then {
-		if (cursorObject in (entities "")) then {
+		if (cursorObject in ((allMissionObjects "Static") + vehicles)) then {
 			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west) then {
 				call {
 					if(((cursorObject isKindOf "Land") or (cursorObject isKindOf "Air")) and ("ToolKit" in (items player)) and (damage cursorObject) == 1) exitWith {
@@ -26,7 +26,7 @@ if !(isNull cursorObject) then {
 							ctrlEnable [1614,false];
 						};
 					};
-					if((call OT_fnc_playerIsGeneral) or (cursorObject getVariable ["owner",""]) == (getplayeruid player)) exitWith {
+					if((call OT_fnc_playerIsGeneral) or (cursorObject call OT_fnc_playerIsOwner)) exitWith {
 						_donerem = true;
 						private _type = typeof cursorObject;
 						_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
@@ -109,13 +109,17 @@ if(typename _b == "ARRAY") then {
 	_txt = "";
 
 	if(_building call OT_fnc_hasOwner) then {
-		_owner = _building getVariable "owner";
+
+		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
-		if(_building getVariable ["leased",false]) then {
-			_ownername = format["%1 (Leased)",_ownername];
-		};
 		if(_owner == getplayerUID player) then {
+			_leased = player getVariable ["leased",[]];
+			_id = [_building] call OT_fnc_getBuildID;
+			if(_id in _leased) then {
+				_ownername = format["%1 (Leased)",_ownername];
+			};
+
 			if(typeof _building == OT_item_Tent) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
@@ -151,13 +155,9 @@ if(typename _b == "ARRAY") then {
 				",_ownername];
 			};
 
-			if(_building getVariable ["leased",false] or !((typeof _building) in OT_allRealEstate)) then {
+			if(_id in _leased) then {
 				ctrlEnable [1609,false];
 				ctrlEnable [1610,false];
-				if !((typeof _building) in OT_allRealEstate) then {
-					_lease = 0;
-					ctrlSetText [1608,"Remove"];
-				};
 			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
@@ -181,7 +181,7 @@ if(typename _b == "ARRAY") then {
 			",_name,_ownername];
 		};
 		if(typeof _building == OT_barracks) then {
-			_owner = _building getVariable "owner";
+			_owner = _building call OT_fnc_getOwner;
 			_ownername = server getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
@@ -226,7 +226,7 @@ if(typename _b == "ARRAY") then {
 	};
 
 	if(typeof _building == OT_policeStation) then {
-		_owner = _building getVariable "owner";
+		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		ctrlSetText [1608,"Sell"];
 		ctrlEnable [1608,false];
@@ -241,7 +241,7 @@ if(typename _b == "ARRAY") then {
 	};
 
 	if(typeof _building == "Land_Cargo_House_V4_F") then {
-		_owner = _building getVariable "owner";
+		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		ctrlSetText [1608,"Sell"];
 		ctrlEnable [1608,false];

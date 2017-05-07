@@ -14,7 +14,7 @@ removeBackpack _unit;
 removeHeadgear _unit;
 removeVest _unit;
 
-_unit setVariable ["owner","self"];
+[_unit,"self"] call OT_fnc_setOwner;
 
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
 [_unit, "NoVoice"] remoteExecCall ["setSpeaker", 0, _unit];
@@ -26,7 +26,7 @@ _unit addEventHandler ["FiredNear", {
 	if !(_u getVariable ["fleeing",false]) then {
 		_u setVariable ["fleeing",true,false];
 		_u setBehaviour "COMBAT";
-		_by = _this select 1;	
+		_by = _this select 1;
 		_u allowFleeing 1;
 		_u setskill ["courage",0];
 	};

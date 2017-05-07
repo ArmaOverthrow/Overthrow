@@ -27,7 +27,7 @@ OT_rankXP = [100,250,500,1000,4000,10000,100000];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 12;
-OT_NATOversion = 7;
+OT_NATOversion = 8;
 OT_CRIMversion = 1;
 OT_adminMode = false;
 OT_economyLoadDone = false;
@@ -58,7 +58,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Katkoula","Lailai","Taga","Bua Bua","Blerick","Moddergat","Tobakoro"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn
 
-OT_NATOwait = 30; //Half the Average time between NATO orders
+OT_NATOwait = 3; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -211,8 +211,7 @@ OT_NATO_AirSpawn = "NATO_airspawn";
 OT_NATO_HQPos = [0,0,0];//Dont worry this gets populated later
 
 OT_NATO_Vehicles_Garrison = [
-	["B_T_MRAP_01_hmg_F",5],
-	["B_T_MRAP_01_gmg_F",5]
+
 ];
 
 OT_NATO_Vehicles_AirGarrison = [
@@ -227,8 +226,8 @@ OT_NATO_Vehicles_AirGarrison = [
 ];
 
 OT_NATO_StaticGarrison_LevelOne = ["B_HMG_01_high_F"];
-OT_NATO_StaticGarrison_LevelTwo = ["B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F"];
-OT_NATO_StaticGarrison_LevelThree = ["B_T_Static_AT_F","B_T_Static_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F"];
+OT_NATO_StaticGarrison_LevelTwo = ["B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F","B_T_MRAP_01_hmg_F"];
+OT_NATO_StaticGarrison_LevelThree = ["B_T_Static_AT_F","B_T_Static_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F","B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F"];
 
 OT_NATO_CommTowers = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F"];
 
@@ -239,7 +238,7 @@ OT_NATO_Vehicle_Quad = "B_Quadbike_01_F";
 OT_NATO_Vehicle_Police = "B_GEN_Offroad_01_gen_F";
 OT_NATO_Vehicle_Transport = ["B_T_Truck_01_transport_F","B_T_Truck_01_covered_F"];
 OT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
-OT_NATO_Vehicles_AirDrones = ["B_UAV_02_F"];
+OT_NATO_Vehicles_ReconDrone = "B_UAV_01_F";
 OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
 OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F"];
 OT_NATO_Vehicles_AirSupport_Small = ["B_Heli_Light_01_armed_F"];
@@ -251,6 +250,7 @@ OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
 OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
 
 OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
+OT_NATO_Group_Recon = (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_ReconTeam");
 
 OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
@@ -290,6 +290,7 @@ OT_interactingWith = objNull;
 //The cost to produce an item will be the Base price - player/factory bonuses + raw materials
 //The wholesale sell price of an item will be the base price - local markup
 //NB: the local markup can be negative, making buy prices lower and sell prices higher, in certain situations (high stability and/or player rep)
+
 OT_items = [];
 if(OT_hasAce) then {
 	OT_item_DefaultBlueprints pushback "ACE_fieldDressing";
@@ -297,8 +298,8 @@ if(OT_hasAce) then {
 	[OT_items,[
 		["ACE_fieldDressing",2,0,0,0.1],
 		["ACE_elasticBandage",3,0,0,0.2],
-		["ACE_morphine",40,0,0,0.2],
-		["ACE_epinephrine",40,0,0,0.2],
+		["ACE_morphine",20,0,0,0.2],
+		["ACE_epinephrine",50,0,0,0.2],
 		["ACE_adenosine",40,0,0,0.2],
 		["ACE_SpraypaintBlue",20,0,0,0.2],
 		["ACE_SpraypaintRed",20,0,0,0.2],
@@ -328,7 +329,8 @@ if(OT_hasAce) then {
 		["ACE_UAVBattery",14,0,0,1],
 		["ACE_wirecutter",4,0,0,1],
 		["ACE_MapTools",2,0,0,1],
-		["ACE_bloodIV",120,0,0,1]
+		["ACE_bloodIV",80,0,0,1],
+		["ACE_Cellphone",100,0,0,1]
 	]] call BIS_fnc_arrayPushStack;
 }else{
 	OT_item_DefaultBlueprints pushback "FirstAidKit";
@@ -894,10 +896,11 @@ OT_portBuilding = "Land_Warehouse_02_F";
 OT_policeStation = "Land_Cargo_House_V3_F";
 OT_warehouse = "Land_Warehouse_03_F";
 OT_barracks = "Land_Barracks_01_grey_F";
+OT_workshopBuilding = "Land_Cargo_House_V4_F";
 
 OT_loadingMessages = ["Adding Hidden Agendas","Adjusting Bell Curves","Aesthesizing Industrial Areas","Aligning Covariance Matrices","Applying Feng Shui Shaders","Applying Theatre Soda Layer","Asserting Packed Exemplars","Attempting to Lock Back-Buffer","Binding Sapling Root System","Breeding Fauna","Building Data Trees","Bureacritizing Bureaucracies","Calculating Inverse Probability Matrices","Calculating Llama Expectoration Trajectory","Calibrating Blue Skies","Charging Ozone Layer","Coalescing Cloud Formations","Cohorting Exemplars","Collecting Meteor Particles","Compounding Inert Tessellations","Compressing Fish Files","Computing Optimal Bin Packing","Concatenating Sub-Contractors","Containing Existential Buffer","Debarking Ark Ramp","Debunching Unionized Commercial Services","Deciding What Message to Display Next","Decomposing Singular Values","Decrementing Tectonic Plates","Deleting Ferry Routes","Depixelating Inner Mountain Surface Back Faces","Depositing Slush Funds","Destabilizing Economic Indicators","Determining Width of Blast Fronts","Deunionizing Bulldozers","Dicing Models","Diluting Livestock Nutrition Variables","Downloading Satellite Terrain Data","Exposing Flash Variables to Streak System","Extracting Resources","Factoring Pay Scale","Fixing Election Outcome Matrix","Flood-Filling Ground Water","Flushing Pipe Network","Gathering Particle Sources","Generating Jobs","Gesticulating Mimes","Graphing Whale Migration","Hiding Willio Webnet Mask","Implementing Impeachment Routine","Increasing Accuracy of RCI Simulators","Increasing Magmafacation","Initializing Rhinoceros Breeding Timetable","Initializing Robotic Click-Path AI","Inserting Sublimated Messages","Integrating Curves","Integrating Illumination Form Factors","Integrating Population Graphs","Iterating Cellular Automata","Lecturing Errant Subsystems","Mixing Genetic Pool","Modeling Object Components","Mopping Occupant Leaks","Normalizing Power","Obfuscating Quigley Matrix","Overconstraining Dirty Industry Calculations","Partitioning City Grid Singularities","Perturbing Matrices","Pixellating Nude Patch","Polishing Water Highlights","Populating Lot Templates","Preparing Sprites for Random Walks","Prioritizing Landmarks","Projecting Law Enforcement Pastry Intake","Realigning Alternate Time Frames","Reconfiguring User Mental Processes","Relaxing Splines","Removing Road Network Speed Bumps","Removing Texture Gradients","Removing Vehicle Avoidance Behavior","Resolving GUID Conflict","Reticulating Splines","Retracting Phong Shader","Retrieving from Back Store","Reverse Engineering Image Consultant","Routing Neural Network Infanstructure","Scattering Rhino Food Sources","Scrubbing Terrain","Searching for Llamas","Seeding Architecture Simulation Parameters","Sequencing Particles","Setting Advisor ","Setting Inner Deity ","Setting Universal Physical Constants","Sonically Enhancing Occupant-Free Timber","Speculating Stock Market Indices","Splatting Transforms","Stratifying Ground Layers","Sub-Sampling Water Data","Synthesizing Gravity","Synthesizing Wavelets","Time-Compressing Simulator Clock","Unable to Reveal Current Activity","Weathering Buildings","Zeroing Crime Network"];
 OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_item_Tent,OT_item_Flag];
-OT_allRealEstate = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_warehouse,OT_policeStation,OT_barracks,OT_barracks,"Land_Cargo_House_V4_F"];
+OT_allRealEstate = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_warehouse,OT_policeStation,OT_barracks,OT_barracks,OT_workshopBuilding];
 
 OT_Buildables = [
 	["Training Camp",1200,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],

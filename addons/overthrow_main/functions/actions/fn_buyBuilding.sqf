@@ -10,7 +10,7 @@ if(typename _b == "ARRAY") then {
 	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
-		_owner = _building getVariable "owner";
+		_owner = _building call OT_fnc_getOwner;
 		if(_owner == getplayeruid player) then {
 			_home = player getVariable "home";
 			if(_home distance _building < 5) exitWith {"You cannot sell your home" call OT_fnc_notifyMinor;_err = true};
@@ -89,7 +89,7 @@ if(_handled) then {
 	_owned = player getVariable "owned";
 
 	if(_type == "buy") then {
-		_building setVariable ["owner",getPlayerUID player,true];
+		[_building,getPlayerUID player] call OT_fnc_setOwner;
 		[-_price] call money;
 
 		_mrk = createMarkerLocal [_mrkid,getpos _building];
@@ -110,10 +110,13 @@ if(_handled) then {
 		};
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
-			_building setVariable ["owner",nil,true];
-			_building setVariable ["leased",nil,true];
+			[_building,nil] call OT_fnc_setOwner;
+			_id = [_building] call fnc_getBuildID;
+			_leased = player getVariable ["leased",[]];
+			_leased deleteAt (_leased find _id);
+			player setVariable ["leased",_leased,true];
 			deleteMarker _mrkid;
-			_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
+			_owned deleteAt (_owned find _id);
 			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_sell]] call BIS_fnc_createLogRecord;
 			[_sell] call money;
 		}else{

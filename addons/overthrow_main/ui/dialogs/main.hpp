@@ -560,7 +560,7 @@ class OT_dialog_options
 		class RscButton_1606: RscOverthrowButton
 		{
 			idc = 1606;
-			action = "{if ((side _x == civilian and !(_x call OT_fnc_hasOwner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call OT_fnc_hasOwner) and !(_x call OT_fnc_inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call OT_fnc_hasOwner) and (_x getvariable [""owner"",""""] != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""OT_fnc_notifyMinor"",0,false];";
+			action = "{if ((side _x == civilian and !(_x call OT_fnc_hasOwner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call OT_fnc_hasOwner) and !(_x call OT_fnc_inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call OT_fnc_hasOwner) and ((_x call OT_fnc_getOwner) != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""OT_fnc_notifyMinor"",0,false];";
 
 			text = "Clean other"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;

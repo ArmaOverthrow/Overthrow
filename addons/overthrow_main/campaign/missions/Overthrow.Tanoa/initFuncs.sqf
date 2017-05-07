@@ -16,6 +16,8 @@ doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sq
 playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
 
 OT_fnc_NATOConvoy = compileFinal preProcessFileLineNumbers "AI\fn_NATOConvoy.sqf";
+OT_fnc_NATOMissionReconDestroy = compileFinal preProcessFileLineNumbers "AI\fn_NATOMissionReconDestroy.sqf";
+OT_fnc_NATOSetExplosives = compileFinal preProcessFileLineNumbers "AI\fn_NATOSetExplosives.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
@@ -92,6 +94,57 @@ keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
 
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
+OT_fnc_getBuildID = fnc_getBuildID;
+
+OT_fnc_initDrone = {
+	_drone = _this;
+
+	_drone spawn {
+		_drone = _this;
+		_targets = [];
+		while {sleep 10; alive _drone} do {
+			{
+				_ty = typeof _x;
+				if((damage _x) < 1) then {
+					call {
+						if((_x isKindOf "StaticWeapon") and (side _x != west)) exitWith {
+							if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
+								_targets pushback ["SW",position _x,100,_x];
+							};
+						};
+						if(_ty == OT_item_Flag) exitWith {
+							_targets pushback ["FOB",position _x,0,_x];
+						};
+						if(_ty == OT_warehouse) exitWith {
+							if(_x call OT_fnc_hasOwner) then {
+								_targets pushback ["WH",position _x,80,_x];
+							};
+						};
+						if(_ty == OT_policeStation) exitWith {
+							_targets pushback ["PS",position _x,90,_x];
+						};
+						if(_ty == OT_workshopBuilding) exitWith {
+							_targets pushback ["WS",position _x,50,_x];
+						};
+						if(((_x isKindOf "Car") or (_x isKindOf "Air") or (_x isKindOf "Ship")) and !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
+							if !(side _x == west) then {
+								if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
+									_targets pushback ["V",position _x,0,_x];
+								};
+							};
+						};
+						if(_ty == OT_item_Storage) exitWith {
+							if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
+								_targets pushback ["AMMO",position _x,25,_x];
+							};
+						};
+					};
+				};
+			}foreach((_drone nearObjects ["Static",500]) + (_drone nearObjects ["AllVehicles",500]));
+			_drone setVariable ["OT_seenTargets",_targets,false];
+		};
+	};
+};
 
 OT_fnc_generateBanditPositions = {
 	_num = 10;
@@ -143,7 +196,7 @@ OT_fnc_generateBanditPositions = {
 };
 
 OT_fnc_playerIsOwner = {
-	(_this getVariable ["owner",""]) == (getplayeruid player)
+	(_this call OT_fnc_getOwner) == (getplayeruid player)
 };
 
 OT_fnc_playerAtWarehouse = {
@@ -160,7 +213,7 @@ OT_fnc_playerAtWarehouse = {
 
 OT_fnc_lockVehicle = {
 	private _veh = vehicle player;
-	if((_veh getVariable ["owner",""]) != (getplayeruid player)) exitWith {};
+	if((_veh call OT_fnc_getOwner) != (getplayeruid player)) exitWith {};
 	if(_veh getVariable ["OT_locked",false]) then {
 		_veh setVariable ["OT_locked",false,true];
 		"Vehicle unlocked" call OT_fnc_notifyMinor;
@@ -220,10 +273,10 @@ OT_fnc_regionIsConnected = {
 };
 
 OT_fnc_getRegion = {
-	_pos = _this;
+	_p = _this;
 	_region = "";
 	{
-		if(_pos inArea _x) exitWith {_region = _x};
+		if(_p inArea _x) exitWith {_region = _x};
 	}foreach(OT_regions);
 	_region;
 };

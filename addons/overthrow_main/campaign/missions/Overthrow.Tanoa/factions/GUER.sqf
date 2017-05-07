@@ -77,7 +77,7 @@ while {true} do {
 							if(_container isEqualTo objNull) then {
 								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
 								_container = OT_item_CargoContainer createVehicle _p;
-								_container setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_container,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _container;
 								clearMagazineCargoGlobal _container;
 								clearBackpackCargoGlobal _container;
@@ -110,7 +110,7 @@ while {true} do {
 							if(_container isEqualTo objNull) then {
 								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
 								_container = OT_item_CargoContainer createVehicle _p;
-								_container setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_container,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _container;
 								clearMagazineCargoGlobal _container;
 								clearBackpackCargoGlobal _container;
@@ -215,7 +215,7 @@ while {true} do {
 							_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
 							if(count _p > 0) then {
 								_veh = OT_item_CargoContainer createVehicle _p;
-								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _veh;
 								clearMagazineCargoGlobal _veh;
 								clearBackpackCargoGlobal _veh;
@@ -245,7 +245,7 @@ while {true} do {
 							_p = OT_factoryVehicleSpawn findEmptyPosition [0,100,_currentCls];
 							if(count _p > 0) then {
 								_veh = _currentCls createVehicle _p;
-								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _veh;
 								clearMagazineCargoGlobal _veh;
 								clearBackpackCargoGlobal _veh;
@@ -261,7 +261,7 @@ while {true} do {
 							if(_veh isEqualTo objNull) then {
 								_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
 								_veh = OT_item_CargoContainer createVehicle _p;
-								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _veh;
 								clearMagazineCargoGlobal _veh;
 								clearBackpackCargoGlobal _veh;

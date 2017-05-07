@@ -14,6 +14,8 @@ class CfgFunctions
 			class unitStock {};
 			class saveGame {};
 			class loadGame {};
+			class setOwner {};
+			class getOwner {};
 		};
 
 		class Events

@@ -25,6 +25,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		};
 	}foreach (OT_allTowns);
 	server setVariable ["NATOabandoned",_abandoned,true];
+    server setVariable ["NATOresources",2000,true];
 	server setVariable ["garrisonHQ",1000,false];
 	OT_NATOobjectives = [];
 	OT_NATOcomms = [];
@@ -99,37 +100,6 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	server setVariable ["NATOcomms",OT_NATOcomms,true];
 	server setVariable ["NATOhvts",OT_NATOhvts,true];
 	diag_log "Overthrow: Distributing NATO vehicles";
-
-
-	//Randomly distribute NATO's vehicles
-    //First, build a weighted list of objectives
-    _prilist = [];
-    {
-        _x params ["_pos","_name","_worth"];
-
-        if(_worth > 250) then {
-            _prilist pushback _name;
-        };
-        if(_worth > 800) then {
-            _prilist pushback _name;
-        };
-        if(_worth > 1200) then {
-            _prilist pushback _name;
-        };
-    }foreach(OT_NATOobjectives);
-
-	{
-		_type = _x select 0;
-		_num = _x select 1;
-		_count = 0;
-		while {_count < _num} do {
-			_name = _prilist call BIS_fnc_selectRandom;
-			_garrison = server getVariable format["vehgarrison%1",_name];
-			_garrison pushback _type;
-			_count = _count + 1;
-			server setVariable [format ["vehgarrison%1",_name],_garrison,true];
-		};
-	}foreach(OT_NATO_Vehicles_Garrison);
 
     //Weighted airport list to distribute air vehicles
     _prilist = [];

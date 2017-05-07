@@ -24,5 +24,5 @@ _unit forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
 _group = group _unit;
 
 _group setBehaviour "CARELESS";
-_unit setvariable ["owner","self",true];
+[_unit,"self"] call OT_fnc_setOwner;
 (group _unit) allowFleeing 0;

@@ -23,7 +23,7 @@ private _cc = 0;
 
 			_veh = createVehicle [OT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
 			_veh enableDynamicSimulation true;
-			_veh setVariable ["owner",_owner,true];
+			[_veh,_owner] call OT_fnc_setOwner;
 			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 			_veh enableDynamicSimulation true;
 
@@ -102,7 +102,7 @@ private _cc = 0;
 						_veh setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 					};
 
-					_veh setVariable ["owner",_owner,true];
+					[_veh,_owner] call OT_fnc_setOwner;
 					{
 						_cls = _x select 0;
 						_num = _x select 1;
@@ -210,23 +210,17 @@ sleep 0.1;
 					_buildings = (_x nearObjects ["Building",8]);
 					if(count _buildings > 0) then {
 						_bdg = _buildings select 0;
-						_bdg setVariable ["owner",_uid,true];
+						[_bdg,_uid] call OT_fnc_setOwner;
 					};
 				}else{
 					//new save with IDs
 					if (typename _x == "SCALAR") then {
-						_bdg = OT_centerPos nearestObject _x;
-						_bdg setVariable ["owner",_uid,true];
-						if(_x in _leased) then {
-							_bdg setVariable ["leased",true,true];
-							_leasedata pushback [_x,typeof _bdg,getpos _bdg,(getpos _bdg) call OT_fnc_nearestTown];
-						};
+						[_x,_uid] call OT_fnc_setOwner;
 					};
 				};
 			}foreach(_val);
 		};
 	}foreach(_vars);
-	[_uid,"leasedata",_leasedata] call OT_fnc_setOfflinePlayerAttribute;
 }foreach(server getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];

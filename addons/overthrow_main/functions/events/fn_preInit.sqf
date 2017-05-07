@@ -9,12 +9,21 @@ if(isServer) then {
     warehouse = _group createUnit ["LOGIC",[2,0,0] , [], 0, ""];
     spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
     templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
+    owners = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
 
     publicVariable "server";
     publicVariable "cost";
     publicVariable "warehouse";
     publicVariable "spawner";
     publicVariable "templates";
+    publicVariable "owners";
+    
+    if(!isMultiplayer) then {
+        addMissionEventHandler ["Loaded", {
+            [] execVM "setupPlayer.sqf";
+    		[] spawn setupKeyHandler;
+        }];
+    };
 };
 
 //VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less

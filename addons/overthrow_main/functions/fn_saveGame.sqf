@@ -34,7 +34,7 @@ private _data = [];
 	_d = [];
 	_all = [];
 	{
-		if(_x != "ot_loaded" and _x != "owner" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,11]) != "MissionData" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		if(_x != "ot_loaded" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,11]) != "MissionData" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
@@ -52,7 +52,7 @@ private _vehicles = [];
 _count = 10001;
 {
 	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_item_Flag)) then {
-		_owner = _x getVariable ["owner",false];
+		_owner = _x call OT_fnc_getOwner;
 		_s = _x call OT_fnc_unitStock;
 		if(typeof _x == OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];

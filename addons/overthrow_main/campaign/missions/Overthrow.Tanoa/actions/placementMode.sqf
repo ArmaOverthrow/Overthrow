@@ -161,7 +161,7 @@ if(_cost > 0) then {
 			}else{
 				[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
 			};
-			modeTarget setVariable ["owner",getPlayerUID player,true];
+			[modeTarget,getPlayerUID player] call OT_fnc_setOwner;
 			modeTarget remoteExec["initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {
 				_veh = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
@@ -214,7 +214,7 @@ if(_cost > 0) then {
 				if(count _camp > 0) then {
 					{
 						_t = typeof _x;
-						if(_x getVariable ["owner",""] == getplayeruid player) then {
+						if((_x call OT_fnc_getOwner) == getplayeruid player) then {
 							if(_t == OT_item_Tent or _t == "Land_ClutterCutter_large_F") then {
 								deleteVehicle _x;
 							};

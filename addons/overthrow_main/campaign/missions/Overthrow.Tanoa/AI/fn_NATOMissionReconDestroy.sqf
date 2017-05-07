@@ -1,18 +1,15 @@
-private ["_group","_population","_posTown","_vehs","_soldier","_vehtype","_pos","_wp","_numgroups","_attackpos","_count","_tgroup","_ao"];
+params ["_knownPos"];
 
-_posTown = _this;
-
+private _posTarget = _knownPos;
 private _close = nil;
-private _dist = 8000;
+private _dist = 4000;
 private _closest = "";
 private _abandoned = server getVariable["NATOabandoned",[]];
-private _town = _posTown call OT_fnc_nearestTown;
-private _region = server getVariable format["region_%1",_town];
 {
 	_pos = _x select 0;
 	_name = _x select 1;
-	if(_pos inArea _region and !(_name in _abandoned)) then {
-		_d = (_pos distance _posTown);
+	if(([_pos,_knownPos] call OT_fnc_regionIsConnected) and !(_name in _abandoned)) then {
+		_d = (_pos distance _knownPos);
 		if(_d < _dist) then {
 			_dist = _d;
 			_close = _pos;
@@ -27,14 +24,30 @@ if(isNil "_close") then {
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 _group = [_start, WEST, OT_NATO_Group_Recon] call BIS_fnc_spawnGroup;
-
+_group call distributeAILoad;
 sleep 0.5;
 
-_dir = [_start,_posTown] call BIS_fnc_dirTo;
-
-_ao = getpos(nearestLocation[_posTown, "Hill"]);
+_dir = [_start,_posTarget] call BIS_fnc_dirTo;
 
 if(_isHQ) then {
+	_attackpos = [_posTarget,[0,150]] call SHK_pos;
+
+	//Determine direction to attack from (preferrably away from water)
+	_attackdir = random 360;
+	if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
+		_attackdir = _attackdir + 180;
+		if(_attackdir > 359) then {_attackdir = _attackdir - 359};
+		if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
+			_attackdir = _attackdir + 90;
+			if(_attackdir > 359) then {_attackdir = _attackdir - 359};
+			if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
+				_attackdir = _attackdir + 180;
+				if(_attackdir > 359) then {_attackdir = _attackdir - 359};
+			};
+		};
+	};
+	_attackdir = _attackdir - 45;
+	_ao = [_posTarget,[350,500],_attackdir + (random 90)] call SHK_pos;
 	_tgroup = creategroup blufor;
 
 	_spawnpos = OT_NATO_HQPos findEmptyPosition [0,100,OT_NATO_Vehicle_AirTransport_Small];
@@ -42,7 +55,7 @@ if(_isHQ) then {
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
 
-
+	_tgroup call distributeAILoad;
 
 	createVehicleCrew _veh;
 	{
@@ -98,12 +111,6 @@ if(_isHQ) then {
 	{
 		_x addCuratorEditableObjects [units _tgroup,true];
 	} forEach allCurators;
-	_tgroup call distributeAILoad;
-}else{
-	_moveto = [_start,50,_dir] call SHK_pos;
-	_wp = _group addWaypoint [_moveto,5];
-	_wp setWaypointType "MOVE";
-	_wp setWaypointBehaviour "SAFE";
 };
 {
 	_x addCuratorEditableObjects [units _group,true];
@@ -113,10 +120,11 @@ sleep 2;
 //This squad operates in stealth mode, therefore does not respond to calls for help from other units
 {
 	_x setVariable ["VCOM_NOPATHING_Unit",true,false];
+	_x setVariable ["OT_targetPos",_knownPos,true];
 }foreach(units _group);
 
-_wp = _group addWaypoint [_ao,10];
-_wp setWaypointType "SAD";
-_wp setWaypointBehaviour "STEALTH";
-
-_group call distributeAILoad;
+_wp = _group addWaypoint [_posTarget,0];
+_wp setWaypointType "MOVE";
+_wp setWaypointBehaviour "COMBAT";
+_wp setWaypointSpeed "FULL";
+_wp setWaypointStatements ["true","this spawn OT_fnc_NATOSetExplosives"];

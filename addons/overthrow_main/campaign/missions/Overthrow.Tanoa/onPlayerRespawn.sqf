@@ -21,7 +21,7 @@ _newrecruits = [];
 	_civ = _x select 2;
 	if(_owner == (getplayeruid player)) then {
 		if(typename _civ == "OBJECT") then {
-			if((_civ getVariable "owner") == (getplayeruid player)) then {
+			if(_civ call OT_fnc_playerIsOwner) then {
 				[_civ] joinSilent (group player);
 			};
 		};

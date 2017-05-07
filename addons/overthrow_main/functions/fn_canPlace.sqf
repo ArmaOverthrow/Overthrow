@@ -61,10 +61,9 @@ if !(_isbase) then {
 	_estate = _pos call OT_fnc_nearestRealEstate;
 	if(typename _estate == "ARRAY") then {
 		_b = _estate select 0;
-		if(_b getVariable ["leased",false]) exitWith {_canplace = false};
 		if(typeof _b == OT_item_Tent) exitWith {_canplace = false};
 		if(_b call OT_fnc_hasOwner) then {
-			_owner = _b getVariable "owner";
+			_owner = _b call OT_fnc_getOwner;
 			if(_owner != getplayeruid player) then {
 				if(_typecls != "Camp" and _typecls != "Base") then {
 					_canplace = false;

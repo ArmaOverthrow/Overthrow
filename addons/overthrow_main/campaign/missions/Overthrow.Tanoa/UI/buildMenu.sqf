@@ -283,14 +283,14 @@ buildOnMouseUp = {
 						clearMagazineCargoGlobal _x;
 						clearBackpackCargoGlobal _x;
 						clearItemCargoGlobal _x;
-						_x setVariable ["owner",getplayeruid player,true];
+						[_x,getplayeruid player] call OT_fnc_setOwner;
 						_x call initObjectLocal;
 					}foreach(_objects);
 					_created = _objects select 0;
 					deleteVehicle modeTarget;
 				}else{
 					_created = modeTarget;
-					modeTarget setVariable ["owner",getplayeruid player,true];
+					[modeTarget,getplayeruid player] call OT_fnc_setOwner;
 					modeTarget enableSimulationGlobal true;
 					modeTarget = objNull;
 				};

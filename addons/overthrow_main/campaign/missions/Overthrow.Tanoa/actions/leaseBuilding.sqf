@@ -29,7 +29,7 @@ if(typename _b == "ARRAY") then {
 	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
-		_owner = _building getVariable "owner";
+		_owner = _building call OT_fnc_getOwner;
 		if(_owner == getplayeruid player) then {
 			_home = player getVariable "home";
 			if((_home distance _building) < 5) exitWith {"You cannot lease your home" call OT_fnc_notifyMinor;_err = true};
@@ -48,7 +48,6 @@ if(_handled) then {
 	_leasedata pushback [_id,typeof _building,getpos _building,(getpos _building) call OT_fnc_nearestTown];
 	player setvariable ["leasedata",_leasedata,true];
 
-	_building setVariable ["leased",true,true];
 	_mrkid = format["bdg-%1",_building];
 	_mrkid setMarkerAlphaLocal 0.3;
 	playSound "3DEN_notificationDefault";

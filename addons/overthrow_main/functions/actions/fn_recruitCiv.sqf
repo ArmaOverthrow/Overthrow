@@ -15,7 +15,7 @@ if(random 100 > 80) then {
 };
 
 _civ = player getvariable "hiringciv";
-_civ setVariable ["owner",getPlayerUID player,true];
+[_civ,getPlayerUID player] call OT_fnc_setOwner;
 _civ removeAllEventHandlers "FiredNear";
 [_civ] joinSilent grpNull;
 [_civ] joinSilent (group player);

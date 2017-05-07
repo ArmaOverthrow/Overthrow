@@ -1,6 +1,8 @@
 [] execVM "income.sqf";
 addMissionEventHandler ["EntityKilled",compileFinal preprocessFileLineNumbers "events\somethingDied.sqf"];
 
+["Building", "Dammaged", compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf"] call CBA_fnc_addClassEventHandler;
+
 if (!isMultiplayer) exitWith {};
 
 //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575

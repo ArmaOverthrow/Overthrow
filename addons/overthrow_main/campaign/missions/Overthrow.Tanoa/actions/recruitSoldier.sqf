@@ -14,6 +14,6 @@ if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMin
 
 private _civ = [_soldier,_pos,_group] call OT_fnc_createSoldier;
 
-_civ setVariable ["owner",getplayeruid player,true];
+[_civ,getPlayerUID player] call OT_fnc_setOwner;
 [_civ] spawn OT_fnc_initRecruit;
 _civ setRank "SERGEANT";

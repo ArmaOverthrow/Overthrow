@@ -32,7 +32,7 @@ _leader = false;
 {
 	_civ = [_x,_pos,_group] call OT_fnc_createSoldier;
 	player reveal [_civ,4];
-	if(!_leader) then {_group selectLeader _civ;_civ setVariable ["owner",getplayeruid player,true],_leader=true};
+	if(!_leader) then {_group selectLeader _civ;[_civ,getPlayerUID player] call OT_fnc_setOwner,_leader=true};
 }foreach(_soldiers);
 
 _group setGroupIdGlobal [format["%1-%2",_shortname,_cc]];
