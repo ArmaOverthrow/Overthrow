@@ -102,12 +102,14 @@ if(_handled) then {
 			_mrk setMarkerAlpha 0;
 			_mrk setMarkerAlphaLocal 1;
 		};
-
-		_owned pushback ([_building] call fnc_getBuildID);
+		_id = [_building] call fnc_getBuildID;
+		buildingpositions setVariable [str _id,position _building,true];
+		_owned pushback _id;
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {
 			[_town,round(_price / 10000)] call standing;
 		};
+		_bdg addEventHandler ["Dammaged",compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf"];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
 			[_building,nil] call OT_fnc_setOwner;

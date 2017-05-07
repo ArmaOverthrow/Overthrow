@@ -113,6 +113,7 @@ if(typename _b == "ARRAY") then {
 		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
+
 		if(_owner == getplayerUID player) then {
 			_leased = player getVariable ["leased",[]];
 			_id = [_building] call OT_fnc_getBuildID;
@@ -151,19 +152,24 @@ if(typename _b == "ARRAY") then {
 
 				_buildingTxt = format["
 					<t align='left' size='0.8'>Warehouse</t><br/>
-					<t align='left' size='0.65'>Owned by %1</t>
-				",_ownername];
+					<t align='left' size='0.65'>Owned by %1</t><br/>
+					<t align='left' size='0.65'>Damage: %2%3</t>
+				",_ownername,round((damage _building) * 100),"%"];
 			};
 
 			if(_id in _leased) then {
 				ctrlEnable [1609,false];
 				ctrlEnable [1610,false];
 			};
+			if(damage _building == 1) then {
+				_lease = 0;
+			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
 				<t align='left' size='0.65'>Owned by %2</t><br/>
-				<t align='left' size='0.65'>Lease Value: $%3/6hrs</t>
-			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+				<t align='left' size='0.65'>Lease Value: $%3/6hrs</t><br/>
+				<t align='left' size='0.65'>Damage: %4%5</t>
+			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber,round((damage _building) * 100),"%"];
 
 		}else{
 			ctrlEnable [1608,false];
@@ -177,8 +183,9 @@ if(typename _b == "ARRAY") then {
 			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
-				<t align='left' size='0.65'>Owned by %2</t>
-			",_name,_ownername];
+				<t align='left' size='0.65'>Owned by %2</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_name,_ownername,round((damage _building) * 100),"%"];
 		};
 		if(typeof _building == OT_barracks) then {
 			_owner = _building call OT_fnc_getOwner;
@@ -192,8 +199,18 @@ if(typename _b == "ARRAY") then {
 
 			_buildingTxt = format["
 				<t align='left' size='0.8'>Barracks</t><br/>
-				<t align='left' size='0.65'>Built by %1</t>
-			",_ownername];
+				<t align='left' size='0.65'>Built by %1</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_ownername,round((damage _building) * 100),"%"];
+		};
+
+		if(damage _building == 1) then {
+			if((_owner == getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {
+				ctrlEnable [1608,false]; //Not allowed to sell
+				ctrlSetText [1609,"Repair"]; //Replace lease/manage with repair
+				ctrlEnable [1609,true];
+				ctrlEnable [1610,false];
+			};
 		};
 	}else{
 		if(isNil "_price") then {

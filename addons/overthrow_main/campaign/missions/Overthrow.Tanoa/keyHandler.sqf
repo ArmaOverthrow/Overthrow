@@ -55,15 +55,7 @@ if (_key == 21) then
 							deleteVehicle _veh;
 						};
 					};
-					_b = player call OT_fnc_nearestRealEstate;
-					_iswarehouse = false;
-					if(typename _b == "ARRAY") then {
-						_building = _b select 0;
-						if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
-							_iswarehouse = true;
-						};
-					};
-					if(_iswarehouse) then {
+					if(call OT_fnc_playerAtWarehouse) then {
 						createDialog "OT_dialog_vehiclewarehouse";
 					}else{
 						createDialog "OT_dialog_vehicle";

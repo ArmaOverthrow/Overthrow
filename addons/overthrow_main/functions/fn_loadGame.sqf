@@ -6,7 +6,7 @@ private ["_data"];
 _data = profileNameSpace getVariable ["Overthrow.save.001",""];
 if(typename _data != "ARRAY") exitWith {
 	[] remoteExec ['newGame',2];
-	"No save found, starting new game" remoteExec ["hint",bigboss,true];
+	"No save found, starting new game" remoteExec ["hint",0,true];
 };
 
 private _cc = 0;
@@ -15,6 +15,12 @@ private _cc = 0;
 	_key = _x select 0;
 	_val = _x select 1;
 	_set = true;
+	if(_key == "buildingpositions") then {
+		{
+			buildingpositions setVariable [_x select 0,_x select 1,true];
+		}foreach(_val);
+		_set = false;
+	};
 	if(_key == "bases") then {
 		{
 			_pos = _x select 0;
@@ -136,7 +142,7 @@ private _cc = 0;
 					if(count _x > 6) then {
 						_code = (_x select 6);
 						if(_code != "") then {
-							[getpos _veh,_code] call structureInit;
+							[_veh,getpos _veh,_code] call structureInit;
 						};
 						_veh setVariable ["OT_init",_code,true];
 					};
@@ -196,11 +202,13 @@ private _cc = 0;
 	};
 }foreach(_data);
 sleep 0.1;
+private _built = (allMissionObjects "Static");
 {
-	_uid = _x;
-	_vars = server getVariable [_uid,[]];
-	_leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
-	_leasedata = [];
+	private _uid = _x;
+	private _vars = server getVariable [_uid,[]];
+	private _leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
+	private _leasedata = [];
+	private _handler = compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf";
 	{
 		_x params ["_name","_val"];
 		if(_name == "owned") then {
@@ -216,11 +224,27 @@ sleep 0.1;
 					//new save with IDs
 					if (typename _x == "SCALAR") then {
 						[_x,_uid] call OT_fnc_setOwner;
+
+						_pos = buildingpositions getVariable [str _x,[]];
+						_bdg = objNull;
+						if(count _pos == 0) then {
+							_bdg = OT_centerPos nearestObject _x;
+							buildingpositions setVariable [str _x,position _bdg,true];
+						}else{
+							_bdg = _pos nearestObject _x;
+						};
+						if !(_bdg in _built) then {
+							_bdg addEventHandler ["Dammaged",_handler];
+						};
+						if(_x in _leased) then {
+							_leasedata pushback [_x,typeof _bdg,_pos,_pos call OT_fnc_nearestTown];
+						};
 					};
 				};
 			}foreach(_val);
 		};
 	}foreach(_vars);
+	[_uid,"leasedata",_leasedata] call OT_fnc_setOfflinePlayerAttribute;
 }foreach(server getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];

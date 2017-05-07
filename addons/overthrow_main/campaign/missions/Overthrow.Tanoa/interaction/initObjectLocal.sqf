@@ -20,7 +20,7 @@ if(typeof _this == OT_item_Storage) then {
 		private _iswarehouse = call OT_fnc_playerAtWarehouse;
 
 		if !(_iswarehouse) exitWith {
-			"No warehouse within range" call OT_fnc_notifyMinor;
+			"No warehouse within range or needs repair" call OT_fnc_notifyMinor;
 		};
 
 		OT_warehouseTarget = _this select 0;
@@ -29,6 +29,10 @@ if(typeof _this == OT_item_Storage) then {
 		[] call warehouseDialog;
 	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
 	_this addAction ["Store In Warehouse", {
+		private _iswarehouse = call OT_fnc_playerAtWarehouse;
+		if !(_iswarehouse) exitWith {
+			"No warehouse within range or needs repair" call OT_fnc_notifyMinor;
+		};
 		OT_warehouseTarget = _this select 0;
 		[] spawn OT_fnc_transferTo;
 	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];

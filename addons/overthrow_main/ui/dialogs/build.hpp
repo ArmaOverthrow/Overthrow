@@ -64,14 +64,14 @@ class OT_dialog_buildbase
 		class RscButton_1604: RscOverthrowButton
 		{
 			idc = 1604;
-			action = "'Helipad' call build";
+			action = "'Workshop' call build";
 
-			text = "Helipad"; //--- ToDo: Localize;
-			x = 0.0204687 * safezoneW + safezoneX;
+			text = "Workshop"; //--- ToDo: Localize;
+			x = 0.891875 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Apparently helicopter pilots need to be told where they are allowed to land"; //--- ToDo: Localize;
+			tooltip = "Modify vehicles"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

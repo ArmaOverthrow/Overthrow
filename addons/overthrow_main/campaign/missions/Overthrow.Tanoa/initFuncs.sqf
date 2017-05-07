@@ -204,7 +204,7 @@ OT_fnc_playerAtWarehouse = {
 	_b = (position player) call OT_fnc_nearestRealEstate;
 	if(typename _b == "ARRAY") then {
 		_building = _b select 0;
-		if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+		if((typeof _building) == OT_warehouse and (_building call OT_fnc_hasOwner) and (damage _building) < 1) then {
 			_iswarehouse = true;
 		};
 	};
@@ -602,9 +602,10 @@ mpSetDir = {
 };
 
 structureInit = {
-	private _pos = _this select 0;
-	private _code = compileFinal preProcessFileLineNumbers (_this select 1);
-	[_pos] spawn _code;
+	private _veh = _this select 0;
+	private _pos = _this select 1;
+	private _code = compileFinal preProcessFileLineNumbers (_this select 2);
+	[_pos,_veh] spawn _code;
 };
 
 blackFaded = {

@@ -132,7 +132,13 @@ if(isMultiplayer or _startup == "LOAD") then {
 				//new save with IDs
 				if (typename _x == "SCALAR") then {
 					_mrkName = format["bdg-%1",_x];
-					_mrkName = createMarkerLocal [_mrkName,getpos _bdg];
+					_pos = buildingpositions getVariable [str _x,[]];
+					if(count _pos == 0) then {
+						_bdg = OT_centerPos nearestObject _x;
+						_pos = position _bdg;
+						buildingpositions setVariable [str _x,_pos,true];
+					};
+					_mrkName = createMarkerLocal [_mrkName,_pos];
 					_mrkName setMarkerShape "ICON";
 					_mrkName setMarkerType "loc_Tourism";
 					_mrkName setMarkerColor "ColorWhite";
@@ -186,7 +192,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 
 				commandStop _civ;
 			}else{
-				if((_civ call OT_fnc_playerIsOwner) then {
+				if(_civ call OT_fnc_playerIsOwner) then {
 					[_civ] joinSilent (group player);
 				};
 			};

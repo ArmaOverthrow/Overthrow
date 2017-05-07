@@ -3,6 +3,22 @@ _building = objNull;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);
 };
+if(damage _building == 1) exitWith {
+	_price =  round((_b select 1) * 0.25);
+	_money = player getVariable ["money",0];
+	if(_money >= _price) then {
+		[-_price] call money;
+		_building setDamage 0;
+		_id = [_building] call OT_fnc_getBuildID;
+		_damaged = owners getVariable ["damagedBuildings",[]];
+		if(_id in _damaged) then {
+			_damaged deleteAt (_damaged find _id);
+			owners setVariable ["damagedBuildings",_damaged,true];
+		}
+	}else{
+		format["You need $%1",[_price, 1, 0, true] call CBA_fnc_formatNumber];
+	};
+};
 if(typeof _building == OT_policeStation) exitWith {[] call policeDialog};
 if(typeof _building == OT_barracks) exitWith {[] call recruitDialog};
 if(typeof _building == OT_warehouse) exitWith {[] call buyVehicleDialog};

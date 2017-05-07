@@ -48,13 +48,15 @@ lbClear 1501;
 }foreach(OT_economicData);
 
 _tax = server getVariable ["taxrate",0];
-
+_damaged = owners getVariable ["damagedBuildings",[]];
 private _lease = 0;
 {
     _x params ["_id","_cls","_pos","_town"];
-    private _data = [_cls,_town] call OT_fnc_getRealEstateData;
-    _tl = (_data select 2);
-    _lease = _lease + _tl;
+    if (!_id in _damaged) then {
+        private _data = [_cls,_town] call OT_fnc_getRealEstateData;
+        _tl = (_data select 2);
+        _lease = _lease + _tl;
+    };
 }foreach(player getVariable ["leasedata",[]]);
 
 if(_lease > 0) then {

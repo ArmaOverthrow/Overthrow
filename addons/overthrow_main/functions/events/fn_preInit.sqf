@@ -10,6 +10,7 @@ if(isServer) then {
     spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
     templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
     owners = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
+    buildingpositions = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
 
     publicVariable "server";
     publicVariable "cost";
@@ -17,7 +18,8 @@ if(isServer) then {
     publicVariable "spawner";
     publicVariable "templates";
     publicVariable "owners";
-    
+    publicVariable "buildingpositions";
+
     if(!isMultiplayer) then {
         addMissionEventHandler ["Loaded", {
             [] execVM "setupPlayer.sqf";

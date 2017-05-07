@@ -26,6 +26,12 @@ private _data = [];
 	};
 }foreach(allVariables server);
 
+_poses = [];
+{
+	_poses pushback [_x,buildingpositions getVariable _x];
+}foreach(allVariables buildingpositions);
+_data pushback ["buildingpositions",_poses];
+
 //get all online player data
 {
 	_uid = getPlayerUID _x;

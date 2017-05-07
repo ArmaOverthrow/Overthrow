@@ -21,8 +21,8 @@ if(_gotexp) then {
     if(alive _expert) then {
         _expert removeMagazineGlobal "DemoCharge_Remote_Mag";
         _p set [2,1];
-        _charge = createVehicle ["DemoCharge_Remote_Ammo", _p, [], 0,""];
-        _charge enableSimulationGlobal true;
+        _charge = "DemoCharge_Remote_Ammo" createVehicle _p;
+        _charge setPosATL _p;
 
         //run away!
         _runto = [_p,[1000,2000],random 360] call SHK_pos;

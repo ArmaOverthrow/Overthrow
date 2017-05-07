@@ -97,7 +97,6 @@ while {sleep 10;true} do {
 				};
 				if(_countered) exitWith {};
 			}foreach(OT_NATOobjectives);
-			player globalchat format ["%1",_knownTargets];
 		};
 
 		//Town QRF (over 50 pop)
@@ -283,7 +282,6 @@ while {sleep 10;true} do {
 					if !(_done) then {
 						if(_ty == "WH" or _ty == "PS" or _ty == "WS") then {
 							if(_spend > 250) then {
-								player globalchat "Scheduled Destroy Mission";
 								_schedule pushback ["DESTROY",_ty,_pos];
 								_spend = _spend - 250;
 								_resources = _resources -250;
@@ -302,7 +300,6 @@ while {sleep 10;true} do {
 		server setVariable ["NATOabandoned",_abandoned,true];
 		spawner setVariable ["NATOknownTargets",_knownTargets,true];
 		server setVariable ["NATOschedule",_schedule,true];
-		hint str _resources;
 	};
 	_count = _count + 1;
 };
