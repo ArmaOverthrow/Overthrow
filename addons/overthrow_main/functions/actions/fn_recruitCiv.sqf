@@ -1,7 +1,9 @@
-if !(captive player) exitWith {"You cannot recruit while wanted" call OT_fnc_notifyMinor};
-
 _town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
+
+if(_standing < 10 and count (player nearObjects [OT_refugeeCamp,20]) == 0) exitWith {
+	"+10 Standing required to recruit. Try building a refugee camp at an FOB." call OT_fnc_notifyMinor
+};
 
 _price = [_town,"CIV",_standing] call OT_fnc_getPrice;
 _money = player getVariable ["money",0];
@@ -19,6 +21,7 @@ _civ = player getvariable "hiringciv";
 _civ removeAllEventHandlers "FiredNear";
 [_civ] joinSilent grpNull;
 [_civ] joinSilent (group player);
+_civ setCaptive true;
 [_civ] spawn OT_fnc_initRecruit;
 
 [player,format["New Recruit: %1",name _civ],format["Recruited: %1 for $%2",name _civ,_price]] call BIS_fnc_createLogRecord;

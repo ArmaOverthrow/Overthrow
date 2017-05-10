@@ -377,7 +377,9 @@ player addEventHandler ["GetInMan",{
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
-			[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call standing;
+			if(_veh getVariable ["ambient",false]) then {
+				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call standing;
+			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {
 				if(!_isgen and (_veh getVariable ["OT_locked",false])) then {

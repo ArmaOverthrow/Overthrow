@@ -327,11 +327,11 @@ while {alive _unit} do {
 	if(_attack != "") then {
 		_pos = server getVariable _attack;
 		private _playerpos = getpos _unit;
-		if(_pos distance _playerpos < 500) then {
+		if(_pos distance _playerpos < 1000) then {
 			private _altitude = _playerpos select 2;
-			_unit setCaptive false;
-			_unit setVariable ["hiding",30,false];
 			if(_altitude > 5) then {
+				_unit setCaptive false;
+				_unit setVariable ["hiding",30,false];
 				//Radar is active here
 				(vehicle _unit) spawn revealToNATO;
 			};

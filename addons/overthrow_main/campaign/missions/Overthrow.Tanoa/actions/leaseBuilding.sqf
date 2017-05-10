@@ -20,7 +20,7 @@ if(damage _building == 1) exitWith {
 	};
 };
 if(typeof _building == OT_policeStation) exitWith {[] call policeDialog};
-if(typeof _building == OT_barracks) exitWith {[] call recruitDialog};
+if((typeof _building == OT_barracks) or (typeof _building == OT_trainingCamp)) exitWith {[] call recruitDialog};
 if(typeof _building == OT_warehouse) exitWith {[] call buyVehicleDialog};
 
 if(typename _b != "ARRAY") exitWith {

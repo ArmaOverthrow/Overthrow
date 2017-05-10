@@ -9,8 +9,8 @@ _description = "";
 modeFinished = false;
 modeCancelled = false;
 call {
-	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for you and your group. Only one allowed per player, will remove any existing camps."};
-	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_item_Flag];_cost=500;_description="Creates a fast travel destination for all friendlies and enables build mode for military structures"};
+	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for all friendlies. Only one allowed per player, will remove any existing camps."};
+	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_item_Flag];_cost=250;_description="Creates a fast travel destination for all friendlies and enables build mode for basic military structures"};
 	if(_typecls == "Ammobox") exitWith {modeValues = [OT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
 	if(_typecls == "Whiteboard") exitWith {modeValues = [OT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
 	{

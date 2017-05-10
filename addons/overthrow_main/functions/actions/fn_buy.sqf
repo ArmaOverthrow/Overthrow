@@ -87,6 +87,11 @@ call {
 		clearBackpackCargoGlobal _veh;
 		clearItemCargoGlobal _veh;
 
+		if(_cls == OT_vehType_service) then {
+			_veh addItemCargoGlobal ["ToolKit", 1];
+			[_veh,3,"ACE_Wheel"] call ace_repair_fnc_addSpareParts;
+		};
+
 		player reveal _veh;
 		format["You bought a %1 for $%2",_cls call ISSE_Cfg_Vehicle_GetName,_price] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";

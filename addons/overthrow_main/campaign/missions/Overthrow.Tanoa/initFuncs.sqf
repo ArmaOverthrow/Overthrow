@@ -18,6 +18,10 @@ playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sq
 OT_fnc_NATOConvoy = compileFinal preProcessFileLineNumbers "AI\fn_NATOConvoy.sqf";
 OT_fnc_NATOMissionReconDestroy = compileFinal preProcessFileLineNumbers "AI\fn_NATOMissionReconDestroy.sqf";
 OT_fnc_NATOSetExplosives = compileFinal preProcessFileLineNumbers "AI\fn_NATOSetExplosives.sqf";
+OT_fnc_NATOMissionDeployFOB = compileFinal preProcessFileLineNumbers "AI\fn_NATOMissionDeployFOB.sqf";
+OT_fnc_NATODeployFOB = compileFinal preProcessFileLineNumbers "AI\fn_NATODeployFOB.sqf";
+OT_fnc_NATOupgradeFOB = compileFinal preProcessFileLineNumbers "AI\fn_NATOupgradeFOB.sqf";
+OT_fnc_NATOMortar = compileFinal preProcessFileLineNumbers "AI\fn_NATOMortar.sqf";
 
 //UI
 mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
@@ -226,9 +230,10 @@ OT_fnc_lockVehicle = {
 OT_fnc_squadAssignVehicle = {
 	_squad = (hcselected player) select 0;
 	_veh = cursorObject;
+
 	if((_veh isKindOf "Air") or (_veh isKindOf "Land") or (_veh isKindOf "Ship")) then {
+		_squad setVariable ["OT_assigned",_veh,false];
 		_squad addVehicle _veh;
-		[] call OT_fnc_squadGetIn;
 		player hcSelectGroup [_squad,false];
 		format["%1 assigned to %2",(typeof _veh) call ISSE_Cfg_Vehicle_GetName,groupId _squad] call OT_fnc_notifyMinor;
 	};
@@ -236,16 +241,20 @@ OT_fnc_squadAssignVehicle = {
 
 OT_fnc_squadGetIn = {
 	{
-		_squad = _x;
-		(units _squad) orderGetIn true;
-		player hcSelectGroup [_squad,false];
+		_veh = _x getVariable ["OT_assigned",objNull];
+		(units _x) allowGetIn true;
+		if !(isNull _veh) then {
+			_x addVehicle _veh;
+		};
+		player hcSelectGroup [_x,false];
 	}foreach(hcSelected player);
 };
 
 OT_fnc_squadGetOut = {
 	{
 		_squad = _x;
-		(units _squad) orderGetIn false;
+		{ unassignVehicle _x } forEach (units _squad);
+		(units _squad) allowGetIn false;
 		player hcSelectGroup [_squad,false];
 	}foreach(hcSelected player);
 };

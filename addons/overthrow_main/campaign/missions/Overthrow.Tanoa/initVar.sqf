@@ -58,7 +58,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Katkoula","Lailai","Taga","Bua Bua","Blerick","Moddergat","Tobakoro"]; //Towns where new players will spawn
 OT_spawnHouses = ["Land_Slum_01_F","Land_Slum_02_F","Land_House_Native_02_F"]; //Houses where new players will spawn
 
-OT_NATOwait = 30; //Half the Average time between NATO orders (x 10 seconds)
+OT_NATOwait = 3; //Half the Average time between NATO orders (x 10 seconds)
 OT_CRIMwait = 500; //Half the Average time between crim changes
 
 //Interactable items that spawn in your house
@@ -144,7 +144,7 @@ OT_faces_western = ["WhiteHead_1","WhiteHead_2","WhiteHead_3","WhiteHead_4","Whi
 OT_faces_eastern = ["AsianHead_A3_01","AsianHead_A3_02","AsianHead_A3_03","AsianHead_A3_04","AsianHead_A3_05","AsianHead_A3_06","AsianHead_A3_07"];
 OT_face_localBoss = "TanoanBossHead";
 
-OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar"];
+OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer"];
 
 OT_civType_gunDealer = "C_man_p_fugitive_F";
 OT_civType_local = "C_man_1";
@@ -155,7 +155,8 @@ OT_civType_priest = "C_man_w_worker_F";
 OT_vehTypes_civ = []; //populated automatically, but you can add more here and they will appear in streets
 OT_vehType_distro = "C_Van_01_box_F";
 OT_vehType_ferry = "C_Boat_Transport_02_F";
-OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F"]; //Civs cannot drive these vehicles for whatever reason
+OT_vehType_service = "C_Offroad_01_repair_F";
+OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F",OT_vehType_service]; //Civs cannot drive these vehicles for whatever reason
 
 OT_item_CargoContainer = "B_Slingload_01_Cargo_F";
 
@@ -170,7 +171,7 @@ OT_item_BasicGun = "hgun_P07_F";//Player starts with this weapon in their ammobo
 OT_item_BasicAmmo = "16Rnd_9x21_Mag";
 
 if(OT_hasAce) then {
-	OT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty","ACE_elasticBandage","ItemMap","ToolKit","ACE_epinephrine"]; //Shops will try to stock more of these
+	OT_consumableItems = ["ACE_fieldDressing","ACE_Sandbag_empty","ACE_elasticBandage","ItemMap","ToolKit","ACE_epinephrine","OT_Fertilizer"]; //Shops will try to stock more of these
 }else{
 	OT_consumableItems = ["FirstAidKit","Medikit","ItemMap","ToolKit"];
 };
@@ -237,24 +238,33 @@ OT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F";
 OT_NATO_Vehicle_Quad = "B_Quadbike_01_F";
 OT_NATO_Vehicle_Police = "B_GEN_Offroad_01_gen_F";
 OT_NATO_Vehicle_Transport = ["B_T_Truck_01_transport_F","B_T_Truck_01_covered_F"];
+OT_NATO_Vehicle_Transport_Light = "B_CTRG_LSV_01_light_F";
 OT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_ReconDrone = "B_UAV_01_F";
 OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
 OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F"];
 OT_NATO_Vehicles_AirSupport_Small = ["B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_GroundSupport = ["B_T_MRAP_01_gmg_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F"];
+OT_NATO_Vehicles_Convoy = ["B_UGV_01_rcws_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = ["B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_F"];
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
 OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
 
+OT_NATO_Sandbag_Curved = "Land_BagFence_01_round_green_F";
+OT_NATO_Barrier_Small = "Land_HBarrier_01_line_5_green_F";
+OT_NATO_Barrier_Large = "Land_HBarrier_01_wall_6_green_F";
+
 OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
 OT_NATO_Group_Recon = (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_ReconTeam");
+OT_NATO_Group_Engineers = (configfile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Support" >> "B_T_Support_ENG");
 
 OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
 OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F"];
+
+OT_NATO_Mortar = "B_T_Mortar_01_F";
 
 OT_NATO_Unit_Pilot = "B_T_Pilot_F";
 OT_NATO_Unit_Sniper = "B_T_Sniper_F";
@@ -410,6 +420,7 @@ cost setVariable ["OT_Steel",[30,0,0,0],true];
 cost setVariable ["OT_Plastic",[20,0,0,0],true];
 cost setVariable ["OT_Sugarcane",[15,0,0,0],true];
 cost setVariable ["OT_Sugar",[25,0,0,0],true];
+cost setVariable ["OT_Fertilizer",[30,0,0,0],true];
 
 if(OT_hasTFAR) then {
 	[OT_backpacks,[
@@ -832,7 +843,7 @@ OT_attachments = [];
 OT_allWeapons = OT_allSubMachineGuns + OT_allAssaultRifles + OT_allMachineGuns + OT_allSniperRifles + OT_allHandGuns + OT_allMissileLaunchers + OT_allRocketLaunchers;
 
 if(isServer) then {
-	cost setVariable ["CIV",[100,0,0,0],true];
+	cost setVariable ["CIV",[80,0,0,0],true];
 	cost setVariable ["WAGE",[5,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
 	cost setVariable ["FUEL",[5,0,0,0],true];
@@ -897,16 +908,18 @@ OT_policeStation = "Land_Cargo_House_V3_F";
 OT_warehouse = "Land_Warehouse_03_F";
 OT_barracks = "Land_Barracks_01_grey_F";
 OT_workshopBuilding = "Land_Cargo_House_V4_F";
+OT_refugeeCamp = "Land_Medevac_house_V1_F";
+OT_trainingCamp = "Land_IRMaskingCover_02_F";
 
 OT_loadingMessages = ["Adding Hidden Agendas","Adjusting Bell Curves","Aesthesizing Industrial Areas","Aligning Covariance Matrices","Applying Feng Shui Shaders","Applying Theatre Soda Layer","Asserting Packed Exemplars","Attempting to Lock Back-Buffer","Binding Sapling Root System","Breeding Fauna","Building Data Trees","Bureacritizing Bureaucracies","Calculating Inverse Probability Matrices","Calculating Llama Expectoration Trajectory","Calibrating Blue Skies","Charging Ozone Layer","Coalescing Cloud Formations","Cohorting Exemplars","Collecting Meteor Particles","Compounding Inert Tessellations","Compressing Fish Files","Computing Optimal Bin Packing","Concatenating Sub-Contractors","Containing Existential Buffer","Debarking Ark Ramp","Debunching Unionized Commercial Services","Deciding What Message to Display Next","Decomposing Singular Values","Decrementing Tectonic Plates","Deleting Ferry Routes","Depixelating Inner Mountain Surface Back Faces","Depositing Slush Funds","Destabilizing Economic Indicators","Determining Width of Blast Fronts","Deunionizing Bulldozers","Dicing Models","Diluting Livestock Nutrition Variables","Downloading Satellite Terrain Data","Exposing Flash Variables to Streak System","Extracting Resources","Factoring Pay Scale","Fixing Election Outcome Matrix","Flood-Filling Ground Water","Flushing Pipe Network","Gathering Particle Sources","Generating Jobs","Gesticulating Mimes","Graphing Whale Migration","Hiding Willio Webnet Mask","Implementing Impeachment Routine","Increasing Accuracy of RCI Simulators","Increasing Magmafacation","Initializing Rhinoceros Breeding Timetable","Initializing Robotic Click-Path AI","Inserting Sublimated Messages","Integrating Curves","Integrating Illumination Form Factors","Integrating Population Graphs","Iterating Cellular Automata","Lecturing Errant Subsystems","Mixing Genetic Pool","Modeling Object Components","Mopping Occupant Leaks","Normalizing Power","Obfuscating Quigley Matrix","Overconstraining Dirty Industry Calculations","Partitioning City Grid Singularities","Perturbing Matrices","Pixellating Nude Patch","Polishing Water Highlights","Populating Lot Templates","Preparing Sprites for Random Walks","Prioritizing Landmarks","Projecting Law Enforcement Pastry Intake","Realigning Alternate Time Frames","Reconfiguring User Mental Processes","Relaxing Splines","Removing Road Network Speed Bumps","Removing Texture Gradients","Removing Vehicle Avoidance Behavior","Resolving GUID Conflict","Reticulating Splines","Retracting Phong Shader","Retrieving from Back Store","Reverse Engineering Image Consultant","Routing Neural Network Infanstructure","Scattering Rhino Food Sources","Scrubbing Terrain","Searching for Llamas","Seeding Architecture Simulation Parameters","Sequencing Particles","Setting Advisor ","Setting Inner Deity ","Setting Universal Physical Constants","Sonically Enhancing Occupant-Free Timber","Speculating Stock Market Indices","Splatting Transforms","Stratifying Ground Layers","Sub-Sampling Water Data","Synthesizing Gravity","Synthesizing Wavelets","Time-Compressing Simulator Clock","Unable to Reveal Current Activity","Weathering Buildings","Zeroing Crime Network"];
 OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_item_Tent,OT_item_Flag];
-OT_allRealEstate = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_warehouse,OT_policeStation,OT_barracks,OT_barracks,OT_workshopBuilding];
+OT_allRealEstate = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_warehouse,OT_policeStation,OT_barracks,OT_barracks,OT_workshopBuilding,OT_refugeeCamp,OT_trainingCamp];
 
 OT_Buildables = [
-	["Training Camp",1200,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],
+	["Training Camp",1500,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],
 	["Bunkers",500,["Land_BagBunker_01_small_green_F","Land_HBarrier_01_big_tower_green_F","Land_HBarrier_01_tower_green_F"],"",false,"Small Defensive Structures. Press space to change type."],
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
-	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Apparently helicopter pilots need to be told where they are allowed to land"],
+	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Informs helicopter pilots of where might be a nice place to land"],
 	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
 	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
 	["Guard Tower",5000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need?."],
@@ -914,7 +927,8 @@ OT_Buildables = [
 	["Workshop",1000,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"Attach weapons to vehicles"],
 	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
 	["Police Station",2500,[OT_policeStation],"structures\policeStation.sqf",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."],
-	["Warehouse",4000,[OT_warehouse],"structures\warehouse.sqf",false,"A house that you put wares in."]
+	["Warehouse",4000,[OT_warehouse],"structures\warehouse.sqf",false,"A house that you put wares in."],
+	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"]
 ];
 
 OT_workshop = [

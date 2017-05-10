@@ -1,24 +1,8 @@
 
 [
-	["Land_IRMaskingCover_02_F",[-0.039865,0.14918,0],0,1,0,[],"","",true,false], 
-	["Box_NATO_Grenades_F",[1.23933,-1.05774,0],93.4866,1,0,[],"","",true,false], 
+	["Land_IRMaskingCover_02_F",[-0.039865,0.14918,0],0,1,0,[],"","",true,false],
+	["Box_NATO_Grenades_F",[1.23933,-1.05774,0],93.4866,1,0,[],"","",true,false],
 	["Land_CampingTable_F",[-0.0490456,-1.74478,0],0,1,0,[],"","",true,false], 
-	["Land_CampingChair_V2_F",[-1.44146,-1.7173,0],223.485,1,0,[],"","",true,false], 
-	["B_CargoNet_01_ammo_F",[2.59602,-1.49866,0],0,1,0,[],"","",true,false], 
-	["Box_NATO_Equip_F",[4.0512,-1.09256,0],90.3535,1,0,[],"","",true,false], 
-	["Box_T_NATO_Wps_F",[-4.59645,-1.78761,0],205.797,1,0,[],"","",true,false], 
-	["Land_ClutterCutter_large_F",[-0.694746,-6.60154,-7.9155e-005],0,1,0,[],"","",true,false], 
-	["Land_Obstacle_Pass_F",[1.7224,6.14434,0],90,1,0,[],"","",true,false], 
-	["Land_Obstacle_Crawl_F",[-3.78085,6.02422,0],90,1,0,[],"","",true,false], 
-	["Land_Portable_generator_F",[-5.7769,-4.06599,0],0,1,0,[],"","",true,false], 
-	["Land_SatelliteAntenna_01_F",[-6.41051,-3.00256,0],212.621,1,0,[],"","",true,false], 
-	["Target_F",[6.05507,-5.10407,0],90,1,0,[],"","",true,false], 
-	["Land_Obstacle_Saddle_F",[5.46514,6.16445,0],90,1,0,[],"","",true,false], 
-	["Target_F",[6.05507,-6.10407,0],90,1,0,[],"","",true,false], 
-	["Land_ClutterCutter_large_F",[2.68296,8.92177,0],0,1,0,[],"","",true,false], 
-	["Target_F",[6.05507,-7.10407,0],90,1,0,[],"","",true,false], 
-	["Land_ClutterCutter_large_F",[-4.15402,8.36712,0],0,1,0,[],"","",true,false], 
-	["Target_F",[6.05507,-8.10407,0],90,1,0,[],"","",true,false], 
-	["Land_Obstacle_RunAround_F",[-3.47784,10.3439,0],90,1,0,[],"","",true,false], 
-	["Land_Obstacle_Climb_F",[4.86212,10.1031,0],0,1,0,[],"","",true,false]
+	["Land_CampingChair_V2_F",[-1.44146,-1.7173,0],223.485,1,0,[],"","",true,false],
+	["Land_ClutterCutter_large_F",[0,0,0],0,1,0,[],"","",true,false]
 ]

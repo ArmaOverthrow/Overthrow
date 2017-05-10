@@ -203,6 +203,22 @@ if(typename _b == "ARRAY") then {
 				<t align='left' size='0.65'>Damage: %2%3</t>
 			",_ownername,round((damage _building) * 100),"%"];
 		};
+		if(typeof _building == OT_trainingCamp) then {
+			_owner = _building call OT_fnc_getOwner;
+			_ownername = server getVariable format["name%1",_owner];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,true];
+			ctrlSetText [1609,"Recruit"];
+			//ctrlEnable [1609,false];
+			//ctrlEnable [1610,false];
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Training Camp</t><br/>
+				<t align='left' size='0.65'>Built by %1</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_ownername,round((damage _building) * 100),"%"];
+		};
 
 		if(damage _building == 1) then {
 			if((_owner == getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {

@@ -198,3 +198,24 @@ publicVariable "OT_allObjectives";
 	OT_allComms pushback _name;
 	OT_allObjectives pushback _name;
 }foreach(OT_NATOcomms);
+
+{
+	_x params ["_pos","_garrison","_upgrades"];
+	OT_flag_NATO createVehicle _pos;
+	_count = 0;
+	_group = creategroup blufor;
+	while {_count < _garrison} do {
+		_start = [[[_pos,50]]] call BIS_fnc_randomPos;
+
+		_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		_civ setVariable ["garrison","HQ",false];
+		_civ setRank "LIEUTENANT";
+		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+		_civ setBehaviour "SAFE";
+
+		_count = _count + 1;
+	};
+	_group call OT_fnc_initMilitaryPatrol;
+
+	[_pos,_upgrades] call OT_fnc_NATOupgradeFOB;
+}foreach(server getVariable ["NATOfobs",[]]);

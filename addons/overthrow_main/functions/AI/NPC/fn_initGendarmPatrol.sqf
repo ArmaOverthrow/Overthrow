@@ -1,6 +1,12 @@
 private _group = _this;
 
 private _garrison = ((units _group) select 0) getvariable ["garrison",""];
+if(isNil "_garrison") exitWith {
+    {
+        deleteVehicle _x;
+    }foreach(units _group);
+    deleteGroup _group;
+};
 private _start = server getVariable [_garrison,position ((units _group) select 0)];
 
 if(isNil "_start") exitWith {};

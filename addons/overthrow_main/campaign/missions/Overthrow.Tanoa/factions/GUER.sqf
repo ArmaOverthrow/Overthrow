@@ -137,6 +137,23 @@ while {true} do {
 								_outnum = round (_outnum * (_inputnum / _intotal));
 							};
 							if(_output != "" and _outnum > 0) then {
+								if(_output in ["OT_Sugarcane","ACE_Banana"]) then {
+									_foundFertilizer = false;
+									{
+										_c = _x;
+										{
+											_x params ["_cls","_amt"];
+											if(_cls == "OT_Fertilizer") exitWith {
+												[_c, _cls, 1] call CBA_fnc_removeItemCargo;
+												_foundFertilizer = true;
+											};
+										}foreach(_c call OT_fnc_unitStock);
+										if(_foundFertilizer) exitWith {};
+									}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
+									if(_foundFertilizer) then {
+										_output = round(_output * 1.5);
+									};
+								};
 								_container addItemCargoGlobal [_output,_outnum];
 							};
 						};
@@ -163,6 +180,11 @@ while {true} do {
 						if(_numcops == 0) then {
 							[_town,-1] call stability;
 						};
+					};
+				}else{
+					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
+					if(_numcops > 0) then {
+						[_town,-1] call stability;
 					};
 				};
 			}foreach(OT_allTowns);

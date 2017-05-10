@@ -40,6 +40,7 @@ if(_typecls != "Base") then {
 		};
 	};
 }else{
+	_isbase = true;
 	_base = _pos call OT_fnc_nearestBase;
 	if !(isNil "_base") then {
 		if((_base select 0) distance _pos < 300) then {
@@ -87,7 +88,7 @@ if !(_isbase) then {
 if(_typecls == "Base") then {
 	_town = _pos call OT_fnc_nearestTown;
 	_postown = server getVariable _town;
-	_dist = 250;
+	_dist = 200;
 	if((_postown distance _pos) < _dist) then {_canplace = false};
 };
 
