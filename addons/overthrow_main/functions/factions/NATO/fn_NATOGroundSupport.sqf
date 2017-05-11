@@ -29,7 +29,11 @@ while {_count < _num} do {
 	sleep 0.1;
 };
 
-_wp = _group addWaypoint [asltoatl _attackpos,20];
+_wp = _group addWaypoint [_attackpos,20];
+_wp setWaypointType "MOVE";
+_wp setWaypointBehaviour "CARELESS";
+
+_wp = _group addWaypoint [_attackpos,20];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointTimeout [600,600,600];

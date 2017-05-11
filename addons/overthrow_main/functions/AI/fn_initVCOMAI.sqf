@@ -11,7 +11,7 @@ VCOM_AIDEBUG = 0;
 //Turn on map markers that track AI movement
 VCOM_UseMarkers = false;
 //Turns off VCOMAI for AI units in a players squad
-NOAI_FOR_PLAYERLEADERS = 0;
+NOAI_FOR_PLAYERLEADERS = 1;
 //Will AI garrison static weapons nearby?
 VCOM_STATICGARRISON = 1;
 //How far can the AI hear gunshots from?
@@ -51,7 +51,7 @@ VCOM_IncreasingAccuracy = true;
 //VCOM_SideBasedMovement- Remove sides from the array below to force that specific AI side to not execute any advance movement code. (I.E. Moving to reinforce allies, being alerted by distant gunshots and etc). AI with this will still react normally in combat. DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
 VCOM_SideBasedMovement = [WEST,EAST];
 //VCOM_SideBasedExecution- Remove sides from the array below to remove that specific AI side from executing any of the VCOMAI scripts at all. DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
-VCOM_SideBasedExecution = [WEST,EAST,RESISTANCE];
+VCOM_SideBasedExecution = [WEST,EAST];
 //Distance AI will respond to call of help from each other
 VCOM_Unit_AIWarnDistance = 600;
 

@@ -298,7 +298,7 @@ while {sleep 10;true} do {
 				_spend = 1200;
 			};
 
-			if((_spend > 1000) and (count _fobs) < 3 and (random 100) > 0) then {
+			if((_spend > 500) and (count _fobs) < 3 and (random 100) > 95) then {
 				//Deploy an FOB
 				_lowest = "";
 				{
@@ -321,8 +321,8 @@ while {sleep 10;true} do {
 						};
 					}foreach (selectBestPlaces [_pp, 1000,"(1 - forest - trees) * (1 - houses) * (1 - sea)",5,4]);
 					if(count _gotpos > 0) then {
-						_spend = _spend - 1000;
-						_resources = _resources - 1000;
+						_spend = _spend - 500;
+						_resources = _resources - 500;
 						[_gotpos] spawn OT_fnc_NATOMissionDeployFOB;
 					};
 				};
@@ -432,7 +432,7 @@ while {sleep 10;true} do {
 					};
 					_group call OT_fnc_initMilitaryPatrol;
 				};
-				if(!("Mortar" in _upgrades) and (_spend > 300) and (random 100 > 0)) exitWith {
+				if(!("Mortar" in _upgrades) and (_spend > 300) and (random 100 > 95)) exitWith {
 					_spend = _spend - 300;
 					_resources = _resources - 300;
 					_upgrades pushback "Mortar";

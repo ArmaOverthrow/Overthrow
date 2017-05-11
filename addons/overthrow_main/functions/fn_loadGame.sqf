@@ -202,6 +202,57 @@ private _cc = 0;
 	};
 }foreach(_data);
 sleep 0.1;
+
+{
+	_pos = _x select 0;
+	_code = format["fob%1",_pos];
+	_garrison = server getVariable [format["resgarrison%1",_code],[]];
+	if(count _garrison > 0) then {
+		_group = creategroup resistance;
+		spawner setVariable [format["resgarrison",_code],_group,true];
+		{
+			_x params ["_cls","_loadout"];
+			call {
+				if(_cls == "HMG") exitWith {
+					_p = _pos findEmptyPosition [0,50,"I_HMG_01_high_F"];
+			        _gun = "I_HMG_01_high_F" createVehicle _p;
+			        createVehicleCrew _gun;
+			        {
+			            [_x] joinSilent _group;
+			        }foreach(crew _gun);
+				};
+				if(_cls == "GMG") exitWith {
+					_p = _pos findEmptyPosition [0,50,"I_GMG_01_high_F"];
+			        _gun = "I_GMG_01_high_F" createVehicle _p;
+			        createVehicleCrew _gun;
+			        {
+			            [_x] joinSilent _group;
+			        }foreach(crew _gun);
+				};
+				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
+				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
+				_civ setUnitLoadout [_loadout,true];
+			};
+		}foreach(_garrison);
+	};
+}foreach(server getvariable ["bases",[]]);
+
+{
+	_pos = _x select 0;
+	_code = _x select 1;
+	_garrison = server getVariable [format["resgarrison%1",_code],[]];
+	if(count _garrison > 0) then {
+		_group = creategroup resistance;
+		spawner setVariable [format["resgarrison",_code],_group,true];
+		{
+			_x params ["_cls","_loadout"];
+			private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
+			private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
+			_civ setUnitLoadout [_loadout,true];
+		}foreach(_garrison);
+	};
+}foreach(OT_objectiveData + OT_airportData);
+
 private _built = (allMissionObjects "Static");
 {
 	private _uid = _x;

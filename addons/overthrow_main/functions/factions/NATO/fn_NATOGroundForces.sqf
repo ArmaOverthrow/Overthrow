@@ -123,6 +123,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 			_dropos = getpos(_roads select (count _roads - 1));
 		};
 		_move = _tgroup addWaypoint [_dropos,0];
+		_move setWaypointBehaviour "CARELESS";
 		_move setWaypointTimeout [30,30,30];
 		_move setWaypointType "TR UNLOAD";
 

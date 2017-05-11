@@ -68,7 +68,7 @@ class OT_dialog_buildbase
 
 			text = "Workshop"; //--- ToDo: Localize;
 			x = 0.891875 * safezoneW + safezoneX;
-			y = 0.412 * safezoneH + safezoneY;
+			y = 0.324 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Modify vehicles"; //--- ToDo: Localize;
@@ -80,7 +80,7 @@ class OT_dialog_buildbase
 
 			text = "Helipad"; //--- ToDo: Localize;
 			x = 0.891875 * safezoneW + safezoneX;
-			y = 0.5 * safezoneH + safezoneY;
+			y = 0.412 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Apparently helicopters need a place to land"; //--- ToDo: Localize;
@@ -92,7 +92,7 @@ class OT_dialog_buildbase
 
 			text = "Refugee Camp"; //--- ToDo: Localize;
 			x = 0.891875 * safezoneW + safezoneX;
-			y = 0.588 * safezoneH + safezoneY;
+			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Helps with recruiting local civilians to your cause."; //--- ToDo: Localize;
@@ -104,7 +104,7 @@ class OT_dialog_buildbase
 
 			text = "Training Camp"; //--- ToDo: Localize;
 			x = 0.891875 * safezoneW + safezoneX;
-			y = 0.676 * safezoneH + safezoneY;
+			y = 0.588 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Recruit trained and pre-equipped soldiers"; //--- ToDo: Localize;

@@ -173,8 +173,8 @@ while {true} do {
 			_stabcounter = 0;
 			{
 				_town = _x;
+				_townpos = server getvariable _x;
 				if !(_town in _abandoned) then {
-					_townpos = server getvariable _x;
 					if(_townpos call OT_fnc_inSpawnDistance) then {
 						_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
 						if(_numcops == 0) then {

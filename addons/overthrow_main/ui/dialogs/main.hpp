@@ -363,7 +363,7 @@ class OT_dialog_command
 			idc = 1601;
 			text = "Loot"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.654 * safezoneH + safezoneY;
+			y = 0.412 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Commands all selected units to loot bodies and fill closest container to them"; //--- ToDo: Localize;
@@ -374,11 +374,22 @@ class OT_dialog_command
 			idc = 1602;
 			text = "Open Inventory"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.478 * safezoneH + safezoneY;
+			y = 0.324 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn OT_fnc_orderOpenInventory;";
+		};
+		class RscButton_1603: RscOverthrowButton
+		{
+			idc = 1603;
+			text = "Create Squad"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Splits selected units off into a new squad"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] spawn OT_fnc_createSquad;";
 		};
 		class RscButton_1612: RscOverthrowButton
 		{
@@ -428,7 +439,7 @@ class OT_dialog_squad
 			idc = 1601;
 			text = "Assign Vehicle"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.654 * safezoneH + safezoneY;
+			y = 0.324 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Assigns vehicle you are looking at to squad"; //--- ToDo: Localize;
@@ -439,7 +450,7 @@ class OT_dialog_squad
 			idc = 1602;
 			text = "Get In"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.478 * safezoneH + safezoneY;
+			y = 0.412 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Orders squad to board assigned vehicle"; //--- ToDo: Localize;
@@ -450,7 +461,7 @@ class OT_dialog_squad
 			idc = 1603;
 			text = "Get Out"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.566 * safezoneH + safezoneY;
+			y = 0.5 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Orders squad to disembark assigned vehicle"; //--- ToDo: Localize;

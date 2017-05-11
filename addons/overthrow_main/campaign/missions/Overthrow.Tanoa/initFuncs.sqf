@@ -48,6 +48,7 @@ OT_fnc_reverseEngineerDialog = compileFinal preProcessFileLineNumbers "UI\fn_rev
 OT_fnc_vehicleDialog = compileFinal preProcessFileLineNumbers "UI\fn_vehicleDialog.sqf";
 OT_fnc_newGameDialog = compileFinal preProcessFileLineNumbers "UI\fn_newGameDialog.sqf";
 OT_fnc_optionsDialog = compileFinal preProcessFileLineNumbers "UI\fn_optionsDialog.sqf";
+OT_fnc_garrisonDialog = compileFinal preProcessFileLineNumbers "UI\fn_garrisonDialog.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -77,6 +78,7 @@ exportAll = compileFinal preProcessFileLineNumbers "actions\exportAll.sqf";
 import = compileFinal preProcessFileLineNumbers "actions\import.sqf";
 restoreLoadout = compileFinal preProcessFileLineNumbers "actions\restoreLoadout.sqf";
 removeLoadout = compileFinal preProcessFileLineNumbers "actions\removeLoadout.sqf";
+OT_fnc_addGarrison = compileFinal preProcessFileLineNumbers "actions\fn_addGarrison.sqf";
 
 
 //Modes
@@ -534,7 +536,7 @@ OT_fnc_initRecruit = {
 
 	_civ setSkill 1.0;
 	_civ setRank "PRIVATE";
-	_civ setVariable ["NOAI",false,true];
+	_civ setVariable ["NOAI",true,true];
 
 	_civ spawn wantedSystem;
 

@@ -9,7 +9,7 @@ waitUntil {!isNil "OT_NATOInitDone"};
 private _data = [];
 //get all server data
 {
-	if !(_x == "StartupType" or _x == "recruits" or _x == "squads") then {
+	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison") then {
 		_val = server getVariable _x;
 		if(typename _val == "ARRAY") then {
 			//Copy the array
@@ -136,6 +136,60 @@ private _squads = [];
 }foreach(server getVariable ["squads",[]]);
 
 _data pushback ["squads",_squads];
+
+{
+	_pos = _x select 0;
+	_code = format["fob%1",_pos];
+	_group = spawner getvariable [format["resgarrison%1",_code],grpNull];
+	if !(isNull _group) then {
+		_soldiers = [];
+		{
+			if(alive _x) then {
+				if(vehicle _x == _x) then {
+					_soldiers pushback [typeof _x,getUnitLoadout _x];
+				}else{
+					_veh = vehicle _x;
+					if(someAmmo _veh and (typeof _veh == "I_HMG_01_high_F")) then {
+						_soldiers pushback ["HMG",[]];
+					};
+					if(someAmmo _veh and (typeof _veh == "I_GMG_01_high_F")) then {
+						_soldiers pushback ["GMG",[]];
+					};
+				};
+			};
+		}foreach(units _group);
+		if(count _soldiers > 0) then {
+			_data pushback [format["resgarrison%1",_code],_soldiers];
+		};
+	};
+}foreach(server getVariable ["bases",[]]);
+
+{
+	_pos = server getvariable _x;
+	_code = _x;
+	_group = spawner getvariable [format["resgarrison%1",_code],grpNull];
+	if !(isNull _group) then {
+		_soldiers = [];
+		{
+			if(alive _x) then {
+				if(vehicle _x == _x) then {
+					_soldiers pushback [typeof _x,getUnitLoadout _x];
+				}else{
+					_veh = vehicle _x;
+					if(someAmmo _veh and (typeof _veh == "I_HMG_01_high_F")) then {
+						_soldiers pushback ["HMG",[]];
+					};
+					if(someAmmo _veh and (typeof _veh == "I_GMG_01_high_F")) then {
+						_soldiers pushback ["GMG",[]];
+					};
+				};
+			};
+		}foreach(units _group);
+		if(count _soldiers > 0) then {
+			_data pushback [format["resgarrison%1",_code],_soldiers];
+		};
+	};
+}foreach(OT_allObjectives);
 
 _data pushback ["timedate",date];
 
