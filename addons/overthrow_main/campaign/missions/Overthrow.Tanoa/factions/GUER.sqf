@@ -167,9 +167,10 @@ while {true} do {
 		_lastmin = date select 4;
 
 		_stabcounter = _stabcounter + 1;
+		private _abandoned = server getVariable ["NATOabandoned",[]];
 
 		if(_stabcounter >= 10) then {
-			private _abandoned = server getVariable ["NATOabandoned",[]];
+
 			_stabcounter = 0;
 			{
 				_town = _x;
@@ -188,6 +189,12 @@ while {true} do {
 					};
 				};
 			}foreach(OT_allTowns);
+		};
+
+		//chemical production
+		if("Chemical Plant" in _abandoned) then {
+			private _chems = server getVariable ["reschems",0];
+			server setVariable ["reschems",_chems + 1,true];
 		};
 
 		//do factory

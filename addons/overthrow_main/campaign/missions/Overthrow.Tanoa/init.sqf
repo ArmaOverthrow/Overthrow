@@ -62,6 +62,7 @@ if(!isMultiplayer) then {
         //ACE events
         ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
 		["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
+		["ace_explosives_place",compile preprocessFileLineNumbers "events\placeExplosives.sqf"] call CBA_fnc_addEventHandler;
 
 		//Setup fuel pumps for interaction
 		{

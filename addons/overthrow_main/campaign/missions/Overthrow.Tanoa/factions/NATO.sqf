@@ -13,6 +13,8 @@ server setVariable ["NATOattackstart",0,true];
 private _lastmin = date select 4;
 private _lastsched = -1;
 
+//sleep 300 + random(300);
+
 while {sleep 10;true} do {
 	private _numplayers = count([] call CBA_fnc_players);
 	if(_numplayers > 0) then {
@@ -113,10 +115,9 @@ while {sleep 10;true} do {
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
 				if(_pos call OT_fnc_inSpawnDistance) then {
-					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-					_numres = {side _x == resistance or captive _x} count (_pos nearObjects 200);
-					if(_nummil < 3 and _numres > 0) then {
-						if(_population > 50 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) then {
+					if(_population > 50 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) then {
+						_numres = {side _x == resistance or captive _x} count (_pos nearObjects 1000);
+						if(_numres > 0) then {
 							server setVariable [format ["garrison%1",_town],0,true];
 							diag_log format["Overthrow: NATO responding to %1",_town];
 							[_town,_population] spawn OT_fnc_NATOResponseTown;
@@ -130,6 +131,30 @@ while {sleep 10;true} do {
 				if(_countered) exitWith {};
 			}foreach (_sorted);
 		};
+
+
+		//Abandon towers
+		{
+			_pos = _x select 0;
+			_name = _x select 1;
+			if !(_name in _abandoned) then {
+				if(_pos call OT_fnc_inSpawnDistance) then {
+					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
+					_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
+					if(_nummil < 3 and _numres > 0) then {
+						_abandoned pushback _name;
+						server setVariable ["NATOabandoned",_abandoned,true];
+						_name setMarkerColor "ColorGUER";
+						_t = _pos call OT_fnc_nearestTown;
+						format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
+						_resources = _resources - 100;
+						_countered = true;
+					};
+				};
+			};
+			if(_countered) exitWith {};
+		}foreach(OT_NATOcomms);
+
 
 		//Check on FOBs
 		_clearedFOBs = [];
@@ -159,7 +184,11 @@ while {sleep 10;true} do {
 			_nextturn = OT_NATOwait + random OT_NATOwait;
 			_count = 0;
 
-			//Abandon towns (under 50 pop)
+			//Recover resources
+			_resources = _resources + _resourceGain + ((count _abandoned) * 25);
+
+			//Abandon towns (under 50 pop) and counter
+			_lastcounter = server getVariable ["NATOlastcounter",""];
 			{
 				_town = _x;
 				_pos = server getVariable _town;
@@ -171,50 +200,50 @@ while {sleep 10;true} do {
 					if(_nummil < 3 and _numres > 0) then {
 						if(_population < 50) then {
 							if(_stability < 10 and !(_town in _abandoned)) then {
+								//Abandon a town
 								_abandoned pushback _town;
 								server setVariable [format ["garrison%1",_town],0,true];
 								format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
 								[_town,15] call stability;
 							};
-						};
-					};
-				};
-				if(_abandonedSomething) exitWith {};
-			}foreach (OT_allTowns);
-
-			if(!_abandonedSomething) then {
-				//Abandon towers
-				{
-					_pos = _x select 0;
-					_name = _x select 1;
-					if !(_name in _abandoned) then {
-						if(_pos call OT_fnc_inSpawnDistance) then {
-							_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-							_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
-							if(_nummil < 3 and _numres > 0) then {
-								_abandoned pushback _name;
-								server setVariable ["NATOabandoned",_abandoned,true];
-								_name setMarkerColor "ColorGUER";
-								_t = _pos call OT_fnc_nearestTown;
-								format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
-								_resources = _resources - 100;
-								_abandonedSomething = true;
+						}else{
+							if(_town != _lastcounter) then {
+								if((_town in _abandoned) and (_resources > _population) and (random 100) > 98) then {
+									//Counter a town
+									[_town,_population] spawn OT_fnc_NATOCounterTown;
+									server setVariable ["NATOlastcounter",_town,true];
+									server setVariable ["NATOattacking",_town,true];
+									server setVariable ["NATOattackstart",time,true];
+									_resources = _resources - _population;
+									_countered = true;
+								};
 							};
 						};
 					};
-					if(_abandonedSomething) exitWith {};
-				}foreach(OT_NATOcomms);
-			};
+				};
+				if(_abandonedSomething or _countered) exitWith {};
+			}foreach (OT_allTowns);
 
-			//Recover resources
-			_resources = _resources + _resourceGain + ((count _abandoned) * 25);
+			{
+				_x params ["_pos","_name","_pri"];
+				if((_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 98) exitWith {
+					//Counter an objective
+
+					[_name,_resources] spawn OT_fnc_NATOCounterObjective;
+					server setVariable ["NATOlastcounter",_name,true];
+					server setVariable ["NATOattacking",_name,true];
+					server setVariable ["NATOattackstart",time,true];
+					_countered = true;
+					_resources = 0;
+				};
+			}foreach (OT_allObjectiveData + OT_airportData);
 
 			//Spawn missing drones
 			{
 				_x params ["_pos","_name"];
 				if !(_name in _abandoned) then {
 					_drone = spawner getVariable [format["drone%1",_name],objNull];
-					if(isNull _drone or !alive _drone) then {
+					if((isNull _drone or !alive _drone) and _resources > 10) then {
 						_targets = [];
 						{
 							_town = _x;
@@ -298,7 +327,7 @@ while {sleep 10;true} do {
 				_spend = 1200;
 			};
 
-			if((_spend > 500) and (count _fobs) < 3 and (random 100) > 95) then {
+			if((_spend > 500) and (count _fobs) < 3 and (random 100) > _chance) then {
 				//Deploy an FOB
 				_lowest = "";
 				{
@@ -335,7 +364,7 @@ while {sleep 10;true} do {
 					_x params ["_ty","_pos","_pri","_obj","_done"];
 					if !(_done) then {
 						if(_ty == "WH" or _ty == "PS" or _ty == "WS") then {
-							if(_spend > 250 and (random 100) > 95) then {
+							if(_spend > 250 and (random 100) > _chance) then {
 								_schedule pushback ["DESTROY",_ty,_pos];
 								_spend = _spend - 250;
 								_resources = _resources -250;
@@ -344,7 +373,7 @@ while {sleep 10;true} do {
 						};
 					};
 				}foreach(_targets);
-				if(_spend > 500 and (random 100) > 95) then {
+				if(_spend > 500 and (random 100) > _chance) then {
 					_low = 50;
 					_lowest = "";
 					{
@@ -401,7 +430,7 @@ while {sleep 10;true} do {
 					if(_pri > 1200) then {
 						_max = 32;
 					};
-					if(!(_pos call OT_fnc_inSpawnDistance) and (_garrison < _max) and (_spend > 150) and  (random 100 > 95)) then {
+					if(!(_pos call OT_fnc_inSpawnDistance) and (_garrison < _max) and (_spend > 150) and  (random 100 > _chance)) then {
 						server setvariable [format["garrison%1",_name],_garrison+4,true];
 						_spend = _spend - 150;
 						_resources = _resources - 150;
@@ -413,7 +442,7 @@ while {sleep 10;true} do {
 			{
 				_x params ["_pos","_garrison","_upgrades"];
 				_max = 16;
-				if((_garrison < _max) and (_spend > 150) and  (random 100 > 95)) exitWith {
+				if((_garrison < _max) and (_spend > 150) and  (random 100 > _chance)) exitWith {
 					_x set [1,_garrison + 4];
 					_spend = _spend - 150;
 					_resources = _resources - 150;
@@ -432,19 +461,19 @@ while {sleep 10;true} do {
 					};
 					_group call OT_fnc_initMilitaryPatrol;
 				};
-				if(!("Mortar" in _upgrades) and (_spend > 300) and (random 100 > 95)) exitWith {
+				if(!("Mortar" in _upgrades) and (_spend > 300) and (random 100 > _chance)) exitWith {
 					_spend = _spend - 300;
 					_resources = _resources - 300;
 					_upgrades pushback "Mortar";
 					[_pos,["Mortar"]] spawn OT_fnc_NATOupgradeFOB;
 				};
-				if(!("Barriers" in _upgrades) and (_spend > 50) and (random 100 > 95)) exitWith {
+				if(!("Barriers" in _upgrades) and (_spend > 50) and (random 100 > _chance)) exitWith {
 					_spend = _spend - 50;
 					_resources = _resources - 50;
 					_upgrades pushback "Barriers";
 					[_pos,["Barriers"]] spawn OT_fnc_NATOupgradeFOB;
 				};
-				if(!("HMG" in _upgrades) and (_spend > 150) and (random 100 > 95)) exitWith {
+				if(!("HMG" in _upgrades) and (_spend > 150) and (random 100 > _chance)) exitWith {
 					_spend = _spend - 150;
 					_resources = _resources - 150;
 					_upgrades pushback "HMG";

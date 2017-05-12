@@ -22,5 +22,8 @@ _success = {
 	_count = {(_x getVariable ["garrison",""]) == _objective} count (allunits);
 	server setVariable [format["garrison%1",_objective],_count,true];
 	_objective setMarkerType "flag_NATO";
+	if(_objective == "Chemical Plant") then {
+		server setVariable ["reschems",0,true];
+	};
 };
 [_posObjective,_strength,_success,_fail,[_tskid,_objective],_objective] spawn OT_fnc_NATOQRF;

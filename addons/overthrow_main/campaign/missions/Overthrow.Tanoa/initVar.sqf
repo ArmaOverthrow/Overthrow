@@ -559,6 +559,12 @@ private _allOptics = "
     { getNumber ( _x >> ""ItemInfo"" >> ""optics"" ) isEqualTo 1})
 " configClasses ( configFile >> "cfgWeapons" );
 
+private _allDetonators = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+    { getNumber ( _x >> ""ace_explosives_Detonator"" ) isEqualTo 1})
+" configClasses ( configFile >> "cfgWeapons" );
+
 private _allUniforms = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
@@ -602,6 +608,10 @@ OT_allOptics = [];
 OT_allHelmets = [];
 OT_allHats = [];
 OT_allAttachments = [];
+OT_allExplosives = [];
+OT_explosives = [];
+OT_detonators = [];
+OT_allDetonators = [];
 
 {
 	_name = configName _x;
@@ -634,7 +644,7 @@ OT_allAttachments = [];
 				}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
 				//Get ammo
 				{
-					if !(_x in _blacklist) then {
+					if !(_x in _blacklist or _x in OT_allExplosives) then {
 						if !(_x in _weapons) then {_weapons pushback _x};
 					};
 				}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
@@ -758,25 +768,56 @@ OT_allAttachments = [];
 {
 	_name = configName _x;
 	_m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and _name != "NLAW_F") then {
+	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and (_name != "NLAW_F") and !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
 		_cost = round(_m * 4);
 		_desc = getText(_x >> "descriptionShort");
+		_exp = false;
+		_steel = 0.1;
+		_plastic = 0;
+		if(getNumber(_x >> "ace_explosives_Placeable") == 1) then {
+			_exp = true;
+		};
 		if((_desc find "Smoke") > -1) then {
 			_cost = round(_m * 0.5);
+		}else{
+			if((_desc find "Grenade") > -1) then {
+				_cost = round(_m * 2);
+				_exp = true;
+			};
 		};
-		if((_desc find "Flare") > -1) then {
+		if((_desc find "Flare") > -1 or (_desc find "flare") > -1) then {
 			_cost = round(_m * 0.6);
+			_exp = false;
 		};
-		if((_desc find "Grenade") > -1) then {
-			_cost = round(_m * 2);
-		};
+
 		if(_name == OT_ammo_50cal) then {_cost = 50};
-		if(isServer) then {
-			cost setVariable [_name,[_cost,0,0.1,0],true];
+
+		if(_exp) then {
+			_steel = 0;
+			_plastic = round(_m * 0.5);
+			OT_allExplosives pushback _name;
+			OT_explosives pushback [_name,_cost,0,_steel,_plastic];
+		}else{
+			OT_allMagazines pushback _name;
 		};
-		OT_allMagazines pushback _name;
+		if(isServer) then {
+			cost setVariable [_name,[_cost,0,_steel,_plastic],true];
+		};
 	};
 } foreach (_allAmmo);
+
+{
+	_name = configName _x;
+	_m = getNumber(_x >> "ItemInfo" >> "mass");
+	if(getNumber(_x >> "ace_explosives_Range") > 1000) then {
+		_m = _m * 10;
+	};
+	OT_allDetonators pushback _name;
+	OT_detonators pushback [_name,_m,0,0.1,0];
+	if(isServer) then {
+		cost setVariable [_name,[_m,0,0.1,0],true];
+	};
+} foreach (_allDetonators);
 
 if(isServer) then {
 	//Remainding vehicle costs

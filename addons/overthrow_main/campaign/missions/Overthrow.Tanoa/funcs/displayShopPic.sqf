@@ -67,6 +67,12 @@ if !(isNil "_pic") then {
 	ctrlSetText [1200,_pic];
 };
 
+if(_cls in OT_allExplosives) then {
+    _cost = cost getVariable _cls;
+    _chems = server getVariable ["reschems",0];
+    _desc = format["Required: %1 x chemicals (%2 available)<br/>%3",_cost select 3,_chems,_desc];
+};
+
 _textctrl = (findDisplay 8000) displayCtrl 1100;
 
 _textctrl ctrlSetStructuredText parseText format["

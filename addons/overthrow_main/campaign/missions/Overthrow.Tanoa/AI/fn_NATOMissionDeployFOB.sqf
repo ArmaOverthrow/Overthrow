@@ -16,10 +16,15 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 		};
 	};
 }foreach(OT_NATOobjectives);
-_isHQ = false;
+_isAir = false;
 if(isNil "_close") then {
-	_isHQ = true;
-	_close = OT_NATO_HQPos;
+	_isAir = true;
+	{
+		_x params ["_obpos","_name","_pri"];
+		if !(_name in _abandoned) exitWith {
+			_close = _obpos;
+		};
+	}foreach([OT_airportData,[],{random 100},"ASCEND"] call BIS_fnc_SortBy);
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 _group = [_start, WEST, OT_NATO_Group_Engineers] call BIS_fnc_spawnGroup;
@@ -28,7 +33,7 @@ sleep 0.5;
 
 _dir = [_start,_posTarget] call BIS_fnc_dirTo;
 
-if(_isHQ) then {
+if(_isAir) then {
 	_attackpos = [_posTarget,[0,150]] call SHK_pos;
 
 	//Determine direction to attack from (preferrably away from water)
@@ -49,7 +54,7 @@ if(_isHQ) then {
 	_ao = [_posTarget,[350,500],_attackdir + (random 90)] call SHK_pos;
 	_tgroup = creategroup blufor;
 
-	_spawnpos = OT_NATO_HQPos findEmptyPosition [0,100,OT_NATO_Vehicle_AirTransport_Small];
+	_spawnpos = _close findEmptyPosition [0,100,OT_NATO_Vehicle_AirTransport_Small];
 	_veh =  OT_NATO_Vehicle_AirTransport_Small createVehicle _spawnpos;
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
@@ -70,7 +75,7 @@ if(_isHQ) then {
 
 	sleep 2;
 
-	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
+	_moveto = [_close,500,_dir] call SHK_pos;
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
@@ -95,7 +100,7 @@ if(_isHQ) then {
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 	_wp setWaypointTimeout [15,15,15];
 
-	_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
+	_moveto = [_close,200,_dir] call SHK_pos;
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "LOITER";

@@ -15,6 +15,7 @@ private _bargates = _start nearobjects ["Land_BarGate_F",50];
 
 while {!(isNil "_group") and count (units _group) > 0} do {
 	_vehs = [];
+	_friendly = [];
 
 	private _leader = leader _group;
 	{
@@ -28,6 +29,9 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 			if (_vehs find _x == -1) then {
 				_vehs pushBack _x;
 			};
+		};
+		if(_unit isKindOf "LandVehicle" and (side _x == west)) then {
+			_friendly pushback _x;
 		};
 		if !(_unit in _inrange or _unit in _searching or _unit in _searched) then {
 			if(_unit call unitSeenNATO) then {
@@ -45,7 +49,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 		};
 	}foreach(_start nearentities [["CaManBase","LandVehicle"],_outerRange]);
 
-	if((count _vehs) > 0) then {
+	if((count _vehs) > 0 or (count _friendly) > 0) then {
 		{
 			_x animate ["Door_1_rot",1];
 		}foreach(_bargates);

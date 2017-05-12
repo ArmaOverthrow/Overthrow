@@ -14,6 +14,13 @@ private _cc = 0;
 {
 	_key = _x select 0;
 	_val = _x select 1;
+	if(typename _val == "ARRAY") then {
+		_new = [];
+		{
+			_new pushback _x;
+		}foreach(_val);
+		_val = _new;
+	};
 	_set = true;
 	if(_key == "buildingpositions") then {
 		{

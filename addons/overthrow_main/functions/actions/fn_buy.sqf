@@ -8,6 +8,10 @@ _standing = player getVariable format['rep%1',_town];
 _price = lbValue [1500,_idx];
 if(_price == -1) exitWith {};
 
+private _chems = server getVariable ["reschems",0];
+private _cost = cost getVariable _cls;
+if(_cls in OT_allExplosives and _chems < (_cost select 3)) exitWith {format["You need %1 chemicals",_cost select 3] call OT_fnc_notifyMinor};
+
 _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
@@ -150,6 +154,9 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+		if(_cls in OT_allExplosives) then {
+			_server setVariable ["reschems",_chems - (_cost select 3),true];
+		};
 		[-_price] call money;
 		player addMagazine _cls;
 		playSound "3DEN_notificationDefault";
