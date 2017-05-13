@@ -102,6 +102,41 @@ menuHandler = {};
 fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
 OT_fnc_getBuildID = fnc_getBuildID;
 
+OT_fnc_createSquad = {
+	_units = groupselectedunits player;
+	if(count _units < 2) exitWith {"You must select at least 2 recruits" call OT_fnc_notifyMinor};
+	_group = createGroup resistance;
+	_cc = player getVariable ["OT_squadcount",1];
+	{
+		if(_x != player) then {
+			[_x] joinSilent _group;
+		};
+	}foreach(_units);
+	_group setGroupIdGlobal [format["S-%1",_cc]];
+	_cc = _cc + 1;
+	player hcSetGroup [_group,groupId _group,"teamgreen"];
+
+	player setVariable ["OT_squadcount",_cc,true];
+
+	_recruits = server getVariable ["squads",[]];
+	_recruits pushback [getplayeruid player,"CUSTOM",_group,[]];
+	server setVariable ["squads",_recruits,true];
+
+	_remove = [];
+	_recruits = server getVariable ["recruits",[]];
+	{
+		if((_x select 2) in _units) then {
+			_remove pushback _x;
+		};
+	}foreach(_recruits);
+	{
+		_recruits deleteAt (_recruits find _x);
+	}foreach(_remove);
+	server setVariable ["recruits",_recruits,true];
+
+	"Squad created, use ctrl + space to command" call OT_fnc_notifyMinor;
+};
+
 OT_fnc_initDrone = {
 	_drone = _this;
 
@@ -232,10 +267,12 @@ OT_fnc_lockVehicle = {
 OT_fnc_squadAssignVehicle = {
 	_squad = (hcselected player) select 0;
 	_veh = cursorObject;
-
-	if((_veh isKindOf "Air") or (_veh isKindOf "Land") or (_veh isKindOf "Ship")) then {
+	_leader = leader _squad;
+	if(_leader distance _veh > 30) exitWith {"Squad leader must be within 30m of vehicle" call OT_fnc_notifyMinor};
+	if((_veh isKindOf "StaticWeapon") or (_veh isKindOf "Air") or (_veh isKindOf "Land") or (_veh isKindOf "Ship")) then {
 		_squad setVariable ["OT_assigned",_veh,false];
 		_squad addVehicle _veh;
+		(units _squad) orderGetIn true;
 		player hcSelectGroup [_squad,false];
 		format["%1 assigned to %2",(typeof _veh) call ISSE_Cfg_Vehicle_GetName,groupId _squad] call OT_fnc_notifyMinor;
 	};
@@ -247,6 +284,7 @@ OT_fnc_squadGetIn = {
 		(units _x) allowGetIn true;
 		if !(isNull _veh) then {
 			_x addVehicle _veh;
+			(units _x) orderGetIn true;
 		};
 		player hcSelectGroup [_x,false];
 	}foreach(hcSelected player);
@@ -256,6 +294,7 @@ OT_fnc_squadGetOut = {
 	{
 		_squad = _x;
 		{ unassignVehicle _x } forEach (units _squad);
+		(units _x) orderGetIn false;
 		(units _squad) allowGetIn false;
 		player hcSelectGroup [_squad,false];
 	}foreach(hcSelected player);

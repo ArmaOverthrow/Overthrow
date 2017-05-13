@@ -219,7 +219,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 					}foreach(OT_Squadables);
 				};
 				_group = creategroup resistance;
-				_group setGroupIdGlobal [format["%1-%2",_name,_cc]];
+				_group setGroupIdGlobal [_name];
 				{
 					_x params ["_type","_pos","_loadout"];
 					_civ = _group createUnit [_type,_pos,[],0,"NONE"];

@@ -173,6 +173,7 @@ call {
 		if (_cls in OT_illegalItems) exitWith {
 			[-_price] call money;
 			player addItem _cls;
+
 			if(player call unitSeenNATO) then {
 				[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 			};

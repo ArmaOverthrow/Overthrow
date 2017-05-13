@@ -1,10 +1,6 @@
 if(typeof _this == OT_item_Map) then {
 	_this addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
 	_this addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
-	_this addAction ["Options", {
-		closedialog 0;
-		_nul = createDialog "OT_dialog_options";
-	},nil,0,false,true,"",""];
 	_this addAction ["Reset UI", {
 		closedialog 0;
 		[] execVM "setupPlayer.sqf";

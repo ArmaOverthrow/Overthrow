@@ -4,7 +4,7 @@ private _abandoned = [];
 private _resources = 0;
 private _diff = server getVariable ["OT_difficulty",1];
 
-private _nextturn = OT_NATOwait + random OT_NATOwait;
+private _nextturn = 3;
 private _count = 0;
 
 server setVariable ["NATOattacking","",true];
@@ -13,7 +13,10 @@ server setVariable ["NATOattackstart",0,true];
 private _lastmin = date select 4;
 private _lastsched = -1;
 
-//sleep 300 + random(300);
+sleep 100 + (random 300);
+
+OT_nextNATOTurn = time+(_nextturn * 10);
+publicVariable "OT_nextNATOTurn";
 
 while {sleep 10;true} do {
 	private _numplayers = count([] call CBA_fnc_players);
@@ -67,9 +70,9 @@ while {sleep 10;true} do {
 				_x params ["_pos","_name","_cost"];
 				if !(_name in _abandoned) then {
 					if(_pos call OT_fnc_inSpawnDistance) then {
-						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-						_numres = {side _x == resistance or captive _x} count (_pos nearObjects 200);
-						if(_nummil < 3 and _numres > 0) then {
+						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",500]);
+						_numres = {side _x == resistance or captive _x} count (_pos nearObjects 500);
+						if(_nummil < _numres) then {
 							_countered = true;
 							server setVariable ["NATOattacking",_name,true];
 							server setVariable ["NATOattackstart",time,true];
@@ -96,14 +99,14 @@ while {sleep 10;true} do {
 							}foreach(_knownTargets);
 
 							if !(_added) then {
-								_knownTargets pushback [_ty,_pos,_pri,_obj,false];
+								_knownTargets pushback [_ty,_pos,_pri,_obj,false,time];
 							};
 						}foreach(_intel);
 						_drone setVariable ["OT_seenTargets",[]];
 					};
 				};
 				if(_countered) exitWith {};
-			}foreach(OT_NATOobjectives);
+			}foreach(OT_objectiveData + OT_airportData);
 		};
 
 		//Town QRF (over 50 pop)
@@ -141,7 +144,7 @@ while {sleep 10;true} do {
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
 					_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
-					if(_nummil < 3 and _numres > 0) then {
+					if(_nummil < _numres) then {
 						_abandoned pushback _name;
 						server setVariable ["NATOabandoned",_abandoned,true];
 						_name setMarkerColor "ColorGUER";
@@ -178,14 +181,35 @@ while {sleep 10;true} do {
 
 
 		if(_count >= _nextturn and !_countered) then {
+			OT_lastNATOTurn = time;
+			publicVariable "OT_lastNATOTurn";
 			_resourceGain = server getVariable ["NATOresourceGain",0];
 			_abandonedSomething = false;
 			//NATO turn
 			_nextturn = OT_NATOwait + random OT_NATOwait;
+			OT_nextNATOTurn = time+(_nextturn * 10);
+			publicVariable "OT_nextNATOTurn";
+
 			_count = 0;
+			_chance = 98;
+			_gain = 100;
+			_mul = 25;
+			if(_diff > 1) then {_gain = 200;_mul = 50};
+			if(_diff < 1) then {_gain = 50;_mul = 15};
+
+			//expire targets
+			private _expired = [];
+			{
+				if((_x select 4) or (time - (_x select 5)) > 2400) then {
+					_expired pushback _x;
+				};
+			}foreach(_knownTargets);
+			{
+				_knownTargets deleteAt (_knownTargets find _x);
+			}foreach(_expired);
 
 			//Recover resources
-			_resources = _resources + _resourceGain + ((count _abandoned) * 25);
+			_resources = _resources + _gain + _resourceGain + ((count _abandoned) * _mul);
 
 			//Abandon towns (under 50 pop) and counter
 			_lastcounter = server getVariable ["NATOlastcounter",""];
@@ -224,23 +248,20 @@ while {sleep 10;true} do {
 				if(_abandonedSomething or _countered) exitWith {};
 			}foreach (OT_allTowns);
 
+			//Spawn missing drones & counter objectives
 			{
 				_x params ["_pos","_name","_pri"];
 				if((_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 98) exitWith {
 					//Counter an objective
 
-					[_name,_resources] spawn OT_fnc_NATOCounterObjective;
+					[_name,_pri] spawn OT_fnc_NATOCounterObjective;
 					server setVariable ["NATOlastcounter",_name,true];
 					server setVariable ["NATOattacking",_name,true];
 					server setVariable ["NATOattackstart",time,true];
 					_countered = true;
-					_resources = 0;
+					_resources = _resources - _pri;
 				};
-			}foreach (OT_allObjectiveData + OT_airportData);
 
-			//Spawn missing drones
-			{
-				_x params ["_pos","_name"];
 				if !(_name in _abandoned) then {
 					_drone = spawner getVariable [format["drone%1",_name],objNull];
 					if((isNull _drone or !alive _drone) and _resources > 10) then {
@@ -313,7 +334,7 @@ while {sleep 10;true} do {
 					};
 				};
 				if(_resources <= 0) exitWith {_resources = 0};
-			}foreach(OT_NATOobjectives + OT_NATOcomms);
+			}foreach(OT_objectiveData + OT_airportData);
 
 			//Decide on spend
 			_spend = 0;
@@ -322,9 +343,15 @@ while {sleep 10;true} do {
 			};
 			if(_resources > 1000) then {
 				_spend = 800;
+				_chance = 95;
 			};
 			if(_resources > 1500) then {
 				_spend = 1200;
+				_chance = 90;
+			};
+			if(_resources > 2500) then {
+				_spend = 1500;
+				_chance = 80;
 			};
 
 			if((_spend > 500) and (count _fobs) < 3 and (random 100) > _chance) then {

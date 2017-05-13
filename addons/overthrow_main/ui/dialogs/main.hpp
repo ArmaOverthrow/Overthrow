@@ -567,19 +567,7 @@ class OT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Will completely destroy all dead bodies, wrecks and vehicles that cannot move"; //--- ToDo: Localize;
-		};
-		class RscButton_1606: RscOverthrowButton
-		{
-			idc = 1606;
-			action = "{if ((side _x == civilian and !(_x call OT_fnc_hasOwner))) then {deletevehicle _x}} foreach(vehicles);{if(side _x == civilian and !(_x call OT_fnc_hasOwner) and !(_x call OT_fnc_inSpawnDistance)) then {deletevehicle _x}} foreach(allunits);{if (side _x == civilian and !(_x call OT_fnc_hasOwner) and ((_x call OT_fnc_getOwner) != ""self"")) then {deletevehicle _x}} foreach(allunits);""Cleaned other"" remoteExec [""OT_fnc_notifyMinor"",0,false];";
-
-			text = "Clean other"; //--- ToDo: Localize;
-			x = 0.515469 * safezoneW + safezoneX;
-			y = 0.412 * safezoneH + safezoneY;
-			w = 0.118594 * safezoneW;
-			h = 0.077 * safezoneH;
-			tooltip = "Removes all unowned civilian vehicles and civilians"; //--- ToDo: Localize;
-		};
+		};		
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////

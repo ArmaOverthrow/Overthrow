@@ -1,7 +1,7 @@
 params ["_posTarget"];
 
 private _close = nil;
-private _dist = 4000;
+private _dist = 3000;
 private _closest = "";
 private _abandoned = server getVariable["NATOabandoned",[]];
 {

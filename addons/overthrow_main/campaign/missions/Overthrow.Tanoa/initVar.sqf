@@ -260,6 +260,7 @@ OT_NATO_Barrier_Large = "Land_HBarrier_01_wall_6_green_F";
 OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
 OT_NATO_Group_Recon = (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_ReconTeam");
 OT_NATO_Group_Engineers = (configfile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Support" >> "B_T_Support_ENG");
+OT_NATO_Group_CTRG = (configfile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Support" >> "B_T_Support_ENG");
 
 OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
 OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
