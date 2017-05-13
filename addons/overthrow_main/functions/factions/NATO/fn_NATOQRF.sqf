@@ -32,6 +32,30 @@ _abandoned = server getvariable ["NATOabandoned",[]];
 	};
 }foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
 diag_log format["Overthrow: NATO QRF spend is %1",_strength];
+
+if(_strength > 250 and (count _air) > 0) then {
+	//Send CAS
+	_obpos = (_air select 0) select 0;
+	_name = (_air select 0) select 1;
+	[[_obpos,[0,100],random 360] call SHK_pos,_pos,10] spawn OT_fnc_NATOAirSupport;
+	diag_log format["Overthrow: NATO Sent CAS from %1",_name];
+};
+
+//Send ground support
+if(count _ground > 0) then {
+	_obpos = (_ground select 0) select 0;
+	_name = (_ground select 0) select 1;
+	_send = 100;
+	if(_strength > 500) then {
+		_send = 300;
+	};
+	if(_strength > 1000) then {
+		_send = 500;
+	};
+	[_obpos,_pos,_send,0] spawn OT_fnc_NATOGroundSupport;
+	diag_log format["Overthrow: NATO Sent ground support from %1",_name];
+};
+
 {
 	_x params ["_obpos","_name","_pri"];
 
@@ -41,20 +65,10 @@ diag_log format["Overthrow: NATO QRF spend is %1",_strength];
 	diag_log format["Overthrow: NATO Sent ground forces from %1",_name];
 	_strength = _strength - 150;
 	if((_obpos inArea _region) and _strength >= 150) then {
+		_ao = [_pos,_dir] call OT_fnc_getAO;
 		[_obpos,_ao,_pos,false,30] spawn OT_fnc_NATOGroundForces;
 		_strength = _strength - 150;
 		diag_log format["Overthrow: NATO Sent extra ground forces from %1",_name];
-	};
-	//If this is a major objective, send ground support
-	if(_pri > 250 and _strength >= 100) then {
-		_strength = _strength - 100;
-		_send = 100;
-		if(_strength >= 100 and (random 100) > 70) then {
-			_send = 300;
-			_strength = _strength - 100;
-		};
-		[_obpos,_pos,_send,0] spawn OT_fnc_NATOGroundSupport;
-		diag_log format["Overthrow: NATO Sent ground support from %1",_name];
 	};
 	if(_strength <=0) exitWith {};
 }foreach(_ground);
@@ -69,11 +83,11 @@ if(_strength >= 75) then {
 		diag_log format["Overthrow: NATO Sent ground forces by air from %1",_name];
 		_strength = _strength - 75;
 
-		//If this is a major airfield, send CAS
-		if((_pri > 1000 and _strength >= 250) and (random 100) > 70) then {
-			_strength = _strength - 250;
-			[[_obpos,[0,100],random 360] call SHK_pos,_pos,10] spawn OT_fnc_NATOAirSupport;
-			diag_log format["Overthrow: NATO Sent CAS from %1",_name];
+		if(_pri > 600 and _strength >= 75) then {
+			_ao = [_pos,_dir] call OT_fnc_getAO;
+			[_obpos,_ao,_pos,true,30] spawn OT_fnc_NATOGroundForces;
+			_strength = _strength - 75;
+			diag_log format["Overthrow: NATO Sent extra ground forces by air from %1",_name];
 		};
 
 		if(_strength <=0) exitWith {};
