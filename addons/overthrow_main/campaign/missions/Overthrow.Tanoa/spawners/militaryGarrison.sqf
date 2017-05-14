@@ -202,7 +202,7 @@ _road = objNull;
 		_civ setVariable ["garrison","HQ",false];
 		_civ setVariable ["hvt",true,true];
 		_civ setVariable ["hvt_id",_id,true];
-		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+		_civ setVariable ["NOAI",true,true];
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
 

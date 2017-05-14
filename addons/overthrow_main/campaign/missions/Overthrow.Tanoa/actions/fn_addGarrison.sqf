@@ -38,7 +38,7 @@ if(typename _create == "SCALAR") then {
     };
 }else{
     if(_create == "HMG") then {
-        _p = _pos findEmptyPosition [0,50,"I_HMG_01_high_F"];
+        _p = _pos findEmptyPosition [30,80,"I_HMG_01_high_F"];
 
         _cost = ["Tanoa","I_HMG_01_high_weapon_F",0] call OT_fnc_getPrice;
         _cost = _cost + (["Tanoa","CIV",0] call OT_fnc_getPrice);
@@ -55,7 +55,7 @@ if(typename _create == "SCALAR") then {
         }foreach(crew _gun);
     };
     if(_create == "GMG") then {
-        _p = _pos findEmptyPosition [0,50,"I_GMG_01_high_F"];
+        _p = _pos findEmptyPosition [10,50,"I_GMG_01_high_F"];
 
         _cost = ["Tanoa","I_GMG_01_high_weapon_F",0] call OT_fnc_getPrice;
         _cost = _cost + (["Tanoa","CIV",0] call OT_fnc_getPrice);

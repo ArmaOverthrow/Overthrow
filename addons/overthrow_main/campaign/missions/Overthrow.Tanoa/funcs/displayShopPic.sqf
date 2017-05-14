@@ -48,12 +48,26 @@ if(_price > -1) then {
 
     	if(_cls isKindOf "Man") exitWith {
     		_txt = _cls call ISSE_Cfg_Vehicle_GetName;
-    		_price = format["%1 + gear",_price];
+            _soldier = _cls call OT_fnc_getSoldier;
+    		_price = _soldier select 0;
     		_desc = "Will recruit this soldier into your group fully equipped using the warehouse where possible.";
     	};
     	if(_cls in OT_allSquads) exitWith {
+            _d = [];
+            {
+            	if((_x select 0) == _cls) exitWith {_d = _x};
+            }foreach(OT_squadables);
+
+            _comp = _d select 1;
+            _price = 0;
+            {
+            	_s = OT_recruitables select _x;
+
+            	_soldier = (_s select 0) call OT_fnc_getSoldier;
+            	_price = _price + (_soldier select 0);
+            }foreach(_comp);
+
     		_txt = _cls;
-    		_price = format["%1 + gear",_price];
     		_desc = "Will recruit this squad into your High-Command bar, accessible with ctrl-space.";
     	};
     };

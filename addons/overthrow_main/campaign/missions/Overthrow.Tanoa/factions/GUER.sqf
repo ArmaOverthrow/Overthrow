@@ -209,20 +209,20 @@ while {true} do {
 					};
 					_b = _base;
 					if(_base > 240) then {
-						_b = 240;
+						_b = 30;
 					};
 					if(_base > 10000) then {
-						_b = 360;
+						_b = 60;
 					};
 					if(_base > 20000) then {
-						_b = 480;
+						_b = 120;
 					};
 					if(_base > 50000) then {
-						_b = 600;
+						_b = 240;
 					};
-					_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
-					if(_timetoproduce > 2880) then {_timetoproduce = 2880};
-					if(_timetoproduce < 10) then {_timetoproduce = 10};
+					_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 2)) + (round (_plastic * 5));
+					if(_timetoproduce > 360) then {_timetoproduce = 360};
+					if(_timetoproduce < 5) then {_timetoproduce = 5};
 					_timespent = server getVariable ["GEURproducetime",0];
 
 					_numtoproduce = 1;
@@ -331,26 +331,31 @@ while {true} do {
 					_x set [3,"CORPORAL"];
 					_unit setRank "CORPORAL";
 					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.2 + (random 0.3);
 				};
 				if(_rank == "CORPORAL" and _xp > (OT_rankXP select 1)) then {
 					_x set [3,"SERGEANT"];
 					_unit setRank "SERGEANT";
 					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.3 + (random 0.3);
 				};
 				if(_rank == "SERGEANT" and _xp > (OT_rankXP select 2)) then {
 					_x set [3,"LIEUTENANT"];
 					_unit setRank "LIEUTENANT";
 					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.5 + (random 0.3);
 				};
 				if(_rank == "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
 					_x set [3,"CAPTAIN"];
 					_unit setRank "CAPTAIN";
 					format["%1 has been promoted to Captain",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.6 + (random 0.3);
 				};
 				if(_rank == "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
 					_x set [3,"MAJOR"];
 					_unit setRank "MAJOR";
 					format["%1 has been promoted to Major",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.8 + (random 0.2);
 				};
 			};
 		}foreach(server getVariable ["recruits",[]]);

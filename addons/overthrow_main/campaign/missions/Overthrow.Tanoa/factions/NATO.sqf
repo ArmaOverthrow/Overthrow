@@ -229,6 +229,7 @@ while {sleep 10;true} do {
 								server setVariable [format ["garrison%1",_town],0,true];
 								format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
 								[_town,15] call stability;
+								_abandonedSomething = true;
 							};
 						}else{
 							if(_town != _lastcounter) then {
@@ -242,6 +243,16 @@ while {sleep 10;true} do {
 									_countered = true;
 								};
 							};
+						};
+					};
+				}else{
+					if(_population < 50) then {
+						if(_stability == 0 and !(_town in _abandoned)) then {
+							//Abandon a town
+							_abandoned pushback _town;
+							server setVariable [format ["garrison%1",_town],0,true];
+							format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+							_abandonedSomething = true;
 						};
 					};
 				};
@@ -392,6 +403,32 @@ while {sleep 10;true} do {
 						[_gotpos] spawn OT_fnc_NATOMissionDeployFOB;
 					};
 				};
+			};
+
+			if(_spend >= 20) then {
+				{
+					_town = _x;
+					_townPos = server getVariable _town;
+					_current = server getVariable format ["garrison%1",_town];;
+					_stability = server getVariable format ["stability%1",_town];
+					_population = server getVariable format ["population%1",_town];
+					if(_stability > 10 and !(_town in _abandoned)) then {
+						_max = round(_population / 40);
+						if(_max < 4) then {_max = 4};
+						_garrison = 2+round((1-(_stability / 100)) * _max);
+						if(_town in OT_NATO_priority) then {
+							_garrison = round(_garrison * 2);
+						};
+						_need = _garrison - _current;
+						if(_need < 0) then {_need = 0};
+						if(_need > 1 and _spend >= 20) then {
+							_spend = _spend - 20;
+							_resources = _resources - 20;
+							_x spawn reGarrisonTown;
+						};
+					};
+					if(_spend < 20) exitWith {};
+				}foreach ([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
 			};
 
 			//Schedule some missions

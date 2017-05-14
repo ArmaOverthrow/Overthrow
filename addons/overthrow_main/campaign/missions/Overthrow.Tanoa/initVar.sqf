@@ -83,15 +83,10 @@ OT_fuelPumps = ["Land_FuelStation_02_pump_F","Land_FuelStation_01_pump_F","Land_
 
 OT_ferryDestinations = ["destination_1","destination_2","destination_3","destination_4","destination_5","destination_6"];
 
-OT_miscables = ["Land_PortableLight_single_F","Land_PortableLight_double_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F",
+OT_miscables = ["ACE_Wheel","ACE_Track","Land_PortableLight_double_F","Land_PortableLight_single_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F",
 "PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F","ArrowDesk_L_F",
 "ArrowDesk_R_F","ArrowMarker_L_F","ArrowMarker_R_F","Pole_F","Land_RedWhitePole_F","RoadBarrier_F","RoadBarrier_small_F","RoadCone_F","RoadCone_L_F","Land_VergePost_01_F",
 "TapeSign_F","Land_WheelChock_01_F","Land_Sleeping_bag_F","Land_Sleeping_bag_blue_F","Land_WoodenLog_F","FlagChecked_F","FlagSmall_F","Land_LandMark_F","Land_Bollard_01_F"];
-
-if(OT_hasACE) then {
-	OT_miscables pushback "ACE_Wheel";
-	OT_miscables pushback "ACE_Track";
-};
 
 //Items you can place
 OT_Placeables = [
@@ -100,7 +95,7 @@ OT_Placeables = [
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2],"Really big sandbags, basically."],
 	["Map",30,[OT_item_Map],[0,2,1.2],"Use these to save your game, change options or check town info."],
 	["Safe",50,[OT_item_Safe],[0,2,0.5],"Store and retrieve money"],
-	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including lights"]
+	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels and lights"]
 ];
 
 //People you can recruit, and squads are composed of

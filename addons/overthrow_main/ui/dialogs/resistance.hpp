@@ -176,9 +176,9 @@ class OT_dialog_garrison
 	movingenable=false;
 	class controlsBackground
 	{
-		class RscStructuredText_1100: RscOverthrowStructuredText
+		class RscStructuredText_1199: RscOverthrowStructuredText
 		{
-			idc = 1100;
+			idc = 1199;
 
 			text = ""; //--- ToDo: Localize;
 			x = 0.288594 * safezoneW + safezoneX;

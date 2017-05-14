@@ -109,6 +109,7 @@ OT_fnc_createSquad = {
 	_cc = player getVariable ["OT_squadcount",1];
 	{
 		if(_x != player) then {
+			_x setVariable ["NOAI",false,false];
 			[_x] joinSilent _group;
 		};
 	}foreach(_units);
@@ -403,7 +404,7 @@ OT_fnc_getTaxIncome = {
 			private _population = server getVariable format["population%1",_town];
 			private _stability = server getVariable format["stability%1",_town];
 			private _garrison = server getVariable [format['police%1',_town],0];
-			private _add = round(_population * 2 * (_stability/100));
+			private _add = round(_population * 4 * (_stability/100));
 			if(_stability > 49) then {
 				_add = round(_add * 4);
 			};
@@ -573,7 +574,7 @@ OT_fnc_initRecruit = {
 
 	[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 
-	_civ setSkill 1.0;
+	_civ setSkill 0.1 + (random 0.3);
 	_civ setRank "PRIVATE";
 	_civ setVariable ["NOAI",true,true];
 

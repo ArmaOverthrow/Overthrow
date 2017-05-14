@@ -155,12 +155,7 @@ if(_cost > 0) then {
 	}else{
 		if ([getpos player,_typecls] call OT_fnc_canPlace) then {
 			[-_cost] call money;
-			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
-			if !((typeof modeTarget) in OT_miscables) then {
-				[modeTarget,true] remoteExec ["enableSimulationGlobal",2];
-			}else{
-				[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
-			};
+			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];			
 			[modeTarget,getPlayerUID player] call OT_fnc_setOwner;
 			modeTarget remoteExec["initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {

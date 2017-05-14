@@ -181,6 +181,12 @@ if(isMultiplayer or _startup == "LOAD") then {
 				_civ setVariable ["OT_xp",_xp,true];
 				_civ setVariable ["NOAI",true,true];
 				_civ setRank _rank;
+				if(_rank == "PRIVATE") then {_civ setSkill 0.1 + (random 0.3)};
+				if(_rank == "CORPORAL") then {_civ setSkill 0.2 + (random 0.3)};
+				if(_rank == "SERGEANT") then {_civ setSkill 0.3 + (random 0.3)};
+				if(_rank == "LIEUTENANT") then {_civ setSkill 0.5 + (random 0.3)};
+				if(_rank == "CAPTAIN") then {_civ setSkill 0.6 + (random 0.3)};
+				if(_rank == "MAJOR") then {_civ setSkill 0.8 + (random 0.2)};
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
@@ -223,6 +229,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 				{
 					_x params ["_type","_pos","_loadout"];
 					_civ = _group createUnit [_type,_pos,[],0,"NONE"];
+					_civ setSkill 0.5 + (random 0.4);
 					_civ setUnitLoadout _loadout;
 					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
