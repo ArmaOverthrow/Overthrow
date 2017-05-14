@@ -2,7 +2,7 @@ if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint"
 OT_saving = true;
 publicVariable "OT_saving";
 
-"Persistent Saving..." remoteExec ["OT_fnc_notifyLong",0,true];
+"Persistent Saving..." remoteExec ["OT_fnc_notifyMinor",0,true];
 sleep 0.1;
 waitUntil {!isNil "OT_NATOInitDone"};
 
@@ -71,7 +71,7 @@ _count = 10001;
 		_vehicles pushback _params;
 	};
 	if(_count > 2000) then {
-		"Still persistent Saving... please wait" remoteExec ["OT_fnc_notifyLong",0,true];
+		"Still persistent Saving... please wait" remoteExec ["OT_fnc_notifyMinor",0,true];
 		_count = 0;
 		sleep 0.01;
 	};
@@ -199,7 +199,7 @@ _data pushback ["timedate",date];
 
 profileNameSpace setVariable ["Overthrow.save.001",_data];
 if (isDedicated) then {
-	"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyLong",0,true];
+	"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyMinor",0,true];
 	sleep 0.01;
 	saveProfileNamespace
 };

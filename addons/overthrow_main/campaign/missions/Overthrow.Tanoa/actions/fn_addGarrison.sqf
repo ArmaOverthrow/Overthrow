@@ -9,7 +9,7 @@ if(_pos distance player > 30) then {
     _code = _b select 1;
 };
 
-if({side _x == west or side _x == east} count (_pos nearEntities 50)) exitWith {"You cannot garrison with enemies nearby" call OT_fnc_notifyMinor};
+if(({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) exitWith {"You cannot garrison with enemies nearby" call OT_fnc_notifyMinor};
 
 _group = spawner getVariable [format["resgarrison%1",_code],grpNull];
 _doinit = false;

@@ -192,10 +192,10 @@ while {sleep 10;true} do {
 
 			_count = 0;
 			_chance = 98;
-			_gain = 100;
+			_gain = 25;
 			_mul = 25;
-			if(_diff > 1) then {_gain = 200;_mul = 50};
-			if(_diff < 1) then {_gain = 50;_mul = 15};
+			if(_diff > 1) then {_gain = 75;_mul = 50};
+			if(_diff < 1) then {_gain = 0;_mul = 15};
 
 			//expire targets
 			private _expired = [];
@@ -354,7 +354,7 @@ while {sleep 10;true} do {
 				_chance = 80;
 			};
 
-			if((_spend > 500) and (count _fobs) < 3 and (random 100) > _chance) then {
+			if(!(spawner getVariable ["NATOdeploying",false]) and (_spend > 500) and (count _fobs) < 3 and (random 100) > _chance) then {
 				//Deploy an FOB
 				_lowest = "";
 				{
@@ -372,13 +372,23 @@ while {sleep 10;true} do {
 						_pos set [2,0];
 						_bb = _pos call OT_fnc_nearestObjective;
 						_bpos = _bb select 0;
-						if((_pos distance _bpos) > 400 and (_pos distance _townPos) > 250) exitWith {
+
+						_near = false;
+						{
+							_pb = _x select 0;
+							if(_pb distance _pos < 500) then {
+								_near = true;
+							};
+						}foreach(_fobs);
+
+						if(!_near and (_pos distance _bpos) > 400 and (_pos distance _townPos) > 250) exitWith {
 							_gotpos = _pos;
 						};
 					}foreach (selectBestPlaces [_pp, 1000,"(1 - forest - trees) * (1 - houses) * (1 - sea)",5,4]);
 					if(count _gotpos > 0) then {
 						_spend = _spend - 500;
 						_resources = _resources - 500;
+						spawner setVariable ["NATOdeploying",true,false];
 						[_gotpos] spawn OT_fnc_NATOMissionDeployFOB;
 					};
 				};

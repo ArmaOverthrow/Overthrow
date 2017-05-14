@@ -567,7 +567,19 @@ class OT_dialog_options
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Will completely destroy all dead bodies, wrecks and vehicles that cannot move"; //--- ToDo: Localize;
-		};		
+		};
+		class RscButton_1606: RscOverthrowButton
+		{
+			idc = 1606;
+			action = "[[0,0],""setFog"",TRUE,FALSE] spawn BIS_fnc_MP";
+
+			text = "Clean fog"; //--- ToDo: Localize;
+			x = 0.515469 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
+			w = 0.118594 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Clears fog"; //--- ToDo: Localize;
+		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
