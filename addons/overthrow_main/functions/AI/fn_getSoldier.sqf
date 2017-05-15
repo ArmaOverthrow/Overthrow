@@ -25,6 +25,7 @@ if(_wpn == "") then {
 	{
 		_weapon = [_x] call BIS_fnc_itemType;
 		_weaponType = _weapon select 1;
+		if(_weaponType == "AssaultRifle" and (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
 		if(_weaponType == _primary) then {_possible pushback _x};
 	}foreach(OT_allWeapons);
 	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;

@@ -10,7 +10,7 @@ if((vehicle _unit) != _unit) then {
 }else{
 	_objects = _unit nearEntities [["LandVehicle",OT_item_Storage],20];
 	if(count _objects == 0) exitWith {
-		"Cannot find any containers or vehicles within 20m of first selected unit" call notify_minor;
+		"Cannot find any containers or vehicles within 20m of first selected unit" call OT_fnc_notifyMinor;
 	};
 	_sorted = [_objects,[],{_x distance _unit},"ASCEND"] call BIS_fnc_SortBy;
 };

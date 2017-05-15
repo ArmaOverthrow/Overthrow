@@ -1,6 +1,8 @@
 [] execVM "income.sqf";
 addMissionEventHandler ["EntityKilled",compileFinal preprocessFileLineNumbers "events\somethingDied.sqf"];
 
+["Building", "Dammaged", compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf"] call CBA_fnc_addClassEventHandler;
+
 if (!isMultiplayer) exitWith {};
 
 //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
@@ -20,6 +22,7 @@ if(OT_fastTime) then {
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] execVM "initEconomyLoad.sqf";
 
+[] call OT_fnc_initNATO;
 [] execVM "factions\NATO.sqf";
 [] execVM "factions\GUER.sqf";
 [] execVM "factions\CRIM.sqf";
@@ -40,11 +43,10 @@ waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\economy.sqf";
 [] execVM "virtualization\factions.sqf";
 
-if(OT_hasAce) then {
-    //ACE events
-    ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
-    ["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
-};
+
+["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
+["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
+["ace_explosives_place",compile preprocessFileLineNumbers "events\placeExplosives.sqf"] call CBA_fnc_addEventHandler;
 
 addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];
 addMissionEventHandler ["HandleConnnect",compile preprocessFileLineNumbers "events\playerConnect.sqf"];

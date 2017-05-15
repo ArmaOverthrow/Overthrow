@@ -40,6 +40,7 @@ if(_typecls != "Base") then {
 		};
 	};
 }else{
+	_isbase = true;
 	_base = _pos call OT_fnc_nearestBase;
 	if !(isNil "_base") then {
 		if((_base select 0) distance _pos < 300) then {
@@ -61,10 +62,9 @@ if !(_isbase) then {
 	_estate = _pos call OT_fnc_nearestRealEstate;
 	if(typename _estate == "ARRAY") then {
 		_b = _estate select 0;
-		if(_b getVariable ["leased",false]) exitWith {_canplace = false};
 		if(typeof _b == OT_item_Tent) exitWith {_canplace = false};
 		if(_b call OT_fnc_hasOwner) then {
-			_owner = _b getVariable "owner";
+			_owner = _b call OT_fnc_getOwner;
 			if(_owner != getplayeruid player) then {
 				if(_typecls != "Camp" and _typecls != "Base") then {
 					_canplace = false;
@@ -88,7 +88,7 @@ if !(_isbase) then {
 if(_typecls == "Base") then {
 	_town = _pos call OT_fnc_nearestTown;
 	_postown = server getVariable _town;
-	_dist = 250;
+	_dist = 200;
 	if((_postown distance _pos) < _dist) then {_canplace = false};
 };
 

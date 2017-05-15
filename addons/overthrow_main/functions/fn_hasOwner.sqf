@@ -12,7 +12,7 @@ Author:
 
 private _item = _this;
 
-private _owner = _item getVariable "owner";
+private _owner = _item call OT_fnc_getOwner;
 private _ret = false;
 if !(isNil "_owner") then {
 	if(typename _owner == "STRING") then {

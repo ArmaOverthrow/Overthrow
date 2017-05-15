@@ -1,16 +1,14 @@
-private _posTown = _this;
+private _posTarget = _this;
 
 private _close = nil;
-private _dist = 8000;
+private _dist = 4000;
 private _closest = "";
 private _abandoned = server getVariable["NATOabandoned",[]];
-private _town = _posTown call OT_fnc_nearestTown;
-private _region = server getVariable format["region_%1",_town];
 {
 	_pos = _x select 0;
 	_name = _x select 1;
-	if(_pos inArea _region and !(_name in _abandoned)) then {
-		_d = (_pos distance _posTown);
+	if(([_pos,_posTarget] call OT_fnc_regionIsConnected) and !(_name in _abandoned)) then {
+		_d = (_pos distance _posTarget);
 		if(_d < _dist) then {
 			_dist = _d;
 			_close = _pos;
@@ -18,41 +16,51 @@ private _region = server getVariable format["region_%1",_town];
 		};
 	};
 }foreach(OT_NATOobjectives);
-_isHQ = false;
+_isAir = false;
 if(isNil "_close") then {
-	_isHQ = true;
-	_close = OT_NATO_HQPos;
+	_isAir = true;
+	{
+		_x params ["_obpos","_name","_pri"];
+		if !(_name in _abandoned) exitWith {
+			_close = _obpos;
+		};
+	}foreach([OT_airportData,[],{random 100},"ASCEND"] call BIS_fnc_SortBy);
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-_group = [_start, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_ReconTeam")] call BIS_fnc_spawnGroup;
+_group = [_start, WEST, OT_NATO_Group_CTRG] call BIS_fnc_spawnGroup;
 _group call distributeAILoad;
 sleep 0.5;
 
-_dir = [_start,_posTown] call BIS_fnc_dirTo;
+_dir = [_start,_posTarget] call BIS_fnc_dirTo;
 
-if(_isHQ) then {
-	_attackpos = [_posTown,[0,150]] call SHK_pos;
+if(_isAir) then {
+	_attackpos = [_posTarget,[0,150]] call SHK_pos;
 
 	//Determine direction to attack from (preferrably away from water)
 	_attackdir = random 360;
-	if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
+	if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
 		_attackdir = _attackdir + 180;
 		if(_attackdir > 359) then {_attackdir = _attackdir - 359};
-		if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
+		if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
 			_attackdir = _attackdir + 90;
 			if(_attackdir > 359) then {_attackdir = _attackdir - 359};
-			if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
+			if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
 				_attackdir = _attackdir + 180;
 				if(_attackdir > 359) then {_attackdir = _attackdir - 359};
 			};
 		};
 	};
 	_attackdir = _attackdir - 45;
-	_ao = [_posTown,[350,500],_attackdir + (random 90)] call SHK_pos;
+	_ao = [_posTarget,[350,500],_attackdir + (random 90)] call SHK_pos;
 	_tgroup = creategroup blufor;
 
-	_spawnpos = OT_NATO_HQPos findEmptyPosition [0,100,OT_NATO_Vehicle_AirTransport_Small];
-	_veh =  OT_NATO_Vehicle_AirTransport_Small createVehicle _spawnpos;
+	_spawnpos = _close findEmptyPosition [0,100,OT_NATO_Vehicle_CTRGTransport];
+	_veh =  OT_NATO_Vehicle_CTRGTransport createVehicle _spawnpos;
+	clearWeaponCargoGlobal _veh;
+	clearMagazineCargoGlobal _veh;
+	clearItemCargoGlobal _veh;
+	clearBackpackCargoGlobal _veh;
+	
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
 
@@ -72,7 +80,7 @@ if(_isHQ) then {
 
 	sleep 2;
 
-	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
+	_moveto = [_close,500,_dir] call SHK_pos;
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
@@ -97,7 +105,7 @@ if(_isHQ) then {
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 	_wp setWaypointTimeout [15,15,15];
 
-	_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
+	_moveto = [_close,200,_dir] call SHK_pos;
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "LOITER";
@@ -113,10 +121,23 @@ if(_isHQ) then {
 		_x addCuratorEditableObjects [units _tgroup,true];
 	} forEach allCurators;
 }else{
-	_moveto = [_start,50,_dir] call SHK_pos;
-	_wp = _group addWaypoint [_moveto,5];
-	_wp setWaypointType "MOVE";
-	_wp setWaypointBehaviour "SAFE";
+    _convoypos = [_close,random 360,120] call SHK_pos;
+    private _road = [_convoypos] call BIS_fnc_nearestRoad;
+    if (!isNull _road) then {
+        _convoypos = (getpos _road);
+    };
+    _spawnpos = _convoypos findEmptyPosition [0,100,OT_NATO_Vehicle_Transport_Light];
+	_veh =  OT_NATO_Vehicle_Transport_Light createVehicle _spawnpos;
+	_group addVehicle _veh;
+
+	_wp = _group addWaypoint [_posTarget,700];
+	_wp setWaypointType "UNLOAD";
+	_wp setWaypointBehaviour "CARELESS";
+	_wp setWaypointSpeed "FULL";
+
+    {
+        _x moveInAny _veh;
+    }foreach(units _group);
 };
 {
 	_x addCuratorEditableObjects [units _group,true];
@@ -128,20 +149,6 @@ sleep 2;
 	_x setVariable ["VCOM_NOPATHING_Unit",true,false];
 }foreach(units _group);
 
-
-_wp = _group addWaypoint [_posTown,100];
-_wp setWaypointType "HOLD";
-_wp setWaypointBehaviour "STEALTH";
-_wp setWaypointTimeout [60,120,600];
-
-_dest = getpos([_posTown,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call OT_fnc_getRandomBuilding);
-_wp = _group addWaypoint [_posTown,100];
-_wp setWaypointType "HOLD";
-_wp setWaypointBehaviour "STEALTH";
-_wp setWaypointTimeout [60,120,600];
-
-_dest = getpos([_posTown,OT_allHouses + OT_allShops + OT_offices + OT_portBuildings] call OT_fnc_getRandomBuilding);
-_wp = _group addWaypoint [_posTown,100];
-_wp setWaypointType "HOLD";
-_wp setWaypointBehaviour "STEALTH";
-_wp setWaypointTimeout [60,120,600];
+_wp = _group addWaypoint [_posTarget,0];
+_wp setWaypointType "GUARD";
+_wp setWaypointBehaviour "COMBAT";

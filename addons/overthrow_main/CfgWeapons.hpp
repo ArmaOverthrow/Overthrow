@@ -76,4 +76,14 @@ class CfgWeapons {
             mass = 30;
         };
     };
+	class OT_Fertilizer: OT_ItemCore {
+        scope = 2;
+        picture = "\ot\ui\items\fertilizer_x_ca.paa";
+        displayName = "Fertilizer";
+        descriptionShort = "A material of natural or synthetic origin that is applied to soils or to plant tissues (usually leaves) to supply one or more plant nutrients essential to the growth of plants.";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 80;
+        };
+    };
 };

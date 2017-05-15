@@ -62,7 +62,7 @@ buyPerk = {
 	private _price = [_perk] call getPerkPrice;
 	private _inf = player getVariable ["influence",0];
 
-	if(_inf < _price) exitWith {"You do not have enough influence" call notify_minor};
+	if(_inf < _price) exitWith {"You do not have enough influence" call OT_fnc_notifyMinor};
 
 	_fitness = _fitness + 1;
 	player setVariable [format["OT_%1",_perk],_fitness,true];

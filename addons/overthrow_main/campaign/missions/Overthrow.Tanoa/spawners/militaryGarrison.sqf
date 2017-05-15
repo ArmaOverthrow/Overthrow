@@ -158,12 +158,12 @@ _road = objNull;
 		if(count _pos > 0) then {
 			_dir = [_posTown,_pos] call BIS_fnc_dirTo;
 			_p = [_pos,1.5,_dir] call BIS_fnc_relPos;
-			_veh =  "Land_BagFence_Round_F" createVehicle _p;
+			_veh =  OT_NATO_Sandbag_Curved createVehicle _p;
 			_veh setpos _p;
 			_veh setDir (_dir-180);
 			_groups pushback _veh;
 			_p = [_pos,-1.5,_dir] call BIS_fnc_relPos;
-			_veh =  "Land_BagFence_Round_F" createVehicle _p;
+			_veh =  OT_NATO_Sandbag_Curved createVehicle _p;
 			_veh setpos _p;
 			_veh setDir (_dir);
 			_groups pushback _veh;
@@ -202,7 +202,7 @@ _road = objNull;
 		_civ setVariable ["garrison","HQ",false];
 		_civ setVariable ["hvt",true,true];
 		_civ setVariable ["hvt_id",_id,true];
-		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+		_civ setVariable ["NOAI",true,true];
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
 

@@ -8,7 +8,7 @@ private _tgroup = false;
 if !(_byair) then {
 	sleep 0.2;
 	_squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
-	_spawnpos = [_spawnpos,[0,50]] call SHK_pos;
+	_spawnpos = [_frompos,[50,75]] call SHK_pos;
 	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 };
 sleep 0.5;
@@ -34,6 +34,10 @@ if(_frompos distance _attackpos > 600) then {
 
 	_veh = createVehicle [_vehtype, _pos, [], 0,""];
 	_veh setVariable ["garrison","HQ",false];
+	clearWeaponCargoGlobal _veh;
+	clearMagazineCargoGlobal _veh;
+	clearItemCargoGlobal _veh;
+	clearBackpackCargoGlobal _veh;
 
 	_veh setDir (_dir);
 	_tgroup addVehicle _veh;
@@ -64,19 +68,14 @@ if !(_byair) then {
 		if(typename _tgroup == "GROUP") then {
 			_x moveInCargo _veh;
 		};
-		[_x] joinSilent _group1;
 		_x setVariable ["VCOM_NOPATHING_Unit",true,false];
 		_allunits pushback _x;
 		_x setVariable ["garrison","HQ",false];
 	}foreach(units _group2);
+	spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group2],false];
 };
 
-
-
-{
-	_x addCuratorEditableObjects [_allunits,true];
-} forEach allCurators;
-sleep 1;
+sleep 5;
 if(_byair and (typename _tgroup == "GROUP")) then {
 	_wp = _tgroup addWaypoint [_frompos,0];
 	_wp setWaypointType "MOVE";
@@ -117,36 +116,87 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 	if(typename _tgroup == "GROUP") then {
 		_veh setdamage 0;
 		_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
-		_roads = ([_attackpos,200,_dir] call BIS_fnc_relPos) nearRoads 200;
+		_roads = _ao nearRoads 50;
 		private _dropos = _ao;
 		if(count _roads > 0) then {
 			_dropos = getpos(_roads select (count _roads - 1));
 		};
+		_move = _tgroup addWaypoint [_dropos,0];
+		_move setWaypointBehaviour "CARELESS";
+		_move setWaypointType "MOVE";
+
 		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointTimeout [30,30,30];
 		_move setWaypointType "TR UNLOAD";
 
 		_wp = _tgroup addWaypoint [_frompos,0];
 		_wp setWaypointType "MOVE";
-		_wp setWaypointSpeed "LIMITED";
+		_wp setWaypointBehaviour "CARELESS";
 		_wp setWaypointCompletionRadius 25;
 
 		_wp = _tgroup addWaypoint [_frompos,0];
 		_wp setWaypointType "SCRIPTED";
+		_wp setWaypointCompletionRadius 25;
 		_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+
+		{
+			_x addCuratorEditableObjects [(units _tgroup)+[_veh],true];
+		} forEach allCurators;
 	};
 };
 sleep 10;
-_wp = _group1 addWaypoint [asltoatl _attackpos,20];
+_wp = _group1 addWaypoint [_attackpos,100];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
 
-_wp = _group1 addWaypoint [asltoatl _attackpos,0];
+_wp = _group1 addWaypoint [_attackpos,0];
 _wp setWaypointType "GUARD";
 _wp setWaypointBehaviour "COMBAT";
 
 _group1 call distributeAILoad;
 if(typename _tgroup == "GROUP") then {
 	_tgroup call distributeAILoad;
+	[_veh,_tgroup,_frompos] spawn {
+		params ["_veh","_tgroup","_frompos"];
+		private _done = false;
+		while{sleep 10;!_done} do {
+			if(isNull _veh) exitWith {};
+			if(isNull _tgroup) exitWith {};
+			if((damage _veh) > 0 and ((getpos _veh) select 2) < 2) then {
+				while {(count (waypoints _tgroup)) > 0} do {
+				 	deleteWaypoint ((waypoints _tgroup) select 0);
+				};
+				commandStop (driver _veh);
+				{
+					unassignVehicle _x;
+					commandGetOut _x;
+				}foreach((crew _veh) - (units _tgroup));
+				_done = true;
+
+				_wp = _tgroup addWaypoint [_frompos,0];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointBehaviour "CARELESS";
+				_wp setWaypointCompletionRadius 50;
+
+				_wp = _tgroup addWaypoint [_frompos,0];
+				_wp setWaypointType "SCRIPTED";
+				_wp setWaypointCompletionRadius 50;
+				_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+			};
+		};
+	};
+};
+
+if !(_byair) then {
+	_wp = _group2 addWaypoint [_attackpos,100];
+	_wp setWaypointType "MOVE";
+	_wp setWaypointBehaviour "COMBAT";
+	_wp setWaypointSpeed "FULL";
+
+	_wp = _group2 addWaypoint [_attackpos,0];
+	_wp setWaypointType "GUARD";
+	_wp setWaypointBehaviour "COMBAT";
+
+	_group2 call distributeAILoad;
 };

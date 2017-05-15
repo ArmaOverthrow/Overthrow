@@ -44,6 +44,7 @@ while {(_count < _numVeh)} do {
 
 				if(count _posVeh > 0) then {
 					_veh = _vehtype createVehicle _posVeh;
+					_veh setVariable ["ambient",true,true];
 					clearItemCargoGlobal _veh;
 					_veh setFuel (0.2 + (random 0.5));
 

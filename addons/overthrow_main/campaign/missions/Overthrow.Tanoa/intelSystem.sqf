@@ -101,6 +101,18 @@ _handler = {
 	}foreach(units (group player));
 
 	{
+		(_this select 0) drawIcon [
+			"\A3\ui_f\data\map\markers\nato\b_mortar.paa",
+			[0,0.3,0.59,(2000 - (_x select 1)) / 2000],
+			_x select 2,
+			24,
+			24,
+			0,
+			""
+		];
+	}foreach(spawner getVariable ["NATOmortars",[]]);
+
+	{
 		_passengers = "";
 		_color = [0,0.5,0,1];
 		{
@@ -227,7 +239,7 @@ _handler = {
 			}
 		}foreach(OT_allTowns);
 		{
-			if !(_x getVariable ["looted",false]) then {
+			if ((typeof _x != "B_UAV_AI") and !(_x getVariable ["looted",false])) then {
 				(_this select 0) drawIcon [
 					"ot\ui\markers\death.paa",
 					[1,1,1,0.5],
@@ -249,23 +261,16 @@ _handler = {
 					getdir _x
 				];
 			};
-			if(_x isKindOf "StaticWeapon" and isNull attachedTo _x) then {
-				_do = false;
-				_color = [0,0.5,0,1];
-				if(side _x == resistance) then {
-					_do = true;
-				}else{
-					if(resistance knowsAbout _x > 0) then {
-						_do = true;
-						_color = [0.5,0,0,1]
-					};
-				};
-				if(_do) then {
+			if((_x isKindOf "StaticWeapon") and (isNull attachedTo _x) and (alive _x)) then {
+				if(side _x == civilian or side _x == resistance or captive _x) then {
+					_col = [0.5,0.5,0.5,1];
+					if(!(isNull gunner _x) and (alive gunner _x)) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";
 					if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
+					if !(someAmmo _x) then {_col set [3,0.4]};
 					(_this select 0) drawIcon [
 						_i,
-						_color,
+						_col,
 						position _x,
 						30,
 						30,

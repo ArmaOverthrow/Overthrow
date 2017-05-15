@@ -51,7 +51,7 @@ class OT_dialog_buy
 			w = 0.139219 * safezoneW;
 			h = 0.099 * safezoneH;
 			colorBackground[] = {0,0,0,0.8};
-			action = "[] call buy;";
+			action = "[] call OT_fnc_buy;";
 		};
 		class RscStructuredText_1100: RscOverthrowStructuredText
 		{
@@ -105,7 +105,7 @@ class OT_dialog_sell
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[] call sell;";
+			action = "[] call OT_fnc_sell;";
 
 			text = "Sell 1"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;
@@ -127,7 +127,7 @@ class OT_dialog_sell
 		class RscButton_1602: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[] call sellall;";
+			action = "[] call OT_fnc_sellAll;";
 
 			text = "Sell All"; //--- ToDo: Localize;
 			x = 0.613437 * safezoneW + safezoneX;
@@ -189,7 +189,7 @@ class OT_dialog_workshop
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[] call workshopAdd;";
+			action = "[] call OT_fnc_workshopAdd;";
 
 			text = "Add"; //--- ToDo: Localize;
 			x = 0.752656 * safezoneW + safezoneX;
@@ -293,7 +293,7 @@ class OT_dialog_warehouse
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[-1] call warehouseTake;";
+			action = "[-1] call OT_fnc_warehouseTake;";
 
 			text = "Take All"; //--- ToDo: Localize;
 			x = 0.840312 * safezoneW + safezoneX;
@@ -315,7 +315,7 @@ class OT_dialog_warehouse
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[100] call warehouseTake;";
+			action = "[100] call OT_fnc_warehouseTake;";
 
 			text = "Take 100"; //--- ToDo: Localize;
 			x = 0.778437 * safezoneW + safezoneX;
@@ -327,7 +327,7 @@ class OT_dialog_warehouse
 		class RscButton_1602: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[10] call warehouseTake;";
+			action = "[10] call OT_fnc_warehouseTake;";
 
 			text = "Take 10"; //--- ToDo: Localize;
 			x = 0.716563 * safezoneW + safezoneX;
@@ -339,7 +339,7 @@ class OT_dialog_warehouse
 		class RscButton_1603: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[1] call warehouseTake;";
+			action = "[1] call OT_fnc_warehouseTake;";
 
 			text = "Take 1"; //--- ToDo: Localize;
 			x = 0.654688 * safezoneW + safezoneX;

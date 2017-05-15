@@ -9,7 +9,7 @@ private _numitems = 0;
 private _blueprints = server getVariable ["GEURblueprints",[]];
 {
 	_cls = _x select 0;
-	if !(_cls in _blueprints) then {
+	if !((_cls in _blueprints) or (_cls in OT_allExplosives)) then {
 		_name = "";
 		_pic = "";
 		if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
@@ -32,7 +32,7 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 }foreach(_playerstock);
 
 {
-	if (!(_x isKindOf "CaManBase") and alive _x) then {
+	if (!(_x isKindOf "CaManBase") and alive _x and (damage _x) == 0) then {
 		_cls = typeof _x;
 		_name = _cls call ISSE_Cfg_Vehicle_GetName;
 		_pic = _cls call ISSE_Cfg_Vehicle_GetPic;

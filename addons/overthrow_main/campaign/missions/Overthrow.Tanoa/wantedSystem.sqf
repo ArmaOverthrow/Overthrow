@@ -49,80 +49,89 @@ _unit addEventHandler ["Fired", {
 	};
 }];
 
+
+if(isPlayer _unit) then {
+	[] spawn {
+		private _unit = player;
+		while {sleep 0.1;alive _unit} do {
+			if!(_unit getVariable["OT_healed",false]) then {
+				if(_unit getVariable ["ACE_isUnconscious", false]) then {
+					//Look for a medic
+					private _medic = objNull;
+					private _havepi = false;
+					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
+					{
+						if(_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x))) then {
+							if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
+								_medic = _x;
+							};
+						};
+						if(!isNull _medic) exitWith{};
+					}foreach(player nearentities["CAManBase",50]);
+					if(!isNull _medic) then {
+						_medic globalchat "On my way to help you";
+						[_medic,_unit] call OT_fnc_orderRevivePlayer;
+					}else{
+						if(isMultiplayer) then {
+							_numplayers = count([] call CBA_fnc_players);
+							if(_numplayers > 1) then {
+								format["%1 is unconscious",name player] remoteExec ["systemChat",0,false];
+								_unit setVariable ["OT_healed",true,true];
+							}else{
+								"You are unconscious, there is no one nearby with Epinephrine to revive you" call OT_fnc_notifyMinor;
+								sleep 5;
+								_unit setDamage 1; //rip
+							}
+						}else{
+							player allowdamage false;
+							titleText ["You are unconscious, there is no one nearby with Epinephrine to revive you. Respawning...", "BLACK FADED", 2];
+							{
+								if((_x select [0,4]) == "ace_") then {
+									player setVariable [_x,nil];
+								};
+							}foreach(allvariables player);
+							player setdamage 0;
+							player setCaptive true;
+							sleep 5;
+							player setpos (player getVariable "home");
+							removeAllWeapons player;
+							removeAllItems player;
+							removeAllAssignedItems player;
+							removeBackpack player;
+							removeVest player;
+							removeGoggles player;
+							removeHeadgear player;
+
+							{
+								if((_x select [0,4]) == "ace_") then {
+									player setVariable [_x,nil];
+								};
+							}foreach(allvariables player);
+							player setDamage 0;
+
+							-1 call influence;
+							sleep 2;
+							player setDamage 0;
+							player linkItem "ItemMap";
+							player switchMove "";
+							titleText ["", "BLACK IN", 5];
+							sleep 10;
+							player allowdamage true;
+						};
+					}
+				}else{
+					_unit setVariable ["OT_healed",false,true];
+				};
+			};
+		};
+	};
+};
+
 private _delay = 3;
 
 while {alive _unit} do {
 	sleep 3;
 	//check wanted status
-	if(isplayer _unit and !(_unit getVariable["OT_healed",false])) then {
-		if(_unit getVariable ["ACE_isUnconscious", false]) then {
-			//Look for a medic
-			private _medic = objNull;
-			private _havepi = false;
-			if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
-			{
-				if(_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x))) then {
-					if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
-						_medic = _x;
-					};
-				};
-				if(!isNull _medic) exitWith{};
-			}foreach(player nearentities["CAManBase",50]);
-			if(!isNull _medic) then {
-				_medic globalchat "On my way to help you";
-				[_medic,_unit] call OT_fnc_orderRevivePlayer;
-			}else{
-				if(isMultiplayer) then {
-					_numplayers = count([] call CBA_fnc_players);
-					if(_numplayers > 1) then {
-						format["%1 is unconscious",name player] remoteExec ["systemChat",0,false];
-						_unit setVariable ["OT_healed",true,true];
-					}else{
-						"You are unconscious, there is no one nearby with Epinephrine to revive you" call notify_minor;
-						sleep 5;
-						_unit setDamage 1; //rip
-					}
-				}else{
-					player allowdamage false;
-					titleText ["You are unconscious, there is no one nearby with Epinephrine to revive you. Respawning...", "BLACK FADED", 2];
-					{
-						if((_x select [0,4]) == "ace_") then {
-							player setVariable [_x,nil];
-						};
-					}foreach(allvariables player);
-					player setdamage 0;
-					player setCaptive true;
-					sleep 5;
-					player setpos (player getVariable "home");
-					removeAllWeapons player;
-					removeAllItems player;
-					removeAllAssignedItems player;
-					removeBackpack player;
-					removeVest player;
-					removeGoggles player;
-					removeHeadgear player;
-
-					{
-						if((_x select [0,4]) == "ace_") then {
-							player setVariable [_x,nil];
-						};
-					}foreach(allvariables player);
-					player setDamage 0;
-
-					-1 call influence;
-					sleep 2;
-					player setDamage 0;
-					player linkItem "ItemMap";
-					player switchMove "";
-					titleText ["", "BLACK IN", 5];
-					sleep 10;
-					player allowdamage true;
-				};
-			}
-		}else{
-			_unit setVariable ["OT_healed",false,true];
-		};
-	};
 
 	if !(captive _unit) then {
 		//CURRENTLY WANTED
@@ -160,7 +169,7 @@ while {alive _unit} do {
 						if !(_obname in (server getVariable ["NATOabandoned",[]])) then {
 							if(_obpos distance _playerpos < 2000) exitWith {
 								if(isPlayer _unit) then {
-									"This is a no-fly zone" call notify_minor;
+									"This is a no-fly zone" call OT_fnc_notifyMinor;
 								};
 								_unit setCaptive false;
 								(vehicle _unit) spawn revealToNATO;
@@ -180,7 +189,7 @@ while {alive _unit} do {
 							_unit setCaptive false;
 							_unit spawn revealToNATO;
 							if(isPlayer _unit) then {
-								"A gang has seen the static weapon" call notify_minor;
+								"A gang has seen the static weapon" call OT_fnc_notifyMinor;
 							};
 						};
 					}foreach(attachedObjects _unit);
@@ -207,7 +216,7 @@ while {alive _unit} do {
 				};
 				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {
 					if(isPlayer _unit) then {
-						"A gang has seen your weapon" call notify_minor;
+						"A gang has seen your weapon" call OT_fnc_notifyMinor;
 					};
 					_unit setCaptive false;
 					_unit spawn revealToNATO;
@@ -223,7 +232,7 @@ while {alive _unit} do {
 					if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
 						_unit setCaptive false;
 						if(isPlayer _unit) then {
-							"A gang has recognized you" call notify_minor;
+							"A gang has recognized you" call OT_fnc_notifyMinor;
 						};
 						_unit spawn revealToCRIM;
 					};
@@ -245,7 +254,7 @@ while {alive _unit} do {
 						if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
 							_unit setCaptive false;
 							if(isPlayer _unit) then {
-								"NATO has recognized you" call notify_minor;
+								"NATO has recognized you" call OT_fnc_notifyMinor;
 							};
 							_unit spawn revealToNATO;
 						}
@@ -256,7 +265,7 @@ while {alive _unit} do {
 								_unit setCaptive false;
 								_unit spawn revealToNATO;
 								if(isPlayer _unit) then {
-									"NATO has seen the static weapon" call notify_minor;
+									"NATO has seen the static weapon" call OT_fnc_notifyMinor;
 								};
 							};
 						}foreach(attachedObjects _unit);
@@ -294,7 +303,14 @@ while {alive _unit} do {
 					};
 					if ((headgear _unit in OT_illegalHeadgear) or (vest _unit in OT_illegalVests)) exitWith {
 						if(isPlayer _unit) then {
-							"You are wearing Gendarmerie gear" call notify_minor;
+							"You are wearing Gendarmerie gear" call OT_fnc_notifyMinor;
+						};
+						_unit setCaptive false;
+						_unit spawn revealToNATO;
+					};
+					if (hmd _unit != "") exitWith {
+						if(isPlayer _unit) then {
+							"NATO has spotted your NV Goggles" call OT_fnc_notifyMinor;
 						};
 						_unit setCaptive false;
 						_unit spawn revealToNATO;
@@ -312,7 +328,7 @@ while {alive _unit} do {
 							};
 							if(_obpos distance (getpos player) < _dist) exitWith {
 								if(isPlayer _unit) then {
-									"You are in a restricted area" call notify_minor;
+									"You are in a restricted area" call OT_fnc_notifyMinor;
 								};
 								_unit setCaptive false;
 								_unit spawn revealToNATO;
@@ -327,11 +343,11 @@ while {alive _unit} do {
 	if(_attack != "") then {
 		_pos = server getVariable _attack;
 		private _playerpos = getpos _unit;
-		if(_pos distance _playerpos < 500) then {
+		if(_pos distance _playerpos < 1000) then {
 			private _altitude = _playerpos select 2;
-			_unit setCaptive false;
-			_unit setVariable ["hiding",30,false];
 			if(_altitude > 5) then {
+				_unit setCaptive false;
+				_unit setVariable ["hiding",30,false];
 				//Radar is active here
 				(vehicle _unit) spawn revealToNATO;
 			};

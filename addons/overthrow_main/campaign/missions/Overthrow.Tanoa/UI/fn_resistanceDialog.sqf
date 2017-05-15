@@ -48,13 +48,15 @@ lbClear 1501;
 }foreach(OT_economicData);
 
 _tax = server getVariable ["taxrate",0];
-
+_damaged = owners getVariable ["damagedBuildings",[]];
 private _lease = 0;
 {
     _x params ["_id","_cls","_pos","_town"];
-    private _data = [_cls,_town] call OT_fnc_getRealEstateData;
-    _tl = (_data select 2);
-    _lease = _lease + _tl;
+    if (!_id in _damaged) then {
+        private _data = [_cls,_town] call OT_fnc_getRealEstateData;
+        _tl = (_data select 2);
+        _lease = _lease + _tl;
+    };
 }foreach(player getVariable ["leasedata",[]]);
 
 if(_lease > 0) then {
@@ -78,10 +80,16 @@ _totaxper = round(_totax / _numPlayers);
 
 private _perhr = (["Tanoa","WAGE",0] call OT_fnc_getPrice)*6;
 private _wages = 0;
+private _income = 0;
 {
     if(_x != "Factory") then {
         _num = server getVariable [format["%1employ",_x],0];
         _wages = _wages + (_num * _perhr);
+        if(_num > 20) then {_num = 20};
+        _data = _x call OT_fnc_getEconomicData;
+        if(count _data == 2) then {
+            _income = _income + ((_num * 200) * 6);
+        };
     };
 }foreach(server getVariable ["GEURowned",[]]);
 
@@ -104,14 +112,16 @@ if(isMultiplayer) then {
 }else{
     _text = _text + format["<t size='0.65'>Tax Income: $%1</t><br/>",[_taxtotal, 1, 0, true] call CBA_fnc_formatNumber];
 };
+_text = _text + format["<t size='0.65'>Business Income: $%1 (6 hrs)</t><br/>",[_income, 1, 0, true] call CBA_fnc_formatNumber];
+
 private _minus = "";
 if(_wages > 0) then {_minus = "-"};
-_text = _text + format["<t size='0.65'>Wages: $%1%2</t><br/>",_minus,[_wages, 1, 0, true] call CBA_fnc_formatNumber];
+_text = _text + format["<t size='0.65'>Wages: $%1%2 (6 hrs)</t><br/>",_minus,[_wages, 1, 0, true] call CBA_fnc_formatNumber];
 if(isMultiplayer) then {
-    _text = _text + format["<t size='0.8'>Balance (Resistance): $%1</t><br/>",[_balance, 1, 0, true] call CBA_fnc_formatNumber];
+    _text = _text + format["<t size='0.8'>Balance (Resistance): $%1</t><br/>",[_balance+_income, 1, 0, true] call CBA_fnc_formatNumber];
     _text = _text + format["<t size='0.8'>Balance (You): $%1</t><br/>",[_lease + (_taxper-_totaxper), 1, 0, true] call CBA_fnc_formatNumber];
 }else{
-    _text = _text + format["<t size='0.8'>Balance: $%1</t><br/>",[_lease + (_taxper-_totaxper) + _balance, 1, 0, true] call CBA_fnc_formatNumber];
+    _text = _text + format["<t size='0.8'>Balance: $%1</t><br/>",[_lease + (_taxper-_totaxper) + _balance + _income, 1, 0, true] call CBA_fnc_formatNumber];
 };
 
 disableSerialization;

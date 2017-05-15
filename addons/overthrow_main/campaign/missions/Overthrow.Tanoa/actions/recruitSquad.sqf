@@ -1,8 +1,10 @@
-if !(captive player) exitWith {"You cannot recruit while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot recruit while wanted" call OT_fnc_notifyMinor};
 
 private _cls = _this select 0;
 private _pos = _this select 1;
 private _cc = player getVariable ["OT_squadcount",0];
+
+if(({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) exitWith {"You cannot recruit squads with enemies nearby" call OT_fnc_notifyMinor};
 
 _d = [];
 {
@@ -23,7 +25,7 @@ private _cost = 0;
 }foreach(_comp);
 
 private _money = player getVariable ["money",0];
-if(_money < _cost) exitWith {format ["You need $%1",_cost] call notify_minor};
+if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
 
 [-_cost] call money;
 
@@ -32,7 +34,7 @@ _leader = false;
 {
 	_civ = [_x,_pos,_group] call OT_fnc_createSoldier;
 	player reveal [_civ,4];
-	if(!_leader) then {_group selectLeader _civ;_civ setVariable ["owner",getplayeruid player,true],_leader=true};
+	if(!_leader) then {_group selectLeader _civ;[_civ,getPlayerUID player] call OT_fnc_setOwner,_leader=true};
 }foreach(_soldiers);
 
 _group setGroupIdGlobal [format["%1-%2",_shortname,_cc]];
@@ -45,4 +47,4 @@ _recruits = server getVariable ["squads",[]];
 _recruits pushback [getplayeruid player,_cls,_group,[]];
 server setVariable ["squads",_recruits,true];
 
-hcShowBar true;
+"Squad recruited, use ctrl + space to command" call OT_fnc_notifyMinor;

@@ -22,7 +22,7 @@ class CfgPatches
             "cba_xeh",
             "cba_jr"
 		};
-		requiredVersion=1.66;
+		requiredVersion=1.69;
 		units[] = {"OT_GanjaItem","OT_BlowItem"};
 		weapons[] = {"OT_Ganja","OT_Blow"};
 	};

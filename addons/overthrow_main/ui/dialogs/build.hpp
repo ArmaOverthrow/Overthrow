@@ -64,14 +64,50 @@ class OT_dialog_buildbase
 		class RscButton_1604: RscOverthrowButton
 		{
 			idc = 1604;
+			action = "'Workshop' call build";
+
+			text = "Workshop"; //--- ToDo: Localize;
+			x = 0.891875 * safezoneW + safezoneX;
+			y = 0.324 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Modify vehicles"; //--- ToDo: Localize;
+		};
+		class RscButton_1605: RscOverthrowButton
+		{
+			idc = 1605;
 			action = "'Helipad' call build";
 
 			text = "Helipad"; //--- ToDo: Localize;
-			x = 0.0204687 * safezoneW + safezoneX;
-			y = 0.676 * safezoneH + safezoneY;
+			x = 0.891875 * safezoneW + safezoneX;
+			y = 0.412 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Apparently helicopter pilots need to be told where they are allowed to land"; //--- ToDo: Localize;
+			tooltip = "Apparently helicopters need a place to land"; //--- ToDo: Localize;
+		};
+		class RscButton_1606: RscOverthrowButton
+		{
+			idc = 1606;
+			action = "'Refugee Camp' call build";
+
+			text = "Refugee Camp"; //--- ToDo: Localize;
+			x = 0.891875 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Helps with recruiting local civilians to your cause."; //--- ToDo: Localize;
+		};
+		class RscButton_1607: RscOverthrowButton
+		{
+			idc = 1607;
+			action = "'Training Camp' call build";
+
+			text = "Training Camp"; //--- ToDo: Localize;
+			x = 0.891875 * safezoneW + safezoneX;
+			y = 0.588 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Recruit trained and pre-equipped soldiers"; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

@@ -24,60 +24,53 @@ _unit addEventHandler ["HandleDamage", {
 	_src = _this select 3;
 	if(captive _src) then {
 		if((vehicle _src) != _src or (_src call unitSeenNATO)) then {
-			_src setCaptive false;				
-		};		
-	};	
+			_src setCaptive false;
+		};
+	};
 }];
 
 removeAllWeapons _unit;
 
-_numweap = (count OT_NATO_weapons_Police)-1;
-_idx = _numweap - 4;
+private _cost = 0;
+private _wpn = ["SubmachineGun"] call OT_fnc_findWeaponInWarehouse;
+if(_wpn == "") then {
+	_possible = [];
+	{
+		_weapon = [_x] call BIS_fnc_itemType;
+		_weaponType = _weapon select 1;
+		if(_weaponType == "AssaultRifle" and (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
+		if(_weaponType == _primary) then {_possible pushback _x};
+	}foreach(OT_allWeapons);
+	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
+	_wpn = _sorted select 0;
+}else{
+	_warehouseWpn = true;
+};
+_unit addWeapon _wpn;
 
-if(_stability > 85) then {
-	_idx = _numweap;
-};
+[_wpn,1] call OT_fnc_removeFromWarehouse;
+
 _hour = date select 3;
-if(_stability > 80) then {
-	if(_hour > 17 or _hour < 6) then {
-		_unit linkItem "NVGoggles_OPFOR";
-	};
-	_unit addGoggles "G_Bandanna_aviator";
-	_unit addWeapon "Rangefinder";
-	_idx = _numweap - 1;
-	if(OT_hasAce) then {
-		_unit addItemToUniform "ACE_rangeCard";
-		_unit addItem "ACE_morphine";
-	};
-}else{	
-	if(_stability > 70) then {
-		_idx = _numweap - 2;
-	}else{
-		if(_stability > 60) then {
-			_idx = _numweap - 3;
-			_unit linkItem "ItemGPS";
-		};
-	};
-};
+
+_unit addPrimaryWeaponItem "acc_flashlight";
+_unit addGoggles "G_Bandanna_aviator";
+_idx = _numweap - 1;
+_unit addItem "ACE_morphine";
+_unit addItem "ACE_epinephrine";
+
 
 if(OT_hasACE) then {
 	_unit addItem "ACE_fieldDressing";
 	_unit addItem "ACE_fieldDressing";
 };
 
-_weapon = OT_NATO_weapons_Police select round(random(_idx));
-_base = [_weapon] call BIS_fnc_baseWeapon;
+_base = [_wpn] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
-_unit addWeapon _weapon;
-
-if(_hour > 17 or _hour < 6) then {
-	_unit addPrimaryWeaponItem "acc_flashlight";
-};
 
 _weapon = OT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
@@ -85,9 +78,3 @@ _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addWeapon _weapon;
-
-if(_stability > 80) then {
-	_unit addPrimaryWeaponItem "optic_Holosight_blk_F";
-}else{	
-	_unit addPrimaryWeaponItem "optic_Aco";
-};

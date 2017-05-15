@@ -1,474 +1,566 @@
 if (!isServer) exitwith {};
 
-private ["_name","_pos","_garrison","_need","_townPos","_current","_stability","_police","_civ","_units","_move","_NATObusy","_abandoned"];
-
-OT_NATOobjectives = [];
-OT_NATOcomms = [];
-
-
-private _NATObusy = false;
 private _abandoned = [];
+private _resources = 0;
 private _diff = server getVariable ["OT_difficulty",1];
-OT_NATOobjectives = server getVariable ["NATOobjectives",[]];
-OT_NATOcomms = server getVariable ["NATOcomms",[]];
-OT_NATOhvts = server getVariable ["NATOhvts",[]];
-OT_allObjectives = [];
-OT_allComms = [];
 
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
-	diag_log "Overthrow: Generating NATO";
-	server setVariable ["NATOversion",OT_NATOversion,false];
-	_abandoned = server getVariable ["NATOabandoned",[]];
+private _nextturn = 3;
+private _count = 0;
 
-	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0,false];
-	sleep 0.1;
-	{
-		_stability = server getVariable format ["stability%1",_x];
-		if(_stability < 11 and !(_x in _abandoned)) then {
-			_abandoned pushback _x;
-		};
-	}foreach (OT_allTowns);
-	server setVariable ["NATOabandoned",_abandoned,true];
-	server setVariable ["garrisonHQ",1000,false];
-	OT_NATOobjectives = [];
-	OT_NATOcomms = [];
-	OT_NATOhvts = [];
-	server setVariable ["NATOobjectives",OT_NATOobjectives,false];
-	server setVariable ["NATOcomms",OT_NATOcomms,false];
-	server setVariable ["NATOhvts",OT_NATOhvts,false];
-
-	_numHVTs = 6;
-	if(_diff == 0) then {_numHVTs = 4};
-	if(_diff == 2) then {_numHVTs = 8};
-
-	//Find military objectives
-	{
-		_x params ["_pos","_name"];
-		if !(_name in _abandoned) then {
-			OT_NATOobjectives pushBack [_pos,_name];
-			server setVariable [format ["vehgarrison%1",_name],[],true];
-
-			_garrison = floor(4 + random(8));
-			if(_name in OT_NATO_priority or _name in OT_allAirports) then {
-				_garrison = floor(16 + random(8));
-				server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F"],true];
-			};
-			if(_name == OT_NATO_HQ) then {
-				_garrison = 48;
-				server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_T_APC_Tracked_01_AA_F","B_GMG_01_high_F","B_GMG_01_high_F","B_GMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];
-				server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
-			}else{
-				server setVariable [format ["airgarrison%1",_name],[],true];
-			};
-			server setVariable [format ["garrison%1",_name],_garrison,true];
-
-			if(_name == OT_NATO_HQ) then {
-				OT_NATO_HQPos = _pos;
-			};
-
-			sleep 0.05;
-
-		}else{
-			OT_NATOobjectives pushBack [_pos,_name];
-		};
-	}foreach (OT_objectiveData + OT_airportData);
-
-	_count = 0;
-	_done = [];
-	while {_count < _numHVTs} do {
-		_ob = selectRandom (OT_NATOobjectives - ([[OT_NATO_HQ,OT_NATO_HQPos]] + _done));
-		_name = _ob select 1;
-		_done pushback _ob;
-		_id = format["%1%2",_name,round(random 99999)];
-		OT_NATOhvts pushback [_id,_name,""];
-		_count = _count + 1;
-	};
-
-	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
-	sleep 0.1;
-	//Add comms towers
-	{
-		_x params ["_pos","_name"];
-		OT_NATOcomms pushBack [_pos,_name];
-		_garrison = floor(4 + random(4));
-		server setVariable [format ["garrison%1",_name],_garrison,true];
-	}foreach (OT_commsData);
-
-	server setVariable ["NATOobjectives",OT_NATOobjectives,true];
-	server setVariable ["NATOcomms",OT_NATOcomms,true];
-	server setVariable ["NATOhvts",OT_NATOhvts,true];
-	diag_log "Overthrow: Distributing NATO vehicles";
-	//Randomly distribute NATO's vehicles
-	{
-		_type = _x select 0;
-		_num = _x select 1;
-		_count = 0;
-		while {_count < _num} do {
-			_obj = OT_NATOobjectives call BIS_fnc_selectRandom;
-			_name = _obj select 1;
-			_garrison = server getVariable format["vehgarrison%1",_name];
-			_garrison pushback _type;
-			_count = _count + 1;
-			server setVariable [format ["vehgarrison%1",_name],_garrison,true];
-		};
-	}foreach(OT_NATO_Vehicles_Garrison);
-
-	{
-		_type = _x select 0;
-		_num = _x select 1;
-		_count = 0;
-		while {_count < _num} do {
-			_name = OT_allAirports call BIS_fnc_selectRandom;
-			_garrison = server getVariable [format["airgarrison%1",_name],[]];
-			_garrison pushback _type;
-			_count = _count + 1;
-			server setVariable [format ["airgarrison%1",_name],_garrison,true];
-		};
-	}foreach(OT_NATO_Vehicles_AirGarrison);
-	diag_log "Overthrow: Setting up NATO checkpoints";
-	{
-		_garrison = floor(8 + random(6));
-		if(_x in OT_NATO_priority) then {
-			_garrison = floor(12 + random(6));
-		};
-
-		//_x setMarkerText format ["%1",_garrison];
-		_x setMarkerAlpha 0;
-		server setVariable [format ["garrison%1",_x],_garrison,true];
-		sleep 0.05;
-	}foreach (OT_NATO_control);
-	diag_log "Overthrow: Garrisoning towns";
-	{
-		_town = _x;
-		_garrison = 0;
-		_stability = server getVariable format ["stability%1",_town];
-		_population = server getVariable format ["population%1",_town];
-		if(_stability > 10) then {
-			_max = round(_population / 30);
-			if(_max < 4) then {_max = 4};
-			_garrison = 2+round((1-(_stability / 100)) * _max);
-			if(_town in OT_NATO_priority) then {
-				_garrison = round(_garrison * 2);
-			};
-		};
-		server setVariable [format ["garrison%1",_x],_garrison,true];
-		sleep 0.05;
-	}foreach (OT_allTowns);
-};
-diag_log "Overthrow: NATO Init Done";
-
-OT_NATOInitDone = true;
-publicVariable "OT_NATOInitDone";
-
-{
-	_pos = _x select 0;
-	_name = _x select 1;
-	_mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
-	_mrk setMarkerShape "ICON";
-	if(_name in (server getVariable "NATOabandoned")) then {
-		_mrk setMarkerType "flag_Tanoa";
-	}else{
-		_mrk setMarkerType "flag_NATO";
-	};
-
-	server setVariable [_name,_pos,true];
-
-	OT_allObjectives pushback _name;
-}foreach(OT_NATOobjectives);
-
-publicVariable "OT_allObjectives";
-
-{
-	_pos = _x select 0;
-	_name = _x select 1;
-	_mrk = createMarker [_name,_pos];
-	_mrk setMarkerShape "ICON";
-	_mrk setMarkerType "loc_Transmitter";
-	if(_name in (server getVariable "NATOabandoned")) then {
-		_mrk setMarkerColor "ColorGUER";
-	}else{
-		_mrk setMarkerColor "ColorBLUFOR";
-	};
-	server setVariable [_name,_pos,true];
-	OT_allComms pushback _name;
-	OT_allObjectives pushback _name;
-}foreach(OT_NATOcomms);
 server setVariable ["NATOattacking","",true];
 server setVariable ["NATOattackstart",0,true];
 
-sleep OT_NATOwait + round(random OT_NATOwait);
+private _lastmin = date select 4;
+private _lastsched = -1;
 
-while {true} do {
-	_garrisoned = false;
-	_numplayers = count([] call CBA_fnc_players);
-	_resources = server getVariable ["NATOresources",1000];
-	_resourceGain = server getVariable ["NATOresourceGain",0];
+sleep 100 + (random 300);
 
+OT_nextNATOTurn = time+(_nextturn * 10);
+publicVariable "OT_nextNATOTurn";
+
+while {sleep 10;true} do {
+	private _numplayers = count([] call CBA_fnc_players);
 	if(_numplayers > 0) then {
-		diag_log format["Overthrow: NATO turn @ %1",time];
-		_abandoned = server getVariable "NATOabandoned";
+		_fobs = server getVariable ["NATOfobs",[]];
+		_abandoned = server getVariable ["NATOabandoned",[]];
+		_resources = server getVariable ["NATOresources",2000];
+		private _countered = (server getVariable ["NATOattacking",""]) != "";
+		_knownTargets = spawner getVariable ["NATOknownTargets",[]];
+		_schedule = server getVariable ["NATOschedule",[]];
 
+		//scheduler
 
-		private _currentAttack = server getVariable ["NATOattacking",""];
-		private _currentAttackStart = server getVariable ["NATOattackstart",0];
-		if(_currentAttack != "" and (time - _currentAttackStart) > 2400) then {
-			server setVariable ["NATOattacking","",true];
-			_currentAttack = "";
-			{
-				if(side _x == west) then {
-					_lead = (units _x) select 0;
-					if((_lead getVariable ["garrison",""]) == "HQ") then {
-						if((vehicle _lead) != _lead) then {
-							[vehicle _lead] spawn OT_fnc_cleanup;
-						};
-						[_x] spawn OT_fnc_cleanup;
+		if(_lastmin != (date select 4)) then {
+			_lastmin = date select 4;
+			if(count _schedule > 0) then {
+				_item = [];
+				if((_lastsched == -1 or _lastsched == 0) and _lastmin >= 30) then {
+					_lastsched = 30;
+					_item = _schedule select 0;
+				}else{
+					if((_lastsched == -1 or _lastsched == 30) and _lastmin < 30) then {
+						_lastsched = 0;
+						_item = _schedule select 0;
 					};
-				}
-			}foreach(allgroups);
+				};
+				if(count _item > 0) then {
+					_schedule deleteAt 0;
+					_item params ["_mission","_p1","_p2"];
+					if(_mission == "DESTROY") then {
+						[_p2] spawn OT_fnc_NATOMissionReconDestroy;
+					};
+					if(_mission == "CONVOY") then {
+						_vehtypes = [];
+						_numveh = round(random 2) + 2;
+						_count = 0;
+						while {_count < _numveh} do {
+							_count = _count + 1;
+							_vehtypes pushback (selectRandom OT_NATO_Vehicles_Convoy);
+						};
+						[_vehtypes,[],_p1 select 1,_p2 select 1] spawn OT_fnc_NATOConvoy;
+					};
+				};
+			};
 		};
 
-		if(_currentAttack == "") then {
-			_resources = _resources + _resourceGain + ((count _abandoned) * 25);
-			diag_log format["Overthrow: NATO resources @ %1",_resources];
-		}else{
-			diag_log format["Overthrow: NATO still attacking %1",_currentAttack];
-		};
 
-		if(_currentAttack != "") then {
-			_garrisoned = true;
-		};
-
-		//Objective response
-		if !(_garrisoned) then {
+		//Objective QRF and drone intel reports
+		if !(_countered) then {
 			{
-				_pos = _x select 0;
-				_name = _x select 1;
+				_x params ["_pos","_name","_cost"];
 				if !(_name in _abandoned) then {
 					if(_pos call OT_fnc_inSpawnDistance) then {
-						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-						_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",200]);
-						if(_nummil < 3 and _numres > 0) then {
-							_garrisoned = true;
+						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",500]);
+						_numres = {side _x == resistance or captive _x} count (_pos nearObjects 500);
+						if(_nummil < _numres) then {
+							_countered = true;
 							server setVariable ["NATOattacking",_name,true];
 							server setVariable ["NATOattackstart",time,true];
 							diag_log format["Overthrow: NATO responding to %1",_name];
-							[_name,_resources] spawn OT_fnc_NATOResponseObjective;
+							if(_resources < _cost) then {_cost = _resources};
+							[_name,_cost] spawn OT_fnc_NATOResponseObjective;
 							_name setMarkerAlpha 1;
-							_resources = 0;
+							_resources = _resources - _cost;
 						};
 					};
-				};
-				if(_garrisoned) exitWith {};
-			}foreach(OT_NATOobjectives);
-		};
-		if !(_garrisoned) then {
-			{
-				_town = _x;
-				_townPos = server getVariable _town;
-				_current = server getVariable format ["garrison%1",_town];;
-				_stability = server getVariable format ["stability%1",_town];
-				_population = server getVariable format ["population%1",_town];
-				if(_stability > 10 and !(_town in _abandoned)) then {
-					_max = round(_population / 40);
-					if(_max < 4) then {_max = 4};
-					_garrison = 2+round((1-(_stability / 100)) * _max);
-					if(_town in OT_NATO_priority) then {
-						_garrison = round(_garrison * 2);
-					};
-					_need = _garrison - _current;
-					if(_need < 0) then {_need = 0};
-					if(_need > 1 and _resources >= 20) then {
-						_resources = _resources - 20;
-						_x spawn reGarrisonTown;
+					//Drone intel report
+					_drone = spawner getVariable [format["drone%1",_name],objNull];
+					if((!isNull _drone) and alive _drone) then {
+						_intel = _drone getVariable ["OT_seenTargets",[]];
+						{
+							_added = false;
+							_x params ["_ty","_pos","_pri","_obj"];
+							_rem = [];
+							{
+								_o = _x select 3;
+								if (_o isEqualTo _obj) then {
+									_added = true;
+								};
+							}foreach(_knownTargets);
+
+							if !(_added) then {
+								_knownTargets pushback [_ty,_pos,_pri,_obj,false,time];
+							};
+						}foreach(_intel);
+						_drone setVariable ["OT_seenTargets",[]];
 					};
 				};
-			}foreach (OT_allTowns);
+				if(_countered) exitWith {};
+			}foreach(OT_objectiveData + OT_airportData);
 		};
 
-		{
-			_town = _x;
-			_stability = server getVariable format ["stability%1",_town];
-			_population = server getVariable format ["population%1",_town];
-			if(_population < 50) then {
-				if(_stability < 10 and !(_town in _abandoned)) then {
-					_abandoned pushback _town;
-					server setVariable [format ["garrison%1",_town],0,true];
-					format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
-					[_town,15] call stability;
-				};
-			};
-		}foreach (OT_allTowns);
-
-		//Town response
-		if !(_garrisoned) then {
+		//Town QRF (over 50 pop)
+		if !(_countered) then {
 			_sorted = [OT_allTowns,[],{server getvariable format["population%1",_x]},"DESCEND"] call BIS_fnc_SortBy;
 			{
 				_town = _x;
+				_pos = server getVariable _town;
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
-				if(_population > 50 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) exitWith {
-					server setVariable [format ["garrison%1",_town],0,true];
-					diag_log format["Overthrow: NATO responding to %1",_town];
-					[_town,_population] spawn OT_fnc_NATOResponseTown;
-					server setVariable ["NATOattacking",_town,true];
-					server setVariable ["NATOattackstart",time,true];
-					_garrisoned = true;
-					_resources = _resources - _population;
-				};
-			}foreach (_sorted);
-		};
-
-		//Objective counter-attacks
-		if (!(_garrisoned) and count(_abandoned) > 2 and (_resources > 1000) and (random 100) > 95) then {
-			_highest = 0;
-			_high = 0;
-			private _sorted = [OT_NATOobjectives,[],{(_x select 0) distance OT_NATO_HQPos},"ASCEND"] call BIS_fnc_SortBy;
-			{
-				_x params ["_pos","_name"];
-				if(_name != server getVariable ["NATOlastcounter",""]) then {
-					if(_name in _abandoned) exitWith {
-						diag_log format["Overthrow: NATO beginning attack on %1",_name];
-						[_name,_resources] spawn OT_fnc_NATOCounterObjective;
-						server setVariable ["NATOlastcounter",_name,true];
-						server setVariable ["NATOattacking",_name,true];
+				if(_pos call OT_fnc_inSpawnDistance) then {
+					if(_population > 50 and _stability < 10 and !(_town in _abandoned)) then {
+						server setVariable [format ["garrison%1",_town],0,true];
+						diag_log format["Overthrow: NATO responding to %1",_town];
+						_strength = _population;
+						if(_population > _resources) then {_strength = _resources};
+						[_town,_strength] spawn OT_fnc_NATOResponseTown;
+						server setVariable ["NATOattacking",_town,true];
 						server setVariable ["NATOattackstart",time,true];
-						_resources = 0;
-						_garrisoned = true;
+						_countered = true;
+						_resources = _resources - _strength;
 					};
 				};
+				if(_countered) exitWith {};
 			}foreach (_sorted);
 		};
 
-		//Town counter-attacks
-		if (!(_garrisoned) and count(_abandoned) > 5 and (_resources > 1000) and (random 100) > 98) then {
-			_highest = 0;
-			_high = 0;
-			{
-				if(_x != server getVariable ["NATOlastcounter",""]) then {
-					_pop = server getVariable[format["population%1",_x],0];
-					if(_pop > 0 and _pop > _high) then {
-						_high = _pop;
-						_highest = _x;
-					};
-				};
-			}foreach (_abandoned);
-			if(_high > 0) then {
-				diag_log format["Overthrow: NATO beginning attack on %1",_highest];
-				[_highest,_resources] spawn OT_fnc_NATOCounterTown;
-				server setVariable ["NATOlastcounter",_name,true];
-				server setVariable ["NATOattacking",_highest,true];
-				server setVariable ["NATOattackstart",time,true];
-				_resources = 0;
-				_garrisoned = true;
-			};
-		};
 
-		//HVT Convoys
-		if (!(_garrisoned) and (_resources > 200) and (random 100) > 96) then {
-			_highest = 0;
-			_high = 0;
-			//Move a random HVT somewhere
-			_hvt = selectRandom OT_NATOhvts;
-			_hvt params ["_id","_loc","_status"];
-			_dest = selectRandom OT_NATOobjectives;
-			if(_status == "" and (_dest select 1) != _loc) then {
-				_frompos = server getVariable _loc;
-				_times = 0;
-				_do = true;
-				while {!([_frompos,_dest select 0] call OT_fnc_regionIsConnected)} do {
-					_dest = selectRandom OT_NATOobjectives;
-					_times = _times + 1;
-					if(_times > 50) exitWith {_do = false};
-				};
-				if (_do) then {
-					diag_log format["Overthrow: NATO moving a HVT from %1 to %2",_loc,_dest select 1];
-					[[],[_hvt],_loc,_dest select 1] spawn OT_fnc_NATOConvoy;
-					_resources = _resources - 200;
-					_garrisoned = true;
-				};
-			};
-		};
-
-		//Radio tower counter-attacks
-		if (!(_garrisoned) and count(_abandoned) > 2 and (_resources > 200) and (random 100) > 90) then {
-			_highest = 0;
-			_high = 0;
-			private _sorted = [OT_NATOcomms,[],{(_x select 0) distance OT_NATO_HQPos},"ASCEND"] call BIS_fnc_SortBy;
-			{
-				_x params ["_pos","_name"];
-				if(_pos in _abandoned) exitWith {
-					diag_log format["Overthrow: NATO sending recon team to %1",_name];
-					_pos spawn OT_fnc_NATOSupportRecon;
-					_resources = _resources - 200;
-					_garrisoned = true;
-				};
-			}foreach (_sorted);
-		};
-
+		//Abandon towers
 		{
-			_x params ["_pos","_name"];
-			_alive = 0;
-			_enemy = 0;
-			{
-				if((side _x == west) and (alive _x) and ((_x getVariable ["garrison",""]) == "HQ")) then {
-					_alive = _alive + 1;
+			_pos = _x select 0;
+			_name = _x select 1;
+			if !(_name in _abandoned) then {
+				if(_pos call OT_fnc_inSpawnDistance) then {
+					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
+					_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
+					if(_nummil < _numres) then {
+						_abandoned pushback _name;
+						server setVariable ["NATOabandoned",_abandoned,true];
+						_name setMarkerColor "ColorGUER";
+						_t = _pos call OT_fnc_nearestTown;
+						format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
+						_resources = _resources - 100;
+						_countered = true;
+					};
 				};
-				if((side _x == resistance) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
-					_enemy = _enemy + 1;
-				};
-			}foreach(_pos nearEntities ["CAManBase",50]);
-			if(_alive > 1 and _enemy == 0) then {
-				_abandoned deleteAt (_abandoned find _name);
-				format["NATO has retaken control of the %1 tower",_name] remoteExec ["notify_good",0,false];
-				_name setMarkerColor "ColorBLUFOR";
-				_resources = _resources + 50;
-				server setVariable [format["garrison%1",_name],floor(4 + random(8)),true];
 			};
+			if(_countered) exitWith {};
 		}foreach(OT_NATOcomms);
 
-		if !(_garrisoned) then {
-			//Nothing to do, so NATO will harass
+
+		//Check on FOBs
+		_clearedFOBs = [];
+		{
+			_x params ["_pos","_garrison"];
+			_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
+			_numres = {side _x == resistance or captive _x} count (_pos nearObjects 50);
+			if(_nummil == 0 and _numres > 0) then {
+				_clearedFOBs pushback _x;
+				"Cleared NATO FOB" remoteExec ["OT_fnc_notifyMinor",0,false];
+				_flag = _pos nearobjects [OT_flag_NATO,50];
+				if(count _flag > 0) then{
+					deleteVehicle (_flag select 0);
+				};
+			};
+		}foreach(_fobs);
+
+		{
+			_fobs deleteAt (_fobs find _x);
+		}foreach(_clearedFOBs);
+
+
+		if(_count >= _nextturn and !_countered) then {
+			OT_lastNATOTurn = time;
+			publicVariable "OT_lastNATOTurn";
+			_resourceGain = server getVariable ["NATOresourceGain",0];
+			_abandonedSomething = false;
+			//NATO turn
+			_nextturn = OT_NATOwait + random OT_NATOwait;
+			OT_nextNATOTurn = time+(_nextturn * 10);
+			publicVariable "OT_nextNATOTurn";
+
+			_count = 0;
 			_chance = 98;
-			if(count _abandoned > 4) then {_chance = 95};
-			if(count _abandoned > 8) then {_chance = 90};
-			if(((random 100) > _chance) and (count _abandoned) > 0 and (_resources >= 25)) then {
-				_target = _abandoned call BIS_fnc_selectRandom;
-				_pos = server getvariable _target;
-				if !(isNil "_pos") then {
-					_pos spawn OT_fnc_NATOSupportSniper;
-					_resources = _resources - 25;
+			_gain = 25;
+			_mul = 25;
+			if(_diff > 1) then {_gain = 75;_mul = 50};
+			if(_diff < 1) then {_gain = 0;_mul = 15};
+
+			//expire targets
+			private _expired = [];
+			{
+				if((_x select 4) or (time - (_x select 5)) > 2400) then {
+					_expired pushback _x;
+				};
+			}foreach(_knownTargets);
+			{
+				_knownTargets deleteAt (_knownTargets find _x);
+			}foreach(_expired);
+
+			//Recover resources
+			_resources = _resources + _gain + _resourceGain + ((count _abandoned) * _mul);
+
+			//Abandon towns (under 50 pop) and counter
+			_lastcounter = server getVariable ["NATOlastcounter",""];
+			{
+				_town = _x;
+				_pos = server getVariable _town;
+				_stability = server getVariable format ["stability%1",_town];
+				_population = server getVariable format ["population%1",_town];
+				if(_pos call OT_fnc_inSpawnDistance) then {
+					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
+					_numres = {side _x == resistance or captive _x} count (_pos nearObjects 200);
+					if(_nummil < 3 and _numres > 0) then {
+						if(_population < 50) then {
+							if(_stability < 10 and !(_town in _abandoned)) then {
+								//Abandon a town
+								_abandoned pushback _town;
+								server setVariable [format ["garrison%1",_town],0,true];
+								format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+								[_town,15] call stability;
+								_abandonedSomething = true;
+							};
+						}else{
+							if(_town != _lastcounter) then {
+								if((_town in _abandoned) and (_resources > _population) and (random 100) > 99) then {
+									//Counter a town
+									[_town,_population] spawn OT_fnc_NATOCounterTown;
+									server setVariable ["NATOlastcounter",_town,true];
+									server setVariable ["NATOattacking",_town,true];
+									server setVariable ["NATOattackstart",time,true];
+									_resources = _resources - _population;
+									_countered = true;
+								};
+							};
+						};
+					};
+				}else{
+					if(_population < 50) then {
+						if(_stability == 0 and !(_town in _abandoned)) then {
+							//Abandon a town
+							_abandoned pushback _town;
+							server setVariable [format ["garrison%1",_town],0,true];
+							format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+							_abandonedSomething = true;
+						};
+					};
+				};
+				if(_abandonedSomething or _countered) exitWith {};
+			}foreach (OT_allTowns);
+
+			//Spawn missing drones & counter objectives
+			{
+				_x params ["_pos","_name","_pri"];
+				if((_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 99) exitWith {
+					//Counter an objective
+
+					[_name,_pri] spawn OT_fnc_NATOCounterObjective;
+					server setVariable ["NATOlastcounter",_name,true];
+					server setVariable ["NATOattacking",_name,true];
+					server setVariable ["NATOattackstart",time,true];
+					_countered = true;
+					_resources = _resources - _pri;
+				};
+
+				if !(_name in _abandoned) then {
+					_drone = spawner getVariable [format["drone%1",_name],objNull];
+					if((isNull _drone or !alive _drone) and _resources > 10) then {
+						_targets = [];
+						{
+							_town = _x;
+							_p = server getVariable _town;
+							if((_p distance _pos) < 3000) then {
+								_stability = server getVariable format["stability%1",_town];
+								if((_town in _abandoned) or (_stability < 50)) then {
+									_targets pushback _p;
+								};
+							};
+						}foreach(OT_allTowns);
+
+						{
+							_x params ["_p","_name"];
+							if((_p distance _pos) < 3000) then {
+								if (_name in _abandoned) then {
+									_targets pushback _p;
+								};
+							};
+						}foreach(OT_NATOobjectives + OT_NATOcomms);
+
+						{
+							_x params ["_ty","_p"];
+							if((_ty == "FOB") and (_p distance _pos) < 3000) then {
+								_targets pushback _p;
+							};
+						}foreach(_knownTargets);
+
+						if(count _targets > 0) then {
+							_targets = [_targets,[],{random 100},"ASCEND"] call BIS_fnc_sortBy;
+							_group = createGroup blufor;
+							_p = [_pos,0,0,false,[0,0],[100,OT_NATO_Vehicles_ReconDrone]] call SHK_pos;
+							_drone = createVehicle [OT_NATO_Vehicles_ReconDrone, _p, [], 0,""];
+
+							createVehicleCrew _drone;
+							{
+								[_x] joinSilent _group;
+							}foreach(crew _drone);
+
+
+							spawner setVariable [format["drone%1",_name],_drone,false];
+							_resources = _resources - 10;
+
+							{
+								_wp = _group addWaypoint [_x,300];
+								_wp setWaypointType "MOVE";
+								_wp setWaypointBehaviour "COMBAT";
+								_wp setWaypointSpeed "FULL";
+								_wp setWaypointTimeout [20,45,60];
+							}foreach(_targets);
+
+							_wp = _group addWaypoint [_pos,300];
+							_wp setWaypointType "MOVE";
+							_wp setWaypointBehaviour "COMBAT";
+							_wp setWaypointSpeed "FULL";
+							_wp setWaypointTimeout [10,20,60];
+
+							_wp = _group addWaypoint [_pos,0];
+							_wp setWaypointType "CYCLE";
+
+							{
+								_x addCuratorEditableObjects [[_drone]];
+							}foreach(allCurators);
+
+							_drone spawn OT_fnc_initDrone;
+						};
+					};
+				};
+				if(_resources <= 0) exitWith {_resources = 0};
+			}foreach(OT_objectiveData + OT_airportData);
+
+			//Decide on spend
+			_spend = 0;
+			if(_resources > 500) then {
+				_spend = 500;
+			};
+			if(_resources > 1000) then {
+				_spend = 800;
+				_chance = 95;
+			};
+			if(_resources > 1500) then {
+				_spend = 1200;
+				_chance = 90;
+			};
+			if(_resources > 2500) then {
+				_spend = 1500;
+				_chance = 80;
+			};
+
+			if(!(spawner getVariable ["NATOdeploying",false]) and (_spend > 500) and (count _fobs) < 3 and (random 100) > _chance) then {
+				//Deploy an FOB
+				_lowest = "";
+				{
+					_stability = server getVariable [format["stability%1",_x],100];
+					if((_x in _abandoned) or _stability < 50) exitWith {
+						_lowest = _x;
+					};
+				}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+				if(_lowest != "") then {
+					_townPos = (server getVariable _lowest);
+					_pp = [_townPos,random 360,2000] call SHK_pos;
+					_gotpos = [];
+					{
+						_pos = _x select 0;
+						_pos set [2,0];
+						_bb = _pos call OT_fnc_nearestObjective;
+						_bpos = _bb select 0;
+
+						_near = false;
+						{
+							_pb = _x select 0;
+							if(_pb distance _pos < 500) then {
+								_near = true;
+							};
+						}foreach(_fobs);
+
+						if(!_near and (_pos distance _bpos) > 400 and (_pos distance _townPos) > 250) exitWith {
+							_gotpos = _pos;
+						};
+					}foreach (selectBestPlaces [_pp, 1000,"(1 - forest - trees) * (1 - houses) * (1 - sea)",5,4]);
+					if(count _gotpos > 0) then {
+						_spend = _spend - 500;
+						_resources = _resources - 500;
+						spawner setVariable ["NATOdeploying",true,false];
+						[_gotpos] spawn OT_fnc_NATOMissionDeployFOB;
+					};
 				};
 			};
+
+			if(_spend >= 20) then {
+				{
+					_town = _x;
+					_townPos = server getVariable _town;
+					_current = server getVariable format ["garrison%1",_town];;
+					_stability = server getVariable format ["stability%1",_town];
+					_population = server getVariable format ["population%1",_town];
+					if(_stability > 10 and !(_town in _abandoned)) then {
+						_max = round(_population / 40);
+						if(_max < 4) then {_max = 4};
+						_garrison = 2+round((1-(_stability / 100)) * _max);
+						if(_town in OT_NATO_priority) then {
+							_garrison = round(_garrison * 2);
+						};
+						_need = _garrison - _current;
+						if(_need < 0) then {_need = 0};
+						if(_need > 1 and _spend >= 20) then {
+							_spend = _spend - 20;
+							_resources = _resources - 20;
+							_x spawn reGarrisonTown;
+						};
+					};
+					if(_spend < 20) exitWith {};
+				}foreach ([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+			};
+
+			//Schedule some missions
+			if(_spend > 0) then {
+				_targets = [_knownTargets,[],{_x select 2},"DESCEND"] call BIS_fnc_sortBy;
+				{
+					_x params ["_ty","_pos","_pri","_obj","_done"];
+					if !(_done) then {
+						if(_ty == "WH" or _ty == "PS" or _ty == "WS") then {
+							if(_spend > 250 and (random 100) > _chance) then {
+								_schedule pushback ["DESTROY",_ty,_pos];
+								_spend = _spend - 250;
+								_resources = _resources -250;
+								_x set [4,true];
+							};
+						};
+					};
+				}foreach(_targets);
+				if(_spend > 500 and (random 100) > _chance) then {
+					_low = 50;
+					_lowest = "";
+					{
+						_stability = server getVariable [format["stability%1",_x],100];
+						if(!(_x in _abandoned) and _stability < _low) exitWith {
+							_lowest = _x;
+						};
+					}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+
+					if(_lowest == "") then {
+						//Could not find NATO controlled town under 50% stability, looking for resistance-controlled town above 50%
+						{
+							_stability = server getVariable [format["stability%1",_x],100];
+							if((_x in _abandoned) and _stability > _low) exitWith {
+								_lowest = _x;
+							};
+						}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+					};
+
+					if(_lowest != "") then {
+						_townPos = server getVariable _lowest;
+						_start = ([OT_NATOobjectives,[],{(_x select 0) distance _townPos},"ASCEND"] call BIS_fnc_SortBy) select 0;
+						_startName = _start select 1;
+						_startPos = _start select 0;
+						_end = [];
+						{
+							_x params ["_p","_n"];
+							if((_n != _startName) and !(_n in _abandoned) and ([_p,_startPos] call OT_fnc_regionIsConnected)) exitWith {
+								_end = _x;
+							};
+						}foreach([OT_NATOobjectives,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+						if(count _end > 0) then {
+							//Schedule a convoy
+							_spend = _spend - 500;
+							_resources = _resources - 500;
+							_schedule pushback ["CONVOY",_start,_end];
+						};
+					};
+				};
+			};
+
+			//Upgrade garrisons
+			{
+				_x params ["_pos","_name","_pri"];
+				if !(_name in _abandoned) then {
+					_garrison = server getvariable [format["garrison%1",_name],0];
+					_max = 8;
+					if(_pri > 300) then {
+						_max = 12;
+					};
+					if(_pri > 800) then {
+						_max = 24;
+					};
+					if(_pri > 1200) then {
+						_max = 32;
+					};
+					if(!(_pos call OT_fnc_inSpawnDistance) and (_garrison < _max) and (_spend > 150) and  (random 100 > _chance)) then {
+						server setvariable [format["garrison%1",_name],_garrison+4,true];
+						_spend = _spend - 150;
+						_resources = _resources - 150;
+					};
+				};
+			}foreach(OT_NATOobjectives);
+
+			//Upgrade FOBs
+			{
+				_x params ["_pos","_garrison","_upgrades"];
+				_max = 16;
+				if((_garrison < _max) and (_spend > 150) and  (random 100 > _chance)) exitWith {
+					_x set [1,_garrison + 4];
+					_spend = _spend - 150;
+					_resources = _resources - 150;
+					_group = creategroup blufor;
+					_count = 0;
+					while {_count < 4} do {
+						_start = [[[_pos,50]]] call BIS_fnc_randomPos;
+
+						_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+						_civ setVariable ["garrison","HQ",false];
+						_civ setRank "LIEUTENANT";
+						_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+						_civ setBehaviour "SAFE";
+
+						_count = _count + 1;
+					};
+					_group call OT_fnc_initMilitaryPatrol;
+				};
+				if(!("Mortar" in _upgrades) and (_spend > 300) and (random 100 > _chance)) exitWith {
+					_spend = _spend - 300;
+					_resources = _resources - 300;
+					_upgrades pushback "Mortar";
+					[_pos,["Mortar"]] spawn OT_fnc_NATOupgradeFOB;
+				};
+				if(!("Barriers" in _upgrades) and (_spend > 50) and (random 100 > _chance)) exitWith {
+					_spend = _spend - 50;
+					_resources = _resources - 50;
+					_upgrades pushback "Barriers";
+					[_pos,["Barriers"]] spawn OT_fnc_NATOupgradeFOB;
+				};
+				if(!("HMG" in _upgrades) and (_spend > 150) and (random 100 > _chance)) exitWith {
+					_spend = _spend - 150;
+					_resources = _resources - 150;
+					_upgrades pushback "HMG";
+					[_pos,["HMG"]] spawn OT_fnc_NATOupgradeFOB;
+				};
+			}foreach(_fobs);
 		};
+		//Finish
+		if(_resources > 2500) then {_resources = 2500};
+		server setVariable ["NATOresources",_resources,true];
+		server setVariable ["NATOabandoned",_abandoned,true];
+		spawner setVariable ["NATOknownTargets",_knownTargets,true];
+		server setVariable ["NATOschedule",_schedule,true];
+		server setVariable ["NATOfobs",_fobs,true];
 	};
-
-	{
-		_pos = _x select 0;
-		_name = _x select 1;
-		if !(_name in _abandoned) then {
-			if(_pos call OT_fnc_inSpawnDistance) then {
-				_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-				_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
-				if(_nummil < 3 and _numres > 0) then {
-					_abandoned pushback _name;
-					server setVariable ["NATOabandoned",_abandoned,true];
-					_name setMarkerColor "ColorGUER";
-					_t = _pos call OT_fnc_nearestTown;
-					format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
-					_resources = _resources - 100;
-				};
-			};
-		};
-	}foreach(OT_NATOcomms);
-	if(_resources < 0) then {_resources = 0};
-
-	{
-		if(count (units _x) == 0) then {
-			deleteGroup _x;
-		};
-	}foreach(allGroups);
-	if(_resources > 2500) then {_resources = 2500};
-	server setVariable ["NATOresources",_resources,true];
-	server setVariable ["NATOabandoned",_abandoned,true];
-	sleep OT_NATOwait + round(random OT_NATOwait);
+	_count = _count + 1;
 };

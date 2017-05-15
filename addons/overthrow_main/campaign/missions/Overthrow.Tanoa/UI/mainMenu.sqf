@@ -10,8 +10,8 @@ _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 private _donerem = false;
 if !(isNull cursorObject) then {
 	if((player distance cursorObject) < 20) then {
-		if (cursorObject in (entities "")) then {
-			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west) then {
+		if (cursorObject in ((allMissionObjects "Static") + vehicles)) then {
+			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west or (typeof cursorObject) == OT_item_flag) then {
 				call {
 					if(((cursorObject isKindOf "Land") or (cursorObject isKindOf "Air")) and ("ToolKit" in (items player)) and (damage cursorObject) == 1) exitWith {
 						_donerem = true;
@@ -26,7 +26,7 @@ if !(isNull cursorObject) then {
 							ctrlEnable [1614,false];
 						};
 					};
-					if((call OT_fnc_playerIsGeneral) or (cursorObject getVariable ["owner",""]) == (getplayeruid player)) exitWith {
+					if((call OT_fnc_playerIsGeneral) or (cursorObject call OT_fnc_playerIsOwner)) exitWith {
 						_donerem = true;
 						private _type = typeof cursorObject;
 						_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
@@ -109,13 +109,18 @@ if(typename _b == "ARRAY") then {
 	_txt = "";
 
 	if(_building call OT_fnc_hasOwner) then {
-		_owner = _building getVariable "owner";
+
+		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
-		if(_building getVariable ["leased",false]) then {
-			_ownername = format["%1 (Leased)",_ownername];
-		};
+
 		if(_owner == getplayerUID player) then {
+			_leased = player getVariable ["leased",[]];
+			_id = [_building] call OT_fnc_getBuildID;
+			if(_id in _leased) then {
+				_ownername = format["%1 (Leased)",_ownername];
+			};
+
 			if(typeof _building == OT_item_Tent) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
@@ -127,17 +132,6 @@ if(typename _b == "ARRAY") then {
 					<t align='left' size='0.65'>Owned by %1</t>
 				",_ownername];
 			};
-			if(typeof _building == OT_item_Flag) exitWith {
-				ctrlSetText [1608,"Sell"];
-				ctrlEnable [1608,false];
-				ctrlEnable [1609,false];
-				ctrlEnable [1610,false];
-
-				_buildingTxt = format["
-					<t align='left' size='0.8'>%1</t><br/>
-					<t align='left' size='0.65'>Founded by %2</t>
-				",_building getVariable "name",_ownername];
-			};
 
 			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
 
@@ -147,23 +141,24 @@ if(typename _b == "ARRAY") then {
 
 				_buildingTxt = format["
 					<t align='left' size='0.8'>Warehouse</t><br/>
-					<t align='left' size='0.65'>Owned by %1</t>
-				",_ownername];
+					<t align='left' size='0.65'>Owned by %1</t><br/>
+					<t align='left' size='0.65'>Damage: %2%3</t>
+				",_ownername,round((damage _building) * 100),"%"];
 			};
 
-			if(_building getVariable ["leased",false] or !((typeof _building) in OT_allRealEstate)) then {
+			if(_id in _leased) then {
 				ctrlEnable [1609,false];
 				ctrlEnable [1610,false];
-				if !((typeof _building) in OT_allRealEstate) then {
-					_lease = 0;
-					ctrlSetText [1608,"Remove"];
-				};
+			};
+			if(damage _building == 1) then {
+				_lease = 0;
 			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
 				<t align='left' size='0.65'>Owned by %2</t><br/>
-				<t align='left' size='0.65'>Lease Value: $%3/6hrs</t>
-			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+				<t align='left' size='0.65'>Lease Value: $%3/6hrs</t><br/>
+				<t align='left' size='0.65'>Damage: %4%5</t>
+			",_name,_ownername,[_lease, 1, 0, true] call CBA_fnc_formatNumber,round((damage _building) * 100),"%"];
 
 		}else{
 			ctrlEnable [1608,false];
@@ -177,11 +172,12 @@ if(typename _b == "ARRAY") then {
 			};
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
-				<t align='left' size='0.65'>Owned by %2</t>
-			",_name,_ownername];
+				<t align='left' size='0.65'>Owned by %2</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_name,_ownername,round((damage _building) * 100),"%"];
 		};
 		if(typeof _building == OT_barracks) then {
-			_owner = _building getVariable "owner";
+			_owner = _building call OT_fnc_getOwner;
 			_ownername = server getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
@@ -192,8 +188,69 @@ if(typename _b == "ARRAY") then {
 
 			_buildingTxt = format["
 				<t align='left' size='0.8'>Barracks</t><br/>
-				<t align='left' size='0.65'>Built by %1</t>
-			",_ownername];
+				<t align='left' size='0.65'>Built by %1</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_ownername,round((damage _building) * 100),"%"];
+		};
+		if(typeof _building == OT_trainingCamp) then {
+			_owner = _building call OT_fnc_getOwner;
+			_ownername = server getVariable format["name%1",_owner];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,true];
+			ctrlSetText [1609,"Recruit"];
+			//ctrlEnable [1609,false];
+			ctrlEnable [1610,false];
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Training Camp</t><br/>
+				<t align='left' size='0.65'>Built by %1</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_ownername,round((damage _building) * 100),"%"];
+		};
+
+		if(typeof _building == OT_refugeeCamp) then {
+			_owner = _building call OT_fnc_getOwner;
+			_ownername = server getVariable format["name%1",_owner];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,false];
+			ctrlEnable [1610,false];
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Refugee Camp</t><br/>
+				<t align='left' size='0.65'>Built by %1</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_ownername,round((damage _building) * 100),"%"];
+		};
+
+		if(typeof _building == OT_item_flag) then {
+			_base = [];
+			{
+				if((_x select 0) distance _building < 5) exitWith {_base = _x};
+			}foreach(server getvariable ["bases",[]]);
+
+			_ownername = server getVariable format["name%1",_base select 2];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,true];
+			ctrlSetText [1608,"Garrison"];
+			ctrlEnable [1609,false];
+			//ctrlEnable [1609,false];
+			ctrlEnable [1610,false];
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>%1</t><br/>
+				<t align='left' size='0.65'>Founded by %2</t>
+			",_base select 1,_ownername];
+		};
+
+		if(damage _building == 1) then {
+			if((_owner == getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {
+				ctrlEnable [1608,false]; //Not allowed to sell
+				ctrlSetText [1609,"Repair"]; //Replace lease/manage with repair
+				ctrlEnable [1609,true];
+				ctrlEnable [1610,false];
+			};
 		};
 	}else{
 		if(isNil "_price") then {
@@ -226,7 +283,7 @@ if(typename _b == "ARRAY") then {
 	};
 
 	if(typeof _building == OT_policeStation) then {
-		_owner = _building getVariable "owner";
+		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		ctrlSetText [1608,"Sell"];
 		ctrlEnable [1608,false];
@@ -241,7 +298,7 @@ if(typename _b == "ARRAY") then {
 	};
 
 	if(typeof _building == "Land_Cargo_House_V4_F") then {
-		_owner = _building getVariable "owner";
+		_owner = _building call OT_fnc_getOwner;
 		_ownername = server getVariable format["name%1",_owner];
 		ctrlSetText [1608,"Sell"];
 		ctrlEnable [1608,false];
@@ -254,7 +311,7 @@ if(typename _b == "ARRAY") then {
 		",_ownername];
 	};
 
-	if(!((typeof _building) in OT_allRealEstate)) then {
+	if(!((typeof _building) in OT_allRealEstate + [OT_item_flag])) then {
 		ctrlEnable [1609,false];
 		ctrlEnable [1610,false];
 		ctrlEnable [1608,false];
@@ -283,8 +340,8 @@ if(typename _b == "ARRAY") then {
 			",_obname];
 			ctrlEnable [1609,false];
 		};
-		ctrlSetText [1608,"Sell"];
-		ctrlEnable [1608,false];
+		ctrlSetText [1608,"Garrison"];
+		ctrlEnable [1608,true];
 		ctrlSetText [1609,"Procurement"];
 		ctrlEnable [1610,false];
 	}else{

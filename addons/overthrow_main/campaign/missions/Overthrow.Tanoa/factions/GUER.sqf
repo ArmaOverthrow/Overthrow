@@ -24,7 +24,7 @@ while {true} do {
 	spawner setVariable ["track",_track,false];
 	private _dead = count alldeadmen;
 	if(_dead > 150) then {
-		format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["notify_minor",0,false];
+		format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];
 	};
 
 	{
@@ -77,7 +77,7 @@ while {true} do {
 							if(_container isEqualTo objNull) then {
 								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
 								_container = OT_item_CargoContainer createVehicle _p;
-								_container setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_container,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _container;
 								clearMagazineCargoGlobal _container;
 								clearBackpackCargoGlobal _container;
@@ -110,7 +110,7 @@ while {true} do {
 							if(_container isEqualTo objNull) then {
 								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
 								_container = OT_item_CargoContainer createVehicle _p;
-								_container setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_container,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _container;
 								clearMagazineCargoGlobal _container;
 								clearBackpackCargoGlobal _container;
@@ -137,10 +137,29 @@ while {true} do {
 								_outnum = round (_outnum * (_inputnum / _intotal));
 							};
 							if(_output != "" and _outnum > 0) then {
+								if(_output in ["OT_Sugarcane","ACE_Banana"]) then {
+									_foundFertilizer = false;
+									{
+										_c = _x;
+										{
+											_x params ["_cls","_amt"];
+											if(_cls == "OT_Fertilizer") exitWith {
+												[_c, _cls, 1] call CBA_fnc_removeItemCargo;
+												_foundFertilizer = true;
+											};
+										}foreach(_c call OT_fnc_unitStock);
+										if(_foundFertilizer) exitWith {};
+									}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
+									if(_foundFertilizer) then {
+										_output = round(_output * 1.5);
+									};
+								};
 								_container addItemCargoGlobal [_output,_outnum];
 							};
 						};
 					};
+				}else{
+					format["Resistance was unable to pay wages at %1",_x] remoteExec ["OT_fnc_notifyMinor",0,false];
 				};
 			};
 		}foreach(server getVariable ["GEURowned",[]]);
@@ -150,22 +169,34 @@ while {true} do {
 		_lastmin = date select 4;
 
 		_stabcounter = _stabcounter + 1;
+		private _abandoned = server getVariable ["NATOabandoned",[]];
 
 		if(_stabcounter >= 10) then {
-			private _abandoned = server getVariable ["NATOabandoned",[]];
+
 			_stabcounter = 0;
 			{
 				_town = _x;
+				_townpos = server getvariable _x;
 				if !(_town in _abandoned) then {
-					_townpos = server getvariable _x;
 					if(_townpos call OT_fnc_inSpawnDistance) then {
 						_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
 						if(_numcops == 0) then {
 							[_town,-1] call stability;
 						};
 					};
+				}else{
+					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
+					if(_numcops > 0) then {
+						[_town,-1] call stability;
+					};
 				};
 			}foreach(OT_allTowns);
+		};
+
+		//chemical production
+		if("Chemical Plant" in _abandoned) then {
+			private _chems = server getVariable ["reschems",0];
+			server setVariable ["reschems",_chems + 1,true];
 		};
 
 		//do factory
@@ -180,20 +211,20 @@ while {true} do {
 					};
 					_b = _base;
 					if(_base > 240) then {
-						_b = 240;
+						_b = 30;
 					};
 					if(_base > 10000) then {
-						_b = 360;
+						_b = 60;
 					};
 					if(_base > 20000) then {
-						_b = 480;
+						_b = 120;
 					};
 					if(_base > 50000) then {
-						_b = 600;
+						_b = 240;
 					};
-					_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 3)) + (round (_plastic * 10));
-					if(_timetoproduce > 2880) then {_timetoproduce = 2880};
-					if(_timetoproduce < 10) then {_timetoproduce = 10};
+					_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 2)) + (round (_plastic * 5));
+					if(_timetoproduce > 360) then {_timetoproduce = 360};
+					if(_timetoproduce < 5) then {_timetoproduce = 5};
 					_timespent = server getVariable ["GEURproducetime",0];
 
 					_numtoproduce = 1;
@@ -215,13 +246,13 @@ while {true} do {
 							_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
 							if(count _p > 0) then {
 								_veh = OT_item_CargoContainer createVehicle _p;
-								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _veh;
 								clearMagazineCargoGlobal _veh;
 								clearBackpackCargoGlobal _veh;
 								clearItemCargoGlobal _veh;
 							}else{
-								format["Factory has no room to place container, please clear marker area"] remoteExec["notify_minor",0,false];
+								format["Factory has no room to place container, please clear marker area"] remoteExec["OT_fnc_notifyMinor",0,false];
 							};
 						};
 						_dowood = ["OT_wood",_wood,OT_factoryPos] call OT_fnc_hasFromContainers;
@@ -245,15 +276,15 @@ while {true} do {
 							_p = OT_factoryVehicleSpawn findEmptyPosition [0,100,_currentCls];
 							if(count _p > 0) then {
 								_veh = _currentCls createVehicle _p;
-								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _veh;
 								clearMagazineCargoGlobal _veh;
 								clearBackpackCargoGlobal _veh;
 								clearItemCargoGlobal _veh;
 								_veh setDir OT_factoryVehicleDir;
-								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["notify_minor",0,false];
+								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["OT_fnc_notifyMinor",0,false];
 							}else{
-								format["Factory has no room to produce %1, please clear the road",_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["notify_minor",0,false];
+								format["Factory has no room to produce %1, please clear the road",_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["OT_fnc_notifyMinor",0,false];
 								_timespent = _timetoproduce;
 							};
 						}else{
@@ -261,7 +292,7 @@ while {true} do {
 							if(_veh isEqualTo objNull) then {
 								_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
 								_veh = OT_item_CargoContainer createVehicle _p;
-								_veh setVariable ["owner",(server getVariable ["generals",[]]) select 0,true];
+								[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 								clearWeaponCargoGlobal _veh;
 								clearMagazineCargoGlobal _veh;
 								clearBackpackCargoGlobal _veh;
@@ -301,27 +332,32 @@ while {true} do {
 				if(_rank == "PRIVATE" and _xp > (OT_rankXP select 0)) then {
 					_x set [3,"CORPORAL"];
 					_unit setRank "CORPORAL";
-					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.2 + (random 0.3);
 				};
 				if(_rank == "CORPORAL" and _xp > (OT_rankXP select 1)) then {
 					_x set [3,"SERGEANT"];
 					_unit setRank "SERGEANT";
-					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.3 + (random 0.3);
 				};
 				if(_rank == "SERGEANT" and _xp > (OT_rankXP select 2)) then {
 					_x set [3,"LIEUTENANT"];
 					_unit setRank "LIEUTENANT";
-					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.5 + (random 0.3);
 				};
 				if(_rank == "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
 					_x set [3,"CAPTAIN"];
 					_unit setRank "CAPTAIN";
-					format["%1 has been promoted to Captain",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Captain",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.6 + (random 0.3);
 				};
 				if(_rank == "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
 					_x set [3,"MAJOR"];
 					_unit setRank "MAJOR";
-					format["%1 has been promoted to Major",_name select 0] remoteExec ["notify_minor",_player,false];
+					format["%1 has been promoted to Major",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
+					_unit setSkill 0.8 + (random 0.2);
 				};
 			};
 		}foreach(server getVariable ["recruits",[]]);

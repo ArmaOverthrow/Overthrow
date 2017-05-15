@@ -39,10 +39,11 @@ if(headgear _unit != "") then {
 if(_full and !_istruck) exitWith {false};
 
 if(backpack _unit != "") then {
-	if !(_t canAdd backpack _unit) exitWith {
+	_cls = (backpack _unit) call BIS_fnc_basicBackpack;
+	if !(_t canAdd _cls) exitWith {
 		_full = true;
 	};
-	_t addBackpackCargoGlobal [backpack _unit,1];
+	_t addBackpackCargoGlobal [_cls,1];
 	removeBackpack _unit;
 };
 if(_full and !_istruck) exitWith {false};

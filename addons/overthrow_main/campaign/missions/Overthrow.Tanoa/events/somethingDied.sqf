@@ -38,7 +38,7 @@ call {
 			_idx = _idx + 1;
 		}foreach(OT_NATOhvts);
 		OT_NATOhvts deleteAt _idx;
-		format["A high-ranking NATO officer has been killed"] remoteExec ["notify_minor",0,false];
+		format["A high-ranking NATO officer has been killed"] remoteExec ["OT_fnc_notifyMinor",0,false];
 		server setvariable ["NATOresources",0,true];
 		[_killer,250] call OT_fnc_experience;
 	};
@@ -59,7 +59,7 @@ call {
 		[_killer,1500] call rewardMoney;
 		[_killer,100] call OT_fnc_experience;
 
-		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["notify_minor",0,true];
+		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["OT_fnc_notifyMinor",0,true];
 		deleteMarker format ["mobster%1",_mobsterid];
 	};
 	if(!isNil "_employee") exitWith {
@@ -67,7 +67,7 @@ call {
 		if(_pop > 0) then {
 			server setVariable [format["employ%1",_mobsterid],_pop - 1,true];
 		};
-		format["An employee of %1 has died",_employee] remoteExec ["notify_minor",0,false];
+		format["An employee of %1 has died",_employee] remoteExec ["OT_fnc_notifyMinor",0,false];
 	};
 	if(!isNil "_mobster") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
@@ -88,7 +88,7 @@ call {
 		};
 		if((random 100) > 50) then {
 			[_town,1] call stability;
-			format["%1 (+1 Stability)",_town] remoteExec ["notify_minor",0,false];
+			format["%1 (+1 Stability)",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
 		};
 		_standingChange = 1;
 		[_killer,10] call rewardMoney;
@@ -97,7 +97,7 @@ call {
 	if(!isNil "_crimleader") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
 		[_town,10] call stability;
-		format["%1 (+10 Stability)",_town] remoteExec ["notify_minor",0,false];
+		format["%1 (+10 Stability)",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
 
 		_standingChange = 10;
 		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
@@ -105,15 +105,15 @@ call {
 			[_killer,_bounty] call rewardMoney;
 			if(isPlayer _killer) then {
 				if(isMultiplayer) then {
-					format["%1 has claimed the bounty in %2",name _killer,_town] remoteExec ["notify_minor",0,false];
+					format["%1 has claimed the bounty in %2",name _killer,_town] remoteExec ["OT_fnc_notifyMinor",0,false];
 				}else{
-					format["You claimed the bounty in %1",_town] call notify_minor;
+					format["You claimed the bounty in %1",_town] call OT_fnc_notifyMinor;
 				};
 			}else{
 				if(side _killer == west) then {
-					format["NATO has removed the bounty in %1",_town] remoteExec ["notify_minor",0,true];
+					format["NATO has removed the bounty in %1",_town] remoteExec ["OT_fnc_notifyMinor",0,true];
 				}else{
-					format["The gang leader in %1 is dead",_town] remoteExec ["notify_minor",0,true];
+					format["The gang leader in %1 is dead",_town] remoteExec ["OT_fnc_notifyMinor",0,true];
 				};
 			};
 			server setVariable [format["CRIMbounty%1",_town],0,true];
@@ -183,7 +183,23 @@ call {
 		};
 	};
 };
+if(_standingChange != 0) then {
 
+	{
+		if(captive _x) then {
+			_x setCaptive false;
+		};
+		_x spawn revealToNATO;
+		if(_x isKindOf "AllVehicles") then {
+			{
+				if(captive _x) then {
+					_x setCaptive false;
+					_x spawn revealToNATO;
+				};
+			}foreach(units _x);
+		};
+	}foreach (_me nearObjects 15);
+};
 if((_killer call unitSeen) or (_standingChange < -9)) then {
 	_killer setCaptive false;
 	if(vehicle _killer != _killer) then {

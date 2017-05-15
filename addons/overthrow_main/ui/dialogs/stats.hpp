@@ -52,7 +52,7 @@ class RscTitles {
 				w = 0.139219 * safezoneW;
 				h = 0.099 * safezoneH;
 				colorBackground[] = {0,0,0,0.8};
-				action = "[] call buy;";
+				action = "[] call OT_fnc_buy;";
 			};
 			class RscStructuredText_1100: RscOverthrowStructuredText
 			{

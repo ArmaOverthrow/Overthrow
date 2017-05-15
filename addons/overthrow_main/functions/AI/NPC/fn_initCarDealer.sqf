@@ -19,9 +19,9 @@ removeVest _unit;
 
 _unit forceAddUniform (OT_clothes_carDealers call BIS_fnc_selectRandom);
 
-_unit setvariable ["owner","self"];
+[_unit,"self"] call OT_fnc_setOwner;
 
 _unit addEventHandler ["FiredNear", {
-	_u = _this select 0;	
+	_u = _this select 0;
 	_u setUnitPos "DOWN";
 }];

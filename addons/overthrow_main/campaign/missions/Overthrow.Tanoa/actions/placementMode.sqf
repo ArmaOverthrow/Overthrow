@@ -1,4 +1,4 @@
-if !(captive player) exitWith {"You cannot place objects while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot place objects while wanted" call OT_fnc_notifyMinor};
 private ["_typecls","_types","_cost","_attach","_idx","_money"];
 
 _typecls = _this;
@@ -9,8 +9,8 @@ _description = "";
 modeFinished = false;
 modeCancelled = false;
 call {
-	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for you and your group. Only one allowed per player, will remove any existing camps."};
-	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_item_Flag];_cost=500;_description="Creates a fast travel destination for all friendlies and enables build mode for military structures"};
+	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for all friendlies. Only one allowed per player, will remove any existing camps."};
+	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_item_Flag];_cost=250;_description="Creates a fast travel destination for all friendlies and enables build mode for basic military structures"};
 	if(_typecls == "Ammobox") exitWith {modeValues = [OT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
 	if(_typecls == "Whiteboard") exitWith {modeValues = [OT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
 	{
@@ -19,13 +19,13 @@ call {
 };
 //Price check (on aisle 3)
 _money = player getVariable "money";
-if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call notify_minor};
+if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call OT_fnc_notifyMinor};
 
 if !([getpos player,_typecls] call OT_fnc_canPlace) exitWith {
 	call {
-		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call notify_minor};
-		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call notify_minor};
-		"You must be near a base or owned structure" call notify_minor
+		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call OT_fnc_notifyMinor};
+		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call OT_fnc_notifyMinor};
+		"You must be near a base or owned structure" call OT_fnc_notifyMinor
 	};
 };
 
@@ -155,13 +155,8 @@ if(_cost > 0) then {
 	}else{
 		if ([getpos player,_typecls] call OT_fnc_canPlace) then {
 			[-_cost] call money;
-			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
-			if !((typeof modeTarget) in OT_miscables) then {
-				[modeTarget,true] remoteExec ["enableSimulationGlobal",2];
-			}else{
-				[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
-			};
-			modeTarget setVariable ["owner",getPlayerUID player,true];
+			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];			
+			[modeTarget,getPlayerUID player] call OT_fnc_setOwner;
 			modeTarget remoteExec["initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {
 				_veh = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
@@ -214,7 +209,7 @@ if(_cost > 0) then {
 				if(count _camp > 0) then {
 					{
 						_t = typeof _x;
-						if(_x getVariable ["owner",""] == getplayeruid player) then {
+						if((_x call OT_fnc_getOwner) == getplayeruid player) then {
 							if(_t == OT_item_Tent or _t == "Land_ClutterCutter_large_F") then {
 								deleteVehicle _x;
 							};
@@ -235,9 +230,9 @@ if(_cost > 0) then {
 			};
 		}else{
 			call {
-				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call notify_minor};
-				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call notify_minor};
-				"You must be near a base or owned building" call notify_minor
+				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call OT_fnc_notifyMinor};
+				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call OT_fnc_notifyMinor};
+				"You must be near a base or owned building" call OT_fnc_notifyMinor
 			};
 			detach modeTarget;
 			deleteVehicle modeTarget;
@@ -245,9 +240,9 @@ if(_cost > 0) then {
 	};
 }else{
 	if(_typecls != "Camp" and _typecls != "Base") then {
-		"To place this item you must be near a base or a building that you own" call notify_minor;
+		"To place this item you must be near a base or a building that you own" call OT_fnc_notifyMinor;
 	}else{
-		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call notify_minor;
+		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call OT_fnc_notifyMinor;
 	};
 };
 

@@ -168,3 +168,134 @@ class OT_dialog_resistance
         ////////////////////////////////////////////////////////
     }
 }
+
+
+class OT_dialog_garrison
+{
+	idd=9000;
+	movingenable=false;
+	class controlsBackground
+	{
+		class RscStructuredText_1199: RscOverthrowStructuredText
+		{
+			idc = 1199;
+
+			text = ""; //--- ToDo: Localize;
+			x = 0.288594 * safezoneW + safezoneX;
+			y = 0.214 * safezoneH + safezoneY;
+			w = 0.422812 * safezoneW;
+			h = 0.572 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+			colorActive[] = {0.1,0.1,0.1,1};
+		};
+	}
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Niwire)
+		////////////////////////////////////////////////////////
+
+		class RscStructuredText_1100: RscOverthrowStructuredText
+		{
+			idc = 1100;
+			text = "<t size='1.5' align='center'>Base</t>"; //--- ToDo: Localize;
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.236 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.033 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};
+		class RscButton_1600: RscOverthrowButton
+		{
+			idc = 1600;
+			text = "+1 Rifleman"; //--- ToDo: Localize;
+			x = 0.37625 * safezoneW + safezoneX;
+			y = 0.291 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "[0] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1601: RscOverthrowButton
+		{
+			idc = 1601;
+			text = "+1 Autorifleman"; //--- ToDo: Localize;
+			x = 0.438125 * safezoneW + safezoneX;
+			y = 0.291 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "[1] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1602: RscOverthrowButton
+		{
+			idc = 1602;
+			text = "+1 Grenadier"; //--- ToDo: Localize;
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.291 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "[13] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1603: RscOverthrowButton
+		{
+			idc = 1603;
+			text = "+1 Medic"; //--- ToDo: Localize;
+			x = 0.561875 * safezoneW + safezoneX;
+			y = 0.291 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "[8] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1604: RscOverthrowButton
+		{
+			idc = 1604;
+			text = "+1 Anti-Tank"; //--- ToDo: Localize;
+			x = 0.37625 * safezoneW + safezoneX;
+			y = 0.379 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "[9] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1605: RscOverthrowButton
+		{
+			idc = 1605;
+			text = "+1 Anti-Air"; //--- ToDo: Localize;
+			x = 0.438125 * safezoneW + safezoneX;
+			y = 0.379 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "[10] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1606: RscOverthrowButton
+		{
+			idc = 1606;
+			text = "+1 HMG"; //--- ToDo: Localize;
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.379 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "['HMG'] spawn OT_fnc_addGarrison";
+		};
+		class RscButton_1607: RscOverthrowButton
+		{
+			idc = 1607;
+			text = "+1 GMG"; //--- ToDo: Localize;
+			x = 0.561875 * safezoneW + safezoneX;
+			y = 0.379 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.077 * safezoneH;
+			action = "['GMG'] spawn OT_fnc_addGarrison";
+		};
+		class RscStructuredText_1101: RscOverthrowStructuredText
+		{
+			idc = 1101;
+			x = 0.314375 * safezoneW + safezoneX;
+			y = 0.489 * safezoneH + safezoneY;
+			w = 0.37125 * safezoneW;
+			h = 0.264 * safezoneH;
+			colorBackground[] = {0,0,0,0.3};
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+	};
+};

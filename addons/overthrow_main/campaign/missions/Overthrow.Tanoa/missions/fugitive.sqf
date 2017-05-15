@@ -77,7 +77,7 @@ _difficulty = 1.8;
 
     //If mission was not a success
     if !(_wassuccess) then {
-        format ["Incoming message from %1: 'Abort mission. You have been spotted.'",_factionName] call notify_minor;
+        format ["Incoming message from %1: 'Abort mission. You have been spotted.'",_factionName] call OT_fnc_notifyMinor;
 
         //Get outta here
         _group = group (player getVariable [format["fugitive%1",_faction],objNull]);

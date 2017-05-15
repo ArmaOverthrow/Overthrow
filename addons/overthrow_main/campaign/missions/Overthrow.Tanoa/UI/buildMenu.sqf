@@ -1,4 +1,4 @@
-if !(captive player) exitWith {"You cannot build while wanted" call notify_minor};
+if !(captive player) exitWith {"You cannot build while wanted" call OT_fnc_notifyMinor};
 _base = (getpos player) call OT_fnc_nearestBase;
 _closest = "";
 _isbase = false;
@@ -42,13 +42,13 @@ if(!_isBase) then {
 
 if ((!_isbase) and !(_closest in (server getVariable ["NATOabandoned",[]]))) exitWith {
 	if(_isobj) then {
-		format ["NATO does not allow construction this close to %1.",_closest] call notify_minor;
+		format ["NATO does not allow construction this close to %1.",_closest] call OT_fnc_notifyMinor;
 	}else{
-		format ["NATO is currently not allowing any construction in %1",_closest] call notify_minor;
+		format ["NATO is currently not allowing any construction in %1",_closest] call OT_fnc_notifyMinor;
 	};
 };
 
-if((player distance _center) > modeMax) exitWith {format ["You need to be within %1m of the %2.",modeMax,_buildlocation] call notify_minor};
+if((player distance _center) > modeMax) exitWith {format ["You need to be within %1m of the %2.",modeMax,_buildlocation] call OT_fnc_notifyMinor};
 
 openMap false;
 _playerpos = (getpos player);
@@ -271,7 +271,7 @@ buildOnMouseUp = {
 		if(!isNull modeTarget and canBuildHere) then {
 			_money = player getVariable "money";
 			if(_money < modePrice) then {
-				"You cannot afford that" call notify_minor;
+				"You cannot afford that" call OT_fnc_notifyMinor;
 			}else{
 				_created = objNULL;
 				playSound "3DEN_notificationDefault";
@@ -283,21 +283,21 @@ buildOnMouseUp = {
 						clearMagazineCargoGlobal _x;
 						clearBackpackCargoGlobal _x;
 						clearItemCargoGlobal _x;
-						_x setVariable ["owner",getplayeruid player,true];
+						[_x,getplayeruid player] call OT_fnc_setOwner;
 						_x call initObjectLocal;
 					}foreach(_objects);
 					_created = _objects select 0;
 					deleteVehicle modeTarget;
 				}else{
 					_created = modeTarget;
-					modeTarget setVariable ["owner",getplayeruid player,true];
+					[modeTarget,getplayeruid player] call OT_fnc_setOwner;
 					modeTarget enableSimulationGlobal true;
 					modeTarget = objNull;
 				};
 
 				if(modeCode != "") then {
 					_created setVariable ["OT_init",modeCode,true];
-					[modeValue,modeCode] remoteExec ["structureInit",2];
+					[_created,modeValue,modeCode] remoteExec ["structureInit",2];
 				};
 				_clu = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
 				_clu enableDynamicSimulation true;
@@ -308,7 +308,7 @@ buildOnMouseUp = {
 			};
 		};
 		if(!canBuildHere) then {
-			"You cannot build that there" call notify_minor;
+			"You cannot build that there" call OT_fnc_notifyMinor;
 		};
 	};
 };
