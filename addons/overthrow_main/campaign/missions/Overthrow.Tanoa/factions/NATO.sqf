@@ -118,17 +118,16 @@ while {sleep 10;true} do {
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
 				if(_pos call OT_fnc_inSpawnDistance) then {
-					if(_population > 50 and _stability < 10 and !(_town in _abandoned) and (_resources >= _population)) then {
-						_numres = {side _x == resistance or captive _x} count (_pos nearObjects 1000);
-						if(_numres > 0) then {
-							server setVariable [format ["garrison%1",_town],0,true];
-							diag_log format["Overthrow: NATO responding to %1",_town];
-							[_town,_population] spawn OT_fnc_NATOResponseTown;
-							server setVariable ["NATOattacking",_town,true];
-							server setVariable ["NATOattackstart",time,true];
-							_countered = true;
-							_resources = _resources - _population;
-						};
+					if(_population > 50 and _stability < 10 and !(_town in _abandoned)) then {
+						server setVariable [format ["garrison%1",_town],0,true];
+						diag_log format["Overthrow: NATO responding to %1",_town];
+						_strength = _population;
+						if(_population > _resources) then {_strength = _resources};
+						[_town,_strength] spawn OT_fnc_NATOResponseTown;
+						server setVariable ["NATOattacking",_town,true];
+						server setVariable ["NATOattackstart",time,true];
+						_countered = true;
+						_resources = _resources - _strength;
 					};
 				};
 				if(_countered) exitWith {};
@@ -233,7 +232,7 @@ while {sleep 10;true} do {
 							};
 						}else{
 							if(_town != _lastcounter) then {
-								if((_town in _abandoned) and (_resources > _population) and (random 100) > 98) then {
+								if((_town in _abandoned) and (_resources > _population) and (random 100) > 99) then {
 									//Counter a town
 									[_town,_population] spawn OT_fnc_NATOCounterTown;
 									server setVariable ["NATOlastcounter",_town,true];
@@ -262,7 +261,7 @@ while {sleep 10;true} do {
 			//Spawn missing drones & counter objectives
 			{
 				_x params ["_pos","_name","_pri"];
-				if((_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 98) exitWith {
+				if((_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 99) exitWith {
 					//Counter an objective
 
 					[_name,_pri] spawn OT_fnc_NATOCounterObjective;

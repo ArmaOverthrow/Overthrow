@@ -136,6 +136,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 
 		_wp = _tgroup addWaypoint [_frompos,0];
 		_wp setWaypointType "SCRIPTED";
+		_wp setWaypointCompletionRadius 25;
 		_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 
 		{
@@ -144,7 +145,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 	};
 };
 sleep 10;
-_wp = _group1 addWaypoint [_attackpos,20];
+_wp = _group1 addWaypoint [_attackpos,100];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
@@ -156,28 +157,39 @@ _wp setWaypointBehaviour "COMBAT";
 _group1 call distributeAILoad;
 if(typename _tgroup == "GROUP") then {
 	_tgroup call distributeAILoad;
-	[_veh,_tgroup] spawn {
-		params ["_veh","_tgroup"];
+	[_veh,_tgroup,_frompos] spawn {
+		params ["_veh","_tgroup","_frompos"];
 		private _done = false;
 		while{sleep 10;!_done} do {
-			if(isNil "_veh") exitWith {};
-			if(isNil "_tgroup") exitWith {};
+			if(isNull _veh) exitWith {};
+			if(isNull _tgroup) exitWith {};
 			if((damage _veh) > 0 and ((getpos _veh) select 2) < 2) then {
 				while {(count (waypoints _tgroup)) > 0} do {
 				 	deleteWaypoint ((waypoints _tgroup) select 0);
 				};
 				commandStop (driver _veh);
 				{
+					unassignVehicle _x;
 					commandGetOut _x;
-				}foreach(units _veh);
+				}foreach((crew _veh) - (units _tgroup));
 				_done = true;
+
+				_wp = _tgroup addWaypoint [_frompos,0];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointBehaviour "CARELESS";
+				_wp setWaypointCompletionRadius 50;
+
+				_wp = _tgroup addWaypoint [_frompos,0];
+				_wp setWaypointType "SCRIPTED";
+				_wp setWaypointCompletionRadius 50;
+				_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 			};
 		};
 	};
 };
 
 if !(_byair) then {
-	_wp = _group2 addWaypoint [_attackpos,20];
+	_wp = _group2 addWaypoint [_attackpos,100];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
 	_wp setWaypointSpeed "FULL";

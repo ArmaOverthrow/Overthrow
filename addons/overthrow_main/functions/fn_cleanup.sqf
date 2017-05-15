@@ -29,7 +29,7 @@ if(_vehicle isKindOf "CAManBase") then {
 		if !(_x call OT_fnc_hasOwner) then {
 			deleteVehicle _x;
 		};
-	}foreach(units _vehicle);
+	}foreach(crew _vehicle);
 };
 if !(_vehicle call OT_fnc_hasOwner) then {
 	deleteVehicle _vehicle;

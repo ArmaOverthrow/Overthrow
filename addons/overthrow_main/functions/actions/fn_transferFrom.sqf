@@ -17,7 +17,7 @@ if(_veh call unitSeen) then {
 	if(typename (_target getVariable ["stockof",""]) == "SCALAR") then {
 		{
 			_x setCaptive false;
-		}foreach(units _veh);
+		}foreach(crew _veh);
 		_veh spawn revealToNATO;
 		hint "You were caught stealing!";
 	};

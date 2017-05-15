@@ -404,7 +404,7 @@ player addEventHandler ["GetInMan",{
 		_veh setVariable ["vehgarrison",nil,true];
 		{
 			_x setCaptive false;
-		}foreach(units _veh);
+		}foreach(crew _veh);
 		_veh spawn revealToNATO;
 	};
 	_g = _v getVariable ["airgarrison",false];
@@ -415,7 +415,7 @@ player addEventHandler ["GetInMan",{
 		_veh setVariable ["airgarrison",nil,true];
 		{
 			_x setCaptive false;
-		}foreach(units _veh);
+		}foreach(crew _veh);
 		_veh spawn revealToNATO;
 	};
 }];
