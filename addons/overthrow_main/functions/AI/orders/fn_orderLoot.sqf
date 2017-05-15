@@ -74,14 +74,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 
 			[_deadguy,_unit] call takeStuff;
-			[_deadguy] spawn {
-				sleep 30;
-				_n = _this select 0;
-				if !(isNil "_n") then {
-					hideBody (_this select 0);
-				}
-			};
 			sleep 2;
+            hideBody _deadguy;
 			if(primaryWeapon _unit == "") then {
 				_weapon = objNull;
 				{

@@ -79,15 +79,25 @@ private _cc = 0;
 
 					if(count _x > 7) then {
 						(_x select 7) params ["_fuel","_dmg"];
+						//Fuel in tank
 						_veh setFuel _fuel;
 						{
-							_veh setHitPointDamage [_x, (_dmg select 2) select _forEachIndex]
+							_veh setHitPointDamage [_x, (_dmg select 2) select _forEachIndex,false]
 						}foreach(_dmg select 0);
 						if(count (_x select 7) > 2) then {
+							//ACE refuel (fuel trucks)
 							[_veh, (_x select 7) select 2] call ace_refuel_fnc_setFuel;
 						};
 						if(count (_x select 7) > 3) then {
+							//Lock/unlock
 							_veh setVariable ["OT_locked",(_x select 7) select 3,true];
+						};
+						if(count (_x select 7) > 4) then {
+							//Ammo
+							_ammo = (_x select 7) select 4;
+							{
+								_veh setAmmo [_x select 0,_x select 1];
+							}foreach((_x select 7) select 4);
 						};
 					};
 

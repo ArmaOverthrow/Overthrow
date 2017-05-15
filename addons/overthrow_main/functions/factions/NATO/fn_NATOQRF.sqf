@@ -12,6 +12,9 @@ if(_diff == 2) then {
 	_strength = round(_strength * 2);
 };
 
+if(_strength < 150) then {_strength = 150};
+if(_strength > 2500) then {_strength = 2500};
+
 spawner setVariable ["NATOattackforce",[],false];
 //determine possible vectors and distribute strength to each
 private _town = _pos call OT_fnc_nearestTown;

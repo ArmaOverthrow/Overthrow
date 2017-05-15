@@ -60,13 +60,19 @@ _count = 10001;
 	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_item_Flag)) then {
 		_owner = _x call OT_fnc_getOwner;
 		_s = _x call OT_fnc_unitStock;
+
 		if(typeof _x == OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];
 			_s pushback ["password",_x getVariable ["password",""]];
 		};
 		_params = [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
 		if(_x isKindOf "AllVehicles") then {
-			_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false]];
+			_ammo = [];
+			_veh = _x;
+			{
+				_ammo pushback [_x,_veh ammo _x];
+			}foreach(_x weaponsTurret [0]);
+			_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo];
 		};
 		_vehicles pushback _params;
 	};
