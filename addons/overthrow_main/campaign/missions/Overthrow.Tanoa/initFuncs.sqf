@@ -705,7 +705,7 @@ setupKeyHandler = {
 };
 
 assignedKey = {
-	(cba_keybinding_dikDecToStringTable select ((actionKeys _this) select 0)+1) select 1
+	(cba_keybinding_keynames) getVariable [str ((actionKeys _this) select 0),""];
 };
 
 standing = {

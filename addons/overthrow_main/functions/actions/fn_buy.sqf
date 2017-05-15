@@ -9,7 +9,7 @@ _price = lbValue [1500,_idx];
 if(_price == -1) exitWith {};
 
 private _chems = server getVariable ["reschems",0];
-private _cost = cost getVariable _cls;
+private _cost = cost getVariable [_cls,[0,0,0,0]];
 if(_cls in OT_allExplosives and _chems < (_cost select 3)) exitWith {format["You need %1 chemicals",_cost select 3] call OT_fnc_notifyMinor};
 
 _money = player getVariable "money";

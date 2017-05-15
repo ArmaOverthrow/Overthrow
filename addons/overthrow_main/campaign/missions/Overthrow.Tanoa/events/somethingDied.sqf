@@ -183,12 +183,19 @@ call {
 		};
 	};
 };
-if(_standingChange < 0) then {
+if(_standingChange != 0) then {
+
 	{
-		if(captive _x) then {_x setCaptive false};
+		if(captive _x) then {
+			_x setCaptive false;
+		};
+		_x spawn revealToNATO;
 		if(_x isKindOf "AllVehicles") then {
 			{
-				if(captive _x) then {_x setCaptive false};
+				if(captive _x) then {
+					_x setCaptive false;
+					_x spawn revealToNATO;
+				};
 			}foreach(units _x);
 		};
 	}foreach (_me nearObjects 15);

@@ -156,6 +156,24 @@ _wp setWaypointBehaviour "COMBAT";
 _group1 call distributeAILoad;
 if(typename _tgroup == "GROUP") then {
 	_tgroup call distributeAILoad;
+	[_veh,_tgroup] spawn {
+		params ["_veh","_tgroup"];
+		private _done = false;
+		while{sleep 10;!_done} do {
+			if(isNil "_veh") exitWith {};
+			if(isNil "_tgroup") exitWith {};
+			if((damage _veh) > 0 and ((getpos _veh) select 2) < 2) then {
+				while {(count (waypoints _tgroup)) > 0} do {
+				 	deleteWaypoint ((waypoints _tgroup) select 0);
+				};
+				commandStop (driver _veh);
+				{
+					commandGetOut _x;
+				}foreach(units _veh);
+				_done = true;
+			};
+		};
+	};
 };
 
 if !(_byair) then {

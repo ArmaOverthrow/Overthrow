@@ -49,80 +49,89 @@ _unit addEventHandler ["Fired", {
 	};
 }];
 
+
+if(isPlayer _unit) then {
+	[] spawn {
+		private _unit = player;
+		while {sleep 0.1;alive _unit} do {
+			if!(_unit getVariable["OT_healed",false]) then {
+				if(_unit getVariable ["ACE_isUnconscious", false]) then {
+					//Look for a medic
+					private _medic = objNull;
+					private _havepi = false;
+					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
+					{
+						if(_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x))) then {
+							if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
+								_medic = _x;
+							};
+						};
+						if(!isNull _medic) exitWith{};
+					}foreach(player nearentities["CAManBase",50]);
+					if(!isNull _medic) then {
+						_medic globalchat "On my way to help you";
+						[_medic,_unit] call OT_fnc_orderRevivePlayer;
+					}else{
+						if(isMultiplayer) then {
+							_numplayers = count([] call CBA_fnc_players);
+							if(_numplayers > 1) then {
+								format["%1 is unconscious",name player] remoteExec ["systemChat",0,false];
+								_unit setVariable ["OT_healed",true,true];
+							}else{
+								"You are unconscious, there is no one nearby with Epinephrine to revive you" call OT_fnc_notifyMinor;
+								sleep 5;
+								_unit setDamage 1; //rip
+							}
+						}else{
+							player allowdamage false;
+							titleText ["You are unconscious, there is no one nearby with Epinephrine to revive you. Respawning...", "BLACK FADED", 2];
+							{
+								if((_x select [0,4]) == "ace_") then {
+									player setVariable [_x,nil];
+								};
+							}foreach(allvariables player);
+							player setdamage 0;
+							player setCaptive true;
+							sleep 5;
+							player setpos (player getVariable "home");
+							removeAllWeapons player;
+							removeAllItems player;
+							removeAllAssignedItems player;
+							removeBackpack player;
+							removeVest player;
+							removeGoggles player;
+							removeHeadgear player;
+
+							{
+								if((_x select [0,4]) == "ace_") then {
+									player setVariable [_x,nil];
+								};
+							}foreach(allvariables player);
+							player setDamage 0;
+
+							-1 call influence;
+							sleep 2;
+							player setDamage 0;
+							player linkItem "ItemMap";
+							player switchMove "";
+							titleText ["", "BLACK IN", 5];
+							sleep 10;
+							player allowdamage true;
+						};
+					}
+				}else{
+					_unit setVariable ["OT_healed",false,true];
+				};
+			};
+		};
+	};
+};
+
 private _delay = 3;
 
 while {alive _unit} do {
 	sleep 3;
 	//check wanted status
-	if(isplayer _unit and !(_unit getVariable["OT_healed",false])) then {
-		if(_unit getVariable ["ACE_isUnconscious", false]) then {
-			//Look for a medic
-			private _medic = objNull;
-			private _havepi = false;
-			if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
-			{
-				if(_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x))) then {
-					if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
-						_medic = _x;
-					};
-				};
-				if(!isNull _medic) exitWith{};
-			}foreach(player nearentities["CAManBase",50]);
-			if(!isNull _medic) then {
-				_medic globalchat "On my way to help you";
-				[_medic,_unit] call OT_fnc_orderRevivePlayer;
-			}else{
-				if(isMultiplayer) then {
-					_numplayers = count([] call CBA_fnc_players);
-					if(_numplayers > 1) then {
-						format["%1 is unconscious",name player] remoteExec ["systemChat",0,false];
-						_unit setVariable ["OT_healed",true,true];
-					}else{
-						"You are unconscious, there is no one nearby with Epinephrine to revive you" call OT_fnc_notifyMinor;
-						sleep 5;
-						_unit setDamage 1; //rip
-					}
-				}else{
-					player allowdamage false;
-					titleText ["You are unconscious, there is no one nearby with Epinephrine to revive you. Respawning...", "BLACK FADED", 2];
-					{
-						if((_x select [0,4]) == "ace_") then {
-							player setVariable [_x,nil];
-						};
-					}foreach(allvariables player);
-					player setdamage 0;
-					player setCaptive true;
-					sleep 5;
-					player setpos (player getVariable "home");
-					removeAllWeapons player;
-					removeAllItems player;
-					removeAllAssignedItems player;
-					removeBackpack player;
-					removeVest player;
-					removeGoggles player;
-					removeHeadgear player;
-
-					{
-						if((_x select [0,4]) == "ace_") then {
-							player setVariable [_x,nil];
-						};
-					}foreach(allvariables player);
-					player setDamage 0;
-
-					-1 call influence;
-					sleep 2;
-					player setDamage 0;
-					player linkItem "ItemMap";
-					player switchMove "";
-					titleText ["", "BLACK IN", 5];
-					sleep 10;
-					player allowdamage true;
-				};
-			}
-		}else{
-			_unit setVariable ["OT_healed",false,true];
-		};
-	};
 
 	if !(captive _unit) then {
 		//CURRENTLY WANTED
