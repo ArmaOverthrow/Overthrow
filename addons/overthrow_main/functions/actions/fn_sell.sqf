@@ -30,9 +30,9 @@ if(isNil "_price") exitWith {OT_selling = false};
 
 {
 	_c = _x select 0;
-	if(_c == _cls) exitWith {_mynum = _x select 1};				
+	if(_c == _cls) exitWith {_mynum = _x select 1};
 }foreach(_s);
-			
+
 if(_mynum > 50) then {
 	_price = ceil(_price * 0.75);
 };
@@ -45,9 +45,9 @@ if(_mynum > 200) then {
 if(_price <= 0) then {_price = 1};
 
 _stockidx = 0;
-{	
+{
 	if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
-		_num = (_x select 1)+1;		
+		_num = (_x select 1)+1;
 		_x set [1,_num];
 		_done = true;
 	};
@@ -61,10 +61,12 @@ if !(_done) then {
 [_price] call money;
 _b setVariable ["stock",_s,true];
 
+if(_price > 1000) then {[_town,1] call standing};
+
 if(OT_hasTFAR) then {
 	_c = _cls splitString "_";
 	if((_c select 0) == "tf") then {
-		{			
+		{
 			if(_x find _cls == 0) exitWith {_cls = _x};
 		}foreach(items player);
 	};

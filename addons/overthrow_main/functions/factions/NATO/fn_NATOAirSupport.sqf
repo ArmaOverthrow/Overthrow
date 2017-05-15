@@ -10,6 +10,11 @@ _group = creategroup blufor;
 _veh = createVehicle [_vehtype, _pos, [], 0,""];
 _veh setVariable ["garrison","HQ",false];
 
+clearWeaponCargoGlobal _veh;
+clearMagazineCargoGlobal _veh;
+clearItemCargoGlobal _veh;
+clearBackpackCargoGlobal _veh;
+
 _veh setDir (_dir);
 _group addVehicle _veh;
 createVehicleCrew _veh;

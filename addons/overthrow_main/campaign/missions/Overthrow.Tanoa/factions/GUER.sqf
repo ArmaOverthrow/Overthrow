@@ -158,6 +158,8 @@ while {true} do {
 							};
 						};
 					};
+				}else{
+					format["Resistance was unable to pay wages at %1",_x] remoteExec ["OT_fnc_notifyMinor",0,false];
 				};
 			};
 		}foreach(server getVariable ["GEURowned",[]]);

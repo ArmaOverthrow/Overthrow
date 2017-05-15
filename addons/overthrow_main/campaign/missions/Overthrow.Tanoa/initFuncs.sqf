@@ -88,6 +88,7 @@ placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sq
 unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
 unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
 unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
+unitSeenAny = compileFinal preProcessFileLineNumbers "funcs\unitSeenAny.sqf";
 wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
 
 //Other Systems
@@ -509,10 +510,10 @@ OT_fnc_getEconomicData = {
 
 OT_fnc_getBusinessPrice = {
 	private _data = _this call OT_fnc_getEconomicData;
-	private _baseprice = 300000;
+	private _baseprice = 100000;
 	if(count _data == 2) then {
 		//turns nothing into money
-		_baseprice = round(_baseprice * 1.8);
+		_baseprice = round(_baseprice * 1.5);
 	};
 	if(count _data == 3) then {
 		//turns something into money

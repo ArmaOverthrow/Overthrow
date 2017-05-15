@@ -299,6 +299,13 @@ while {alive _unit} do {
 						_unit setCaptive false;
 						_unit spawn revealToNATO;
 					};
+					if (hmd _unit != "") exitWith {
+						if(isPlayer _unit) then {
+							"NATO has spotted your NV Goggles" call OT_fnc_notifyMinor;
+						};
+						_unit setCaptive false;
+						_unit spawn revealToNATO;
+					};
 					_base = (getpos player) call OT_fnc_nearestObjective;
 					if !(isNil "_base") then {
 						_base params ["_obpos","_obname"];

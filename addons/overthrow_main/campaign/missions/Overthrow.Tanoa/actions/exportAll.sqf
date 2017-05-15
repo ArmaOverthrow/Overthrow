@@ -21,7 +21,9 @@ _total = 0;
 	_cls = _x select 0;
 	_num = _x select 1;
 	if(_doillegal or _cls in (OT_allItems + OT_allBackpacks + OT_Resources + OT_allClothing)) then {
-		_costprice = ["Tanoa",_cls,0] call OT_fnc_getSellPrice;
+		_baseprice = ["Tanoa",_cls,0] call OT_fnc_getSellPrice;
+		_costprice = round(_baseprice * 0.4); //The cost of export
+
 		_total = _total + (_costprice * _num);
 		call {
 			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {

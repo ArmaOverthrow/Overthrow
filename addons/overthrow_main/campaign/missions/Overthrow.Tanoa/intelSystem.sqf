@@ -261,10 +261,10 @@ _handler = {
 					getdir _x
 				];
 			};
-			if((_x isKindOf "StaticWeapon") and isNull attachedTo _x) then {
+			if((_x isKindOf "StaticWeapon") and (isNull attachedTo _x) and (alive _x)) then {
 				if(side _x == civilian or side _x == resistance or captive _x) then {
 					_col = [0.5,0.5,0.5,1];
-					if(!isNull gunner _x) then {_col = [0,0.5,0,1]};
+					if(!(isNull gunner _x) and (alive gunner _x)) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";
 					if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
 					if !(someAmmo _x) then {_col set [3,0.4]};

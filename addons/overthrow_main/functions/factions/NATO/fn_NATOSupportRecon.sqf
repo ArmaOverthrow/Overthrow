@@ -56,6 +56,11 @@ if(_isAir) then {
 
 	_spawnpos = _close findEmptyPosition [0,100,OT_NATO_Vehicle_CTRGTransport];
 	_veh =  OT_NATO_Vehicle_CTRGTransport createVehicle _spawnpos;
+	clearWeaponCargoGlobal _veh;
+	clearMagazineCargoGlobal _veh;
+	clearItemCargoGlobal _veh;
+	clearBackpackCargoGlobal _veh;
+	
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
 

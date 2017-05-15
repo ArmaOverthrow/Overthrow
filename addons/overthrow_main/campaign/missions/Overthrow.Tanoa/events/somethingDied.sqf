@@ -183,7 +183,16 @@ call {
 		};
 	};
 };
-
+if(_standingChange < 0) then {
+	{
+		if(captive _x) then {_x setCaptive false};
+		if(_x isKindOf "AllVehicles") then {
+			{
+				if(captive _x) then {_x setCaptive false};
+			}foreach(units _x);
+		};
+	}foreach (_me nearObjects 15);
+};
 if((_killer call unitSeen) or (_standingChange < -9)) then {
 	_killer setCaptive false;
 	if(vehicle _killer != _killer) then {
