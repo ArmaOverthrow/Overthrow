@@ -30,7 +30,7 @@
 
 // version preprocessor definitions before defining strings
 // update the header file before version tagging
-#include "\ot\script_version.hpp"
+#include "script_version.hpp"
 
 #define VERSION MAJOR.MINOR.PATCHLVL.BUILD
 

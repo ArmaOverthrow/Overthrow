@@ -16,7 +16,7 @@ class CfgPatches
 	{
 		author="ARMAzac";
 		name=COMPONENT_NAME;
-		url="https://github.com/jabberzac/overthrow";
+		url="https://armaoverthrow.com/";
 		requiredAddons[]=
 		{
 			"a3_map_tanoabuka",

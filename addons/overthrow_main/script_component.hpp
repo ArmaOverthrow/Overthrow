@@ -28,7 +28,7 @@
 // must define prior to script_mod.hpp
 #define COMPONENT main
 
-#include "\ot\script_mod.hpp"
+#include "headers\script_mod.hpp"
 
 // Top of \ot\script_component.hpp
 // Ensure that any FULL and NORMAL setting from the individual files are undefined and MINIMAL is set.
@@ -46,4 +46,4 @@
 
 #define DEBUG_SYNCHRONOUS
 
-#include "\ot\macros.hpp"
+#include "headers\macros.hpp"

@@ -4,7 +4,7 @@
  * Description:
  *     Preprocessor definitions used to define version. Called
  *     by script_mod.hpp. Updated prior to a new tag.
- * 
+ *
  * Author:
  *     Mal
  *
@@ -17,6 +17,6 @@
  */
 
 #define MAJOR 0
-#define MINOR 4
+#define MINOR 7
 #define PATCHLVL 4
-#define BUILD 0-DEV
+#define BUILD 1

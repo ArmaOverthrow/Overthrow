@@ -25,7 +25,7 @@ _air = [];
 _abandoned = server getvariable ["NATOabandoned",[]];
 {
 	_x params ["_obpos","_name","_pri"];
-	if !(_name in _abandoned) then {
+	if !((_name in _abandoned) or (_obpos distance _pos) < 300) then {
 		if([_pos,_obpos] call OT_fnc_regionIsConnected) then {
 			_ground pushback _x;
 		};
