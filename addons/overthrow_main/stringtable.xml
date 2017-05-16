@@ -1,0 +1,14 @@
+<!--
+@see https://community.bistudio.com/wiki/localize
+@see https://community.bistudio.com/wiki/Stringtable.xml
+-->
+<?xml version="1.0" encoding="utf-8" ?>
+<Project name="Overthrow">
+    <Package name="Main">
+        <Key ID="STR_Overthrow_Main_Author">
+            <Original>ARMAzac</Original>
+            <English>ARMAzac</English>
+            <French>C'est ARMAzac!</French>
+        </Key>
+    </Package>
+</Project>
