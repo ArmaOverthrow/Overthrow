@@ -1,3 +1,5 @@
+#include "script_component.hpp"
+
 #include "ui\dialogs\defines.hpp"
 #include "ui\dialogs\stats.hpp"
 #include "ui\dialogs\shop.hpp"
@@ -13,7 +15,7 @@ class CfgPatches
 	class OT_Overthrow_Main
 	{
 		author="ARMAzac";
-		name="Overthrow";
+		name=COMPONENT_NAME;
 		url="https://github.com/jabberzac/overthrow";
 		requiredAddons[]=
 		{
@@ -22,7 +24,8 @@ class CfgPatches
             "cba_xeh",
             "cba_jr"
 		};
-		requiredVersion=1.69;
+		requiredVersion=REQUIRED_VERSION;
+        VERSION_CONFIG;
 		units[] = {"OT_GanjaItem","OT_BlowItem"};
 		weapons[] = {"OT_Ganja","OT_Blow"};
 	};
@@ -181,7 +184,7 @@ class CfgWorlds
 	};
 };
 
-#include "macros.hpp"
+#include "CfgSettings.hpp"
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"
 #include "CfgFunctions.hpp"
