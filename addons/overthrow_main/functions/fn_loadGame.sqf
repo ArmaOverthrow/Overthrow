@@ -53,8 +53,7 @@ private _cc = 0;
 		_set = false;
 		{
 			if(typename _x == "ARRAY") then {
-				_cls = _x select 0;
-				warehouse setVariable [_cls,_x,true];
+				warehouse setVariable [_x select 0,_x,true];
 			};
 		}foreach(_val);
 	};
