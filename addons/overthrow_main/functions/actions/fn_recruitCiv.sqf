@@ -5,7 +5,7 @@ if(_standing < 10 and count (player nearObjects [OT_refugeeCamp,20]) == 0) exitW
 	"+10 Standing required to recruit. Try building a refugee camp at an FOB." call OT_fnc_notifyMinor
 };
 
-if(({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) exitWith {"You cannot recruit with enemies nearby" call OT_fnc_notifyMinor};
+if(({side _x == west or side _x == east} count (player nearEntities 50)) > 0) exitWith {"You cannot recruit with enemies nearby" call OT_fnc_notifyMinor};
 
 _price = [_town,"CIV",_standing] call OT_fnc_getPrice;
 _money = player getVariable ["money",0];

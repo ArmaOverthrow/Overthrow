@@ -3,17 +3,19 @@ private _found = "";
 private _possible = [];
 {
 	private _d = warehouse getvariable [_x,[_x,0]];
-	private _cls = _d select 0;
-	private _num = _d select 1;
-	if(_num > 0 and (_cls in OT_allOptics)) then {
-		private _allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _cls >> "ItemInfo" >> "OpticsModes" );
-		_max = 0;
-		{
-			_mode = configName _x;
-			_max = _max max getNumber (configFile >> "cfgWeapons" >> _cls >> "ItemInfo" >> "OpticsModes" >> _mode >> "distanceZoomMax");
-		}foreach(_allModes);
+	if(typename _d == "ARRAY") then {
+		private _cls = _d select 0;
+		private _num = _d select 1;
+		if(_num > 0 and (_cls in OT_allOptics)) then {
+			private _allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _cls >> "ItemInfo" >> "OpticsModes" );
+			_max = 0;
+			{
+				_mode = configName _x;
+				_max = _max max getNumber (configFile >> "cfgWeapons" >> _cls >> "ItemInfo" >> "OpticsModes" >> _mode >> "distanceZoomMax");
+			}foreach(_allModes);
 
-		if(_max >= _range) then {_possible pushback _cls};
+			if(_max >= _range) then {_possible pushback _cls};
+		};
 	};
 }foreach(allvariables warehouse);
 
