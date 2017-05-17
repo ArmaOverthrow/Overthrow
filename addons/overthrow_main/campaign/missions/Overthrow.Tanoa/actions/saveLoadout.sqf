@@ -1,4 +1,4 @@
-inputHandler = {
+OT_inputHandler {
 	_name = ctrltext 1400;
 	if(_name != "") then {
 		profileNamespace setVariable [format["OT_loadout_%1",_name],getUnitLoadout player];
@@ -11,4 +11,4 @@ inputHandler = {
 	};	
 };
 
-["Name this loadout",""] spawn inputDialog;
+["Name this loadout",""] spawn OT_fnc_inputDialog;

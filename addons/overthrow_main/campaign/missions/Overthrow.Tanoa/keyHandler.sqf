@@ -7,7 +7,7 @@ if (_key == 21) then
 {
 	if(!dialog) then {
 		if(count (player nearObjects [OT_workshopBuilding,10]) > 0) then {
-			[] call workshopDialog;
+			[] call OT_fnc_workshopDialog;
 		}else{
 			if((vehicle player) != player and count (player nearObjects [OT_portBuilding,30]) > 0) then {
 				createDialog "OT_dialog_vehicleport";
@@ -62,7 +62,7 @@ if (_key == 21) then
 						[] spawn OT_fnc_vehicleDialog;
 					};
 				};
-				[] spawn mainMenu;
+				[] spawn OT_fnc_mainMenu;
 			};
 		};
 	}else{

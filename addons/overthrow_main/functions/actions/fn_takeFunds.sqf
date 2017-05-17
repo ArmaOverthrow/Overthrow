@@ -1,5 +1,5 @@
 closeDialog 0;
-inputHandler = {
+OT_inputHandler {
 	_val = parseNumber(ctrltext 1400);
 	_cash = server getVariable ["money",0];
 	if(_val > _cash) then {_val = _cash};
@@ -9,4 +9,4 @@ inputHandler = {
 	};
 };
 
-["How much to take from resistance?",1000] spawn inputDialog;
+["How much to take from resistance?",1000] spawn OT_fnc_inputDialog;

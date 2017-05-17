@@ -98,7 +98,7 @@ if(_isHQ) then {
 	{
 		_x addCuratorEditableObjects [units _tgroup,true];
 	} forEach allCurators;
-	_tgroup call distributeAILoad;
+	
 }else{
 	_moveto = [_start,50,_dir] call SHK_pos;
 	_wp = _group addWaypoint [_moveto,5];
@@ -119,4 +119,4 @@ _wp = _group addWaypoint [_ao,10];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "STEALTH";
 
-_group call distributeAILoad;
+

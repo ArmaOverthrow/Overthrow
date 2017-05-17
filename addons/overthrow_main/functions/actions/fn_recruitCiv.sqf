@@ -15,7 +15,7 @@ playSound "3DEN_notificationDefault";
 player setVariable ["money",_money-_price,true];
 
 if(random 100 > 80) then {
-	[_town,1] call standing;
+	[_town,1] call OT_fnc_standing;
 };
 
 _civ = player getvariable "hiringciv";

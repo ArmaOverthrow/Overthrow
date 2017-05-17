@@ -107,7 +107,7 @@ class OT_dialog_input
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "_this call inputHandler;closeDialog 0;";
+			action = "_this call OT_inputHandler;closeDialog 0;";
 			text = "OK"; //--- ToDo: Localize;
 			x = 0.577344 * safezoneW + safezoneX;
 			y = 0.478 * safezoneH + safezoneY;

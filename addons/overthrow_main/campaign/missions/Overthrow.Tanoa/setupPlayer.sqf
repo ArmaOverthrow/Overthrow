@@ -8,7 +8,7 @@ townChange = {
 	_town = _this;
 	_pop = server getVariable format["population%1",_town];
 	_stability = server getVariable format["stability%1",_town];
-	_rep = player getVariable format["rep%1",_town];
+	_rep = [_town] call OT_fnc_standing;
 	_abandon = "NATO Controlled";
 	if(_town in (server getVariable ["NATOabandoned",[]])) then {
 		_garrison = server getVariable [format['police%1',_town],0];
@@ -16,7 +16,7 @@ townChange = {
 			_abandon = "Resistance Controlled";
 		}else{
 			_abandon = "Anarchy";
-		};							
+		};
 	};
 	_plusmin = "";
 	if(_rep > -1) then {
@@ -35,24 +35,23 @@ player setVariable ["player_uid",getPlayerUID player,true];
 _closestcount = 0;
 
 while {alive player} do {
-	sleep 1;	
+	sleep 1;
 
 	{
 		[_x, -1, -0.2, 10, 0.5, 0, 2] spawn bis_fnc_dynamicText;
-		sleep 1;		
+		sleep 1;
 	}foreach(OT_notifies);
 	OT_notifies = [];
-		
+
 	if(_closestcount <= 0) then {
 		_closest = (getPos player) call OT_fnc_nearestTown;
 		if !(isNil "_closest") then {
 			if(_closest != _town) then {
-				_closest call townChange;	
-				_closestcount = 60;		
-			};		
+				_closest call townChange;
+				_closestcount = 60;
+			};
 		};
 		_closestcount = 0;
-	};	
-	_closestcount = _closestcount - 2;	
+	};
+	_closestcount = _closestcount - 2;
 };
-

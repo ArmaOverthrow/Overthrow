@@ -114,18 +114,18 @@ if(_handled) then {
 			_mrk setMarkerAlpha 0;
 			_mrk setMarkerAlphaLocal 1;
 		};
-		_id = [_building] call fnc_getBuildID;
+		_id = [_building] call OT_fnc_getBuildID;
 		buildingpositions setVariable [str _id,position _building,true];
 		_owned pushback _id;
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {
-			[_town,round(_price / 10000)] call standing;
+			[_town,round(_price / 10000)] call OT_fnc_standing;
 		};
 		_bdg addEventHandler ["Dammaged",compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf"];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
 			[_building,nil] call OT_fnc_setOwner;
-			_id = [_building] call fnc_getBuildID;
+			_id = [_building] call OT_fnc_getBuildID;
 			_leased = player getVariable ["leased",[]];
 			_leased deleteAt (_leased find _id);
 			player setVariable ["leased",_leased,true];
@@ -135,7 +135,7 @@ if(_handled) then {
 			[_sell] call money;
 		}else{
 			deleteVehicle _building;
-			_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
+			_owned deleteAt (_owned find ([_building] call OT_fnc_getBuildID));
 		};
 	};
 

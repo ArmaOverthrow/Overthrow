@@ -210,8 +210,8 @@ if((_killer call unitSeen) or (_standingChange < -9)) then {
 };
 if(isPlayer _killer) then {
 	if (_standingChange == -10) then {
-		[_town,_standingChange,"You killed a civilian"] remoteExec ["standing",_killer,true];
+		[_town,_standingChange,"You killed a civilian"] remoteExec ["OT_fnc_standing",_killer,true];
 	}else{
-		[_town,_standingChange] remoteExec ["standing",_killer,true];
+		[_town,_standingChange] remoteExec ["OT_fnc_standing",_killer,true];
 	};
 };

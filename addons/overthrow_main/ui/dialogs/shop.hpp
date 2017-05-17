@@ -30,7 +30,7 @@ class OT_dialog_buy
 			w = 0.402187 * safezoneW;
 			h = 0.55 * safezoneH;
 			colorBackground[] = {0,0,0,0.9};
-			onLBSelChanged = "_this call displayShopPic";
+			onLBSelChanged = "_this call OT_fnc_displayShopPic";
 		};
 		class RscPicture_1200: RscOverthrowPicture
 		{
@@ -168,7 +168,7 @@ class OT_dialog_workshop
 		class RscListbox_1500: RscOverthrowListBox
 		{
 			idc = 1500;
-			onLBSelChanged = "_this call displayShopPic";
+			onLBSelChanged = "_this call OT_fnc_displayShopPic";
 
 			x = 0.247344 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
@@ -272,7 +272,7 @@ class OT_dialog_warehouse
 		class RscListbox_1500: RscOverthrowListBox
 		{
 			idc = 1500;
-			onLBSelChanged = "_this call displayWarehousePic";
+			onLBSelChanged = "_this call OT_fnc_displayWarehousePic";
 
 			x = 0.247344 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
@@ -381,7 +381,7 @@ class OT_dialog_import
 		class RscListbox_1500: RscOverthrowListBox
 		{
 			idc = 1500;
-			onLBSelChanged = "_this call displayShopPic";
+			onLBSelChanged = "_this call OT_fnc_displayShopPic";
 
 			x = 0.247344 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;

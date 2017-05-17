@@ -339,7 +339,7 @@ while {sleep 10;true} do {
 								_x addCuratorEditableObjects [[_drone]];
 							}foreach(allCurators);
 
-							_drone spawn OT_fnc_initDrone;
+							_drone spawn OT_fnc_NATODrone;
 						};
 					};
 				};

@@ -215,7 +215,7 @@ class OT_dialog_vehiclewarehouse
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Take from the warehouse"; //--- ToDo: Localize;
-			action = "closeDialog 0;createDialog ""OT_dialog_warehouse"";[] call warehouseDialog;";
+			action = "closeDialog 0;createDialog ""OT_dialog_warehouse"";[] call OT_fnc_warehouseDialog;";
 		};
 		class RscButton_1602: RscOverthrowButton
 		{
@@ -302,7 +302,7 @@ class OT_dialog_vehicleport
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Import items from the global market"; //--- ToDo: Localize;
-			action = "closeDialog 0;createDialog ""OT_dialog_import"";[] call importDialog;";
+			action = "closeDialog 0;createDialog ""OT_dialog_import"";[] call OT_fnc_importDialog;";
 		};
 		class RscButton_1602: RscOverthrowButton
 		{
@@ -313,7 +313,7 @@ class OT_dialog_vehicleport
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
 			tooltip = "Exports the contents of this vehicle"; //--- ToDo: Localize;
-			action = "closeDialog 0;[] spawn exportAll;";
+			action = "closeDialog 0;[] spawn OT_fnc_exportAll;";
 		};
 		class RscButton_1612: RscOverthrowButton
 		{
@@ -646,7 +646,7 @@ class OT_dialog_main
 		class RscButton_1613: RscOverthrowButton
 		{
 			idc = 1613;
-			action = "closeDialog 0;[] spawn resistanceScreen";
+			action = "closeDialog 0;[] spawn OT_fnc_resistanceDialog";
 
 			text = "Resistance"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;

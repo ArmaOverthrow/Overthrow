@@ -9,9 +9,9 @@ if(count _this == 0) then {
 }else{
     params ["_ctrl","_index"];
     _name = _ctrl lbData _index;
-    _data = _name call OT_fnc_getEconomicData;
+    _data = _name call OT_fnc_getBusinessData;
 };
-_data = _name call OT_fnc_getEconomicData;
+_data = _name call OT_fnc_getBusinessData;
 
 private _anum = server getVariable [format["%1employ",_name],0];
 private _num = _anum;

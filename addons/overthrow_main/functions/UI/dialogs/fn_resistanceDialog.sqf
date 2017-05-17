@@ -86,7 +86,7 @@ private _income = 0;
         _num = server getVariable [format["%1employ",_x],0];
         _wages = _wages + (_num * _perhr);
         if(_num > 20) then {_num = 20};
-        _data = _x call OT_fnc_getEconomicData;
+        _data = _x call OT_fnc_getBusinessData;
         if(count _data == 2) then {
             _income = _income + ((_num * 200) * 6);
         };

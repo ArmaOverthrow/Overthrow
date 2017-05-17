@@ -233,7 +233,7 @@ call {
 					_s = _x select 1;
 				};
 			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
-			[_town,_standing,_s] call buyDialog;
+			[_town,_standing,_s] call OT_fnc_buyDialog;
 		};
 	};
 };

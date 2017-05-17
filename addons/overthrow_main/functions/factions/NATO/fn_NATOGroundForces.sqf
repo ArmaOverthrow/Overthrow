@@ -156,7 +156,7 @@ _wp setWaypointBehaviour "COMBAT";
 
 _group1 call distributeAILoad;
 if(typename _tgroup == "GROUP") then {
-	_tgroup call distributeAILoad;
+	
 	[_veh,_tgroup,_frompos] spawn {
 		params ["_veh","_tgroup","_frompos"];
 		private _done = false;

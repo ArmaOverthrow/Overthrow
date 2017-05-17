@@ -94,7 +94,7 @@ if(!isNil "_close") then {
 	sleep 1;
 
 	_group call OT_fnc_initGendarmPatrol;
-	_group call distributeAILoad;
+	
 };
 
 

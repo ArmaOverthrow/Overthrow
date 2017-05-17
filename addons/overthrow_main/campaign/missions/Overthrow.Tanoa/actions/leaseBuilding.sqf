@@ -19,8 +19,8 @@ if(damage _building == 1) exitWith {
 		format["You need $%1",[_price, 1, 0, true] call CBA_fnc_formatNumber];
 	};
 };
-if(typeof _building == OT_policeStation) exitWith {[] call policeDialog};
-if((typeof _building == OT_barracks) or (typeof _building == OT_trainingCamp)) exitWith {[] call recruitDialog};
+if(typeof _building == OT_policeStation) exitWith {[] call OT_fnc_policeDialog};
+if((typeof _building == OT_barracks) or (typeof _building == OT_trainingCamp)) exitWith {[] call OT_fnc_recruitDialog};
 if(typeof _building == OT_warehouse) exitWith {[] call buyVehicleDialog};
 
 if(typename _b != "ARRAY") exitWith {
@@ -55,7 +55,7 @@ if(typename _b == "ARRAY") then {
 };
 if(_err) exitWith {};
 if(_handled) then {
-	private _id = ([_building] call fnc_getBuildID);
+	private _id = ([_building] call OT_fnc_getBuildID);
 	_leased = player getvariable ["leased",[]];
 	_leased pushback _id;
 	player setvariable ["leased",_leased,true];

@@ -1,5 +1,5 @@
 OT_context = _this select 0;
-inputHandler = {
+OT_inputHandler {
 	_val = parseNumber(ctrltext 1400);
 	_cash = player getVariable ["money",0];
 	if(_val > _cash) then {_val = _cash};
@@ -10,4 +10,4 @@ inputHandler = {
 	};
 };
 
-["How much to put in this safe?",player getvariable ["money",100]] spawn inputDialog;
+["How much to put in this safe?",player getvariable ["money",100]] spawn OT_fnc_inputDialog;

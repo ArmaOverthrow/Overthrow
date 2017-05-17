@@ -34,7 +34,7 @@ _qty = 0;
 	if(_c == _sellcls) exitWith {_qty = _x select 1};
 }foreach(player call OT_fnc_unitStock);
 
-if(_qty == 0) exitWith {[_mystock,_town,_standing,_s] call sellDialog};
+if(_qty == 0) exitWith {[_mystock,_town,_standing,_s] call OT_fnc_sellDialog};
 
 {
 	_c = _x select 0;
@@ -68,7 +68,7 @@ if !(_done) then {
 };
 
 [(_price*_qty)] call money;
-if((_price*_qty) > 1000) then {[_town,1] call standing};
+if((_price*_qty) > 1000) then {[_town,1] call OT_fnc_standing};
 _ocls = _sellcls;
 _b setVariable ["stock",_s,true];
 for "_i" from 0 to _qty do {
@@ -87,4 +87,4 @@ for "_i" from 0 to _qty do {
 OT_selling = false;
 _mystock = player call OT_fnc_unitStock;
 lbClear 1500;
-[_mystock,_town,_standing,_s] call sellDialog;
+[_mystock,_town,_standing,_s] call OT_fnc_sellDialog;

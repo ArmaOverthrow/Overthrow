@@ -88,7 +88,7 @@ _pos = [];
 _housepos = [];
 
 if(isMultiplayer or _startup == "LOAD") then {
-	player remoteExec ["loadPlayerData",2,false];
+	player remoteExec ["OT_fnc_loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
 
@@ -126,7 +126,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 					if(_x in _leased) then {
 						_mrkName setMarkerAlphaLocal 0.3;
 					};
-					_nowowned pushback ([_bdg] call fnc_getBuildID);
+					_nowowned pushback ([_bdg] call OT_fnc_getBuildID);
 				};
 			}else{
 				//new save with IDs
@@ -309,7 +309,7 @@ if (_newplayer) then {
         };
         [_x,getplayeruid player] call OT_fnc_setOwner;
     }foreach(_furniture);
-    player setVariable ["owned",[[_house] call fnc_getBuildID],true];
+    player setVariable ["owned",[[_house] call OT_fnc_getBuildID],true];
 
     _mrkName = format["home-%1",getPlayerUID player];
     if((markerpos _mrkName) select 0 == 0) then {
@@ -385,7 +385,7 @@ player addEventHandler ["GetInMan",{
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
 			if((_veh getVariable ["ambient",false]) and (player call unitSeenAny)) then {
-				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call standing;
+				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
 			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {

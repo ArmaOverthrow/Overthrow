@@ -59,7 +59,7 @@ if(rain > 0.9) then {
 };
 
 _ctrl = (findDisplay 8001) displayCtrl 1100;
-_standing = player getVariable format["rep%1",_town];
+_standing = [_town] call OT_fnc_standing;
 _plusmin = "";
 if(_standing > -1) then {_plusmin = "+"};
 

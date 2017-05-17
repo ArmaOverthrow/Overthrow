@@ -1,7 +1,7 @@
 private _civ = OT_interactingWith;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
-private _standing = player getvariable format["rep%1",_town];
+private _standing = [_town] call OT_fnc_standing;
 private _civprice = [_town,"CIV",_standing] call OT_fnc_getPrice;
 private _influence = player getvariable "influence";
 private _money = player getvariable "money";
@@ -44,10 +44,6 @@ if (_canRecruit) then {
 	];
 };
 
-if (_canIntel) then {
-	_options pushBack ["Probe for intel (-1 Influence)", getIntel];
-};
-
 if (_canLocMission) then {
 	_options pushBack [format["Request Mission"], {
 		[] call OT_fnc_getLocalMission;
@@ -63,7 +59,7 @@ if (_canLocMission) then {
 if (_canMission) then {
 	_factionName = _civ getvariable ["factionrepname",""];
 	_faction = _civ getvariable ["faction",""];
-	_standing = server getvariable[format["standing%1",_faction],0];
+	private _standing = [_town] call OT_fnc_standing;
 	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
 	_options pushBack [format["Request Mission"], {
 		private _civ = OT_interactingWith;
@@ -72,7 +68,7 @@ if (_canMission) then {
 	_options pushBack [format["Buy Gear"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
-		_standing = server getvariable[format["standing%1",_faction],0];
+		private _standing = [_town] call OT_fnc_standing;
 
 		_gear = spawner getvariable[format["facweapons%1",_faction],[]];
 		_s = [];
@@ -80,13 +76,13 @@ if (_canMission) then {
 			_s pushback [_x,-1];
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		["Tanoa",_standing,_s,1.2] call buyDialog;
+		["Tanoa",_standing,_s,1.2] call OT_fnc_buyDialog;
 	}];
 	_options pushBack [format["Buy Blueprints"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
 		_factionName = _civ getvariable ["factionrepname",""];
-		_standing = server getvariable[format["standing%1",_faction],0];
+		private _standing = [_town] call OT_fnc_standing;
 
 		_gear = spawner getvariable[format["facvehicles%1",_faction],[]];
 		_s = [];
@@ -111,7 +107,7 @@ if (_canMission) then {
 			};
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		["Tanoa",_standing,_s,10] call buyDialog;
+		["Tanoa",_standing,_s,10] call OT_fnc_buyDialog;
 	}];
 	_missions = player getVariable ["mytasks",[]];
 	if(count _missions > 0) then {
@@ -126,7 +122,7 @@ if (_canBuy) then {
 		"Buy",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = player getvariable format["rep%1",_town];
+			private _standing = [_town] call OT_fnc_standing;
 
 			_bp = _civ getVariable "shop";
 			_s = [];
@@ -139,7 +135,7 @@ if (_canBuy) then {
 
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
-			[_town,_standing,_s] call buyDialog;
+			[_town,_standing,_s] call OT_fnc_buyDialog;
 		}
 	];
 };
@@ -149,10 +145,9 @@ if (_canBuyClothes) then {
 		"Buy Clothing",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = player getvariable format["rep%1",_town];
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
-			[_town,_standing] call buyClothesDialog;
+			[_town,[_town] call OT_fnc_standing] call OT_fnc_buyClothesDialog;
 		}
 	];
 };
@@ -165,7 +160,7 @@ if (_canBuyBoats) then {
 				private _civ = OT_interactingWith;
 				_cls = _x select 0;
 				private _town = (getpos player) call OT_fnc_nearestTown;
-				private _standing = player getvariable format["rep%1",_town];
+				private _standing = [_town] call OT_fnc_standing;
 
 				_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
@@ -288,7 +283,7 @@ if (_canSell) then {
 		"Sell",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = player getvariable format["rep%1",_town];
+			private _standing = [_town] call OT_fnc_standing;
 
 			_bp = _civ getVariable "shop";
 			_s = [];
@@ -302,7 +297,7 @@ if (_canSell) then {
 			_playerstock = player call OT_fnc_unitStock;
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_sell";
-			[_playerstock,_town,_standing,_s] call sellDialog;
+			[_playerstock,_town,_standing,_s] call OT_fnc_sellDialog;
 		}
 	];
 };
@@ -358,9 +353,9 @@ if (_canSellDrugs) then {
 								if(random 100 > 80) then {
 									1 call influence;
 								};
-							}] spawn doConversation;
+							}] spawn OT_fnc_doConversation;
 						}else{
-							[_civ,player,["No, thank you"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn doConversation;
+							[_civ,player,["No, thank you"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 						};
 					};
 				}else{
@@ -369,10 +364,10 @@ if (_canSellDrugs) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
-							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn doConversation;
+							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 							[_town,-OT_drugQty] call stability;
 						}else{
-							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn doConversation;
+							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;
 							if(player call unitSeenCRIM) then {
 								hint "You are dealing on enemy turf";
 								player setCaptive false;

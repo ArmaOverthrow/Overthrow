@@ -60,6 +60,6 @@ if(_newnum > 0) then {
 	warehouse setVariable [_cls,nil,true];
 };
 
-[] call warehouseDialog;
+[] call OT_fnc_warehouseDialog;
 
 OT_taking = false;

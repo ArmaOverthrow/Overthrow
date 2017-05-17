@@ -1,7 +1,7 @@
 closeDialog 0;
 private _idx = lbCurSel 1500;
 inputData = lbData [1500,_idx];
-inputHandler = {
+OT_inputHandler {
 	_val = parseNumber(ctrltext 1400);
 	_cash = server getVariable ["money",0];
 	if(_val > _cash) then {_val = _cash};
@@ -22,4 +22,4 @@ inputHandler = {
 	};
 };
 
-["How much to send to this player?",1000] spawn inputDialog;
+["How much to send to this player?",1000] spawn OT_fnc_inputDialog;

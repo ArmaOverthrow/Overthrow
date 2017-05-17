@@ -12,10 +12,21 @@ class CfgFunctions
 			class spawnTemplate {};
 			class spawnTemplateAttached {};
 			class unitStock {};
-			class saveGame {};
-			class loadGame {};
 			class setOwner {};
 			class getOwner {};
+			class playerIsOwner {};
+			class playerIsGeneral {};
+		};
+
+		/* Persistent Save */
+		class Save
+		{
+			file = "\ot\functions\save";
+			class saveGame {};
+			class loadGame {};
+			class setOfflinePlayerAttribute {};
+			class getOfflinePlayerAttribute {};
+			class loadPlayerData {};
 		};
 
 		class Events
@@ -34,12 +45,48 @@ class CfgFunctions
 			class notifyVehicle {};
 		};
 
+		class Dialogs
+		{
+			file = "\ot\functions\UI\dialogs";
+
+			class mainMenu {};
+			class buyDialog {};
+			class sellDialog {};
+			class workshopDialog {};
+			class policeDialog {};
+			class warehouseDialog {};
+			class inputDialog {};
+			class importDialog {};
+			class recruitDialog {};
+			class buyClothesDialog {};
+			class factoryDialog {};
+			class garrisonDialog {};
+			class newGameDialog {};
+			class optionsDialog {};
+			class resistanceDialog {};
+			class reverseEngineerDialog {};
+			class vehicleDialog {};
+			class mapInfoDialog {};
+		};
+
+		class Display
+		{
+			file = "\ot\functions\UI\display";
+			class displayShopPic {};
+			class displayWarehousePic {};
+			class showMemberInfo {};
+			class showBusinessInfo {};
+			class refreshEmployees {};
+		};
+
 		/*
 		* User actions
 		*/
 		class Actions
 		{
 			file = "\ot\functions\actions";
+
+			class newGame {};
 
 			/* Main Menu */
 			class salvageWreck {};
@@ -48,12 +95,19 @@ class CfgFunctions
 			class talkToCiv {};
 			class recruitCiv {};
 
+			/* Options */
+			class increaseTax {};
+			class decreaseTax {};
+
 			/* Vehicle */
 			class transferTo {};
 			class transferFrom {};
 			class transferLegit {};
 			class takeLegit {};
 			class warehouseTake {};
+
+			/* Port */
+			class exportAll {};
 
 			/* Workshop */
 			class workshopAdd {};
@@ -72,12 +126,18 @@ class CfgFunctions
 			class factorySet {};
 
 			/* Resistance Screen */
-			class showMemberInfo {};
-			class showBusinessInfo {};
 			class makeGeneral {};
 			class giveFunds {};
 			class takeFunds {};
 			class transferFunds {};
+			class hireEmployee {};
+			class fireEmployee {};
+
+			/* Other */
+			class addGarrison {};
+			class addPolice {};
+			class lockVehicle {};
+			class reverseEngineer {};
 		}
 
 		/*
@@ -95,8 +155,12 @@ class CfgFunctions
 			class nearestObjective {};
 			class nearestPositionRegion {};
 			class nearestTown {};
+			class getRegion {};
 			class townsInRegion {};
+			class regionIsConnected {};
 			class getAO {};
+			class getBuildId {};
+			class playerIsAtWarehouse {};
 		}
 
 		/*
@@ -114,6 +178,7 @@ class CfgFunctions
 			class registerSpawner {};
 			class deregisterSpawner {};
 			class updateSpawnerPosition {};
+			class resetSpawn {};
 		};
 
 		/*
@@ -123,12 +188,27 @@ class CfgFunctions
 		{
 			file = "\ot\functions\economy";
 			class setupTownEconomy {};
+			class standing {};
 			class getPrice {};
 			class getSellPrice {};
 			class getDrugPrice {};
 			class nearestRealEstate {};
 			class getRealEstateData {};
+			class getBusinessData {};
+			class getBusinessPrice {};
+			class getTaxIncome {};
+			class resistanceFunds {};
 		}
+
+		/*
+		* Inventory transfer and manegement
+		*/
+		class Inventory
+		{
+			file = "\ot\functions\inventory";
+			class takeFromCargoContainers {};
+			class hasFromCargoContainers {};
+		};
 
 		/*
 		* The warehouse
@@ -153,6 +233,8 @@ class CfgFunctions
 			class getSoldier {};
 			class parachuteAll {};
 			class NATOsearch {};
+			class createSquad {};
+			class experience {};
 		};
 
 		/*
@@ -164,6 +246,9 @@ class CfgFunctions
 			class orderLoot {};
 			class orderOpenInventory {};
 			class orderRevivePlayer {};
+			class squadAssignVehicle {};
+			class squadGetIn {};
+			class squadGetOut {};
 		};
 
 		/*
@@ -191,6 +276,7 @@ class CfgFunctions
 			class initPriest {};
 			class initShopkeeper {};
 			class initSniper {};
+			class initRecruit {};
 		}
 
 		/*
@@ -226,6 +312,19 @@ class CfgFunctions
 
 			class NATOSupportSniper {};
 			class NATOSupportRecon {};
+			class NATOConvoy {};
+			class NATODeployFOB {};
+			class NATOMissionDeployFOB {};
+			class NATOMissionReconDestroy {};
+			class NATOSetExplosives {};
+			class NATOupgradeFOB {};
+		};
+
+		class NATOAI
+		{
+			file = "\ot\functions\factions\NATO\AI";
+			class NATODrone {};
+			class NATOMortar {};
 		};
 
 		/*

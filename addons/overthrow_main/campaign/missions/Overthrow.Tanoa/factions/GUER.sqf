@@ -56,7 +56,7 @@ while {true} do {
 				if(_funds >= _towage) then {
 					[-_towage] call OT_fnc_resistanceFunds;
 					_wages = _wages + (_num * _perhr);
-					_data = _x call OT_fnc_getEconomicData;
+					_data = _x call OT_fnc_getBusinessData;
 
 					_pos = _data select 0;
 					_outnum = 2 * _num;
@@ -255,14 +255,14 @@ while {true} do {
 								format["Factory has no room to place container, please clear marker area"] remoteExec["OT_fnc_notifyMinor",0,false];
 							};
 						};
-						_dowood = ["OT_wood",_wood,OT_factoryPos] call OT_fnc_hasFromContainers;
-						_dosteel = ["OT_steel",_steel,OT_factoryPos] call OT_fnc_hasFromContainers;
-						_doplastic = ["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_hasFromContainers;
+						_dowood = ["OT_wood",_wood,OT_factoryPos] call OT_fnc_hasFromCargoContainers;
+						_dosteel = ["OT_steel",_steel,OT_factoryPos] call OT_fnc_hasFromCargoContainers;
+						_doplastic = ["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_hasFromCargoContainers;
 						_domoney = ([] call OT_fnc_resistanceFunds >= _costtoproduce);
 						if(_dowood and _dosteel and _doplastic and _domoney) then {
-							["OT_wood",_wood,OT_factoryPos] call OT_fnc_takeFromContainers;
-							["OT_steel",_steel,OT_factoryPos] call OT_fnc_takeFromContainers;
-							["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_takeFromContainers;
+							["OT_wood",_wood,OT_factoryPos] call OT_fnc_takeFromCargoContainers;
+							["OT_steel",_steel,OT_factoryPos] call OT_fnc_takeFromCargoContainers;
+							["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_takeFromCargoContainers;
 							[-_costtoproduce] call OT_fnc_resistanceFunds;
 							_timespent = _timespent + 1;
 						};

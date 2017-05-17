@@ -107,7 +107,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     _wp setWaypointType "SCRIPTED";
     _wp setWaypointStatements ["true","[group this] spawn OT_fnc_cleanup"];
 };
-_group call distributeAILoad;
+
 
 if(isNull _track) exitWith {};
 waitUntil {(_track distance _topos) < 100 or !alive _track};

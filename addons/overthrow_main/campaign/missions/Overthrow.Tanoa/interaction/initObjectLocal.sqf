@@ -1,5 +1,5 @@
 if(typeof _this == OT_item_Map) then {
-	_this addAction ["Town Info", "actions\townInfo.sqf",nil,0,false,true,"",""];
+	_this addAction ["Town Info", OT_fnc_mapInfoDialog,nil,0,false,true,"",""];
 	_this addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
 	_this addAction ["Reset UI", {
 		closedialog 0;
@@ -22,7 +22,7 @@ if(typeof _this == OT_item_Storage) then {
 		OT_warehouseTarget = _this select 0;
 		closeDialog 0;
 		createDialog "OT_dialog_warehouse";
-		[] call warehouseDialog;
+		[] call OT_fnc_warehouseDialog;
 	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
 	_this addAction ["Store In Warehouse", {
 		private _iswarehouse = call OT_fnc_playerAtWarehouse;

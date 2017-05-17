@@ -28,7 +28,7 @@ while {visibleMap} do {
 						_abandon = "Under Resistance Control";
 					};
 				};
-				_rep = player getVariable format["rep%1",_town];
+				_rep = [_town] call OT_fnc_standing;
 				_numshops = server getVariable format["shopsin%1",_town];
 				if(_numshops == 0) then {
 					_numshops = "None";

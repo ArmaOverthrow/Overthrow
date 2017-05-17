@@ -9,7 +9,7 @@
 
 	Call with:-
 
-		_id = [building] call fnc_getBuildID;
+		_id = [building] call OT_fnc_getBuildID;
 
 */
 

@@ -68,7 +68,7 @@ menuHandler = {
 							sleep 20;
 							hint "Press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
-						[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, I also have this mission if you want it."],_end] spawn doConversation;
+						[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, I also have this mission if you want it."],_end] spawn OT_fnc_doConversation;
 						player addItemToUniform OT_item_BasicGun;
 						player addItemToUniform OT_item_BasicAmmo;
 						player addItemToUniform OT_item_BasicAmmo;
@@ -84,7 +84,7 @@ menuHandler = {
 							sleep 20;
 							hint "Press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
-						[player,_gundealer,[(_this select 0),"I agree. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","Local businessmen are always setting bounties on the gang leaders around Tanoa, go and claim a few!","Alright.. thanks","No problem, just come back if you need more ammunition or anything else the stores won't sell you."],_end] spawn doConversation;
+						[player,_gundealer,[(_this select 0),"I agree. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","Local businessmen are always setting bounties on the gang leaders around Tanoa, go and claim a few!","Alright.. thanks","No problem, just come back if you need more ammunition or anything else the stores won't sell you."],_end] spawn OT_fnc_doConversation;
 						player addItemToUniform OT_item_BasicGun;
 						player addItemToUniform OT_item_BasicAmmo;
 						player addItemToUniform OT_item_BasicAmmo;
@@ -100,7 +100,7 @@ menuHandler = {
 							sleep 20;
 							hint "You can also press 'Y' and talk to the gun dealer at any time to request a mission that will help the resistance";
 						};
-						[player,_gundealer,[(_this select 0),"Probably a good idea with everything that's happening. I tell you what, take this spare bud I have laying around.","What am I supposed to do with this?","Sell it to some of the civilians round here, maybe it will calm them down","Um.. thanks I guess","No problem, just come back if you need more, or anything else the stores won't sell you."],_end] spawn doConversation;
+						[player,_gundealer,[(_this select 0),"Probably a good idea with everything that's happening. I tell you what, take this spare bud I have laying around.","What am I supposed to do with this?","Sell it to some of the civilians round here, maybe it will calm them down","Um.. thanks I guess","No problem, just come back if you need more, or anything else the stores won't sell you."],_end] spawn OT_fnc_doConversation;
 						player addItemToUniform "OT_Ganja";
 					}
 				],
@@ -113,7 +113,7 @@ menuHandler = {
 							sleep 10;
 							hint "You can also press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
-						[player,_gundealer,[(_this select 0),"Well I'm not really the guy to help you there, but I have these items laying around","What am I supposed to do with these?","Take them to a shop and sell them I guess"],_end] spawn doConversation;
+						[player,_gundealer,[(_this select 0),"Well I'm not really the guy to help you there, but I have these items laying around","What am I supposed to do with these?","Take them to a shop and sell them I guess"],_end] spawn OT_fnc_doConversation;
 						if(OT_hasTFAR) then {
 							player addItemToUniform "tf_anprc148jem";
 						}else{
@@ -126,7 +126,7 @@ menuHandler = {
 
 			_options spawn playerDecision;
 		};
-		[_gundealer,player,_lines,_done] spawn doConversation;
+		[_gundealer,player,_lines,_done] spawn OT_fnc_doConversation;
 	};
 
 	[player,getpos _gundealer,"Find the local dealer","Apparently the spokesperson of the 'Free Tanoa' movement was murdered at the protest last night. I don't know what's going on with this country anymore. I need some answers, and I think I know who could have them.",_whendone] spawn OT_fnc_assignMission;

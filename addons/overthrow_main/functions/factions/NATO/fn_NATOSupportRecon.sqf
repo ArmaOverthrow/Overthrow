@@ -28,7 +28,7 @@ if(isNil "_close") then {
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
 _group = [_start, WEST, OT_NATO_Group_CTRG] call BIS_fnc_spawnGroup;
-_group call distributeAILoad;
+
 sleep 0.5;
 
 _dir = [_start,_posTarget] call BIS_fnc_dirTo;
@@ -60,11 +60,11 @@ if(_isAir) then {
 	clearMagazineCargoGlobal _veh;
 	clearItemCargoGlobal _veh;
 	clearBackpackCargoGlobal _veh;
-	
+
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
 
-	_tgroup call distributeAILoad;
+
 
 	createVehicleCrew _veh;
 	{

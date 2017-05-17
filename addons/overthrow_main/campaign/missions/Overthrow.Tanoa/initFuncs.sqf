@@ -1,9 +1,6 @@
 //Helper functions
 totalCarry = compileFinal preProcessFileLineNumbers "funcs\totalCarry.sqf";
 searchStock = compileFinal preProcessFileLineNumbers "funcs\searchStock.sqf";
-giveIntel = compileFinal preProcessFileLineNumbers "funcs\giveIntel.sqf";
-displayShopPic = compileFinal preProcessFileLineNumbers "funcs\displayShopPic.sqf";
-displayWarehousePic = compileFinal preProcessFileLineNumbers "funcs\displayWarehousePic.sqf";
 dumpStuff = compileFinal preProcessFileLineNumbers "funcs\dumpStuff.sqf";
 takeStuff = compileFinal preProcessFileLineNumbers "funcs\takeStuff.sqf";
 progressBar = compileFinal preProcessFileLineNumbers "funcs\progressBar.sqf";
@@ -12,43 +9,14 @@ revealToCRIM = compileFinal preProcessFileLineNumbers "funcs\revealToCRIM.sqf";
 
 intelEvent = compileFinal preProcessFileLineNumbers "funcs\intelEvent.sqf";
 intelLevel = compileFinal preProcessFileLineNumbers "funcs\intelLevel.sqf";
-doConversation = compileFinal preProcessFileLineNumbers "funcs\doConversation.sqf";
 playerDecision = compileFinal preProcessFileLineNumbers "funcs\playerDecision.sqf";
 
-OT_fnc_NATOConvoy = compileFinal preProcessFileLineNumbers "AI\fn_NATOConvoy.sqf";
-OT_fnc_NATOMissionReconDestroy = compileFinal preProcessFileLineNumbers "AI\fn_NATOMissionReconDestroy.sqf";
-OT_fnc_NATOSetExplosives = compileFinal preProcessFileLineNumbers "AI\fn_NATOSetExplosives.sqf";
-OT_fnc_NATOMissionDeployFOB = compileFinal preProcessFileLineNumbers "AI\fn_NATOMissionDeployFOB.sqf";
-OT_fnc_NATODeployFOB = compileFinal preProcessFileLineNumbers "AI\fn_NATODeployFOB.sqf";
-OT_fnc_NATOupgradeFOB = compileFinal preProcessFileLineNumbers "AI\fn_NATOupgradeFOB.sqf";
-OT_fnc_NATOMortar = compileFinal preProcessFileLineNumbers "AI\fn_NATOMortar.sqf";
-
 //UI
-mainMenu = compileFinal preProcessFileLineNumbers "UI\mainMenu.sqf";
 buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
 manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 characterSheet = compileFinal preProcessFileLineNumbers "UI\characterSheet.sqf";
-buyDialog = compileFinal preProcessFileLineNumbers "UI\buyDialog.sqf";
-buyClothesDialog = compileFinal preProcessFileLineNumbers "UI\buyClothesDialog.sqf";
-sellDialog = compileFinal preProcessFileLineNumbers "UI\sellDialog.sqf";
-workshopDialog = compileFinal preProcessFileLineNumbers "UI\workshopDialog.sqf";
-policeDialog = compileFinal preProcessFileLineNumbers "UI\policeDialog.sqf";
-warehouseDialog = compileFinal preProcessFileLineNumbers "UI\warehouseDialog.sqf";
-inputDialog = compileFinal preProcessFileLineNumbers "UI\inputDialog.sqf";
-importDialog = compileFinal preProcessFileLineNumbers "UI\importDialog.sqf";
-recruitDialog = compileFinal preProcessFileLineNumbers "UI\recruitDialog.sqf";
 buyVehicleDialog = compileFinal preProcessFileLineNumbers "UI\buyVehicleDialog.sqf";
 gunDealerDialog = compileFinal preProcessFileLineNumbers "UI\gunDealerDialog.sqf";
-
-resistanceScreen = compileFinal preprocessFileLineNumbers "UI\fn_resistanceDialog.sqf";
-OT_fnc_resistanceDialog = resistanceScreen;
-OT_fnc_mapInfoDialog = compileFinal preprocessFileLineNumbers "actions\townInfo.sqf";
-OT_fnc_factoryDialog = compileFinal preProcessFileLineNumbers "UI\fn_factoryDialog.sqf";
-OT_fnc_reverseEngineerDialog = compileFinal preProcessFileLineNumbers "UI\fn_reverseEngineerDialog.sqf";
-OT_fnc_vehicleDialog = compileFinal preProcessFileLineNumbers "UI\fn_vehicleDialog.sqf";
-OT_fnc_newGameDialog = compileFinal preProcessFileLineNumbers "UI\fn_newGameDialog.sqf";
-OT_fnc_optionsDialog = compileFinal preProcessFileLineNumbers "UI\fn_optionsDialog.sqf";
-OT_fnc_garrisonDialog = compileFinal preProcessFileLineNumbers "UI\fn_garrisonDialog.sqf";
 
 template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
 template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
@@ -72,13 +40,9 @@ leaseBuilding = compileFinal preProcessFileLineNumbers "actions\leaseBuilding.sq
 recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
 recruitSquad = compileFinal preProcessFileLineNumbers "actions\recruitSquad.sqf";
 setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
-getIntel = compileFinal preProcessFileLineNumbers "actions\getIntel.sqf";
-addPolice = compileFinal preProcessFileLineNumbers "actions\addPolice.sqf";
-exportAll = compileFinal preProcessFileLineNumbers "actions\exportAll.sqf";
 import = compileFinal preProcessFileLineNumbers "actions\import.sqf";
 restoreLoadout = compileFinal preProcessFileLineNumbers "actions\restoreLoadout.sqf";
 removeLoadout = compileFinal preProcessFileLineNumbers "actions\removeLoadout.sqf";
-OT_fnc_addGarrison = compileFinal preProcessFileLineNumbers "actions\fn_addGarrison.sqf";
 
 
 //Modes
@@ -99,493 +63,6 @@ intelSystem = compileFinal preProcessFileLineNumbers "intelSystem.sqf";
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
-
-fnc_getBuildID = compileFinal preProcessFileLineNumbers "funcs\fnc_getBuildID.sqf";
-OT_fnc_getBuildID = fnc_getBuildID;
-
-OT_fnc_createSquad = {
-	_units = groupselectedunits player;
-	if(count _units < 2) exitWith {"You must select at least 2 recruits" call OT_fnc_notifyMinor};
-	_group = createGroup resistance;
-	_cc = player getVariable ["OT_squadcount",1];
-	{
-		if(_x != player) then {
-			_x setVariable ["NOAI",false,false];
-			[_x] joinSilent _group;
-		};
-	}foreach(_units);
-	_group setGroupIdGlobal [format["S-%1",_cc]];
-	_cc = _cc + 1;
-	player hcSetGroup [_group,groupId _group,"teamgreen"];
-
-	player setVariable ["OT_squadcount",_cc,true];
-
-	_recruits = server getVariable ["squads",[]];
-	_recruits pushback [getplayeruid player,"CUSTOM",_group,[]];
-	server setVariable ["squads",_recruits,true];
-
-	_remove = [];
-	_recruits = server getVariable ["recruits",[]];
-	{
-		if((_x select 2) in _units) then {
-			_remove pushback _x;
-		};
-	}foreach(_recruits);
-	{
-		_recruits deleteAt (_recruits find _x);
-	}foreach(_remove);
-	server setVariable ["recruits",_recruits,true];
-
-	"Squad created, use ctrl + space to command" call OT_fnc_notifyMinor;
-};
-
-OT_fnc_initDrone = {
-	_drone = _this;
-
-	_drone spawn {
-		_drone = _this;
-		_targets = [];
-		while {sleep 10; alive _drone} do {
-			{
-				_ty = typeof _x;
-				if((damage _x) < 1) then {
-					call {
-						if((_x isKindOf "StaticWeapon") and (side _x != west)) exitWith {
-							if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
-								_targets pushback ["SW",position _x,100,_x];
-							};
-						};
-						if(_ty == OT_item_Flag) exitWith {
-							_targets pushback ["FOB",position _x,0,_x];
-						};
-						if(_ty == OT_warehouse) exitWith {
-							if(_x call OT_fnc_hasOwner) then {
-								_targets pushback ["WH",position _x,80,_x];
-							};
-						};
-						if(_ty == OT_policeStation) exitWith {
-							_targets pushback ["PS",position _x,90,_x];
-						};
-						if(_ty == OT_workshopBuilding) exitWith {
-							_targets pushback ["WS",position _x,50,_x];
-						};
-						if(((_x isKindOf "Car") or (_x isKindOf "Air") or (_x isKindOf "Ship")) and !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
-							if !(side _x == west) then {
-								if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
-									_targets pushback ["V",position _x,0,_x];
-								};
-							};
-						};
-						if(_ty == OT_item_Storage) exitWith {
-							if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
-								_targets pushback ["AMMO",position _x,25,_x];
-							};
-						};
-					};
-				};
-			}foreach((_drone nearObjects ["Static",500]) + (_drone nearObjects ["AllVehicles",500]));
-			_drone setVariable ["OT_seenTargets",_targets,false];
-		};
-	};
-};
-
-OT_fnc_generateBanditPositions = {
-	_num = 10;
-	_mobsters = [];
-	_t = 0;
-	for "_i" from 0 to _num do {
-		_pp = [OT_centerPos,[0,20000]] call SHK_pos;
-		{
-			_pos = _x select 0;
-			_pos set [2,0];
-			if !(_pos isFlatEmpty  [-1, -1, 0.5, 10] isEqualTo []) then {
-				_ob = _pos call OT_fnc_nearestObjective;
-				_town = _pos call OT_fnc_nearestTown;
-
-				_obpos = _ob select 0;
-				_obdist = _obpos distance _pos;
-
-				_towndist = 500;
-				if (!isNil "_town") then {
-					if !(_town in (server getVariable ["NATOabandoned",[]])) then {
-						_stability = server getVariable format ["stability%1",_town];
-						_population = server getVariable format ["population%1",_town];
-						_towndist = (server getVariable _town) distance _pos;
-						if(_stability < 20) then {
-							_towndist = _towndist * 2;
-						};
-						if(_stability > 60) then {
-							_towndist = _towndist * 0.5;
-						};
-						if(_population < 160) then {
-							_towndist = _towndist * 2;
-						};
-					};
-				};
-
-				_control = _pos call OT_fnc_nearestCheckpoint;
-				_cdist = (getmarkerpos _control) distance _pos;
-
-				_mdist = 2000;
-				if(_obdist > 1000 and _towndist > 400 and _cdist > 800 and _mdist > 700) then {
-					_mobsters pushback _pos;
-				};
-			};
-		}foreach (selectBestPlaces [_pp, 1200,"(1 + forest + trees) * (1 - houses) * (1 - sea)",10,600]);
-		hint format["Generated %1 positions",count _mobsters];
-	};
-	copyToClipboard format["%1",_mobsters];
-	hint format["Done! Generated %1 positions",count _mobsters];
-};
-
-OT_fnc_playerIsOwner = {
-	(_this call OT_fnc_getOwner) == (getplayeruid player)
-};
-
-OT_fnc_playerAtWarehouse = {
-	private _iswarehouse = false;
-	_b = (position player) call OT_fnc_nearestRealEstate;
-	if(typename _b == "ARRAY") then {
-		_building = _b select 0;
-		if((typeof _building) == OT_warehouse and (_building call OT_fnc_hasOwner) and (damage _building) < 1) then {
-			_iswarehouse = true;
-		};
-	};
-	_iswarehouse
-};
-
-OT_fnc_lockVehicle = {
-	private _veh = vehicle player;
-	if((_veh call OT_fnc_getOwner) != (getplayeruid player)) exitWith {};
-	if(_veh getVariable ["OT_locked",false]) then {
-		_veh setVariable ["OT_locked",false,true];
-		"Vehicle unlocked" call OT_fnc_notifyMinor;
-	}else{
-		_veh setVariable ["OT_locked",true,true];
-		"Vehicle locked" call OT_fnc_notifyMinor;
-	};
-};
-
-OT_fnc_squadAssignVehicle = {
-	_squad = (hcselected player) select 0;
-	_veh = cursorObject;
-	_leader = leader _squad;
-	if(_leader distance _veh > 30) exitWith {"Squad leader must be within 30m of vehicle" call OT_fnc_notifyMinor};
-	if((_veh isKindOf "StaticWeapon") or (_veh isKindOf "Air") or (_veh isKindOf "Land") or (_veh isKindOf "Ship")) then {
-		_squad setVariable ["OT_assigned",_veh,false];
-		_squad addVehicle _veh;
-		(units _squad) orderGetIn true;
-		player hcSelectGroup [_squad,false];
-		format["%1 assigned to %2",(typeof _veh) call ISSE_Cfg_Vehicle_GetName,groupId _squad] call OT_fnc_notifyMinor;
-	};
-};
-
-OT_fnc_squadGetIn = {
-	{
-		_veh = _x getVariable ["OT_assigned",objNull];
-		(units _x) allowGetIn true;
-		if !(isNull _veh) then {
-			_x addVehicle _veh;
-			(units _x) orderGetIn true;
-		};
-		player hcSelectGroup [_x,false];
-	}foreach(hcSelected player);
-};
-
-OT_fnc_squadGetOut = {
-	{
-		_squad = _x;
-		{ unassignVehicle _x } forEach (units _squad);
-		(units _x) orderGetIn false;
-		(units _squad) allowGetIn false;
-		player hcSelectGroup [_squad,false];
-	}foreach(hcSelected player);
-};
-
-OT_fnc_regionIsConnected = {
-	params ["_f","_t"];
-	private _por = "";
-	private _region = "";
-	if((typename _f) == "ARRAY") then {
-		_por = _f call OT_fnc_getRegion;
-	}else{
-		_por = _f;
-	};
-	if((typename _t) == "ARRAY") then {
-		_region = _t call OT_fnc_getRegion;
-	}else{
-		_region = _t;
-	};
-	if(_por == _region) exitWith {true};
-	private _ret = false;
-	{
-		if(((_x select 0) == _por) and ((_x select 1) == _region)) exitWith {_ret = true};
-	}foreach(OT_connectedRegions);
-	_ret;
-};
-
-OT_fnc_getRegion = {
-	_p = _this;
-	_region = "";
-	{
-		if(_p inArea _x) exitWith {_region = _x};
-	}foreach(OT_regions);
-	_region;
-};
-
-OT_fnc_missionSuccess = {
-	player globalchat "Mission success";
-	player setVariable [format["MissionData",_this],[],false];
-};
-
-OT_fnc_increaseTax = {
-	private _rate = server getVariable ["taxrate",0];
-	_rate = _rate + 5;
-	if(_rate > 100) then {_rate = 100};
-	server setVariable ["taxrate",_rate,true];
-	format["Tax rate is now %1%2",_rate,"%"] call OT_fnc_notifyMinor;
-};
-
-OT_fnc_decreaseTax = {
-	private _rate = server getVariable ["taxrate",0];
-	_rate = _rate - 5;
-	if(_rate < 0) then {_rate = 0};
-	server setVariable ["taxrate",_rate,true];
-	format["Tax rate is now %1%2",_rate,"%"] call OT_fnc_notifyMinor;
-};
-
-OT_fnc_hireEmployee = {
-	private _idx = lbCurSel 1501;
-	private _name = lbData [1501,_idx];
-	private _rate = server getVariable [format["%1employ",_name],0];
-	_rate = _rate + 1;
-	if(_rate > 20) exitWith {};
-	server setVariable [format["%1employ",_name],_rate,true];
-	_name remoteExec ["OT_fnc_refreshEmployees",2,false];
-	[] call OT_fnc_showBusinessInfo;
-};
-
-OT_fnc_playerIsGeneral = {
-	(!isMultiplayer) or ((getPlayerUID player) in (server getvariable ["generals",[]]))
-};
-
-OT_fnc_refreshEmployees = {
-	private _data = _this call OT_fnc_getEconomicData;
-	private _pos = _data select 0;
-	private _group = spawner getVariable [format["employees%1",_this],grpNull];
-	{
-		deleteVehicle _x;
-	}foreach(units _group);
-	deleteGroup _group;	
-};
-
-OT_fnc_fireEmployee = {
-	private _idx = lbCurSel 1501;
-	private _name = lbData [1501,_idx];
-	private _rate = server getVariable [format["%1employ",_name],0];
-	_rate = _rate - 1;
-	if(_rate < 0) then {_rate = 0};
-	server setVariable [format["%1employ",_name],_rate,true];
-	_name remoteExec ["OT_fnc_refreshEmployees",2,false];
-	[] call OT_fnc_showBusinessInfo;
-};
-
-OT_fnc_getTaxIncome = {
-	private _total = 0;
-	private _inf = 0;
-	{
-		private _town = _x;
-		_total = _total + 250;
-		if(_town in OT_allAirports) then {
-			_total = _total + ((server getVariable ["stabilityTanoa",100]) * 3); //Tourism income
-		};
-		_inf = _inf + 1;
-		if(_town in OT_allTowns) then {
-			private _population = server getVariable format["population%1",_town];
-			private _stability = server getVariable format["stability%1",_town];
-			private _garrison = server getVariable [format['police%1',_town],0];
-			private _add = round(_population * 4 * (_stability/100));
-			if(_stability > 49) then {
-				_add = round(_add * 4);
-			};
-			_total = _total + _add;
-		};
-	}foreach(server getVariable ["NATOabandoned",[]]);
-	[_total,_inf];
-};
-
-OT_fnc_takeFromContainers = {
-	 params ["_input","_num","_pos"];
-	 if(_num == 0) exitWith {true};
-	 if(_num < 1) then {_num = 1};
-	 _gotit = false;
-	{
-		_c = _x;
-		{
-			_x params ["_cls","_amt"];
-			if(_cls == _input and _amt >= _num) exitWith {
-				[_c, _cls, _num] call CBA_fnc_removeItemCargo;
-				_gotit = true;
-			};
-		}foreach(_c call OT_fnc_unitStock);
-	}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
-	_gotit
-};
-
-OT_fnc_reverseEngineer = {
-	private _idx = lbCurSel 1500;
-	private _cls = lbData [1500,_idx];
-	_cost = cost getVariable[_cls,[]];
-	private _blueprints = server getVariable ["GEURblueprints",[]];
-	if((count _cost) > 0 and !(_cls in _blueprints)) then {
-		_blueprints pushBack _cls;
-		server setVariable ["GEURblueprints",_blueprints,true];
-		closeDialog 0;
-		"Item is now available for production" call OT_fnc_notifyMinor;
-
-		if(!(_cls isKindOf "Bag_Base") and _cls isKindOf "AllVehicles") then {
-			private _veh = OT_factoryPos nearestObject _cls;
-			deleteVehicle _veh;
-		}else{
-			player removeItem _cls;
-		};
-	}else{
-		"Cannot reverse-engineer this item, please contact Overthrow Devs on Discord" call OT_fnc_notifyMinor;
-	};
-};
-
-OT_fnc_hasFromContainers = {
-	 params ["_input","_num","_pos"];
-	 if(_num == 0) exitWith {true};
-	 if(_num < 1) then {_num = 1};
-	 _gotit = false;
-	{
-		_c = _x;
-		{
-			_x params ["_cls","_amt"];
-			if(_cls == _input and _amt >= _num) exitWith {
-				_gotit = true;
-			};
-		}foreach(_c call OT_fnc_unitStock);
-	}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
-	_gotit
-};
-
-OT_fnc_getOfflinePlayerAttribute = {
-	params ["_uid","_attr"];
-	private _val = "";
-	if(count _this > 2) then {
-		_val = _this select 2;
-	};
-	{
-		_x params ["_k","_v"];
-		if(_k == _attr) exitWith {_val=_v};
-	}foreach(server getVariable [_uid,[]]);
-	_val;
-};
-OT_fnc_setOfflinePlayerAttribute = {
-	params ["_uid","_attr","_value"];
-	private _params = server getVariable [_uid,[]];
-	private _done = false;
-	{
-		_x params ["_k","_v"];
-		if(_k == _attr) exitWith {_done=true;_x set [1,_value]};
-	}foreach(_params);
-	if(!_done) then {
-		_params pushback [_attr,_value];
-	};
-	server setVariable [_uid,_params,true];
-};
-
-OT_fnc_getEconomicData = {
-	private _name = _this;
-	if(_name == "Factory") exitWith {[OT_factoryPos,"Factory"]};
-	_data = [];
-	{
-		if((_x select 1) == _name) exitWith {_data = _x};
-	}foreach(OT_economicData);
-	_data;
-};
-
-OT_fnc_getBusinessPrice = {
-	private _data = _this call OT_fnc_getEconomicData;
-	private _baseprice = 100000;
-	if(count _data == 2) then {
-		//turns nothing into money
-		_baseprice = round(_baseprice * 1.5);
-	};
-	if(count _data == 3) then {
-		//turns something into money
-		_baseprice = round(_baseprice * 1.3);
-	};
-	if(count _data == 4) then {
-		if((_data select 2) != "" and (_data select 3) != "") then {
-			//turns something into something
-			_baseprice = round(_baseprice * 1.2);
-		};
-		if((_data select 2) == "" and (_data select 3) != "") then {
-			if((_data select 3) == "OT_Steel") then {
-				_baseprice = round(_baseprice * 2.4);
-			};
-			if((_data select 3) == "OT_Sugarcane") then {
-				_baseprice = round(_baseprice * 0.4);
-			};
-		};
-	};
-	private _stability = 1.0 - ((server getVariable ["stabilityTanoa",100]) / 100);
-
-	_baseprice + (_baseprice * _stability)
-};
-
-OT_fnc_resetSpawn = {
-	_pars = _this;
-	{
-		_p = _x select 1;
-		if(_p isEqualTo _pars) exitWith {
-			_id = _x select 0;
-			OT_allSpawned deleteAt (OT_allSpawned find _id);
-		};
-	}foreach(OT_allSpawners);
-};
-
-OT_fnc_resistanceFunds = {
-	_funds = player getVariable ["money",0];
-	if(isMultiplayer) then {
-		_funds = server getVariable ["money",0];
-	};
-	if(count _this > 0) then {
-		_funds = _funds + (_this select 0);
-		if(isMultiplayer) then {
-			server setVariable ["money",_funds,true];
-		}else{
-			player setVariable ["money",_funds,true];
-		}
-	};
-	_funds;
-};
-
-OT_fnc_initRecruit = {
-	private ["_civ"];
-
-	_civ = _this select 0;
-
-	removeAllActions _civ;
-	_civ removeAllEventHandlers "FiredNear";
-
-	[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
-
-	_civ setSkill 0.1 + (random 0.3);
-	_civ setRank "PRIVATE";
-	_civ setVariable ["NOAI",true,true];
-
-	_civ spawn wantedSystem;
-
-	_recruits = server getVariable ["recruits",[]];
-	_nameparts = (name _civ) splitString " ";
-
-	_recruits pushback [getplayeruid player,[name _civ]+_nameparts,_civ,"PRIVATE",[],typeof _civ];
-	server setVariable ["recruits",_recruits,true];
-};
 
 //Credit to John681611: http://www.armaholic.com/page.php?id=25720
 mpAddEventHand = {
@@ -673,18 +150,6 @@ canDrive = {
 	((_this getHitPointDamage "HitEngine") < 1)
 };
 
-distributeAILoad = {
-	//disabled, using ACEX
-};
-
-OT_fnc_newGame = {
-	closeDialog 0;
-    "Generating economy" remoteExec['blackFaded',0,false];
-    [] execVM "initEconomy.sqf";
-    waitUntil {!isNil "OT_economyInitDone"};
-    server setVariable["StartupType","NEW",true];
-};
-
 setupKeyHandler = {
     waitUntil {!(isnull (findDisplay 46))};
     sleep 1;
@@ -695,50 +160,6 @@ assignedKey = {
 	(cba_keybinding_keynames) getVariable [str ((actionKeys _this) select 0),""];
 };
 
-standing = {
-	if!(hasInterface) exitWith {};
-    _town = _this select 0;
-    _rep = (player getVariable [format["rep%1",_town],0])+(_this select 1);
-    player setVariable [format["rep%1",_town],_rep,true];
-    _totalrep = (player getVariable ["rep",0])+(_this select 1);
-    player setVariable ["rep",_totalrep,true];
-
-	if(count _this > 2) then {
-		format["%1 (%2 %3)",_this select 2,_this select 1,_town] call OT_fnc_notifyMinor;
-	};
-};
-
-
-loadPlayerData = {
-	private _player = _this;
-	_newplayer = true;
-	_data = server getvariable (getplayeruid _player);
-	_count = 0;
-    if !(isNil "_data") then {
-        _newplayer = false;
-        {
-            _key = _x select 0;
-            _val = _x select 1;
-			if !(isNil "_val") then {
-				_player setVariable [_key,_val,true];
-			};
-			_count = _count + 1;
-			if(_count > 50) then {
-				_count = 0;
-				sleep 0.1;
-			};
-        }foreach(_data);
-
-    };
-
-	_loadout = server getvariable format["loadout%1",getplayeruid _player];
-	if !(isNil "_loadout") then {
-		_player setunitloadout _loadout;
-	};
-	_player setVariable ["OT_loaded",true,true];
-	_player setVariable ["OT_newplayer",_newplayer,true];
-};
-
 influence = {
 	if!(hasInterface) exitWith {};
     _totalrep = (player getVariable ["influence",0])+_this;
@@ -747,7 +168,9 @@ influence = {
     if(_this > 0) then {
         _plusmin = "+";
     };
-    format["%1%2 Influence",_plusmin,_this] call OT_fnc_notifyMinor;
+	if(_this != 0) then {
+        format["%1%2 Influence",_plusmin,_this] call OT_fnc_notifyMinor;
+    };
 };
 
 influenceSilent = {
@@ -785,17 +208,6 @@ rewardMoney = {
 				}foreach([] call CBA_fnc_players);
 			};
 		};
-	};
-};
-
-OT_fnc_experience = {
-	_who = _this select 0;
-	_amount = _this select 1;
-	if(isPlayer _who) then {
-		[_amount] remoteExec ["experience",_who,false];
-	}else{
-		_xp = _who getVariable ["OT_xp",0];
-		_who setVariable ["OT_xp",_xp + _amount,true];
 	};
 };
 

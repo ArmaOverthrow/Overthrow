@@ -43,6 +43,6 @@ _move setWaypointType "GUARD";
 _move setWaypointSpeed "NORMAL";
 _move setWaypointBehaviour "STEALTH";
 
-_group call distributeAILoad;
+
 
 _group
