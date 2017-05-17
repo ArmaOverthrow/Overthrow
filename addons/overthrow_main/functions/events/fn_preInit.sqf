@@ -22,7 +22,7 @@ if(isServer) then {
 
     if(!isMultiplayer) then {
         addMissionEventHandler ["Loaded", {
-            [] execVM "setupPlayer.sqf";
+            [] spawn OT_fnc_setupPlayer;
     		[] spawn setupKeyHandler;
         }];
     };

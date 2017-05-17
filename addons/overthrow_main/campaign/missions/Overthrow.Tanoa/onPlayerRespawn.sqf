@@ -50,7 +50,7 @@ _town = _housepos call OT_fnc_nearestTown;
 player setPos _housepos;
 _clothes = player getVariable ["uniform",(OT_clothes_guerilla call BIS_fnc_selectRandom)];
 player forceAddUniform _clothes;
-[] execVM "setupPlayer.sqf";
+[] spawn OT_fnc_setupPlayer;
 
 call {
 	disableSerialization;

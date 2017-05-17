@@ -190,7 +190,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
-				_civ spawn wantedSystem;
+				_civ spawn OT_fnc_wantedSystem;
 				_civ setName _name;
 
 				[_civ] joinSilent grpNull;
@@ -431,4 +431,4 @@ _introcam cameraEffect ["Terminate", "BACK" ];
 _introcam = nil;
 
 [] spawn setupKeyHandler;
-[] execVM "setupPlayer.sqf";
+[] spawn OT_fnc_setupPlayer;

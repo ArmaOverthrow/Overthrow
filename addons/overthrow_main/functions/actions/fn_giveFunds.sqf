@@ -1,5 +1,5 @@
 closeDialog 0;
-OT_inputHandler {
+OT_inputHandler = {
 	_val = parseNumber(ctrltext 1400);
 	_cash = player getVariable ["money",0];
 	if(_val > _cash) then {_val = _cash};

@@ -1,10 +1,10 @@
-player spawn statsSystem;
-player spawn wantedSystem;
-player spawn perkSystem;
-player spawn intelSystem;
+player spawn OT_fnc_statsSystem;
+player spawn OT_fnc_wantedSystem;
+player spawn OT_fnc_perkSystem;
+player spawn OT_fnc_mapSystem;
 disableUserInput false;
 
-townChange = {
+_townChange = {
 	_town = _this;
 	_pop = server getVariable format["population%1",_town];
 	_stability = server getVariable format["stability%1",_town];
@@ -26,7 +26,7 @@ townChange = {
 	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 _town = (getPos player) call OT_fnc_nearestTown;
-_town call townChange;
+_town call _townChange;
 
 _timer = -1;
 
@@ -47,7 +47,7 @@ while {alive player} do {
 		_closest = (getPos player) call OT_fnc_nearestTown;
 		if !(isNil "_closest") then {
 			if(_closest != _town) then {
-				_closest call townChange;
+				_closest call _townChange;
 				_closestcount = 60;
 			};
 		};

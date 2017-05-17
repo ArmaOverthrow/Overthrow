@@ -51,74 +51,10 @@ unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
 unitSeenCRIM = compileFinal preProcessFileLineNumbers "funcs\unitSeenCRIM.sqf";
 unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 unitSeenAny = compileFinal preProcessFileLineNumbers "funcs\unitSeenAny.sqf";
-wantedSystem = compileFinal preProcessFileLineNumbers "wantedSystem.sqf";
-
-//Other Systems
-perkSystem = compileFinal preProcessFileLineNumbers "perkSystem.sqf";
-statsSystem = compileFinal preProcessFileLineNumbers "stats.sqf";
-intelSystem = compileFinal preProcessFileLineNumbers "intelSystem.sqf";
 
 //Key handler
 keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
-
-//Credit to John681611: http://www.armaholic.com/page.php?id=25720
-mpAddEventHand = {
-private["_obj","_type","_code"];
-_obj = _this select 0;
-_type = _this select 1;
-_code = _this select 2;
-_add = _obj addEventHandler [_type,_code];
-};
-mpRemoveEventHand = {
-private["_obj","_type","_index"];
-_obj = _this select 0;
-_type = _this select 1;
-_index = _this select 2;
-_obj removeEventHandler [_type, _index];
-};
-AUG_GetIn = {
-	_aug = (_this select 0) getVariable["AUG_Attached",false];
-	if((count (crew _aug)) > 0) exitWith {hint 'Weapon must be empty to mount';};
-	(_this select 1) moveInGunner _aug;
-};
-AUG_UpdateState = {
-	//Update Action
-	[(_this select 0),((_this select 0) getVariable "AUG_Act")] call BIS_fnc_holdActionRemove;
- 	_ls = [ (_this select 0),(_this select 1),
-				"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
-				"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
-				"speed _target <= 1 AND speed _target >= -1 AND _target distance _this < 5 AND vehicle _this == _this AND ( typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' OR typeNAME (_target getVariable 'AUG_Local') != 'BOOL')",
-				"true",
-					(_this select 1),"Acts_carFixingWheel"] remoteExec ["playMoveNow",(_this select 1),false]
-					,{},
-					{[(_this select 1),""] remoteExec ["switchMove",(_this select 1),false];[(_this select 0)] Call AUG_Action;},
-					[{[(_this select 1),""] remoteExec ["switchMove",(_this select 1),false];},[],13,1.5,false,false] Call BIS_fnc_holdActionAdd;
-	(_this select 0) setVariable ["AUG_Act",_ls,false];
-
-};
-AUG_UpdateGetInState = {
-	//Update Action
-	(_this select 0) setUserActionText [(_this select 0) getVariable ["AUG_Act_GetIn",""],(_this select 1),(_this select 2)];
-};
-AUG_Action = {
-	_veh = (_this select 0);
-	if( typeNAME(_veh getVariable["AUG_Attached",false]) == "OBJECT")  then {
-		[_veh,(_this select 1)] call AUG_Detach;
-	}else{
-		[_veh,(_this select 1)] call AUG_Attach;
-
-	}
-};
-AUG_AddAction = {
-	// mp issues may occure
-	_ls = [ (_this select 0),"","","","speed _target <= 1 AND speed _target >= -1 AND _target distance _this < 5  AND vehicle _this == _this AND ( typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' OR typeNAME (_target getVariable 'AUG_Local') != 'BOOL')","true",{},{},{},{},[],13,nil,false,false] call BIS_fnc_holdActionAdd;
-	_vls = (_this select 0) addAction ["", {[(_this select 0),(_this select 1)] spawn AUG_GetIn;},[],5.5,true,true,"","typeNAME (_target getVariable 'AUG_Attached') != 'BOOL' AND _target distance _this < 5"];
-	(_this select 0) setVariable ["AUG_Act",_ls,false];
-	(_this select 0) setVariable ["AUG_Act_GetIn",_vls,false];
-	(_this select 0) setVariable["AUG_Attached",false,true];
-	(_this select 0) setVariable["AUG_Local",false,true];
-};
 
 mpSetDir = {
 	params ["_obj","_dir"];

@@ -14,8 +14,6 @@ class CfgFunctions
 			class unitStock {};
 			class setOwner {};
 			class getOwner {};
-			class playerIsOwner {};
-			class playerIsGeneral {};
 		};
 
 		/* Persistent Save */
@@ -27,6 +25,26 @@ class CfgFunctions
 			class setOfflinePlayerAttribute {};
 			class getOfflinePlayerAttribute {};
 			class loadPlayerData {};
+		};
+
+		class Player
+		{
+			file = "\ot\functions\player";
+			class mapSystem {};
+			class perkSystem {};
+			class setupPlayer {};
+			class statsSystem {};
+			class wantedSystem {};
+			class playerIsOwner {};
+			class playerIsGeneral {};
+		};
+
+		class Interaction
+		{
+			file = "\ot\functions\interaction";
+			class mountAttached {};
+			class initAttached {};
+			class updateAttached {};
 		};
 
 		class Events
