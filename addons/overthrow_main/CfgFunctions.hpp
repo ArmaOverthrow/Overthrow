@@ -59,6 +59,8 @@ class CfgFunctions
 			class importDialog {};
 			class recruitDialog {};
 			class buyClothesDialog {};
+			class buyVehicleDialog {};
+			class gunDealerDialog {};
 			class factoryDialog {};
 			class garrisonDialog {};
 			class newGameDialog {};

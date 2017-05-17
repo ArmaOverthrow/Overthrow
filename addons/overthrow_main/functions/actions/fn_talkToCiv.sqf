@@ -268,13 +268,13 @@ if (_canBuyBoats) then {
 
 if (_canBuyVehicles) then {
 	_options pushBack [
-		"Buy Vehicles",buyVehicleDialog
+		"Buy Vehicles",OT_fnc_buyVehicleDialog
 	];
 };
 
 if (_canBuyGuns) then {
 	_options pushBack [
-		"Buy",gunDealerDialog
+		"Buy",OT_fnc_gunDealerDialog
 	];
 };
 
