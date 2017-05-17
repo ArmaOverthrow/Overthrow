@@ -46,7 +46,7 @@ _objects = [];
 
 	//_o = _type createVehicle _pos;
 	_o = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
-	//_o enableSimulationGlobal false;
+
 	_o setPos _pos;
 	_dir = _dir + _bdir;
 	if(_dir > 359) then {

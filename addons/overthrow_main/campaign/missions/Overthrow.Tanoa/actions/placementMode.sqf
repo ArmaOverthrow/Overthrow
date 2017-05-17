@@ -90,7 +90,6 @@ if(_cost > 0) then {
 				if(_cls == "B_Boat_Transport_01_F") then {
 					_dir = _dir + 90;
 				};
-				[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
 				if(_cls == OT_item_Map) then {
 					modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 				};
@@ -121,7 +120,6 @@ if(_cost > 0) then {
 	_cls = modeValues select modeValue;
 	_handlerId = (findDisplay 46) displayAddEventHandler ["KeyDown",_keyhandler];
 	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
-	[modeTarget,false] remoteExec ["enableSimulationGlobal",2];
 	if(_cls == OT_item_Map) then {
 		modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 	};
@@ -155,7 +153,7 @@ if(_cost > 0) then {
 	}else{
 		if ([getpos player,_typecls] call OT_fnc_canPlace) then {
 			[-_cost] call money;
-			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];			
+			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
 			[modeTarget,getPlayerUID player] call OT_fnc_setOwner;
 			modeTarget remoteExec["initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {

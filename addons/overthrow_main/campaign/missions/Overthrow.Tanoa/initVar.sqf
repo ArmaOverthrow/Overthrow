@@ -374,8 +374,7 @@ OT_item_DefaultBlueprints pushback "ToolKit";
 	["ItemWatch",30,0,0,1],
 	["Binocular",70,0,0,1],
 	["Rangefinder",130,0,0,1],
-	["I_UAVTerminal",100,0,0,1],
-	["NVGoggles_INDEP",800,0,0,1]
+	["I_UAVTerminal",100,0,0,1]
 ]] call BIS_fnc_arrayPushStack;
 
 OT_staticBackpacks = [
@@ -409,7 +408,7 @@ OT_backpacks = [
 ];
 
 if(OT_hasAce) then {
-	OT_backpacks pushback ["ACE_TacticalLadder_Pack",40,0,0,1];
+	OT_items pushback ["ACE_TacticalLadder_Pack",40,0,0,1];
 };
 
 cost setVariable ["OT_Wood",[10,0,0,0],true];

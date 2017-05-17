@@ -376,8 +376,7 @@ OT_fnc_refreshEmployees = {
 	{
 		deleteVehicle _x;
 	}foreach(units _group);
-	deleteGroup _group;
-	_pos call OT_fnc_resetSpawn;
+	deleteGroup _group;	
 };
 
 OT_fnc_fireEmployee = {
@@ -675,19 +674,7 @@ canDrive = {
 };
 
 distributeAILoad = {
-	private _send = true;
-	private _group = _this;
-	if(OT_useDynamicSimulation) then {
-		_group enableDynamicSimulation true;
-	};
-	if(OT_serverTakesLoad) then {
-		if(random 100 > (100 / ((count OT_activeClients) + 1))) then {
-			_send = false;
-		};
-	};
-	if(_send) then {
-		_group setGroupOwner owner(selectRandom OT_activeClients);
-	};
+	//disabled, using ACEX
 };
 
 OT_fnc_newGame = {

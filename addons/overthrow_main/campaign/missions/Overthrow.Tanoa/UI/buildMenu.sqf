@@ -223,7 +223,6 @@ buildOnKeyDown = {
 
 			modeTarget = createVehicle [_cls, modeValue, [], 0, "CAN_COLLIDE"];
 			modeTarget enableDynamicSimulation true;
-			modeTarget remoteExec ["enableSimulationGlobal false",2,false];
 			modeTarget setDir _dir;
 		};
 		_amt = 5;
@@ -291,7 +290,6 @@ buildOnMouseUp = {
 				}else{
 					_created = modeTarget;
 					[modeTarget,getplayeruid player] call OT_fnc_setOwner;
-					modeTarget enableSimulationGlobal true;
 					modeTarget = objNull;
 				};
 
@@ -381,8 +379,6 @@ build = {
 
 	modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];
 	modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
-	modeTarget remoteExec ["enableSimulationGlobal false",2];
-	modeTarget enableSimulation false;
 	modeVisual allowDamage false;
 	modeTarget setMass 0;
 	modeVisual setMass 0;
