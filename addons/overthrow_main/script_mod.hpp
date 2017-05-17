@@ -26,10 +26,8 @@
 
 #define MOD_NAME Overthrow
 
-#define PREFIX ot
+#define PREFIX OT
 
-// version preprocessor definitions before defining strings
-// update the header file before version tagging
 #include "script_version.hpp"
 
 #define VERSION MAJOR.MINOR.PATCHLVL.BUILD
@@ -37,7 +35,7 @@
 #define VERSION_AR MAJOR,MINOR,PATCHLVL,BUILD
 
 // MINIMAL required ARMA version for the addon
-#define REQUIRED_VERSION 1.67
+#define REQUIRED_VERSION 1.70
 
 // MINIMAL required CBA_A3 version for the addon
 #define REQUIRED_CBA_VERSION {3,3,0}
@@ -45,8 +43,4 @@
 // MINIMAL required ACE3 version for the addon
 #define REQUIRED_ACE_VERSION {3,9,1}
 
-#ifdef COMPONENT_BEAUTIFIED
-    #define COMPONENT_NAME QUOTE(MOD_NAME - COMPONENT_BEAUTIFIED)
-#else
-    #define COMPONENT_NAME QUOTE(MOD_NAME - COMPONENT)
-#endif
+#define COMPONENT_NAME QUOTE(MOD_NAME - VERSION)

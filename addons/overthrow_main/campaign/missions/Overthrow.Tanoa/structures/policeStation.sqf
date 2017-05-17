@@ -14,7 +14,30 @@ if(isNil "_garrison") then {
 
 	server setVariable [format['police%1',_town],2,true];
 
-	_spawned = [_town,"_noid_"] spawn (compileFinal preProcessFileLineNumbers "spawners\police.sqf");
+	_count = 0;
+	_range = 15;
+	_spawned = [];
+	_group = createGroup resistance;
+	_spawned pushBack _group;
+	while {_count < 2} do {
+		_start = [[[_pos,_range]]] call BIS_fnc_randomPos;
+
+		_p = [[[_start,20]]] call BIS_fnc_randomPos;
+
+		_civ = _group createUnit ["I_G_Soldier_F", _p, [],0, "NONE"];
+		_civ setVariable ["polgarrison",_town,false];
+		[_civ] joinSilent _group;
+		_civ setRank "SERGEANT";
+		[_civ,_town] call OT_fnc_initPolice;
+		_civ setBehaviour "SAFE";
+
+		_count = _count + 1;
+	};
+	_group call OT_fnc_initPolicePatrol;
+
+	_despawn = spawner getVariable [format["despawn%1",_town],[]];
+	[_despawn,_spawned] call BIS_fnc_arrayPushStack;
+	spawner setVariable [format["despawn%1",_town],_despawn,false];
 };
 
 _mrkid = format["%1-police",_town];

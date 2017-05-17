@@ -118,8 +118,6 @@ private _cc = 0;
 					clearItemCargoGlobal _veh;
 					_veh setVariable ["name",_name,true];
 
-					_veh enableSimulationGlobal true;
-
 					if(_type == OT_item_Map) then {
 						_veh setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
 					};

@@ -37,9 +37,7 @@ if(_wpn == "") then {
 	_possible = [];
 	{
 		_weapon = [_x] call BIS_fnc_itemType;
-		_weaponType = _weapon select 1;
-		if(_weaponType == "AssaultRifle" and (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
-		if(_weaponType == _primary) then {_possible pushback _x};
+		if((_weapon select 1) == "SubmachineGun") then {_possible pushback _x};
 	}foreach(OT_allWeapons);
 	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
 	_wpn = _sorted select 0;
@@ -48,13 +46,10 @@ if(_wpn == "") then {
 };
 _unit addWeapon _wpn;
 
-[_wpn,1] call OT_fnc_removeFromWarehouse;
-
 _hour = date select 3;
 
 _unit addPrimaryWeaponItem "acc_flashlight";
 _unit addGoggles "G_Bandanna_aviator";
-_idx = _numweap - 1;
 _unit addItem "ACE_morphine";
 _unit addItem "ACE_epinephrine";
 

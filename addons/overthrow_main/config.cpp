@@ -22,7 +22,8 @@ class CfgPatches
 			"a3_map_tanoabuka",
 			"cba_ui",
             "cba_xeh",
-            "cba_jr"
+            "cba_jr",
+			"ace_main"
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;

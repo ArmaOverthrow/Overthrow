@@ -6,6 +6,10 @@
     #define OT_PFUNC(var) _##FUNC(var)
 #endif
 
+#ifndef OT_FUNC
+    #define OT_FUNC(var) ##FUNC(var)
+#endif
+
 #define MACRO_ADDITEM(ITEM,COUNT) class _xx_##ITEM { \
     name = #ITEM; \
     count = COUNT; \

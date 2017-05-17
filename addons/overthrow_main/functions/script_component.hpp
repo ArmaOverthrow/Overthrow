@@ -26,4 +26,4 @@
  */
 
 // @todo requires a more standard framework
-#include "\ot\script_component.hpp"
+#include "\ot\addons\overthrow_main\script_component.hpp"

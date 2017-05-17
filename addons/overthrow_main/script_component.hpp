@@ -28,9 +28,9 @@
 // must define prior to script_mod.hpp
 #define COMPONENT main
 
-#include "headers\script_mod.hpp"
+#include "script_mod.hpp"
 
-// Top of \ot\script_component.hpp
+// Top of script_component.hpp
 // Ensure that any FULL and NORMAL setting from the individual files are undefined and MINIMAL is set.
 #ifdef DEBUG_MODE_FULL
     #undef DEBUG_MODE_FULL
