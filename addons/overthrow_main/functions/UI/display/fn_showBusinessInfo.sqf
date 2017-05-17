@@ -18,7 +18,7 @@ private _num = _anum;
 if(_num > 20) then {
     _num = 20;
 };
-private _perhr = ["Tanoa","WAGE",0] call OT_fnc_getPrice;
+private _perhr = [OT_nation,"WAGE",0] call OT_fnc_getPrice;
 if(_name == "Factory") then {_perhr = _perhr * 2};
 
 private _wages = _anum * _perhr;
@@ -50,7 +50,7 @@ if(count _data > 2) then {
     if(_output != "") then {
         _text = _text + format["<t size='0.65'>Output: %1 x %2 /hr</t><br/>",_outnum, _output call ISSE_Cfg_Weapons_GetName];
     }else{
-        _sellprice = round((["Tanoa",_input,0] call OT_fnc_getSellPrice) * 1.2);
+        _sellprice = round(([OT_nation,_input,0] call OT_fnc_getSellPrice) * 1.2);
         _text = _text + format["<t size='0.65'>Income: $%1 /hr</t><br/>",round(_innum * _sellprice)];
     };
 }else{

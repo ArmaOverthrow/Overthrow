@@ -29,7 +29,7 @@ if(!isMultiplayer) then {
 
     //SINGLE PLAYER init
     waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-    [] execVM "initEconomyLoad.sqf";
+    [] spawn OT_fnc_initEconomyLoad;
 
 	if(OT_fastTime) then {
 		setTimeMultiplier 4;
@@ -44,9 +44,8 @@ if(!isMultiplayer) then {
     waitUntil {!isNil "OT_CRIMInitDone"};
 
     //Game systems
-    [] execVM "bountySystem.sqf";
-	[] execVM "propagandaSystem.sqf";
-	[] execVM "weather.sqf";
+	[] spawn OT_fnc_propagandaSystem;
+	[] spawn OT_fnc_weatherSystem;
 
     //Init virtualization
     [] spawn OT_fnc_runVirtualization;
@@ -58,17 +57,16 @@ if(!isMultiplayer) then {
 	[] execVM "virtualization\factions.sqf";
 
     missionNamespace setVariable [getplayeruid player,player,true];
-    if(OT_hasAce) then {
-        //ACE events
-        ["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
-		["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
-		["ace_explosives_place",compile preprocessFileLineNumbers "events\placeExplosives.sqf"] call CBA_fnc_addEventHandler;
 
-		//Setup fuel pumps for interaction
-		{
-			[_x,0] call ace_interact_menu_fnc_addMainAction;
-		}foreach(OT_fuelPumps);
-    };
+	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
+
+	//Setup fuel pumps for interaction
+	{
+		[_x,0] call ace_interact_menu_fnc_addMainAction;
+	}foreach(OT_fuelPumps);
+
 
     OT_serverInitDone = true;
     publicVariable "OT_serverInitDone";

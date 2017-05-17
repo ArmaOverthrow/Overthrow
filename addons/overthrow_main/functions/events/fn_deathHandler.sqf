@@ -10,7 +10,15 @@ if(_killer call unitSeen) then {
 };
 _town = (getpos _me) call OT_fnc_nearestTown;
 
-if(isPlayer _me) exitWith {};
+if(isPlayer _me) exitWith {
+	_myuid = getPlayerUID _me;
+	{
+		_uid = _x getVariable ["player_uid",""];
+		if(_uid == _myuid and _x != _me) then {
+			deleteVehicle _x;
+		}
+	}foreach(allDeadMen);
+};
 
 _civ = _me getvariable "civ";
 _garrison = _me getvariable "garrison";

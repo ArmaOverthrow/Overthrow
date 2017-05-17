@@ -76,7 +76,7 @@ if (_canMission) then {
 			_s pushback [_x,-1];
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		["Tanoa",_standing,_s,1.2] call OT_fnc_buyDialog;
+		[OT_nation,_standing,_s,1.2] call OT_fnc_buyDialog;
 	}];
 	_options pushBack [format["Buy Blueprints"], {
 		private _civ = OT_interactingWith;
@@ -107,7 +107,7 @@ if (_canMission) then {
 			};
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		["Tanoa",_standing,_s,10] call OT_fnc_buyDialog;
+		[OT_nation,_standing,_s,10] call OT_fnc_buyDialog;
 	}];
 	_missions = player getVariable ["mytasks",[]];
 	if(count _missions > 0) then {
@@ -359,12 +359,12 @@ if (_canSellDrugs) then {
 						};
 					};
 				}else{
-					_price = ["Tanoa",_drugcls] call OT_fnc_getDrugPrice;
+					_price = [OT_nation,_drugcls] call OT_fnc_getDrugPrice;
 					if(player call unitSeenNATO) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
-							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
+							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 							[_town,-OT_drugQty] call stability;
 						}else{
 							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;

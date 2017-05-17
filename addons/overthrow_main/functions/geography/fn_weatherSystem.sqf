@@ -1,4 +1,4 @@
-getWeather = {
+private _getWeather = {
 	private _forecast = _this;
 	private _wavetarget = 0;
 	private _fogtarget = 0;
@@ -60,7 +60,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 	server setVariable ["weatherversion",1,false];
 
 	_mode = ["Clear","Cloudy","Storm","Rain"] call BIS_fnc_selectRandom;
-	_weather = _mode call getWeather;
+	_weather = _mode call _getWeather;
 	_newOvercast = _weather select 0;
 
 	skiptime -24;
@@ -86,7 +86,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 	_count = 0;
 }else{
 	_forecast = server getVariable ["forecast","Clear"];
-	_weather = _forecast call getWeather;
+	_weather = _forecast call _getWeather;
 	_newOvercast = _weather select 0;
 	skiptime -24;
 	86400 setOvercast _newOvercast;
@@ -162,7 +162,7 @@ while {true} do {
 			if((random 100) > _cloudychance) exitWith {_forecast = "Clear"};
 		};
 	};
-	_weather = _forecast call getWeather;
+	_weather = _forecast call _getWeather;
 
 	_newOvercast = (_weather select 0);
 	120 setOvercast _newOvercast;

@@ -78,7 +78,7 @@ _numPlayers = count([] call CBA_fnc_players);
 _taxper = round(_taxtotal / _numPlayers);
 _totaxper = round(_totax / _numPlayers);
 
-private _perhr = (["Tanoa","WAGE",0] call OT_fnc_getPrice)*6;
+private _perhr = ([OT_nation,"WAGE",0] call OT_fnc_getPrice)*6;
 private _wages = 0;
 private _income = 0;
 {

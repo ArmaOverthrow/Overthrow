@@ -1,7 +1,7 @@
-[] execVM "income.sqf";
-addMissionEventHandler ["EntityKilled",compileFinal preprocessFileLineNumbers "events\somethingDied.sqf"];
+[] spawn OT_fnc_incomeSystem;
+addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 
-["Building", "Dammaged", compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf"] call CBA_fnc_addClassEventHandler;
+["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
 
 if (!isMultiplayer) exitWith {};
 
@@ -20,7 +20,7 @@ if(OT_fastTime) then {
 };
 
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-[] execVM "initEconomyLoad.sqf";
+[] spawn OT_fnc_initEconomyLoad;
 
 [] call OT_fnc_initNATO;
 [] execVM "factions\NATO.sqf";
@@ -30,9 +30,8 @@ waitUntil {!isNil "OT_NATOInitDone"};
 waitUntil {!isNil "OT_CRIMInitDone"};
 
 //Game systems
-[] execVM "bountySystem.sqf";
-[] execVM "propagandaSystem.sqf";
-[] execVM "weather.sqf";
+[] spawn OT_fnc_propagandaSystem;
+[] spawn OT_fnc_weatherSystem;
 
 //Init virtualization
 [] spawn OT_fnc_runVirtualization;
@@ -44,12 +43,12 @@ waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
 [] execVM "virtualization\factions.sqf";
 
 
-["ace_cargoLoaded",compile preprocessFileLineNumbers "events\cargoLoaded.sqf"] call CBA_fnc_addEventHandler;
-["ace_common_setFuel",compile preprocessFileLineNumbers "events\refuel.sqf"] call CBA_fnc_addEventHandler;
-["ace_explosives_place",compile preprocessFileLineNumbers "events\placeExplosives.sqf"] call CBA_fnc_addEventHandler;
+["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 
-addMissionEventHandler ["HandleDisconnect",compile preprocessFileLineNumbers "events\playerDisconnect.sqf"];
-addMissionEventHandler ["HandleConnnect",compile preprocessFileLineNumbers "events\playerConnect.sqf"];
+addMissionEventHandler ["HandleDisconnect",OT_fnc_playerConnectHandler];
+addMissionEventHandler ["HandleConnnect",OT_fnc_playerDisconnectHandler];
 
 OT_serverInitDone = true;
 publicVariable "OT_serverInitDone";

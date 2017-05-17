@@ -1,5 +1,5 @@
 closeDialog 0;
 "Generating economy" remoteExec['blackFaded',0,false];
-[] execVM "initEconomy.sqf";
+[] spawn OT_fnc_initEconomy;
 waitUntil {!isNil "OT_economyInitDone"};
 server setVariable["StartupType","NEW",true];

@@ -76,12 +76,12 @@ if(isMultiplayer) then {
 };
 
 _ctrl ctrlSetStructuredText parseText format["
-	<t align='left' size='0.65'>Standing: %2 (%3%4) Tanoa (%5%6)</t><br/>
+	<t align='left' size='0.65'>Standing: %2 (%3%4) %12 (%5%6)</t><br/>
 	<t align='left' size='0.65'>Influence: %9</t><br/>
 	<t align='left' size='0.65'>Weather: %7 (Forecast: %8)</t><br/>
 	<t align='left' size='0.65'>Fuel Price: $%11/L</t><br/>
 	%10
-",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0],_extra,["Tanoa","FUEL",100] call OT_fnc_getPrice];
+",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0],_extra,[OT_nation,"FUEL",100] call OT_fnc_getPrice,OT_nation];
 
 _ctrl = (findDisplay 8001) displayCtrl 1106;
 _ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber];

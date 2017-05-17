@@ -21,9 +21,6 @@ template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\
 
 [] call compileFinal preProcessFileLineNumbers "funcs\dict.sqf";
 
-//Events
-illegalContainerOpened = compileFinal preProcessFileLineNumbers "events\illegalContainerOpened.sqf";
-
 //Insertion
 reGarrisonTown = compileFinal preProcessFileLineNumbers "spawners\insertion\reGarrisonTown.sqf";
 sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims.sqf";
@@ -61,13 +58,6 @@ mpSetDir = {
 	if !(isNil "_dir") then {
 		_obj setDir _dir;
 	};
-};
-
-structureInit = {
-	private _veh = _this select 0;
-	private _pos = _this select 1;
-	private _code = compileFinal preProcessFileLineNumbers (_this select 2);
-	[_pos,_veh] spawn _code;
 };
 
 blackFaded = {

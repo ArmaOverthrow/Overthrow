@@ -156,7 +156,7 @@ private _cc = 0;
 					if(count _x > 6) then {
 						_code = (_x select 6);
 						if(_code != "") then {
-							[_veh,getpos _veh,_code] call structureInit;
+							[_veh,getpos _veh,_code] call OT_fnc_initBuilding;
 						};
 						_veh setVariable ["OT_init",_code,true];
 					};

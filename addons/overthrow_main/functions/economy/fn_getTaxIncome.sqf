@@ -4,7 +4,7 @@ private _inf = 0;
     private _town = _x;
     _total = _total + 250;
     if(_town in OT_allAirports) then {
-        _total = _total + ((server getVariable ["stabilityTanoa",100]) * 3); //Tourism income
+        _total = _total + ((server getVariable [format["stability%1",OT_nation],100]) * 3); //Tourism income
     };
     _inf = _inf + 1;
     if(_town in OT_allTowns) then {

@@ -2,6 +2,8 @@
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
+OT_nation = "Tanoa";
+
 call compileFinal preprocessFileLineNumbers "data\names.sqf";
 call compileFinal preprocessFileLineNumbers "data\towns.sqf";
 call compileFinal preprocessFileLineNumbers "data\airports.sqf";
@@ -156,7 +158,6 @@ OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F",OT_vehType_
 
 OT_item_CargoContainer = "B_Slingload_01_Cargo_F";
 
-OT_activeDistribution = [];
 OT_activeShops = [];
 OT_selling = false;
 OT_taking = false;
@@ -180,7 +181,6 @@ OT_illegalItems = OT_allDrugs;
 OT_item_UAV = "I_UAV_01_F";
 OT_item_UAVterminal = "I_UavTerminal";
 
-OT_items_distroStorage = ["CargoNet_01_box_F"]; //Where distribution centers store inventory
 OT_items_Simulate = ["Box_NATO_Equip_F","Box_T_East_Wps_F","B_CargoNet_01_ammo_F","OfficeTable_01_old_F","Land_PortableLongRangeRadio_F"]; //These will be saved, position + inventory and have gravity
 
 OT_staticMachineGuns = ["I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
@@ -934,7 +934,6 @@ OT_touristHouses = ["Land_House_Big_05_F"]; //hostels and the like
 OT_allShops = ["Land_Shop_Town_01_F","Land_Shop_Town_02_F","Land_Shop_Town_03_F","Land_Shop_Town_04_F","Land_Shop_Town_05_F","Land_Shop_City_01_F","Land_Shop_City_02_F","Land_Shop_City_03_F","Land_Shop_City_04_F","Land_Shop_City_05_F","Land_Shop_City_06_F","Land_Shop_City_07_F"]; //used to calculate civ spawn positions and initial stability
 OT_markets = []; //buildings/objects that will spawn local markets (no templates required)
 OT_shops = ["Land_FuelStation_01_shop_F","Land_Shop_Town_01_F","Land_Shop_Town_03_F","Land_Shop_City_02_F","Land_Supermarket_01_F"]; //buildings that will spawn the main shops (must have a template with a cash register)
-OT_warehouses = ["Land_Warehouse_03_F"]; //buildings that will spawn local distribution centers
 OT_carShops = ["Land_FuelStation_01_workshop_F","Land_FuelStation_02_workshop_F"]; //buildings that will spawn car salesmen (must have a template with a cash register)
 OT_piers = ["Land_PierConcrete_01_4m_ladders_F","Land_PierWooden_01_platform_F","Land_PierWooden_01_hut_F","Land_PierWooden_02_hut_F"]; //spawns dudes that sell boats n stuff
 OT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
@@ -953,18 +952,18 @@ OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + 
 OT_allRealEstate = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_warehouse,OT_policeStation,OT_barracks,OT_barracks,OT_workshopBuilding,OT_refugeeCamp,OT_trainingCamp];
 
 OT_Buildables = [
-	["Training Camp",1500,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","structures\trainingCamp.sqf",true,"Allows training of recruits and hiring of mercenaries"],
+	["Training Camp",1500,[] call compileFinal preProcessFileLineNumbers "templates\military\trainingCamp.sqf","OT_fnc_initTrainingCamp",true,"Allows training of recruits and hiring of mercenaries"],
 	["Bunkers",500,["Land_BagBunker_01_small_green_F","Land_HBarrier_01_big_tower_green_F","Land_HBarrier_01_tower_green_F"],"",false,"Small Defensive Structures. Press space to change type."],
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Informs helicopter pilots of where might be a nice place to land"],
-	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"structures\observationPost.sqf",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
+	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"OT_fnc_initObservationPost",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
 	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
 	["Guard Tower",5000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need?."],
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
-	["Workshop",1000,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","structures\workshop.sqf",true,"Attach weapons to vehicles"],
+	["Workshop",1000,[] call compileFinal preProcessFileLineNumbers "templates\military\workshop.sqf","OT_fnc_initWorkshop",true,"Attach weapons to vehicles"],
 	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
-	["Police Station",2500,[OT_policeStation],"structures\policeStation.sqf",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."],
-	["Warehouse",4000,[OT_warehouse],"structures\warehouse.sqf",false,"A house that you put wares in."],
+	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."],
+	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
 	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"]
 ];
 

@@ -46,4 +46,4 @@
 
 #define DEBUG_SYNCHRONOUS
 
-#include "headers\macros.hpp"
+#include "headers\script_macros.hpp"

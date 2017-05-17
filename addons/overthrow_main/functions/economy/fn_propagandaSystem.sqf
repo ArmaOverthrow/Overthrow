@@ -51,8 +51,8 @@ while {true} do {
 				};
 			};
 		}foreach(OT_allTowns);
-		server setVariable ["stabilityTanoa",_totalStability / (count OT_allTowns),true];
-		server setVariable ["populationTanoa",_totalPop,true];
+		server setVariable [format["stability%1",OT_nation],_totalStability / (count OT_allTowns),true];
+		server setVariable [format["population%1",OT_nation],_totalPop,true];
 	};
 	waitUntil {sleep 5;(date select 3) != _lasthour}; //do actions on the hour
 };

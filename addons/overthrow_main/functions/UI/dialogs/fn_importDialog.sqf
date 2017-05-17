@@ -20,7 +20,7 @@ _numitems = 0;
 
 	if !((_cls in _done) or (_cls in OT_allExplosives)) then {
 		_done pushback _cls;
-		_price = ["Tanoa",_cls,100] call OT_fnc_getPrice;
+		_price = [OT_nation,_cls,100] call OT_fnc_getPrice;
 		_name = "";
 		_pic = "";
 

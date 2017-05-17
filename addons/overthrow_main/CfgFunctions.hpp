@@ -37,6 +37,8 @@ class CfgFunctions
 			class wantedSystem {};
 			class playerIsOwner {};
 			class playerIsGeneral {};
+			class playerIsAtWarehouse {};
+			class tutorial {};
 		};
 
 		class Interaction
@@ -52,6 +54,14 @@ class CfgFunctions
 			file = "\ot\functions\events";
 			class preInit {preInit = 1};
 			class postInit {postInit = 1};
+			class deathHandler {};
+			class buildingDamagedHandler {};
+			class cargoLoadedHandler {};
+			class explosivesPlacedHandler {};
+			class cargoLoadedHandler {};
+			class playerConnectHandler {};
+			class playerDisconnectHandler {};
+			class refuelHandler {};
 		};
 
 		class UI
@@ -180,7 +190,7 @@ class CfgFunctions
 			class regionIsConnected {};
 			class getAO {};
 			class getBuildId {};
-			class playerIsAtWarehouse {};
+			class weatherSystem {};
 		}
 
 		/*
@@ -207,6 +217,8 @@ class CfgFunctions
 		class Economy
 		{
 			file = "\ot\functions\economy";
+			class initEconomy {};
+			class initEconomyLoad {};
 			class setupTownEconomy {};
 			class standing {};
 			class getPrice {};
@@ -218,6 +230,8 @@ class CfgFunctions
 			class getBusinessPrice {};
 			class getTaxIncome {};
 			class resistanceFunds {};
+			class incomeSystem {};
+			class propagandaSystem {};
 		}
 
 		/*
@@ -345,6 +359,14 @@ class CfgFunctions
 			file = "\ot\functions\factions\NATO\AI";
 			class NATODrone {};
 			class NATOMortar {};
+		};
+
+		class Buildings
+		{
+			file = "\ot\functions\buildings";
+			class initBuilding {};
+			class initObservationPost {};
+
 		};
 
 		/*

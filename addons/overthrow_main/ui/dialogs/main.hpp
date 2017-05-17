@@ -952,7 +952,7 @@ class OT_dialog_tute
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "closeDialog 0;[] execVM ""tutorial.sqf""";
+			action = "closeDialog 0;[] spawn OT_fnc_tutorial;";
 
 			text = "Yes"; //--- ToDo: Localize;
 			x = 0.340156 * safezoneW + safezoneX;

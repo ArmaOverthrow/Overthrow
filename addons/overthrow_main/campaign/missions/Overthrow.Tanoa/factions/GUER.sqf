@@ -45,7 +45,7 @@ while {true} do {
 		private _wages = 0;
 		{
 			if(_x != "Factory") then {
-				private _perhr = ["Tanoa","WAGE",0] call OT_fnc_getPrice;
+				private _perhr = [OT_nation,"WAGE",0] call OT_fnc_getPrice;
 				_num = server getVariable [format["%1employ",_x],0];
 				_enum = _num;
 				if(_enum > 20) then {
@@ -72,7 +72,7 @@ while {true} do {
 							//Turns something into money
 							_input = _data select 2;
 							_income = 0;
-							_sellprice = round((["Tanoa",_input,0] call OT_fnc_getSellPrice) * 1.2);
+							_sellprice = round(([OT_nation,_input,0] call OT_fnc_getSellPrice) * 1.2);
 							_container = _pos nearestObject OT_item_CargoContainer;
 							if(_container isEqualTo objNull) then {
 								_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];

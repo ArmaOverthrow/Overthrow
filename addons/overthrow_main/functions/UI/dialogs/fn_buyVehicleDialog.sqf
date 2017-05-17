@@ -7,7 +7,7 @@ private _ob = (getpos player) call OT_fnc_nearestObjective;
 _ob params ["_obpos","_obname"];
 if(_obpos distance player < 250) then {
 	if(_obname in (server getVariable ["NATOabandoned",[]])) then {
-		_town = "Tanoa";
+		_town = OT_nation;
 		_standing = 100;
 		if((_obname in OT_allAirports) or OT_adminMode) then {
 			_items = OT_helis + OT_vehicles + OT_staticBackpacks + [["Set_HMG"]];

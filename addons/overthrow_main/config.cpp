@@ -1,4 +1,5 @@
-#include "script_component.hpp"
+#include "script_mod.hpp"
+#include "headers\config_macros.hpp"
 
 #include "ui\dialogs\defines.hpp"
 #include "ui\dialogs\stats.hpp"

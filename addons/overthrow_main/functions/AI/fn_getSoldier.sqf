@@ -17,7 +17,7 @@ private _warehouseTertiary = false;
 private _warehousePistol = false;
 
 //calculate cost
-private _cost = floor((["Tanoa","CIV",0] call OT_fnc_getPrice) * 1.5);
+private _cost = floor(([OT_nation,"CIV",0] call OT_fnc_getPrice) * 1.5);
 
 private _wpn = [_primary] call OT_fnc_findWeaponInWarehouse;
 if(_wpn == "") then {

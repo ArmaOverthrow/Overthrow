@@ -1,5 +1,5 @@
 private _faction = "PLAYER";
-private _factionName = "Tanoa";
+private _factionName = OT_nation;
 private _haveMission = player getVariable [format["MissionData%1",_faction],[]];
 if(count _haveMission > 0) exitWith {"You already have an active mission for the resistance" call OT_fnc_notifyMinor};
 private _standing = 1;

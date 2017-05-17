@@ -40,8 +40,8 @@ if(typename _create == "SCALAR") then {
     if(_create == "HMG") then {
         _p = _pos findEmptyPosition [30,80,"I_HMG_01_high_F"];
 
-        _cost = ["Tanoa","I_HMG_01_high_weapon_F",0] call OT_fnc_getPrice;
-        _cost = _cost + (["Tanoa","CIV",0] call OT_fnc_getPrice);
+        _cost = [OT_nation,"I_HMG_01_high_weapon_F",0] call OT_fnc_getPrice;
+        _cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
         _cost = _cost + 300;
 
         private _money = player getVariable ["money",0];
@@ -57,8 +57,8 @@ if(typename _create == "SCALAR") then {
     if(_create == "GMG") then {
         _p = _pos findEmptyPosition [10,50,"I_GMG_01_high_F"];
 
-        _cost = ["Tanoa","I_GMG_01_high_weapon_F",0] call OT_fnc_getPrice;
-        _cost = _cost + (["Tanoa","CIV",0] call OT_fnc_getPrice);
+        _cost = [OT_nation,"I_GMG_01_high_weapon_F",0] call OT_fnc_getPrice;
+        _cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
         _cost = _cost + 300;
 
         private _money = player getVariable ["money",0];

@@ -4,7 +4,7 @@ OT_taking = true;
 private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 private _num = _this select 0;
-private _price = ["Tanoa",_cls,100] call OT_fnc_getPrice;
+private _price = [OT_nation,_cls,100] call OT_fnc_getPrice;
 _total = (_num * _price);
 private _veh = (vehicle player);
 

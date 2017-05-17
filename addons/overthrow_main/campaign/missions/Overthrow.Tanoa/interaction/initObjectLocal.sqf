@@ -1,6 +1,5 @@
 if(typeof _this == OT_item_Map) then {
 	_this addAction ["Town Info", OT_fnc_mapInfoDialog,nil,0,false,true,"",""];
-	_this addAction ["Most Wanted", "actions\mostWanted.sqf",nil,0,false,true,"",""];
 	_this addAction ["Reset UI", {
 		closedialog 0;
 		[] spawn OT_fnc_setupPlayer;

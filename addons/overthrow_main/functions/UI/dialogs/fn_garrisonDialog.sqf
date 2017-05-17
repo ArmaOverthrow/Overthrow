@@ -43,13 +43,13 @@ _soldier = ((OT_recruitables select 10) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1606;
-_cost = ["Tanoa","I_HMG_01_high_weapon_F",0] call OT_fnc_getPrice;
-_cost = _cost + (["Tanoa","CIV",0] call OT_fnc_getPrice);
+_cost = [OT_nation,"I_HMG_01_high_weapon_F",0] call OT_fnc_getPrice;
+_cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
 _cost = _cost + 300;
 _btn ctrlSetTooltip format["$%1",[_cost, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1607;
-_cost = ["Tanoa","I_GMG_01_high_weapon_F",0] call OT_fnc_getPrice;
-_cost = _cost + (["Tanoa","CIV",0] call OT_fnc_getPrice);
+_cost = [OT_nation,"I_GMG_01_high_weapon_F",0] call OT_fnc_getPrice;
+_cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
 _cost = _cost + 300;
 _btn ctrlSetTooltip format["$%1",[_cost, 1, 0, true] call CBA_fnc_formatNumber];

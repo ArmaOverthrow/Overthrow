@@ -22,6 +22,6 @@ if(count _data == 4) then {
         };
     };
 };
-private _stability = 1.0 - ((server getVariable ["stabilityTanoa",100]) / 100);
+private _stability = 1.0 - ((server getVariable [format["stability%1",OT_nation],100]) / 100);
 
 _baseprice + (_baseprice * _stability)
