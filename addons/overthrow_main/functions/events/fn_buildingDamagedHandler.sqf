@@ -16,7 +16,7 @@ if(damage _obj == 1) then {
             _abandoned = server getVariable ["NATOabandoned",[]];
             server setVariable [format["police%1",_town],0,true];
             if(_town in _abandoned) then {
-                [_town,-20] call stability;
+                [_town,-20] call OT_fnc_stability;
                 format ["Police station destroyed in %1",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
             };
         };

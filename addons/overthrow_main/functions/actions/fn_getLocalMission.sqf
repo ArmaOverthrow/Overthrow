@@ -54,4 +54,4 @@ _options pushback ["Cancel",{
     OT_currentMissionData = nil;
 }];
 
-_options spawn playerDecision;
+_options spawn OT_fnc_playerDecision;

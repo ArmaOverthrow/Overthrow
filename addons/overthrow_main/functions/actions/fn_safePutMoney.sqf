@@ -4,7 +4,7 @@ OT_inputHandler = {
 	_cash = player getVariable ["money",0];
 	if(_val > _cash) then {_val = _cash};
 	if(_val > 0) then {
-		[-_val] call money;
+		[-_val] call OT_fnc_money;
 		_in = OT_context getVariable ["money",0];
 		OT_context setVariable ["money",_in + _val,true];
 	};

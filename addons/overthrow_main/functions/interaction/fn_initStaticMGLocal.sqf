@@ -4,7 +4,7 @@ if !(_wpn getVariable ["actioned",false]) then {
 	_wpn addAction ["Rearm",{		
 		_w = _this select 0;
 		_p = _this select 1;
-		if(_p call unitSeen) then {
+		if(_p call OT_fnc_unitSeen) then {
 			_p setCaptive false;
 		};
 		_ammocount = {_x == OT_ammo_50cal} count (magazineCargo _p);
@@ -16,7 +16,7 @@ if !(_wpn getVariable ["actioned",false]) then {
 			_p removeMagazineGlobal OT_ammo_50cal;
 			_w spawn {					
 				"Rearming MG..." call OT_fnc_notifyMinor;
-				[15,false] call progressBar;
+				[15,false] call OT_fnc_progressBar;
 				sleep 15;
 				[_this,1] remoteExec ["setVehicleAmmoDef",_this,_this];
 				"MG rearmed" call OT_fnc_notifyMinor;

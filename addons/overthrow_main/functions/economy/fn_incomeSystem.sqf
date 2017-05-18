@@ -46,7 +46,7 @@ while {true} do {
 					_tt = round(_lease * (_tax / 100));
 				};
 				_totax = _totax + _tt;
-				[_lease-_tt,"Lease Income"] remoteExec ["money",_x,false];
+				[_lease-_tt,"Lease Income"] remoteExec ["OT_fnc_money",_x,false];
 			};
 		}foreach([] call CBA_fnc_players);
 
@@ -65,14 +65,14 @@ while {true} do {
 				if(_diff == 0) then {_perPlayer = round(_perPlayer * 1.2)};
 				if(_diff == 2) then {_perPlayer = round(_perPlayer * 0.8)};
 
-				_inf remoteExec ["influenceSilent",0,false];
+				_inf remoteExec ["OT_fnc_influenceSilent",0,false];
 				{
 					_money = _x getVariable ["money",0];
 					_x setVariable ["money",_money+_perPlayer,true];
 				}foreach([] call CBA_fnc_players);
 				format ["Tax income: $%1 (+%2 Influence)",[_perPlayer, 1, 0, true] call CBA_fnc_formatNumber,_inf] remoteExec ["OT_fnc_notifyGood",0,true];
 			}else{
-				_inf remoteExec ["influence",0,false];
+				_inf remoteExec ["OT_fnc_influence",0,false];
 			};
 		};
 	};

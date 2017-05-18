@@ -10,7 +10,7 @@ if(!dialog) then {
 		if((vehicle player) != player and count (player nearObjects [OT_portBuilding,30]) > 0) then {
 			createDialog "OT_dialog_vehicleport";
 		}else{
-			[] spawn menuHandler;
+			[] spawn OT_menuHandler;
 			if(hcShownBar and count (hcSelected player) > 0) exitWith {
 				createDialog "OT_dialog_squad";
 			};
@@ -34,7 +34,7 @@ if(!dialog) then {
 					if((player getVariable "money") < _cost) exitWith {
 						"You cannot afford that!" call OT_fnc_notifyMinor;
 					};
-					[-_cost] call money;
+					[-_cost] call OT_fnc_money;
 					cutText [format["Skipping ferry to %1",_town],"BLACK",2];
 					player setVariable ["OT_ferryDestination",[],false];
 					[_ferry,_veh] spawn {

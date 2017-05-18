@@ -4,7 +4,7 @@ params ["_unit","_ammobox","_name"];
 _loadout = profileNamespace getVariable format["OT_loadout_%1",_name];
 _loadout params ["_primary","_secondary","_tertiary","_uniform","_vest","_backpack","_headgear","_goggles","_optic","_assigned"];
 
-[_unit,_ammobox] call dumpStuff;
+[_unit,_ammobox] call OT_fnc_dumpStuff;
 
 if(count _primary > 0) then {
 	private _pWpn = _primary select 0;

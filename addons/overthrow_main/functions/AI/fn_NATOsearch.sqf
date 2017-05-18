@@ -123,7 +123,7 @@ if((_target distance _posnow) > 2) exitWith {
 	[_group,_cop,_target,_hdl] call _cleanup;
 	_target setCaptive false;
 
-	_target spawn revealToNATO;
+	_target spawn OT_fnc_revealToNATO;
 };
 
 private _msg = "";
@@ -149,7 +149,7 @@ if(isplayer _target) then {
 			};
 			_foundillegal = true;
 		};
-	}foreach(_target call searchStock);
+	}foreach(_target call OT_fnc_getSearchStock);
 
 	if(_foundillegal or _foundweapons) then {
 		if(_foundweapons) then {
@@ -158,7 +158,7 @@ if(isplayer _target) then {
 				"NATO found weapons" remoteExecCall ["hint",_target,false];
 			};
 			_target setCaptive false;
-			_target spawn revealToNATO;
+			_target spawn OT_fnc_revealToNATO;
 		}else{
 			if(isplayer _target) then {
 				private _stealth = _target getVariable ["OT_stealth",1];

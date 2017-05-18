@@ -16,6 +16,7 @@ class CfgFunctions
 			class unitStock {};
 			class setOwner {};
 			class getOwner {};
+			class vehicleCanMove {};
 		};
 
 		class Factions
@@ -23,6 +24,12 @@ class CfgFunctions
 			file = "\ot\functions\factions";
 			class factionNATO {};
 			class factionGUER {};
+			class unitSeen {};
+			class unitSeenNATO {};
+			class unitSeenCRIM {};
+			class unitSeenAny {};
+			class revealToNATO {};
+			class revealToCRIM {};
 		}
 
 		/* Persistent Save */
@@ -49,6 +56,10 @@ class CfgFunctions
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
 			class tutorial {};
+			class influence {};
+			class influenceSilent {};
+			class rewardMoney {};
+			class money {};
 		};
 
 		class Interaction
@@ -57,6 +68,8 @@ class CfgFunctions
 			class mountAttached {};
 			class initAttached {};
 			class updateAttached {};
+			class initObjectLocal {};
+			class initStaticMGLocal {};
 		};
 
 		class Events
@@ -82,6 +95,10 @@ class CfgFunctions
 			class notifyBig {};
 			class notifyGood {};
 			class notifyVehicle {};
+			class playerDecision {};
+			class notifyStart {};
+			class progressBar {};
+			class getAssignedKey {};
 		};
 
 		class Dialogs
@@ -108,6 +125,8 @@ class CfgFunctions
 			class reverseEngineerDialog {};
 			class vehicleDialog {};
 			class mapInfoDialog {};
+			class characterSheetDialog {};
+			class manageRecruitsDialog {};
 		};
 
 		class Display
@@ -138,6 +157,7 @@ class CfgFunctions
 			class leaseBuilding {};
 			class place {};
 			class setHome {};
+			class build {};
 
 			/* Options */
 			class increaseTax {};
@@ -187,6 +207,8 @@ class CfgFunctions
 			class removeLoadout {};
 			class restoreLoadout {};
 			class saveLoadout {};
+			class dumpStuff {};
+			class takeStuff {};
 
 			/* Other */
 			class recruitSoldier {};
@@ -277,6 +299,7 @@ class CfgFunctions
 			class resistanceFunds {};
 			class incomeSystem {};
 			class propagandaSystem {};
+			class stability {};
 		}
 
 		/*
@@ -295,6 +318,7 @@ class CfgFunctions
 			class vehicleGetPic {};
 			class magazineGetDescription {};
 			class vehicleGetDescription {};
+			class getSearchStock {};
 		};
 
 		/*
@@ -337,6 +361,7 @@ class CfgFunctions
 			class squadAssignVehicle {};
 			class squadGetIn {};
 			class squadGetOut {};
+			class orderStopAndFace {};
 		};
 
 		/*

@@ -13,7 +13,7 @@ OT_inputHandler = {
 		    if(getplayeruid _x == _uid) exitWith {_player = _x};
 		}foreach(allplayers);
 		if !(isNull _player) then {
-			[_val] remoteExec ["money",_player,false];
+			[_val] remoteExec ["OT_fnc_money",_player,false];
 		}else{
 			private _money = [_uid,"money"] call OT_fnc_getOfflinePlayerAttribute;
 			[_uid,"money",_money+_val] call OT_fnc_setOfflinePlayerAttribute;

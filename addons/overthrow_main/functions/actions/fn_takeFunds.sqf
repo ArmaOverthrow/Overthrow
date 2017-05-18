@@ -5,7 +5,7 @@ OT_inputHandler = {
 	if(_val > _cash) then {_val = _cash};
 	if(_val > 0) then {
 		[-_val] call OT_fnc_resistanceFunds;
-        [_val] call money;
+        [_val] call OT_fnc_money;
 	};
 };
 

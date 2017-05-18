@@ -152,10 +152,10 @@ if(_cost > 0) then {
 		deleteVehicle modeTarget;
 	}else{
 		if ([getpos player,_typecls] call OT_fnc_canPlace) then {
-			[-_cost] call money;
+			[-_cost] call OT_fnc_money;
 			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
 			[modeTarget,getPlayerUID player] call OT_fnc_setOwner;
-			modeTarget remoteExec["initObjectLocal",0,modeTarget];
+			modeTarget remoteExec["OT_fnc_initObjectLocal",0,modeTarget];
 			if(_typecls == "Base" or _typecls == "Camp") then {
 				_veh = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
 			};

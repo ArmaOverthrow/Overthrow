@@ -15,7 +15,7 @@ _garrison = _garrison + _amt;
 server setVariable [format["police%1",_town],_garrison,true];
 
 
-[-(_amt*_price)] call money;
+[-(_amt*_price)] call OT_fnc_money;
 
 _effect = floor(_garrison / 2);
 if(_effect == 0) then {_effect = "None"} else {_effect = format["+%1 Stability/hr",_effect]};

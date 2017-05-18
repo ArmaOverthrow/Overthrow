@@ -59,7 +59,7 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
     sleep 1;
     _nul = createDialog "OT_dialog_start";
 }else{
-	"Loading" call blackFaded;
+	"Loading" call OT_fnc_notifyStart;
 };
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 
@@ -326,7 +326,7 @@ _count = 0;
 {
 	if !(_x isKindOf "Vehicle") then {
 		if(_x call OT_fnc_hasOwner) then {
-			_x call initObjectLocal;
+			_x call OT_fnc_initObjectLocal;
 		};
 	};
 	if(_count > 5000) then {
@@ -347,10 +347,10 @@ player addEventHandler ["WeaponAssembled",{
 	_wpn = _this select 1;
 	_pos = position _wpn;
 	if(typeof _wpn in OT_staticMachineGuns) then {
-		_wpn remoteExec["initStaticMGLocal",0,_wpn];
+		_wpn remoteExec["OT_fnc_initStaticMGLocal",0,_wpn];
 	};
 	if(typeof _wpn in OT_staticWeapons) then {
-		if(_me call unitSeen) then {
+		if(_me call OT_fnc_unitSeen) then {
 			_me setCaptive false;
 		};
 	};
@@ -384,7 +384,7 @@ player addEventHandler ["GetInMan",{
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
-			if((_veh getVariable ["ambient",false]) and (player call unitSeenAny)) then {
+			if((_veh getVariable ["ambient",false]) and (player call OT_fnc_unitSeenAny)) then {
 				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
 			};
 		}else{
@@ -405,7 +405,7 @@ player addEventHandler ["GetInMan",{
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
-		_veh spawn revealToNATO;
+		_veh spawn OT_fnc_revealToNATO;
 	};
 	_g = _v getVariable ["airgarrison",false];
 	if(typename _g == "STRING") then {
@@ -416,7 +416,7 @@ player addEventHandler ["GetInMan",{
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
-		_veh spawn revealToNATO;
+		_veh spawn OT_fnc_revealToNATO;
 	};
 }];
 

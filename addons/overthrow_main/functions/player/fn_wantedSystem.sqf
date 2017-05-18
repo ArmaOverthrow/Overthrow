@@ -20,11 +20,11 @@ _unit addEventHandler ["take", {
 					hideBody _n;
 				}
 			};
-			if (!(_container call OT_fnc_hasOwner) and (_me call unitSeen)) then {
+			if (!(_container call OT_fnc_hasOwner) and (_me call OT_fnc_unitSeen)) then {
 				//Looting dead bodies is illegal
 				_me setCaptive false;
-				_me spawn revealToNATO;
-				_me spawn revealToCRIM;
+				_me spawn OT_fnc_revealToNATO;
+				_me spawn OT_fnc_revealToCRIM;
 			};
 		};
 	};
@@ -44,7 +44,7 @@ _unit addEventHandler ["Fired", {
 
 		if({(side _x == west || side _x == east) and ((leader _x) distance _me) < _range} count (allgroups) > 0) exitWith {
 			_me setCaptive false;
-			_me spawn revealToNATO;
+			_me spawn OT_fnc_revealToNATO;
 		};
 	};
 }];
@@ -109,7 +109,7 @@ if(isPlayer _unit) then {
 							}foreach(allvariables player);
 							player setDamage 0;
 
-							-1 call influence;
+							-1 call OT_fnc_influence;
 							sleep 2;
 							player setDamage 0;
 							player linkItem "ItemMap";
@@ -141,14 +141,14 @@ while {alive _unit} do {
 			if(_timer >= 30) then {
 				_unit setCaptive true;
 			}else{
-				if (_unit call unitSeen) then {
+				if (_unit call OT_fnc_unitSeen) then {
 					_unit setCaptive false;
 					_timer = 0;
 					_unit setVariable ["hiding",30,false];
 				};
 			};
 		}else{
-			if !(_unit call unitSeen) then {
+			if !(_unit call OT_fnc_unitSeen) then {
 				_unit setVariable ["hiding",30,false];
 				_timer = 0;
 			};
@@ -172,7 +172,7 @@ while {alive _unit} do {
 									"This is a no-fly zone" call OT_fnc_notifyMinor;
 								};
 								_unit setCaptive false;
-								(vehicle _unit) spawn revealToNATO;
+								(vehicle _unit) spawn OT_fnc_revealToNATO;
 								_delay = 90;
 							};
 						};
@@ -180,14 +180,14 @@ while {alive _unit} do {
 				};
 			};
 		}else{
-			if(_unit call unitSeenCRIM) then {
+			if(_unit call OT_fnc_unitSeenCRIM) then {
 				sleep 0.1;
 				//chance they will just notice you if your global rep is very high or low
 				if(count attachedObjects _unit > 0) exitWith {
 					{
 						if(typeOf _x in OT_staticWeapons) exitWith {
 							_unit setCaptive false;
-							_unit spawn revealToNATO;
+							_unit spawn OT_fnc_revealToNATO;
 							if(isPlayer _unit) then {
 								"A gang has seen the static weapon" call OT_fnc_notifyMinor;
 							};
@@ -211,7 +211,7 @@ while {alive _unit} do {
 						{
 							_x setCaptive false;
 						}foreach(crew vehicle _unit);
-						(vehicle _unit) spawn revealToCRIM;
+						(vehicle _unit) spawn OT_fnc_revealToCRIM;
 					};
 				};
 				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {
@@ -219,7 +219,7 @@ while {alive _unit} do {
 						"A gang has seen your weapon" call OT_fnc_notifyMinor;
 					};
 					_unit setCaptive false;
-					_unit spawn revealToNATO;
+					_unit spawn OT_fnc_revealToNATO;
 				};
 				_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
 				_replim = 50;
@@ -234,11 +234,11 @@ while {alive _unit} do {
 						if(isPlayer _unit) then {
 							"A gang has recognized you" call OT_fnc_notifyMinor;
 						};
-						_unit spawn revealToCRIM;
+						_unit spawn OT_fnc_revealToCRIM;
 					};
 				};
 			}else{
-				if(_unit call unitSeenNATO) then {
+				if(_unit call OT_fnc_unitSeenNATO) then {
 					sleep 0.1;
 					_town = (getpos _unit) call OT_fnc_nearestTown;
 					_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
@@ -256,14 +256,14 @@ while {alive _unit} do {
 							if(isPlayer _unit) then {
 								"NATO has recognized you" call OT_fnc_notifyMinor;
 							};
-							_unit spawn revealToNATO;
+							_unit spawn OT_fnc_revealToNATO;
 						}
 					};
 					if(count attachedObjects _unit > 0) exitWith {
 						{
 							if(typeOf _x in OT_staticWeapons) exitWith {
 								_unit setCaptive false;
-								_unit spawn revealToNATO;
+								_unit spawn OT_fnc_revealToNATO;
 								if(isPlayer _unit) then {
 									"NATO has seen the static weapon" call OT_fnc_notifyMinor;
 								};
@@ -285,7 +285,7 @@ while {alive _unit} do {
 						if(_bad) then {
 							//Set the whole car wanted
 							_unit setcaptive false;
-							(vehicle _unit) spawn revealToNATO;
+							(vehicle _unit) spawn OT_fnc_revealToNATO;
 						};
 					};
 					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {
@@ -298,7 +298,7 @@ while {alive _unit} do {
 						};
 						if(_bad) then {
 							_unit setCaptive false;
-							_unit spawn revealToNATO;
+							_unit spawn OT_fnc_revealToNATO;
 						};
 					};
 					if ((headgear _unit in OT_illegalHeadgear) or (vest _unit in OT_illegalVests)) exitWith {
@@ -306,14 +306,14 @@ while {alive _unit} do {
 							"You are wearing Gendarmerie gear" call OT_fnc_notifyMinor;
 						};
 						_unit setCaptive false;
-						_unit spawn revealToNATO;
+						_unit spawn OT_fnc_revealToNATO;
 					};
 					if (hmd _unit != "") exitWith {
 						if(isPlayer _unit) then {
 							"NATO has spotted your NV Goggles" call OT_fnc_notifyMinor;
 						};
 						_unit setCaptive false;
-						_unit spawn revealToNATO;
+						_unit spawn OT_fnc_revealToNATO;
 					};
 					_base = (getpos player) call OT_fnc_nearestObjective;
 					if !(isNil "_base") then {
@@ -331,7 +331,7 @@ while {alive _unit} do {
 									"You are in a restricted area" call OT_fnc_notifyMinor;
 								};
 								_unit setCaptive false;
-								_unit spawn revealToNATO;
+								_unit spawn OT_fnc_revealToNATO;
 							};
 						};
 					};
@@ -349,7 +349,7 @@ while {alive _unit} do {
 				_unit setCaptive false;
 				_unit setVariable ["hiding",30,false];
 				//Radar is active here
-				(vehicle _unit) spawn revealToNATO;
+				(vehicle _unit) spawn OT_fnc_revealToNATO;
 			};
 		};
 	};

@@ -34,7 +34,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 			_friendly pushback _x;
 		};
 		if !(_unit in _inrange or _unit in _searching or _unit in _searched) then {
-			if(_unit call unitSeenNATO) then {
+			if(_unit call OT_fnc_unitSeenNATO) then {
 
 				if((isPlayer _unit) and (captive _unit)) then {
 					if(_iscar) then {
@@ -68,7 +68,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 			_gone pushback _x;
 			if(isPlayer _x and !(_x in _searched)) then {
 				_x setCaptive false;
-				_x spawn revealToNATO;
+				_x spawn OT_fnc_revealToNATO;
 			};
 		}else{
 			_iscar = false;
@@ -83,7 +83,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 							_v = vehicle _x;
 							_v setVelocity [0,0,0];
 							{
-								[_x,_v,true] call dumpStuff;
+								[_x,_v,true] call OT_fnc_dumpStuff;
 							}foreach(units _v);
 						};
 					};
