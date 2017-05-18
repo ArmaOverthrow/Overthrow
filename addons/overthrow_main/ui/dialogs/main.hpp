@@ -835,7 +835,7 @@ class OT_dialog_main
 			y = 0.775 * safezoneH + safezoneY;
 			w = 0.159844 * safezoneW;
 			h = 0.055 * safezoneH;
-			action = "deleteVehicle cursorTarget;ctrlShow [1614,false];ctrlShow [1202,false];"
+			action = "deleteVehicle cursorTarget;ctrlShow [1614,false];ctrlShow [1202,false];";
 		};
 
 		////////////////////////////////////////////////////////
@@ -1114,7 +1114,7 @@ class OT_dialog_newgame
             y = 0.313 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_difficulty"",0,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_difficulty"",0,true];call OT_fnc_newGameDialog;";
         };
         class RscButton_1601: RscOverthrowButton
         {
@@ -1124,7 +1124,7 @@ class OT_dialog_newgame
             y = 0.313 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_difficulty"",1,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_difficulty"",1,true];call OT_fnc_newGameDialog;";
             color[] = {0,0.8,0,1};
         };
         class RscButton_1602: RscOverthrowButton
@@ -1135,7 +1135,7 @@ class OT_dialog_newgame
             y = 0.313 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_difficulty"",2,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_difficulty"",2,true];call OT_fnc_newGameDialog;";
         };
         class RscStructuredText_1101: RscOverthrowStructuredText
         {
