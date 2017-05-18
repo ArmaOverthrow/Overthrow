@@ -23,7 +23,7 @@ class CfgFunctions
 			file = "\ot\functions\factions";
 			class factionNATO {};
 			class factionGUER {};
-		}
+		};
 
 		/* Persistent Save */
 		class Save
@@ -195,7 +195,7 @@ class CfgFunctions
 			class addPolice {};
 			class lockVehicle {};
 			class reverseEngineer {};
-		}
+		};
 
 		/*
 		* Locations, positions etc.
@@ -218,7 +218,7 @@ class CfgFunctions
 			class getAO {};
 			class getBuildId {};
 			class weatherSystem {};
-		}
+		};
 
 		/*
 		* The spawner
@@ -277,7 +277,7 @@ class CfgFunctions
 			class resistanceFunds {};
 			class incomeSystem {};
 			class propagandaSystem {};
-		}
+		};
 
 		/*
 		* Inventory transfer and manegement
@@ -365,7 +365,7 @@ class CfgFunctions
 			class initShopkeeper {};
 			class initSniper {};
 			class initRecruit {};
-		}
+		};
 
 		/*
 		* Math.. how does it work?

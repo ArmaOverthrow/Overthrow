@@ -14,7 +14,7 @@ class OT_dialog_start
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -167,8 +167,8 @@ class OT_dialog_vehicle
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
-}
+	};
+};
 
 class OT_dialog_vehiclewarehouse
 {
@@ -254,8 +254,8 @@ class OT_dialog_vehiclewarehouse
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
-}
+	};
+};
 
 class OT_dialog_vehicleport
 {
@@ -330,8 +330,8 @@ class OT_dialog_vehicleport
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
-}
+	};
+};
 
 class OT_dialog_command
 {
@@ -406,8 +406,8 @@ class OT_dialog_command
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
-}
+	};
+};
 
 class OT_dialog_squad
 {
@@ -482,8 +482,8 @@ class OT_dialog_squad
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
-}
+	};
+};
 
 class OT_dialog_options
 {
@@ -614,7 +614,7 @@ class OT_dialog_main
 			h = 1 * safezoneH;
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -921,8 +921,8 @@ class OT_dialog_char
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};
 
 
 class OT_dialog_tute
@@ -941,7 +941,7 @@ class OT_dialog_tute
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -985,8 +985,8 @@ class OT_dialog_tute
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};
 
 class OT_dialog_choose
 {
@@ -1078,8 +1078,8 @@ class OT_dialog_choose
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};
 
 
 class OT_dialog_newgame
@@ -1098,7 +1098,7 @@ class OT_dialog_newgame
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
