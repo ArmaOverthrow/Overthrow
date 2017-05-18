@@ -57,7 +57,7 @@ private _vehicles = [];
 
 _count = 10001;
 {
-	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_item_Flag)) then {
+	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_flag_IND)) then {
 		_owner = _x call OT_fnc_getOwner;
 		_s = _x call OT_fnc_unitStock;
 

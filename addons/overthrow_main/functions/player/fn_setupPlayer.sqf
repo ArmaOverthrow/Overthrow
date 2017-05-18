@@ -34,6 +34,10 @@ player setVariable ["player_uid",getPlayerUID player,true];
 
 _closestcount = 0;
 
+if(isMultiplayer) then {
+	player addEventHandler ["Respawn",OT_fnc_respawnHandler];
+};
+
 while {alive player} do {
 	sleep 1;
 

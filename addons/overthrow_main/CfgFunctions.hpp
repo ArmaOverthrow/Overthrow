@@ -5,6 +5,8 @@ class CfgFunctions
 		class Base
 		{
 			file = "\ot\functions";
+			class initVar {};
+			class initOverthrow {};
 			class assignMission {};
 			class canPlace {};
 			class cleanup {};
@@ -30,6 +32,7 @@ class CfgFunctions
 		class Player
 		{
 			file = "\ot\functions\player";
+			class initPlayerLocal {};
 			class mapSystem {};
 			class perkSystem {};
 			class setupPlayer {};
@@ -58,10 +61,10 @@ class CfgFunctions
 			class buildingDamagedHandler {};
 			class cargoLoadedHandler {};
 			class explosivesPlacedHandler {};
-			class cargoLoadedHandler {};
 			class playerConnectHandler {};
 			class playerDisconnectHandler {};
 			class refuelHandler {};
+			class respawnHandler {};
 		};
 
 		class UI
@@ -269,6 +272,7 @@ class CfgFunctions
 			class NATOsearch {};
 			class createSquad {};
 			class experience {};
+			class initVCOMAI {};
 		};
 
 		/*

@@ -5,7 +5,7 @@ private _err = false;
 private _isfactory = false;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);
-	if(typeof _building == OT_item_Flag) then {
+	if(typeof _building == OT_flag_IND) then {
 		_err = true;
 		[] call OT_fnc_garrisonDialog;
 	}else{

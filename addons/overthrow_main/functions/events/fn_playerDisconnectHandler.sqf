@@ -1,8 +1,6 @@
 _me = _this select 0;
 _uid = _this select 2;
 
-missionNamespace setVariable [_uid,nil,true];
-
 if(_me getVariable ["ACE_isUnconscious",false]) then {
 	removeAllWeapons _me;
 	removeAllItems _me;

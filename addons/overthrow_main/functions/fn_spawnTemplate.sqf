@@ -7,11 +7,7 @@ if(isNil {templates getVariable _type}) then {
 
 	_template = call(compileFinal preProcessFileLineNumbers _filename);
 	{
-		if((_x select 0) in OT_items_Simulate) then {
-			_x set [8,true];
-		}else{
-			_x set [8,false];
-		};
+		_x set [8,true];
 	}forEach(_template);
 
 	templates setVariable [_type,_template,true];

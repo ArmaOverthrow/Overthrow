@@ -11,7 +11,7 @@ private _donerem = false;
 if !(isNull cursorObject) then {
 	if((player distance cursorObject) < 20) then {
 		if (cursorObject in ((allMissionObjects "Static") + vehicles)) then {
-			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west or (typeof cursorObject) == OT_item_flag) then {
+			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west or (typeof cursorObject) == OT_flag_IND) then {
 				call {
 					if(((cursorObject isKindOf "Land") or (cursorObject isKindOf "Air")) and ("ToolKit" in (items player)) and (damage cursorObject) == 1) exitWith {
 						_donerem = true;
@@ -167,7 +167,7 @@ if(typename _b == "ARRAY") then {
 			if(typeof _building == OT_item_Tent) then {
 				_name = "Camp";
 			};
-			if(typeof _building == OT_item_Flag) then {
+			if(typeof _building == OT_flag_IND) then {
 				_name = _building getVariable "name";
 			};
 			_buildingTxt = format["
@@ -224,7 +224,7 @@ if(typename _b == "ARRAY") then {
 			",_ownername,round((damage _building) * 100),"%"];
 		};
 
-		if(typeof _building == OT_item_flag) then {
+		if(typeof _building == OT_flag_IND) then {
 			_base = [];
 			{
 				if((_x select 0) distance _building < 5) exitWith {_base = _x};
@@ -311,7 +311,7 @@ if(typename _b == "ARRAY") then {
 		",_ownername];
 	};
 
-	if(!((typeof _building) in OT_allRealEstate + [OT_item_flag])) then {
+	if(!((typeof _building) in OT_allRealEstate + [OT_flag_IND])) then {
 		ctrlEnable [1609,false];
 		ctrlEnable [1610,false];
 		ctrlEnable [1608,false];

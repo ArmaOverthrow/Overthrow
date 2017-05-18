@@ -12,7 +12,7 @@ private _vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
 private _roadscon = roadsConnectedto _road;
 private _dir = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 
-private _vehs = [_start,_dir,template_checkpoint] call BIS_fnc_objectsMapper;
+private _vehs = [_start,_dir,OT_tpl_checkpoint] call BIS_fnc_objectsMapper;
 
 private _groups = [];
 private _soldiers = [];

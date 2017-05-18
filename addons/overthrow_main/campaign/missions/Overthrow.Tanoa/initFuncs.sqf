@@ -16,9 +16,6 @@ buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
 manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 characterSheet = compileFinal preProcessFileLineNumbers "UI\characterSheet.sqf";
 
-template_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
-template_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
-
 [] call compileFinal preProcessFileLineNumbers "funcs\dict.sqf";
 
 //Insertion

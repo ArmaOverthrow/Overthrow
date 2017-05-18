@@ -103,7 +103,7 @@ buildOnMouseMove = {
 		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
 
 		if(modeMode == 0) then {
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_item_Flag) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
+			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];

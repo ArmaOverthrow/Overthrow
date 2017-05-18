@@ -40,18 +40,18 @@ debriefing=0;
 
 //Disable ACE blood (just too much of it in a heavy game)
 class Params {
-	class ace_medical_level { //This needs to match an ace_setting, this one is a "SCALAR"(number)
-        title = "ACE Medical Level"; // Name that is shown
-        ACE_setting = 1; //Marks param to be read as an ace setting, without this nothing will happen!
-        values[] = {1, 2}; //Values that ace_medical_level can be set to
-        texts[] =  {"Basic", "Advanced"}; //Text names to show for values (Basic will set level to 1, Advanced will set level to 2)
-        default = 1; //Default value used - Value should be in the values[] list
+	class ace_medical_level {
+        title = "ACE Medical Level";
+        ACE_setting = 1;
+        values[] = {1, 2}; 
+        texts[] =  {"Basic", "Advanced"};
+        default = 1;
     };
     class ace_medical_blood_enabledFor {
         title = "ACE Blood";
         ACE_setting = 1;
         values[] = {0, 1, 2};
         texts[] =  {"None", "Players Only", "All"};
-        default = 0;
+        default = 1;
     };
 };

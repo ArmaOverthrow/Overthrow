@@ -13,7 +13,7 @@ _drone spawn {
                             _targets pushback ["SW",position _x,100,_x];
                         };
                     };
-                    if(_ty == OT_item_Flag) exitWith {
+                    if(_ty == OT_flag_IND) exitWith {
                         _targets pushback ["FOB",position _x,0,_x];
                     };
                     if(_ty == OT_warehouse) exitWith {

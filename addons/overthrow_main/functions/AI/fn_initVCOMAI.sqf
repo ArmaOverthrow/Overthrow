@@ -1,5 +1,3 @@
-[] execVM "\ot\functions\AI\VCOMAI\init.sqf";
-
 VCOMAI_Func =
 {
 //Variable for enabling/disabling skill changes for AI. True is on, False is off.
@@ -167,3 +165,5 @@ _Unit setSkill ["endurance",0.5];
 _Unit setSkill ["reloadSpeed",(0.4 + (random 0.3))];
 };
 };
+call VCOMAI_Func;
+[] execVM "\ot\functions\AI\VCOMAI\init.sqf";

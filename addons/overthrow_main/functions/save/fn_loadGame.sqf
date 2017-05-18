@@ -34,7 +34,7 @@ private _cc = 0;
 			_name = _x select 1;
 			_owner = _x select 2;
 
-			_veh = createVehicle [OT_Item_Flag, _pos, [], 0, "CAN_COLLIDE"];
+			_veh = createVehicle [OT_flag_IND, _pos, [], 0, "CAN_COLLIDE"];
 			_veh enableDynamicSimulation true;
 			[_veh,_owner] call OT_fnc_setOwner;
 			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
