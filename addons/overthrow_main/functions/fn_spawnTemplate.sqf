@@ -3,9 +3,8 @@ private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template
 _building = _this;
 private _type = typeOf(_building);
 if(isNil {templates getVariable _type}) then {
-	_filename = format["templates\houses\%1.sqf",_type];
-
-	_template = call(compileFinal preProcessFileLineNumbers _filename);
+	_template = call compile call compile getText(configFile >> "CfgVehicles" >> _type >> "ot_template");
+	if !(typename _template == "ARRAY") exitWith {};
 	{
 		_x set [8,true];
 	}forEach(_template);

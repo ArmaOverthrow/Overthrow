@@ -60,3 +60,5 @@ OT_townData = [
     [[14295.2,11680.3,0],"Ba"],
     [[12317.8,13929.5,0],"Ipota"]
 ];
+
+OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Katkoula","Lailai","Taga","Bua Bua","Blerick","Moddergat","Tobakoro"];

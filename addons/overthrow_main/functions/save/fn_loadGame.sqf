@@ -273,7 +273,6 @@ private _built = (allMissionObjects "Static");
 	private _vars = server getVariable [_uid,[]];
 	private _leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
 	private _leasedata = [];
-	private _handler = compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf";
 	{
 		_x params ["_name","_val"];
 		if(_name == "owned") then {
@@ -299,7 +298,7 @@ private _built = (allMissionObjects "Static");
 							_bdg = _pos nearestObject _x;
 						};
 						if !(_bdg in _built) then {
-							_bdg addEventHandler ["Dammaged",_handler];
+							_bdg addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 						};
 						if(_x in _leased) then {
 							_leasedata pushback [_x,typeof _bdg,_pos,_pos call OT_fnc_nearestTown];

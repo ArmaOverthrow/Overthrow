@@ -21,6 +21,55 @@ class CfgVehicles {
         };
     };
 
+	//Houses (Tanoa)
+	class House_Small_F;
+    class House_F;
+    class Land_Slum_O1_F: House_Small_F {
+        ot_isPlayerHouse = 1;
+        ot_template = '[["Land_MetalCase_01_small_F",[-0.897521,0.746889,0.594079],178.839,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[3.00668,1.91341,0.59408],0,1,0,[0,0],"","",true,false],["Land_MapBoard_F",[4.62316,-1.50578,0.594079],119.84,1,0,[0,-0],"","",true,false],["B_CargoNet_01_ammo_F",[4.72776,1.54301,0.59408],0,1,0,[0,0],"","",true,false]]';
+    };
+
+    class Land_Slum_O2_F: House_Small_F {
+        ot_isPlayerHouse = 1;
+        ot_template = '[["Land_MapBoard_F",[-2.26472,2.64946,0.559122],314.105,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.83102,-3.80072,0.559122],0,1,0,[0,0],"","",true,false],["Land_MetalCase_01_small_F",[1.25476,4.2525,0.559122],287.951,1,0,[0,0],"","",true,false],["OfficeTable_01_new_F",[-0.0970871,4.45407,0.559122],0,1,0,[0,0],"","",true,false]]';
+    };
+
+    class Land_House_Native_02_F: House_Small_F {
+        ot_isPlayerHouse = 1;
+        ot_template = '[["Land_MapBoard_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
+    };
+
+    //Shops (Tanoa)
+    class Land_FuelStation_01_shop_F: House_F {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-0.746313,-1.1316,0.277551],0,1,0,[],"","",true,false]]';
+    };
+    class Land_Shop_City_02_F: House_F {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[7.16479,-4.60961,0.0704632],0,1,0,[],"","",true,false]]';
+    };
+    class Land_Shop_Town_01_F: House_F {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[1.26089,-3.41939,0.131084],90,1,0,[],"","",true,false]]';
+    };
+    class Land_Shop_Town_03_F: House_F {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[2.77324,-4.32109,0.141195],0,1,0,[],"","",true,false]]';
+    };
+    class Land_Supermarket_01_F: House_F {
+        ot_isShop = 1;
+        ot_template = '[]';
+    };
+
+    //Car Dealers (Tanoa)
+    class Land_FuelStation_01_workshop_F: House_F {
+        ot_isCarDealer = 1;
+        ot_template = '[["Land_CashDesk_F",[2.87972,-3.57524,0.277551],0,1,0,[],"","",true,false]]';
+    };
+    class Land_FuelStation_02_workshop_F: House_F {
+        ot_isCarDealer = 1;
+        ot_template = '[["Land_CashDesk_F",[2.21226,0.566814,0.53],0,1,0,[],"","",true,false]]';
+    };
 
 	class Civilian;
     class CAManBase;

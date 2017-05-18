@@ -56,6 +56,17 @@ private _allMissions = "" configClasses ( configFile >> "CfgOverthrowMissions" )
 
 call OT_fnc_initVar;
 
+//Find markers
+OT_ferryDestinations = [];
+OT_NATO_control = [];
+OT_regions = [];
+{
+	if((_x select [0,12]) == "destination_") then {OT_ferryDestinations pushback _x};
+	if((_x select [0,8]) == "control_") then {OT_NATO_control pushback _x};
+	if((_x select [0,7]) == "island_") then {OT_regions pushback _x};
+	if((_x select [0,7]) == "region_") then {OT_regions pushback _x};
+}foreach(allMapMarkers);
+
 if(isServer) then {
     diag_log "Overthrow: Server Pre-Init";
 
@@ -63,8 +74,7 @@ if(isServer) then {
     call OT_fnc_initVirtualization;
 };
 
-OT_tpl_playerDesk = [] call compileFinal preProcessFileLineNumbers "templates\playerdesk.sqf";
-OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "templates\NATOcheckpoint.sqf";
+OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templates\NATOcheckpoint.sqf";
 
 call compileFinal preprocessFileLineNumbers "data\names.sqf";
 call compileFinal preprocessFileLineNumbers "data\towns.sqf";
