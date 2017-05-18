@@ -25,4 +25,4 @@
  *     @see https://github.com/CBATeam/CBA_A3/wiki/Error-handling
  */
 
-#include "\ot\script_component.hpp"
+#include "\ot\functions\script_component.hpp"
