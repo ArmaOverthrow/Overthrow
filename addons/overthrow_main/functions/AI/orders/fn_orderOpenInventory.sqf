@@ -19,7 +19,7 @@ if(count _sorted == 0) exitWith {};
 
 _target = _sorted select 0;
 
-_unit globalchat format["Opening %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName];
+_unit globalchat format["Opening %1",(typeof _target) call OT_fnc_vehicleGetName];
 if(((vehicle _unit) != _unit) and (vehicle _unit) != _target) then {
 	doGetOut _unit;
 };

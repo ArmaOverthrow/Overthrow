@@ -430,5 +430,5 @@ if(_newplayer) then {
 _introcam cameraEffect ["Terminate", "BACK" ];
 _introcam = nil;
 
-[] spawn setupKeyHandler;
+OT_keyHandlerID = [21, [false, false, false], OT_fnc_keyHandler] call CBA_fnc_addKeyHandler;
 [] spawn OT_fnc_setupPlayer;

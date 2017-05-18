@@ -735,7 +735,7 @@ class OT_dialog_main
 		class RscButton_1609: RscOverthrowButton
 		{
 			idc = 1609;
-			action = "closeDialog 0;[] call leaseBuilding";
+			action = "closeDialog 0;[] call OT_fnc_leaseBuilding";
 
 			text = "Lease"; //--- ToDo: Localize;
 			x = 0.881562 * safezoneW + safezoneX;
@@ -747,7 +747,7 @@ class OT_dialog_main
 		class RscButton_1610: RscOverthrowButton
 		{
 			idc = 1610;
-			action = "closeDialog 0;[] spawn setHome";
+			action = "closeDialog 0;[] spawn OT_fnc_setHome";
 
 			text = "Set Home"; //--- ToDo: Localize;
 			x = 0.943438 * safezoneW + safezoneX;

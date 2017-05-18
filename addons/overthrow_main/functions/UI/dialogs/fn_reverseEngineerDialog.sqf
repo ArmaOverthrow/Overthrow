@@ -13,16 +13,16 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 		_name = "";
 		_pic = "";
 		if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
-			_name = _cls call ISSE_Cfg_Weapons_GetName;
-			_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+			_name = _cls call OT_fnc_weaponGetName;
+			_pic = _cls call OT_fnc_weaponGetPic;
 		};
 		if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
-			_name = _cls call ISSE_Cfg_Magazine_GetName;
-			_pic = _cls call ISSE_Cfg_Magazine_GetPic;
+			_name = _cls call OT_fnc_magazineGetName;
+			_pic = _cls call OT_fnc_magazineGetPic;
 		};
 		if(_cls isKindOf "Bag_Base") then {
-			_name = _cls call ISSE_Cfg_Vehicle_GetName;
-			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+			_name = _cls call OT_fnc_vehicleGetName;
+			_pic = _cls call OT_fnc_vehicleGetPic;
 		};
 		_idx = lbAdd [1500,_name];
 		lbSetPicture [1500,_idx,_pic];
@@ -34,8 +34,8 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 {
 	if (!(_x isKindOf "CaManBase") and alive _x and (damage _x) == 0) then {
 		_cls = typeof _x;
-		_name = _cls call ISSE_Cfg_Vehicle_GetName;
-		_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+		_name = _cls call OT_fnc_vehicleGetName;
+		_pic = _cls call OT_fnc_vehicleGetPic;
 		_idx = lbAdd [1500,_name];
 		lbSetPicture [1500,_idx,_pic];
 		lbSetData [1500,_idx,_cls];

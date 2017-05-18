@@ -423,7 +423,7 @@ while {sleep 10;true} do {
 						if(_need > 1 and _spend >= 20) then {
 							_spend = _spend - 20;
 							_resources = _resources - 20;
-							_x spawn reGarrisonTown;
+							_x spawn OT_fnc_NATOsendGendarmerie;
 						};
 					};
 					if(_spend < 20) exitWith {};

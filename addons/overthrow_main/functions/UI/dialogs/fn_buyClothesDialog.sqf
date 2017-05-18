@@ -14,8 +14,8 @@ lbClear 1500;
 		_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 		_name = "";
 		_pic = "";
-		_name = _cls call ISSE_Cfg_Weapons_GetName;
-		_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+		_name = _cls call OT_fnc_weaponGetName;
+		_pic = _cls call OT_fnc_weaponGetPic;
 
 		_idx = lbAdd [1500,_name];
 		lbSetPicture [1500,_idx,_pic];

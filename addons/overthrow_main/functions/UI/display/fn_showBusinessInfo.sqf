@@ -45,10 +45,10 @@ if(count _data > 2) then {
     _input = _data select 2;
     _output = _data select 3;
     if(_input != "") then {
-        _text = _text + format["<t size='0.65'>Input: %1 x %2 /hr</t><br/>",_innum, _input call ISSE_Cfg_Weapons_GetName];
+        _text = _text + format["<t size='0.65'>Input: %1 x %2 /hr</t><br/>",_innum, _input call OT_fnc_weaponGetName];
     };
     if(_output != "") then {
-        _text = _text + format["<t size='0.65'>Output: %1 x %2 /hr</t><br/>",_outnum, _output call ISSE_Cfg_Weapons_GetName];
+        _text = _text + format["<t size='0.65'>Output: %1 x %2 /hr</t><br/>",_outnum, _output call OT_fnc_weaponGetName];
     }else{
         _sellprice = round(([OT_nation,_input,0] call OT_fnc_getSellPrice) * 1.2);
         _text = _text + format["<t size='0.65'>Income: $%1 /hr</t><br/>",round(_innum * _sellprice)];

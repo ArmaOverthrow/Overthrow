@@ -3,13 +3,12 @@ if(typeof _this == OT_item_Map) then {
 	_this addAction ["Reset UI", {
 		closedialog 0;
 		[] spawn OT_fnc_setupPlayer;
-		[] spawn setupKeyHandler;
 	},nil,0,false,true,"",""];
 
 };
 if(typeof _this == OT_item_Storage) then {
 	_this addAction ["Dump Everything", {[player,_this select 0] call dumpStuff},nil,0,false,true,"",""];
-	_this addAction ["Save Loadout", "actions\saveLoadout.sqf",nil,0,false,true,"",""];
+	_this addAction ["Save Loadout", OT_fnc_saveLoadout,nil,0,false,true,"",""];
 	_this addAction ["Restore Loadout", "UI\loadoutDialog.sqf",nil,0,false,true,"",""];
 	_this addAction ["Take From Warehouse", {
 		private _iswarehouse = call OT_fnc_playerAtWarehouse;
@@ -43,9 +42,9 @@ if(typeof _this == OT_item_Storage) then {
 	};
 };
 if(typeof _this == OT_item_Safe) then {
-	_this addAction ["Put Money", "actions\putMoney.sqf",nil,0,false,true,"",""];
-	_this addAction ["Take Money", "actions\takeMoney.sqf",nil,0,false,true,"",""];
-	_this addAction ["Set Password", "actions\setPassword.sqf",nil,0,false,true,"","(_target getVariable ['owner','']) == getplayeruid _this"];
+	_this addAction ["Put Money", OT_fnc_safePutMoney,nil,0,false,true,"",""];
+	_this addAction ["Take Money", OT_fnc_safeTakeMoney,nil,0,false,true,"",""];
+	_this addAction ["Set Password", OT_fnc_safeSetPassword,nil,0,false,true,"","(_target getVariable ['owner','']) == getplayeruid _this"];
 };
 
 if(typeof _this == "Land_Cargo_House_V4_F") then {

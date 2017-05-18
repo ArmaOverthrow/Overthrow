@@ -1,16 +1,6 @@
 
 OT_nation = "Tanoa";
 
-OT_missions = [];
-OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\transportvip.sqf");
-OT_missions pushback (compileFinal preprocessFileLineNumbers "missions\fugitive.sqf");
-
-OT_localMissions = [];
-//OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\recon.sqf");
-OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\medicalsupplies.sqf");
-OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\informant.sqf");
-OT_localMissions pushback (compileFinal preprocessFileLineNumbers "missions\kill.sqf");
-
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 12;
 OT_NATOversion = 8;

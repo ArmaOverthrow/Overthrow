@@ -28,15 +28,15 @@ lbClear 1500;
 	_pic = "";
 	call {
 		if(_cls isKindOf "Bag_Base" or _cls isKindOf "Land" or _cls isKindOf "Air") exitWith {
-			_name = _cls call ISSE_Cfg_Vehicle_GetName;
-			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+			_name = _cls call OT_fnc_vehicleGetName;
+			_pic = _cls call OT_fnc_vehicleGetPic;
 		};
 		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-			_name = _cls call ISSE_Cfg_Magazine_GetName;
-			_pic = _cls call ISSE_Cfg_Magazine_GetPic;
+			_name = _cls call OT_fnc_magazineGetName;
+			_pic = _cls call OT_fnc_magazineGetPic;
 		};
-		_name = _cls call ISSE_Cfg_Weapons_GetName;
-		_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+		_name = _cls call OT_fnc_weaponGetName;
+		_pic = _cls call OT_fnc_weaponGetPic;
 	};
 	_text = format["%1 x %2",_num,_name];
 	if(_num == -1) then {_text = _name};

@@ -402,7 +402,7 @@ class OT_dialog_import
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[1000] call import;";
+			action = "[1000] call OT_fnc_import;";
 
 			text = "Import 1000"; //--- ToDo: Localize;
 			x = 0.840312 * safezoneW + safezoneX;
@@ -424,7 +424,7 @@ class OT_dialog_import
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[100] call import;";
+			action = "[100] call OT_fnc_import;";
 
 			text = "Import 100"; //--- ToDo: Localize;
 			x = 0.778437 * safezoneW + safezoneX;
@@ -436,7 +436,7 @@ class OT_dialog_import
 		class RscButton_1602: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[10] call import;";
+			action = "[10] call OT_fnc_import;";
 
 			text = "Import 10"; //--- ToDo: Localize;
 			x = 0.716563 * safezoneW + safezoneX;
@@ -465,7 +465,7 @@ class OT_dialog_loadout
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[player,OT_context,lbData [1500,lbCurSel 1500]] call restoreLoadout";
+			action = "[player,OT_context,lbData [1500,lbCurSel 1500]] call OT_fnc_restoreLoadout";
 
 			text = "Restore"; //--- ToDo: Localize;
 			x = 0.12875 * safezoneW + safezoneX;
@@ -477,7 +477,7 @@ class OT_dialog_loadout
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1601;
-			action = "[lbData [1500,lbCurSel 1500]] call removeLoadout";
+			action = "[lbData [1500,lbCurSel 1500]] call OT_fnc_removeLoadout";
 
 			text = "Delete"; //--- ToDo: Localize;
 			x = 0.12875 * safezoneW + safezoneX;

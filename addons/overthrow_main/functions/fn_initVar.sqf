@@ -25,7 +25,7 @@ OT_selling = false;
 OT_taking = false;
 OT_interactingWith = objNull;
 
-OT_ammo_50cal = "100Rnd_127x99_mag";
+OT_ammo_50cal = "OT_ammo50cal";
 
 OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck_F","Land_Wreck_Car2_F","Land_Wreck_Car_F","Land_Wreck_Hunter_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad2_F","Land_Wreck_UAZ_F","Land_Wreck_Truck_dropside_F"]; //rekt
 

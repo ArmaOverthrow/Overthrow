@@ -18,6 +18,13 @@ class CfgFunctions
 			class getOwner {};
 		};
 
+		class Factions
+		{
+			file = "\ot\functions\factions";
+			class factionNATO {};
+			class factionGUER {};
+		}
+
 		/* Persistent Save */
 		class Save
 		{
@@ -65,6 +72,7 @@ class CfgFunctions
 			class playerDisconnectHandler {};
 			class refuelHandler {};
 			class respawnHandler {};
+			class keyHandler {};
 		};
 
 		class UI
@@ -127,6 +135,9 @@ class CfgFunctions
 			class fastTravel {};
 			class talkToCiv {};
 			class recruitCiv {};
+			class leaseBuilding {};
+			class place {};
+			class setHome {};
 
 			/* Options */
 			class increaseTax {};
@@ -141,6 +152,7 @@ class CfgFunctions
 
 			/* Port */
 			class exportAll {};
+			class import {};
 
 			/* Workshop */
 			class workshopAdd {};
@@ -166,7 +178,19 @@ class CfgFunctions
 			class hireEmployee {};
 			class fireEmployee {};
 
+			/* Safe */
+			class safePutMoney {};
+			class safeTakeMoney {};
+			class safeSetPassword {};
+
+			/* Ammobox */
+			class removeLoadout {};
+			class restoreLoadout {};
+			class saveLoadout {};
+
 			/* Other */
+			class recruitSoldier {};
+			class recruitSquad {};
 			class addGarrison {};
 			class addPolice {};
 			class lockVehicle {};
@@ -214,6 +238,24 @@ class CfgFunctions
 			class resetSpawn {};
 		};
 
+		class Spawners
+		{
+			file = "\ot\functions\virtualization\spawners";
+
+			class spawnAmbientVehicles {};
+			class spawnBoatDealers {};
+			class spawnBusinessEmployees {};
+			class spawnCarDealers {};
+			class spawnCivilians {};
+			class spawnFactionRep {};
+			class spawnGendarmerie {};
+			class spawnGunDealer {};
+			class spawnNATOCheckpoint {};
+			class spawnNATOObjective {};
+			class spawnPolice {};
+			class spawnShops {};
+		};
+
 		/*
 		* The economy, trade and real estate
 		*/
@@ -245,6 +287,14 @@ class CfgFunctions
 			file = "\ot\functions\inventory";
 			class takeFromCargoContainers {};
 			class hasFromCargoContainers {};
+			class weaponGetName {};
+			class magazineGetName {};
+			class vehicleGetName {};
+			class weaponGetPic {};
+			class magazineGetPic {};
+			class vehicleGetPic {};
+			class magazineGetDescription {};
+			class vehicleGetDescription {};
 		};
 
 		/*
@@ -356,6 +406,7 @@ class CfgFunctions
 			class NATOMissionReconDestroy {};
 			class NATOSetExplosives {};
 			class NATOupgradeFOB {};
+			class NATOsendGendarmerie {};
 		};
 
 		class NATOAI
@@ -380,6 +431,7 @@ class CfgFunctions
 		{
 			file = "\ot\functions\integration";
 			class initTFAR {};
+			class advancedTowingInit {};
 		};
 	};
 };

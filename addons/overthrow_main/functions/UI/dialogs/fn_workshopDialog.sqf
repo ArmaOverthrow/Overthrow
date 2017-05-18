@@ -21,7 +21,7 @@ lbClear 1500;
 		
 		_do = _x select 4;
 		
-		_pic = _do call ISSE_Cfg_Vehicle_GetPic;
+		_pic = _do call OT_fnc_vehicleGetPic;
 		
 		_idx = lbAdd [1500,format["%1",_name]];
 		lbSetPicture [1500,_idx,_pic];

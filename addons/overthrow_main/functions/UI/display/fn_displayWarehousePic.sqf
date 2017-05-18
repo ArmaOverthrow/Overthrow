@@ -10,12 +10,12 @@ _txt = "";
 _desc = "";
 
 if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
-	_txt = _cls call ISSE_Cfg_Magazine_GetName;
-	_pic = _cls call ISSE_Cfg_Magazine_GetPic;
-	_desc = _cls call ISSE_Cfg_Magazine_GetDesc;	
+	_txt = _cls call OT_fnc_magazineGetName;
+	_pic = _cls call OT_fnc_magazineGetPic;
+	_desc = _cls call OT_fnc_magazineGetDescription;	
 };
 if(_cls isKindOf "Default") then {
-	_txt = _cls call ISSE_Cfg_Vehicle_GetName;
+	_txt = _cls call OT_fnc_vehicleGetName;
 	_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
 	_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");
 };
@@ -24,14 +24,14 @@ if(isClass (configFile >> "CfgGlasses" >> _cls)) then {
 	_pic = gettext(configFile >> "CfgGlasses" >> _cls >> "picture");		
 };
 if(_cls isKindOf "Bag_Base") then {
-	_txt = _cls call ISSE_Cfg_Vehicle_GetName;
-	_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
-	_desc = _cls call ISSE_Cfg_Vehicle_GetDesc;
+	_txt = _cls call OT_fnc_vehicleGetName;
+	_pic = _cls call OT_fnc_vehicleGetPic;
+	_desc = _cls call OT_fnc_vehicleGetDescription;
 };
 if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
-	_txt = _cls call ISSE_Cfg_Weapons_GetName;
-	_pic = _cls call ISSE_Cfg_Weapons_GetPic;
-	_desc = format["%1<br/>%2",getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort"),_cls call ISSE_Cfg_Magazine_GetDesc];
+	_txt = _cls call OT_fnc_weaponGetName;
+	_pic = _cls call OT_fnc_weaponGetPic;
+	_desc = format["%1<br/>%2",getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort"),_cls call OT_fnc_magazineGetDescription];
 };
 if !(isNil "_pic") then {
 	ctrlSetText [1200,_pic];

@@ -27,7 +27,7 @@ _target = _sorted select 0;
 _doTransfer = {
 	private _veh = vehicle player;
 	private _target = _this;
-	private _toname = (typeof _target) call ISSE_Cfg_Vehicle_GetName;
+	private _toname = (typeof _target) call OT_fnc_vehicleGetName;
 	private _iswarehouse = (_target isKindOf "OT_warehouse");
 	if(_iswarehouse) then {_toname = "Warehouse"};
 	format["Transferring legal inventory from %1",_toname] call OT_fnc_notifyMinor;
@@ -84,7 +84,7 @@ if(count _objects == 1) then {
 }else{
 	private _options = [];
 	{
-		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doTransfer,_x];
+		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer legal items from which container?" call OT_fnc_notifyBig;
 	_options spawn playerDecision;

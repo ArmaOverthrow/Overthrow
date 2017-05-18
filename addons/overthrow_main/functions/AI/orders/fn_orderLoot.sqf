@@ -21,7 +21,7 @@ if(vehicle _tt != _tt) then {
 if(count _sorted == 0) exitWith {};
 private _target = _sorted select 0;
 
-format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
+format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 
 {
 	[_x,_target] spawn {

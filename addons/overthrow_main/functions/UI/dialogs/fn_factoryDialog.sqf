@@ -18,20 +18,20 @@ _numitems = 0;
 
 		_numitems = _numitems + 1;
 		if(_cls isKindOf "AllVehicles") then {
-			_name = _cls call ISSE_Cfg_Vehicle_GetName;
-			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+			_name = _cls call OT_fnc_vehicleGetName;
+			_pic = _cls call OT_fnc_vehicleGetPic;
 		};
 		if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
-			_name = _cls call ISSE_Cfg_Weapons_GetName;
-			_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+			_name = _cls call OT_fnc_weaponGetName;
+			_pic = _cls call OT_fnc_weaponGetPic;
 		};
 		if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
-			_name = _cls call ISSE_Cfg_Magazine_GetName;
-			_pic = _cls call ISSE_Cfg_Magazine_GetPic;
+			_name = _cls call OT_fnc_magazineGetName;
+			_pic = _cls call OT_fnc_magazineGetPic;
 		};
 		if(_cls isKindOf "Bag_Base") then {
-			_name = _cls call ISSE_Cfg_Vehicle_GetName;
-			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+			_name = _cls call OT_fnc_vehicleGetName;
+			_pic = _cls call OT_fnc_vehicleGetPic;
 		};
 
 		_idx = lbAdd [1500,format["%1",_name]];

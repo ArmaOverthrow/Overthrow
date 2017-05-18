@@ -25,7 +25,6 @@ publicVariable "buildingpositions";
 if(!isMultiplayer) then {
     addMissionEventHandler ["Loaded", {
         [] spawn OT_fnc_setupPlayer;
-		[] spawn setupKeyHandler;
     }];
 };
 
@@ -41,6 +40,21 @@ call compile preprocessFileLineNumbers "initVar.sqf";
 [] call OT_fnc_initVCOMAI;
 
 [] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
+
+OT_missions = [];
+OT_localMissions = [];
+private _allMissions = "" configClasses ( configFile >> "CfgOverthrowMissions" );
+{
+	_name = configName _x;
+	_script = getText (_x >> "script");
+	_code = compileFinal preprocessFileLineNumbers _script;
+	if(getNumber(_x >> "faction") > 0) then {
+		OT_missions pushback _code;
+	}else{
+		OT_localMissions pushback _code;
+	};
+}foreach(_allMissions);
+
 call OT_fnc_initVar;
 
 if(isServer) then {
@@ -96,7 +110,7 @@ if(isServer) then {
 };
 
 //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
-[] execVM "funcs\fn_advancedTowingInit.sqf";
+[] spawn OT_fnc_advancedTowingInit;
 
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] spawn OT_fnc_initEconomyLoad;
@@ -107,11 +121,9 @@ if(OT_fastTime) then {
 
 //Init factions
 [] call OT_fnc_initNATO;
-[] execVM "factions\NATO.sqf";
-[] execVM "factions\GUER.sqf";
-[] execVM "factions\CRIM.sqf";
+[] spawn OT_fnc_factionNATO;
+[] spawn OT_fnc_factionGUER;
 waitUntil {!isNil "OT_NATOInitDone"};
-waitUntil {!isNil "OT_CRIMInitDone"};
 
 //Game systems
 [] spawn OT_fnc_propagandaSystem;
@@ -120,12 +132,7 @@ waitUntil {!isNil "OT_CRIMInitDone"};
 
 //Init virtualization
 [] spawn OT_fnc_runVirtualization;
-waitUntil {!isNil "OT_economyLoadDone" and !isNil "OT_fnc_registerSpawner"};
-[] execVM "virtualization\towns.sqf";
-[] execVM "virtualization\military.sqf";
-[] execVM "virtualization\mobsters.sqf";
-[] execVM "virtualization\economy.sqf";
-[] execVM "virtualization\factions.sqf";
+waitUntil {!isNil "OT_economyLoadDone"};
 
 //Subscribe to events
 if(isMultiplayer) then {

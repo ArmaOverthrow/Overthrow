@@ -1,57 +1,8 @@
-#include "script_component.hpp"
+#include "\ot\mission_component.hpp"
 
 overviewPicture = "\ot\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
-author="ARMAzac";
-briefingName = "Overthrow Tanoa";
-OnLoadName = "Overthrow Tanoa";
-OnLoadMission = QUOTE(VERSION);
+briefingName = "Overthrow: Tanoa";
+OnLoadName = "Overthrow: Tanoa";
 loadScreen = "\ot\campaign\missions\Overthrow.Tanoa\pic.jpg";
-onLoadMissionTime = 1;
-allowSubordinatesTakeWeapons= 1;
-skipLobby = 0;
-
-class Header
-{
-	gameType = Coop;
-	minPlayers = 1;
-	maxPlayers = 20;
-};
 
 overviewText = "This is Tanoa, a small island nation in the South Pacific with a history of British and French colonialism. Tanoa is currently under occupation by NATO forces and has been at the center of international attention since the Vunakece regime was ousted in 2020. The Tanoan population is currently in dissaray and there are many conspiracy theories as to the economic and political future of this small but strategically valuable archipelago. A massive protest against the NATO occupation recently took place in the nation's capital of Georgetown, where the spokesperson for the 'Free Tanoa' movement was assassinated by an unknown assailant. In response, NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.";
-
-allowFunctionsLog = 0;
-enableDebugConsole = 1;
-
-respawn = "BASE";
-respawnDelay = 5;
-respawnVehicleDelay = 120;
-respawnDialog = 1;
-aiKills = 0;
-disabledAI=1;
-Saving = 1;
-showCompass=1;
-showRadio=1;
-showGPS=1;
-showMap=1;
-showBinocular=1;
-showNotepad=1;
-showWatch=1;
-debriefing=0;
-
-//Disable ACE blood (just too much of it in a heavy game)
-class Params {
-	class ace_medical_level {
-        title = "ACE Medical Level";
-        ACE_setting = 1;
-        values[] = {1, 2}; 
-        texts[] =  {"Basic", "Advanced"};
-        default = 1;
-    };
-    class ace_medical_blood_enabledFor {
-        title = "ACE Blood";
-        ACE_setting = 1;
-        values[] = {0, 1, 2};
-        texts[] =  {"None", "Players Only", "All"};
-        default = 1;
-    };
-};

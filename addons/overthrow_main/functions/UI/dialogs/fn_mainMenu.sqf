@@ -100,7 +100,7 @@ if(typename _b == "ARRAY") then {
 	_totaloccupants = _b select 4;
 
 	_cls = typeof _building;
-	_name = _cls call ISSE_Cfg_Vehicle_GetName;
+	_name = _cls call OT_fnc_vehicleGetName;
 	_pic = getText(configFile >>  "CfgVehicles" >>  _cls >> "editorPreview");
 
 	if !(isNil "_pic") then {
@@ -439,7 +439,7 @@ if(count _possible > 0) then {
 
 		if !((_civ getvariable ["garrison",""]) isEqualTo "") then {
 			if(side _civ == west) exitWith {
-				_type = (typeof _civ) call ISSE_Cfg_Vehicle_GetName;
+				_type = (typeof _civ) call OT_fnc_vehicleGetName;
 			};
 			if(side _civ == east) exitWith {
 				_type = "Bandit";
@@ -456,7 +456,7 @@ if(count _possible > 0) then {
 		if(_civ call OT_fnc_hasOwner) then {
 			call {
 				if(side _civ == resistance) exitWith {
-					_type = (typeof _civ) call ISSE_Cfg_Vehicle_GetName;
+					_type = (typeof _civ) call OT_fnc_vehicleGetName;
 				};
 			};
 			ctrlEnable [1605,false];

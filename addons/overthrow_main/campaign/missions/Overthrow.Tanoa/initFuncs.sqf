@@ -16,29 +16,9 @@ buildMenu = compileFinal preProcessFileLineNumbers "UI\buildMenu.sqf";
 manageRecruits = compileFinal preProcessFileLineNumbers "UI\manageRecruits.sqf";
 characterSheet = compileFinal preProcessFileLineNumbers "UI\characterSheet.sqf";
 
-[] call compileFinal preProcessFileLineNumbers "funcs\dict.sqf";
-
-//Insertion
-reGarrisonTown = compileFinal preProcessFileLineNumbers "spawners\insertion\reGarrisonTown.sqf";
-sendCrims = compileFinal preProcessFileLineNumbers "spawners\insertion\sendCrims.sqf";
-newLeader = compileFinal preProcessFileLineNumbers "spawners\insertion\newLeader.sqf";
-
 //Local interactions
 initObjectLocal = compileFinal preProcessFileLineNumbers "interaction\initObjectLocal.sqf";
 initStaticMGLocal = compileFinal preProcessFileLineNumbers "interaction\initStaticMGLocal.sqf";
-
-//Actions
-leaseBuilding = compileFinal preProcessFileLineNumbers "actions\leaseBuilding.sqf";
-recruitSoldier = compileFinal preProcessFileLineNumbers "actions\recruitSoldier.sqf";
-recruitSquad = compileFinal preProcessFileLineNumbers "actions\recruitSquad.sqf";
-setHome = compileFinal preProcessFileLineNumbers "actions\setHome.sqf";
-import = compileFinal preProcessFileLineNumbers "actions\import.sqf";
-restoreLoadout = compileFinal preProcessFileLineNumbers "actions\restoreLoadout.sqf";
-removeLoadout = compileFinal preProcessFileLineNumbers "actions\removeLoadout.sqf";
-
-
-//Modes
-placementMode = compileFinal preProcessFileLineNumbers "actions\placementMode.sqf";
 
 //Wanted System
 unitSeen = compileFinal preProcessFileLineNumbers "funcs\unitSeen.sqf";
@@ -47,7 +27,6 @@ unitSeenNATO = compileFinal preProcessFileLineNumbers "funcs\unitSeenNATO.sqf";
 unitSeenAny = compileFinal preProcessFileLineNumbers "funcs\unitSeenAny.sqf";
 
 //Key handler
-keyHandler = compileFinal preProcessFileLineNumbers "keyHandler.sqf";
 menuHandler = {};
 
 mpSetDir = {
@@ -69,12 +48,6 @@ canDrive = {
 	((_this getHitPointDamage "HitRF2Wheel") < 1) and
 	((_this getHitPointDamage "HitFuel") < 1) and
 	((_this getHitPointDamage "HitEngine") < 1)
-};
-
-setupKeyHandler = {
-    waitUntil {!(isnull (findDisplay 46))};
-    sleep 1;
-    (findDisplay 46) displayAddEventHandler ["KeyDown",keyHandler];
 };
 
 assignedKey = {
@@ -199,5 +172,3 @@ stability = {
 		_townmrk setMarkerAlphaLocal 0;
 	};
 };
-
-[] execVM "funcs\info.sqf";

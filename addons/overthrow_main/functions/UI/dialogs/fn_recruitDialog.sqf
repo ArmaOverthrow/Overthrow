@@ -35,7 +35,7 @@ if (typeof _building == OT_barracks) then {
 };
 {
 	_cls = _x select 0;
-	_name = _cls call ISSE_Cfg_Vehicle_GetName;
+	_name = _cls call OT_fnc_vehicleGetName;
 
 	_idx = lbAdd [1500,_name];
 	lbSetValue [1500,_idx,_price];

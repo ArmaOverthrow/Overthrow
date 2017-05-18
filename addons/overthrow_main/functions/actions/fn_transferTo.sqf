@@ -37,7 +37,7 @@ if(_notvehicle and count _objects == 0) exitWith {
 
 private _doTransfer = {
 	private _veh = _this;
-	private _toname = (typeof _veh) call ISSE_Cfg_Vehicle_GetName;
+	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	_iswarehouse = false;
 	if((typeof _veh) == OT_warehouse) then {
 		_toname = "Warehouse";
@@ -127,7 +127,7 @@ if(count _objects == 1) then {
 }else{
 	private _options = [];
 	{
-		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doTransfer,_x];
+		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer to which container?" call OT_fnc_notifyBig;
 	_options spawn playerDecision;

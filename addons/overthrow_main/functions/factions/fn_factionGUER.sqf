@@ -282,9 +282,9 @@ while {true} do {
 								clearBackpackCargoGlobal _veh;
 								clearItemCargoGlobal _veh;
 								_veh setDir OT_factoryVehicleDir;
-								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["OT_fnc_notifyMinor",0,false];
+								format["Factory has produced %1 x %2",_numtoproduce,_currentCls call OT_fnc_vehicleGetName] remoteExec["OT_fnc_notifyMinor",0,false];
 							}else{
-								format["Factory has no room to produce %1, please clear the road",_currentCls call ISSE_Cfg_Vehicle_GetName] remoteExec["OT_fnc_notifyMinor",0,false];
+								format["Factory has no room to produce %1, please clear the road",_currentCls call OT_fnc_vehicleGetName] remoteExec["OT_fnc_notifyMinor",0,false];
 								_timespent = _timetoproduce;
 							};
 						}else{

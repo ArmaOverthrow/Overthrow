@@ -23,7 +23,7 @@ private _doSalvage = {
         "Vehicle is full, use a truck or ammobox for more storage" call OT_fnc_notifyMinor;
     };
 
-	private _toname = (typeof _veh) call ISSE_Cfg_Vehicle_GetName;
+	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	format["Salvaging wreck into %1",_toname] call OT_fnc_notifyMinor;
     player playMove "AinvPknlMstpSnonWnonDnon_medic_1";
 	[14,false] call progressBar;
@@ -48,7 +48,7 @@ if(count _objects == 1) then {
     if(count _objects > 1) then {
     	private _options = [];
     	{
-    		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doSalvage,_x];
+    		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doSalvage,_x];
     	}foreach(_objects);
     	"Salvage to which container?" call OT_fnc_notifyBig;
     	_options spawn playerDecision;

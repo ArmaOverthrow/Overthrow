@@ -86,4 +86,14 @@ class CfgWeapons {
             mass = 80;
         };
     };
+	class OT_ammo50cal: OT_ItemCore {
+        scope = 2;
+        picture = "\ot\ui\items\ammo50cal_x_ca.paa";
+        displayName = "100 x 50 Cal BMG";
+        descriptionShort = "100 Rounds of .50 Calibre 660 grain FMJ xM33 ammunition for use in Static weapons";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 25;
+        };
+    };
 };

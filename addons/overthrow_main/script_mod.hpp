@@ -28,6 +28,8 @@
 
 #define PREFIX OT
 
+#define MOD_AUTHOR ARMAzac
+
 #include "script_version.hpp"
 
 #define VERSION MAJOR.MINOR.PATCHLVL.BUILD

@@ -1,3 +1,57 @@
+//Setup our spawners
+
+{
+	private ["_p","_i"];
+	_p = _x select 0;
+	_i = _x select 1;
+	[_p,OT_fnc_spawnBusinessEmployees,[_p,_i]] call OT_fnc_registerSpawner;
+}foreach(OT_economicData);
+
+waitUntil {!isNil "OT_economyLoadDone"};
+{
+    _x params ["_cls","_name","_side"];
+	_pos = server getVariable [format["factionrep%1",_cls],[]];
+    if(count _pos > 0) then {
+	       [_pos,OT_fnc_spawnFactionRep,[_cls,_name]] call OT_fnc_registerSpawner;
+    }
+}foreach(OT_allFactions);
+
+{
+	_name = _x select 1;
+	_pos = _x select 0;
+	[_pos,OT_fnc_spawnNATOObjective,[_pos,_name]] call OT_fnc_registerSpawner;
+}foreach(OT_NATOobjectives + OT_NATOcomms);
+
+{
+	_pos = getMarkerPos _x;
+	[_pos,OT_fnc_spawnNATOCheckpoint,[_pos,_x]] call OT_fnc_registerSpawner;
+}foreach(OT_NATO_control);
+
+OT_townSpawners = [
+	OT_fnc_spawnCivilians,
+	OT_fnc_spawnGendarmerie,
+	OT_fnc_spawnPolice,
+	OT_fnc_spawnCarDealers,
+	OT_fnc_spawnGunDealer,
+	OT_fnc_spawnAmbientVehicles,
+	OT_fnc_spawnShops,
+	OT_fnc_spawnBoatDealers
+];
+
+{
+	private _pos = server getVariable _x;
+	private _town = _x;
+	[_pos,{
+			params ["_spawntown","_spawnid"];
+			{
+				_hdl = [_spawntown,_spawnid] spawn _x;
+				waitUntil {sleep 0.2;scriptDone _hdl};
+				sleep 0.5;
+			}foreach(OT_townSpawners);
+	},[_town]] call OT_fnc_registerSpawner;
+}foreach(OT_allTowns);
+
+//Start Virtualization Loop
 while{true} do {
     sleep 0.5;
 	OT_activeClients = [];
@@ -51,7 +105,7 @@ while{true} do {
     					_x call OT_fnc_despawn;
     					sleep 0.1;
                     };
-                };                
+                };
             }else{
                 if ((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
                     OT_allSpawned pushback _id;

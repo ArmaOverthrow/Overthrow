@@ -166,8 +166,8 @@ if (_canBuyBoats) then {
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
 					_price = round(_price * 0.5);
 				};
-				_idx = lbAdd [1500,format["%1",_cls call ISSE_Cfg_Vehicle_GetName]];
-				lbSetPicture [1500,_idx,_cls call ISSE_Cfg_Vehicle_GetPic];
+				_idx = lbAdd [1500,format["%1",_cls call OT_fnc_vehicleGetName]];
+				lbSetPicture [1500,_idx,_cls call OT_fnc_vehicleGetPic];
 				lbSetData [1500,_idx,_cls];
 				lbSetValue [1500,_idx,_price];
 			}foreach(OT_boats);
@@ -309,11 +309,11 @@ if (_canSellDrugs) then {
 		_drugcls = _x;
 		if(((items player) find _x) > -1 and !(_civ getVariable["OT_askedDrugs",false])) then {
 
-			_drugname = _x call ISSE_Cfg_Weapons_GetName;
+			_drugname = _x call OT_fnc_weaponGetName;
 			_options pushBack [format ["Sell %1",_drugname],{
 				OT_drugSelling = _this;
 				_drugcls = _this;
-				_drugname = _drugcls call ISSE_Cfg_Weapons_GetName;
+				_drugname = _drugcls call OT_fnc_weaponGetName;
 				if(((items player) find _drugcls) == -1) exitWith {};
 				_num = 0;
 				{

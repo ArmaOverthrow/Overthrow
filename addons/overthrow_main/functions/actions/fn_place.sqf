@@ -249,7 +249,7 @@ modeTarget = nil;
 modeCancelled = nil;
 modeFinished = nil;
 if(modeRedo) then {
-	_typecls call placementMode;
+	_typecls spawn OT_fnc_placementMode;
 }else{
 	modeValue = nil;
 }

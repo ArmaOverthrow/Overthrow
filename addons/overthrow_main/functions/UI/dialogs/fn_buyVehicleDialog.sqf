@@ -47,18 +47,18 @@ createDialog "OT_dialog_buy";
 				_p = _p + 150; //Convenience cost
 				_price = _p;
 				_name = "Quad Bike w/ HMG Backpacks";
-				_pic = "C_Quadbike_01_F" call ISSE_Cfg_Vehicle_GetPic;
+				_pic = "C_Quadbike_01_F" call OT_fnc_vehicleGetPic;
 			};
 			if(_cls in OT_allExplosives) exitWith {
-				_pic = _cls call ISSE_Cfg_Magazine_GetPic;
-				_name = _cls call ISSE_Cfg_Magazine_GetName;
+				_pic = _cls call OT_fnc_magazineGetPic;
+				_name = _cls call OT_fnc_magazineGetName;
 			};
 			if(_cls in OT_allDetonators) exitWith {
-				_pic = _cls call ISSE_Cfg_Weapons_GetPic;
-				_name = _cls call ISSE_Cfg_Weapons_GetName;
+				_pic = _cls call OT_fnc_weaponGetPic;
+				_name = _cls call OT_fnc_weaponGetName;
 			};
-			_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
-			_name = _cls call ISSE_Cfg_Vehicle_GetName;
+			_pic = _cls call OT_fnc_vehicleGetPic;
+			_name = _cls call OT_fnc_vehicleGetName;
 		};
 		_idx = lbAdd [1500,format["%1",_name]];
 		lbSetPicture [1500,_idx,_pic];
@@ -69,6 +69,6 @@ createDialog "OT_dialog_buy";
 
 _price = [_town,OT_item_UAV,_standing] call OT_fnc_getPrice;
 _idx = lbAdd [1500,format["Quadcopter"]];
-lbSetPicture [1500,_idx,OT_item_UAV call ISSE_Cfg_Vehicle_GetPic];
+lbSetPicture [1500,_idx,OT_item_UAV call OT_fnc_vehicleGetPic];
 lbSetData [1500,_idx,OT_item_UAV];
 lbSetValue [1500,_idx,_price];

@@ -14,23 +14,23 @@ _numitems = 0;
 			_numitems = _numitems + 1;
 			call {
 				if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) exitWith {
-					_name = _cls call ISSE_Cfg_Weapons_GetName;
-					_pic = _cls call ISSE_Cfg_Weapons_GetPic;
+					_name = _cls call OT_fnc_weaponGetName;
+					_pic = _cls call OT_fnc_weaponGetPic;
 				};
 				if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
-					_name = _cls call ISSE_Cfg_Magazine_GetName;
-					_pic = _cls call ISSE_Cfg_Magazine_GetPic;
+					_name = _cls call OT_fnc_magazineGetName;
+					_pic = _cls call OT_fnc_magazineGetPic;
 				};
 				if(_cls isKindOf "Bag_Base") exitWith {
-					_name = _cls call ISSE_Cfg_Vehicle_GetName;
-					_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+					_name = _cls call OT_fnc_vehicleGetName;
+					_pic = _cls call OT_fnc_vehicleGetPic;
 				};
 				if(isClass (configFile >> "CfgGlasses" >> _cls)) exitWith {
 					_name = gettext(configFile >> "CfgGlasses" >> _cls >> "displayName");
 					_pic = gettext(configFile >> "CfgGlasses" >> _cls >> "picture");
 				};
-				_name = _cls call ISSE_Cfg_Vehicle_GetName;
-				_pic = _cls call ISSE_Cfg_Vehicle_GetPic;
+				_name = _cls call OT_fnc_vehicleGetName;
+				_pic = _cls call OT_fnc_vehicleGetPic;
 			};
 
 			_idx = lbAdd [1500,format["%1 x %2",_num,_name]];

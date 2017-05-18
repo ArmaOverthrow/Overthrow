@@ -40,15 +40,15 @@ call {
 			_blueprints pushback _cls;
 			server setVariable ["GEURblueprints",_blueprints,true];
 			_factionName = OT_interactingWith getVariable ["factionrepname",""];
-			format["%1 has bought %2 blueprint from %3",name player,_cls call ISSE_Cfg_Vehicle_GetName,_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+			format["%1 has bought %2 blueprint from %3",name player,_cls call OT_fnc_vehicleGetName,_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
 			closeDialog 0;
 		};
 	};
 	if(_cls isKindOf "Man") exitWith {
-		[_cls,getpos player,group player] call recruitSoldier;
+		[_cls,getpos player,group player] call OT_fnc_recruitSoldier;
 	};
 	if(_cls in OT_allSquads) exitWith {
-		[_cls,getpos player] call recruitSquad;
+		[_cls,getpos player] call OT_fnc_recruitSquad;
 	};
 	if(_cls == OT_item_UAV) exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
@@ -75,7 +75,7 @@ call {
 		player connectTerminalToUAV _veh;
 
 		player reveal _veh;
-		format["You bought a Quadcopter",_cls call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
+		format["You bought a Quadcopter",_cls call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
 	};
@@ -97,7 +97,7 @@ call {
 		};
 
 		player reveal _veh;
-		format["You bought a %1 for $%2",_cls call ISSE_Cfg_Vehicle_GetName,_price] call OT_fnc_notifyMinor;
+		format["You bought a %1 for $%2",_cls call OT_fnc_vehicleGetName,_price] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls isKindOf "Ship") exitWith {
@@ -113,7 +113,7 @@ call {
 		clearItemCargoGlobal _veh;
 
 		player reveal _veh;
-		format["You bought a %1",_cls call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
+		format["You bought a %1",_cls call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls in OT_allClothing) exitWith {

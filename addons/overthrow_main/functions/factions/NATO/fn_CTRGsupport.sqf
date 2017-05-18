@@ -113,7 +113,7 @@ _wp = _group addWaypoint [_attackpos,0];
 _wp setWaypointType "GUARD";
 _wp setWaypointBehaviour "COMBAT";
 
-_comp = OT_NATO_Vehicle_CTRGTransport call ISSE_Cfg_Vehicle_GetName;
+_comp = OT_NATO_Vehicle_CTRGTransport call OT_fnc_vehicleGetName;
 _an = "A";
 if((_ao select [0,1]) in ["A","E","I","O","a","e","i","o"]) then {_an = "An"};
 [5,_ao,format["%1 Reinforcements",_town],format["NATO has dispatched a CTRG support team to this location. Reports indicate that %1 %2 is departing %3 as we speak.",_an,_comp,OT_NATO_HQ]] remoteExec ["intelEvent",0,false];
