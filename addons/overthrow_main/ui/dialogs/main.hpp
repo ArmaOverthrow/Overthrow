@@ -559,7 +559,7 @@ class OT_dialog_options
 		class RscButton_1605: RscOverthrowButton
 		{
 			idc = 1605;
-			action = "{if !(alive _x) then {deletevehicle _x}} foreach(vehicles);{if !(_x call canDrive) then {deletevehicle _x}} foreach(vehicles);{deleteVehicle _x} foreach(alldeadmen);""Cleaned bodies/wrecks"" remoteExec [""OT_fnc_notifyMinor"",0,false];";
+			action = "{if !(alive _x) then {deletevehicle _x}} foreach(vehicles);{if !(_x call OT_fnc_vehicleCanMove) then {deletevehicle _x}} foreach(vehicles);{deleteVehicle _x} foreach(alldeadmen);""Cleaned bodies/wrecks"" remoteExec [""OT_fnc_notifyMinor"",0,false];";
 
 			text = "Clean bodies/wrecks"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
@@ -679,7 +679,7 @@ class OT_dialog_main
 		class RscButton_1602: RscOverthrowButton
 		{
 			idc = 1602;
-			action = "closeDialog 0;[] spawn buildMenu";
+			action = "closeDialog 0;[] spawn OT_fnc_build";
 
 			text = "Build"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
@@ -691,7 +691,7 @@ class OT_dialog_main
 		class RscButton_1603: RscOverthrowButton
 		{
 			idc = 1603;
-			action = "[] spawn manageRecruits;";
+			action = "[] spawn OT_fnc_manageRecruitsDialog;";
 
 			text = "Manage Recruits"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;
@@ -779,7 +779,7 @@ class OT_dialog_main
 		class RscButton_1611: RscOverthrowButton
 		{
 			idc = 1611;
-			action = "[] spawn characterSheet;";
+			action = "[] spawn OT_fnc_characterSheetDialog;";
 
 			text = "Character Sheet"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW + safezoneX;

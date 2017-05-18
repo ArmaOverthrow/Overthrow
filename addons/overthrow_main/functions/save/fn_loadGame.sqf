@@ -1,7 +1,7 @@
 private ["_data"];
 
 //get all server data
-"Loading persistent save" remoteExec['blackFaded',0,false];
+"Loading persistent save" remoteExec['OT_fnc_notifyStart',0,false];
 
 _data = profileNameSpace getVariable ["Overthrow.save.001",""];
 if(typename _data != "ARRAY") exitWith {

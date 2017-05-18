@@ -283,7 +283,7 @@ buildOnMouseUp = {
 						clearBackpackCargoGlobal _x;
 						clearItemCargoGlobal _x;
 						[_x,getplayeruid player] call OT_fnc_setOwner;
-						_x call initObjectLocal;
+						_x call OT_fnc_initObjectLocal;
 					}foreach(_objects);
 					_created = _objects select 0;
 					deleteVehicle modeTarget;

@@ -27,7 +27,7 @@ private _cost = 0;
 private _money = player getVariable ["money",0];
 if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
 
-[-_cost] call money;
+[-_cost] call OT_fnc_money;
 
 _group = creategroup resistance;
 _leader = false;

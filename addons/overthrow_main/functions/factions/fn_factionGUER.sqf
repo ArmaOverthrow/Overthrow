@@ -181,13 +181,13 @@ while {true} do {
 					if(_townpos call OT_fnc_inSpawnDistance) then {
 						_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
 						if(_numcops == 0) then {
-							[_town,-1] call stability;
+							[_town,-1] call OT_fnc_stability;
 						};
 					};
 				}else{
 					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
 					if(_numcops > 0) then {
-						[_town,-1] call stability;
+						[_town,-1] call OT_fnc_stability;
 					};
 				};
 			}foreach(OT_allTowns);

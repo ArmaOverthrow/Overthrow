@@ -30,7 +30,7 @@ while {alive player} do {
 	};
 
 	_seen = "";
-	if(player call unitSeenNATO) then {
+	if(player call OT_fnc_unitSeenNATO) then {
 		_seen = "<t color='#5D8AA8'>o_o</t>";
 
 		_replim = 50;
@@ -45,7 +45,7 @@ while {alive player} do {
 			};
 		};
 	}else{
-		if(player call unitSeenCRIM) then {
+		if(player call OT_fnc_unitSeenCRIM) then {
 			_seen = "<t color='#B2282f'>o_o</t>";
 			_totalrep = (abs _rep);
 			_replim = 50;

@@ -22,12 +22,12 @@ while {true} do {
 					//Resistance controls both, stability goes up if theres police
 					_police = server getVariable [format["police%1",_town],0];
 					if (_police > 0) then {
-						[_town,floor(_police / 2)] call stability;
+						[_town,floor(_police / 2)] call OT_fnc_stability;
 					};
 				}else{
 					//NATO owns the tower but not the town, stability goes down
 					if((random 100) > 80) then {
-						[_town,-1] call stability;
+						[_town,-1] call OT_fnc_stability;
 					};
 				};
 			}else{
@@ -42,10 +42,10 @@ while {true} do {
 						_chance = 80;
 					};
 					if((random 100) < _chance) then {
-						[_town,-2] call stability;
+						[_town,-2] call OT_fnc_stability;
 					}else{
 						if((random 100) > 50) then {
-							[_town,-1] call stability;
+							[_town,-1] call OT_fnc_stability;
 						};
 					};
 				};

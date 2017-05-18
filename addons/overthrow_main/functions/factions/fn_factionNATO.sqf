@@ -227,7 +227,7 @@ while {sleep 10;true} do {
 								_abandoned pushback _town;
 								server setVariable [format ["garrison%1",_town],0,true];
 								format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
-								[_town,15] call stability;
+								[_town,15] call OT_fnc_stability;
 								_abandonedSomething = true;
 							};
 						}else{

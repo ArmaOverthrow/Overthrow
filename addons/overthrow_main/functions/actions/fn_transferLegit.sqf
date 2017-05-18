@@ -33,7 +33,7 @@ _doTransfer = {
 	format["Transferring legal inventory from %1",_toname] call OT_fnc_notifyMinor;
 
 
-	[5,false] call progressBar;
+	[5,false] call OT_fnc_progressBar;
 	sleep 5;
 	_full = false;
 	if(_iswarehouse) then {
@@ -87,5 +87,5 @@ if(count _objects == 1) then {
 		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer legal items from which container?" call OT_fnc_notifyBig;
-	_options spawn playerDecision;
+	_options spawn OT_fnc_playerDecision;
 };

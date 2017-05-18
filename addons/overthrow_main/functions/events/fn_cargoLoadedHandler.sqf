@@ -8,7 +8,7 @@ if(_illegal) then {
 	{
 		if(isPlayer _x) then {
 			_x setCaptive false;
-			_x spawn revealToNATO;
+			_x spawn OT_fnc_revealToNATO;
 		};
 	}foreach(_pos nearentities 30);
 };

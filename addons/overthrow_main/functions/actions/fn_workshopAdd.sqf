@@ -34,14 +34,14 @@ if(!alive _veh) exitWith {};
 	disableUserInput true;
 
 	"Attaching weapon to vehicle" call OT_fnc_notifyMinor;
-	[30,false] call progressBar;
+	[30,false] call OT_fnc_progressBar;
 	sleep 30;
 	disableUserInput false;
 	if((!alive player) or (!alive _veh)) exitWith {};
 
 	_wpn = _cls createVehicle [0,0,0];
 	_wpn attachto [_veh,_attachat select 0];
-	[[_wpn,_attachat select 1],"mpSetDir",true,true] spawn BIS_fnc_MP;
+	[[_wpn,_attachat select 1],"setDir",true,true] spawn BIS_fnc_MP;
 
 	_money = player getVariable "money";
 	_money = _money - _price;

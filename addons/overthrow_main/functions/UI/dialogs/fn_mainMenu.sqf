@@ -463,7 +463,7 @@ if(count _possible > 0) then {
 			ctrlEnable [1606,false];
 		}else{
 			if(side _civ == civilian) then {
-				[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['stopAndFace',_civ,false];
+				[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['OT_fnc_orderStopAndFace',_civ,false];
 			};
 		};
 	}else{

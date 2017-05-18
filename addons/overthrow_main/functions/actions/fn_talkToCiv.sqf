@@ -10,7 +10,7 @@ private _options = [];
 
 if (side _civ == west) exitWith {
 	_options pushBack ["Cancel",{}];
-	_options spawn playerDecision;
+	_options spawn OT_fnc_playerDecision;
 };
 
 private _canRecruit = true;
@@ -193,7 +193,7 @@ if (_canBuyBoats) then {
 					_money = player getVariable "money";
 					if(_money < _cost) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
-					[-_cost] call money;
+					[-_cost] call OT_fnc_money;
 					_veh = OT_vehType_ferry createVehicle _pos;
 
 					clearWeaponCargoGlobal _veh;
@@ -261,7 +261,7 @@ if (_canBuyBoats) then {
 					_ferryoptions pushback [format["%1 (-$%2)",_t,_cost],_go,_p];
 				};
 			}foreach(OT_ferryDestinations);
-			_ferryoptions spawn playerDecision;
+			_ferryoptions spawn OT_fnc_playerDecision;
 		}
 	];
 };
@@ -331,7 +331,7 @@ if (_canSellDrugs) then {
 
 				if(side _civ == civilian) then {
 					_price = round(_price * 1.2);
-					if(player call unitSeenNATO) then {
+					if(player call OT_fnc_unitSeenNATO) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 68) then {
@@ -342,16 +342,16 @@ if (_canSellDrugs) then {
 									round(
 										([(getpos player) call OT_fnc_nearestTown,OT_drugSelling] call OT_fnc_getDrugPrice)*1.2
 									)
-								] call money;
+								] call OT_fnc_money;
 								player removeItem OT_drugSelling;
 								OT_interactingWith addItem OT_drugSelling;
 								OT_interactingWith setVariable ["OT_Talking",false,true];
 								private _town = (getpos player) call OT_fnc_nearestTown;
 								if((random 100 > 50) and !isNil "_town") then {
-									[_town,-1] call stability;
+									[_town,-1] call OT_fnc_stability;
 								};
 								if(random 100 > 80) then {
-									1 call influence;
+									1 call OT_fnc_influence;
 								};
 							}] spawn OT_fnc_doConversation;
 						}else{
@@ -360,15 +360,15 @@ if (_canSellDrugs) then {
 					};
 				}else{
 					_price = [OT_nation,_drugcls] call OT_fnc_getDrugPrice;
-					if(player call unitSeenNATO) then {
+					if(player call OT_fnc_unitSeenNATO) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
-							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
-							[_town,-OT_drugQty] call stability;
+							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call OT_fnc_money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
+							[_town,-OT_drugQty] call OT_fnc_stability;
 						}else{
 							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;
-							if(player call unitSeenCRIM) then {
+							if(player call OT_fnc_unitSeenCRIM) then {
 								hint "You are dealing on enemy turf";
 								player setCaptive false;
 							};
@@ -384,4 +384,4 @@ _options pushBack ["Cancel",{
 
 }];
 
-_options spawn playerDecision;
+_options spawn OT_fnc_playerDecision;

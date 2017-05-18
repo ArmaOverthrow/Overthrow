@@ -31,7 +31,7 @@ _newrecruits = [];
 private _money = player getVariable ["money",0];
 private _take = floor(_money * 0.05);
 if(_take > 0) then {
-	[-_take] call money;
+	[-_take] call OT_fnc_money;
 };
 
 removeHeadgear player;

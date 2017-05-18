@@ -32,6 +32,6 @@ call {
 	};
 	_veh addItemCargoGlobal [_cls,_num];
 };
-[-_total] call money;
+[-_total] call OT_fnc_money;
 
 OT_taking = false;

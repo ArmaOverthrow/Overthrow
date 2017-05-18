@@ -30,7 +30,7 @@ if((typeof _source) in OT_fuelPumps) then {
         "You cannot afford fuel" remoteExec ["OT_fnc_notifyMinor",_player];
         _sink setFuel _last;
     }else{
-        [-_total] remoteExec ["money",_player];
+        [-_total] remoteExec ["OT_fnc_money",_player];
     };
 
     _sink setVariable ["ot_lastFuel",fuel _sink,false];

@@ -16,7 +16,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	server setVariable ["NATOversion",OT_NATOversion,false];
 	_abandoned = server getVariable ["NATOabandoned",[]];
 
-	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0,false];
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
 	sleep 0.1;
 	{
 		_stability = server getVariable format ["stability%1",_x];
@@ -86,7 +86,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		_count = _count + 1;
 	};
 
-	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['blackFaded',0];
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0];
 	sleep 0.1;
 	//Add comms towers
 	{

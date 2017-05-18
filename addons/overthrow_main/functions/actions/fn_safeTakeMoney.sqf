@@ -11,7 +11,7 @@ if(_password == "") exitWith {
 		_in = OT_context getVariable ["money",0];
 		if(_val > _in) then {_val = _in};
 		if(_val > 0) then {
-			[_val] call money;
+			[_val] call OT_fnc_money;
 			OT_context setVariable ["money",_in - _val,true];
 		};
 	};
@@ -31,7 +31,7 @@ OT_inputHandler = {
 		_in = OT_context getVariable ["money",0];
 		if(_val > _in) then {_val = _in};
 		if(_val > 0) then {
-			[_val] call money;
+			[_val] call OT_fnc_money;
 			OT_context setVariable ["money",_in - _val,true];
 		};
 	};

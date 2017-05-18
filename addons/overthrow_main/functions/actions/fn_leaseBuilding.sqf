@@ -7,7 +7,7 @@ if(damage _building == 1) exitWith {
 	_price =  round((_b select 1) * 0.25);
 	_money = player getVariable ["money",0];
 	if(_money >= _price) then {
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 		_building setDamage 0;
 		_id = [_building] call OT_fnc_getBuildID;
 		_damaged = owners getVariable ["damagedBuildings",[]];

@@ -67,7 +67,7 @@ if !(_done) then {
 	_s pushback [_sellcls,_qty];
 };
 
-[(_price*_qty)] call money;
+[(_price*_qty)] call OT_fnc_money;
 if((_price*_qty) > 1000) then {[_town,1] call OT_fnc_standing};
 _ocls = _sellcls;
 _b setVariable ["stock",_s,true];

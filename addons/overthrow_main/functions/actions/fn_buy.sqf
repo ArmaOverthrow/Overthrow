@@ -117,7 +117,7 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls in OT_allClothing) exitWith {
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 
 		if((backpack player != "") and (player canAdd _cls)) then {
 			player addItemToBackpack _cls;
@@ -128,7 +128,7 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	if(_cls == "V_RebreatherIA") exitWith {
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 
 		if((backpack player != "") and (player canAdd _cls)) then {
 			player addItemToBackpack _cls;
@@ -139,7 +139,7 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	if((_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) or (_cls isKindOf ["Pistol",configFile >> "CfgWeapons"])) exitWith {
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 
 		_box = false;
 		{
@@ -157,7 +157,7 @@ call {
 		if(_cls in OT_allExplosives) then {
 			_server setVariable ["reschems",_chems - (_cost select 3),true];
 		};
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 		player addMagazine _cls;
 		playSound "3DEN_notificationDefault";
 	};
@@ -171,19 +171,19 @@ call {
 	if(_handled) then {
 		playSound "3DEN_notificationDefault";
 		if (_cls in OT_illegalItems) exitWith {
-			[-_price] call money;
+			[-_price] call OT_fnc_money;
 			player addItem _cls;
 
-			if(player call unitSeenNATO) then {
+			if(player call OT_fnc_unitSeenNATO) then {
 				[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 			};
 		};
 		if (_cls in OT_allStaticBackpacks) exitWith {
-			[-_price] call money;
+			[-_price] call OT_fnc_money;
 			player addBackpack _cls;
 		};
 		if (_cls in OT_allOptics) exitWith {
-			[-_price] call money;
+			[-_price] call OT_fnc_money;
 			player addItem _cls;
 		};
 

@@ -102,7 +102,7 @@ if(_handled) then {
 
 	if(_type == "buy") then {
 		[_building,getPlayerUID player] call OT_fnc_setOwner;
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 
 		_mrk = createMarkerLocal [_mrkid,getpos _building];
 		_mrk setMarkerShape "ICON";
@@ -132,7 +132,7 @@ if(_handled) then {
 			deleteMarker _mrkid;
 			_owned deleteAt (_owned find _id);
 			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_sell]] call BIS_fnc_createLogRecord;
-			[_sell] call money;
+			[_sell] call OT_fnc_money;
 		}else{
 			deleteVehicle _building;
 			_owned deleteAt (_owned find ([_building] call OT_fnc_getBuildID));

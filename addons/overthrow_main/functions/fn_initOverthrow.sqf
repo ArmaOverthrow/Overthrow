@@ -33,7 +33,6 @@ OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPositi
 
 [] call OT_fnc_initTFAR;
 
-call compile preprocessFileLineNumbers "initFuncs.sqf";
 call compile preprocessFileLineNumbers "initVar.sqf";
 
 //VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less

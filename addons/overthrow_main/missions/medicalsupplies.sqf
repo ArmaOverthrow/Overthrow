@@ -87,10 +87,10 @@ _difficulty = 0.5;
 
         //apply stability and standing
         [_town,round(_effect*0.5),format["Delivered %1 medical supplies",_numavailable]] call OT_fnc_standing;
-        [_town,-_effect] call stability;
+        [_town,-_effect] call OT_fnc_stability;
     }else{
         //slight positive effect on stability
         _town = _pos call OT_fnc_nearestTown;
-        [_town,2] call stability;
+        [_town,2] call OT_fnc_stability;
     };
 },_params,_difficulty];

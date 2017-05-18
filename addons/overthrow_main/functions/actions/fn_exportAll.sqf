@@ -13,7 +13,7 @@ if(_town in (server getVariable ["NATOabandoned",[]])) then {
 };
 
 "Exporting inventory" call OT_fnc_notifyMinor;
-[5,false] call progressBar;
+[5,false] call OT_fnc_progressBar;
 sleep 5;
 _total = 0;
 {
@@ -48,4 +48,4 @@ _total = 0;
 	};
 }foreach(_target call OT_fnc_unitStock);
 
-[_total] call money;
+[_total] call OT_fnc_money;

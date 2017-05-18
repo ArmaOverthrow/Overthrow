@@ -3,13 +3,13 @@ sleep 0.1;
 
 private _txt = "<t align='right'><t size='0.6' color='#ffffff'>Basic Controls</t><br/>";
 
-_txt = format ["%1<t size='0.4' color='#ffffff'>Move Forward  <t size='0.6'>%2</t></t><br/>",_txt,"MoveForward" call assignedKey];
-_txt = format ["%1<t size='0.4' color='#ffffff'>Move Back  <t size='0.6'>%2</t></t><br/>",_txt,"MoveBack" call assignedKey];
-_txt = format ["%1<t size='0.4' color='#ffffff'>Move Left  <t size='0.6'>%2</t></t><br/>",_txt,"TurnLeft" call assignedKey];
-_txt = format ["%1<t size='0.4' color='#ffffff'>Move Right  <t size='0.6'>%2</t></t><br/><br/>",_txt,"TurnRight" call assignedKey];
-_txt = format ["%1<t size='0.4' color='#ffffff'>Vault  <t size='0.6'>%2</t></t><br/><br/>",_txt,"GetOver" call assignedKey];
-_txt = format ["%1<t size='0.4' color='#ffffff'>Open Inventory  <t size='0.6'>%2</t></t><br/>",_txt,"Gear" call assignedKey];
-_txt = format ["%1<t size='0.4' color='#ffffff'>Open Map  <t size='0.6'>%2</t></t><br/>",_txt,"ShowMap" call assignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Move Forward  <t size='0.6'>%2</t></t><br/>",_txt,"MoveForward" call OT_fnc_geAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Move Back  <t size='0.6'>%2</t></t><br/>",_txt,"MoveBack" call OT_fnc_geAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Move Left  <t size='0.6'>%2</t></t><br/>",_txt,"TurnLeft" call OT_fnc_geAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Move Right  <t size='0.6'>%2</t></t><br/><br/>",_txt,"TurnRight" call OT_fnc_geAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Vault  <t size='0.6'>%2</t></t><br/><br/>",_txt,"GetOver" call OT_fnc_geAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Open Inventory  <t size='0.6'>%2</t></t><br/>",_txt,"Gear" call OT_fnc_geAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Open Map  <t size='0.6'>%2</t></t><br/>",_txt,"ShowMap" call OT_fnc_geAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Main Menu  <t size='0.6'>Y</t></t><br/>",_txt];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Go Back  <t size='0.6'>Esc</t></t><br/>",_txt];
 
@@ -17,18 +17,18 @@ _txt = format["%1</t>",_txt];
 
 [_txt, 0.25, 0.2, 120, 1, 0, 2] spawn bis_fnc_dynamicText;
 
-menuHandler = {
-	hint format["Take some time to explore the main menu, when you're finished open the map (%1 key)","ShowMap" call assignedKey];
-	menuHandler = {};
+OT_menuHandler = {
+	hint format["Take some time to explore the main menu, when you're finished open the map (%1 key)","ShowMap" call OT_fnc_geAssignedKey];
+	OT_menuHandler = {};
 
 	private _txt = "<t align='center'><t size='0.6' color='#ffffff'>Main Menu</t><br/><br/>";
-	_txt = format ["%1<t size='0.5' color='#ffffff'>From here you can perform basic actions such as recruiting civilians or fast travelling to buildings you own, friendly bases and camps that you place. As you can see on the bottom right, this shack is owned by you, so you can therefore fast travel back here when you need to, but not while wanted.<br/><br/>To continue, close this menu (Esc) and open the map (%2 key)</t>",_txt,"ShowMap" call assignedKey];
+	_txt = format ["%1<t size='0.5' color='#ffffff'>From here you can perform basic actions such as recruiting civilians or fast travelling to buildings you own, friendly bases and camps that you place. As you can see on the bottom right, this shack is owned by you, so you can therefore fast travel back here when you need to, but not while wanted.<br/><br/>To continue, close this menu (Esc) and open the map (%2 key)</t>",_txt,"ShowMap" call OT_fnc_geAssignedKey];
 	sleep 3;
 	[_txt, 0, 0.2, 120, 1, 0, 2] spawn bis_fnc_dynamicText;
 
 	waitUntil {sleep 1; visibleMap};
 
-	hint format["Holding RMB will pan the map, zoom with the scrollwheel. When you are finished exploring the map, close it with the Esc key.","Action" call assignedKey];
+	hint format["Holding RMB will pan the map, zoom with the scrollwheel. When you are finished exploring the map, close it with the Esc key.","Action" call OT_fnc_geAssignedKey];
 	sleep 3;
 	_txt = "<t align='left'><t size='0.7' color='#000000'>Stability</t><br/>";
 	_txt = format ["%1<t size='0.6' color='#000000'>Red areas indicate towns where stability is lowest. Blue icons indicate known NATO installations.</t><br/><br/>",_txt];
@@ -42,7 +42,7 @@ menuHandler = {
 	sleep 3;
 
 	_txt = "<t align='center'><t size='0.6' color='#ffffff'>Interaction</t><br/>";
-	_txt = format ["%1<t size='0.5' color='#ffffff'>Most interactions will be done via the 'Y' menu. However some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your scroll wheel or pressing %2 to open the action menu. Select 'inventory' with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call assignedKey];
+	_txt = format ["%1<t size='0.5' color='#ffffff'>Most interactions will be done via the 'Y' menu. However some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your scroll wheel or pressing %2 to open the action menu. Select 'inventory' with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call OT_fnc_geAssignedKey];
 
 	[_txt, 0, 0.2, 20, 1, 0, 2] spawn bis_fnc_dynamicText;
 
@@ -63,7 +63,7 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
-							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you, so best to keep it where it is until you uh... 'need' it", "Gear" call assignedKey];
+							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you, so best to keep it where it is until you uh... 'need' it", "Gear" call OT_fnc_geAssignedKey];
 							[] call OT_fnc_getLocalMission;
 							sleep 20;
 							hint "Press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
@@ -80,7 +80,7 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
-							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you.", "Gear" call assignedKey];
+							hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you.", "Gear" call OT_fnc_geAssignedKey];
 							sleep 20;
 							hint "Press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
@@ -96,7 +96,7 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
-							hint format["The drugs are in your pocket, you can see it in your inventory (%1 key). Try selling it to the civilians, larger towns fetch higher prices. But be careful, if NATO searches you and finds any they will confiscate it.", "Gear" call assignedKey];
+							hint format["The drugs are in your pocket, you can see it in your inventory (%1 key). Try selling it to the civilians, larger towns fetch higher prices. But be careful, if NATO searches you and finds any they will confiscate it.", "Gear" call OT_fnc_geAssignedKey];
 							sleep 20;
 							hint "You can also press 'Y' and talk to the gun dealer at any time to request a mission that will help the resistance";
 						};
@@ -109,7 +109,7 @@ menuHandler = {
 					{
 						_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 						private _end = {
-							hint format["The items are in your pocket, you can see it in your inventory (%1 key). Balavu, Rautake and Tavu have shops that will buy them from you as well as locations all over Tanoa. Towns with lower stability will pay higher prices for all items.", "Gear" call assignedKey];
+							hint format["The items are in your pocket, you can see it in your inventory (%1 key). Balavu, Rautake and Tavu have shops that will buy them from you as well as locations all over Tanoa. Towns with lower stability will pay higher prices for all items.", "Gear" call OT_fnc_geAssignedKey];
 							sleep 10;
 							hint "You can also press 'Y' and talk to this gun dealer at any time to request a mission that will help the resistance";
 						};
@@ -124,17 +124,17 @@ menuHandler = {
 				]
 			];
 
-			_options spawn playerDecision;
+			_options spawn OT_fnc_playerDecision;
 		};
 		[_gundealer,player,_lines,_done] spawn OT_fnc_doConversation;
 	};
 
 	[player,getpos _gundealer,"Find the local dealer","Apparently the spokesperson of the 'Free Tanoa' movement was murdered at the protest last night. I don't know what's going on with this country anymore. I need some answers, and I think I know who could have them.",_whendone] spawn OT_fnc_assignMission;
 	sleep 3;
-	hint format["You just recieved a task. To check it out open the map (%1 key) and click on 'Tasks'","ShowMap" call assignedKey];
+	hint format["You just recieved a task. To check it out open the map (%1 key) and click on 'Tasks'","ShowMap" call OT_fnc_geAssignedKey];
 	waitUntil {sleep 1; visibleMap};
 	sleep 3;
-	hint format ["You can 'assign' the task once you find it, or shift-click on the map to give yourself a waypoint.\n\nWhen you're ready close the map with Esc or '%1' key.", "ShowMap" call assignedKey];
+	hint format ["You can 'assign' the task once you find it, or shift-click on the map to give yourself a waypoint.\n\nWhen you're ready close the map with Esc or '%1' key.", "ShowMap" call OT_fnc_geAssignedKey];
 
 	waitUntil {sleep 1; !visibleMap};
 	sleep 3;

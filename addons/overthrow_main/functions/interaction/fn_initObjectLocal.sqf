@@ -7,7 +7,7 @@ if(typeof _this == OT_item_Map) then {
 
 };
 if(typeof _this == OT_item_Storage) then {
-	_this addAction ["Dump Everything", {[player,_this select 0] call dumpStuff},nil,0,false,true,"",""];
+	_this addAction ["Dump Everything", {[player,_this select 0] call OT_fnc_dumpStuff},nil,0,false,true,"",""];
 	_this addAction ["Save Loadout", OT_fnc_saveLoadout,nil,0,false,true,"",""];
 	_this addAction ["Restore Loadout", "UI\loadoutDialog.sqf",nil,0,false,true,"",""];
 	_this addAction ["Take From Warehouse", {
