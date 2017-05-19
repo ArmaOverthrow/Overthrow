@@ -25,7 +25,7 @@ while {_count < _numNATO} do {
 	_groups pushBack _group;
 
 	_home = [_posTown,[0,_range]] call SHK_pos;
-	_building = [_home,OT_allHouses+OT_allShops+OT_offices] call OT_fnc_getRandomBuilding;
+	_building = [_home,OT_allHouses+OT_shops+OT_offices] call OT_fnc_getRandomBuilding;
 	if(typename _building != "BOOL") then {_home = position _building};
 	_roads = _home nearRoads 100;
 	if(count _roads > 0) then {_home = position (_roads select 0)};

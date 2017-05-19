@@ -42,9 +42,9 @@ if(isMultiplayer and (!isServer)) then {
 	OT_varInitDone = true;
 };
 
-_start = [1385.17,505.453,1.88826];
+_start = OT_startCameraPos;
 _introcam = "camera" camCreate _start;
-_introcam camSetTarget [1420,535,5.8];
+_introcam camSetTarget OT_startCameraTarget;
 _introcam cameraEffect ["internal", "BACK"];
 _introcam camSetFocus [15, 1];
 _introcam camsetfov 1.1;

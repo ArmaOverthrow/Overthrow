@@ -39,7 +39,7 @@ if (!isServer) exitwith {};
 
     {
         _allshops pushback (getpos _x);
-    }foreach(nearestObjects [_pos, OT_allShops + OT_offices + OT_warehouses + OT_carShops + OT_portBuildings, _mSize]);
+    }foreach(nearestObjects [_pos, OT_shops + OT_offices + OT_warehouses + OT_carShops + OT_portBuildings, _mSize]);
 
     private _lopop = round(count(_low) * (random(2) + 1));
     private _medpop = round(count(_med) * (random(4) + 2));

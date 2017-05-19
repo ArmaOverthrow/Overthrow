@@ -2,6 +2,9 @@ private ["_town","_unit","_numweap","_skill","_unit","_magazine","_weapon","_sta
 
 _unit = _this select 0;
 
+[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
+[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
+
 _town = _this select 1;
 
 _unit setVariable ["garrison",_town,false];

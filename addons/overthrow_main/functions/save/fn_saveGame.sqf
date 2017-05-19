@@ -2,7 +2,7 @@ if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint"
 OT_saving = true;
 publicVariable "OT_saving";
 
-"Persistent Saving..." remoteExec ["OT_fnc_notifyMinor",0,true];
+"Persistent Saving..." remoteExec ["OT_fnc_notifyMinor",0,false];;
 sleep 0.1;
 waitUntil {!isNil "OT_NATOInitDone"};
 
@@ -77,7 +77,7 @@ _count = 10001;
 		_vehicles pushback _params;
 	};
 	if(_count > 2000) then {
-		"Still persistent Saving... please wait" remoteExec ["OT_fnc_notifyMinor",0,true];
+		"Still persistent Saving... please wait" remoteExec ["OT_fnc_notifyMinor",0,false];;
 		_count = 0;
 		sleep 0.01;
 	};
@@ -203,14 +203,14 @@ _data pushback ["timedate",date];
 	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
 }foreach([] call CBA_fnc_players);
 
-profileNameSpace setVariable ["Overthrow.save.001",_data];
+profileNameSpace setVariable [OT_saveName,_data];
 if (isDedicated) then {
-	"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyMinor",0,true];
+	"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyMinor",0,false];;
 	sleep 0.01;
 	saveProfileNamespace
 };
 
-"Persistent Save Completed" remoteExec ["OT_fnc_notifyMinor",0,true];
+"Persistent Save Completed" remoteExec ["OT_fnc_notifyMinor",0,false];;
 
 OT_saving = false;
 publicVariable "OT_saving";

@@ -67,7 +67,7 @@ call {
 		[_killer,1500] call OT_fnc_rewardMoney;
 		[_killer,100] call OT_fnc_experience;
 
-		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["OT_fnc_notifyMinor",0,true];
+		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["OT_fnc_notifyMinor",0,false];;
 		deleteMarker format ["mobster%1",_mobsterid];
 	};
 	if(!isNil "_employee") exitWith {
@@ -119,9 +119,9 @@ call {
 				};
 			}else{
 				if(side _killer == west) then {
-					format["NATO has removed the bounty in %1",_town] remoteExec ["OT_fnc_notifyMinor",0,true];
+					format["NATO has removed the bounty in %1",_town] remoteExec ["OT_fnc_notifyMinor",0,false];;
 				}else{
-					format["The gang leader in %1 is dead",_town] remoteExec ["OT_fnc_notifyMinor",0,true];
+					format["The gang leader in %1 is dead",_town] remoteExec ["OT_fnc_notifyMinor",0,false];;
 				};
 			};
 			server setVariable [format["CRIMbounty%1",_town],0,true];

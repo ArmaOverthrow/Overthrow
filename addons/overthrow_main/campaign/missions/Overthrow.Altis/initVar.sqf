@@ -1,23 +1,23 @@
 
-OT_nation = "Tanoa";
-OT_saveName = "Overthrow.save.001";
+OT_nation = "Altis";
+OT_saveName = "Overthrow.altis.001";
 
-OT_startCameraPos = [1385.17,505.453,1.88826];
-OT_startCameraTarget = [1420,535,5.8];
+OT_startCameraPos = [11646.6,6406.52,2];
+OT_startCameraTarget = [13808.2,6387.16,0];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 12;
-OT_NATOversion = 8;
+OT_economyVersion = 1;
+OT_NATOversion = 1;
 OT_CRIMversion = 1;
 
 OT_flag_NATO = "Flag_NATO_F";
 OT_flag_CRIM = "Flag_Syndikat_F";
-OT_flag_IND = "Flag_HorizonIslands_F";
+OT_flag_IND = "Flag_Altis_F";
 
 //Interactable items that spawn in your house
 OT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
 OT_item_Desk = "OfficeTable_01_new_F"; //Your spawn desk
-OT_item_Radio = "Land_PortableLongRangeRadio_F";
+OT_item_Radio = "Land_PortableLongmRangeRadio_F";
 OT_item_Map = "Land_MapBoard_F";
 OT_item_Repair = "Land_ToolTrolley_02_F";
 OT_item_Tent = "Land_TentDome_F";
@@ -34,8 +34,8 @@ OT_fuelPumps = ["Land_FuelStation_02_pump_F","Land_FuelStation_01_pump_F","Land_
 
 OT_churches = ["Land_Church_03_F","Land_Church_01_F","Land_Church_02_F","Land_Temple_Native_01_F"];
 
-OT_language_local = "LanguageENGFRE_F";
-OT_identity_local = "Head_Tanoan";
+OT_language_local = "LanguageGRE_F";
+OT_identity_local = "Head_Greek";
 
 OT_language_western = "LanguageENG_F";
 OT_identity_western = "Head_Euro";
@@ -44,6 +44,7 @@ OT_language_eastern = "LanguageCHI_F";
 OT_identity_eastern = "Head_Asian";
 
 OT_face_localBoss = "TanoanBossHead";
+
 
 OT_civType_gunDealer = "C_man_p_fugitive_F";
 OT_civType_local = "C_man_1";
@@ -60,7 +61,7 @@ OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F",OT_vehType_
 OT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F","H_HelmetB_TI_tna_F"];
 OT_illegalVests = ["V_TacVest_gen_F"];
 
-OT_clothes_locals = ["U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
+OT_clothes_locals = ["U_C_Man_casual_5_F","U_C_Poloshirt_burgundy","U_I_C_Soldier_Bandit_1_F"];
 OT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
 OT_clothes_tourists = [];
 OT_clothes_priest = "U_C_Man_casual_2_F";

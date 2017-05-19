@@ -208,6 +208,8 @@ OT_spawnHouses = [];
 	OT_spawnHouses pushback _cls;
 }foreach(_allHouses);
 
+OT_gunDealerHouses = OT_spawnHouses;
+
 private _allShops = "getNumber ( _x >> ""ot_isShop"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_shops = [];
 {
