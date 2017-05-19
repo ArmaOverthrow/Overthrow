@@ -25,5 +25,4 @@
  *     @see https://github.com/CBATeam/CBA_A3/wiki/Error-handling
  */
 
-// @todo requires a more standard framework
-#include "\ot\addons\overthrow_main\script_component.hpp"
+#include "\ot\script_component.hpp"
