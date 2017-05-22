@@ -60,24 +60,15 @@ while {(_count < _numVeh)} do {
 
 						_region  = server getVariable format["region_%1",_town];
 						_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
-						_bdg = [server getvariable _dest,OT_allHouses + OT_shops + OT_offices] call OT_fnc_getRandomBuilding;
-						if(typename _bdg == "BOOL") then {
-							_moveto = server getvariable _dest;
-						}else{
-							_moveto = getpos(_bdg);
-						};
-						if(!isNil "_moveto") then {
-							_wp = _group addWaypoint [_moveto,0];
+						_moveto = _dest call OT_fnc_getRandomRoadPosition;
 
-							_wp setWaypointType "MOVE";
-							_wp setWaypointSpeed "LIMITED";
-							_wp setWaypointBehaviour "SAFE";
-							_wp setWaypointCompletionRadius 60;
-							_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
-						}else{
-							_group spawn OT_fnc_cleanup;
-							_veh spawn OT_fnc_cleanup;
-						};
+						_wp = _group addWaypoint [_moveto,0];
+
+						_wp setWaypointType "MOVE";
+						_wp setWaypointSpeed "LIMITED";
+						_wp setWaypointBehaviour "SAFE";
+						_wp setWaypointCompletionRadius 60;
+						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup;unassignVehicle this;[group this] spawn OT_fnc_cleanup;"];
 					}else{
 						if(_town == (server getVariable "spawntown") and (random 100) > 75) then {
 							_veh setDamage [1,false]; //salvage wreck

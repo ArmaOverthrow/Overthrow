@@ -24,11 +24,7 @@ while {_count < _numNATO} do {
 	_group = createGroup west;
 	_groups pushBack _group;
 
-	_home = [_posTown,[0,_range]] call SHK_pos;
-	_building = [_home,OT_allHouses+OT_shops+OT_offices] call OT_fnc_getRandomBuilding;
-	if(typename _building != "BOOL") then {_home = position _building};
-	_roads = _home nearRoads 100;
-	if(count _roads > 0) then {_home = position (_roads select 0)};
+	_home = _town call OT_fnc_getRandomRoadPosition;
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _home, [],0, "NONE"];
 	sleep 0.1;
 	_civ setVariable ["garrison",_town,false];

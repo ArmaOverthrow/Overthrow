@@ -60,4 +60,6 @@ OT_townData = [
     [[3608.63,10281.1,0],"Athanos"]
 ];
 
-OT_spawnTowns = ["Oreokastro","Agios Konstantinos","Athanos","Panochori","Neri","Negades"];
+OT_spawnTowns = ["Oreokastro","Agios Konstantinos","Athanos","Negades","Kore","Syrta","Abdera"];
+OT_capitals = ["Kavala","Athira","Pyrgos"]; //region capitals
+OT_sprawling = [];

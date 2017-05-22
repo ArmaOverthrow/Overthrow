@@ -28,7 +28,7 @@ if(isNil "_close") then {
 	}foreach([OT_airportData,[],{random 100},"ASCEND"] call BIS_fnc_SortBy);
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-_group = [_start, WEST, OT_NATO_Group_Recon] call BIS_fnc_spawnGroup;
+_group = [_start, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> OT_NATO_Group_Recon)] call BIS_fnc_spawnGroup;
 
 sleep 0.5;
 
@@ -60,7 +60,7 @@ if(_isAir) then {
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;
 
-	
+
 
 	createVehicleCrew _veh;
 	{

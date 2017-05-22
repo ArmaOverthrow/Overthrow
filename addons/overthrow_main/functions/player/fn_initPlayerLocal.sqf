@@ -32,12 +32,8 @@ player linkItem "ItemMap";
 if(isMultiplayer and (!isServer)) then {
 	//TFAR Support, thanks to Dedmen for the help
 	[] call OT_fnc_initTFAR;
-	if (OT_hasTFAR) then {
-	   player linkItem "tf_anprc148jem";
-	};
-
-    call compile preprocessFileLineNumbers "initFuncs.sqf";
-    call compile preprocessFileLineNumbers "initVar.sqf";
+	call compile preprocessFileLineNumbers "initVar.sqf";
+	call OT_fnc_initVar;
 }else{
 	OT_varInitDone = true;
 };
@@ -275,16 +271,7 @@ if (_newplayer) then {
     if(OT_randomSpawnTown) then {
         _town = OT_spawnTowns call BIS_fnc_selectRandom;
     };
-    _pos = server getVariable _town;
-
-    _house = [_pos,OT_spawnHouses] call OT_fnc_getRandomBuilding;
-    if(typename _house == "BOOL") then {
-		//Spawn town is full, make a new one
-        _town = (OT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
-        server setVariable ["spawntown",_town,true];
-        _pos = server getvariable _town;
-        _house = [_pos,OT_spawnHouses] call OT_fnc_getRandomBuilding;
-    };
+	_house = _town call OT_fnc_getPlayerHome;    
     _housepos = getpos _house;
 
     //Put a light on at home

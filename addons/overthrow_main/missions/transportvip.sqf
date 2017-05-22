@@ -21,9 +21,10 @@ if((random 100) > 50) then { // 50/50 chance of either
     _destinationTown = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
     _posTown = server getVariable _destinationTown;
 
-    //Pick a random small house as the dropoff
-    _building = [_posTown,OT_lowPopHouses] call OT_fnc_getRandomBuilding;
+    //Pick a random building as the dropoff
+    _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
 	_destination = position _building;
+    if((_destination select 0) == 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
     _type = "insertion";
 }else{
     //Extraction

@@ -10,7 +10,6 @@ while {!_found and _range < 1200} do {
 	_houses = nearestObjects [_search, _types, _range,false];
 	_possible = [];
 	if(count _houses > 0) then {
-		{if !(_x call OT_fnc_hasOwner) then {_possible pushback _x}}foreach(_houses);
 		if(count _possible > 0) then {
 			_house = _possible call BIS_fnc_selectRandom;
 			_found = true;

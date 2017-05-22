@@ -8,12 +8,12 @@ _g setBehaviour "SAFE";
 
 private _hour = date select 3;
 
-//Walk to a shop and back again
 private _start = getpos ((units _g) select 0);
 if(isNil "_start") exitWith {};
-private _dest = [_start,[0,100]] call SHK_pos;
-private _bdg = [_start,OT_shops + OT_offices + [OT_refugeeCamp]] call OT_fnc_getRandomBuilding;
-if(typename _bdg != "BOOL") then { _dest = getpos(_bdg)};
+private _town = (leader _group) getVariable "hometown";
+if(isNil "_town") then {_town = position(leader _group)};
+
+private _dest = _town call OT_fnc_getRandomRoadPosition;
 
 private _wp = _g addWaypoint [_dest,0];
 _wp setWaypointType "MOVE";

@@ -21,11 +21,11 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
             _town = selectRandom OT_allTowns;
             if(_name == "AAF") then {_town = server getvariable "spawntown"};
             _posTown = server getVariable _town;
-            _building = [_posTown,OT_lowPopHouses] call OT_fnc_getRandomBuilding;
+            _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
             while {isNil "_building"} do {
                 _town = selectRandom OT_allTowns;
                 _posTown = server getVariable _town;
-                _building = [_posTown,OT_lowPopHouses] call OT_fnc_getRandomBuilding;
+                _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
             };
 
             _pos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;

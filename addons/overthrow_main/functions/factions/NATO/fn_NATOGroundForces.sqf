@@ -2,14 +2,14 @@ params ["_frompos","_ao","_attackpos","_byair","_delay"];
 if !(isNil "_delay") then {sleep _delay};
 private _squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
 private _spawnpos = [_frompos,[50,75]] call SHK_pos;
-private _group1 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
+private _group1 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 private _group2 = "";
 private _tgroup = false;
 if !(_byair) then {
 	sleep 0.2;
 	_squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
 	_spawnpos = [_frompos,[50,75]] call SHK_pos;
-	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
+	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 };
 sleep 0.5;
 private _allunits = [];
@@ -156,7 +156,7 @@ _wp setWaypointBehaviour "COMBAT";
 
 _group1 call distributeAILoad;
 if(typename _tgroup == "GROUP") then {
-	
+
 	[_veh,_tgroup,_frompos] spawn {
 		params ["_veh","_tgroup","_frompos"];
 		private _done = false;

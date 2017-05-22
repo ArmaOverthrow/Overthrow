@@ -82,7 +82,7 @@ while {_count < _numNATO} do {
 	_groups pushBack _group;
 	_groupcount = 1;
 
-	_civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
+	_civ = _group createUnit [OT_NATO_Unit_TeamLeader, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
 	_civ setVariable ["VCOM_NOPATHING_Unit",true,false];

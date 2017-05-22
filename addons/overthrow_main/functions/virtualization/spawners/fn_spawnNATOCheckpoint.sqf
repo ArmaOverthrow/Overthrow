@@ -33,7 +33,7 @@ _groupcount = 1;
 
 _start = [_start,7,_dir-90] call BIS_fnc_relPos;
 
-_civ = _group createUnit [OT_NATO_Unit_LevelOneLeader, _start, [],0, "NONE"];
+_civ = _group createUnit [OT_NATO_Unit_TeamLeader, _start, [],0, "NONE"];
 _civ setVariable ["garrison",_name,false];
 _civ setRank "MAJOR";
 _soldiers pushBack _civ;

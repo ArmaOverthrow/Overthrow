@@ -1,3 +1,92 @@
+//VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less
+[] call OT_fnc_initVCOMAI;
+
+[] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
+
+OT_missions = [];
+OT_localMissions = [];
+private _allMissions = "" configClasses ( configFile >> "CfgOverthrowMissions" );
+{
+	_name = configName _x;
+	_script = getText (_x >> "script");
+	_code = compileFinal preprocessFileLineNumbers _script;
+	if(getNumber(_x >> "faction") > 0) then {
+		OT_missions pushback _code;
+	}else{
+		OT_localMissions pushback _code;
+	};
+}foreach(_allMissions);
+
+call compileFinal preprocessFileLineNumbers "data\names.sqf";
+call compileFinal preprocessFileLineNumbers "data\towns.sqf";
+call compileFinal preprocessFileLineNumbers "data\airports.sqf";
+call compileFinal preprocessFileLineNumbers "data\objectives.sqf";
+call compileFinal preprocessFileLineNumbers "data\economy.sqf";
+call compileFinal preprocessFileLineNumbers "data\comms.sqf";
+
+//Identity
+OT_faces_local = [];
+OT_faces_western = [];
+OT_faces_eastern = [];
+{
+    _types = getArray(_x >> "identityTypes");
+	if(OT_identity_local in _types) then {OT_faces_local pushback configName _x};
+	if(OT_identity_western in _types) then {OT_faces_western pushback configName _x};
+	if(OT_identity_eastern in _types) then {OT_faces_eastern pushback configName _x};
+}foreach("getNumber(_x >> 'disabled') == 0" configClasses (configfile >> "CfgFaces" >> "Man_A3"));
+
+OT_voices_local = [];
+OT_voices_western = [];
+OT_voices_eastern = [];
+{
+    _types = getArray(_x >> "identityTypes");
+	if(OT_language_local in _types) then {OT_voices_local pushback configName _x};
+	if(OT_language_western in _types) then {OT_voices_western pushback configName _x};
+	if(OT_language_eastern in _types) then {OT_voices_eastern pushback configName _x};
+}foreach("getNumber(_x >> 'scope') == 2" configClasses (configfile >> "CfgVoice"));
+
+//Find houses
+OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F"]; //buildings with potentially lots of people living in them
+OT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_Hotel_01_F","Land_Hotel_02_F"]; //buildings that rich guys like to live in
+OT_lowPopHouses = [];
+OT_medPopHouses = [];
+OT_highPopHouses = [];
+{
+    _cost = getNumber(_x >> "cost");
+    call {
+        if(_cost > 70000) then {OT_hugePopHouses pushback configName _x};
+        if(_cost > 55000) then {OT_highPopHouses pushback configName _x};
+        if(_cost > 25000) then {OT_medPopHouses pushback configName _x};
+        OT_lowPopHouses pushback configName _x
+    };
+}foreach("(getNumber (_x >> 'scope') == 2) && (configName _x isKindOf 'House') && (configName _x find '_House' > -1)" configClasses (configfile >> "CfgVehicles"));
+
+OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_item_Tent,OT_flag_IND];
+
+OT_allHouses = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses;
+OT_allRealEstate = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_warehouse,OT_policeStation,OT_barracks,OT_barracks,OT_workshopBuilding,OT_refugeeCamp,OT_trainingCamp];
+
+OT_allTowns = [];
+OT_allTownPositions = [];
+
+{
+	_x params ["_pos","_name"];
+	OT_allTowns pushBack _name;
+	OT_allTownPositions pushBack _pos;
+	if(isServer) then {
+		server setVariable [_name,_pos,true];
+	};
+}foreach (OT_townData);
+
+OT_allAirports = [];
+{
+		OT_allAirports pushBack (_x select 1);
+}foreach (OT_airportData);
+
+if(isServer) then {
+	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
+};
+
 //Global overthrow variables related to any map
 
 OT_menuHandler = {};
@@ -728,6 +817,16 @@ OT_Buildables = [
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
 	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"]
 ];
+
+{
+	_istpl = _x select 4;
+	if(_istpl) then {
+		_tpl = _x select 2;
+		OT_allBuyableBuildings pushback ((_tpl select 0) select 0);
+	}else{
+		[OT_allBuyableBuildings,(_x select 2)] call BIS_fnc_arrayPushStack;
+	}
+}foreach(OT_Buildables);
 
 //Items you can place
 OT_Placeables = [

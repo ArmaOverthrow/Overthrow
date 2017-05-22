@@ -1,4 +1,69 @@
 if (!isServer) exitwith {};
+OT_NATO_GroundForces = [];
+OT_NATO_Group_Recon = "";
+OT_NATO_Group_Engineers = "";
+{
+	_name = configName _x;
+	OT_NATO_GroundForces pushback _name;
+	if((_name find "Recon") > -1) then {
+		OT_NATO_Group_Recon = _name;
+		OT_NATO_Group_Engineers = _name;
+	};
+}foreach("true" configClasses (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry"));
+
+{
+	_name = configName _x;
+	if((_name find "ENG") > -1) then {
+		OT_NATO_Group_Engineers = _name;
+	};
+}foreach("true" configClasses (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Support"));
+
+OT_NATO_Unit_TeamLeader = "B_T_Soldier_TL_F";
+OT_NATO_Unit_SquadLeader = "B_T_Soldier_SL_F";
+OT_NATO_Units_LevelOne = [];
+OT_NATO_Units_LevelTwo = [];
+OT_NATO_Units_CTRGSupport = [];
+OT_NATO_Unit_Sniper = "B_T_Sniper_F";
+OT_NATO_Unit_Spotter = "B_T_Spotter_F";
+OT_NATO_Unit_AA_spec = "B_T_Soldier_AA_F";
+OT_NATO_Unit_AA_ass = "B_T_Soldier_AAA_F";
+OT_NATO_Unit_HVT = "B_T_Officer_F";
+
+
+{
+	_name = configName _x;
+	if(_name isKindOf "SoldierWB") then {
+		call {
+			if((_name find "_TL_") > -1) exitWith {
+				OT_NATO_Unit_TeamLeader = _name;
+			};
+			if((_name find "_SL_") > -1) exitWith {
+				OT_NATO_Unit_SquadLeader = _name;
+			};
+			if((_name find "_Officer_") > -1 or (_name find "_officer_") > -1) exitWith {
+				OT_NATO_Unit_HVT = _name
+			};
+			if((_name find "_CTRG_") > -1) exitWith {
+				OT_NATO_Units_CTRGSupport pushback _name
+			};
+			if((_name find "_Recon_") > -1 or
+				(_name find "_recon_") > -1 or
+				(_name find "_story_") > -1 or
+				(_name find "_Story_") > -1 or
+				(_name find "_lite_") > -1 or
+				(_name find "_HeavyGunner_") > -1) exitWith {};
+
+			_role = getText (_x >> "role");
+			if(_role in ["MachineGunner","Rifleman","CombatLifeSaver"]) then {OT_NATO_Units_LevelOne pushback _name};
+			if(_role in ["MissileSpecialist","Assistant","Grenadier","Marksman"]) then {OT_NATO_Units_LevelTwo pushback _name};
+			if(_role == "Marksman" and (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
+			if(_role == "Marksman" and (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
+			if(_role == "MissileSpecialist" and (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
+		};
+	};
+}foreach(format["(getNumber(_x >> 'scope') == 2) && (getText(_x >> 'faction') == '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
+
+OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + OT_NATO_Units_LevelTwo;
 
 OT_NATOobjectives = [];
 OT_NATOcomms = [];

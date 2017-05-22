@@ -5,25 +5,25 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=513;
+	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=2131;
+		nextID=2151;
 	};
 	class MarkerIDProvider
 	{
-		nextID=39;
+		nextID=41;
 	};
 	class LayerIndexProvider
 	{
-		nextID=334;
+		nextID=349;
 	};
 	class Camera
 	{
-		pos[]={21757.389,195.97241,16712.037};
-		dir[]={0.6568644,-0.44049674,0.61202043};
-		up[]={0.32230657,0.89773202,0.3003054};
-		aside[]={0.68172073,6.4019696e-007,-0.73167098};
+		pos[]={12524.104,99.578369,15210.382};
+		dir[]={-0.92709911,-0.35047126,-0.13340355};
+		up[]={-0.34692186,0.93654996,-0.04991978};
+		aside[]={-0.1424389,-5.3855183e-007,0.98987895};
 	};
 };
 binarizationWanted=0;
@@ -53,13 +53,17 @@ addons[]=
 	"ace_respawn",
 	"ace_explosives",
 	"ace_ui",
-	"A3_Modules_F_Curator_Curator"
+	"A3_Modules_F_Curator_Curator",
+	"A3_Structures_F_Exp_Industrial_Port",
+	"A3_Structures_F_Ind_Cargo",
+	"A3_Boat_F_Gamma_Boat_Civil_04",
+	"A3_Structures_F_Ind_Transmitter_Tower"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=22;
+		items=25;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -211,6 +215,27 @@ class AddonsMetaData
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item22
+		{
+			className="A3_Structures_F_Exp_Industrial";
+			name="Arma 3 Apex - Industrial Structures";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item23
+		{
+			className="A3_Structures_F_Ind";
+			name="Arma 3 - Industrial Structures";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item24
+		{
+			className="A3_Boat_F_Gamma";
+			name="Arma 3 - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -668,7 +693,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=65;
+		items=79;
 		class Item0
 		{
 			dataType="Layer";
@@ -679,7 +704,7 @@ class Mission
 		class Item1
 		{
 			dataType="Marker";
-			position[]={16529.891,2.27,12565.936};
+			position[]={16574.963,2.3952162,12442.152};
 			name="port_1";
 			type="loc_Quay";
 			id=1597;
@@ -687,11 +712,11 @@ class Mission
 		class Item2
 		{
 			dataType="Marker";
-			position[]={3319.3203,192.31787,12952.559};
+			position[]={3344.2642,192.31787,12967.897};
 			name="port_2";
 			type="loc_Quay";
 			id=1598;
-			atlOffset=190.29501;
+			atlOffset=184.35924;
 		};
 		class Item3
 		{
@@ -6510,8 +6535,8 @@ class Mission
 			markerType="RECTANGLE";
 			type="rectangle";
 			colorName="ColorRed";
-			alpha=0;
-			a=4200.229;
+			alpha=0.22466959;
+			a=4000.229;
 			b=9924.1992;
 			id=2127;
 			atlOffset=-21.541027;
@@ -6519,16 +6544,242 @@ class Mission
 		class Item64
 		{
 			dataType="Marker";
-			position[]={22760.707,0,15557.588};
+			position[]={22783.479,-2.7858887,15453.628};
 			name="region_3";
 			markerType="RECTANGLE";
 			type="rectangle";
 			colorName="ColorBlue";
-			alpha=0;
-			a=6228.3408;
+			alpha=0.63978338;
+			a=6428.3408;
 			b=11028.604;
 			id=2128;
-			atlOffset=2.3265209;
+			atlOffset=6.6285105;
+		};
+		class Item65
+		{
+			dataType="Marker";
+			position[]={11501.896,0,15777.88};
+			name="control_1";
+			type="mil_triangle";
+			alpha=0;
+			id=2131;
+			atlOffset=-40.353825;
+		};
+		class Item66
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={16565.238,4.9405184,12435.12};
+				angles[]={0,4.0674658,-0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2134;
+			type="Land_WarehouseShelter_01_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item67
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={16560.367,3.4432077,12431.751};
+				angles[]={0.0009765625,0.88632154,6.2812943};
+			};
+			side="Empty";
+			class Attributes
+			{
+				aiRadarUsage=1600093184;
+			};
+			id=2137;
+			type="Land_Cargo40_blue_F";
+			atlOffset=1.6612335;
+		};
+		class Item68
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={16494.721,3.6463957,12453.514};
+				angles[]={0.0016558425,0,6.2825875};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				aiRadarUsage=1412825344;
+			};
+			id=2139;
+			type="Land_Cargo40_grey_F";
+		};
+		class Item69
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={16475.664,3.6619544,12468.39};
+				angles[]={6.2815294,0,6.2821498};
+			};
+			side="Empty";
+			class Attributes
+			{
+				aiRadarUsage=1412825344;
+			};
+			id=2140;
+			type="Land_Cargo40_white_F";
+			atlOffset=0.43286192;
+		};
+		class Item70
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={16462.111,3.6300626,12459.22};
+				angles[]={0.0016558425,0,6.2825875};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				aiRadarUsage=-156014336;
+			};
+			id=2141;
+			type="Land_Cargo20_brick_red_F";
+			atlOffset=8.392334e-005;
+		};
+		class Item71
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={16436.518,3.6510735,12468.201};
+				angles[]={6.2815294,0,6.2821498};
+			};
+			side="Empty";
+			class Attributes
+			{
+				aiRadarUsage=-156014336;
+			};
+			id=2143;
+			type="Land_Cargo40_light_green_F";
+			atlOffset=0.82408905;
+		};
+		class Item72
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3342.9539,4.9883285,12965.84};
+				angles[]={0,3.7005317,-0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2144;
+			type="Land_WarehouseShelter_01_F";
+		};
+		class Item73
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3340.1965,3.3463142,12960.658};
+				angles[]={6.257082,0.56147259,0.0085605122};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				aiRadarUsage=1301361408;
+			};
+			id=2145;
+			type="Land_Cargo40_cyan_F";
+			atlOffset=-2.9563904e-005;
+		};
+		class Item74
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3199.6135,7.5159326,12897.615};
+				angles[]={0,1.574596,-0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2146;
+			type="Land_ContainerLine_02_F";
+		};
+		class Item75
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3224.4434,3.5722413,12844.066};
+				angles[]={0,0.17040998,-0};
+			};
+			side="Empty";
+			class Attributes
+			{
+			};
+			id=2147;
+			type="C_Boat_Civil_04_F";
+			atlOffset=0.25890112;
+		};
+		class Item76
+		{
+			dataType="Marker";
+			position[]={20609.461,0,18812.686};
+			name="control_2";
+			type="mil_triangle";
+			alpha=0;
+			id=2148;
+			atlOffset=-37.087898;
+		};
+		class Item77
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={20359.188,112.01695,18760.836};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2149;
+			type="Land_TTowerBig_2_F";
+			atlOffset=0.22627258;
+		};
+		class Item78
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={12483.278,98.153847,15177.81};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=251300;
+			};
+			id=2150;
+			type="Land_TTowerBig_2_F";
+			atlOffset=-0.0029220581;
 		};
 	};
 	class Connections

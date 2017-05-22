@@ -51,8 +51,9 @@ if (!isServer) exitwith {};
     if(_base > 80) then {
         _base = 80;
     };
+    if(_pop > 2500) then {_pop = 2350 + (random 150)};
     private _stability = round(_base + random(20));
-    if((_pop < 40) and !(_name in OT_NATO_priority) and !(_name in OT_Capitals) and (_pos select 1 < 7000)) then {
+    if((_pop < 500) and !(_name in OT_NATO_priority) and !(_name in OT_Capitals) and (_name in OT_spawnTowns)) then {
         _stability = floor(20 + random(20));
     };
     server setVariable [format["stability%1",_name],_stability,true];

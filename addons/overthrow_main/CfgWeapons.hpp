@@ -76,6 +76,36 @@ class CfgWeapons {
             mass = 30;
         };
     };
+	class OT_Grapes: OT_ItemCore {
+        scope = 2;
+        picture = "\ot\ui\items\cane_x_ca.paa";
+        displayName = "Grapes";
+        descriptionShort = "A fruit, botanically a berry, of the deciduous woody vines of the flowering plant genus Vitis. Can be turned into Wine.";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 50;
+        };
+    };
+	class OT_Wine: OT_ItemCore {
+        scope = 2;
+        picture = "\ot\ui\items\cane_x_ca.paa";
+        displayName = "Wine";
+        descriptionShort = "An alcoholic beverage made from grapes, generally Vitis vinifera, fermented without the addition of sugars, acids, enzymes, water, or other nutrients.";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 50;
+        };
+    };
+	class OT_Olives: OT_ItemCore {
+        scope = 2;
+        picture = "\ot\ui\items\cane_x_ca.paa";
+        displayName = "Olives";
+        descriptionShort = "A species of small tree in the family Oleaceae, found in the Mediterranean Basin from Portugal to the Levant, the Arabian Peninsula, and southern Asia as far east as China, as well as the Canary Islands, Mauritius, and Altis.";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 50;
+        };
+    };
 	class OT_Fertilizer: OT_ItemCore {
         scope = 2;
         picture = "\ot\ui\items\fertilizer_x_ca.paa";

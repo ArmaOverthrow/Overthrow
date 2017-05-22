@@ -1,5 +1,10 @@
 class CfgVehicles {
 	class Item_Base_F;
+	class Land_MapBoard_F;
+	class Mapboard_tanoa_F: Land_MapBoard_F {
+		displayName = "Map (Tanoa)";
+		hiddenSelectionsTextures[] = {"\ot\ui\maptanoa.paa"};
+	};
     class OT_GanjaItem: Item_Base_F {
         scope = 2;
         scopeCurator = 2;

@@ -10,16 +10,15 @@ OT_economyVersion = 1;
 OT_NATOversion = 1;
 OT_CRIMversion = 1;
 
+OT_faction_NATO = "BLU_F";
+
 OT_flag_NATO = "Flag_NATO_F";
 OT_flag_CRIM = "Flag_Syndikat_F";
 OT_flag_IND = "Flag_Altis_F";
 
 //Interactable items that spawn in your house
 OT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
-OT_item_Desk = "OfficeTable_01_new_F"; //Your spawn desk
-OT_item_Radio = "Land_PortableLongmRangeRadio_F";
-OT_item_Map = "Land_MapBoard_F";
-OT_item_Repair = "Land_ToolTrolley_02_F";
+OT_item_Map = "Mapboard_altis_F";
 OT_item_Tent = "Land_TentDome_F";
 OT_item_Safe = "Land_MetalCase_01_small_F";
 
@@ -118,27 +117,10 @@ OT_NATO_Sandbag_Curved = "Land_BagFence_01_round_green_F";
 OT_NATO_Barrier_Small = "Land_HBarrier_01_line_5_green_F";
 OT_NATO_Barrier_Large = "Land_HBarrier_01_wall_6_green_F";
 
-OT_NATO_GroundForces = ["B_T_InfSquad_Weapons","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad","B_T_InfSquad"];
-OT_NATO_Group_Recon = (configFile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Infantry" >> "B_T_ReconTeam");
-OT_NATO_Group_Engineers = (configfile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Support" >> "B_T_Support_ENG");
-OT_NATO_Group_CTRG = (configfile >> "CfgGroups" >> "West" >> "BLU_T_F" >> "Support" >> "B_T_Support_ENG");
-
-OT_NATO_Unit_LevelOneLeader = "B_T_Soldier_TL_F";
-OT_NATO_Units_LevelOne = ["B_T_Medic_F","B_T_Soldier_F","B_T_Soldier_LAT_F","B_T_Soldier_AAT_F","B_T_Soldier_AT_F","B_T_soldier_M_F","B_T_Soldier_GL_F","B_T_Soldier_AR_F"];
-OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + ["B_T_Soldier_AA_F","B_T_Soldier_AAR_F","B_T_Soldier_AAA_F"];
-
 OT_NATO_Mortar = "B_T_Mortar_01_F";
 
-OT_NATO_Unit_Pilot = "B_T_Pilot_F";
-OT_NATO_Unit_Sniper = "B_T_Sniper_F";
-OT_NATO_Unit_Spotter = "B_T_Spotter_F";
-OT_NATO_Unit_AA_spec = "B_T_Soldier_AA_F";
-OT_NATO_Unit_AA_ass = "B_T_Soldier_AAA_F";
-
-OT_NATO_Unit_HVT = "B_T_Officer_F";
 OT_NATO_Vehicle_HVT = "B_MRAP_01_F";
 
-OT_NATO_Units_CTRGSupport = ["B_CTRG_Soldier_TL_tna_F","B_CTRG_Soldier_tna_F","B_CTRG_Soldier_M_tna_F","B_CTRG_Soldier_Medic_tna_F"];
 OT_NATO_Vehicle_CTRGTransport = "B_CTRG_Heli_Transport_01_tropic_F";
 
 OT_NATO_weapons_Police = ["hgun_PDW2000_F","SMG_05_F","SMG_01_F","SMG_02_F","arifle_SPAR_01_blk_F","arifle_MXC_Black_F"];
@@ -152,14 +134,11 @@ OT_CRIM_Weapons = ["arifle_AK12_F","arifle_AKM_F","arifle_AKM_F","arifle_AKM_F"]
 OT_CRIM_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 OT_CRIM_Launchers = ["launch_RPG32_F","launch_RPG7_F","launch_RPG7_F","launch_RPG7_F"];
 
-OT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka","Sosovu","Ipota"]; //region capitals
-OT_sprawling = ["Blue Pearl industrial port"];
-
 OT_piers = ["Land_PierConcrete_01_4m_ladders_F","Land_PierWooden_01_platform_F","Land_PierWooden_01_hut_F","Land_PierWooden_02_hut_F"]; //spawns dudes that sell boats n stuff
 OT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 OT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 OT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F"];
-OT_portBuilding = "Land_Warehouse_02_F";
+OT_portBuilding = "Land_WarehouseShelter_01_F";
 OT_policeStation = "Land_Cargo_House_V3_F";
 OT_warehouse = "Land_Warehouse_03_F";
 OT_warehouses = [OT_warehouse];

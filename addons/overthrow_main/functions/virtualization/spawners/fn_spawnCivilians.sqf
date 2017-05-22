@@ -59,20 +59,12 @@ while {_count < _numCiv} do {
 	_groups pushback _group;
 	_idd = _idd + 1;
 
-	_home = [_posTown,[random 300,_mSize]] call SHK_pos;
-	_building = [_home,OT_shops+OT_offices] call OT_fnc_getRandomBuilding;
-	if(typename _building != "BOOL") then {
-		_building = [_home,OT_allHouses] call OT_fnc_getRandomBuilding;
-		if(typename _building != "BOOL") then {
-			_home = position _building;
-		};
-	};
-	_roads = _home nearRoads 100;
-	if(count _roads > 0) then {_home = position (_roads select 0)};
+	_home = _town call OT_fnc_getRandomRoadPosition;
 	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
 		_pos = [[[_home,50]]] call BIS_fnc_randomPos;
 		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
+		_civ setVariable ["hometown",_town,true];
 		[_civ] call OT_fnc_initCivilian;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;

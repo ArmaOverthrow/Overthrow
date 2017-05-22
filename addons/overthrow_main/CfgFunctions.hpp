@@ -60,6 +60,7 @@ class CfgFunctions
 			class influenceSilent {};
 			class rewardMoney {};
 			class money {};
+			class getPlayerHome {};
 		};
 
 		class Interaction
@@ -240,6 +241,7 @@ class CfgFunctions
 			class getAO {};
 			class getBuildId {};
 			class weatherSystem {};
+			class getRandomRoadPosition {};
 		};
 
 		/*
