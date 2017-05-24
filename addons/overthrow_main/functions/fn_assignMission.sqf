@@ -51,7 +51,7 @@ if(typename _condition == "STRING") then {
 private _start = time;
 
 _name = format["%1%2%3",_pos,_text,time];//unique task id
-[_target,_name,[_desc,_text,_name],_pos,0,1,true,"move",true] call BIS_fnc_taskCreate;
+[_target,_name,[_desc,_text,_name],_pos,0,1,true,"move"] call BIS_fnc_taskCreate;
 
 _missions = _target getVariable ["mytasks",[]];
 _missions pushback _name;

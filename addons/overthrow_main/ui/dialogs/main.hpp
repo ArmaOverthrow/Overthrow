@@ -559,7 +559,7 @@ class OT_dialog_options
 		class RscButton_1605: RscOverthrowButton
 		{
 			idc = 1605;
-			action = "{if !(alive _x) then {deletevehicle _x}} foreach(vehicles);{if !(_x call OT_fnc_vehicleCanMove) then {deletevehicle _x}} foreach(vehicles);{deleteVehicle _x} foreach(alldeadmen);""Cleaned bodies/wrecks"" remoteExec [""OT_fnc_notifyMinor"",0,false];";
+			action = "call OT_fnc_cleanDead;";
 
 			text = "Clean bodies/wrecks"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;

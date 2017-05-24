@@ -1,7 +1,9 @@
 private _group = _this;
 
 private _town = (leader _group) getVariable "garrison";
-if(isNil "_town") then {_town = position(leader _group)};
+private _start = position(leader _group);
+if(isNil "_town") then {_town = _start};
+
 
 private _dest = _town call OT_fnc_getRandomRoadPosition;
 

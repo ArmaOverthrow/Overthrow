@@ -280,6 +280,23 @@ _handler = {
 			};
 		}foreach(vehicles);
 	};
+	private _qrf = server getVariable "QRFpos";
+	if(!isNil "_qrf") then {
+		private _progress = server getVariable ["QRFprogress",0];
+		_col = [];
+		if(_progress > 0) then {_col = [0,0,1,_progress]};
+		if(_progress < 0) then {_col = [0,1,0,abs _progress]};
+		if(_progress != 0) then {
+			(_this select 0) drawEllipse [
+				_qrf,
+				100,
+				100,
+				0,
+				_col,
+				""
+			];
+		};
+	};
 
 	if((vehicle player) isKindOf "Air") then {
 		_abandoned = server getVariable ["NATOabandoned",[]];

@@ -29,7 +29,7 @@ VCOM_MineLayChance = 40;
 //AI will automatically disembark from vehicles when in combat.
 VCOM_AIDisembark = true;
 //How low should an AI's mag count be for them to consider finding more ammo? This DOES NOT include the mag loaded in the gun already.
-VCOM_AIMagLimit = 2;
+VCOM_AIMagLimit = 1;
 //Should the rain impact accuracy of AI? DEFAULT = true;
 VCOM_RainImpact = true;
 //How much should rain impact the accuracy of AI? Default = 3. Default formula is -> _WeatherCheck = (rain)/3; "rain" is on a scale from 0 to 1. 1 Being very intense rain.
@@ -42,6 +42,10 @@ VCOM_SuppressionVar = 5;
 VCOM_Adrenaline = true;
 //How much of a speed boost should players/AI recieve? Default = 1.35; (1 is ArmA's normal speed).
 VCOM_AdrenalineVar = 1.35;
+//How many AI UNITS can be calculating cover positions at once?
+VCOM_CurrentlyMovingLimit = 6;
+//How many AI UNITS can be suppressing others at once?
+VCOM_CurrentlySuppressingLimit = 12;
 
 
 //The longer an AI's target stays in 1 location, the more accurate and aware of the target the AI becomes.DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];

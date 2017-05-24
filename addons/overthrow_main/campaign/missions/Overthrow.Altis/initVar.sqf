@@ -11,6 +11,7 @@ OT_NATOversion = 1;
 OT_CRIMversion = 1;
 
 OT_faction_NATO = "BLU_F";
+OT_spawnFaction = "IND_G_F"; //This faction will have a rep in spawn town
 
 OT_flag_NATO = "Flag_NATO_F";
 OT_flag_CRIM = "Flag_Syndikat_F";

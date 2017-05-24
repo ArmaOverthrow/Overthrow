@@ -154,7 +154,6 @@ _wp = _group1 addWaypoint [_attackpos,0];
 _wp setWaypointType "GUARD";
 _wp setWaypointBehaviour "COMBAT";
 
-_group1 call distributeAILoad;
 if(typename _tgroup == "GROUP") then {
 
 	[_veh,_tgroup,_frompos] spawn {
@@ -197,6 +196,4 @@ if !(_byair) then {
 	_wp = _group2 addWaypoint [_attackpos,0];
 	_wp setWaypointType "GUARD";
 	_wp setWaypointBehaviour "COMBAT";
-
-	_group2 call distributeAILoad;
 };

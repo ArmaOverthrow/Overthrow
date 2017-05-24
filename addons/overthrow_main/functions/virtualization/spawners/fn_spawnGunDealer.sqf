@@ -8,24 +8,22 @@ _pop = server getVariable format["population%1",_town];
 
 _groups = [];
 
-
 _gundealerpos = server getVariable format["gundealer%1",_town];
 if(isNil "_gundealerpos") then {
 	_building = [_posTown,OT_gunDealerHouses] call OT_fnc_getRandomBuilding;
-	_gundealerpos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
+	if(typename _building != "BOOL") then {
+		_gundealerpos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
+		[_building,"system"] call OT_fnc_setOwner;
+	}else{
+		_gundealerpos = [[[_posTown,200]]] call BIS_fnc_randomPos;
+	};
 	server setVariable [format["gundealer%1",_town],_gundealerpos,true];
-	[_building,"system"] call OT_fnc_setOwner;
 };
 _group = createGroup civilian;
 _groups	pushback _group;
 
 _group setBehaviour "CARELESS";
-_pos = [[[_gundealerpos,50]]] call BIS_fnc_randomPos;
-_dealer = _group createUnit [OT_civType_gunDealer, _pos, [],0, "NONE"];
-
-_wp = _group addWaypoint [_gundealerpos,0];
-_wp setWaypointType "MOVE";
-_wp setWaypointSpeed "LIMITED";
+_dealer = _group createUnit [OT_civType_gunDealer, _gundealerpos, [],0, "NONE"];
 
 [_dealer] call OT_fnc_initGunDealer;
 

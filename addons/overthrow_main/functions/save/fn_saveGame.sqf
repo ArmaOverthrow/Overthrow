@@ -1,8 +1,24 @@
-if(OT_saving) exitWith {"Please wait, save still in progress" remoteExec ["hint",bigboss,false]};
+private _quiet = false;
+if(count _this > 0) then {_quiet = _this select 0};
+
+if(OT_saving) exitWith {
+	if !(_quiet) then {
+		"Please wait, save still in progress" remoteExec ["OT_fnc_notifyMinor",0,false];
+	};
+};
+
+if((count alldeadmen) > 300) exitWith {
+	if !(_quiet) then {
+		"Too many dead bodies, please clean first" remoteExec ["OT_fnc_notifyMinor",0,false];
+	};
+};
+
 OT_saving = true;
 publicVariable "OT_saving";
 
-"Persistent Saving..." remoteExec ["OT_fnc_notifyMinor",0,false];;
+if !(_quiet) then {
+	"Persistent Saving..." remoteExec ["OT_fnc_notifyMinor",0,false];
+};
 sleep 0.1;
 waitUntil {!isNil "OT_NATOInitDone"};
 
@@ -77,7 +93,9 @@ _count = 10001;
 		_vehicles pushback _params;
 	};
 	if(_count > 2000) then {
-		"Still persistent Saving... please wait" remoteExec ["OT_fnc_notifyMinor",0,false];;
+		if !(_quiet) then {
+			"Persistent Saving... please wait" remoteExec ["OT_fnc_notifyMinor",0,false];
+		};
 		_count = 0;
 		sleep 0.01;
 	};
@@ -205,12 +223,16 @@ _data pushback ["timedate",date];
 
 profileNameSpace setVariable [OT_saveName,_data];
 if (isDedicated) then {
-	"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyMinor",0,false];;
+	if !(_quiet) then {
+		"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyMinor",0,false];;
+	};
 	sleep 0.01;
 	saveProfileNamespace
 };
 
-"Persistent Save Completed" remoteExec ["OT_fnc_notifyMinor",0,false];;
+if !(_quiet) then {
+	"Persistent Save Completed" remoteExec ["OT_fnc_notifyGood",0,false];
+};
 
 OT_saving = false;
 publicVariable "OT_saving";

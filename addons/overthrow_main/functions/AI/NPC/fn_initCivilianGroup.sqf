@@ -10,8 +10,8 @@ private _hour = date select 3;
 
 private _start = getpos ((units _g) select 0);
 if(isNil "_start") exitWith {};
-private _town = (leader _group) getVariable "hometown";
-if(isNil "_town") then {_town = position(leader _group)};
+private _town = (leader _g) getVariable "hometown";
+if(isNil "_town") then {_town = position(leader _g)};
 
 private _dest = _town call OT_fnc_getRandomRoadPosition;
 

@@ -148,7 +148,7 @@ while {sleep 10;true} do {
 						server setVariable ["NATOabandoned",_abandoned,true];
 						_name setMarkerColor "ColorGUER";
 						_t = _pos call OT_fnc_nearestTown;
-						format["Resistance has captured the %1 tower",_name] remoteExec ["notify_good",0,false];
+						format["Resistance has captured the %1 tower",_name] remoteExec ["OT_fnc_notifyGood",0,false];
 						_resources = _resources - 100;
 						_countered = true;
 					};
@@ -226,7 +226,7 @@ while {sleep 10;true} do {
 								//Abandon a town
 								_abandoned pushback _town;
 								server setVariable [format ["garrison%1",_town],0,true];
-								format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+								format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
 								[_town,15] call OT_fnc_stability;
 								_abandonedSomething = true;
 							};
@@ -250,7 +250,7 @@ while {sleep 10;true} do {
 							//Abandon a town
 							_abandoned pushback _town;
 							server setVariable [format ["garrison%1",_town],0,true];
-							format["NATO has abandoned %1",_town] remoteExec ["notify_good",0,false];
+							format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
 							_abandonedSomething = true;
 						};
 					};

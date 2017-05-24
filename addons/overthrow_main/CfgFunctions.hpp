@@ -17,6 +17,7 @@ class CfgFunctions
 			class setOwner {};
 			class getOwner {};
 			class vehicleCanMove {};
+			class cleanDead {};
 		};
 
 		class Factions
@@ -61,6 +62,7 @@ class CfgFunctions
 			class rewardMoney {};
 			class money {};
 			class getPlayerHome {};
+			class generalIsOnline {};
 		};
 
 		class Interaction

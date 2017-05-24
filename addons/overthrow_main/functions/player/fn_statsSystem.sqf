@@ -61,7 +61,22 @@ while {alive player} do {
 			};
 		};
 	};
-	_txt = format ["<t size='0.9' align='right'>$%1<br/>%2<br/>%3</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted];
+	_qrf = "";
+	_qrfstart = server getVariable "QRFstart";
+	if(!isNil "_qrfstart") then {
+		if((time - _qrfstart) < 300) then {
+			_secs = 300 - round(time - _qrfstart);
+			_mins = 0;
+			if(_secs > 59) then {
+				_mins = floor(_secs / 60);
+				_secs = round(_secs % 60);
+			};
+			if(_secs < 10) then {_secs = format["0%1",_secs]};
+			_qrf = format["Battle start in 0%1:%2",_mins,_secs];
+		};
+	};
+
+	_txt = format ["<t size='0.9' align='right'>$%1<br/>%2<br/>%3<br/>%4</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted,_qrf];
 	_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
 	_setText ctrlCommit 0;
 	_currentTxt = _txt;

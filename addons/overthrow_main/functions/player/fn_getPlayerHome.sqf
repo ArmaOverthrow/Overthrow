@@ -1,5 +1,7 @@
 _pos = server getVariable _this;
 _range = 200;
+_found = false;
+_house = objNull;
 while {!_found and _range < 1200} do {
 	_houses = nearestObjects [_pos, OT_spawnHouses, _range,false];
 	_possible = [];

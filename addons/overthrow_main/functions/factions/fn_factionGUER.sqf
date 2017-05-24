@@ -21,6 +21,14 @@ while {true} do {
 		};
 		sleep 0.01;
 	}foreach(allunits);
+	{
+		if(_x getVariable ["spawntrack",false]) then {
+			_track pushback _x;
+		}else{
+			if((_x call OT_fnc_hasOwner) and (alive _x) and !isNull(driver _x)) then {_track pushback _x};
+		};
+		sleep 0.01;
+	}foreach(vehicles);
 	spawner setVariable ["track",_track,false];
 	private _dead = count alldeadmen;
 	if(_dead > 150) then {
@@ -40,6 +48,10 @@ while {true} do {
 	}foreach(spawner getVariable ["_noid_",[]]);
 
 	if ((date select 3) != _lasthr) then {
+		if(isDedicated) then {			
+			[true] spawn OT_fnc_saveGame;
+		};
+
 		//Do production/wages
 		_lasthr = date select 3;
 		private _wages = 0;
@@ -167,6 +179,11 @@ while {true} do {
 
 	if ((date select 4) != _lastmin) then {
 		_lastmin = date select 4;
+
+		if(!(call OT_fnc_generalIsOnline) and _dead > 300) then {
+			format["There are %1 dead bodies, initiating auto-cleanup",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];
+			call OT_fnc_cleanDead;
+		};
 
 		_stabcounter = _stabcounter + 1;
 		private _abandoned = server getVariable ["NATOabandoned",[]];

@@ -478,48 +478,50 @@ OT_allDetonators = [];
 	_title = getText (configFile >> "cfgFactionClasses" >> _name >> "displayName");
 	_side = getNumber (configFile >> "cfgFactionClasses" >> _name >> "side");
 	_flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
-	if(_side > -1) then {
-		OT_allFactions pushback [_name,_title,_side,_flag];
-	};
+	_numblueprints = 0;
 
-	if(isServer) then {
-		//Get vehicles and weapons
-		private _vehicles = [];
-		private _weapons = [];
-		private _blacklist = ["Throw","Put","NLAW_F"];
+	//Get vehicles and weapons
+	private _vehicles = [];
+	private _weapons = [];
+	private _blacklist = ["Throw","Put","NLAW_F"];
 
-		private _all = "
-		    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
-			and ( getText ( _x >> ""faction"" ) isEqualTo """ + _name + """ )
-		" configClasses ( configFile >> "cfgVehicles" );
-		{
-			_cls = configName _x;
-			if(_cls isKindOf "CAManBase") then {
-				//Get weapons;
-				{
-					_x = [_x] call BIS_fnc_baseWeapon;
-					if !(_x in _blacklist) then {
-						if !(_x in _weapons) then {_weapons pushback _x};
-					};
-				}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
-				//Get ammo
-				{
-					if !(_x in _blacklist or _x in OT_allExplosives) then {
-						if !(_x in _weapons) then {_weapons pushback _x};
-					};
-				}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
-			}else{
-				//It's a vehicle
-				if !(_cls isKindOf "Bag_Base" or _cls isKindOf "StaticWeapon") then {
-					if(_cls isKindOf "LandVehicle" or _cls isKindOf "Air") then {
-						_vehicles pushback _cls;
-					};
+	private _all = "
+	    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
+		and ( getText ( _x >> ""faction"" ) isEqualTo """ + _name + """ )
+	" configClasses ( configFile >> "cfgVehicles" );
+	{
+		_cls = configName _x;
+		if(_cls isKindOf "CAManBase") then {
+			//Get weapons;
+			{
+				_x = [_x] call BIS_fnc_baseWeapon;
+				if !(_x in _blacklist) then {
+					if !(_x in _weapons) then {_weapons pushback _x};
+				};
+			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
+			//Get ammo
+			{
+				if !(_x in _blacklist or _x in OT_allExplosives) then {
+					if !(_x in _weapons) then {_weapons pushback _x};
+				};
+			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
+		}else{
+			//It's a vehicle
+			if !(_cls isKindOf "Bag_Base" or _cls isKindOf "StaticWeapon") then {
+				if(_cls isKindOf "LandVehicle" or _cls isKindOf "Air" or _cls isKindOf "Ship") then {
+					_vehicles pushback _cls;
+					_numblueprints = _numblueprints + 1;
 				};
 			};
-		}foreach(_all);
+		};
+	}foreach(_all);
 
+	if(isServer) then {
 		spawner setVariable [format["facweapons%1",_name],_weapons,true];
 		spawner setVariable [format["facvehicles%1",_name],_vehicles,true];
+	};
+	if(_side > -1 and _numblueprints > 0) then {
+		OT_allFactions pushback [_name,_title,_side,_flag];
 	};
 }foreach(_allFactions);
 
