@@ -90,16 +90,38 @@ call {
 	};
 	if(!isNil "_criminal") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
-		_pop = server getVariable format["numcrims%1",_town];
-		if(_pop > 0) then {
-			server setVariable [format["numcrims%1",_town],_pop - 1,true];
-		};
-		if((random 100) > 50) then {
-			[_town,1] call OT_fnc_stability;
-			format["%1 (+1 Stability)",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
-		};
+		_civid = _me getVariable ["OT_civid",-1];
+		_gangid = _me getVariable ["OT_gangid",-1];
+		_hometown = _me getVariable ["hometown",""];
+		_reward = 25;
+		_stability = 1;
 		_standingChange = 1;
-		[_killer,10] call OT_fnc_rewardMoney;
+		if(_civid > -1) then {
+			OT_civilians setVariable [format["%1",_civid],nil,true];
+			_towncivs = OT_civilians getVariable [format["civs%1",_hometown],[]];
+			_towncivs deleteAt (_towncivs find _civid);
+			OT_civilians setVariable [format["civs%1",_hometown],_towncivs,true];
+
+			if(_gangid > -1) then {
+				_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+				if(count _gang > 0) then {
+					_members = _gang select 0;
+					_members deleteAt (_members find _civid);
+					if(count _members == 0) then {
+						OT_civilians setVariable [format["gang%1",_gangid],nil,true];
+						_reward = 200 + ((round random 6) * 50);
+						_stability = 10;
+						_standingChange = 10;
+					}else{
+						_gang set [0,_members];
+						OT_civilians setVariable [format["gang%1",_gangid],_gang,true];
+					};
+				};
+			};
+		};
+
+		[_town,_stability] call OT_fnc_stability;
+		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,10] call OT_fnc_experience;
 	};
 	if(!isNil "_crimleader") exitWith {
@@ -218,8 +240,8 @@ if((_killer call OT_fnc_unitSeen) or (_standingChange < -9)) then {
 };
 if(isPlayer _killer) then {
 	if (_standingChange == -10) then {
-		[_town,_standingChange,"You killed a civilian"] remoteExec ["OT_fnc_standing",_killer,true];
+		[_town,_standingChange,"You killed a civilian"] remoteExec ["OT_fnc_standing",_killer,false];
 	}else{
-		[_town,_standingChange] remoteExec ["OT_fnc_standing",_killer,true];
+		[_town,_standingChange] remoteExec ["OT_fnc_standing",_killer,false];
 	};
 };

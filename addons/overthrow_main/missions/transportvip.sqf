@@ -70,7 +70,7 @@ _difficulty = 1.5;
     _civ forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 
     //Make sure hes in our group
-    [_civ] joinSilent grpNull;
+    [_civ] joinSilent nil;
     [_civ] joinSilent (group player);
     commandStop _civ;
 
@@ -98,7 +98,7 @@ _difficulty = 1.5;
     player setVariable [format["vip%1",_faction],nil,false];
     _group = createGroup civilian;
     [_group] spawn OT_fnc_cleanup;
-    [_civ] joinSilent grpNull;
+    [_civ] joinSilent nil;
     [_civ] joinSilent _group;
 
 },_params,_difficulty];

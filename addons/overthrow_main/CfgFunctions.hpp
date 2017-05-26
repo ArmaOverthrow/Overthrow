@@ -25,10 +25,13 @@ class CfgFunctions
 			file = "\ot\functions\factions";
 			class factionNATO {};
 			class factionGUER {};
+			class factionCIV {};
+			class factionCRIM {};
 			class unitSeen {};
 			class unitSeenNATO {};
 			class unitSeenCRIM {};
 			class unitSeenAny {};
+			class unitSeenPlayer {};
 			class revealToNATO {};
 			class revealToCRIM {};
 		};
@@ -374,6 +377,8 @@ class CfgFunctions
 		class NPC
 		{
 			file = "\ot\functions\AI\NPC";
+			class randomLocalIdentity {};
+			class applyIdentity {};
 			class initCarDealer {};
 			class initCivilian {};
 			class initCivilianGroup {};

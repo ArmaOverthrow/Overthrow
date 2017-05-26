@@ -59,7 +59,7 @@ private _forecast = "Clear";
 if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherversion",0]) < 1) then {
 	server setVariable ["weatherversion",1,false];
 
-	_mode = ["Clear","Cloudy","Storm","Rain"] call BIS_fnc_selectRandom;
+	_mode = ["Clear","Cloudy"] call BIS_fnc_selectRandom;
 	_weather = _mode call _getWeather;
 	_newOvercast = _weather select 0;
 

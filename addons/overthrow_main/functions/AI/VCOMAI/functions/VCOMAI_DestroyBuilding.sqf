@@ -3,7 +3,7 @@ private ["_Unit", "_UnitGroup", "_Point", "_PreviousPosition", "_vehicle", "_Off
 _Unit = _this;
 
 //_UnitGroup = group _Unit;
-//[_Unit] joinSilent grpNull;
+//[_Unit] joinSilent nil;
 //_Point = _Unit getVariable "VCOM_CLOSESTENEMY";
 
 //systemchat format ["D %1",_Unit];

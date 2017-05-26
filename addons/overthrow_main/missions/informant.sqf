@@ -48,7 +48,7 @@ if(random(100)>99) then {_difficulty = _difficulty + 1}; //random chance of a bi
     _civ forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
 
     //Make sure hes in the group
-    [_civ] joinSilent grpNull;
+    [_civ] joinSilent nil;
     [_civ] joinSilent _group;
 
     //Save him for access later

@@ -1,13 +1,15 @@
 private ["_unit","_numslots","_weapon","_magazine","_base","_config"];
 _unit = _this select 0;
 _town = _this select 1;
-
-private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
-private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
-private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
-[_unit,_fullname] remoteExecCall ["setName",0,_unit];
+_vest = _this select 2;
 
 _unit setVariable ["criminal",true,false];
+_unit setVariable ["civ",nil,false];
+_unit setVariable ["NOAI",false,false];
+_unit setVariable ["VCOM_NOPATHING_Unit",true,false];
+_unit setRank "SERGEANT";
+
+_unit removeAllEventHandlers "FiredNear";
 
 _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
@@ -19,23 +21,15 @@ _unit addEventHandler ["HandleDamage", {
 	};
 }];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
-_unit forceAddUniform (OT_CRIM_Clothes call BIS_fnc_selectRandom);
-
 removeAllItems _unit;
 removeHeadgear _unit;
 removeAllWeapons _unit;
 removeVest _unit;
 removeAllAssignedItems _unit;
 
-if((random 100) > 50) then {
-	_unit addHeadgear "H_Bandanna_khk";
-};
-
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest (OT_allProtectiveVests call BIS_fnc_selectRandom);
+_unit addVest _vest;
 if(OT_hasTFAR) then {
 	_unit linkItem "tf_fadak";
 }else{
@@ -47,9 +41,12 @@ if(_hour < 8 or _hour > 15) then {
 };
 _unit linkItem "ItemWatch";
 
-_weapon = (OT_allHandguns) call BIS_fnc_selectRandom;
-if(random 100 > 60) then {
-	_weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
+_weapon = "";
+
+if(random 100 > 30) then {
+	_weapon = selectRandom (OT_CRIM_Weapons + OT_allCheapRifles);
+}else{
+	_weapon = selectRandom OT_allHandguns;
 };
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;

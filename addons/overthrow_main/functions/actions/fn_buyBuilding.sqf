@@ -68,7 +68,7 @@ if(typename _b == "ARRAY") then {
 							server setVariable ["GEURowned",_owned + [_name],true];
 							server setVariable [format["%1employ",_name],2];
 							_pos remoteExec ["OT_fnc_resetSpawn",2,false];
-							format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,true];
+							format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,false];
 							_name setMarkerColor "ColorGUER";
 						}else{
 							"The resistance cannot afford this" call OT_fnc_notifyMinor;

@@ -40,7 +40,7 @@ _difficulty = 1.8;
     _civ forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
 
     //Make sure hes in the group
-    [_civ] joinSilent grpNull;
+    [_civ] joinSilent nil;
     [_civ] joinSilent _group;
 
     //And not wanted

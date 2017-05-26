@@ -3,10 +3,10 @@ private ["_data"];
 //get all server data
 "Loading persistent save" remoteExec['OT_fnc_notifyStart',0,false];
 
-_data = profileNameSpace getVariable ["Overthrow.save.001",""];
+_data = profileNameSpace getVariable [OT_saveName,""];
 if(typename _data != "ARRAY") exitWith {
 	[] remoteExec ['newGame',2];
-	"No save found, starting new game" remoteExec ["hint",0,true];
+	"No save found, starting new game" remoteExec ["hint",0,false];
 };
 
 private _cc = 0;
@@ -22,6 +22,12 @@ private _cc = 0;
 		_val = _new;
 	};
 	_set = true;
+	if(_key == "civilians") then {
+		{
+			OT_civilians setVariable [_x select 0,_x select 1,true];
+		}foreach(_val);
+		_set = false;
+	};
 	if(_key == "buildingpositions") then {
 		{
 			buildingpositions setVariable [_x select 0,_x select 1,true];

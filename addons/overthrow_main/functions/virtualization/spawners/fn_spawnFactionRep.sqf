@@ -22,6 +22,14 @@ _shopkeeper = _group createUnit [OT_civType_shopkeeper, _start, [],0, "NONE"];
 [_shopkeeper, "NoVoice"] remoteExecCall ["setSpeaker", 0, _shopkeeper];
 _shopkeeper forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 
+removeAllItems _shopkeeper;
+removeHeadgear _shopkeeper;
+removeAllWeapons _shopkeeper;
+removeVest _shopkeeper;
+removeAllAssignedItems _shopkeeper;
+
+_shopkeeper addGoggles (selectRandom OT_allGlasses);
+
 _shopkeeper allowDamage false;
 _shopkeeper disableAI "MOVE";
 _shopkeeper disableAI "AUTOCOMBAT";
@@ -30,5 +38,6 @@ _shopkeeper setVariable ["NOAI",true,false];
 _shopkeeper setVariable ["factionrep",true,true];
 _shopkeeper setVariable ["faction",_faction,true];
 _shopkeeper setVariable ["factionrepname",_name,true];
+[_shopkeeper,"self"] call OT_fnc_setOwner;
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

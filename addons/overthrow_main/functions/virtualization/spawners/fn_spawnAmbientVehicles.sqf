@@ -59,8 +59,13 @@ while {(_count < _numVeh)} do {
 						_civ moveInDriver _veh;
 
 						_region  = server getVariable format["region_%1",_town];
-						_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
-						_moveto = _dest call OT_fnc_getRandomRoadPosition;
+						_moveto = _posVeh;						
+						if(isNil "_region") then {
+							_moveto = _posVeh call OT_fnc_getRandomRoadPosition;
+						}else{
+							_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
+							_moveto = _dest call OT_fnc_getRandomRoadPosition;
+						};
 
 						_wp = _group addWaypoint [_moveto,0];
 

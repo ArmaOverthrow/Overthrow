@@ -53,7 +53,7 @@ if(!dialog) then {
 						deleteVehicle _veh;
 					};
 				};
-				if(call OT_fnc_playerAtWarehouse) then {
+				if(call OT_fnc_playerIsAtWarehouse) then {
 					createDialog "OT_dialog_vehiclewarehouse";
 				}else{
 					createDialog "OT_dialog_vehicle";

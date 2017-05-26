@@ -11,7 +11,7 @@ if(typeof _this == OT_item_Storage) then {
 	_this addAction ["Save Loadout", OT_fnc_saveLoadout,nil,0,false,true,"",""];
 	_this addAction ["Restore Loadout", "UI\loadoutDialog.sqf",nil,0,false,true,"",""];
 	_this addAction ["Take From Warehouse", {
-		private _iswarehouse = call OT_fnc_playerAtWarehouse;
+		private _iswarehouse = call OT_fnc_playerIsAtWarehouse;
 
 		if !(_iswarehouse) exitWith {
 			"No warehouse within range or needs repair" call OT_fnc_notifyMinor;
@@ -21,15 +21,15 @@ if(typeof _this == OT_item_Storage) then {
 		closeDialog 0;
 		createDialog "OT_dialog_warehouse";
 		[] call OT_fnc_warehouseDialog;
-	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
+	},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
 	_this addAction ["Store In Warehouse", {
-		private _iswarehouse = call OT_fnc_playerAtWarehouse;
+		private _iswarehouse = call OT_fnc_playerIsAtWarehouse;
 		if !(_iswarehouse) exitWith {
 			"No warehouse within range or needs repair" call OT_fnc_notifyMinor;
 		};
 		OT_warehouseTarget = _this select 0;
 		[] spawn OT_fnc_transferTo;
-	},nil,0,false,true,"","call OT_fnc_playerAtWarehouse"];
+	},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
 	if(_this call OT_fnc_playerIsOwner) then {
 		_this addAction ["Lock", {
 			(_this select 0) setVariable ["OT_locked",true,true];

@@ -49,7 +49,7 @@ _unit addWeapon _wpn;
 _hour = date select 3;
 
 _unit addPrimaryWeaponItem "acc_flashlight";
-_unit addGoggles "G_Bandanna_aviator";
+_unit addGoggles (selectRandom OT_allGlasses);
 _unit addItem "ACE_morphine";
 _unit addItem "ACE_epinephrine";
 

@@ -145,6 +145,7 @@ if(OT_hasAce) then {
 	OT_item_DefaultBlueprints pushback "ACE_fieldDressing";
 	OT_item_DefaultBlueprints pushback "ACE_elasticBandage";
 	[OT_items,[
+		["ACE_Flashlight_XL50",50,0,0,1],
 		["ACE_fieldDressing",2,0,0,0.1],
 		["ACE_elasticBandage",3,0,0,0.2],
 		["ACE_morphine",20,0,0,0.2],
@@ -449,6 +450,10 @@ private _allFactions = "
     ( getNumber ( _x >> ""side"" ) < 3 )
 " configClasses ( configFile >> "cfgFactionClasses" );
 
+private _allGlasses = "
+    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
+" configClasses ( configFile >> "CfgGlasses" );
+
 OT_allFactions = [];
 OT_allSubMachineGuns = [];
 OT_allAssaultRifles = [];
@@ -472,6 +477,28 @@ OT_allExplosives = [];
 OT_explosives = [];
 OT_detonators = [];
 OT_allDetonators = [];
+OT_allGlasses = [];
+OT_allFacewear = [];
+OT_allGoggles = [];
+
+{
+	_name = configName _x;
+	_title = getText (_x >> "displayname");
+	_m = getNumber(_x >> "mass");
+	call {
+		if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
+			OT_allGoggles pushback _name;
+		};
+		if((_title find "Balaclava") > -1 or (_title find "Bandana") > -1) exitWith {
+			OT_allFacewear pushback _name;
+		};
+		OT_allGlasses pushback _name;
+	};
+	if(isServer) then {
+		cost setVariable [_name,[_m*5,0,0,ceil(_m*0.5)],true];
+	};
+	OT_allItems pushback _name;
+}foreach(_allGlasses);
 
 {
 	_name = configName _x;

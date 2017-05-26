@@ -431,6 +431,7 @@ if(count _possible > 0) then {
 	OT_interactingWith = _civ;
 	player setVariable ["hiringciv",_civ,false];
 	_type = "Civilian";
+	_extra = "";
 	if(!isplayer _civ) then {
 		if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_type = "Shopkeeper"};
 		if (_civ getvariable ["carshop",false]) then {_type = "Car Dealer"};
@@ -451,6 +452,16 @@ if(count _possible > 0) then {
 
 		if (_civ getvariable ["factionrep",false]) then {
 			_type = format["Representative (%1)",_civ getvariable ["factionrepname",false]];
+		};
+		_civid = _civ getvariable "OT_civid";
+
+		if(OT_adminMode and !isNil "_civid") then {
+			_ident = OT_civilians getVariable [format["%1",_civid],[]];
+			if(count _ident > 0) then {
+				_hasjob = "Employed";
+				if !(_ident select 1) then {_hasjob = "Unemployed"};
+				_extra = format["%1<br/>Cash: $%2",_hasjob,_ident select 2];
+			};
 		};
 
 		if(_civ call OT_fnc_hasOwner) then {
@@ -474,7 +485,8 @@ if(count _possible > 0) then {
 	_civTxt = format["
 		<t align='left' size='0.8'>%1</t><br/>
 		<t align='left' size='0.7'>%2</t><br/>
-	",_name,_type];
+		<t align='left' size='0.7'>%3</t><br/>
+	",_name,_type,_extra];
 }else{
 	ctrlEnable [1605,false];
 	ctrlEnable [1606,false];

@@ -48,6 +48,12 @@ _poses = [];
 }foreach(allVariables buildingpositions);
 _data pushback ["buildingpositions",_poses];
 
+_civs = [];
+{
+	_civs pushback [_x,OT_civilians getVariable _x];
+}foreach(allVariables OT_civilians);
+_data pushback ["civilians",_civs];
+
 //get all online player data
 {
 	_uid = getPlayerUID _x;

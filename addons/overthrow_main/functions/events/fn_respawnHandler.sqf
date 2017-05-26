@@ -11,7 +11,7 @@ player setCaptive true;
 player allowDamage false;
 
 _group = creategroup resistance;
-[player] joinSilent grpNull;
+[player] joinSilent nil;
 [player] joinSilent _group;
 _recruits = server getVariable ["recruits",[]];
 _newrecruits = [];

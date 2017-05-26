@@ -13,6 +13,7 @@ spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
 templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
 owners = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
 buildingpositions = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
+OT_civilians = _group createUnit ["LOGIC",[6,0,0] , [], 0, ""];
 
 publicVariable "server";
 publicVariable "cost";
@@ -21,6 +22,7 @@ publicVariable "spawner";
 publicVariable "templates";
 publicVariable "owners";
 publicVariable "buildingpositions";
+publicVariable "OT_civilians";
 
 if(!isMultiplayer) then {
     addMissionEventHandler ["Loaded", {
@@ -70,6 +72,8 @@ if(OT_fastTime) then {
 [] call OT_fnc_initNATO;
 [] spawn OT_fnc_factionNATO;
 [] spawn OT_fnc_factionGUER;
+[] spawn OT_fnc_factionCIV;
+[] spawn OT_fnc_factionCRIM;
 waitUntil {!isNil "OT_NATOInitDone"};
 
 //Game systems

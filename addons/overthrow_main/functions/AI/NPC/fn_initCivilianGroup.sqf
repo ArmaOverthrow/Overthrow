@@ -6,14 +6,21 @@ if(typename _start == "BOOL") exitWith {};
 
 _g setBehaviour "SAFE";
 
-private _hour = date select 3;
-
 private _start = getpos ((units _g) select 0);
 if(isNil "_start") exitWith {};
 private _town = (leader _g) getVariable "hometown";
-if(isNil "_town") then {_town = position(leader _g)};
+if(isNil "_town") then {_town = position(leader _g) call OT_fnc_nearestTown};
 
-private _dest = _town call OT_fnc_getRandomRoadPosition;
+private _activeshops = server getVariable [format["activeshopsin%1",_town],[]];
+
+private _dest = [];
+
+if(count _activeshops > 0) then {
+    _shop = selectRandom _activeshops;
+    _dest = _shop select 0;
+}else{
+    _dest = _town call OT_fnc_getRandomRoadPosition;
+};
 
 private _wp = _g addWaypoint [_dest,0];
 _wp setWaypointType "MOVE";

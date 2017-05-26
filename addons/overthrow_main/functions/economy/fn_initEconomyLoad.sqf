@@ -14,6 +14,37 @@ private _allActivePiers = [];
 
 if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
 
+    //Generate civilians
+    _id = 0;
+    {
+        _pop = server getVariable [format["population%1",_x],0];
+        _stability = server getVariable [format["stability%1",_x],0];
+        _num = _pop * 0.1;
+        _count = 0;
+        _thistown = [];
+        while {_count < _num} do {
+            _hasjob = true;
+            if(_stability < 50) then {
+                _hasjob = (random 50) > _stability;
+            };
+
+            //Generate a civilian [identity, has job, cash, superior]
+            //@todo: generate beliefs and traits
+            _cash = 0;
+            if(_hasjob) then {_cash = round random 200} else {
+                if((random 100) < 50) then {
+                    _cash = floor random 50;
+                };
+            };
+            OT_civilians setVariable [format["%1",_id],[call OT_fnc_randomLocalIdentity,_hasjob,_cash,-1],true];
+            _thistown pushback _id;
+            _count = _count + 1;
+            _id = _id + 1;
+        };
+        OT_civilians setVariable [format["civs%1",_x],_thistown,true];
+    }foreach(OT_allTowns);
+    OT_civilians setVariable ["autocivid",_id,false];
+
     {
         _x params ["_cls","_name","_side"];
         if(_side != 1) then {

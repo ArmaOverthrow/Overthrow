@@ -91,7 +91,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 	if(isMultiplayer) then {
 		//ensure player is in own group, not one someone else left
 		_group = creategroup resistance;
-		[player] joinSilent grpNull;
+		[player] joinSilent nil;
 		[player] joinSilent _group;
 	};
 
@@ -189,7 +189,7 @@ if(isMultiplayer or _startup == "LOAD") then {
 				_civ spawn OT_fnc_wantedSystem;
 				_civ setName _name;
 
-				[_civ] joinSilent grpNull;
+				[_civ] joinSilent nil;
 				[_civ] joinSilent (group player);
 
 				commandStop _civ;
@@ -271,7 +271,7 @@ if (_newplayer) then {
     if(OT_randomSpawnTown) then {
         _town = OT_spawnTowns call BIS_fnc_selectRandom;
     };
-	_house = _town call OT_fnc_getPlayerHome;    
+	_house = _town call OT_fnc_getPlayerHome;
     _housepos = getpos _house;
 
     //Put a light on at home

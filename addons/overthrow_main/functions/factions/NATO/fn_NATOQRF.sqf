@@ -193,7 +193,9 @@ if(_progress > 0) then {
 		if(side _x == west) then {
 			if(count (units _x) > 0) then {
 				_lead = (units _x) select 0;
-				if((_lead getVariable ["garrison",""]) == "HQ") then {
+				private _g = (_lead getVariable ["garrison",""]);
+				if(typename _g != "STRING") then {_g = "HQ"};
+				if(_g == "HQ") then {
 					if((vehicle _lead) != _lead) then {
 						[vehicle _lead] spawn OT_fnc_cleanup;
 					}else{
