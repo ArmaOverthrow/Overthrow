@@ -19,11 +19,8 @@ while {true} do {
 			_totalPop = _totalPop + _pop;
 			if(_town in _abandoned) then {
 				if(_commsAbandoned) then {
-					//Resistance controls both, stability goes up if theres police
-					_police = server getVariable [format["police%1",_town],0];
-					if (_police > 0) then {
-						[_town,floor(_police / 2)] call OT_fnc_stability;
-					};
+					//Resistance controls both, stability goes up
+					[_town,1] call OT_fnc_stability;
 				}else{
 					//NATO owns the tower but not the town, stability goes down
 					if((random 100) > 80) then {

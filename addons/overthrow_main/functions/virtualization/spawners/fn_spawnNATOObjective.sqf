@@ -5,34 +5,33 @@ private _groups = [];
 
 _numNATO = server getVariable format["garrison%1",_name];
 if(_name in (server getVariable ["NATOabandoned",[]])) exitWith {[]};
+if(isNil "_numNATO") then {
+	//New objective was added
+	_numNATO = 2 + round(random 6);
+	server setVariable [format["garrison%1",_name],_numNATO,true];
+};
 
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 _count = 0;
 if(_name in OT_allComms) then {
-	_tower = nearestObjects [_posTown,OT_NATO_CommTowers,100] select 0;
-	_posTown = getpos _tower;
-
-	_group = createGroup blufor;
-	_groups pushBack _group;
-
-	_civ = _group createUnit [OT_NATO_Unit_Sniper, _posTown, [],0, "NONE"];
+	_start = [[[_posTown,50]]] call BIS_fnc_randomPos;
+	_civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
 	[_civ,_name] call OT_fnc_initSniper;
 	_civ setBehaviour "SAFE";
-	_civ action ["ladderOnUp", _tower, 0, 0];
 
 	_count = _count + 1;
 	sleep 0.2;
 
 	if(_count < _numNATO) then {
-		_civ = _group createUnit [OT_NATO_Unit_Spotter, _posTown, [],0, "NONE"];
+		_start = [[[_posTown,50]]] call BIS_fnc_randomPos;
+		_civ = _group createUnit [OT_NATO_Unit_Spotter, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 		[_civ,_name] call OT_fnc_initSniper;
 		_civ setBehaviour "SAFE";
-		_civ action ["ladderOnUp", _tower, 0, 0];
 		_count = _count + 1;
 		sleep 0.2;
 	};
@@ -73,6 +72,74 @@ if(_name in OT_allComms) then {
 	_flag =  OT_flag_NATO createVehicle _posTown;
 	_groups pushback _flag;
 };
+
+//Garrison any buildings
+if(_numNATO > 0) then {
+	_garrisongroup = creategroup blufor;
+	_groups pushback _garrisongroup;
+	private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 150];
+	{
+		private _building = _x;
+		private _type = typeof _x;
+
+		call {
+			if((damage _building) > 0.95) exitWith {};
+			if 	((_type == "Land_Cargo_HQ_V1_F") or (_type == "Land_Cargo_HQ_V2_F") or (_type == "Land_Cargo_HQ_V3_F") or (_type == "Land_Cargo_HQ_V4_F")) exitWith {
+				_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 8), [],0, "CAN_COLLIDE"];
+				_veh setPosATL [(getPos _building select 0),(getPos _building select 1),(getPosATL _veh select 2)];
+				_veh setDir (getDir _building);
+
+				createVehicleCrew _veh;
+				_groups pushback _veh;
+				{
+					[_x] joinSilent _garrisongroup;
+					_x setVariable ["garrison",_name,false];
+				}foreach(crew _veh);
+				_numNATO = _numNATO - 1;
+			};
+
+			if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
+				_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 1), [], 0, "CAN_COLLIDE"];
+				_ang = (getDir _building) - 180;
+				_pos = [getPosATL _veh, 2.5, _ang] call BIS_Fnc_relPos;
+				_veh setPosATL _pos;
+				_veh setDir (getDir _building) - 180;
+
+				createVehicleCrew _veh;
+				_groups pushback _veh;
+				{
+					[_x] joinSilent _garrisongroup;
+					_x setVariable ["garrison",_name,false];
+				}foreach(crew _veh);
+				_numNATO = _numNATO - 1;
+			};
+
+
+			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 11), [], 0, "CAN_COLLIDE"];
+			createVehicleCrew _veh;
+			_groups pushback _veh;
+			{
+				[_x] joinSilent _garrisongroup;
+				_x setVariable ["garrison",_name,false];
+			}foreach(crew _veh);
+			_numNATO = _numNATO - 1;
+
+			sleep 0.1;
+
+			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 13), [], 0, "CAN_COLLIDE"];
+			createVehicleCrew _veh;
+			_groups pushback _veh;
+			{
+				[_x] joinSilent _garrisongroup;
+				_x setVariable ["garrison",_name,false];
+			}foreach(crew _veh);
+			_numNATO = _numNATO - 1;
+		};
+
+		if(_numNATO <= 0) exitWith {};
+	}foreach(_buildings);
+};
+
 sleep 0.1;
 _range = 100;
 _groupcount = 0;

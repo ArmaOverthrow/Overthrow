@@ -7,6 +7,7 @@ disableUserInput false;
 _townChange = {
 	_town = _this;
 	_pop = server getVariable format["population%1",_town];
+	if(isNil "_pop") exitWith {};
 	_stability = server getVariable format["stability%1",_town];
 	_rep = [_town] call OT_fnc_standing;
 	_abandon = "NATO Controlled";

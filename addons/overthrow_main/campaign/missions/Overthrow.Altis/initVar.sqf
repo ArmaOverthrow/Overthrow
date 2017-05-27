@@ -20,6 +20,8 @@ OT_flag_NATO = "Flag_NATO_F";
 OT_flag_CRIM = "Flag_Syndikat_F";
 OT_flag_IND = "Flag_Altis_F";
 
+OT_populationMultiplier = 0.5; //Used to tweak populations per map
+
 //Interactable items that spawn in your house
 OT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
 OT_item_Map = "Mapboard_altis_F";
@@ -79,7 +81,7 @@ OT_hat_police = "H_Cap_police";
 OT_clothes_mob = "U_I_C_Soldier_Camo_F";
 
 //NATO stuff
-
+OT_NATO_HMG = "B_HMG_01_high_F";
 OT_NATO_Vehicles_AirGarrison = [
 	["B_T_VTOL_01_vehicle_F",1],
 	["B_T_VTOL_01_infantry_F",1],

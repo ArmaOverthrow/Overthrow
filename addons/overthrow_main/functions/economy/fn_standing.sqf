@@ -1,4 +1,5 @@
 private _town = _this select 0;
+if(isNil "_town") exitWith {};
 private _rep = (player getVariable [format["rep%1",_town],0]);
 if(count _this > 1) then {
     _rep = _rep+(_this select 1);

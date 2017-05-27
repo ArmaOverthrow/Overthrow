@@ -48,7 +48,7 @@ while {true} do {
 	}foreach(spawner getVariable ["_noid_",[]]);
 
 	if ((date select 3) != _lasthr) then {
-		if(isDedicated) then {			
+		if(isDedicated) then {
 			[true] spawn OT_fnc_saveGame;
 		};
 
@@ -189,7 +189,6 @@ while {true} do {
 		private _abandoned = server getVariable ["NATOabandoned",[]];
 
 		if(_stabcounter >= 10) then {
-
 			_stabcounter = 0;
 			{
 				_town = _x;
@@ -202,9 +201,17 @@ while {true} do {
 						};
 					};
 				}else{
+					_stabchange = 0;
 					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
 					if(_numcops > 0) then {
-						[_town,-1] call OT_fnc_stability;
+						_stabchange = _stabchange - _numcops;
+					};
+					_police = server getVariable [format["police%1",_town],0];
+					if (_police > 0) then {
+						_stabchange = _stabchange + floor(_police / 2);
+					};
+					if(_stabchange != 0) then {
+						[_town,_stabchange] call OT_fnc_stability;
 					};
 				};
 			}foreach(OT_allTowns);

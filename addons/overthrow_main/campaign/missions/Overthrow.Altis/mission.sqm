@@ -8,7 +8,7 @@ class EditorData
 	toggles=522;
 	class ItemIDProvider
 	{
-		nextID=2151;
+		nextID=2157;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=374;
+		nextID=404;
 	};
 	class Camera
 	{
-		pos[]={12524.104,99.578369,15210.382};
-		dir[]={-0.92709911,-0.35047126,-0.13340355};
-		up[]={-0.34692186,0.93654996,-0.04991978};
-		aside[]={-0.1424389,-5.3855183e-007,0.98987895};
+		pos[]={4208.2852,121.65195,12175.687};
+		dir[]={-0.062754579,-0.41400495,0.90818679};
+		up[]={-0.028544042,0.91024369,0.41306183};
+		aside[]={0.99769878,6.6967914e-007,0.068946071};
 	};
 };
 binarizationWanted=0;
@@ -693,7 +693,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=79;
+		items=85;
 		class Item0
 		{
 			dataType="Layer";
@@ -6535,7 +6535,7 @@ class Mission
 			markerType="RECTANGLE";
 			type="rectangle";
 			colorName="ColorRed";
-			alpha=0.22466959;
+			alpha=0;
 			a=4000.229;
 			b=9924.1992;
 			id=2127;
@@ -6544,16 +6544,16 @@ class Mission
 		class Item64
 		{
 			dataType="Marker";
-			position[]={22783.479,-2.7858887,15453.628};
+			position[]={22783.479,0,15453.628};
 			name="region_3";
 			markerType="RECTANGLE";
 			type="rectangle";
 			colorName="ColorBlue";
-			alpha=0.63978338;
+			alpha=0;
 			a=6428.3408;
 			b=11028.604;
 			id=2128;
-			atlOffset=6.6285105;
+			atlOffset=9.4143991;
 		};
 		class Item65
 		{
@@ -6780,6 +6780,66 @@ class Mission
 			id=2150;
 			type="Land_TTowerBig_2_F";
 			atlOffset=-0.0029220581;
+		};
+		class Item79
+		{
+			dataType="Marker";
+			position[]={5532.3091,0,16102.296};
+			name="control_3";
+			type="mil_triangle";
+			alpha=0;
+			id=2151;
+			atlOffset=-73.303612;
+		};
+		class Item80
+		{
+			dataType="Marker";
+			position[]={7327.6807,6.3996582,11009.567};
+			name="control_4";
+			type="mil_triangle";
+			alpha=0;
+			id=2152;
+			atlOffset=0.10454607;
+		};
+		class Item81
+		{
+			dataType="Marker";
+			position[]={10774.324,6.4709473,10783.703};
+			name="control_5";
+			type="mil_triangle";
+			alpha=0;
+			id=2153;
+			atlOffset=0.070014477;
+		};
+		class Item82
+		{
+			dataType="Marker";
+			position[]={20331.689,57.25,9480.2891};
+			name="control_6";
+			type="mil_triangle";
+			alpha=0;
+			id=2154;
+			atlOffset=-0.0084037781;
+		};
+		class Item83
+		{
+			dataType="Marker";
+			position[]={17074.836,14.540482,17860.701};
+			name="control_7";
+			type="mil_triangle";
+			alpha=0;
+			id=2155;
+			atlOffset=0.0012025833;
+		};
+		class Item84
+		{
+			dataType="Marker";
+			position[]={24788.359,20.505074,20719.5};
+			name="control_8";
+			type="mil_triangle";
+			alpha=0;
+			id=2156;
+			atlOffset=0.025074005;
 		};
 	};
 	class Connections

@@ -5,10 +5,10 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=522;
+	toggles=521;
 	class ItemIDProvider
 	{
-		nextID=2109;
+		nextID=2129;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=334;
+		nextID=339;
 	};
 	class Camera
 	{
-		pos[]={12880.063,4.9866929,4514.0859};
-		dir[]={-0.39422134,-0.028979944,0.91865265};
-		up[]={-0.011464994,0.99956822,0.026719522};
-		aside[]={0.919052,-4.5984052e-009,0.39439592};
+		pos[]={2881.1663,178.2007,2690.7559};
+		dir[]={-0.91740453,-0.046566825,-0.39533362};
+		up[]={-0.042815298,0.99891353,-0.018451389};
+		aside[]={-0.39576888,9.5096766e-007,0.91841394};
 	};
 };
 binarizationWanted=0;
@@ -58,13 +58,14 @@ addons[]=
 	"A3_Structures_F_Exp_Industrial_SugarCaneFactory_01",
 	"A3_Structures_F_Naval_Piers",
 	"A3_Structures_F_Civ_Constructions",
-	"A3_Structures_F_Exp_Industrial_Materials"
+	"A3_Structures_F_Exp_Industrial_Materials",
+	"A3_Structures_F_Exp_Military_ContainerBases"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=25;
+		items=26;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -237,6 +238,13 @@ class AddonsMetaData
 		{
 			className="A3_Structures_F";
 			name="Arma 3 - Buildings and Structures";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item25
+		{
+			className="A3_Structures_F_Exp";
+			name="Arma 3 Apex - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -694,7 +702,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=95;
+		items=112;
 		class Item0
 		{
 			dataType="Marker";
@@ -7157,6 +7165,308 @@ class Mission
 			name="Roadblock";
 			id=2064;
 			atlOffset=60.779999;
+		};
+		class Item95
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2090.2102,25.833403,3391.0469};
+				angles[]={0,4.480782,0};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				aiRadarUsage=1081719681;
+			};
+			id=2109;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=0.35198593;
+		};
+		class Item96
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={11611.42,17.576286,3065.7844};
+				angles[]={0,5.3795266,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=1011571308;
+			};
+			id=2111;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=7.5817108e-005;
+		};
+		class Item97
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={6996.8833,15.546225,7229.8662};
+				angles[]={0,5.652791,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2112;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=1.502037e-005;
+		};
+		class Item98
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={6773.6299,10.933626,7515.9341};
+				angles[]={0,0.75195676,0};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				aiRadarUsage=-2147483457;
+			};
+			id=2113;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=0.25872564;
+		};
+		class Item99
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5171.9634,33.106934,3653.1125};
+				angles[]={0,3.9708266,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2114;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=0.040994644;
+		};
+		class Item100
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={10090.385,422.82147,11821.047};
+				angles[]={0,5.7118678,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2115;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=-0.035308838;
+		};
+		class Item101
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={11925.78,19.836195,13054.678};
+				angles[]={0,0.27213302,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=523264;
+			};
+			id=2116;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=-1.4305115e-005;
+		};
+		class Item102
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2370.2708,26.039562,13301.747};
+				angles[]={0,4.0587606,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2117;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=0.0020236969;
+		};
+		class Item103
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2141.2786,25.590662,13113.537};
+				angles[]={0,4.0945816,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2118;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=8.392334e-005;
+		};
+		class Item104
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={1919.7001,28.506197,12911.656};
+				angles[]={0,4.0666747,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2119;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=1.7166138e-005;
+		};
+		class Item105
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={1732.505,18.193048,12850.115};
+				angles[]={0,0.019748457,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1089176317;
+			};
+			id=2120;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=0.093062401;
+		};
+		class Item106
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2372.4001,17.366394,13071.793};
+				angles[]={0,5.7379179,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=56;
+			};
+			id=2121;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=-3.528595e-005;
+		};
+		class Item107
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2327.7681,17.853319,6346.8809};
+				angles[]={0,3.6645083,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2124;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=-7.5340271e-005;
+		};
+		class Item108
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2234.0952,16.736891,6317.6133};
+				angles[]={0,1.8329573,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2125;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=-0.00010299683;
+		};
+		class Item109
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={11032.859,195.47185,4215.8862};
+				angles[]={0,1.2573732,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2126;
+			type="Land_Cargo_Tower_V4_F";
+			atlOffset=-6.1035156e-005;
+		};
+		class Item110
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={11768.212,9.5949993,2981.0325};
+				angles[]={0,5.4081845,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2127;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=-4.7683716e-007;
+		};
+		class Item111
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2687.3269,222.3548,2599.1257};
+				angles[]={0,4.026258,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				aiRadarUsage=-1054867456;
+			};
+			id=2128;
+			type="Land_Cargo_Patrol_V4_F";
+			atlOffset=-1.5258789e-005;
 		};
 	};
 	class Connections

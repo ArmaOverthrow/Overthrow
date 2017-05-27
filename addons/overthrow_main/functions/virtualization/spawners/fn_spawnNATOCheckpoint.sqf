@@ -3,6 +3,11 @@ params ["_start","_name","_spawnid"];
 private _count = 0;
 
 private _numNATO = server getVariable format["garrison%1",_name];
+if(isNil "_numNATO") then {
+	//New checkpoint was added
+	_numNATO = 6 + round(random 4);
+	server setVariable [format["garrison%1",_name],_numNATO,true];
+};
 if(_numNATO <= 0) exitWith {[]};
 
 private _road = [_start] call BIS_fnc_nearestRoad;
@@ -16,12 +21,6 @@ private _vehs = [_start,_dir,OT_tpl_checkpoint] call BIS_fnc_objectsMapper;
 
 private _groups = [];
 private _soldiers = [];
-
-if(isNil "_numNATO") then {
-	//New checkpoint was added to game
-	_numNATO = 6 + (random 4);
-	server setVariable [format["garrison%1",_name],_numNATO,true];
-};
 
 _count = 0;
 _range = 100;

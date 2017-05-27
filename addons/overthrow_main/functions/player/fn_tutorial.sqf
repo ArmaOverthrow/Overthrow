@@ -32,8 +32,7 @@ OT_menuHandler = {
 	sleep 3;
 	_txt = "<t align='left'><t size='0.7' color='#000000'>Stability</t><br/>";
 	_txt = format ["%1<t size='0.6' color='#000000'>Yellow areas indicate towns where stability is lowest. Blue icons indicate known NATO installations.</t><br/><br/>",_txt];
-	_txt = format ["%1<t size='0.5' color='#101010'>%2</t>",_txt,OT_tutorialBackstoryText];
-	_txt = format ["%1A massive protest against the NATO occupation recently took place in the nation's capital of Georgetown, where the spokesperson for the 'Free Tanoa' movement was assassinated by an unknown assailant. In response, NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.<br/><br/></t>",_txt];
+	_txt = format ["%1<t size='0.5' color='#101010'>%2</t>",_txt,OT_tutorial_backstoryText];	
 
 	[_txt, -0.5, 0.5, 240, 1, 0, 2] spawn bis_fnc_dynamicText;
 

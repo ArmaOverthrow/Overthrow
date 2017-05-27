@@ -112,7 +112,7 @@ while {sleep 10;true} do {
 			}foreach(OT_objectiveData + OT_airportData);
 		};
 
-		//Town QRF (over 50 pop)
+		//Town QRF (over 100 pop)
 		if !(_countered) then {
 			_sorted = [OT_allTowns,[],{server getvariable format["population%1",_x]},"DESCEND"] call BIS_fnc_SortBy;
 			{
@@ -121,7 +121,7 @@ while {sleep 10;true} do {
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
 				if(_pos call OT_fnc_inSpawnDistance) then {
-					if(_population > 50 and _stability < 10 and !(_town in _abandoned)) then {
+					if(_population > 100 and _stability < 10 and !(_town in _abandoned)) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						_strength = _population;
@@ -224,7 +224,7 @@ while {sleep 10;true} do {
 					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
 					_numres = {side _x == resistance or captive _x} count (_pos nearObjects 200);
 					if(_nummil < 3 and _numres > 0) then {
-						if(_population < 50) then {
+						if(_population < 100) then {
 							if(_stability < 10 and !(_town in _abandoned)) then {
 								//Abandon a town
 								_abandoned pushback _town;
@@ -248,7 +248,7 @@ while {sleep 10;true} do {
 						};
 					};
 				}else{
-					if(_population < 50) then {
+					if(_population < 100) then {
 						if(_stability == 0 and !(_town in _abandoned)) then {
 							//Abandon a town
 							_abandoned pushback _town;

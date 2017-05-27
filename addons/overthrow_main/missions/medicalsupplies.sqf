@@ -35,6 +35,11 @@ _difficulty = 0.5;
     _p params ["_destination","_destinationName","_lastwarning"];
     _supplies = ["ACE_fieldDressing","ACE_elasticBandage"];
 
+    if(isNil "_lastwarning") then {
+        _lastwarning = 0;
+        _p set [2,0];
+    };
+
     _numavailable = 0;
     _threshold = 10;
     {

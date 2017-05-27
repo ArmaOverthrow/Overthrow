@@ -14,6 +14,12 @@ while {sleep 1; true} do {
             {
                 _civ = OT_civilians getVariable [format["%1",_x],[]];
                 _civ params ["_identity","_hasjob","_cash"];
+
+                if(_stability > 50 and !_hasjob) then {
+                    _hasjob = true;
+                    _civ set [1,true];
+                };
+
                 if(_hasjob) then {
                     _cash = _cash + _wages;
                 };

@@ -58,11 +58,13 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
                 if(typename _building != "BOOL") then {
             		_pos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
             		[_building,"system"] call OT_fnc_setOwner;
+                    if(isNil "_pos") then {
+                        _pos = [[[getpos _building,20]]] call BIS_fnc_randomPos;
+                    };
             	}else{
             		_pos = [[[_posTown,200]]] call BIS_fnc_randomPos;
             	};
             	server setVariable [format["factionrep%1",_cls],_pos,true];
-            	[_building,"system"] call OT_fnc_setOwner;
             };
         };
     }foreach(OT_allFactions);
