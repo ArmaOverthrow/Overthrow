@@ -12,7 +12,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
         if(_timesince < 300) then {
             if (_distance < 4000 and _distance > 500) then {
                 _mortargroup setCombatMode "RED";
-                _p = [_pos,random 360,300] call SHK_pos;
+                _p = [_pos,random 360,150] call SHK_pos;
                 _mortar commandArtilleryFire [_p, "8Rnd_82mm_Mo_shells", 1];
                 sleep 3+(random 3);
                 _mortar commandArtilleryFire [_p, "8Rnd_82mm_Mo_shells", 1];
@@ -41,7 +41,9 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
         {
             _x params ["_ty","_pos","_pri","_obj","_done"];
             _distance = (_pos distance _mortar);
-            if (_distance < 4000 and _distance > 250 and !_done) exitWith {
+            _town = _pos call OT_fnc_nearestTown;
+            _towndist = _pos distance (server getvariable [_town,_pos]); //make sure we dont shell towns
+            if (_towndist > 600 and _distance < 4000 and _distance > 250 and !_done) exitWith {
                 _x set [4,true];
                 _mortargroup setCombatMode "RED";
 

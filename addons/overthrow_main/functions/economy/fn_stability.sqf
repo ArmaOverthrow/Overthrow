@@ -39,6 +39,9 @@ if(_stability < 50) then {
         _town setMarkerAlpha 0;
     };
 };
+if(_town == (server getVariable ["NATOattacking",""])) then {
+    _town setMarkerAlpha 0;
+};
 if !(_town in _abandoned) then {
     _townmrk setMarkerAlpha 0;
     _townmrk setMarkerAlphaLocal 0;

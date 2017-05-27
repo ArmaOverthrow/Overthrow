@@ -121,7 +121,7 @@ if(_handled) then {
 		if(_price > 10000) then {
 			[_town,round(_price / 10000)] call OT_fnc_standing;
 		};
-		_bdg addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
+		_building addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
 			[_building,nil] call OT_fnc_setOwner;

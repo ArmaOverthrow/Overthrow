@@ -173,7 +173,7 @@ if(typename _b == "ARRAY") then {
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
 				<t align='left' size='0.65'>Owned by %2</t><br/>
-				<t align='left' size='0.65'>Damage: %2%3</t>
+				<t align='left' size='0.65'>Damage: %3%4</t>
 			",_name,_ownername,round((damage _building) * 100),"%"];
 		};
 		if(typeof _building == OT_barracks) then {

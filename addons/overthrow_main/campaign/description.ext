@@ -39,7 +39,13 @@ class Campaign
 
 		class Tanoa: MissionDefault
 		{
+			end1 = Altis;
 			template = Overthrow.Tanoa;
+		};
+
+		class Altis: MissionDefault
+		{
+			template = Overthrow.Altis;
 		};
 	};
 };

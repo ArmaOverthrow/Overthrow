@@ -104,7 +104,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherv
 		10 setRain _this;
 	};
 
-	_date = server getVariable ["timedate",[2025,7,27,8,00]];
+	_date = server getVariable ["timedate",OT_startDate];
 	setdate _date;
 	0 setfog 0; //Tanoa fog wtf
 	forceWeatherChange;

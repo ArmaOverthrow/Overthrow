@@ -2,6 +2,9 @@
 OT_nation = "Altis";
 OT_saveName = "Overthrow.altis.001";
 
+OT_tutorial_backstoryText = "Welcome to Altis, the jewel of the Mediterranean. The year is 2040, it has been five years since NATO pushed the AAF forces out of the nation and no efforts have been made to re-establish local leadership and restore the once great economy of Altis. A protest in the capital city Pyrgos turned sour last night when the leader of the 'Free Altis' movement was gunned down by an unknown assailant.";
+OT_startDate = [2040,7,14,8,00];
+
 OT_startCameraPos = [11646.6,6406.52,2];
 OT_startCameraTarget = [13808.2,6387.16,0];
 

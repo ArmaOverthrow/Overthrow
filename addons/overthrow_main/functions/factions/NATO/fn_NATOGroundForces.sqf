@@ -59,6 +59,17 @@ if(_frompos distance _attackpos > 600) then {
 	_allunits pushback _x;
 	_x setVariable ["garrison","HQ",false];
 	_x setVariable ["VCOM_NOPATHING_Unit",true,false];
+
+	//NATO would not use titans when they arent going up against armor
+	if(secondaryWeapon _x == "launch_B_Titan_short_F") then {
+		_x removeWeapon "launch_B_Titan_short_F";
+		_x addWeapon "launch_NLAW_F";
+		removeBackpack _x;
+	};
+	if(((typeof _x) find "_AAT_") > -1) then {
+		_x addWeapon "launch_NLAW_F";
+		removeBackpack _x;
+	};
 }foreach(units _group1);
 
 spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group1],false];
@@ -75,7 +86,7 @@ if !(_byair) then {
 	spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group2],false];
 };
 
-sleep 5;
+sleep 15;
 if(_byair and (typename _tgroup == "GROUP")) then {
 	_wp = _tgroup addWaypoint [_frompos,0];
 	_wp setWaypointType "MOVE";
@@ -128,6 +139,7 @@ if(_byair and (typename _tgroup == "GROUP")) then {
 		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointTimeout [30,30,30];
 		_move setWaypointType "TR UNLOAD";
+		_move setWaypointCompletionRadius 50;
 
 		_wp = _tgroup addWaypoint [_frompos,0];
 		_wp setWaypointType "MOVE";
@@ -157,12 +169,30 @@ _wp setWaypointBehaviour "COMBAT";
 if(typename _tgroup == "GROUP") then {
 
 	[_veh,_tgroup,_frompos] spawn {
+		//Ejects crew from vehicles when they take damage or stay relatively still for too long (you know, like when they ram a tree for 4 hours)
 		params ["_veh","_tgroup","_frompos"];
 		private _done = false;
+		private _stillfor = 0;
+		private _lastpos = getpos _veh;
 		while{sleep 10;!_done} do {
 			if(isNull _veh) exitWith {};
 			if(isNull _tgroup) exitWith {};
+			if(!alive _veh) exitWith {};
+			private _eject = false;
 			if((damage _veh) > 0 and ((getpos _veh) select 2) < 2) then {
+				//Vehicle damaged (and on the ground)
+				_eject = true;
+			};
+			if((getpos _veh) distance _lastpos < 0.5) then {
+				_stillfor = _stillfor + 10;
+				if(_stillfor > 60) then {
+					//what are you doing? gtfo
+					_eject = true;
+				};
+			}else{
+				_stillfor = 0;
+			};
+			if(_eject) then {
 				while {(count (waypoints _tgroup)) > 0} do {
 				 	deleteWaypoint ((waypoints _tgroup) select 0);
 				};

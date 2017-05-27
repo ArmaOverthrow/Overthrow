@@ -9,6 +9,9 @@ private _count = 0;
 
 server setVariable ["NATOattacking","",true];
 server setVariable ["NATOattackstart",0,true];
+server setVariable ["QRFpos",nil,true];
+server setVariable ["QRFprogress",nil,true];
+server setVariable ["QRFstart",nil,true];
 
 private _lastmin = date select 4;
 private _lastsched = -1;

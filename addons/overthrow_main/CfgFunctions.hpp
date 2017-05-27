@@ -66,6 +66,7 @@ class CfgFunctions
 			class money {};
 			class getPlayerHome {};
 			class generalIsOnline {};
+			class doConversation {};
 		};
 
 		class Interaction
@@ -320,9 +321,11 @@ class CfgFunctions
 			class weaponGetName {};
 			class magazineGetName {};
 			class vehicleGetName {};
+			class glassesGetName {};
 			class weaponGetPic {};
 			class magazineGetPic {};
 			class vehicleGetPic {};
+			class glassesGetPic {};
 			class magazineGetDescription {};
 			class vehicleGetDescription {};
 			class getSearchStock {};

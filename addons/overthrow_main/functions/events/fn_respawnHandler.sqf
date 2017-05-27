@@ -43,8 +43,6 @@ removeVest player;
 
 player addWeapon "ItemMap";
 
-sleep 2;
-
 _housepos = _old getVariable "home";
 _town = _housepos call OT_fnc_nearestTown;
 player setPos _housepos;
@@ -63,7 +61,7 @@ call {
 
 titleText ["", "BLACK IN", 5];
 
-
-
-sleep 5;
-player allowDamage true;
+[] spawn {
+	sleep 5;
+	player allowDamage true;
+};

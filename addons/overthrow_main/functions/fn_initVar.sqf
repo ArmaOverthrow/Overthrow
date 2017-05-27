@@ -5,7 +5,7 @@
 
 OT_missions = [];
 OT_localMissions = [];
-private _allMissions = "" configClasses ( configFile >> "CfgOverthrowMissions" );
+private _allMissions = "true" configClasses ( configFile >> "CfgOverthrowMissions" );
 {
 	_name = configName _x;
 	_script = getText (_x >> "script");
@@ -296,6 +296,12 @@ OT_spawnHouses = [];
 {
 	_cls = configName _x;
 	OT_spawnHouses pushback _cls;
+	if((OT_allBuyableBuildings find _cls) == -1) then {
+		OT_allBuyableBuildings pushback _cls;
+	};
+	if((OT_allRealEstate find _cls) == -1) then {
+		OT_allRealEstate pushback _cls;
+	};
 }foreach(_allHouses);
 
 OT_gunDealerHouses = OT_spawnHouses;
@@ -607,8 +613,8 @@ OT_allGoggles = [];
 		case "MachineGun": {_cost = 1500;OT_allMachineGuns pushBack _name};
 		case "SniperRifle": {_cost = 2000;OT_allSniperRifles pushBack _name};
 		case "Handgun": {_steel = 0.2;_cost = 100; if(_short != "Metal Detector") then {OT_allHandGuns pushBack _name}};
-		case "MissileLauncher": {_cost=2500;OT_allMissileLaunchers pushBack _name};
-		case "RocketLauncher": {_cost = 1000;if(_name == "launch_NLAW_F") then {_cost=400};OT_allRocketLaunchers pushBack _name};
+		case "MissileLauncher": {_cost=35000;OT_allMissileLaunchers pushBack _name};
+		case "RocketLauncher": {_cost = 5000;if(_name == "launch_NLAW_F") then {_cost=1500};OT_allRocketLaunchers pushBack _name};
 		case "Vest": {
 			if !(_name in ["V_RebreatherB","V_RebreatherIA","V_RebreatherIR","V_Rangemaster_belt"]) then {
 				_cost = 40 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 20);

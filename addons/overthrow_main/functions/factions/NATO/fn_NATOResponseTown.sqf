@@ -1,5 +1,6 @@
 params ["_town","_strength"];
 private _posTown = server getVariable _town;
+_town setMarkerAlpha 0;
 
 private _tskid = [resistance,[format["assault%1",_town]],[format["NATO is assaulting %1.",_town],format["Battle for %1",_town],format["assault%1",_town]],_posTown,1,2,true,"Defend",true] call BIS_fnc_taskCreate;
 

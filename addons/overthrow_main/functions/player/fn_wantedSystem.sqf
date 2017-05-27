@@ -61,7 +61,7 @@ if(isPlayer _unit) then {
 					private _havepi = false;
 					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
 					{
-						if(_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner)) and !(isPlayer _x))) then {
+						if(_unit != _x and (_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner))) and !(isPlayer _x))) then {
 							if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
 								_medic = _x;
 							};

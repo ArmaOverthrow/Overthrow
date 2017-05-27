@@ -293,7 +293,7 @@ _handler = {
 				100,
 				0,
 				_col,
-				""
+				"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
 			];
 		};
 	};

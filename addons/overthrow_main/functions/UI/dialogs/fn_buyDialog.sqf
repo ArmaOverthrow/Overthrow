@@ -27,6 +27,10 @@ lbClear 1500;
 	_name = "";
 	_pic = "";
 	call {
+		if(_cls isKindOf ["None",configFile >> "CfgGlasses"]) exitWith {
+			_name = _cls call OT_fnc_glassesGetName;
+			_pic = _cls call OT_fnc_glassesGetPic;
+		};
 		if(_cls isKindOf "Bag_Base" or _cls isKindOf "Land" or _cls isKindOf "Air") exitWith {
 			_name = _cls call OT_fnc_vehicleGetName;
 			_pic = _cls call OT_fnc_vehicleGetPic;

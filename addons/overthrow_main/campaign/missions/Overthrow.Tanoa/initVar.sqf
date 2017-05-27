@@ -2,6 +2,9 @@
 OT_nation = "Tanoa";
 OT_saveName = "Overthrow.save.001";
 
+OT_tutorial_backstoryText = "This is Tanoa, a small island nation in the South Pacific with a history of British and French colonialism. Tanoa is currently under occupation by NATO forces and has been at the center of international attention since the Vunakece regime was ousted in 2020. The Tanoan population is currently in dissaray and there are many conspiracy theories as to the economic and political future of this small but strategically valuable archipelago.";
+OT_startDate = [2025,7,27,8,00];
+
 OT_startCameraPos = [1385.17,505.453,1.88826];
 OT_startCameraTarget = [1420,535,5.8];
 
