@@ -284,31 +284,35 @@ if(typename _b == "ARRAY") then {
 
 	if(typeof _building == OT_policeStation) then {
 		_owner = _building call OT_fnc_getOwner;
-		_ownername = server getVariable format["name%1",_owner];
-		ctrlSetText [1608,"Sell"];
-		ctrlEnable [1608,false];
-		ctrlSetText [1609,"Manage"];
-		ctrlEnable [1609,true];
-		//ctrlEnable [1610,false];
+		if(!isNil "_owner") then {
+			_ownername = server getVariable format["name%1",_owner];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlSetText [1609,"Manage"];
+			ctrlEnable [1609,true];
+			//ctrlEnable [1610,false];
 
-		_buildingTxt = format["
-			<t align='left' size='0.8'>Police Station</t><br/>
-			<t align='left' size='0.65'>Built by %1</t>
-		",_ownername];
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Police Station</t><br/>
+				<t align='left' size='0.65'>Built by %1</t>
+			",_ownername];
+		};
 	};
 
 	if(typeof _building == "Land_Cargo_House_V4_F") then {
 		_owner = _building call OT_fnc_getOwner;
-		_ownername = server getVariable format["name%1",_owner];
-		ctrlSetText [1608,"Sell"];
-		ctrlEnable [1608,false];
-		ctrlEnable [1609,false];
-		//ctrlEnable [1610,false];
+		if(!isNil "_owner") then {
+			_ownername = server getVariable format["name%1",_owner];
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,false];
+			//ctrlEnable [1610,false];
 
-		_buildingTxt = format["
-			<t align='left' size='0.8'>Workshop</t><br/>
-			<t align='left' size='0.65'>Built by %1</t>
-		",_ownername];
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Workshop</t><br/>
+				<t align='left' size='0.65'>Built by %1</t>
+			",_ownername];
+		};
 	};
 
 	if(!((typeof _building) in OT_allRealEstate + [OT_flag_IND])) then {

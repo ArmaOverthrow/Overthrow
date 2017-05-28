@@ -227,6 +227,8 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 };
 diag_log "Overthrow: NATO Init Done";
 
+publicVariable "OT_allComms";
+
 OT_NATOInitDone = true;
 publicVariable "OT_NATOInitDone";
 

@@ -29,6 +29,7 @@ _objects = [];
 
 {
 	_type = _x select 0;
+	if(_type == "Mapboard_tanoa_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
 	_rel = _x select 1;
 	_dir = (_x select 2);
 

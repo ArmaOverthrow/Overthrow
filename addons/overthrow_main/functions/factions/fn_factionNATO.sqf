@@ -9,6 +9,7 @@ private _count = 0;
 
 server setVariable ["NATOattacking","",true];
 server setVariable ["NATOattackstart",0,true];
+server setVariable ["NATOlastattack",-1200,true];
 server setVariable ["QRFpos",nil,true];
 server setVariable ["QRFprogress",nil,true];
 server setVariable ["QRFstart",nil,true];
@@ -185,6 +186,7 @@ while {sleep 10;true} do {
 		if(_count >= _nextturn and !_countered) then {
 			OT_lastNATOTurn = time;
 			publicVariable "OT_lastNATOTurn";
+			_lastAttack = time - (server getVariable ["NATOlastattack",-1200]);
 			_resourceGain = server getVariable ["NATOresourceGain",0];
 			_abandonedSomething = false;
 			//NATO turn
@@ -235,7 +237,7 @@ while {sleep 10;true} do {
 							};
 						}else{
 							if(_town != _lastcounter) then {
-								if((_town in _abandoned) and (_resources > _population) and (random 100) > 99) then {
+								if(_lastAttack > 1200 and (_town in _abandoned) and (_resources > _population) and (random 100) > 99) then {
 									//Counter a town
 									[_town,_population] spawn OT_fnc_NATOCounterTown;
 									server setVariable ["NATOlastcounter",_town,true];
@@ -264,7 +266,7 @@ while {sleep 10;true} do {
 			//Spawn missing drones & counter objectives
 			{
 				_x params ["_pos","_name","_pri"];
-				if((_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 99) exitWith {
+				if(_lastAttack > 1200 and (_name != _lastcounter) and (_name in _abandoned) and (_resources > _pri) and (random 100) > 99) exitWith {
 					//Counter an objective
 
 					[_name,_pri] spawn OT_fnc_NATOCounterObjective;

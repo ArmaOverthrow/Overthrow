@@ -69,7 +69,10 @@ private _cc = 0;
 			_ccc = 0;
 			{
 				_type = _x select 0;
-
+				if(_type == "Land_MapBoard_F") then {
+					//Backwards-compatability map upgrade for old saves
+					_type = OT_item_Map;
+				};
 				if !(_type isKindOf "Man") then {
 					_pos = _x select 1;
 					_dir = _x select 2;
@@ -123,10 +126,6 @@ private _cc = 0;
 					clearBackpackCargoGlobal _veh;
 					clearItemCargoGlobal _veh;
 					_veh setVariable ["name",_name,true];
-
-					if(_type == OT_item_Map) then {
-						_veh setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
-					};
 
 					[_veh,_owner] call OT_fnc_setOwner;
 					{

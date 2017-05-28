@@ -14,6 +14,9 @@ if(isNil "_numNATO") then {
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 _count = 0;
 if(_name in OT_allComms) then {
+	_group = createGroup blufor;
+	_groups pushBack _group;
+
 	_start = [[[_posTown,50]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
@@ -48,7 +51,7 @@ if(_name in OT_allComms) then {
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
 		sleep 0.2;
-		_wp = _group addWaypoint [getpos _tower,0];
+		_wp = _group addWaypoint [_posTown,0];
 		_wp setWaypointType "GUARD";
 		_wp setWaypointBehaviour "SAFE";
 		_wp setWaypointSpeed "LIMITED";
@@ -77,7 +80,7 @@ if(_name in OT_allComms) then {
 if(_numNATO > 0) then {
 	_garrisongroup = creategroup blufor;
 	_groups pushback _garrisongroup;
-	private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 150];
+	private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 250];
 	{
 		private _building = _x;
 		private _type = typeof _x;
@@ -99,10 +102,10 @@ if(_numNATO > 0) then {
 			};
 
 			if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
-				_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 1), [], 0, "CAN_COLLIDE"];
-				_ang = (getDir _building) - 180;
-				_pos = [getPosATL _veh, 2.5, _ang] call BIS_Fnc_relPos;
-				_veh setPosATL _pos;
+				_ang = (getDir _building) - 170;
+				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
+				_veh = createVehicle [OT_NATO_HMG, _p, [], 0, "CAN_COLLIDE"];
+				_veh setPosATL _p;
 				_veh setDir (getDir _building) - 180;
 
 				createVehicleCrew _veh;

@@ -3,6 +3,9 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
     [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
+OT_varInitDone = false;
+publicVariable "OT_varInitDone";
+
 private _center = createCenter sideLogic;
 private _group = createGroup _center;
 
@@ -87,8 +90,8 @@ waitUntil {!isNil "OT_economyLoadDone"};
 
 //Subscribe to events
 if(isMultiplayer) then {
-    addMissionEventHandler ["HandleDisconnect",OT_fnc_playerConnectHandler];
-    addMissionEventHandler ["HandleConnnect",OT_fnc_playerDisconnectHandler];
+    addMissionEventHandler ["HandleConnect",OT_fnc_playerConnectHandler];
+    addMissionEventHandler ["HandleDisconnect",OT_fnc_playerDisconnectHandler];
 };
 addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 

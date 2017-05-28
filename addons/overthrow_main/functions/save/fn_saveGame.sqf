@@ -27,18 +27,20 @@ private _data = [];
 {
 	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison") then {
 		_val = server getVariable _x;
-		if(typename _val == "ARRAY") then {
-			//Copy the array
-			_old = _val;
-			_val = [];
-			{
-				_val pushback _x;
-			}foreach(_old);
-			if(_x == "natoabandoned") then {
-				_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
+		if !(isNil "_val") then {
+			if(typename _val == "ARRAY") then {
+				//Copy the array
+				_old = _val;
+				_val = [];
+				{
+					_val pushback _x;
+				}foreach(_old);
+				if(_x == "natoabandoned") then {
+					_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
+				};
 			};
+			_data pushback [_x,_val];
 		};
-		_data pushback [_x,server getVariable _x];
 	};
 }foreach(allVariables server);
 

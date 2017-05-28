@@ -280,15 +280,24 @@ if (_newplayer) then {
     _light setLightAmbient[.9, .9, .6];
     _light setLightColor[.5, .5, .4];
 
+	//Free quad
+	_pos = _housepos findEmptyPosition [5,100,"C_Quadbike_01_F"];
+	if (count _pos > 0) then {
+		_veh = "C_Quadbike_01_F" createVehicle _pos;
+		[_veh,getPlayerUID player] call OT_fnc_setOwner;
+		clearWeaponCargoGlobal _veh;
+		clearMagazineCargoGlobal _veh;
+		clearBackpackCargoGlobal _veh;
+		clearItemCargoGlobal _veh;
+		player reveal _veh;
+	};
+
     [_house,getplayeruid player] call OT_fnc_setOwner;
     player setVariable ["home",_housepos,true];
 
     _furniture = (_house call OT_fnc_spawnTemplate) select 0;
 
-    {
-        if(typeof _x == OT_item_Map) then {
-            _x setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
-        };
+    {        
 		if(typeof _x == OT_item_Storage) then {
             _x addItemCargoGlobal ["ToolKit", 1];
 			_x addBackpackCargoGlobal ["B_AssaultPack_khk", 1];

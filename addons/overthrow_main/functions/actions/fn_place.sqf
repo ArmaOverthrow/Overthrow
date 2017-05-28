@@ -90,9 +90,7 @@ if(_cost > 0) then {
 				if(_cls == "B_Boat_Transport_01_F") then {
 					_dir = _dir + 90;
 				};
-				if(_cls == OT_item_Map) then {
-					modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
-				};
+
 				clearWeaponCargoGlobal modeTarget;
 				clearMagazineCargoGlobal modeTarget;
 				clearBackpackCargoGlobal modeTarget;
@@ -120,9 +118,7 @@ if(_cost > 0) then {
 	_cls = modeValues select modeValue;
 	_handlerId = (findDisplay 46) displayAddEventHandler ["KeyDown",_keyhandler];
 	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
-	if(_cls == OT_item_Map) then {
-		modeTarget setObjectTextureGlobal [0,"\ot\ui\maptanoa.paa"];
-	};
+	
 	clearWeaponCargoGlobal modeTarget;
 	clearMagazineCargoGlobal modeTarget;
 	clearBackpackCargoGlobal modeTarget;

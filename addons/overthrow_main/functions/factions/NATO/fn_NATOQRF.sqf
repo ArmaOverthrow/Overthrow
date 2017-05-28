@@ -226,7 +226,7 @@ if(_progress > 0) then {
 	server setVariable ["NATOresources",-_strength,true];
 	server setVariable ["NATOresourceGain",0,true];
 };
-
+server setVariable ["NATOlastattack",time,true]; //Ensures NATO takes some time after a QRF to recover (even if they win)
 server setVariable ["QRFpos",nil,true];
 server setVariable ["QRFstart",nil,true];
 server setVariable ["QRFprogress",nil,true];

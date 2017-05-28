@@ -10,26 +10,32 @@ while {sleep 10;true} do {
             _civ = OT_civilians getVariable [format["%1",_x],[]];
             _civid = _x;
             _civ params ["_identity","_hasjob","_cash","_superior"];
+            if(isNil "_superior") then {_superior = -1};
             if (!_hasjob and _cash == 0 and _superior == -1) then {
                 if(count _gangs > 0) then {
                     //join a gang (maybe)
                     if((random 100) > 98) then {
                         _gangid = _gangs select 0;
                         _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
-                        (_gang select 0) pushback _civid;
-                        _vest = _gang select 3;
-                        _civ set [3,(_gang select 0) select 0];
-                        if(_townpos call OT_fnc_inSpawnDistance) then {
-                            _unit = OT_civilians getVariable [format["spawn%1",_civid],objNull];
-                            if(!isNull _unit and alive _unit) then {
-                                _group = OT_civilians getVariable [format["gangspawn%1",_gangid],grpNull];
-                                _unit setVariable ["OT_gangid",_gangid,true];
-                                if(!isNull _group) then {
-                                    [_unit] joinSilent nil;
-                                    [_unit] joinSilent _group;
-                                    [_unit,_town,_vest] call OT_fnc_initCriminal;
+                        if(count _gang > 0) then {
+                            (_gang select 0) pushback _civid;
+                            _vest = _gang select 3;
+                            _civ set [3,(_gang select 0) select 0];
+                            if(_townpos call OT_fnc_inSpawnDistance) then {
+                                _unit = OT_civilians getVariable [format["spawn%1",_civid],objNull];
+                                if(!isNull _unit and alive _unit) then {
+                                    _group = OT_civilians getVariable [format["gangspawn%1",_gangid],grpNull];
+                                    _unit setVariable ["OT_gangid",_gangid,true];
+                                    if(!isNull _group) then {
+                                        [_unit] joinSilent nil;
+                                        [_unit] joinSilent _group;
+                                        [_unit,_town,_vest] call OT_fnc_initCriminal;
+                                    };
                                 };
                             };
+                        }else{
+                            _gangs deleteAt (_gangs find _gangid);
+                            OT_civilians setVariable [format["gangs%1",_x],_gangs,true];
                         };
                     };
                 }else{

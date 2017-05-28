@@ -38,7 +38,7 @@ if(typename _create == "SCALAR") then {
     };
 }else{
     if(_create == "HMG") then {
-        private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 150];
+        private _buildings = nearestObjects [_pos, OT_garrisonBuildings, 250];
         _done = false;
         _dir = 0;
         _p = [];
@@ -56,8 +56,8 @@ if(typename _create == "SCALAR") then {
                     };
                 };
                 if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
-                    _ang = (getDir _building) - 180;
-    				_p = [_building buildingPos 1, 2.5, _ang] call BIS_Fnc_relPos;
+                    _ang = (getDir _building) - 170;
+    				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				_dir = (getDir _building) - 180;
 
                     _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
@@ -98,14 +98,14 @@ if(typename _create == "SCALAR") then {
 
         _gun = "I_HMG_01_high_F" createVehicle _p;
         _gun setDir _dir;
-        _veh setPosATL _p;
+        _gun setPosATL _p;
         createVehicleCrew _gun;
         {
             [_x] joinSilent _group;
         }foreach(crew _gun);
     };
     if(_create == "GMG") then {
-        private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 150];
+        private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 250];
         _done = false;
         _dir = 0;
         _p = [];
@@ -124,8 +124,8 @@ if(typename _create == "SCALAR") then {
                     };
                 };
                 if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
-                    _ang = (getDir _building) - 180;
-    				_p = [_building buildingPos 1, 2.5, _ang] call BIS_Fnc_relPos;
+                    _ang = (getDir _building) - 170;
+    				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				_dir = (getDir _building) - 180;
 
                     _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
@@ -166,7 +166,7 @@ if(typename _create == "SCALAR") then {
 
         _gun = "I_GMG_01_high_F" createVehicle _p;
         _gun setDir _dir;
-        _veh setPosATL _p;
+        _gun setPosATL _p;
         createVehicleCrew _gun;
         {
             [_x] joinSilent _group;
