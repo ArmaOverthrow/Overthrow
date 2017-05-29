@@ -8,7 +8,7 @@ private _tskid = [resistance,[format["counter%1",_objective]],[format["NATO is s
 _fail = {
 	params ["_tskid","_objective"];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-	_objective setMarkerType "flag_Tanoa";
+	_objective setMarkerType OT_flagMarker;
 
 	_effect = "";
 	if(_objective == "The Fuel Depot") then {

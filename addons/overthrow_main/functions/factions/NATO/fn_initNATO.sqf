@@ -238,7 +238,7 @@ publicVariable "OT_NATOInitDone";
 	_mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
 	_mrk setMarkerShape "ICON";
 	if(_name in (server getVariable "NATOabandoned")) then {
-		_mrk setMarkerType "flag_Tanoa";
+		_mrk setMarkerType OT_flagMarker;
 	}else{
 		_mrk setMarkerType "flag_NATO";
 	};

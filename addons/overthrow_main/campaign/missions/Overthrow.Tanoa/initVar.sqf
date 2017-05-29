@@ -19,6 +19,8 @@ OT_spawnFaction = "IND_F"; //This faction will have a rep in spawn town
 OT_flag_NATO = "Flag_NATO_F";
 OT_flag_CRIM = "Flag_Syndikat_F";
 OT_flag_IND = "Flag_HorizonIslands_F";
+OT_flagImage = "\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa";
+OT_flagMarker = "flag_Tanoa";
 
 OT_populationMultiplier = 1.2; //Used to tweak populations per map
 

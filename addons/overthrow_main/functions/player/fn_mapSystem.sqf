@@ -229,7 +229,7 @@ _handler = {
 			_pos = server getVariable [format["gundealer%1",_x],[]];
 			if(count _pos > 0) then {
 				(_this select 0) drawIcon [
-					"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa",
+					OT_flagImage,
 					[1,1,1,1],
 					_pos,
 					0.6/ctrlMapScale (_this select 0),

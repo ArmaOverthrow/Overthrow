@@ -516,7 +516,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Overthrow.Tanoa";
+		briefingName="Overthrow.Altis";
 		resistanceWest=0;
 		startWeather=0.29173625;
 		startWind=0;
