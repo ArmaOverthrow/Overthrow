@@ -324,6 +324,7 @@ while {true} do {
 							};
 							call {
 								if(_currentCls isKindOf "Bag_Base") exitWith {
+									_currentCls = _currentCls call BIS_fnc_basicBackpack;
 									_veh addBackpackCargoGlobal [_currentCls,_numtoproduce];
 								};
 								if(_currentCls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {

@@ -152,6 +152,7 @@ private _cc = 0;
 								_veh addMagazineCargoGlobal [_cls,_num];
 							};
 							if(_cls isKindOf "Bag_Base") exitWith {
+								_cls = _cls call BIS_fnc_basicBackpack;
 								_veh addBackpackCargoGlobal [_cls,_num];
 							};
 							_veh addItemCargoGlobal _x;

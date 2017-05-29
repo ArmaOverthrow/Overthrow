@@ -29,7 +29,7 @@ while {sleep 1; true} do {
                     _cash = 0;
                 };
                 _civ set [2,_cash];
-                if(_stability < 50 and (random 100) > 99) then {
+                if(_stability < 50 and (random 1000) > 998) then {
                     //Civ lost his job
                     _civ set [1,false];
                 };

@@ -55,6 +55,7 @@ _doTransfer = {
 					_veh addMagazineCargoGlobal [_cls,1];
 				};
 				if(_cls isKindOf "Bag_Base") exitWith {
+					_cls = _cls call BIS_fnc_basicBackpack;
 					_veh addBackpackCargoGlobal [_cls,1];
 				};
 				_veh addItemCargoGlobal [_cls,1];

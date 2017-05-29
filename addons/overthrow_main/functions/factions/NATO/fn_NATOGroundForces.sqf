@@ -64,10 +64,11 @@ if(_frompos distance _attackpos > 600) then {
 	if(secondaryWeapon _x == "launch_B_Titan_short_F") then {
 		_x removeWeapon "launch_B_Titan_short_F";
 		_x addWeapon "launch_NLAW_F";
-		removeBackpack _x;
 	};
 	if(((typeof _x) find "_AAT_") > -1) then {
 		_x addWeapon "launch_NLAW_F";
+	};
+	if(secondaryWeapon _x == "launch_NLAW_F") then {
 		removeBackpack _x;
 	};
 }foreach(units _group1);
@@ -79,9 +80,21 @@ if !(_byair) then {
 		if(typename _tgroup == "GROUP") then {
 			_x moveInCargo _veh;
 		};
+		[_x] joinSilent _group2;
 		_x setVariable ["VCOM_NOPATHING_Unit",true,false];
 		_allunits pushback _x;
 		_x setVariable ["garrison","HQ",false];
+
+		if(secondaryWeapon _x == "launch_B_Titan_short_F") then {
+			_x removeWeapon "launch_B_Titan_short_F";
+			_x addWeapon "launch_NLAW_F";
+		};
+		if(((typeof _x) find "_AAT_") > -1) then {
+			_x addWeapon "launch_NLAW_F";
+		};
+		if(secondaryWeapon _x == "launch_NLAW_F") then {
+			removeBackpack _x;
+		};
 	}foreach(units _group2);
 	spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group2],false];
 };
