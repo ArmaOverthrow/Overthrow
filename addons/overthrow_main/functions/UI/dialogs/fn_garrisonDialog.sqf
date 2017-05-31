@@ -7,7 +7,7 @@ if(typename _b == "ARRAY") then {
 	if(typeof (_b select 0) == OT_flag_IND) then {
         _name = "";
         {
-            if((_x select 0) distance (_b select 0) < 10) exitWith {_name = _b select 1};
+            if((_x select 0) distance (_b select 0) < 10) exitWith {_name = _x select 1};
         }foreach(server getVariable ["bases",[]]);
     };
 }else{

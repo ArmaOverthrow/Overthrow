@@ -159,7 +159,7 @@ call {
 			_server setVariable ["reschems",_chems - (_cost select 3),true];
 		};
 		[-_price] call OT_fnc_money;
-		player addMagazine _cls;
+		player addMagazineGlobal _cls;
 		playSound "3DEN_notificationDefault";
 	};
 	_handled = true;

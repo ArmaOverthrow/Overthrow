@@ -57,18 +57,18 @@ if(_wpn != "") then {
 	_civ addWeaponGlobal _wpn;
 	_base = [_wpn] call BIS_fnc_baseWeapon;
 	_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-	_civ addMagazine _magazine;
-	_civ addMagazine _magazine;
-	_civ addMagazine _magazine;
-	_civ addMagazine _magazine;
-	_civ addMagazine _magazine;
+	_civ addMagazineGlobal _magazine;
+	_civ addMagazineGlobal _magazine;
+	_civ addMagazineGlobal _magazine;
+	_civ addMagazineGlobal _magazine;
+	_civ addMagazineGlobal _magazine;
 };
 
 if(_pwpn != "") then {
 	_civ addWeaponGlobal _pwpn;
 	_base = [_pwpn] call BIS_fnc_baseWeapon;
 	_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-	_civ addMagazine _magazine;
+	_civ addMagazineGlobal _magazine;
 };
 
 if(_tertiary != "") then {
@@ -76,8 +76,8 @@ if(_tertiary != "") then {
 	_civ addWeaponGlobal _tertiary;
 	_base = [_tertiary] call BIS_fnc_baseWeapon;
 	_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-	_civ addMagazine _magazine;
-	_civ addMagazine _magazine;
+	_civ addMagazineGlobal _magazine;
+	_civ addMagazineGlobal _magazine;
 };
 
 if(_cls == "I_Medic_F") then {
