@@ -3,6 +3,8 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
     [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
 };
 
+if(!isServer) exitWith {};
+
 OT_varInitDone = false;
 publicVariable "OT_varInitDone";
 
@@ -85,8 +87,8 @@ waitUntil {!isNil "OT_NATOInitDone"};
 [] spawn OT_fnc_incomeSystem;
 
 //Init virtualization
-[] spawn OT_fnc_runVirtualization;
 waitUntil {!isNil "OT_economyLoadDone"};
+[] spawn OT_fnc_runVirtualization;
 
 //Subscribe to events
 if(isMultiplayer) then {

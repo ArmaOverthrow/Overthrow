@@ -41,16 +41,22 @@ if(!dialog) then {
 						params ["_pos","_veh"];
 						sleep 2;
 						private _driver = driver _veh;
+						private _e = [];
 						{
 							private _p = [_pos,[0,50]] call SHK_pos;
 							moveOut _x;
+							_x allowDamage false;
 							_x setPos _p;
+							_e pushback _x;
 						} foreach(crew vehicle player);
 						sleep 2;
 						disableUserInput false;
 						cutText ["","BLACK IN",3];
 						deleteVehicle _driver;
 						deleteVehicle _veh;
+						{
+							_x allowDamage true;
+						}foreach(_e);
 					};
 				};
 				if(call OT_fnc_playerIsAtWarehouse) then {

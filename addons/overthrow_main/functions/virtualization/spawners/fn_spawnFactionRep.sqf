@@ -9,13 +9,11 @@ if(count _pos == 0) exitWith {[]};
 
 private _groups = [];
 
-_building = nearestBuilding _pos;
-
 private _group = createGroup civilian;
 _group setBehaviour "CARELESS";
 _groups pushback _group;
-private _start = _building buildingPos 0;
-_shopkeeper = _group createUnit [OT_civType_shopkeeper, _start, [],0, "NONE"];
+
+_shopkeeper = _group createUnit [OT_civType_shopkeeper, _pos, [],0, "NONE"];
 
 //Set face/voice and uniform
 [_shopkeeper, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _shopkeeper];

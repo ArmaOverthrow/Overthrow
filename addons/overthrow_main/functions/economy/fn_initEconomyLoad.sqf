@@ -68,6 +68,7 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
             };
         };
     }foreach(OT_allFactions);
+    diag_log "Overthrow: Economy Load Complete";
 };
 
 //Stability markers

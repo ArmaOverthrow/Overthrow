@@ -6,7 +6,7 @@
 #include "script_component.hpp"
 
 author=QUOTE(MOD_AUTHOR);
-OnLoadMission=QUOTE(VERSION);
+OnLoadMission=QUOTE(VERSION - Please read http://wiki.armaoverthrow.com/);
 
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;

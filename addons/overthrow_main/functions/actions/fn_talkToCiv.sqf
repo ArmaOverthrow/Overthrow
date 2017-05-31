@@ -68,7 +68,7 @@ if (_canMission) then {
 	_options pushBack [format["Buy Gear"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
-		private _standing = [_town] call OT_fnc_standing;
+		private _standing = server getVariable [format["standing%1",_faction],0];
 
 		_gear = spawner getvariable[format["facweapons%1",_faction],[]];
 		_s = [];
@@ -82,7 +82,7 @@ if (_canMission) then {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
 		_factionName = _civ getvariable ["factionrepname",""];
-		private _standing = [_town] call OT_fnc_standing;
+		private _standing = server getVariable [format["standing%1",_faction],0];
 
 		_gear = spawner getvariable[format["facvehicles%1",_faction],[]];
 		_s = [];

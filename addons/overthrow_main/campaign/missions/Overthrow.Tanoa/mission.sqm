@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=339;
+		nextID=344;
 	};
 	class Camera
 	{
@@ -7200,7 +7200,7 @@ class Mission
 			};
 			id=2111;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=7.5817108e-005;
+			atlOffset=7.6770782e-005;
 		};
 		class Item97
 		{
@@ -7235,7 +7235,7 @@ class Mission
 			};
 			id=2113;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=0.25872564;
+			atlOffset=0.25872612;
 		};
 		class Item99
 		{
@@ -7305,7 +7305,7 @@ class Mission
 			};
 			id=2117;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=0.0020236969;
+			atlOffset=0.0020246506;
 		};
 		class Item103
 		{
@@ -7448,7 +7448,7 @@ class Mission
 			};
 			id=2127;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-4.7683716e-007;
+			atlOffset=-9.5367432e-007;
 		};
 		class Item111
 		{

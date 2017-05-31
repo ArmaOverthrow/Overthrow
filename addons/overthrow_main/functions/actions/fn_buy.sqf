@@ -57,6 +57,7 @@ call {
 		player setVariable ["money",_money-_price,true];
 
 		_veh = createVehicle [_cls, _pos, [], 0,""];
+		_veh setVariable ["OT_spawntrack",true,true]; //Tells virtualization to track this vehicle like it's a player.
 		_crew = createVehicleCrew _veh;
 		{
 			[_x,getPlayerUID player] call OT_fnc_setOwner;

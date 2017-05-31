@@ -102,7 +102,7 @@ if(_numNATO > 0) then {
 			};
 
 			if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
-				_ang = (getDir _building) - 170;
+				_ang = (getDir _building) - 190;
 				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
 				_veh = createVehicle [OT_NATO_HMG, _p, [], 0, "CAN_COLLIDE"];
 				_veh setPosATL _p;
@@ -275,6 +275,7 @@ _road = objNull;
 		_civ setVariable ["NOAI",true,true];
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
+		sleep 0.2;
 
 		//His empty APC
 		_vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];

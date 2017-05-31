@@ -82,7 +82,7 @@ private _cc = 0;
 					if(count _x > 5) then {
 						_name = _x select 5;
 					};
-					_veh = _type createVehicle _pos;
+					_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 					_veh enableDynamicSimulation true;
 
 					if(count _x > 7) then {

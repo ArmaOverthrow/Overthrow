@@ -8,6 +8,7 @@ private _destination = [];
 private _destinationTown = "";
 private _type = "";
 private _title = "";
+private _abandoned = server getVariable ["NATOabandoned",[]];
 
 //Here is where we might randomize the parameters a bit
 //Is this an insertion or an extraction?

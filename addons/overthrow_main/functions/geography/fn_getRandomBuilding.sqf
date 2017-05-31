@@ -4,7 +4,7 @@ private _search = _this select 0;
 private _types = _this select 1;
 
 private _found = false;
-private _range = 150;
+private _range = 400;
 private _house = false;
 while {!_found and _range < 1200} do {
 	_houses = nearestObjects [_search, ["house"], _range,false];

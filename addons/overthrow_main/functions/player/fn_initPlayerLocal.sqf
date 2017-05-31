@@ -297,7 +297,7 @@ if (_newplayer) then {
 
     _furniture = (_house call OT_fnc_spawnTemplate) select 0;
 
-    {        
+    {
 		if(typeof _x == OT_item_Storage) then {
             _x addItemCargoGlobal ["ToolKit", 1];
 			_x addBackpackCargoGlobal ["B_AssaultPack_khk", 1];
@@ -421,6 +421,10 @@ if(_newplayer) then {
 		createDialog "OT_dialog_tute";
 		player setVariable ["tute",true,true];
 	};
+};
+
+if(isMultiplayer) then {
+	player addEventHandler ["Respawn",OT_fnc_respawnHandler];
 };
 
 _introcam cameraEffect ["Terminate", "BACK" ];

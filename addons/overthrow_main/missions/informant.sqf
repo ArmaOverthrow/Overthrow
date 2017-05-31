@@ -11,7 +11,12 @@ private _posTown = server getVariable [_destinationName,[]];
 
 _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
 _destination = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
-if((_destination select 0) == 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
+if(!isNil "_destination") then {
+    if((_destination select 0) == 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
+}else{
+    _destination = [_posTown,[random 100,600]] call SHK_pos;
+};
+
 private _params = [_destination,_destinationName];
 private _markerPos = [[[_destination,50]]] call BIS_fnc_randomPos; //randomize the marker position a bit
 

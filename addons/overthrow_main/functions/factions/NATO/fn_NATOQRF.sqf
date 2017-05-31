@@ -176,7 +176,9 @@ while {sleep 5; !_over} do {
 	if(_progresschange < -20) then {_progresschange = -20};
 	if(_progresschange > 10) then {_progresschange = 10};
 	_progress = _progress + _progresschange;
-	server setVariable ["QRFprogress",_progress/_totalStrength,true];
+	_progressPercent = 0;
+	if(_progress != 0) then {_progressPercent = _progress/_totalStrength};	
+	server setVariable ["QRFprogress",_progressPercent,true];
 	if((abs _progress) >= _totalStrength) then {
 		//Someone has won
 		_over = true;

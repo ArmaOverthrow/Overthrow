@@ -10,13 +10,13 @@ if(isNull _target or isNil "_target") exitWith {};
 
 private _objects = [];
 
-private _b = _target call OT_fnc_nearestRealEstate;
+private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b == "ARRAY") then {
 	_building = _b select 0;
 	if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
-		_objects = [_building];
+		_objects pushback _building;
 	};
 };
 

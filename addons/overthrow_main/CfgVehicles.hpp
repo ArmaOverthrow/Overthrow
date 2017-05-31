@@ -73,6 +73,39 @@ class CfgVehicles {
         ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
     };
 
+	//Houses (CUP)
+	class Land_House_C_5_dam_EP1: House_Small_F {
+		ot_isPlayerHouse = 1;
+        ot_template = '[["Land_Sleeping_bag_F",[-0.859297,-0.554941,0],0,1,0,[],"","",true,false], ["I_supplyCrate_F",[3.89146,1.20775,-0.00284338],0,1,0,[],"","",true,false],["Land_MapBoard_F",[-3.09413,3.7061,0.046927],0,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[-0.463434,-5.14101,0],0,1,0,[],"","",true,false]]';
+	};
+	class Land_House_C_5_EP1: Land_House_C_5_dam_EP1 {
+		ot_isPlayerHouse = 1;
+	};
+	class Land_House_C_5_V1_dam_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_5_V1_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_5_V2_dam_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_5_V2_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_5_V3_dam_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_5_V3_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_11_dam_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+	class Land_House_C_11_EP1: Land_House_C_5_dam_EP1 {
+        ot_isPlayerHouse = 1;
+    };
+
     //Shops (Tanoa)
     class Land_FuelStation_01_shop_F: House_F {
         ot_isShop = 1;
@@ -107,6 +140,32 @@ class CfgVehicles {
     class Land_i_Shop_02_V3_F: Land_i_Shop_02_V1_F {
         ot_isShop = 1;
         ot_template = '[]';
+    };
+
+	//Shops (CUP)
+	class Land_A_GeneralStore_01: House_F {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-6.93629,2.99194,0],180.686,1,0,[],"","",true,false]]';
+    };
+    class Land_A_GeneralStore_01_dam: Land_A_GeneralStore_01 {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-6.95791,2.98163,0],180.686,1,0,[],"","",true,false]]';
+    };
+    class Land_A_GeneralStore_01a: Land_A_GeneralStore_01 {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-5.77295,6.66858,0],180.686,1,0,[],"","",true,false]]';
+    };
+	class Land_A_GeneralStore_01a_dam: Land_A_GeneralStore_01 {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-5.35,6.89225,0],180.686,1,0,[],"","",true,false]]';
+    };
+    class Land_GeneralStore_01a_dam_PMC: Land_A_GeneralStore_01 {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-5.36103,6.85785,0],180.686,1,0,[],"","",true,false]]';
+    };
+    class Land_GeneralStore_01a_PMC: Land_A_GeneralStore_01 {
+        ot_isShop = 1;
+        ot_template = '[["Land_CashDesk_F",[-5.76134,6.66694,0],180.686,1,0,[],"","",true,false]]';
     };
 
     //Car Dealers (Tanoa)

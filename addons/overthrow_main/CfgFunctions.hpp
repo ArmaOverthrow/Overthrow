@@ -134,6 +134,7 @@ class CfgFunctions
 			class mapInfoDialog {};
 			class characterSheetDialog {};
 			class manageRecruitsDialog {};
+			class loadoutDialog {};
 		};
 
 		class Display

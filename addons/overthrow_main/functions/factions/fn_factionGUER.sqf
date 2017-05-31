@@ -9,27 +9,30 @@ private _lastmin = date select 4;
 private _lasthr = date select 3;
 private _currentProduction = "";
 private _stabcounter = 0;
+private _trackcounter = 0;
 
 while {true} do {
 	sleep 1;
-	_track = [];
-	{
-		if(_x getVariable ["spawntrack",false]) then {
-			_track pushback _x;
-		}else{
-			if((_x call OT_fnc_hasOwner) and (alive _x) and (!isPlayer _x)) then {_track pushback _x};
-		};
-		sleep 0.01;
-	}foreach(allunits);
-	{
-		if(_x getVariable ["spawntrack",false]) then {
-			_track pushback _x;
-		}else{
-			if((_x call OT_fnc_hasOwner) and (alive _x) and !isNull(driver _x)) then {_track pushback _x};
-		};
-		sleep 0.01;
-	}foreach(vehicles);
-	spawner setVariable ["track",_track,false];
+
+	_trackcounter = _trackcounter + 1;
+	if(_trackcounter > 5) then {
+		_trackcounter = 0;
+		_track = [];
+		{
+			if(_x getVariable ["OT_spawntrack",false]) then {
+				_track pushback _x;
+			};
+			sleep 0.01;
+		}foreach(allunits);
+		{
+			if(_x getVariable ["OT_spawntrack",false]) then {
+				_track pushback _x;
+			};
+			sleep 0.01;
+		}foreach(vehicles);
+		spawner setVariable ["track",_track,false];
+	};
+
 	private _dead = count alldeadmen;
 	if(_dead > 150) then {
 		format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];

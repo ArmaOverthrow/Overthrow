@@ -95,7 +95,6 @@ OT_currentMissionFaction = "";
 OT_rankXP = [100,250,500,1000,4000,10000,100000];
 
 OT_adminMode = false;
-OT_economyLoadDone = false;
 OT_deepDebug = false;
 OT_hasAce = true;
 OT_allIntel = [];
@@ -248,8 +247,6 @@ OT_backpacks = [
 	["B_Carryall_cbr",80,0,0,1],
 	["B_Carryall_khk",80,0,0,1],
 	["B_Carryall_oli",80,0,0,1],
-	["B_Bergen_dgtl_F",100,0,0,1],
-	["B_Bergen_hex_F",100,0,0,1],
 	["B_Parachute",120,0,0,1]
 ];
 
@@ -594,7 +591,7 @@ OT_allGoggles = [];
 			call {
 				if(_caliber == " 5.56" or _caliber == "5.56" or _caliber == " 5.45" or _caliber == " 5.8") exitWith {_cost = 500};
 				if(_caliber == " 12 gauge") exitWith {_cost = 1200};
-				if(_caliber == " .408") exitWith {_cost = 2000};
+				if(_caliber == " .408") exitWith {_cost = 4000};
 				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
 				if(_caliber == " 9") exitWith {_cost = 400}; //9x21mm
 				if(_caliber == " 6.5") exitWith {_cost = 1000};
@@ -614,22 +611,34 @@ OT_allGoggles = [];
 			};
 		};
 		case "MachineGun": {_cost = 1500;OT_allMachineGuns pushBack _name};
-		case "SniperRifle": {_cost = 2000;OT_allSniperRifles pushBack _name};
-		case "Handgun": {_steel = 0.2;_cost = 100; if(_short != "Metal Detector") then {OT_allHandGuns pushBack _name}};
-		case "MissileLauncher": {_cost=35000;OT_allMissileLaunchers pushBack _name};
-		case "RocketLauncher": {_cost = 5000;if(_name == "launch_NLAW_F") then {_cost=1500};OT_allRocketLaunchers pushBack _name};
+		case "SniperRifle": {_cost = 4000;OT_allSniperRifles pushBack _name};
+		case "Handgun": {
+			_steel = 0.2;
+			_cost = 100;
+			call {
+				if(_caliber == " .408") exitWith {_cost = 2000};
+				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
+			};
+			if(_short != "Metal Detector") then {
+				OT_allHandGuns pushBack _name
+			}
+		};
+		case "MissileLauncher": {_cost=15000;OT_allMissileLaunchers pushBack _name};
+		case "RocketLauncher": {_cost = 1500;if(_name == "launch_NLAW_F") then {_cost=1000};OT_allRocketLaunchers pushBack _name};
 		case "Vest": {
 			if !(_name in ["V_RebreatherB","V_RebreatherIA","V_RebreatherIR","V_Rangemaster_belt"]) then {
 				_cost = 40 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 20);
-				OT_allVests pushBack _name;
-				if(_cost > 40) then {
-					OT_allProtectiveVests pushback _name;
-				};
-				if(_cost > 300) then {
-					OT_allExpensiveVests pushback _name;
-				};
-				if(_cost < 300 and _cost > 40) then {
-					OT_allCheapVests pushback _name;
+				if !(_name in ["V_Press_F","V_TacVest_blk_POLICE"]) then {
+					OT_allVests pushBack _name;
+					if(_cost > 40) then {
+						OT_allProtectiveVests pushback _name;
+					};
+					if(_cost > 300) then {
+						OT_allExpensiveVests pushback _name;
+					};
+					if(_cost < 300 and _cost > 40) then {
+						OT_allCheapVests pushback _name;
+					};
 				};
 			};
 		};
@@ -669,6 +678,9 @@ OT_allGoggles = [];
 	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and (_name != "NLAW_F") and !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
 		_cost = round(_m * 4);
 		_desc = getText(_x >> "descriptionShort");
+		if((_desc find ".408") > -1) then {
+			_cost = _cost * 4;
+		};
 		_exp = false;
 		_steel = 0.1;
 		_plastic = 0;

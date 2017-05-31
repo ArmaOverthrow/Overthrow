@@ -56,7 +56,7 @@ if(typename _create == "SCALAR") then {
                     };
                 };
                 if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
-                    _ang = (getDir _building) - 170;
+                    _ang = (getDir _building) - 190;
     				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				_dir = (getDir _building) - 180;
 
@@ -97,6 +97,7 @@ if(typename _create == "SCALAR") then {
         [-_cost] call OT_fnc_money;
 
         _gun = "I_HMG_01_high_F" createVehicle _p;
+        [_gun,getplayeruid player] call OT_fnc_setOwner;
         _gun setDir _dir;
         _gun setPosATL _p;
         createVehicleCrew _gun;
@@ -124,7 +125,7 @@ if(typename _create == "SCALAR") then {
                     };
                 };
                 if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
-                    _ang = (getDir _building) - 170;
+                    _ang = (getDir _building) - 190;
     				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				_dir = (getDir _building) - 180;
 
@@ -165,6 +166,7 @@ if(typename _create == "SCALAR") then {
         [-_cost] call OT_fnc_money;
 
         _gun = "I_GMG_01_high_F" createVehicle _p;
+        [_gun,getplayeruid player] call OT_fnc_setOwner;
         _gun setDir _dir;
         _gun setPosATL _p;
         createVehicleCrew _gun;

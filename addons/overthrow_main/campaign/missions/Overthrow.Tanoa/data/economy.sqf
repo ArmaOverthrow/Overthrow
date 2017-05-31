@@ -19,10 +19,8 @@ OT_factoryPos = [4226.49,8370.82,0];
 OT_factoryVehicleSpawn = [4265.64,8400.65,0];
 OT_factoryVehicleDir = 67;
 OT_connectedRegions = [
-    ["region_1","region_2"],
-    ["region_1","region_3"],
-    ["region_2","region_1"],
-    ["region_2","region_3"],
-    ["region_3","region_2"],
-    ["region_3","region_1"]
+    ["island_1","island_2"],
+    ["island_2","island_1"],
+    ["island_3","island_4"],
+    ["island_4","island_3"]
 ];

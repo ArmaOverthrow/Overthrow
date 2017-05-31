@@ -10,8 +10,8 @@ if(typename _b == "ARRAY") then {
 	_building = _b select 0;
 	if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
+		_objects pushback _building;
 	};
-	_objects = [_building];
 };
 
 {
@@ -28,7 +28,7 @@ _doTransfer = {
 	private _veh = vehicle player;
 	private _target = _this;
 	private _toname = (typeof _target) call OT_fnc_vehicleGetName;
-	private _iswarehouse = (_target isKindOf "OT_warehouse");
+	private _iswarehouse = (_target isKindOf OT_warehouse);
 	if(_iswarehouse) then {_toname = "Warehouse"};
 	format["Transferring legal inventory from %1",_toname] call OT_fnc_notifyMinor;
 
