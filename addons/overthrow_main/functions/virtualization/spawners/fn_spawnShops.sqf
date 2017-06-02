@@ -26,17 +26,10 @@ if(count _activeshops > 0) exitWith {
 			_groups pushback _x;
 		}foreach(_vehs);
 
-		_cashdesk = _pos nearestObject OT_item_ShopRegister;
-
-		_dir = getDir _cashdesk;
-		_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;
-
 		_shopkeeper allowDamage false;
 		_shopkeeper disableAI "MOVE";
 		_shopkeeper disableAI "AUTOCOMBAT";
 		_shopkeeper setVariable ["NOAI",true,false];
-
-		_shopkeeper setDir (_dir-180);
 
 		_shopkeeper setVariable ["shop",format["%1",_pos],true];
 		[_shopkeeper] call OT_fnc_initShopkeeper;

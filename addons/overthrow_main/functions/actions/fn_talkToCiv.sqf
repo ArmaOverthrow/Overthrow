@@ -59,7 +59,7 @@ if (_canLocMission) then {
 if (_canMission) then {
 	_factionName = _civ getvariable ["factionrepname",""];
 	_faction = _civ getvariable ["faction",""];
-	private _standing = [_town] call OT_fnc_standing;
+	private _standing = server getVariable [format["standing%1",_faction],0];
 	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
 	_options pushBack [format["Request Mission"], {
 		private _civ = OT_interactingWith;

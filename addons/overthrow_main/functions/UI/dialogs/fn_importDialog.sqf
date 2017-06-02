@@ -26,6 +26,10 @@ _numitems = 0;
 
 		if(_price > 0) then {
 			_numitems = _numitems + 1;
+			if(_cls isKindOf ["None",configFile >> "CfgGlasses"]) then {
+				_name = _cls call OT_fnc_glassesGetName;
+				_pic = _cls call OT_fnc_glassesGetPic;
+			};
 			if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
 				_name = _cls call OT_fnc_weaponGetName;
 				_pic = _cls call OT_fnc_weaponGetPic;

@@ -90,7 +90,10 @@ private _cc = 0;
 						//Fuel in tank
 						_veh setFuel _fuel;
 						{
-							_veh setHitPointDamage [_x, (_dmg select 2) select _forEachIndex,false]
+							_d = (_dmg select 2) select _forEachIndex;
+							if(_d > 0) then {
+								_veh setHitPointDamage [_x, _d, false];
+							};
 						}foreach(_dmg select 0);
 						if(count (_x select 7) > 2) then {
 							//ACE refuel (fuel trucks)

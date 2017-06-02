@@ -3,7 +3,9 @@ private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template
 _building = _this;
 private _type = typeOf(_building);
 if(isNil {templates getVariable _type}) then {
-	_template = call compile call compile getText(configFile >> "CfgVehicles" >> _type >> "ot_template");
+	_tpl = getText(configFile >> "CfgVehicles" >> _type >> "ot_template");
+	if(isNil "_tpl" or _tpl == "") exitWith {};
+	_template = call compile call compile _tpl;
 	if !(typename _template == "ARRAY") exitWith {};
 	{
 		_x set [8,true];
@@ -14,7 +16,7 @@ if(isNil {templates getVariable _type}) then {
 
 _template = templates getVariable typeOf(_building);
 
-if(isNil "_template") exitWith {};
+if(isNil "_template") exitWith {[[]]};
 
 
 _buildingpos = getposatl _building;

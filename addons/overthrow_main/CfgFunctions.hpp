@@ -459,7 +459,10 @@ class CfgFunctions
 			file = "\ot\functions\buildings";
 			class initBuilding {};
 			class initObservationPost {};
-
+			class initPoliceStation {};
+			class initWorkshop {};
+			class initTrainingCamp {};
+			class initWarehouse {};
 		};
 
 		/*

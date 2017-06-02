@@ -98,32 +98,39 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 	_gangid = _x;
 	_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
 	_members = _gang select 0;
-	_vest = _gang select 3;
-	_group = creategroup opfor;
-	_groups pushback _group;
-	_home = _town call OT_fnc_getRandomRoadPosition;
-	{
-		_civid = _x;
-		_ident = (OT_civilians getVariable [format["%1",_civid],[]]);
-		_identity = _ident select 0;
+	if !(isNil "_members") then {
+		if(count _gang > 3) then {
+			_vest = _gang select 3;
+		}else{
+			_vest = selectRandom OT_allProtectiveVests;
+			_gang set[3,_vest];
+		};
+		_group = creategroup opfor;
+		_groups pushback _group;
+		_home = _town call OT_fnc_getRandomRoadPosition;
+		{
+			_civid = _x;
+			_ident = (OT_civilians getVariable [format["%1",_civid],[]]);
+			_identity = _ident select 0;
 
-		_pos = [_home,random 360,10] call SHK_pos;
-		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
-		[_civ] joinSilent nil;
-		[_civ] joinSilent _group;
-		spawner setVariable [format["civspawn%1",_civid],_civ,false];
+			_pos = [_home,random 360,10] call SHK_pos;
+			_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
+			[_civ] joinSilent nil;
+			[_civ] joinSilent _group;
+			spawner setVariable [format["civspawn%1",_civid],_civ,false];
 
-		[_civ,_town,_vest] call OT_fnc_initCriminal;
-		[_civ,_identity] call OT_fnc_applyIdentity;
-		[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+			[_civ,_town,_vest] call OT_fnc_initCriminal;
+			[_civ,_identity] call OT_fnc_applyIdentity;
+			[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 
-		_civ setVariable ["OT_gangid",_gangid,true];
-		_civ setVariable ["OT_civid",_civid,true];
-		_civ setBehaviour "SAFE";
-		_civ setVariable ["hometown",_hometown,true];
-		sleep 0.2;
-	}foreach(_members);
-	_group spawn OT_fnc_initCivilianGroup;
+			_civ setVariable ["OT_gangid",_gangid,true];
+			_civ setVariable ["OT_civid",_civid,true];
+			_civ setBehaviour "SAFE";
+			_civ setVariable ["hometown",_hometown,true];
+			sleep 0.2;
+		}foreach(_members);
+		_group spawn OT_fnc_initCivilianGroup;
+	};
 }foreach(_gangs);
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

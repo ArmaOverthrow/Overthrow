@@ -22,7 +22,13 @@ _total = 0;
 	_num = _x select 1;
 	if(_doillegal or _cls in (OT_allItems + OT_allBackpacks + OT_Resources + OT_allClothing)) then {
 		_baseprice = [OT_nation,_cls,0] call OT_fnc_getSellPrice;
-		_costprice = round(_baseprice * 0.4); //The cost of export
+		_costprice = round(_baseprice * 0.6); //The cost of export
+		if(_cls in OT_allDrugs) then {
+			_costprice = round(_baseprice * 0.5);
+		};
+		if(_cls in OT_illegalItems) then {
+			_costprice = round(_baseprice * 0.3);
+		};
 
 		_total = _total + (_costprice * _num);
 		call {

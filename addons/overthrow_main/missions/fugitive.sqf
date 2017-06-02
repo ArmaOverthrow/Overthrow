@@ -5,8 +5,17 @@ private _destinationName = "";
 private _title = "";
 
 //Here is where we might randomize the parameters a bit
+private _currentTown = (getpos player) call OT_fnc_nearestTown;
 private _abandoned = server getVariable ["NATOabandoned",[]];
-_destinationName = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
+private _outofspawndistance = [];
+{
+    if !((server getVariable _x) call OT_fnc_inSpawnDistance) then {
+        if !(_x in _abandoned or _x == _currentTown) then {
+            _outofspawndistance pushback _x;
+        };
+    };
+}foreach(OT_allTowns);
+_destinationName = selectRandom _outofspawndistance;
 private _posTown = server getVariable [_destinationName,[]];
 
 _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;

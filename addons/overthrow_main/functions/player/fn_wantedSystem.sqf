@@ -61,12 +61,9 @@ if(isPlayer _unit) then {
 					private _havepi = false;
 					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
 					{
-						if(_unit != _x and (_havepi or ((side _x == resistance or (_x call OT_fnc_hasOwner))) and !(isPlayer _x))) then {
-							if(_havepi or ((items _x) find "ACE_epinephrine" > -1)) then {
-								_medic = _x;
-							};
+						if(((side _x == resistance) or captive _x) and _unit != _x and _havepi and !(isPlayer _x) and (items _x) find "ACE_epinephrine" > -1) exitWith {
+							_medic = _x;
 						};
-						if(!isNull _medic) exitWith{};
 					}foreach(player nearentities["CAManBase",50]);
 					if(!isNull _medic) then {
 						_medic globalchat "On my way to help you";

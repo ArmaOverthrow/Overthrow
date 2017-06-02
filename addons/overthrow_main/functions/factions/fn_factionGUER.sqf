@@ -51,10 +51,6 @@ while {true} do {
 	}foreach(spawner getVariable ["_noid_",[]]);
 
 	if ((date select 3) != _lasthr) then {
-		if(isDedicated) then {
-			[true] spawn OT_fnc_saveGame;
-		};
-
 		//Do production/wages
 		_lasthr = date select 3;
 		private _wages = 0;

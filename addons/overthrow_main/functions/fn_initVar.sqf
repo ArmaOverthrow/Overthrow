@@ -258,7 +258,10 @@ cost setVariable ["OT_Wood",[10,0,0,0],true];
 cost setVariable ["OT_Steel",[30,0,0,0],true];
 cost setVariable ["OT_Plastic",[20,0,0,0],true];
 cost setVariable ["OT_Sugarcane",[15,0,0,0],true];
+cost setVariable ["OT_Grapes",[15,0,0,0],true];
 cost setVariable ["OT_Sugar",[25,0,0,0],true];
+cost setVariable ["OT_Wine",[25,0,0,0],true];
+cost setVariable ["OT_Olives",[10,0,0,0],true];
 cost setVariable ["OT_Fertilizer",[30,0,0,0],true];
 
 if(OT_hasTFAR) then {

@@ -1,6 +1,12 @@
 if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
+private _hasdrugs = false;
 
+{
+	if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
+}foreach(items player);
+
+if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor};
 
 if((vehicle player) != player) then {
 	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call OT_fnc_notifyMinor};
@@ -8,6 +14,8 @@ if((vehicle player) != player) then {
 };
 
 if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
+
+if !((vehicle player) call OT_fnc_vehicleCanMove)  exitWith {"This vehicle is unable to move" call OT_fnc_notifyMinor};
 
 "Click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 openMap true;
@@ -56,7 +64,6 @@ openMap true;
 	if(OT_adminMode) then {_handled = true};
 
 	if !(_handled) then {
-
 		"You must click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 		openMap false;
 	}else{
