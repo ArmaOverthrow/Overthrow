@@ -311,6 +311,7 @@ while {sleep 10;true} do {
 						if(count _targets > 0) then {
 							_targets = [_targets,[],{random 100},"ASCEND"] call BIS_fnc_sortBy;
 							_group = createGroup blufor;
+							_group deleteGroupWhenEmpty true;
 							_p = [_pos,0,0,false,[0,0],[100,OT_NATO_Vehicles_ReconDrone]] call SHK_pos;
 							_drone = createVehicle [OT_NATO_Vehicles_ReconDrone, _p, [], 0,""];
 
@@ -525,6 +526,7 @@ while {sleep 10;true} do {
 					_spend = _spend - 150;
 					_resources = _resources - 150;
 					_group = creategroup blufor;
+					_group deleteGroupWhenEmpty true;
 					_count = 0;
 					while {_count < 4} do {
 						_start = [[[_pos,50]]] call BIS_fnc_randomPos;

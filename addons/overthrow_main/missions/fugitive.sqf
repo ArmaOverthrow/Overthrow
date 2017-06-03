@@ -39,6 +39,7 @@ _difficulty = 1.8;
 
     //Spawn the dude
     _group = creategroup opfor;
+    _group deleteGroupWhenEmpty true;
     _start = [[[_destination,40]]] call BIS_fnc_randomPos;
     _civ = _group createUnit [OT_civType_gunDealer, _start, [],0, "NONE"];
     _civ setVariable ["notalk",true,true]; //Tells Overthrow this guy cannot be recruited etc
@@ -62,6 +63,7 @@ _difficulty = 1.8;
     _numGoons = round(random 4);
     _count = 0;
     _bgroup = creategroup opfor;
+    _bgroup deleteGroupWhenEmpty true;
     while {(_count < _numGoons)} do {
 		_start = [[[_destination,5]]] call BIS_fnc_randomPos;
 

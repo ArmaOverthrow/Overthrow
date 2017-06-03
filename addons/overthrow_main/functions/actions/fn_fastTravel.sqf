@@ -8,10 +8,17 @@ private _hasdrugs = false;
 
 if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor};
 
+_exit = false;
 if((vehicle player) != player) then {
-	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call OT_fnc_notifyMinor};
-	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call OT_fnc_notifyMinor};
+	{
+		if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
+	}foreach(itemCargo vehicle player);
+
+	if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor;_exit=true};
+	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call OT_fnc_notifyMinor;_exit=true};
+	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call OT_fnc_notifyMinor;_exit=true};
 };
+if(_exit) exitWith {};
 
 if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
 

@@ -37,7 +37,7 @@ VCOM_RainPercent = 3;
 //Should AI and players have an additional layer of suppression that decreases aiming when suppressed? Default = true;
 VCOM_Suppression = true;
 //How much should suppression impact both AI and player aiming? Default is 5. Normal ArmA is 1.
-VCOM_SuppressionVar = 5;
+VCOM_SuppressionVar = 2;
 //Should AI/players be impacted by adrenaline? This provides players and AI with a small speed boost to animations to assist with cover seeking and positioning for a short time. Default = true;
 VCOM_Adrenaline = true;
 //How much of a speed boost should players/AI recieve? Default = 1.35; (1 is ArmA's normal speed).

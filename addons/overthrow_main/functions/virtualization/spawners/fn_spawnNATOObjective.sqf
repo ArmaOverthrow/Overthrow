@@ -15,6 +15,7 @@ if(isNil "_numNATO") then {
 _count = 0;
 if(_name in OT_allComms) then {
 	_group = createGroup blufor;
+	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
 
 	_start = [[[_posTown,50]]] call BIS_fnc_randomPos;
@@ -79,6 +80,7 @@ if(_name in OT_allComms) then {
 //Garrison any buildings
 if(_numNATO > 0) then {
 	_garrisongroup = creategroup blufor;
+	_garrisongroup deleteGroupWhenEmpty true;
 	_groups pushback _garrisongroup;
 	private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 250];
 	{
@@ -149,6 +151,7 @@ _groupcount = 0;
 while {_count < _numNATO} do {
 	_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
 	_group = createGroup blufor;
+	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
 	_groupcount = 1;
 

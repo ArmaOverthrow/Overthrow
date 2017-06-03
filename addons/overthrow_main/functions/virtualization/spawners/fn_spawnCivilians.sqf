@@ -58,6 +58,7 @@ private _numidents = count _idents;
 while {_count < _numCiv} do {
 	_groupcount = 0;
 	_group = createGroup civilian;
+	_group deleteGroupWhenEmpty true;
 	_group setBehaviour "SAFE";
 	_groups pushback _group;
 
@@ -98,7 +99,9 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 	_gangid = _x;
 	_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
 	_members = _gang select 0;
+
 	if !(isNil "_members") then {
+		_vest = "";
 		if(count _gang > 3) then {
 			_vest = _gang select 3;
 		}else{

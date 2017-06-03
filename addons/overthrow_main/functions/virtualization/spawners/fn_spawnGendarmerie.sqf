@@ -22,6 +22,7 @@ _pergroup = 4;
 while {_count < _numNATO} do {
 	_groupcount = 0;
 	_group = createGroup west;
+	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
 
 	_home = _town call OT_fnc_getRandomRoadPosition;
