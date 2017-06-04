@@ -13,6 +13,9 @@ private _doSalvage = {
     if((_cost select 2) > 40) then {
         _steel = 6;
     };
+    if((_cost select 2) > 80) then {
+        _steel = 8;
+    };
     if((_cost select 3) > 0 and (random 100) > 90) then {
         _plastic = 1;
     };
@@ -22,7 +25,7 @@ private _doSalvage = {
     if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd "OT_Steel")) exitWith {
         "Vehicle is full, use a truck or ammobox for more storage" call OT_fnc_notifyMinor;
     };
-
+    closeDialog 0;
 	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	format["Salvaging wreck into %1",_toname] call OT_fnc_notifyMinor;
     player playMove "AinvPknlMstpSnonWnonDnon_medic_1";

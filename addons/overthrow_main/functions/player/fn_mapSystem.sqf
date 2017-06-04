@@ -216,16 +216,6 @@ _handler = {
 		}foreach(OT_allFactions);
 
 		{
-			(_this select 0) drawIcon [
-				"ot\ui\markers\shop.paa",
-				[1,1,1,1],
-				_x select 0,
-				0.4/ctrlMapScale (_this select 0),
-				0.4/ctrlMapScale (_this select 0),
-				0
-			];
-		}foreach(OT_allActiveShops);
-		{
 			_pos = server getVariable [format["gundealer%1",_x],[]];
 			if(count _pos > 0) then {
 				(_this select 0) drawIcon [
@@ -236,7 +226,28 @@ _handler = {
 					0.5/ctrlMapScale (_this select 0),
 					0
 				];
-			}
+			};
+			{
+				_icon = format["ot\ui\markers\shop-%1.paa",_x select 1];
+				(_this select 0) drawIcon [
+					_icon,
+					[1,1,1,1],
+					_x select 0,
+					0.4/ctrlMapScale (_this select 0),
+					0.4/ctrlMapScale (_this select 0),
+					0
+				];
+			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
+			{
+				(_this select 0) drawIcon [
+					"ot\ui\markers\shop-Hardware.paa",
+					[1,1,1,1],
+					_x select 0,
+					0.4/ctrlMapScale (_this select 0),
+					0.4/ctrlMapScale (_this select 0),
+					0
+				];
+			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 		}foreach(OT_allTowns);
 		{
 			if ((typeof _x != "B_UAV_AI") and !(_x getVariable ["looted",false])) then {

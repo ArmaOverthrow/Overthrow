@@ -2,7 +2,7 @@ if (!isServer) exitwith {};
 
 //automatically determining the population of each town/city on the map
 //For each city and/or town
-
+OT_allShops = [];
 {
     private _name = _x;// Get name
 
@@ -77,6 +77,9 @@ server setVariable ["spawntown",OT_spawnTowns call BIS_fnc_selectrandom,true];
     private _towns = [_x] call OT_fnc_townsInRegion;
     server setVariable [format ["towns_%1",_x],_towns,true];
 }foreach(OT_regions);
+
+server setVariable ["EconomyVersion",OT_economyVersion,true];
+OT_allShops = nil; //Clean this up we dont need it anymore
 
 OT_economyInitDone = true;
 publicVariable "OT_economyInitDone";

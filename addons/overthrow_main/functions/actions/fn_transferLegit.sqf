@@ -44,7 +44,7 @@ _doTransfer = {
 				_cls = _d select 0;
 				_num = _d select 1;
 				if(_num > 0) then {
-					if(_cls in (OT_allItems - OT_consumableItems)) then {
+					if(_cls in OT_allItems) then {
 						while {_count < _num} do {
 							if !(_veh canAdd _cls) exitWith {_full = true;warehouse setVariable [_cls,_num - _count,true]};
 							_veh addItemCargoGlobal [_cls,1];
@@ -62,7 +62,7 @@ _doTransfer = {
 		{
 			_count = 0;
 			_cls = _x select 0;
-			if(_cls in (OT_allItems - OT_consumableItems)) then {
+			if(_cls in OT_allItems) then {
 				while {_count < (_x select 1)} do {
 					if !(_veh canAdd _cls) exitWith {_full = true};
 					_veh addItemCargoGlobal [_cls,1];

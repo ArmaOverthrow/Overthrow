@@ -16,7 +16,6 @@ if (side _civ == west) exitWith {
 private _canRecruit = true;
 
 private _canBuy = false;
-private _canBuyClothes = false;
 private _canBuyVehicles = false;
 private _canBuyBoats = false;
 private _canBuyGuns = false;
@@ -26,7 +25,7 @@ private _canIntel = true;
 private _canMission = false;
 private _canLocMission = false;
 
-if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true;_canBuyClothes=true};
+if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true};
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
 if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canLocMission=true};
@@ -124,30 +123,25 @@ if (_canBuy) then {
 			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = [_town] call OT_fnc_standing;
 
-			_bp = _civ getVariable "shop";
-			_s = [];
-			{
-				_pos = _x select 0;
-				if(format["%1",_pos] == _bp) exitWith {
-					_s = _x select 1;
-				};
-			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+			_cat = _civ getVariable "OT_shopCategory";
+			player setVariable ["OT_shopTarget","Self",false];
 
-			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
-			[_town,_standing,_s] call OT_fnc_buyDialog;
-		}
-	];
-};
 
-if (_canBuyClothes) then {
-	_options pushBack [
-		"Buy Clothing",{
-			private _civ = OT_interactingWith;
-			private _town = (getpos player) call OT_fnc_nearestTown;
-			player setVariable ["shopping",_civ,false];
-			createDialog "OT_dialog_buy";
-			[_town,[_town] call OT_fnc_standing] call OT_fnc_buyClothesDialog;
+			if(_cat == "Clothing") then {
+				[_town,_standing] call OT_fnc_buyClothesDialog;
+			}else{
+				_s = [];
+
+				{
+					if((_x select 0) == _cat) exitWith {
+						{
+							_s pushback [_x,-1];
+						}foreach(_x select 1);
+					};
+				}foreach(OT_items);
+				[_town,_standing,_s] call OT_fnc_buyDialog;
+			};
 		}
 	];
 };
@@ -285,19 +279,14 @@ if (_canSell) then {
 			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = [_town] call OT_fnc_standing;
 
-			_bp = _civ getVariable "shop";
-			_s = [];
-			{
-				_pos = _x select 0;
-				if(format["%1",_pos] == _bp) exitWith {
-					_s = _x select 1;
-				};
-			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+			_cat = _civ getVariable "OT_shopCategory";
+			_categorystock = [player,_cat] call OT_fnc_unitStock;
 
-			_playerstock = player call OT_fnc_unitStock;
-			player setVariable ["shopping",_civ,false];
+			player setVariable ["OT_shopTarget","Self",false];
+			player setVariable ["OT_shopTargetCategory",_cat,false];
+
 			createDialog "OT_dialog_sell";
-			[_playerstock,_town,_standing,_s] call OT_fnc_sellDialog;
+			[_categorystock,_town,_standing] call OT_fnc_sellDialog;
 		}
 	];
 };

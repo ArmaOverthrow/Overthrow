@@ -163,10 +163,16 @@ call {
 		playSound "3DEN_notificationDefault";
 	};
 	_handled = true;
-	if(_cls isKindOf "Bag_Base") then {
-		if(backpack player != "") exitWith {"You already have a backpack" call OT_fnc_notifyMinor;_handled = false};
+	_b = player getVariable ["OT_shopTarget","Self"];
+	if(_b != "Vehicle") then {
+		if(_cls isKindOf "Bag_Base") then {
+			if(backpack player != "") exitWith {"You already have a backpack" call OT_fnc_notifyMinor;_handled = false};
+		}else{
+			if !(player canAdd [_cls,1]) exitWith {"There is not enough room in your inventory" call OT_fnc_notifyMinor;_handled = false};
+		};
 	}else{
-		if !(player canAdd [_cls,1]) exitWith {"There is not enough room in your inventory" call OT_fnc_notifyMinor;_handled = false};
+		_veh = vehicle player;
+		if ((!(_veh isKindOf "Truck_F")) and (!(_veh canAdd [_cls,1]))) exitWith {"This vehicle is full, use a truck for more storage" call OT_fnc_notifyMinor;_handled = false};
 	};
 
 	if(_handled) then {
@@ -187,54 +193,21 @@ call {
 			[-_price] call OT_fnc_money;
 			player addItem _cls;
 		};
+		player setVariable ["money",_money-_price,true];
 
-		_b = player getVariable ["shopping",objNull];
-		_bp = _b getVariable "shop";
-		if(isNil "_bp") exitWith {};
 
-		_s = [];
-		_active = server getVariable [format["activeshopsin%1",_town],[]];
-		{
-			_pos = _x select 0;
-			if(format["%1",_pos] == _bp) exitWith {
-				_s = _x select 1;
+		if(_b == "Vehicle") then {
+			if(_cls isKindOf "Bag_Base") then {
+				(vehicle player) addBackpackCargoGlobal [_cls,1];
+			}else{
+				(vehicle player) addItemCargoGlobal [_cls,1];
 			};
-		}foreach(_active);
-
-		_done = false;
-		_soldout = false;
-		_stockidx = 0;
-		{
-			if(((_x select 0) == _cls) && ((_x select 1) > 0)) exitWith {
-				_num = (_x select 1)-1;
-				if(_num == 0) then {
-					_soldout = true;
-				};
-				_x set [1,_num];
-				_done = true;
-			};
-			_stockidx = _stockidx + 1;
-		}foreach(_s);
-
-		if(_done) then {
-			if(_soldout) then {
-				_s deleteAt _stockidx;
-			};
-			player setVariable ["money",_money-_price,true];
-			server setVariable [format["activeshopsin%1",_town],_active,true];
+		}else{
 			if(_cls isKindOf "Bag_Base") then {
 				player addBackpack _cls;
 			}else{
 				player addItem _cls;
 			};
-			_s = [];
-			{
-				_pos = _x select 0;
-				if(format["%1",_pos] == _bp) exitWith {
-					_s = _x select 1;
-				};
-			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
-			[_town,_standing,_s] call OT_fnc_buyDialog;
 		};
 	};
 };
