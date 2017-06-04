@@ -132,7 +132,6 @@ if (_canBuy) then {
 				[_town,_standing] call OT_fnc_buyClothesDialog;
 			}else{
 				_s = [];
-
 				{
 					if((_x select 0) == _cat) exitWith {
 						{
@@ -140,6 +139,13 @@ if (_canBuy) then {
 						}foreach(_x select 1);
 					};
 				}foreach(OT_items);
+
+				if(_cat == "Surplus") then {
+					{
+						_s pushback [_x,-1];
+					}foreach(OT_allBackpacks);
+				};
+
 				[_town,_standing,_s] call OT_fnc_buyDialog;
 			};
 		}

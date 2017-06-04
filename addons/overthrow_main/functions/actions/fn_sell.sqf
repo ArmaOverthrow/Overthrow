@@ -39,5 +39,5 @@ if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
 
 lbClear 1500;
 _cat = player getVariable ["OT_shopTargetCategory",""];
-[[_target,_cat] call OT_fnc_unitStock,_town,_standing,_s] call OT_fnc_sellDialog;
+[[_target,_cat] call OT_fnc_unitStock,_town,_standing] call OT_fnc_sellDialog;
 OT_selling = false;

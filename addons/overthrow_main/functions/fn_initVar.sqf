@@ -422,6 +422,7 @@ OT_allGoggles = [];
 	_title = getText (_x >> "displayname");
 	_m = getNumber(_x >> "mass");
 	call {
+		if(_name == "None") exitWith {};
 		if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
 			OT_allGoggles pushback _name;
 		};
@@ -430,7 +431,7 @@ OT_allGoggles = [];
 		};
 		OT_allGlasses pushback _name;
 	};
-	if(isServer) then {
+	if(isServer and _name != "None") then {
 		cost setVariable [_name,[_m*3,0,0,ceil(_m*0.5)],true];
 	};
 }foreach(_allGlasses);
