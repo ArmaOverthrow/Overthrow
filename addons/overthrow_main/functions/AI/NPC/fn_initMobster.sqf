@@ -12,7 +12,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
+		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenCRIM)) then {
 			_src setCaptive false;				
 		};		
 	};	
@@ -66,9 +66,9 @@ call {
 		_launcher = OT_CRIM_Launchers select 0;
 		_base = [_launcher] call BIS_fnc_baseWeapon;
 		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
-		_unit addMagazine _magazine;
-		_unit addMagazine _magazine;
-		_unit addMagazine _magazine;	
+		_unit addMagazineGlobal _magazine;
+		_unit addMagazineGlobal _magazine;
+		_unit addMagazineGlobal _magazine;	
 		_unit addWeapon _launcher;
 	};
 	if((random 100) > 85) exitWith {
@@ -108,11 +108,11 @@ call {
 
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
 
 if((random 100) > 80) then {
 	_unit addItem "SmokeShell";

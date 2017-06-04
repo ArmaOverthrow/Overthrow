@@ -1,7 +1,7 @@
 closeDialog 0;
 private _idx = lbCurSel 1500;
 inputData = lbData [1500,_idx];
-inputHandler = {
+OT_inputHandler = {
 	_val = parseNumber(ctrltext 1400);
 	_cash = server getVariable ["money",0];
 	if(_val > _cash) then {_val = _cash};
@@ -13,7 +13,7 @@ inputHandler = {
 		    if(getplayeruid _x == _uid) exitWith {_player = _x};
 		}foreach(allplayers);
 		if !(isNull _player) then {
-			[_val] remoteExec ["money",_player,false];
+			[_val] remoteExec ["OT_fnc_money",_player,false];
 		}else{
 			private _money = [_uid,"money"] call OT_fnc_getOfflinePlayerAttribute;
 			[_uid,"money",_money+_val] call OT_fnc_setOfflinePlayerAttribute;
@@ -22,4 +22,4 @@ inputHandler = {
 	};
 };
 
-["How much to send to this player?",1000] spawn inputDialog;
+["How much to send to this player?",1000] spawn OT_fnc_inputDialog;

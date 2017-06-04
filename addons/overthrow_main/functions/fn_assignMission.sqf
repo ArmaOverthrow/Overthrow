@@ -51,7 +51,7 @@ if(typename _condition == "STRING") then {
 private _start = time;
 
 _name = format["%1%2%3",_pos,_text,time];//unique task id
-[_target,_name,[_desc,_text,_name],_pos,0,1,true,"move",true] call BIS_fnc_taskCreate;
+[_target,_name,[_desc,_text,_name],_pos,0,1,true,"move"] call BIS_fnc_taskCreate;
 
 _missions = _target getVariable ["mytasks",[]];
 _missions pushback _name;
@@ -63,11 +63,11 @@ if(((time - _start) > 7200) or (_params call _fail) or !(_name in (_target getva
 	[_name, "FAILED",true] spawn BIS_fnc_taskSetState;
 }else{
 	if(_reward > 0) then {
-		[_reward] remoteExec ["money",_target];
+		[_reward] remoteExec ["OT_fnc_money",_target];
 	};
 
 	if(_infreward > 0) then {
-		_infreward remoteExec ["influence",_target,false];
+		_infreward remoteExec ["OT_fnc_influence",_target,false];
 	};
 	_success = true;
 	[_name, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;

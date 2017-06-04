@@ -1,8 +1,8 @@
 _town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
-if(_standing < 10 and count (player nearObjects [OT_refugeeCamp,20]) == 0) exitWith {
-	"+10 Standing required to recruit. Try building a refugee camp at an FOB." call OT_fnc_notifyMinor
+if(_standing < 10 and count (player nearObjects [OT_refugeeCamp,50]) == 0) exitWith {
+	"+10 Standing required to recruit, or you must be within 50m of a refugee camp" call OT_fnc_notifyMinor
 };
 
 if(({side _x == west or side _x == east} count (player nearEntities 50)) > 0) exitWith {"You cannot recruit with enemies nearby" call OT_fnc_notifyMinor};
@@ -15,13 +15,13 @@ playSound "3DEN_notificationDefault";
 player setVariable ["money",_money-_price,true];
 
 if(random 100 > 80) then {
-	[_town,1] call standing;
+	[_town,1] call OT_fnc_standing;
 };
 
 _civ = player getvariable "hiringciv";
 [_civ,getPlayerUID player] call OT_fnc_setOwner;
 _civ removeAllEventHandlers "FiredNear";
-[_civ] joinSilent grpNull;
+[_civ] joinSilent nil;
 [_civ] joinSilent (group player);
 _civ setCaptive true;
 [_civ] spawn OT_fnc_initRecruit;

@@ -5,6 +5,8 @@ class CfgFunctions
 		class Base
 		{
 			file = "\ot\functions";
+			class initVar {};
+			class initOverthrow {};
 			class assignMission {};
 			class canPlace {};
 			class cleanup {};
@@ -12,17 +14,85 @@ class CfgFunctions
 			class spawnTemplate {};
 			class spawnTemplateAttached {};
 			class unitStock {};
-			class saveGame {};
-			class loadGame {};
 			class setOwner {};
 			class getOwner {};
+			class vehicleCanMove {};
+			class cleanDead {};
+		};
+
+		class Factions
+		{
+			file = "\ot\functions\factions";
+			class factionNATO {};
+			class factionGUER {};
+			class factionCIV {};
+			class factionCRIM {};
+			class unitSeen {};
+			class unitSeenNATO {};
+			class unitSeenCRIM {};
+			class unitSeenAny {};
+			class unitSeenPlayer {};
+			class revealToNATO {};
+			class revealToCRIM {};
+		};
+
+		/* Persistent Save */
+		class Save
+		{
+			file = "\ot\functions\save";
+			class saveGame {};
+			class loadGame {};
+			class setOfflinePlayerAttribute {};
+			class getOfflinePlayerAttribute {};
+			class loadPlayerData {};
+		};
+
+		class Player
+		{
+			file = "\ot\functions\player";
+			class initPlayerLocal {};
+			class mapSystem {};
+			class perkSystem {};
+			class setupPlayer {};
+			class statsSystem {};
+			class wantedSystem {};
+			class playerIsOwner {};
+			class playerIsGeneral {};
+			class playerIsAtWarehouse {};
+			class tutorial {};
+			class influence {};
+			class influenceSilent {};
+			class rewardMoney {};
+			class money {};
+			class getPlayerHome {};
+			class generalIsOnline {};
+			class doConversation {};
+		};
+
+		class Interaction
+		{
+			file = "\ot\functions\interaction";
+			class mountAttached {};
+			class initAttached {};
+			class updateAttached {};
+			class initObjectLocal {};
+			class initStaticMGLocal {};
 		};
 
 		class Events
 		{
 			file = "\ot\functions\events";
-			class preInit {preInit = 1};
-			class postInit {postInit = 1};
+			class preInit {preInit = 1;};
+			class postInit {postInit = 1;};
+			class deathHandler {};
+			class buildingDamagedHandler {};
+			class cargoLoadedHandler {};
+			class explosivesPlacedHandler {};
+			class playerConnectHandler {};
+			class playerDisconnectHandler {};
+			class refuelHandler {};
+			class respawnHandler {};
+			class keyHandler {};
 		};
 
 		class UI
@@ -32,6 +102,49 @@ class CfgFunctions
 			class notifyBig {};
 			class notifyGood {};
 			class notifyVehicle {};
+			class playerDecision {};
+			class notifyStart {};
+			class progressBar {};
+			class getAssignedKey {};
+		};
+
+		class Dialogs
+		{
+			file = "\ot\functions\UI\dialogs";
+
+			class mainMenu {};
+			class buyDialog {};
+			class sellDialog {};
+			class workshopDialog {};
+			class policeDialog {};
+			class warehouseDialog {};
+			class inputDialog {};
+			class importDialog {};
+			class recruitDialog {};
+			class buyClothesDialog {};
+			class buyVehicleDialog {};
+			class gunDealerDialog {};
+			class factoryDialog {};
+			class garrisonDialog {};
+			class newGameDialog {};
+			class optionsDialog {};
+			class resistanceDialog {};
+			class reverseEngineerDialog {};
+			class vehicleDialog {};
+			class mapInfoDialog {};
+			class characterSheetDialog {};
+			class manageRecruitsDialog {};
+			class loadoutDialog {};
+		};
+
+		class Display
+		{
+			file = "\ot\functions\UI\display";
+			class displayShopPic {};
+			class displayWarehousePic {};
+			class showMemberInfo {};
+			class showBusinessInfo {};
+			class refreshEmployees {};
 		};
 
 		/*
@@ -41,12 +154,22 @@ class CfgFunctions
 		{
 			file = "\ot\functions\actions";
 
+			class newGame {};
+
 			/* Main Menu */
 			class salvageWreck {};
 			class buyBuilding {};
 			class fastTravel {};
 			class talkToCiv {};
 			class recruitCiv {};
+			class leaseBuilding {};
+			class place {};
+			class setHome {};
+			class build {};
+
+			/* Options */
+			class increaseTax {};
+			class decreaseTax {};
 
 			/* Vehicle */
 			class transferTo {};
@@ -54,6 +177,10 @@ class CfgFunctions
 			class transferLegit {};
 			class takeLegit {};
 			class warehouseTake {};
+
+			/* Port */
+			class exportAll {};
+			class import {};
 
 			/* Workshop */
 			class workshopAdd {};
@@ -72,13 +199,33 @@ class CfgFunctions
 			class factorySet {};
 
 			/* Resistance Screen */
-			class showMemberInfo {};
-			class showBusinessInfo {};
 			class makeGeneral {};
 			class giveFunds {};
 			class takeFunds {};
 			class transferFunds {};
-		}
+			class hireEmployee {};
+			class fireEmployee {};
+
+			/* Safe */
+			class safePutMoney {};
+			class safeTakeMoney {};
+			class safeSetPassword {};
+
+			/* Ammobox */
+			class removeLoadout {};
+			class restoreLoadout {};
+			class saveLoadout {};
+			class dumpStuff {};
+			class takeStuff {};
+
+			/* Other */
+			class recruitSoldier {};
+			class recruitSquad {};
+			class addGarrison {};
+			class addPolice {};
+			class lockVehicle {};
+			class reverseEngineer {};
+		};
 
 		/*
 		* Locations, positions etc.
@@ -95,9 +242,14 @@ class CfgFunctions
 			class nearestObjective {};
 			class nearestPositionRegion {};
 			class nearestTown {};
+			class getRegion {};
 			class townsInRegion {};
+			class regionIsConnected {};
 			class getAO {};
-		}
+			class getBuildId {};
+			class weatherSystem {};
+			class getRandomRoadPosition {};
+		};
 
 		/*
 		* The spawner
@@ -114,6 +266,25 @@ class CfgFunctions
 			class registerSpawner {};
 			class deregisterSpawner {};
 			class updateSpawnerPosition {};
+			class resetSpawn {};
+		};
+
+		class Spawners
+		{
+			file = "\ot\functions\virtualization\spawners";
+
+			class spawnAmbientVehicles {};
+			class spawnBoatDealers {};
+			class spawnBusinessEmployees {};
+			class spawnCarDealers {};
+			class spawnCivilians {};
+			class spawnFactionRep {};
+			class spawnGendarmerie {};
+			class spawnGunDealer {};
+			class spawnNATOCheckpoint {};
+			class spawnNATOObjective {};
+			class spawnPolice {};
+			class spawnShops {};
 		};
 
 		/*
@@ -122,13 +293,44 @@ class CfgFunctions
 		class Economy
 		{
 			file = "\ot\functions\economy";
+			class initEconomy {};
+			class initEconomyLoad {};
 			class setupTownEconomy {};
+			class standing {};
 			class getPrice {};
 			class getSellPrice {};
 			class getDrugPrice {};
 			class nearestRealEstate {};
 			class getRealEstateData {};
-		}
+			class getBusinessData {};
+			class getBusinessPrice {};
+			class getTaxIncome {};
+			class resistanceFunds {};
+			class incomeSystem {};
+			class propagandaSystem {};
+			class stability {};
+		};
+
+		/*
+		* Inventory transfer and manegement
+		*/
+		class Inventory
+		{
+			file = "\ot\functions\inventory";
+			class takeFromCargoContainers {};
+			class hasFromCargoContainers {};
+			class weaponGetName {};
+			class magazineGetName {};
+			class vehicleGetName {};
+			class glassesGetName {};
+			class weaponGetPic {};
+			class magazineGetPic {};
+			class vehicleGetPic {};
+			class glassesGetPic {};
+			class magazineGetDescription {};
+			class vehicleGetDescription {};
+			class getSearchStock {};
+		};
 
 		/*
 		* The warehouse
@@ -153,6 +355,9 @@ class CfgFunctions
 			class getSoldier {};
 			class parachuteAll {};
 			class NATOsearch {};
+			class createSquad {};
+			class experience {};
+			class initVCOMAI {};
 		};
 
 		/*
@@ -164,6 +369,10 @@ class CfgFunctions
 			class orderLoot {};
 			class orderOpenInventory {};
 			class orderRevivePlayer {};
+			class squadAssignVehicle {};
+			class squadGetIn {};
+			class squadGetOut {};
+			class orderStopAndFace {};
 		};
 
 		/*
@@ -172,6 +381,8 @@ class CfgFunctions
 		class NPC
 		{
 			file = "\ot\functions\AI\NPC";
+			class randomLocalIdentity {};
+			class applyIdentity {};
 			class initCarDealer {};
 			class initCivilian {};
 			class initCivilianGroup {};
@@ -191,7 +402,8 @@ class CfgFunctions
 			class initPriest {};
 			class initShopkeeper {};
 			class initSniper {};
-		}
+			class initRecruit {};
+		};
 
 		/*
 		* Math.. how does it work?
@@ -226,6 +438,31 @@ class CfgFunctions
 
 			class NATOSupportSniper {};
 			class NATOSupportRecon {};
+			class NATOConvoy {};
+			class NATODeployFOB {};
+			class NATOMissionDeployFOB {};
+			class NATOMissionReconDestroy {};
+			class NATOSetExplosives {};
+			class NATOupgradeFOB {};
+			class NATOsendGendarmerie {};
+		};
+
+		class NATOAI
+		{
+			file = "\ot\functions\factions\NATO\AI";
+			class NATODrone {};
+			class NATOMortar {};
+		};
+
+		class Buildings
+		{
+			file = "\ot\functions\buildings";
+			class initBuilding {};
+			class initObservationPost {};
+			class initPoliceStation {};
+			class initWorkshop {};
+			class initTrainingCamp {};
+			class initWarehouse {};
 		};
 
 		/*
@@ -235,6 +472,7 @@ class CfgFunctions
 		{
 			file = "\ot\functions\integration";
 			class initTFAR {};
+			class advancedTowingInit {};
 		};
 	};
 };

@@ -1,7 +1,7 @@
 private _civ = OT_interactingWith;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
-private _standing = player getvariable format["rep%1",_town];
+private _standing = [_town] call OT_fnc_standing;
 private _civprice = [_town,"CIV",_standing] call OT_fnc_getPrice;
 private _influence = player getvariable "influence";
 private _money = player getvariable "money";
@@ -10,7 +10,7 @@ private _options = [];
 
 if (side _civ == west) exitWith {
 	_options pushBack ["Cancel",{}];
-	_options spawn playerDecision;
+	_options spawn OT_fnc_playerDecision;
 };
 
 private _canRecruit = true;
@@ -44,10 +44,6 @@ if (_canRecruit) then {
 	];
 };
 
-if (_canIntel) then {
-	_options pushBack ["Probe for intel (-1 Influence)", getIntel];
-};
-
 if (_canLocMission) then {
 	_options pushBack [format["Request Mission"], {
 		[] call OT_fnc_getLocalMission;
@@ -63,7 +59,7 @@ if (_canLocMission) then {
 if (_canMission) then {
 	_factionName = _civ getvariable ["factionrepname",""];
 	_faction = _civ getvariable ["faction",""];
-	_standing = server getvariable[format["standing%1",_faction],0];
+	private _standing = server getVariable [format["standing%1",_faction],0];
 	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
 	_options pushBack [format["Request Mission"], {
 		private _civ = OT_interactingWith;
@@ -72,7 +68,7 @@ if (_canMission) then {
 	_options pushBack [format["Buy Gear"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
-		_standing = server getvariable[format["standing%1",_faction],0];
+		private _standing = server getVariable [format["standing%1",_faction],0];
 
 		_gear = spawner getvariable[format["facweapons%1",_faction],[]];
 		_s = [];
@@ -80,13 +76,13 @@ if (_canMission) then {
 			_s pushback [_x,-1];
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		["Tanoa",_standing,_s,1.2] call buyDialog;
+		[OT_nation,_standing,_s,1.2] call OT_fnc_buyDialog;
 	}];
 	_options pushBack [format["Buy Blueprints"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
 		_factionName = _civ getvariable ["factionrepname",""];
-		_standing = server getvariable[format["standing%1",_faction],0];
+		private _standing = server getVariable [format["standing%1",_faction],0];
 
 		_gear = spawner getvariable[format["facvehicles%1",_faction],[]];
 		_s = [];
@@ -111,7 +107,7 @@ if (_canMission) then {
 			};
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		["Tanoa",_standing,_s,10] call buyDialog;
+		[OT_nation,_standing,_s,10] call OT_fnc_buyDialog;
 	}];
 	_missions = player getVariable ["mytasks",[]];
 	if(count _missions > 0) then {
@@ -126,7 +122,7 @@ if (_canBuy) then {
 		"Buy",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = player getvariable format["rep%1",_town];
+			private _standing = [_town] call OT_fnc_standing;
 
 			_bp = _civ getVariable "shop";
 			_s = [];
@@ -139,7 +135,7 @@ if (_canBuy) then {
 
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
-			[_town,_standing,_s] call buyDialog;
+			[_town,_standing,_s] call OT_fnc_buyDialog;
 		}
 	];
 };
@@ -149,10 +145,9 @@ if (_canBuyClothes) then {
 		"Buy Clothing",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = player getvariable format["rep%1",_town];
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
-			[_town,_standing] call buyClothesDialog;
+			[_town,[_town] call OT_fnc_standing] call OT_fnc_buyClothesDialog;
 		}
 	];
 };
@@ -165,14 +160,14 @@ if (_canBuyBoats) then {
 				private _civ = OT_interactingWith;
 				_cls = _x select 0;
 				private _town = (getpos player) call OT_fnc_nearestTown;
-				private _standing = player getvariable format["rep%1",_town];
+				private _standing = [_town] call OT_fnc_standing;
 
 				_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
 					_price = round(_price * 0.5);
 				};
-				_idx = lbAdd [1500,format["%1",_cls call ISSE_Cfg_Vehicle_GetName]];
-				lbSetPicture [1500,_idx,_cls call ISSE_Cfg_Vehicle_GetPic];
+				_idx = lbAdd [1500,format["%1",_cls call OT_fnc_vehicleGetName]];
+				lbSetPicture [1500,_idx,_cls call OT_fnc_vehicleGetPic];
 				lbSetData [1500,_idx,_cls];
 				lbSetValue [1500,_idx,_price];
 			}foreach(OT_boats);
@@ -198,7 +193,7 @@ if (_canBuyBoats) then {
 					_money = player getVariable "money";
 					if(_money < _cost) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
-					[-_cost] call money;
+					[-_cost] call OT_fnc_money;
 					_veh = OT_vehType_ferry createVehicle _pos;
 
 					clearWeaponCargoGlobal _veh;
@@ -266,20 +261,20 @@ if (_canBuyBoats) then {
 					_ferryoptions pushback [format["%1 (-$%2)",_t,_cost],_go,_p];
 				};
 			}foreach(OT_ferryDestinations);
-			_ferryoptions spawn playerDecision;
+			_ferryoptions spawn OT_fnc_playerDecision;
 		}
 	];
 };
 
 if (_canBuyVehicles) then {
 	_options pushBack [
-		"Buy Vehicles",buyVehicleDialog
+		"Buy Vehicles",OT_fnc_buyVehicleDialog
 	];
 };
 
 if (_canBuyGuns) then {
 	_options pushBack [
-		"Buy",gunDealerDialog
+		"Buy",OT_fnc_gunDealerDialog
 	];
 };
 
@@ -288,7 +283,7 @@ if (_canSell) then {
 		"Sell",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = player getvariable format["rep%1",_town];
+			private _standing = [_town] call OT_fnc_standing;
 
 			_bp = _civ getVariable "shop";
 			_s = [];
@@ -302,7 +297,7 @@ if (_canSell) then {
 			_playerstock = player call OT_fnc_unitStock;
 			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_sell";
-			[_playerstock,_town,_standing,_s] call sellDialog;
+			[_playerstock,_town,_standing,_s] call OT_fnc_sellDialog;
 		}
 	];
 };
@@ -314,11 +309,11 @@ if (_canSellDrugs) then {
 		_drugcls = _x;
 		if(((items player) find _x) > -1 and !(_civ getVariable["OT_askedDrugs",false])) then {
 
-			_drugname = _x call ISSE_Cfg_Weapons_GetName;
+			_drugname = _x call OT_fnc_weaponGetName;
 			_options pushBack [format ["Sell %1",_drugname],{
 				OT_drugSelling = _this;
 				_drugcls = _this;
-				_drugname = _drugcls call ISSE_Cfg_Weapons_GetName;
+				_drugname = _drugcls call OT_fnc_weaponGetName;
 				if(((items player) find _drugcls) == -1) exitWith {};
 				_num = 0;
 				{
@@ -336,7 +331,7 @@ if (_canSellDrugs) then {
 
 				if(side _civ == civilian) then {
 					_price = round(_price * 1.2);
-					if(player call unitSeenNATO) then {
+					if(player call OT_fnc_unitSeenNATO) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 68) then {
@@ -347,33 +342,33 @@ if (_canSellDrugs) then {
 									round(
 										([(getpos player) call OT_fnc_nearestTown,OT_drugSelling] call OT_fnc_getDrugPrice)*1.2
 									)
-								] call money;
+								] call OT_fnc_money;
 								player removeItem OT_drugSelling;
 								OT_interactingWith addItem OT_drugSelling;
 								OT_interactingWith setVariable ["OT_Talking",false,true];
 								private _town = (getpos player) call OT_fnc_nearestTown;
 								if((random 100 > 50) and !isNil "_town") then {
-									[_town,-1] call stability;
+									[_town,-1] call OT_fnc_stability;
 								};
 								if(random 100 > 80) then {
-									1 call influence;
+									1 call OT_fnc_influence;
 								};
-							}] spawn doConversation;
+							}] spawn OT_fnc_doConversation;
 						}else{
-							[_civ,player,["No, thank you"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn doConversation;
+							[_civ,player,["No, thank you"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 						};
 					};
 				}else{
-					_price = ["Tanoa",_drugcls] call OT_fnc_getDrugPrice;
-					if(player call unitSeenNATO) then {
+					_price = [OT_nation,_drugcls] call OT_fnc_getDrugPrice;
+					if(player call OT_fnc_unitSeenNATO) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
-							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[(["Tanoa",OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn doConversation;
-							[_town,-OT_drugQty] call stability;
+							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call OT_fnc_money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
+							[_town,-OT_drugQty] call OT_fnc_stability;
 						}else{
-							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn doConversation;
-							if(player call unitSeenCRIM) then {
+							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;
+							if(player call OT_fnc_unitSeenCRIM) then {
 								hint "You are dealing on enemy turf";
 								player setCaptive false;
 							};
@@ -389,4 +384,4 @@ _options pushBack ["Cancel",{
 
 }];
 
-_options spawn playerDecision;
+_options spawn OT_fnc_playerDecision;

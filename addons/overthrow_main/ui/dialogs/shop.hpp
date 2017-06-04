@@ -30,7 +30,7 @@ class OT_dialog_buy
 			w = 0.402187 * safezoneW;
 			h = 0.55 * safezoneH;
 			colorBackground[] = {0,0,0,0.9};
-			onLBSelChanged = "_this call displayShopPic";
+			onLBSelChanged = "_this call OT_fnc_displayShopPic";
 		};
 		class RscPicture_1200: RscOverthrowPicture
 		{
@@ -168,7 +168,7 @@ class OT_dialog_workshop
 		class RscListbox_1500: RscOverthrowListBox
 		{
 			idc = 1500;
-			onLBSelChanged = "_this call displayShopPic";
+			onLBSelChanged = "_this call OT_fnc_displayShopPic";
 
 			x = 0.247344 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
@@ -272,7 +272,7 @@ class OT_dialog_warehouse
 		class RscListbox_1500: RscOverthrowListBox
 		{
 			idc = 1500;
-			onLBSelChanged = "_this call displayWarehousePic";
+			onLBSelChanged = "_this call OT_fnc_displayWarehousePic";
 
 			x = 0.247344 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
@@ -381,7 +381,7 @@ class OT_dialog_import
 		class RscListbox_1500: RscOverthrowListBox
 		{
 			idc = 1500;
-			onLBSelChanged = "_this call displayShopPic";
+			onLBSelChanged = "_this call OT_fnc_displayShopPic";
 
 			x = 0.247344 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
@@ -402,7 +402,7 @@ class OT_dialog_import
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[1000] call import;";
+			action = "[1000] call OT_fnc_import;";
 
 			text = "Import 1000"; //--- ToDo: Localize;
 			x = 0.840312 * safezoneW + safezoneX;
@@ -424,7 +424,7 @@ class OT_dialog_import
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[100] call import;";
+			action = "[100] call OT_fnc_import;";
 
 			text = "Import 100"; //--- ToDo: Localize;
 			x = 0.778437 * safezoneW + safezoneX;
@@ -436,7 +436,7 @@ class OT_dialog_import
 		class RscButton_1602: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[10] call import;";
+			action = "[10] call OT_fnc_import;";
 
 			text = "Import 10"; //--- ToDo: Localize;
 			x = 0.716563 * safezoneW + safezoneX;
@@ -465,7 +465,7 @@ class OT_dialog_loadout
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
-			action = "[player,OT_context,lbData [1500,lbCurSel 1500]] call restoreLoadout";
+			action = "[player,OT_context,lbData [1500,lbCurSel 1500]] call OT_fnc_restoreLoadout";
 
 			text = "Restore"; //--- ToDo: Localize;
 			x = 0.12875 * safezoneW + safezoneX;
@@ -477,7 +477,7 @@ class OT_dialog_loadout
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1601;
-			action = "[lbData [1500,lbCurSel 1500]] call removeLoadout";
+			action = "[lbData [1500,lbCurSel 1500]] call OT_fnc_removeLoadout";
 
 			text = "Delete"; //--- ToDo: Localize;
 			x = 0.12875 * safezoneW + safezoneX;

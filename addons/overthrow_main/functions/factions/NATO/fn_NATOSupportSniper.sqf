@@ -26,7 +26,7 @@ if(isNil "_close") then {
 	_close = OT_NATO_HQPos;
 };
 _start = [_close,50,200, 1, 0, 0, 0] call BIS_fnc_findSafePos;
-_group = [_start, WEST, OT_NATO_Group_Recon] call BIS_fnc_spawnGroup;
+_group = [_start, WEST,  (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> OT_NATO_Group_Recon)] call BIS_fnc_spawnGroup;
 
 sleep 0.5;
 
@@ -98,7 +98,7 @@ if(_isHQ) then {
 	{
 		_x addCuratorEditableObjects [units _tgroup,true];
 	} forEach allCurators;
-	_tgroup call distributeAILoad;
+
 }else{
 	_moveto = [_start,50,_dir] call SHK_pos;
 	_wp = _group addWaypoint [_moveto,5];
@@ -118,5 +118,3 @@ sleep 2;
 _wp = _group addWaypoint [_ao,10];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "STEALTH";
-
-_group call distributeAILoad;

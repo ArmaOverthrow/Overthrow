@@ -454,7 +454,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "1 call addPolice;";
+			action = "1 call OT_fnc_addPolice;";
 		};
 		class RscButton_1605: RscOverthrowButton
 		{
@@ -465,7 +465,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "2 call addPolice;";
+			action = "2 call OT_fnc_addPolice;";
 		};
 		class RscButton_1606: RscOverthrowButton
 		{
@@ -476,7 +476,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "4 call addPolice;";
+			action = "4 call OT_fnc_addPolice;";
 		};
 		class RscButton_1607: RscOverthrowButton
 		{
@@ -487,7 +487,7 @@ class OT_dialog_police
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.0721875 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "8 call addPolice;";
+			action = "8 call OT_fnc_addPolice;";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

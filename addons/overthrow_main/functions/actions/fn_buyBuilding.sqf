@@ -5,7 +5,7 @@ private _err = false;
 private _isfactory = false;
 if(typename _b == "ARRAY") then {
 	_building = (_b select 0);
-	if(typeof _building == OT_item_Flag) then {
+	if(typeof _building == OT_flag_IND) then {
 		_err = true;
 		[] call OT_fnc_garrisonDialog;
 	}else{
@@ -45,7 +45,7 @@ if(typename _b == "ARRAY") then {
 						server setVariable ["GEURowned",_owned + [_name],true];
 						server setVariable [format["%1employ",_name],2];
 						_pos remoteExec ["OT_fnc_resetSpawn",2,false];
-						format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,true];
+						format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,false];
 						_name setMarkerColor "ColorGUER";
 					};
 				}else{
@@ -68,7 +68,7 @@ if(typename _b == "ARRAY") then {
 							server setVariable ["GEURowned",_owned + [_name],true];
 							server setVariable [format["%1employ",_name],2];
 							_pos remoteExec ["OT_fnc_resetSpawn",2,false];
-							format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,true];
+							format["%1 is now operational",_name] remoteExec ["OT_fnc_notifyMinor",0,false];
 							_name setMarkerColor "ColorGUER";
 						}else{
 							"The resistance cannot afford this" call OT_fnc_notifyMinor;
@@ -102,7 +102,7 @@ if(_handled) then {
 
 	if(_type == "buy") then {
 		[_building,getPlayerUID player] call OT_fnc_setOwner;
-		[-_price] call money;
+		[-_price] call OT_fnc_money;
 
 		_mrk = createMarkerLocal [_mrkid,getpos _building];
 		_mrk setMarkerShape "ICON";
@@ -114,28 +114,28 @@ if(_handled) then {
 			_mrk setMarkerAlpha 0;
 			_mrk setMarkerAlphaLocal 1;
 		};
-		_id = [_building] call fnc_getBuildID;
+		_id = [_building] call OT_fnc_getBuildID;
 		buildingpositions setVariable [str _id,position _building,true];
 		_owned pushback _id;
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {
-			[_town,round(_price / 10000)] call standing;
+			[_town,round(_price / 10000)] call OT_fnc_standing;
 		};
-		_bdg addEventHandler ["Dammaged",compileFinal preprocessFileLineNumbers "events\buildingDamaged.sqf"];
+		_building addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
 			[_building,nil] call OT_fnc_setOwner;
-			_id = [_building] call fnc_getBuildID;
+			_id = [_building] call OT_fnc_getBuildID;
 			_leased = player getVariable ["leased",[]];
 			_leased deleteAt (_leased find _id);
 			player setVariable ["leased",_leased,true];
 			deleteMarker _mrkid;
 			_owned deleteAt (_owned find _id);
 			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_sell]] call BIS_fnc_createLogRecord;
-			[_sell] call money;
+			[_sell] call OT_fnc_money;
 		}else{
 			deleteVehicle _building;
-			_owned deleteAt (_owned find ([_building] call fnc_getBuildID));
+			_owned deleteAt (_owned find ([_building] call OT_fnc_getBuildID));
 		};
 	};
 

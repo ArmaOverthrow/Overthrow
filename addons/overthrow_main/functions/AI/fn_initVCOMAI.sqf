@@ -1,5 +1,3 @@
-[] execVM "\ot\functions\AI\VCOMAI\init.sqf";
-
 VCOMAI_Func =
 {
 //Variable for enabling/disabling skill changes for AI. True is on, False is off.
@@ -31,7 +29,7 @@ VCOM_MineLayChance = 40;
 //AI will automatically disembark from vehicles when in combat.
 VCOM_AIDisembark = true;
 //How low should an AI's mag count be for them to consider finding more ammo? This DOES NOT include the mag loaded in the gun already.
-VCOM_AIMagLimit = 2;
+VCOM_AIMagLimit = 1;
 //Should the rain impact accuracy of AI? DEFAULT = true;
 VCOM_RainImpact = true;
 //How much should rain impact the accuracy of AI? Default = 3. Default formula is -> _WeatherCheck = (rain)/3; "rain" is on a scale from 0 to 1. 1 Being very intense rain.
@@ -39,11 +37,15 @@ VCOM_RainPercent = 3;
 //Should AI and players have an additional layer of suppression that decreases aiming when suppressed? Default = true;
 VCOM_Suppression = true;
 //How much should suppression impact both AI and player aiming? Default is 5. Normal ArmA is 1.
-VCOM_SuppressionVar = 5;
+VCOM_SuppressionVar = 2;
 //Should AI/players be impacted by adrenaline? This provides players and AI with a small speed boost to animations to assist with cover seeking and positioning for a short time. Default = true;
 VCOM_Adrenaline = true;
 //How much of a speed boost should players/AI recieve? Default = 1.35; (1 is ArmA's normal speed).
 VCOM_AdrenalineVar = 1.35;
+//How many AI UNITS can be calculating cover positions at once?
+VCOM_CurrentlyMovingLimit = 6;
+//How many AI UNITS can be suppressing others at once?
+VCOM_CurrentlySuppressingLimit = 12;
 
 
 //The longer an AI's target stays in 1 location, the more accurate and aware of the target the AI becomes.DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
@@ -167,3 +169,5 @@ _Unit setSkill ["endurance",0.5];
 _Unit setSkill ["reloadSpeed",(0.4 + (random 0.3))];
 };
 };
+call VCOMAI_Func;
+[] execVM "\ot\functions\AI\VCOMAI\init.sqf";

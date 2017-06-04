@@ -8,7 +8,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call unitSeenCRIM)) then {
+		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenCRIM)) then {
 			_src setCaptive false;
 		};
 	};
@@ -47,10 +47,10 @@ _unit linkItem "ItemWatch";
 _weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
 _unit addWeapon _weapon;
 
 _config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";

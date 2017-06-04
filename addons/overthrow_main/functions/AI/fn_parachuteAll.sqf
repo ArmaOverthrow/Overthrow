@@ -20,7 +20,7 @@ paraLandSafe =
 	_unit action ["eject",_unit];
 	sleep 1;
 	_inv = name _unit;
-	_id = [_unit] call fnc_getBuildID;
+	_id = [_unit] call OT_fnc_getBuildID;
 	_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
 	spawner setvariable [format["eject_%1",_id],nil,false];
 	_unit allowDamage true;
@@ -38,7 +38,7 @@ OpenPlayerChute =
 
 
 {
-	spawner setvariable [format["eject_%1",[_x] call fnc_getBuildID],getUnitLoadout _x,false];
+	spawner setvariable [format["eject_%1",[_x] call OT_fnc_getBuildID],getUnitLoadout _x,false];
 	removeBackpackGlobal _x;
 	_x disableCollisionWith _vehicle;// Sometimes units take damage when being ejected.
 	_x addBackpackGlobal "B_parachute";

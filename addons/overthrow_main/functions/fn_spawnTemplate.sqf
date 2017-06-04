@@ -3,15 +3,12 @@ private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template
 _building = _this;
 private _type = typeOf(_building);
 if(isNil {templates getVariable _type}) then {
-	_filename = format["templates\houses\%1.sqf",_type];
-
-	_template = call(compileFinal preProcessFileLineNumbers _filename);
+	_tpl = getText(configFile >> "CfgVehicles" >> _type >> "ot_template");
+	if(isNil "_tpl" or _tpl == "") exitWith {};
+	_template = call compile call compile _tpl;
+	if !(typename _template == "ARRAY") exitWith {};
 	{
-		if((_x select 0) in OT_items_Simulate) then {
-			_x set [8,true];
-		}else{
-			_x set [8,false];
-		};
+		_x set [8,true];
 	}forEach(_template);
 
 	templates setVariable [_type,_template,true];
@@ -19,7 +16,7 @@ if(isNil {templates getVariable _type}) then {
 
 _template = templates getVariable typeOf(_building);
 
-if(isNil "_template") exitWith {};
+if(isNil "_template") exitWith {[[]]};
 
 
 _buildingpos = getposatl _building;
@@ -34,6 +31,7 @@ _objects = [];
 
 {
 	_type = _x select 0;
+	if(_type == "Mapboard_tanoa_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
 	_rel = _x select 1;
 	_dir = (_x select 2);
 

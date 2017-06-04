@@ -23,7 +23,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call unitSeenNATO)) then {
+		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenNATO)) then {
 			_src setCaptive false;
 		};
 	};
@@ -49,7 +49,7 @@ _unit addWeapon _wpn;
 _hour = date select 3;
 
 _unit addPrimaryWeaponItem "acc_flashlight";
-_unit addGoggles "G_Bandanna_aviator";
+_unit addGoggles (selectRandom OT_allGlasses);
 _unit addItem "ACE_morphine";
 _unit addItem "ACE_epinephrine";
 
@@ -61,15 +61,15 @@ if(OT_hasACE) then {
 
 _base = [_wpn] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
 
 _weapon = OT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazine _magazine;
-_unit addMagazine _magazine;
+_unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
 _unit addWeapon _weapon;

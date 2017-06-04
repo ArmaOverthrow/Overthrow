@@ -27,9 +27,12 @@ if((_town in OT_allTowns) and _cls in (OT_allWeapons + OT_allMagazines + OT_ille
 	};
 
 	_population = server getVariable [format["population%1",_town],1000];
-	if(_town == "Tanoa") then {_population = 100};
+	if(_town == OT_nation) then {_population = 100};
 	if(_population > 2000) then {_population = 2000};
 	_population = 1-(_population / 2000);
+	if(_cls == "WAGE" and _town != OT_nation) then {
+		_population = (_population / 2000);
+	};
 
 	if(_standing < -100) then {_standing = -100};
 	if(_standing > 100) then {_standing = 100};

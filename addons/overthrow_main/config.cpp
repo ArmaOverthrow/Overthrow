@@ -1,4 +1,5 @@
-#include "script_component.hpp"
+#include "script_mod.hpp"
+#include "headers\config_macros.hpp"
 
 #include "ui\dialogs\defines.hpp"
 #include "ui\dialogs\stats.hpp"
@@ -19,7 +20,6 @@ class CfgPatches
 		url="https://armaoverthrow.com/";
 		requiredAddons[]=
 		{
-			"a3_map_tanoabuka",
 			"cba_ui",
             "cba_xeh",
             "cba_jr",
@@ -96,12 +96,20 @@ class CfgMissions
 		{
 			directory="ot\campaign\missions\Overthrow.Tanoa";
 		};
+		class OverthrowAltisScenario
+		{
+			directory="ot\campaign\missions\Overthrow.Altis";
+		};
 	};
 	class MPMissions
 	{
 		class OverthrowTanoaMP
 		{
 			directory="ot\campaign\missions\Overthrow.Tanoa";
+		};
+		class OverthrowAltisMP
+		{
+			directory="ot\campaign\missions\Overthrow.Altis";
 		};
 	};
 };
@@ -189,3 +197,4 @@ class CfgWorlds
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"
 #include "CfgFunctions.hpp"
+#include "missions\CfgOverthrowMissions.hpp"

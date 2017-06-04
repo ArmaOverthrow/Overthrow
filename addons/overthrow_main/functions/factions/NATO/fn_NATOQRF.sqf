@@ -1,4 +1,5 @@
 params ["_pos","_strength","_success","_fail","_params","_garrison"];
+private _totalStrength = _strength;
 private _numPlayers = count([] call CBA_fnc_players);
 
 if(_numPlayers > 3) then {
@@ -143,126 +144,92 @@ if(_isCoastal and !(OT_NATO_Navy_HQ in _abandoned) and (random 100) > 70) then {
 		_delay = _delay + 20;
 	};
 };
+private _start = round(time);
+server setVariable ["QRFpos",_pos,true];
+server setVariable ["QRFstart",_start,true];
+server setVariable ["QRFprogress",0,true];
 
-sleep 300; //Give NATO some time to get their shit together
+waitUntil {(time - _start) > 300};
 
 private _timeout = time + 800;
 
-waitUntil {
-	sleep 5;
-	private _force = spawner getVariable["NATOattackforce",[]];
-	private _numalive = 0;
-	private _numin = 0;
-	{
-		_numalive = _numalive + ({alive _x} count (units _x));
-		_numin = _numin + ({alive _x and _x distance _pos < 150} count (units _x));
-		{
-			if(vehicle _x != _x) then {
-				if(((vehicle _x) isKindOf "Air") and (position _x select 2) < 4) then {
-					//Downed heli
-					doGetout _x;
-				}
-			};
-		}foreach(units _x);
-	}foreach(_force);
-	(_numalive < 4) or (time > _timeout) or (_numin > 4)
-};
+private _over = false;
+private _progress = 0;
 
-private _force = spawner getVariable["NATOattackforce",[]];
-{
-	_target = leader _x;
-	{
-		if((side _x == resistance or captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
-			_x reveal [_target,3];
-		};
-	}foreach(allunits);
-}foreach(_force);
-
-_timeout = time + 1200;
-_won = false;
-
-private _alive = 0;
-private _enemy = 0;
-private _alivein = 0;
-private _enemyin = 0;
-private _natowin = false;
-
-while {sleep 5;time < _timeout and !_won} do {
+while {sleep 5; !_over} do {
 	_alive = 0;
 	_enemy = 0;
 	_alivein = 0;
 	_enemyin = 0;
 	{
-		_g = (_x getVariable ["garrison",""]);
-		if(typename _g != "STRING") then {_g = "HQ"};
-		if(_x distance _pos < 1000) then {
-			if((side _x == west) and (alive _x) and (_g == "HQ")) then {
+		if(_x distance _pos < 100) then {
+			if((side _x == west) and (alive _x)) then {
 				_alive = _alive + 1;
-				if(_x distance _pos < 300) then {
-					_alivein = _alivein + 1;
-				};
 			};
 			if((side _x == resistance or captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
 				_enemy = _enemy + 1;
-				if(_x distance _pos < 400) then {
-					_enemyin = _enemyin + 1;
-				};
 			};
 		};
 	}foreach(allunits);
-	if(_natowin and (_alivein < _enemy)) then {
-		_natowin = false;
+	if(time > _timeout and _alive == 0 and _enemy == 0) then {_enemy = 1};
+	_progresschange = (_alive - _enemy);
+	if(_progresschange < -20) then {_progresschange = -20};
+	if(_progresschange > 10) then {_progresschange = 10};
+	_progress = _progress + _progresschange;
+	_progressPercent = 0;
+	if(_progress != 0) then {_progressPercent = _progress/_totalStrength};	
+	server setVariable ["QRFprogress",_progressPercent,true];
+	if((abs _progress) >= _totalStrength) then {
+		//Someone has won
+		_over = true;
 	};
+};
 
-	if(_natowin) exitWith {
-		//Nato has won
-		_params call _success;
+if(_progress > 0) then {
+	//Nato has won
+	_params call _success;
 
-		//Recover resources
-		server setVariable ["NATOresources",round(_strength * 0.5),true];
-		{
-			if(side _x == west) then {
-				if(count (units _x) > 0) then {
-					_lead = (units _x) select 0;
-					if((_lead getVariable ["garrison",""]) == "HQ") then {
-						if((vehicle _lead) != _lead) then {
-							[vehicle _lead] spawn OT_fnc_cleanup;
+	//Recover resources
+	server setVariable ["NATOresources",round(_strength * 0.5),true];
+	{
+		if(side _x == west) then {
+			if(count (units _x) > 0) then {
+				_lead = (units _x) select 0;
+				private _g = (_lead getVariable ["garrison",""]);
+				if(typename _g != "STRING") then {_g = "HQ"};
+				if(_g == "HQ") then {
+					if((vehicle _lead) != _lead) then {
+						[vehicle _lead] spawn OT_fnc_cleanup;
+					}else{
+						if((getpos _lead) call OT_fnc_inSpawnDistance) then {
+							{
+								_x setVariable ["garrison",_garrison,true];
+							}foreach(units _x);
 						}else{
-							if((getpos _lead) call OT_fnc_inSpawnDistance) then {
-								{
-									_x setVariable ["garrison",_garrison,true];
-								}foreach(units _x);
-							}else{
-								[_x] call OT_fnc_cleanup;
-							};
+							[_x] call OT_fnc_cleanup;
 						};
 					};
-				}else{
-					deleteGroup _x;
 				};
-			}
-		}foreach(allgroups);
-		{
-			if(side _x == west) then {
-				if(_x getVariable ["garrison",""] == "HQ") then {
-					[_x] spawn OT_fnc_cleanup;
-				};
-			}
-		}foreach(vehicles);
-		_won = true;
-	};
-	if(_alivein > _enemy) then {
-		sleep 30; //Buffer zone
-		_natowin = true;
-	};
-	//diag_log format["Overthrow: Win/Loss BLU %1  RES %2",_alive,_enemy];
-	if(_alive < 4) exitWith{};
-};
-if !(_won) then {
+			}else{
+				deleteGroup _x;
+			};
+		}
+	}foreach(allgroups);
+	{
+		if(side _x == west) then {
+			if(_x getVariable ["garrison",""] == "HQ") then {
+				[_x] spawn OT_fnc_cleanup;
+			};
+		}
+	}foreach(vehicles);
+}else{
 	_params call _fail;
 	//Nato gets pushed back
 	server setVariable ["NATOresources",-_strength,true];
 	server setVariable ["NATOresourceGain",0,true];
 };
-
+server setVariable ["NATOlastattack",time,true]; //Ensures NATO takes some time after a QRF to recover (even if they win)
+server setVariable ["QRFpos",nil,true];
+server setVariable ["QRFstart",nil,true];
+server setVariable ["QRFprogress",nil,true];
 server setVariable ["NATOattacking","",true];

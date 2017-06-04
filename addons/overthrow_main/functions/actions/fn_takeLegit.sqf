@@ -4,7 +4,7 @@ if(_veh == player) exitWith {};
 
 format["Taking legal inventory from vehicle"] call OT_fnc_notifyMinor;
 
-[5,false] call progressBar;
+[5,false] call OT_fnc_progressBar;
 sleep 5;
 
 {

@@ -10,13 +10,13 @@ if(isNull _target or isNil "_target") exitWith {};
 
 private _objects = [];
 
-private _b = _target call OT_fnc_nearestRealEstate;
+private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b == "ARRAY") then {
 	_building = _b select 0;
 	if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
-		_objects = [_building];
+		_objects pushback _building;
 	};
 };
 
@@ -37,7 +37,7 @@ if(_notvehicle and count _objects == 0) exitWith {
 
 private _doTransfer = {
 	private _veh = _this;
-	private _toname = (typeof _veh) call ISSE_Cfg_Vehicle_GetName;
+	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	_iswarehouse = false;
 	if((typeof _veh) == OT_warehouse) then {
 		_toname = "Warehouse";
@@ -50,7 +50,7 @@ private _doTransfer = {
 	};
 
 	format["Transferring inventory to %1",_toname] call OT_fnc_notifyMinor;
-	[5,false] call progressBar;
+	[5,false] call OT_fnc_progressBar;
 	sleep 5;
 	if(_iswarehouse) then {
 		{
@@ -78,6 +78,7 @@ private _doTransfer = {
 				_count = _count + 1;
 				call {
 					if(_cls isKindOf "Bag_Base") exitWith {
+						_cls = _cls call BIS_fnc_basicBackpack;
 						_veh addBackpackCargoGlobal [_cls,1];
 					};
 					if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
@@ -127,8 +128,8 @@ if(count _objects == 1) then {
 }else{
 	private _options = [];
 	{
-		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doTransfer,_x];
+		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer to which container?" call OT_fnc_notifyBig;
-	_options spawn playerDecision;
+	_options spawn OT_fnc_playerDecision;
 };

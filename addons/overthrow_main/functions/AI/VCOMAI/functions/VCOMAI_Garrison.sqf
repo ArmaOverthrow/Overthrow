@@ -27,7 +27,7 @@ if ((count _BuildingPositions) isEqualTo 0) exitWith {};
 _GroupUnits = units _group;
 
 //Put each unit in a seperate group 
-{[_x] joinSilent grpNull} forEach _GroupUnits;
+{[_x] joinSilent nil} forEach _GroupUnits;
 
 if (isNil "_PassFunction") then
 {

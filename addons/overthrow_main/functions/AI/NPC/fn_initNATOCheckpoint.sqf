@@ -34,7 +34,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 			_friendly pushback _x;
 		};
 		if !(_unit in _inrange or _unit in _searching or _unit in _searched) then {
-			if(_unit call unitSeenNATO) then {
+			if(_unit call OT_fnc_unitSeenNATO) then {
 
 				if((isPlayer _unit) and (captive _unit)) then {
 					if(_iscar) then {
@@ -68,7 +68,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 			_gone pushback _x;
 			if(isPlayer _x and !(_x in _searched)) then {
 				_x setCaptive false;
-				_x spawn revealToNATO;
+				_x spawn OT_fnc_revealToNATO;
 			};
 		}else{
 			_iscar = false;
@@ -83,7 +83,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 							_v = vehicle _x;
 							_v setVelocity [0,0,0];
 							{
-								[_x,_v,true] call dumpStuff;
+								[_x,_v,true] call OT_fnc_dumpStuff;
 							}foreach(units _v);
 						};
 					};
@@ -135,14 +135,14 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
 						};
-						_msg remoteExec ["OT_fnc_notifyMinor",_x,true];
+						_msg remoteExec ["OT_fnc_notifyMinor",_x,false];
 						_searched pushback _x;
 						_searching deleteAt(_searching find _x);
 					};
 				};
 			}else{
 				if (_x in _searching and isPlayer _x) then {
-					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,true];
+					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,false];
 					_searching deleteAt(_searching find _x);
 				}
 			};

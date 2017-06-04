@@ -78,7 +78,7 @@ _active = [];
 {
     if !(_x call OT_fnc_hasOwner) then {
         if((random 100) > 60) then {
-			_bdgid = [_x] call fnc_getBuildID;
+			_bdgid = [_x] call OT_fnc_getBuildID;
             _pos   = getpos _x;
             _stock = [];
             {

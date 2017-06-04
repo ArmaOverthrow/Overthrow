@@ -13,12 +13,12 @@ if(count _objects == 0) exitWith {
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
 
-if(_veh call unitSeen) then {
+if(_veh call OT_fnc_unitSeen) then {
 	if(typename (_target getVariable ["stockof",""]) == "SCALAR") then {
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
-		_veh spawn revealToNATO;
+		_veh spawn OT_fnc_revealToNATO;
 		hint "You were caught stealing!";
 	};
 };
@@ -28,8 +28,8 @@ _doTransfer = {
 	private _veh = vehicle player;
 	disableUserInput true;
 
-	format["Transferring inventory from %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
-	[5,false] call progressBar;
+	format["Transferring inventory from %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
+	[5,false] call OT_fnc_progressBar;
 	_end = time + 5;
 	{
 		_count = 0;
@@ -55,6 +55,7 @@ _doTransfer = {
 					_veh addMagazineCargoGlobal [_cls,1];
 				};
 				if(_cls isKindOf "Bag_Base") exitWith {
+					_cls = _cls call BIS_fnc_basicBackpack;
 					_veh addBackpackCargoGlobal [_cls,1];
 				};
 				_veh addItemCargoGlobal [_cls,1];
@@ -91,8 +92,8 @@ if(count _objects == 1) then {
 }else{
 	private _options = [];
 	{
-		_options pushback [format["%1 (%2m)",(typeof _x) call ISSE_Cfg_Vehicle_GetName,round (_x distance player)],_doTransfer,_x];
+		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer from which container?" call OT_fnc_notifyBig;
-	_options spawn playerDecision;
+	_options spawn OT_fnc_playerDecision;
 };

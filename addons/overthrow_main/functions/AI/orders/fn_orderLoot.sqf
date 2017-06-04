@@ -21,7 +21,7 @@ if(vehicle _tt != _tt) then {
 if(count _sorted == 0) exitWith {};
 private _target = _sorted select 0;
 
-format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicle_GetName] call OT_fnc_notifyMinor;
+format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 
 {
 	[_x,_target] spawn {
@@ -48,7 +48,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 		waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 10) or (_timeOut < time) or (unitReady _unit)};
 		if(!alive _unit or (isNull _t) or (_timeOut < time)) exitWith {};
 
-		if !([_unit,_t] call dumpStuff) then {
+		if !([_unit,_t] call OT_fnc_dumpStuff) then {
 			_unit globalchat "This vehicle is full, cancelling loot order";
 			_active = false;
 		};
@@ -73,7 +73,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _deadguy < 10) or (_timeOut < time)};
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 
-			[_deadguy,_unit] call takeStuff;
+			[_deadguy,_unit] call OT_fnc_takeStuff;
 			sleep 2;
             hideBody _deadguy;
 			if(primaryWeapon _unit == "") then {
@@ -108,7 +108,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 10) or (_timeOut < time)};
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 
-			if !([_unit,_t] call dumpStuff) exitWith {
+			if !([_unit,_t] call OT_fnc_dumpStuff) exitWith {
 				_unit globalchat "This vehicle is full, cancelling loot order";
 				_active = false;
 			};
@@ -150,7 +150,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call ISSE_Cfg_Vehicl
 			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 10) or (_timeOut < time) or (unitReady _unit)};
 			if((!alive _unit) or (_timeOut < time)) exitWith {};
 
-			[_unit,_t] call dumpStuff;
+			[_unit,_t] call OT_fnc_dumpStuff;
 		};
 		_unit setVariable ["NOAI",true,true];
 		if(_wasincar) then {

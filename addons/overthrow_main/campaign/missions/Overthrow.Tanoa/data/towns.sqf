@@ -60,3 +60,7 @@ OT_townData = [
     [[14295.2,11680.3,0],"Ba"],
     [[12317.8,13929.5,0],"Ipota"]
 ];
+
+OT_spawnTowns = ["Balavu","Katkoula","Savaka","Namuvaka","Yanukka","Cerebu","Koumac","Laikoro","Tavu","Muaceba","Leqa"];
+OT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka"]; //region capitals
+OT_sprawling = ["Blue Pearl industrial port"];

@@ -8,14 +8,14 @@ private _tskid = [resistance,[format["counter%1",_objective]],[format["NATO is s
 _fail = {
 	params ["_tskid","_objective"];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-	_objective setMarkerType "flag_Tanoa";
+	_objective setMarkerType OT_flagMarker;
 
 	_effect = "";
 	if(_objective == "The Fuel Depot") then {
 		_effect = "(Vehicles are now cheaper)";
 	};
 	format["Resistance has captured %1 (+100 Influence) %2",_objective,_effect] remoteExec ["OT_fnc_notifyGood",0,false];
-	100 remoteExec ["influenceSilent",0,false];
+	100 remoteExec ["OT_fnc_influenceSilent",0,false];
 	private _posTown = getMarkerPos _objective;
 	_flag = _posTown nearobjects [OT_flag_NATO,500];
 	if(count _flag > 0) then{

@@ -28,4 +28,4 @@ _wp = _group addWaypoint [_frompos,2000];
 _wp setWaypointType "SCRIPTED";
 _wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
 
-_group call distributeAILoad;
+

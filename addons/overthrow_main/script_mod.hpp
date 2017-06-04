@@ -28,6 +28,8 @@
 
 #define PREFIX OT
 
+#define MOD_AUTHOR ARMAzac
+
 #include "script_version.hpp"
 
 #define VERSION MAJOR.MINOR.PATCHLVL.BUILD
@@ -44,3 +46,7 @@
 #define REQUIRED_ACE_VERSION {3,9,1}
 
 #define COMPONENT_NAME QUOTE(MOD_NAME - VERSION)
+
+#ifndef VERSION_CONFIG
+    #define VERSION_CONFIG version = VERSION; versionStr = QUOTE(VERSION); versionAr[] = {VERSION_AR}
+#endif

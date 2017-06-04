@@ -8,28 +8,28 @@ while {true} do
 		_Disabled = _ConsideringUnit getVariable ["NOAI",false];
 		if ((vehicle _ConsideringUnit) isKindOf "Plane") then {_Disabled = 1;};
 		if (_Disabled isEqualTo 1) then {_Disabled = true;_ConsideringUnit setvariable ["NOAI",true];};
-		if (!(isNull _ConsideringUnit) && !(_Disabled)) then 
+		if (!(isNull _ConsideringUnit) && !(_Disabled)) then
 		{
 			if (side _ConsideringUnit in VCOM_SideBasedExecution) then
 			{
-				[_ConsideringUnit] execFSM "VCOMAI\AIBEHAVIORNEW.fsm";
+				[_ConsideringUnit] execFSM "\ot\functions\AI\VCOMAI\AIBEHAVIORNEW.fsm";
 			};
 				VcomAI_ActiveList pushback _ConsideringUnit;
 				VcomAI_UnitQueue deleteAt 0;
 		}
 		else
 		{
-				VcomAI_UnitQueue deleteAt 0;		
+				VcomAI_UnitQueue deleteAt 0;
 		};
-		
+
 
 		{
 			if (isNull _x) then {VcomAI_ActiveList = VcomAI_ActiveList - [_x];};
-		} foreach VcomAI_ActiveList;		
+		} foreach VcomAI_ActiveList;
 	};
 
-	
+
 	//systemchat format ["VcomAI_ActiveList: %1",VcomAI_ActiveList];
 
-	
+
 };

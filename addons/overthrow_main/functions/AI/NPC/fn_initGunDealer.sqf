@@ -20,6 +20,7 @@ removeVest _unit;
 _unit setVariable ["NOAI",true,false];
 
 _unit forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
+_unit addGoggles (selectRandom OT_allGlasses);
 
 _group = group _unit;
 

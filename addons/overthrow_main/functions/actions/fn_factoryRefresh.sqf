@@ -8,20 +8,20 @@ private _currentPic = "";
 if(_currentCls != "") then {
 	private _currentName = "";
 	if(_currentCls isKindOf "AllVehicles") then {
-		_currentName = _currentCls call ISSE_Cfg_Vehicle_GetName;
-		_currentPic = _currentCls call ISSE_Cfg_Vehicle_GetPic;
+		_currentName = _currentCls call OT_fnc_vehicleGetName;
+		_currentPic = _currentCls call OT_fnc_vehicleGetPic;
 	};
 	if(_currentCls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
-		_currentName = _currentCls call ISSE_Cfg_Weapons_GetName;
-		_currentPic = _currentCls call ISSE_Cfg_Weapons_GetPic;
+		_currentName = _currentCls call OT_fnc_weaponGetName;
+		_currentPic = _currentCls call OT_fnc_weaponGetPic;
 	};
 	if(_currentCls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
-		_currentName = _currentCls call ISSE_Cfg_Magazine_GetName;
-		_currentPic = _currentCls call ISSE_Cfg_Magazine_GetPic;
+		_currentName = _currentCls call OT_fnc_magazineGetName;
+		_currentPic = _currentCls call OT_fnc_magazineGetPic;
 	};
 	if(_currentCls isKindOf "Bag_Base") then {
-		_currentName = _currentCls call ISSE_Cfg_Vehicle_GetName;
-		_currentPic = _currentCls call ISSE_Cfg_Vehicle_GetPic;
+		_currentName = _currentCls call OT_fnc_vehicleGetName;
+		_currentPic = _currentCls call OT_fnc_vehicleGetPic;
 	};
 
 
