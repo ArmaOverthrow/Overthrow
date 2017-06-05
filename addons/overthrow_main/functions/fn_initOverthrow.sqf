@@ -111,3 +111,6 @@ addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 
 OT_serverInitDone = true;
 publicVariable "OT_serverInitDone";
+if(isServer) then {
+    diag_log "Overthrow: Server Pre-Init Done";
+};
