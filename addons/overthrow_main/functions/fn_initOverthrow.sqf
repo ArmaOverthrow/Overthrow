@@ -43,17 +43,6 @@ OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPositi
 call compile preprocessFileLineNumbers "initVar.sqf";
 call OT_fnc_initVar;
 
-//Find markers
-OT_ferryDestinations = [];
-OT_NATO_control = [];
-OT_regions = [];
-{
-	if((_x select [0,12]) == "destination_") then {OT_ferryDestinations pushback _x};
-	if((_x select [0,8]) == "control_") then {OT_NATO_control pushback _x};
-	if((_x select [0,7]) == "island_") then {OT_regions pushback _x};
-	if((_x select [0,7]) == "region_") then {OT_regions pushback _x};
-}foreach(allMapMarkers);
-
 if(isServer) then {
     diag_log "Overthrow: Server Pre-Init";
 

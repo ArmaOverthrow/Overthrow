@@ -42,23 +42,24 @@ _objects = [];
 
 	_pos = [(_buildingpos select 0)+(_rel select 0),(_buildingpos select 1)+(_rel select 1),(_buildingpos select 2)+(_rel select 2)];
 
-	//_o = _type createVehicle _pos;
-	_o = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+	if(_type != "Site_Minefield") then {
+		_o = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
 
-	_o setPos _pos;
-	_dir = _dir + _bdir;
-	if(_dir > 359) then {
-		_dir = _dir - 360;
+		_o setPos _pos;
+		_dir = _dir + _bdir;
+		if(_dir > 359) then {
+			_dir = _dir - 360;
+		};
+		_o setVectorDir _vdir;
+		_o setDir _dir;
+
+		clearWeaponCargoGlobal _o;
+		clearMagazineCargoGlobal _o;
+		clearBackpackCargoGlobal _o;
+		clearItemCargoGlobal _o;
+
+		_objects pushBack _o;
 	};
-	_o setVectorDir _vdir;
-	_o setDir _dir;
-
-	clearWeaponCargoGlobal _o;
-	clearMagazineCargoGlobal _o;
-	clearBackpackCargoGlobal _o;
-	clearItemCargoGlobal _o;
-
-	_objects pushBack _o;
 }foreach(_template);
 
 _building setVariable ["furniture",_objects,false];
