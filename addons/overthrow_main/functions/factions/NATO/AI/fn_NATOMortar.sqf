@@ -60,7 +60,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                     _found = false;
                     {
                         if((_x select 0) == _mortar) exitWith {
-                            _range = (_x select 1) - round((_x select 0) * 0.25);
+                            _range = (_x select 1) - round((_x select 1) * 0.25);
                             _x set [1,_range];
                             _x set [2,[_mortarpos,random 360,_range] call SHK_pos];
                         };
