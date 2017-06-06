@@ -38,4 +38,4 @@ lbClear 1500;
 	lbSetValue [1500,_idx,_price];
 	lbSetData [1500,_idx,_cls];
 
-}foreach(OT_allGlasses);
+}foreach(OT_allGlasses + OT_allGoggles + OT_allFacewear);

@@ -1,6 +1,6 @@
 OT_itemCategoryDefinitions = [
     ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs"]],
-    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing"]],
+    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
     ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
     ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],
     ["Surplus",["Rangefinder","Binocular","Compass"]]

@@ -166,20 +166,20 @@ OT_staticBackpacks = [
 ];
 
 OT_backpacks = [
-	["B_AssaultPack_cbr",30,0,0,1],
-	["B_AssaultPack_blk",30,0,0,1],
-	["B_AssaultPack_khk",30,0,0,1],
-	["B_AssaultPack_sgg",30,0,0,1],
-	["B_FieldPack_cbr",50,0,0,1],
-	["B_FieldPack_blk",50,0,0,1],
-	["B_FieldPack_khk",50,0,0,1],
-	["B_FieldPack_oli",50,0,0,1],
-	["B_Kitbag_cbr",65,0,0,1],
-	["B_Kitbag_sgg",65,0,0,1],
-	["B_Carryall_cbr",80,0,0,1],
-	["B_Carryall_khk",80,0,0,1],
-	["B_Carryall_oli",80,0,0,1],
-	["B_Parachute",120,0,0,1]
+	["B_AssaultPack_cbr",20,0,0,1],
+	["B_AssaultPack_blk",20,0,0,1],
+	["B_AssaultPack_khk",20,0,0,1],
+	["B_AssaultPack_sgg",20,0,0,1],
+	["B_FieldPack_cbr",30,0,0,1],
+	["B_FieldPack_blk",30,0,0,1],
+	["B_FieldPack_khk",30,0,0,1],
+	["B_FieldPack_oli",30,0,0,1],
+	["B_Kitbag_cbr",45,0,0,1],
+	["B_Kitbag_sgg",45,0,0,1],
+	["B_Carryall_cbr",60,0,0,1],
+	["B_Carryall_khk",60,0,0,1],
+	["B_Carryall_oli",60,0,0,1],
+	["B_Parachute",50,0,0,1]
 ];
 
 cost setVariable ["OT_Wood",[5,0,0,0],true];
@@ -421,8 +421,18 @@ OT_allGoggles = [];
 	_name = configName _x;
 	_title = getText (_x >> "displayname");
 	_m = getNumber(_x >> "mass");
+	if((_name find "Balaclava_TI_") > -1) then {
+		_m = _m * 2;
+	};
+
+	_protection = getNumber(_x >> "ACE_Protection");
+	if(_protection > 0) then {
+		_m = round(_m * 1.5);
+	};
+
 	call {
 		if(_name == "None") exitWith {};
+		if(_name == "G_Goggles_VR") exitWith {};
 		if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
 			OT_allGoggles pushback _name;
 		};
