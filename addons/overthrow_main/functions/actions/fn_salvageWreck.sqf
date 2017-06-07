@@ -25,10 +25,6 @@ private _doSalvage = {
     if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd "OT_Steel")) exitWith {
         "Vehicle is full, use a truck or ammobox for more storage" call OT_fnc_notifyMinor;
     };
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/dev
     closeDialog 0;
 	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	format["Salvaging wreck into %1",_toname] call OT_fnc_notifyMinor;

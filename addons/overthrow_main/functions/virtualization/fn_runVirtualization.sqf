@@ -57,10 +57,7 @@ OT_townSpawners = [
 			params ["_spawntown","_spawnid"];
 			{
 				_hdl = [_spawntown,_spawnid] spawn _x;
-<<<<<<< HEAD
 				sleep 0.1;
-=======
->>>>>>> refs/remotes/origin/dev
 			}foreach(OT_townSpawners);
 	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);
