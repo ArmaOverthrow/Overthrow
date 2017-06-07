@@ -59,9 +59,16 @@ if(!dialog) then {
 						}foreach(_e);
 					};
 				};
-				if(call OT_fnc_playerIsAtWarehouse) then {
-					createDialog "OT_dialog_vehiclewarehouse";
-				}else{
+				call {
+					if(driver vehicle player != player) exitWith {
+						[] spawn OT_fnc_mainMenu;
+					};
+					if(call OT_fnc_playerIsAtWarehouse) exitWith {
+						createDialog "OT_dialog_vehiclewarehouse";
+					};
+					if(call OT_fnc_playerIsAtHardwareStore) exitWith {
+						createDialog "OT_dialog_vehiclehardware";
+					};
 					createDialog "OT_dialog_vehicle";
 					[] spawn OT_fnc_vehicleDialog;
 				};

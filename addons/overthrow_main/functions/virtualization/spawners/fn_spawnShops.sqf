@@ -11,6 +11,7 @@ if(count _activeshops > 0) exitWith {
 	private _groups = [];
 
 	{
+		_x params ["_pos","_category"];
 		private _pos = _x select 0;
 		_building = nearestBuilding _pos;
 
@@ -32,6 +33,7 @@ if(count _activeshops > 0) exitWith {
 		_shopkeeper setVariable ["NOAI",true,false];
 
 		_shopkeeper setVariable ["shop",format["%1",_pos],true];
+		_shopkeeper setVariable ["OT_shopCategory",_category,true];
 		[_shopkeeper] call OT_fnc_initShopkeeper;
 
 		//Put a light on

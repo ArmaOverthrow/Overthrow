@@ -57,6 +57,7 @@ OT_townSpawners = [
 			params ["_spawntown","_spawnid"];
 			{
 				_hdl = [_spawntown,_spawnid] spawn _x;
+				sleep 0.1;
 			}foreach(OT_townSpawners);
 	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);

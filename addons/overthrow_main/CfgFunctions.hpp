@@ -59,6 +59,7 @@ class CfgFunctions
 			class playerIsOwner {};
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
+			class playerIsAtHardwareStore {};
 			class tutorial {};
 			class influence {};
 			class influenceSilent {};
@@ -135,6 +136,8 @@ class CfgFunctions
 			class characterSheetDialog {};
 			class manageRecruitsDialog {};
 			class loadoutDialog {};
+			class buyHardwareDialog {};
+			class sellHardwareDialog {};
 		};
 
 		class Display
@@ -473,6 +476,7 @@ class CfgFunctions
 			file = "\ot\functions\integration";
 			class initTFAR {};
 			class advancedTowingInit {};
+			class detectItems {};
 		};
 	};
 };

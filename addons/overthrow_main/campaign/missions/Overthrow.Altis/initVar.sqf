@@ -162,3 +162,4 @@ OT_barracks = "Land_Barracks_01_grey_F";
 OT_workshopBuilding = "Land_Cargo_House_V4_F";
 OT_refugeeCamp = "Land_Medevac_house_V1_F";
 OT_trainingCamp = "Land_IRMaskingCover_02_F";
+OT_hardwareStore = "Land_dp_smallFactory_F";
