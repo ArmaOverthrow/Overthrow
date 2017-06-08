@@ -3,11 +3,11 @@ private ["_id","_pos","_building","_tracked","_vehs","_group","_all","_shopkeepe
 private _hour = date select 3;
 params ["_town","_spawnid"];
 
+sleep 0.1;
+
 private _activeshops = server getVariable [format["activeshopsin%1",_town],[]];
 
 if(count _activeshops > 0) exitWith {
-
-
 	private _groups = [];
 
 	{
@@ -42,7 +42,7 @@ if(count _activeshops > 0) exitWith {
 		_light setLightAmbient[.9, .9, .6];
 		_light setLightColor[.5, .5, .4];
 		_groups pushback _light;
-		sleep 0.1;
+		sleep 0.2;
 	}foreach(_activeshops);
 	spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];
 };

@@ -9,7 +9,7 @@ while {true} do {
 	waitUntil {sleep 3;(date select 3) != _lasthour}; //do actions on the hour
 	_lasthour = date select 3;
 
-	if(OT_fastTime) then {
+	if(OT_fastTime) then {		
 		if(_lasthour == 19) then {
 			setTimeMultiplier 8;
 		};

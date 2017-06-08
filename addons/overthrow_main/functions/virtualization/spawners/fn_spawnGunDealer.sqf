@@ -1,5 +1,6 @@
 private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper","_groups"];
 if (!isServer) exitwith {};
+sleep 0.1;
 
 _count = 0;
 params ["_town","_spawnid"];

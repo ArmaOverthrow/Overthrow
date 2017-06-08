@@ -12,9 +12,15 @@ private _allActiveShops = [];
 private _allActiveCarShops = [];
 private _allActivePiers = [];
 
-if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
+private _version = server getVariable ["EconomyVersion",0];
 
+diag_log format["Overthrow: Economy version is %1",_version];
+
+if(_version < OT_economyVersion) then {
+    diag_log "Overthrow: Economy version is old, regenerating towns";
+    OT_allShops = [];
     //Generate civilians
+    private _spawntown = server getVariable ["spawntown",""];
     _id = 0;
     {
         _pop = server getVariable [format["population%1",_x],0];
@@ -22,18 +28,31 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
         _num = _pop * 0.1;
         _count = 0;
         _thistown = [];
+        _numgangs = 0;
+        _donegang = false;
         while {_count < _num} do {
             _hasjob = true;
             if(_stability < 50) then {
-                _hasjob = (random 50) > _stability;
+                if (!_donegang and _x != _spawntown) then {
+                    _hasjob = false;
+                }else{
+                    _hasjob = (random 50) > _stability;
+                };
             };
 
             //Generate a civilian [identity, has job, cash, superior]
             //@todo: generate beliefs and traits
             _cash = 0;
             if(_hasjob) then {_cash = round random 200} else {
-                if((random 100) < 50) then {
-                    _cash = floor random 50;
+                if (_x != _spawntown) then {
+                    if(!_donegang or (random 100) < 50) then {
+                        _donegang = true;
+                        _cash = floor random 50;
+                        [_id,_x] call OT_fnc_formOrJoinGang;
+                        _numgangs = _numgangs + 1;
+                    };
+                }else{
+                    _cash = round random 200;
                 };
             };
             OT_civilians setVariable [format["%1",_id],[call OT_fnc_randomLocalIdentity,_hasjob,_cash,-1],true];
@@ -42,6 +61,8 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
             _id = _id + 1;
         };
         OT_civilians setVariable [format["civs%1",_x],_thistown,true];
+        diag_log format["%1: %2 possible gang members",_x,_numgangs];
+        sleep 0.1;
     }foreach(OT_allTowns);
     OT_civilians setVariable ["autocivid",_id,false];
 
@@ -129,7 +150,7 @@ if((server getVariable ["EconomyVersion",0]) < OT_economyVersion) then {
 
 	_piers = server getVariable [format["activepiersin%1",_x],[]];
 	[_allActivePiers,_piers] call BIS_fnc_arrayPushStack;
-
+    sleep 0.1;
 }foreach(OT_allTowns);
 
 OT_allEconomic = [];
@@ -145,6 +166,7 @@ OT_allEconomic = [];
     server setVariable [_name,_pos,true];
     cost setVariable [_name,_x,true];
 }foreach(OT_economicData);
+sleep 0.1;
 
 _mrk = createMarker ["Factory",OT_factoryPos];
 _mrk setMarkerShape "ICON";

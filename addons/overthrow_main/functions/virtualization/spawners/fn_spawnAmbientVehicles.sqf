@@ -1,5 +1,5 @@
 if (!isServer) exitwith {};
-
+sleep 0.1;
 private _count = 0;
 
 params ["_town","_spawnid"];
@@ -59,7 +59,7 @@ while {(_count < _numVeh)} do {
 						_civ moveInDriver _veh;
 
 						_region  = server getVariable format["region_%1",_town];
-						_moveto = _posVeh;						
+						_moveto = _posVeh;
 						if(isNil "_region") then {
 							_moveto = _posVeh call OT_fnc_getRandomRoadPosition;
 						}else{

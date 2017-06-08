@@ -68,6 +68,7 @@ class CfgFunctions
 			class getPlayerHome {};
 			class generalIsOnline {};
 			class doConversation {};
+			class givePlayerWaypoint {};
 		};
 
 		class Interaction
@@ -194,7 +195,6 @@ class CfgFunctions
 			class sellAll {};
 
 			/* Gun Dealer */
-			class getLocalMission {};
 			class getMission {};
 
 			/* Factory */
@@ -455,6 +455,12 @@ class CfgFunctions
 			file = "\ot\functions\factions\NATO\AI";
 			class NATODrone {};
 			class NATOMortar {};
+		};
+
+		class CRIM
+		{
+			file = "\ot\functions\factions\CRIM";
+			class formOrJoinGang {};
 		};
 
 		class Buildings

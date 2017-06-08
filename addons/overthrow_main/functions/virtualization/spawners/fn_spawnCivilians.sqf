@@ -1,5 +1,5 @@
 params ["_town","_spawnid"];
-
+sleep 0.1;
 spawner setvariable [format["townspawnid%1",_town],_spawnid,false];
 
 private _hometown = _town;

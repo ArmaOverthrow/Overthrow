@@ -16,6 +16,18 @@ if(isMultiplayer) then {
 	};
 };
 
+onEachFrame {
+	if(!isNil "OT_missionMarker") then {
+		private _dis = round(OT_missionMarker distance player);
+		private _t = "m";
+		if(_dis > 999) then {
+			_dis = round(_dis / 1000);
+			_t = "km";
+		};
+		drawIcon3D ["a3\ui_f\data\map\markers\military\dot_ca.paa", [1,1,1,1], OT_missionMarker, 1, 1, 0, format["%1 (%2%3)",OT_missionMarkerText,_dis,_t], 0, 0.02, "TahomaB", "center", true];
+	};
+};
+
 _handler = {
 	private ["_vehs","_dest","_destpos","_passengers"];
 	if !(visibleMap or visibleGPS) exitWith {};
@@ -46,41 +58,48 @@ _handler = {
 	};
 	_t = 1;
 	{
-		if (!(isPlayer _x)) then {
+		if (!(isPlayer _x) and (side _x == resistance)) then {
 			_veh = vehicle _x;
 			if(_veh == _x) then {
-				_dest = expectedDestination _x;
-				_destpos = _dest select 0;
 				_color = [0,0.5,0,1];
 				if !(captive _x) then {
 					_color = [0,0.2,0,1];
 				};
-				if(_x in groupSelectedUnits player) then {
-					(_this select 0) drawIcon [
-						"\A3\ui_f\data\igui\cfg\islandmap\iconplayer_ca.paa",
-						_color,
-						visiblePosition  _x,
-						24,
-						24,
-						0
-					];
-				};
-				if ((_dest select 1)== "LEADER PLANNED") then {
-					(_this select 0) drawLine [
-						getPos _x,
-						_destpos,
-						_color
-					];
-					(_this select 0) drawIcon [
-						"\A3\ui_f\data\map\groupicons\waypoint.paa",
-						_color,
-						_destpos,
-						24,
-						24,
-						0
-					];
-				};
 
+				_txt = "";
+				if(leader _x == player) then {
+					_dest = expectedDestination _x;
+					_destpos = _dest select 0;
+					if ((_dest select 1)== "LEADER PLANNED") then {
+						(_this select 0) drawLine [
+							getPos _x,
+							_destpos,
+							_color
+						];
+						(_this select 0) drawIcon [
+							"\A3\ui_f\data\map\groupicons\waypoint.paa",
+							_color,
+							_destpos,
+							24,
+							24,
+							0
+						];
+					};
+
+					_txt = format["%1",_t];
+					_t = _t + 1;
+
+					if(_x in groupSelectedUnits player) then {
+						(_this select 0) drawIcon [
+							"\A3\ui_f\data\igui\cfg\islandmap\iconplayer_ca.paa",
+							_color,
+							visiblePosition  _x,
+							24,
+							24,
+							0
+						];
+					};
+				};
 
 				(_this select 0) drawIcon [
 					"iconMan",
@@ -89,7 +108,7 @@ _handler = {
 					24,
 					24,
 					getDir _x,
-					format["%1",_t]
+					_txt
 				];
 			}else{
 				if !(_veh in _vehs) then {
@@ -97,8 +116,7 @@ _handler = {
 				};
 			};
 		};
-		_t = _t + 1;
-	}foreach(units (group player));
+	}foreach(allunits);
 
 	{
 		(_this select 0) drawIcon [
@@ -222,8 +240,8 @@ _handler = {
 					OT_flagImage,
 					[1,1,1,1],
 					_pos,
-					0.6/ctrlMapScale (_this select 0),
-					0.5/ctrlMapScale (_this select 0),
+					0.3/ctrlMapScale (_this select 0),
+					0.3/ctrlMapScale (_this select 0),
 					0
 				];
 			};
@@ -233,8 +251,8 @@ _handler = {
 					_icon,
 					[1,1,1,1],
 					_x select 0,
-					0.4/ctrlMapScale (_this select 0),
-					0.4/ctrlMapScale (_this select 0),
+					0.2/ctrlMapScale (_this select 0),
+					0.2/ctrlMapScale (_this select 0),
 					0
 				];
 			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
@@ -243,8 +261,8 @@ _handler = {
 					"ot\ui\markers\shop-Hardware.paa",
 					[1,1,1,1],
 					_x select 0,
-					0.4/ctrlMapScale (_this select 0),
-					0.4/ctrlMapScale (_this select 0),
+					0.3/ctrlMapScale (_this select 0),
+					0.3/ctrlMapScale (_this select 0),
 					0
 				];
 			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);

@@ -23,12 +23,12 @@ private _canSell = false;
 private _canSellDrugs = true;
 private _canIntel = true;
 private _canMission = false;
-private _canLocMission = false;
+private _canTute = false;
 
 if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true};
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
-if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canLocMission=true};
+if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canTute =true};
 if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
@@ -41,18 +41,6 @@ if (_canRecruit) then {
 	_options pushBack [
 		format["Recruit Civilian (-$%1)",_civprice],OT_fnc_recruitCiv
 	];
-};
-
-if (_canLocMission) then {
-	_options pushBack [format["Request Mission"], {
-		[] call OT_fnc_getLocalMission;
-	}];
-	_missions = player getVariable ["mytasks",[]];
-	if(count _missions > 0) then {
-		_options pushBack [format["Cancel All Missions"], {
-			player setVariable ["mytasks",[],true];
-		}];
-	};
 };
 
 if (_canMission) then {
@@ -150,6 +138,38 @@ if (_canBuy) then {
 			};
 		}
 	];
+};
+
+if (_canTute) then {
+	_done = player getVariable ["OT_tutesDone",[]];
+	if !("NATO" in _done) then {
+		_options pushBack [
+			"So, about those NATO soldiers...",{
+				[player,_civ,["So, about those NATO soldiers...","Yes! I will gladly pay you $250 to get them off my back","Alright I'll see what I can do"],(OT_tutorialMissions select 0)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
+	if !("CRIM" in _done) then {
+		_options pushBack [
+			"So, about those gangs...",{
+				[player,_civ,["So, about those gangs...","Sure, local businessmen usually pay quite well for them.","Alright I'll see what I can do"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
+	if !("Drugs" in _done) then {
+		_options pushBack [
+			"You sell Ganja right?",{
+				[player,_civ,["You sell Ganja right?","I sure do, wanna blaze it?","Not right now, I need some cash first","Oh OK, sell it to the civilians then"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
+	if !("Economy" in _done) then {
+		_options pushBack [
+			"So how can I make money legally?",{
+				[player,_civ,["You sell Ganja right?","I sure do, wanna blaze it?","Not right now, I need some cash first","Oh OK, sell it to the civilians then"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
 };
 
 if (_canBuyBoats) then {

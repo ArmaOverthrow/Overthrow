@@ -417,9 +417,9 @@ player addEventHandler ["GetInMan",{
 }];
 
 if(_newplayer) then {
-	if!(player getVariable ["tute",false]) then {
+	if!(player getVariable ["OT_tute",false]) then {
 		createDialog "OT_dialog_tute";
-		player setVariable ["tute",true,true];
+		player setVariable ["OT_tute",true,true];
 	};
 };
 

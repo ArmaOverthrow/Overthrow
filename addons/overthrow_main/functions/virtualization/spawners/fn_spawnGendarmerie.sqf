@@ -1,6 +1,6 @@
 private ["_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
-
+sleep 0.1;
 _count = 0;
 params ["_town","_spawnid"];
 
@@ -48,7 +48,7 @@ while {_count < _numNATO} do {
 
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-		sleep 0.1;
+		sleep 0.2;
 	};
 	_group call OT_fnc_initGendarmPatrol;
 	_range = _range + 50;

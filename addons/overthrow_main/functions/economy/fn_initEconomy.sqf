@@ -78,7 +78,6 @@ server setVariable ["spawntown",OT_spawnTowns call BIS_fnc_selectrandom,true];
     server setVariable [format ["towns_%1",_x],_towns,true];
 }foreach(OT_regions);
 
-server setVariable ["EconomyVersion",OT_economyVersion,true];
 OT_allShops = nil; //Clean this up we dont need it anymore
 
 OT_economyInitDone = true;

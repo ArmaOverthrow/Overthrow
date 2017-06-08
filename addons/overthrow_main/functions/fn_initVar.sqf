@@ -22,12 +22,14 @@ private _allMissions = "true" configClasses ( configFile >> "CfgOverthrowMission
 	_name = configName _x;
 	_script = getText (_x >> "script");
 	_code = compileFinal preprocessFileLineNumbers _script;
-	if(getNumber(_x >> "faction") > 0) then {
-		OT_missions pushback _code;
-	}else{
-		OT_localMissions pushback _code;
-	};
+	OT_missions pushback _code;
 }foreach(_allMissions);
+
+OT_tutorialMissions = [];
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_NATO.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_CRIM.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_Drugs.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_Economy.sqf");
 
 call compileFinal preprocessFileLineNumbers "data\names.sqf";
 call compileFinal preprocessFileLineNumbers "data\towns.sqf";
