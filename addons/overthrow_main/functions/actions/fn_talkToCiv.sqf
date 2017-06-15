@@ -1,4 +1,4 @@
-private _civ = OT_interactingWith;
+private _civ = _this;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
 private _standing = [_town] call OT_fnc_standing;

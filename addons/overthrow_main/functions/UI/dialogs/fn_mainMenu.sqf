@@ -7,43 +7,6 @@ openMap false;
 disableSerialization;
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 
-private _donerem = false;
-if !(isNull cursorObject) then {
-	if((player distance cursorObject) < 20) then {
-		if (cursorObject in ((allMissionObjects "Static") + vehicles)) then {
-			if !((cursorObject isKindOf "CAManBase") or (side cursorObject) == west or (typeof cursorObject) == OT_flag_IND) then {
-				call {
-					if(((cursorObject isKindOf "Land") or (cursorObject isKindOf "Air")) and ("ToolKit" in (items player)) and (damage cursorObject) == 1) exitWith {
-						_donerem = true;
-						private _type = typeof cursorObject;
-						_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
-						ctrlSetText [1202,_pic];
-						if(player distance cursorObject < 5) then {
-							ctrlSetText [1614,"Salvage"];
-							buttonSetAction [1614, "[] spawn OT_fnc_salvageWreck"];
-						}else{
-							ctrlSetText [1614,"Salvage (too far)"];
-							ctrlEnable [1614,false];
-						};
-					};
-					if((call OT_fnc_playerIsGeneral) or (cursorObject call OT_fnc_playerIsOwner)) exitWith {
-						_donerem = true;
-						private _type = typeof cursorObject;
-						_pic = getText(configfile >> "CfgVehicles" >> _type >> "editorPreview");
-						ctrlSetText [1202,_pic];
-					};
-				};
-			};
-		};
-	};
-};
-
-if !(_donerem) then {
-	ctrlShow [1614,false];
-	ctrlShow [1202,false];
-};
-
-
 _town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
@@ -326,175 +289,99 @@ if(typename _b == "ARRAY") then {
 		",_name];
 	};
 }else{
-	private _ob = (getpos player) call OT_fnc_nearestObjective;
-	_ob params ["_obpos","_obname"];
-	if(_obpos distance player < 250) then {
-		if(_obname in (server getVariable ["NATOabandoned",[]])) then {
-			ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
-			_buildingTxt = format["
-				<t align='left' size='0.8'>%1</t><br/>
-				<t align='left' size='0.65'>Under resistance control</t>
-			",_obname];
-			ctrlEnable [1609,true];
-		}else{
-			ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\nato_ca.paa"];
-			_buildingTxt = format["
-				<t align='left' size='0.8'>%1</t><br/>
-				<t align='left' size='0.65'>Under NATO control</t>
-			",_obname];
-			ctrlEnable [1609,false];
-		};
-		ctrlSetText [1608,"Garrison"];
-		ctrlEnable [1608,true];
-		ctrlSetText [1609,"Procurement"];
-		ctrlEnable [1610,false];
+	ctrlEnable [1608,false];
+	ctrlEnable [1609,false];
+	ctrlEnable [1610,false];
+};
+private _areaText = "";
+_areatxtctrl = (findDisplay 8001) displayCtrl 1101;
+private _ob = (getpos player) call OT_fnc_nearestObjective;
+_ob params ["_obpos","_obname"];
+if(_obpos distance player < 250) then {
+	if(_obname in (server getVariable ["NATOabandoned",[]])) then {
+		_areaText = format["
+			<t align='left' size='0.8'>%1</t><br/>
+			<t align='left' size='0.65'>Under resistance control</t>
+		",_obname];
+		ctrlEnable [1620,true];
+		ctrlEnable [1621,true];
 	}else{
-		private _ob = (getpos player) call OT_fnc_nearestLocation;
-		if((_ob select 1) == "Business") then {
-			_obpos = (_ob select 2) select 0;
-			_obname = (_ob select 0);
+		_areaText = format["
+			<t align='left' size='0.8'>%1</t><br/>
+			<t align='left' size='0.65'>Under NATO control</t>
+		",_obname];
+		ctrlEnable [1620,false];
+		ctrlEnable [1621,false];
+	};
+}else{
+	private _ob = (getpos player) call OT_fnc_nearestLocation;
+	if((_ob select 1) == "Business") then {
+		_obpos = (_ob select 2) select 0;
+		_obname = (_ob select 0);
 
-			if(_obpos distance player < 250) then {
-				if(_obname in (server getVariable ["GEURowned",[]])) then {
-					ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
-					_buildingTxt = format["
-						<t align='left' size='0.8'>%1</t><br/>
-						<t align='left' size='0.65'>Operational</t><br/>
-						<t align='left' size='0.65'>(see resistance screen)</t><br/>
-					",_obname];
-
-					ctrlEnable [1608,false];
-					ctrlEnable [1609,false];
-					ctrlEnable [1610,false];
+		if(_obpos distance player < 250) then {
+			if(_obname in (server getVariable ["GEURowned",[]])) then {
+				ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+				_areaText = format["
+					<t align='left' size='0.8'>%1</t><br/>
+					<t align='left' size='0.65'>Operational</t><br/>
+					<t align='left' size='0.65'>(see resistance screen)</t><br/>
+				",_obname];
+				ctrlEnable [1620,false];
+				ctrlEnable [1621,false];
+			}else{
+				_price = _obname call OT_fnc_getBusinessPrice;
+				ctrlSetText [1201,"\ot\ui\closed.paa"];
+				_areaText = format["
+					<t align='left' size='0.8'>%1</t><br/>
+					<t align='left' size='0.65'>Out Of Operation</t><br/>
+					<t align='left' size='0.65'>$%2</t>
+				",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
+				ctrlSetText [1620,"Buy"];
+				ctrlEnable [1621,false];
+				if (call OT_fnc_playerIsGeneral) then {
+					ctrlEnable [1620,true];
 				}else{
-					_price = _obname call OT_fnc_getBusinessPrice;
-					ctrlSetText [1201,"\ot\ui\closed.paa"];
-					_buildingTxt = format["
-						<t align='left' size='0.8'>%1</t><br/>
-						<t align='left' size='0.65'>Out Of Operation</t><br/>
-						<t align='left' size='0.65'>$%2</t>
-					",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
-					ctrlEnable [1609,false];
-					ctrlEnable [1610,false];
-					if !(call OT_fnc_playerIsGeneral) then {
-						ctrlEnable [1608,false];
-					}
+					ctrlEnable [1620,false];
+				};
+			};
+		};
+	}else{
+		if((getpos player) distance OT_factoryPos < 150) then {
+			_obname = "Factory";
+			if(_obname in (server getVariable ["GEURowned",[]])) then {
+				ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
+				_areaText = format["
+					<t align='left' size='0.8'>%1</t><br/>
+					<t align='left' size='0.65'>Operational</t>
+				",_obname];
+				ctrlEnable [1620,true];
+				ctrlSetText [1620,"Manage"];
+				ctrlEnable [1621,false];
+			}else{
+				_price = _obname call OT_fnc_getBusinessPrice;
+				ctrlSetText [1201,"\ot\ui\closed.paa"];
+				_areaText = format["
+					<t align='left' size='0.8'>%1</t><br/>
+					<t align='left' size='0.65'>Out Of Operation</t><br/>
+					<t align='left' size='0.65'>$%2</t>
+				",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
+				ctrlSetText [1620,"Buy"];
+				ctrlEnable [1621,false];
+				if (call OT_fnc_playerIsGeneral) then {
+					ctrlEnable [1620,true];
+				}else{
+					ctrlEnable [1620,false];
 				};
 			};
 		}else{
-			if((getpos player) distance OT_factoryPos < 150) then {
-				_obname = "Factory";
-				if(_obname in (server getVariable ["GEURowned",[]])) then {
-					ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
-					_buildingTxt = format["
-						<t align='left' size='0.8'>%1</t><br/>
-						<t align='left' size='0.65'>Operational</t>
-					",_obname];
-					ctrlEnable [1608,true];
-					ctrlSetText [1608,"Manage"];
-					ctrlEnable [1609,false];
-					ctrlEnable [1610,false];
-				}else{
-					_price = _obname call OT_fnc_getBusinessPrice;
-					ctrlSetText [1201,"\ot\ui\closed.paa"];
-					_buildingTxt = format["
-						<t align='left' size='0.8'>%1</t><br/>
-						<t align='left' size='0.65'>Out Of Operation</t><br/>
-						<t align='left' size='0.65'>$%2</t>
-					",_obname,[_price, 1, 0, true] call CBA_fnc_formatNumber];
-					ctrlEnable [1609,false];
-					ctrlEnable [1610,false];
-				};
-			}else{
-				ctrlEnable [1608,false];
-				ctrlEnable [1609,false];
-				ctrlEnable [1610,false];
-			};
+			ctrlEnable [1620,false];
+			ctrlEnable [1621,false];
 		};
 	};
 };
 
-
+_areatxtctrl ctrlSetStructuredText parseText _areaText;
 
 OT_interactingWith = objNull;
 _buildingtextctrl ctrlSetStructuredText parseText _buildingTxt;
-
-
-//Nearest Civ info
-_possible = (player nearEntities ["CAManBase", 20]) - [player];
-_civTxt = "";
-_civtxtctrl = (findDisplay 8001) displayCtrl 1101;
-if(count _possible > 0) then {
-	_possible = [_possible,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
-	_civ = _possible select 0;
-
-	_cls = typeof _civ;
-
-	_name = name _civ;
-
-	OT_interactingWith = _civ;
-	player setVariable ["hiringciv",_civ,false];
-	_type = "Civilian";
-	_extra = "";
-	if(!isplayer _civ) then {
-		if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_type = "Shopkeeper"};
-		if (_civ getvariable ["carshop",false]) then {_type = "Car Dealer"};
-		if (_civ getvariable ["harbor",false]) then {_type = "Boat Dealer"};
-		if (_civ getvariable ["gundealer",false]) then {_type = "Gun Dealer"};
-
-		if !((_civ getvariable ["garrison",""]) isEqualTo "") then {
-			if(side _civ == west) exitWith {
-				_type = (typeof _civ) call OT_fnc_vehicleGetName;
-			};
-			if(side _civ == east) exitWith {
-				_type = "Bandit";
-			};
-			if(side _civ == resistance) exitWith {
-				_type = "Policeman";
-			};
-		};
-
-		if (_civ getvariable ["factionrep",false]) then {
-			_type = format["Representative (%1)",_civ getvariable ["factionrepname",false]];
-		};
-		_civid = _civ getvariable "OT_civid";
-
-		if(OT_adminMode and !isNil "_civid") then {
-			_ident = OT_civilians getVariable [format["%1",_civid],[]];
-			if(count _ident > 0) then {
-				_hasjob = "Employed";
-				if !(_ident select 1) then {_hasjob = "Unemployed"};
-				_extra = format["%1<br/>Cash: $%2",_hasjob,_ident select 2];
-			};
-		};
-
-		if(_civ call OT_fnc_hasOwner) then {
-			call {
-				if(side _civ == resistance) exitWith {
-					_type = (typeof _civ) call OT_fnc_vehicleGetName;
-				};
-			};
-			ctrlEnable [1605,false];
-			ctrlEnable [1606,false];
-		}else{
-			if(side _civ == civilian) then {
-				[_civ,[_civ,player] call BIS_fnc_dirTo] remoteExec ['OT_fnc_orderStopAndFace',_civ,false];
-			};
-		};
-	}else{
-		ctrlEnable [1605,false];
-		ctrlEnable [1606,false];
-		_type = "Player";
-	};
-	_civTxt = format["
-		<t align='left' size='0.8'>%1</t><br/>
-		<t align='left' size='0.7'>%2</t><br/>
-		<t align='left' size='0.7'>%3</t><br/>
-	",_name,_type,_extra];
-}else{
-	ctrlEnable [1605,false];
-	ctrlEnable [1606,false];
-	ctrlEnable [1607,false];
-};
-
-_civtxtctrl ctrlSetStructuredText parseText _civTxt;

@@ -1,6 +1,24 @@
 class CfgVehicles {
 	class Item_Base_F;
-	class Land_MapBoard_F;
+	class ThingX;
+	class Land_MapBoard_F : ThingX {
+		class ACE_Actions {
+			class ACE_MainActions {
+				displayName = "Interactions";
+				distance = 6;
+				icon = "\a3\ui_f\data\IGUI\Cfg\Actions\eject_ca.paa";
+
+				class mapinfo {
+					displayName = "Map Info";
+	                statement = "[] call OT_fnc_mapInfoDialog;";
+				};
+	            class resetui {
+					displayName = "Reset UI";
+	                statement = "[] spawn OT_fnc_setupPlayer;";
+				};
+			};
+		}
+	};
 	class Mapboard_tanoa_F: Land_MapBoard_F {
 		displayName = "Map (Tanoa)";
 		hiddenSelectionsTextures[] = {"\ot\ui\maptanoa.paa"};
@@ -26,85 +44,62 @@ class CfgVehicles {
         };
     };
 
+	//ACE Interactions
+    class Man;
+    class CAManBase: Man {
+        class ACE_Actions {
+			class OT_HeadActions {
+				condition = "!isplayer _target";
+				selection = "pilot";
+				distance = 20;
+				displayName = "Talk";
+				statement = "_target call OT_fnc_talkToCiv";
+			}
+		}
+	};
+
 	//Houses (Tanoa)
 	class House_Small_F;
     class House_F;
     class Land_Slum_01_F: House_Small_F {
         ot_isPlayerHouse = 1;
-        ot_template = '[["Land_MetalCase_01_small_F",[-0.897521,0.746889,0.594079],178.839,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[3.00668,1.91341,0.59408],0,1,0,[0,0],"","",true,false],["Mapboard_tanoa_F",[4.62316,-1.50578,0.594079],119.84,1,0,[0,-0],"","",true,false],["B_CargoNet_01_ammo_F",[4.72776,1.54301,0.59408],0,1,0,[0,0],"","",true,false]]';
+        ot_template = '[["Land_MetalCase_01_small_F", [-0.746442,-0.078261,0.594079],0.418328,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[1.22725,1.2502,0.594079],199.447,1,0,[0,0],"","",true,false],["Mapboard_tanoa_F",[-0.340959,1.65805,0.59408],327.71,1,0,[0,0],"","",true,false],["OfficeTable_01_new_F",[1.54124,1.92773,0.59408],0,1,0,[0,0],"","",true,false],["Land_Workbench_01_F",[2.70912,-1.90632,0.594079],180,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[4.56925,1.31465,0.59408],0,1,0,[0,0],"","",true,false]]';
     };
     class Land_Slum_02_F: House_Small_F {
         ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[-2.26472,2.64946,0.559122],314.105,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.83102,-3.80072,0.559122],0,1,0,[0,0],"","",true,false],["Land_MetalCase_01_small_F",[1.25476,4.2525,0.559122],287.951,1,0,[0,0],"","",true,false],["OfficeTable_01_new_F",[-0.0970871,4.45407,0.559122],0,1,0,[0,0],"","",true,false]]';
+        ot_template = '[["Land_MetalCase_01_small_F", [-2.58489,-0.659296,0.559122],0.418328,1,0,[0,0],"","",true,false],["Land_Workbench_01_F",[2.247,2.4636,0.559122],90,1,0,[0,-0],"","",true,false],["Land_CampingChair_V2_F",[-1.65537,3.79657,0.559121],199.447,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[-1.74631,-3.67237,0.559122],0,1,0,[0,0],"","",true,false],["Mapboard_tanoa_F",[1.75104,-3.70061,0.559122],155.874,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[-1.34138,4.4741,0.559122],0,1,0,[0,0],"","",true,false]]';
     };
 	class Land_House_Native_01_F: House_Small_F {
 		ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
+        ot_template = '[["Land_CampingChair_V2_F", [2.26438,-2.22928,0.2],17.5159,1,0,[0,0],"","",true,false],["OfficeTable_01_new_F",[1.97339,-2.917,0.2],178.069,1,0,[0,-0],"","",true,false],["Land_Workbench_01_F",[-2.34453,2.75383,0.200001],0,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[-3.88622,-2.36955,0.200001],0,1,0,[0,0],"","",true,false],["Mapboard_tanoa_F",[4.03968,2.56928,0.200001],32.4555,1,0,[0,0],"","",true,false],["Land_MetalCase_01_small_F",[4.28656,-2.64937,0.2],212.206,1,0,[0,0],"","",true,false]]';
 	};
     class Land_House_Native_02_F: House_Small_F {
         ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
+        ot_template = '[["Land_CampingChair_V2_F", [0.0907892,-1.587,0.103002],17.5159,1,0,[0,0],"","",true,false],["OfficeTable_01_new_F",[-0.200199,-2.27472,0.103003],178.069,1,0,[0,-0],"","",true,false],["Mapboard_tanoa_F",[1.78568,2.06457,0.103003],32.4555,1,0,[0,0],"","",true,false],["Land_MetalCase_01_small_F",[2.12703,-2.08529,0.103003],212.206,1,0,[0,0],"","",true,false],["Land_Workbench_01_F",[-2.40922,2.34683,0.103003],0,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[-3.11908,-1.7698,0.103003],0,1,0,[0,0],"","",true,false]]';
     };
-
 	//Houses (Altis)
 	class Land_i_House_Small_02_V1_F: House_Small_F {
 		ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
+        ot_template = '[["Land_MetalCase_01_small_F", [1.76559,-2.99125,0.417622],284.311,1,0,[-0.071722,-0.0182958],"","",true,false],["Land_Workbench_01_F",[3.2372,2.27116,0.422988],0,1,0,[0.195835,0],"","",true,false],["Land_CampingChair_V2_F",[4.94837,-2.23044,0.421724],19.8195,1,0,[0.0250966,-0.0696343],"","",true,false],["OfficeTable_01_new_F",[4.62998,-2.90591,0.421724],180.373,1,0,[-0.000481725,0.0740172],"","",true,false],["B_CargoNet_01_ammo_F",[6.60879,-0.956271,0.423864],0,1,0,[0,-0.0740187],"","",true,false],["MapBoard_altis_F",[6.69212,1.92874,0.423972],57.5222,1,0,[0.0624422,-0.039746],"","",true,false]]';
 	};
-	class Land_i_House_Small_02_V2_F: Land_i_House_Small_02_V1_F {
-		ot_isPlayerHouse = 1;
-	};
-	class Land_i_House_Small_02_V3_F: Land_i_House_Small_02_V1_F {
-        ot_isPlayerHouse = 1;
-    };
 	class Land_i_Stone_Shed_V1_F: House_Small_F {
         ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
-    };
-	class Land_i_Stone_Shed_V2_F: Land_i_Stone_Shed_V1_F {
-        ot_isPlayerHouse = 1;
+        ot_template = '[["OfficeTable_01_new_F", [0.161512,-0.0919862,0.26],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[0.479908,0.583482,0.26],19.8195,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[-3.03811,0.542177,0.26],0,1,0,[0,0],"","",true,false],["Land_MetalCase_01_small_F",[0.197573,4.06797,0.26],92.8353,1,0,[0,-0],"","",true,false],["Land_Workbench_01_F",[-2.11435,3.83624,0.26],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.26796,3.73339,0.26],57.5223,1,0,[0,0],"","",true,false]]';
     };
 	class Land_Slum_House02_F: House_Small_F {
         ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
+        ot_template = '[["Land_Workbench_01_F", [-1.36485,0.870917,0],90,1,0,[0,-0],"","",true,false],["Land_MetalCase_01_small_F",[1.28859,-1.0394,0.23],92.8353,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[2.5086,-1.0345,0.23],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[2.71048,-0.444679,0.23],7.55273,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.61679,-2.76766,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.48146,2.91809,0.23],41.3345,1,0,[0,0],"","",true,false]]';
     };
 	class Land_Slum_House03_F: House_Small_F {
         ot_isPlayerHouse = 1;
-        ot_template = '[["Mapboard_tanoa_F",[1.77709,1.85536,0.148079],38.8726,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[1.96175,-1.98313,0.121121],37.1995,1,0,[],"","",true,false],["OfficeTable_01_new_F",[-2.31248,2.38399,0.103003],0,1,0,[],"","",true,false],["B_CargoNet_01_ammo_F",[-3.07393,-1.85328,0.157859],0,1,0,[],"","",true,false]]';
+        ot_template = '[["Land_Workbench_01_F", [0.907345,-0.33023,0],180,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[-1.73133,2.06371,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[0.872005,2.49783,-4.76837e-007],347.165,1,0,[0,0],"","",true,false],["Land_MetalCase_01_small_F",[2.22081,2.79016,0],92.8353,1,0,[0,-0],"","",true,false],["Land_CampingChair_V2_F",[3.26546,2.37647,0],274.515,1,0,[0,0],"","",true,false],["OfficeTable_01_new_F",[3.86515,2.20614,0],87.3352,1,0,[0,0],"","",true,false]]';
     };
 
 	//Houses (CUP)
-	class Land_House_C_5_dam_EP1: House_Small_F {
+	class Land_House_C_5_EP1: House_Small_F {
 		ot_isPlayerHouse = 1;
         ot_template = '[["Land_Sleeping_bag_F",[-0.859297,-0.554941,0],0,1,0,[],"","",true,false], ["I_supplyCrate_F",[3.89146,1.20775,-0.00284338],0,1,0,[],"","",true,false],["Land_MapBoard_F",[-3.09413,3.7061,0.046927],0,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[-0.463434,-5.14101,0],0,1,0,[],"","",true,false]]';
 	};
-	class Land_House_C_5_EP1: Land_House_C_5_dam_EP1 {
-		ot_isPlayerHouse = 1;
-	};
-	class Land_House_C_5_V1_dam_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_5_V1_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_5_V2_dam_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_5_V2_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_5_V3_dam_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_5_V3_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_11_dam_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
-	class Land_House_C_11_EP1: Land_House_C_5_dam_EP1 {
-        ot_isPlayerHouse = 1;
-    };
 
     //Shops (Tanoa)
     class Land_FuelStation_01_shop_F: House_F {
@@ -133,39 +128,11 @@ class CfgVehicles {
         ot_isShop = 1;
         ot_template = '[]';
     };
-    class Land_i_Shop_02_V2_F: Land_i_Shop_02_V1_F {
-        ot_isShop = 1;
-        ot_template = '[]';
-    };
-    class Land_i_Shop_02_V3_F: Land_i_Shop_02_V1_F {
-        ot_isShop = 1;
-        ot_template = '[]';
-    };
 
 	//Shops (CUP)
 	class Land_A_GeneralStore_01: House_F {
         ot_isShop = 1;
         ot_template = '[["Land_CashDesk_F",[-6.93629,2.99194,0],180.686,1,0,[],"","",true,false]]';
-    };
-    class Land_A_GeneralStore_01_dam: Land_A_GeneralStore_01 {
-        ot_isShop = 1;
-        ot_template = '[["Land_CashDesk_F",[-6.95791,2.98163,0],180.686,1,0,[],"","",true,false]]';
-    };
-    class Land_A_GeneralStore_01a: Land_A_GeneralStore_01 {
-        ot_isShop = 1;
-        ot_template = '[["Land_CashDesk_F",[-5.77295,6.66858,0],180.686,1,0,[],"","",true,false]]';
-    };
-	class Land_A_GeneralStore_01a_dam: Land_A_GeneralStore_01 {
-        ot_isShop = 1;
-        ot_template = '[["Land_CashDesk_F",[-5.35,6.89225,0],180.686,1,0,[],"","",true,false]]';
-    };
-    class Land_GeneralStore_01a_dam_PMC: Land_A_GeneralStore_01 {
-        ot_isShop = 1;
-        ot_template = '[["Land_CashDesk_F",[-5.36103,6.85785,0],180.686,1,0,[],"","",true,false]]';
-    };
-    class Land_GeneralStore_01a_PMC: Land_A_GeneralStore_01 {
-        ot_isShop = 1;
-        ot_template = '[["Land_CashDesk_F",[-5.76134,6.66694,0],180.686,1,0,[],"","",true,false]]';
     };
 
     //Car Dealers (Tanoa)
@@ -186,7 +153,6 @@ class CfgVehicles {
 
 	//Unlocks uniforms (ace_nouniformrestrictions)
 	class Civilian;
-    class CAManBase;
     class B_Soldier_diver_base_F;
     class C_man_1;
     class I_G_Soldier_F;

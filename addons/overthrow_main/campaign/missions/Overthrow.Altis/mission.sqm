@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=419;
+		nextID=429;
 	};
 	class Camera
 	{
@@ -6851,7 +6851,7 @@ class Mission
 			type="mil_box";
 			alpha=0;
 			id=2161;
-			atlOffset=4.2761655;
+			atlOffset=2.7054186;
 		};
 	};
 	class Connections
