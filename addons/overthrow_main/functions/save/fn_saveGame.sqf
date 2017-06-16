@@ -22,6 +22,7 @@ if !(_quiet) then {
 sleep 0.1;
 waitUntil {!isNil "OT_NATOInitDone"};
 
+"Step 1/9 - saving server data" remoteExec ["OT_fnc_notifyMinor",0,false];
 private _data = [];
 //get all server data
 {
@@ -44,18 +45,21 @@ private _data = [];
 	};
 }foreach(allVariables server);
 
+"Step 2/9 - saving buildings" remoteExec ["OT_fnc_notifyMinor",0,false];
 _poses = [];
 {
 	_poses pushback [_x,buildingpositions getVariable _x];
 }foreach(allVariables buildingpositions);
 _data pushback ["buildingpositions",_poses];
 
+"Step 3/9 - saving civs" remoteExec ["OT_fnc_notifyMinor",0,false];
 _civs = [];
 {
 	_civs pushback [_x,OT_civilians getVariable _x];
 }foreach(allVariables OT_civilians);
 _data pushback ["civilians",_civs];
 
+"Step 4/9 - saving player data" remoteExec ["OT_fnc_notifyMinor",0,false];
 //get all online player data
 {
 	_uid = getPlayerUID _x;
@@ -77,6 +81,7 @@ _data pushback ["civilians",_civs];
 	_data pushback [_uid,_d];
 }foreach([] call CBA_fnc_players);
 
+"Step 5/9 - saving vehicles" remoteExec ["OT_fnc_notifyMinor",0,false];
 private _vehicles = [];
 
 _count = 10001;
@@ -113,6 +118,7 @@ _count = 10001;
 sleep 0.2;
 _data pushback ["vehicles",_vehicles];
 
+"Step 6/9 - saving warehouses" remoteExec ["OT_fnc_notifyMinor",0,false];
 private _warehouse = [];
 {
 	_var = warehouse getVariable _x;
@@ -122,6 +128,7 @@ private _warehouse = [];
 }foreach(allvariables warehouse);
 _data pushback ["warehouse",_warehouse];
 
+"Step 7/9 - saving recruits" remoteExec ["OT_fnc_notifyMinor",0,false];
 private _recruits = [];
 {
 	_do = true;
@@ -148,6 +155,7 @@ private _recruits = [];
 
 _data pushback ["recruits",_recruits];
 
+"Step 7/9 - saving squads" remoteExec ["OT_fnc_notifyMinor",0,false];
 private _squads = [];
 {
 	_do = true;
@@ -169,6 +177,7 @@ private _squads = [];
 
 _data pushback ["squads",_squads];
 
+"Step 8/9 - saving bases" remoteExec ["OT_fnc_notifyMinor",0,false];
 {
 	_pos = _x select 0;
 	_code = format["fob%1",_pos];
@@ -196,6 +205,7 @@ _data pushback ["squads",_squads];
 	};
 }foreach(server getVariable ["bases",[]]);
 
+"Step 8/9 - reticulating splines" remoteExec ["OT_fnc_notifyMinor",0,false];
 {
 	_pos = server getvariable _x;
 	_code = _x;
@@ -225,6 +235,7 @@ _data pushback ["squads",_squads];
 
 _data pushback ["timedate",date];
 
+"Step 9/9 - saving loadouts" remoteExec ["OT_fnc_notifyMinor",0,false];
 {
 	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
 }foreach([] call CBA_fnc_players);
