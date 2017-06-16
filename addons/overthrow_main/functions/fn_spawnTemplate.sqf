@@ -38,7 +38,7 @@ _objects = [];
 
 {
 	_type = _x select 0;
-	if(_type == "Mapboard_tanoa_F" or _type == "Land_MapBoard_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
+	if(_type == "MapBoard_altis_F" or _type == "Mapboard_tanoa_F" or _type == "Land_MapBoard_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
 	_rel = _x select 1;
 	_dir = (_x select 2);
 

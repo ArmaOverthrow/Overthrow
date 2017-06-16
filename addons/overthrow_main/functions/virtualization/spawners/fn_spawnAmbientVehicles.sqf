@@ -25,8 +25,9 @@ if(_numVeh > 12) then {_numVeh = 12};
 if(count(vehicles) > 200) then {_numVeh = 3};
 while {(_count < _numVeh)} do {
 	private _start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
-	private _road = [_start] call BIS_fnc_nearestRoad;
-	if (!isNull _road) then {
+	_roads = _start nearRoads 75;
+	if(count _roads > 0) then {
+		_road = _roads select 0;
 		_pos = getPos _road;
 		_vehtype = "";
 		if(_pop > 600) then {
@@ -75,7 +76,7 @@ while {(_count < _numVeh)} do {
 						_wp setWaypointCompletionRadius 60;
 						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup;unassignVehicle this;[group this] spawn OT_fnc_cleanup;"];
 					}else{
-						if(_town == (server getVariable "spawntown") and (random 100) > 75) then {
+						if(_stability < 50 and (random 100) > 75) then {
 							_veh setDamage [1,false]; //salvage wreck
 						};
 					};

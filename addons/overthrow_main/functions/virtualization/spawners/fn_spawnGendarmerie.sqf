@@ -48,7 +48,7 @@ while {_count < _numNATO} do {
 
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.1;
 	};
 	_group call OT_fnc_initGendarmPatrol;
 	_range = _range + 50;

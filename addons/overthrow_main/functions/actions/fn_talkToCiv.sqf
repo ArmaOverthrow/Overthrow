@@ -1,5 +1,7 @@
 private _civ = _this;
 
+OT_interactingWith = _civ;
+
 private _town = (getpos player) call OT_fnc_nearestTown;
 private _standing = [_town] call OT_fnc_standing;
 private _civprice = [_town,"CIV",_standing] call OT_fnc_getPrice;
@@ -8,7 +10,7 @@ private _money = player getvariable "money";
 
 private _options = [];
 
-if (side _civ == west) exitWith {
+if (side _civ == west or side _civ == east) exitWith {
 	_options pushBack ["Cancel",{}];
 	_options spawn OT_fnc_playerDecision;
 };

@@ -1,11 +1,10 @@
 class CfgOverthrowMissions
 {
-    class Fugitive
+    class MedicalSupplies
     {
-        script = "\ot\missions\fugitive.sqf";
+        target = "Town";
+        repeatable = 1;
+        condition = "_inSpawnDistance and _stability < 50";
+        script = "\ot\missions\medicalsupplies.sqf";
     };
-    class TransportVIP
-    {
-        script = "\ot\missions\transportvip.sqf";
-    }
 };

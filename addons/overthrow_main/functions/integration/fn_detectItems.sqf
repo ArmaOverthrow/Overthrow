@@ -8,6 +8,7 @@ OT_itemCategoryDefinitions = [
 
 OT_items = [];
 OT_allItems = [];
+OT_craftableItems = [];
 
 private _categorize = {
     params ["_c","_cat"];
@@ -29,6 +30,14 @@ private _categorize = {
 private _getprice = {
     params ["_x","_primaryCategory"];
     _mass = getNumber ( _x >> "ItemInfo" >> "mass" );
+    _craftable = getNumber ( _x >> "ot_craftable" );
+
+    if(_craftable > 0) then {
+        _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
+        _qty = getNumber ( _x >> "ot_craftQuantity" );
+        OT_craftableItems pushback [_cls,_recipe,_qty];
+    };
+
     _name = getText (_x >> "displayName");
     _price = round(_mass * 1.5);
     _steel = 0;
@@ -97,7 +106,8 @@ private _getprice = {
     if(_primaryCategory == "Hardware") then {
         _price = _mass;
     };
-    if(_name == "Toolkit") then {
+    _cls = configName _x;
+    if(_cls == "ToolKit") then {
         _price = 80;
     };
     [_price,_wood,_steel,_plastic];

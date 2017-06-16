@@ -10,7 +10,9 @@ while {sleep 10;true} do {
             _civid = _x;
             if(count _civ == 0) then {
                 //Civ has died, welp, generate a replacement
-                _civ = [call OT_fnc_randomLocalIdentity,_hasjob,_cash,-1];
+                player globalchat format["replacing civ %1",_civid];
+                _cash = round(random 200);
+                _civ = [call OT_fnc_randomLocalIdentity,true,_cash,-1];
                 OT_civilians setVariable [format["%1",_civid],_civ,true];
             }else{
                 _civ params ["_identity","_hasjob","_cash","_superior"];

@@ -4,6 +4,12 @@ closedialog 0;
 createDialog "OT_dialog_main";
 
 openMap false;
+
+private _ft = server getVariable ["OT_fastTravelType",1];
+if(!OT_adminMode and _ft > 1) then {
+	ctrlEnable [1600,false];
+};
+
 disableSerialization;
 _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 
@@ -77,6 +83,25 @@ if(typename _b == "ARRAY") then {
 		_ownername = server getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
 
+		if(typeof _building == OT_warehouse) exitWith {
+			ctrlEnable [1609,true];
+			ctrlSetText [1609,"Procurement"];
+
+			if(_owner == getplayerUID player) then {
+				ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
+				ctrlEnable [1608,true];
+			}else{
+				ctrlSetText [1608,"Sell"];
+				ctrlEnable [1608,false];
+			};
+
+			_buildingTxt = format["
+				<t align='left' size='0.8'>Warehouse</t><br/>
+				<t align='left' size='0.65'>Owned by %1</t><br/>
+				<t align='left' size='0.65'>Damage: %2%3</t>
+			",_ownername,round((damage _building) * 100),"%"];
+		};
+
 		if(_owner == getplayerUID player) then {
 			_leased = player getVariable ["leased",[]];
 			_id = [_building] call OT_fnc_getBuildID;
@@ -97,17 +122,6 @@ if(typename _b == "ARRAY") then {
 			};
 
 			ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
-
-			if(typeof _building == OT_warehouse) exitWith {
-				ctrlEnable [1609,true];
-				ctrlSetText [1609,"Procurement"];
-
-				_buildingTxt = format["
-					<t align='left' size='0.8'>Warehouse</t><br/>
-					<t align='left' size='0.65'>Owned by %1</t><br/>
-					<t align='left' size='0.65'>Damage: %2%3</t>
-				",_ownername,round((damage _building) * 100),"%"];
-			};
 
 			if(_id in _leased) then {
 				ctrlEnable [1609,false];
@@ -224,9 +238,7 @@ if(typename _b == "ARRAY") then {
 			ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
 			ctrlEnable [1609,false];
 			ctrlEnable [1610,false];
-			if(typeof _building == OT_warehouse) exitWith {
-				_buildingTxt = "<t align='left' size='0.8'>Warehouse</t>";
-			};
+
 			_buildingTxt = format["
 				<t align='left' size='0.8'>%1</t><br/>
 				<t align='left' size='0.65'>Lease Value: $%2/6hrs</t>
@@ -350,7 +362,6 @@ if(_obpos distance player < 250) then {
 		if((getpos player) distance OT_factoryPos < 150) then {
 			_obname = "Factory";
 			if(_obname in (server getVariable ["GEURowned",[]])) then {
-				ctrlSetText [1201,"\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa"];
 				_areaText = format["
 					<t align='left' size='0.8'>%1</t><br/>
 					<t align='left' size='0.65'>Operational</t>
@@ -360,7 +371,6 @@ if(_obpos distance player < 250) then {
 				ctrlEnable [1621,false];
 			}else{
 				_price = _obname call OT_fnc_getBusinessPrice;
-				ctrlSetText [1201,"\ot\ui\closed.paa"];
 				_areaText = format["
 					<t align='left' size='0.8'>%1</t><br/>
 					<t align='left' size='0.65'>Out Of Operation</t><br/>
@@ -385,3 +395,30 @@ _areatxtctrl ctrlSetStructuredText parseText _areaText;
 
 OT_interactingWith = objNull;
 _buildingtextctrl ctrlSetStructuredText parseText _buildingTxt;
+
+_notifytxtctrl = (findDisplay 8001) displayCtrl 1150;
+
+_txt = "";
+_opacity = "FF";
+for "_x" from 0 to (count OT_notifyHistory - 1) do {
+	_txt = format["%1<t size='0.7' align='left' color='#%2FFFFFF'>%3</t><br/>",_txt,_opacity,OT_notifyHistory select ((count OT_notifyHistory) - _x - 1)];
+	call {
+		if(_opacity == "FF") exitWith {_opacity = "EF"};
+		if(_opacity == "EF") exitWith {_opacity = "DF"};
+		if(_opacity == "DF") exitWith {_opacity = "CF"};
+		if(_opacity == "CF") exitWith {_opacity = "BF"};
+		if(_opacity == "BF") exitWith {_opacity = "AF"};
+		if(_opacity == "AF") exitWith {_opacity = "9F"};
+		if(_opacity == "9F") exitWith {_opacity = "8F"};
+		if(_opacity == "8F") exitWith {_opacity = "7F"};
+		if(_opacity == "7F") exitWith {_opacity = "6F"};
+		if(_opacity == "6F") exitWith {_opacity = "5F"};
+		if(_opacity == "5F") exitWith {_opacity = "4F"};
+		if(_opacity == "4F") exitWith {_opacity = "3F"};
+		if(_opacity == "3F") exitWith {_opacity = "2F"};
+		if(_opacity == "2F") exitWith {_opacity = "1F"};
+		if(_opacity == "1F") exitWith {_opacity = "0F"};
+	};
+};
+
+_notifytxtctrl ctrlSetStructuredText parseText _txt;

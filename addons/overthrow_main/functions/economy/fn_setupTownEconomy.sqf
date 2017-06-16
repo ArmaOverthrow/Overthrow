@@ -25,11 +25,18 @@ if(count _churches > 0) then {
 }foreach(nearestObjects [_posTown, [OT_hardwareStore], _dist,false]);
 server setVariable [format["activehardwarein%1",_town],_activeHardware,true];
 
+private _chance = 100; //Chance that a shop will be a shop
+private _shops = nearestObjects [_posTown, OT_shops, _dist,false];
+if(count _shops > 15) then {_chance = 50};
+if(count _shops > 30) then {_chance = 30};
+if(count _shops > 50) then {_chance = 20};
+if(count _shops > 100) then {_chance = 10};
+
 //Find shop buildings and distribute categories to them
 {
 	private _pos = getpos _x;
 	//Ensure shops are not found twice (overlapping town search radius)
-	if !(_pos in OT_allShops) then {
+	if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
 		_category = "General";
 		_rnd = random 100;
 		call {
@@ -41,7 +48,7 @@ server setVariable [format["activehardwarein%1",_town],_activeHardware,true];
 		_activeShops pushback [_pos,_category];
 		OT_allShops pushback _pos;
 	};
-}foreach(nearestObjects [_posTown, OT_shops, _dist,false]);
+}foreach(_shops);
 
 server setVariable [format["activeshopsin%1",_town],_activeShops,true];
 

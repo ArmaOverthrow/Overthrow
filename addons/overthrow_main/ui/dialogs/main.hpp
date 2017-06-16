@@ -667,8 +667,6 @@ class OT_dialog_main
 	idd=8001;
 	movingenable=false;
 
-	onLoad = "ctrlShow [1650,false];ctrlShow [1651,false];ctrlShow [1652,false];ctrlShow [1653,false];ctrlShow [1654,false];ctrlShow [1655,false];ctrlShow [1150,false];";
-
 	class controlsBackground {
 		class RscStructuredText_1103: RscOverthrowStructuredText
 		{
@@ -720,6 +718,16 @@ class OT_dialog_main
 			w = 0.149531 * safezoneW;
 			h = 0.1 * safezoneH;
 			colorBackground[] = {0,0,0,0.4};
+		};
+		class RscStructuredText_1150: RscOverthrowStructuredText
+		{
+			idc = 1150;
+
+			x = 0.16 * safezoneW + safezoneX;
+			y = 0.302 * safezoneH + safezoneY;
+			w = 0.3 * safezoneW;
+			h = 0.3 * safezoneH;
+			colorBackground[] = {0,0,0,0};
 		};
 		class RscButton_1600: RscOverthrowButton
 		{
@@ -821,7 +829,7 @@ class OT_dialog_main
 		class RscButton_1620: RscOverthrowButton
 		{
 			idc = 1620;
-			action = "closeDialog 0;[] spawn OT_fnc_buyVehicleDialog";
+			action = "closeDialog 0;[] spawn OT_fnc_manageArea";
 
 			text = "Procurement"; //--- ToDo: Localize;
 			x = 0.881562 * safezoneW + safezoneX;
@@ -847,9 +855,9 @@ class OT_dialog_main
 
 			text = "#(argb,8,8,3)color(0,0,0,0)";
 			x = 0.881562 * safezoneW + safezoneX;
-			y = 0.457 * safezoneH + safezoneY;
+			y = 0.479 * safezoneH + safezoneY;
 			w = 0.113437 * safezoneW;
-			h = 0.143 * safezoneH;
+			h = 0.1 * safezoneH;
 		};
 		class RscButton_1608: RscOverthrowButton
 		{
@@ -1234,11 +1242,11 @@ class OT_dialog_newgame
             w = 0.159844 * safezoneW;
             h = 0.033 * safezoneH;
             colorBackground[] = {0,0,0,0};
-        };/*
+        };
         class RscStructuredText_1102: RscOverthrowStructuredText
         {
             idc = 1102;
-            text = "<t size=""1.5"">Medical</t>"; //--- ToDo: Localize;
+            text = "<t size=""1.5"">Fast Travel</t>"; //--- ToDo: Localize;
             x = 0.329844 * safezoneW + safezoneX;
             y = 0.423 * safezoneH + safezoneY;
             w = 0.159844 * safezoneW;
@@ -1248,34 +1256,34 @@ class OT_dialog_newgame
         class RscButton_1603: RscOverthrowButton
         {
             idc = 1603;
-            text = "Vanilla"; //--- ToDo: Localize;
+            text = "Free"; //--- ToDo: Localize;
             x = 0.329844 * safezoneW + safezoneX;
             y = 0.467 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_medical"",0,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_fastTravelType"",0,true];call OT_fnc_newGameDialog;"
         };
         class RscButton_1604: RscOverthrowButton
         {
             idc = 1604;
-            text = "Basic"; //--- ToDo: Localize;
+            text = "Costs"; //--- ToDo: Localize;
             x = 0.453594 * safezoneW + safezoneX;
             y = 0.467 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
 			color[] = {0,0.8,0,1};
-			action = "server setvariable [""OT_medical"",1,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_fastTravelType"",1,true];call OT_fnc_newGameDialog;"
         };
         class RscButton_1605: RscOverthrowButton
         {
             idc = 1605;
-            text = "Advanced"; //--- ToDo: Localize;
+            text = "Disabled"; //--- ToDo: Localize;
             x = 0.577344 * safezoneW + safezoneX;
             y = 0.467 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_medical"",2,true];call OT_fnc_newGameDialog;"
-        };*/
+			action = "server setvariable [""OT_fastTravelType"",2,true];call OT_fnc_newGameDialog;"
+        };
         class RscButton_1606: RscOverthrowButton
         {
             idc = 1606;

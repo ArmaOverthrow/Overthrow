@@ -88,11 +88,11 @@ while {_count < _numCiv} do {
 		[_civ,_identity] call OT_fnc_applyIdentity;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
-		sleep 0.2;
+		sleep 0.1;
 	};
 	_group spawn OT_fnc_initCivilianGroup;
 };
-
+sleep 0.1;
 //Do gangs
 private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 {
@@ -130,7 +130,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			_civ setVariable ["OT_civid",_civid,true];
 			_civ setBehaviour "SAFE";
 			_civ setVariable ["hometown",_hometown,true];
-			sleep 0.2;
+			sleep 0.1;
 		}foreach(_members);
 		_group spawn OT_fnc_initCivilianGroup;
 	};

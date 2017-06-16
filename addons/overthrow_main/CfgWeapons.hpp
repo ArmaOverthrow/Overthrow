@@ -126,4 +126,13 @@ class CfgWeapons {
             mass = 25;
         };
     };
+
+
+	//Craftable items
+	class ACE_ItemCore;
+	class ACE_fieldDressing {
+		ot_craftable = 1;
+		ot_craftQuantity = 5;
+		ot_craftRecipe = "[[""Uniform_Base"",1]]"
+	};
 };

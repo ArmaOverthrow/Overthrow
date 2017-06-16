@@ -26,10 +26,10 @@ private _allMissions = "true" configClasses ( configFile >> "CfgOverthrowMission
 }foreach(_allMissions);
 
 OT_tutorialMissions = [];
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_NATO.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_CRIM.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_Drugs.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "dev\tut_Economy.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_NATO.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_CRIM.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_Drugs.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_Economy.sqf");
 
 call compileFinal preprocessFileLineNumbers "data\names.sqf";
 call compileFinal preprocessFileLineNumbers "data\towns.sqf";
@@ -136,6 +136,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 
 OT_NATOwait = 30; //Half the Average time between NATO orders (x 10 seconds)
 OT_CRIMwait = 500; //Half the Average time between crim changes
+OT_jobWait = 10;
 
 OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer"];
 
@@ -155,6 +156,8 @@ OT_item_UAVterminal = "I_UavTerminal";
 OT_item_DefaultBlueprints = [];
 
 call OT_fnc_detectItems;
+
+OT_notifyHistory = [];
 
 OT_staticBackpacks = [
 	["I_HMG_01_high_weapon_F",600,1,0,1],
@@ -590,6 +593,7 @@ OT_allGoggles = [];
 	};
 } foreach (_allWeapons);
 
+OT_allLegalClothing = [];
 {
 	_name = configName _x;
 	_short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
@@ -598,6 +602,11 @@ OT_allGoggles = [];
 	_cost = round(_carry * 0.5);
 
 	OT_allClothing pushback _name;
+	_c = _name splitString "_";
+	_side = _c select 1;
+	if((_name == "V_RebreatherIA" or _side == "C" or _side == "I") and (_c select (count _c - 1) != "VR")) then {
+		OT_allLegalClothing pushback _name;
+	};
 	cost setVariable [_name,[_cost,0,0,1],true];
 } foreach (_allUniforms);
 

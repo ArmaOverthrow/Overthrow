@@ -38,7 +38,7 @@ if(count _targets == 0) exitWith {
         //give waypoint
         [player,_destination,_town] call OT_fnc_givePlayerWaypoint;
 
-        hint format["There doesnt seem to be any gangs nearby. Head to %1, you should be able to find some there. It's marked on your map",_town];
+        format["There doesnt seem to be any gangs nearby. Head to %1, you should be able to find some there. It's marked on your map",_town] call OT_fnc_notifyMinor;
 
         waitUntil {player distance _destination < 200};
         sleep 10; //If the player fast travelled, give time to spawn
@@ -50,9 +50,10 @@ if(count _targets == 0) exitWith {
     };
 };
 
-hint "There is a gang nearby, locals are sick and tired of them so there might be a few dollars in it if you made them go away.";
+"There is a gang nearby, locals are sick and tired of them so there might be a few dollars in it if you made them go away." call OT_fnc_notifyMinor;
 //pick the first group and reveal
-private _group = group (_targets select 0);
+private _sorted = [_targets,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
+private _group = group (_sorted select 0);
 player reveal [leader _group,4];
 
 //give waypoint
@@ -75,7 +76,7 @@ while {sleep 0.5; !_done} do {
         };
     }else{
         _num = _total - ({alive _x} count units _group);
-        if(_num > _lastnum) then {
+        if(_num >= _total) then {
             _done = true;
         };
         hint format["Kills: %1/%2",_num,_total];

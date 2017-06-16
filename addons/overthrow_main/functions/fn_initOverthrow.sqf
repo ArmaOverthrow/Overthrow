@@ -74,6 +74,7 @@ waitUntil {!isNil "OT_NATOInitDone"};
 [] spawn OT_fnc_propagandaSystem;
 [] spawn OT_fnc_weatherSystem;
 [] spawn OT_fnc_incomeSystem;
+[] spawn OT_fnc_jobSystem;
 
 //Init virtualization
 waitUntil {!isNil "OT_economyLoadDone"};
