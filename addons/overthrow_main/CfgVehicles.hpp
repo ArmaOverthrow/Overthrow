@@ -76,7 +76,7 @@ class CfgVehicles {
 	//Houses (CUP)
 	class Land_House_C_5_dam_EP1: House_Small_F {
 		ot_isPlayerHouse = 1;
-        ot_template = '[["Land_Sleeping_bag_F",[-0.859297,-0.554941,0],0,1,0,[],"","",true,false], ["I_supplyCrate_F",[3.89146,1.20775,-0.00284338],0,1,0,[],"","",true,false],["Land_MapBoard_F",[-3.09413,3.7061,0.046927],0,1,0,[],"","",true,false],["Land_MetalCase_01_small_F",[-0.463434,-5.14101,0],0,1,0,[],"","",true,false]]';
+        ot_template = '[["Land_MetalCase_01_small_F",[-0.507421,-0.278264,0.377357],0,1,0,[],"","",true,false], ["B_CargoNet_01_ammo_F",[-1.09897,-1.48947,0.377357],0,1,0,[],"","",true,false], ["Land_Workbench_01_F",[-4.09043,2.20817,0.324941],270,1,0,[],"","",true,false], ["Land_MapBoard_F",[-4.07916,-4.87537,0.325],210,1,0,[],"","",true,false] ]';
 	};
 	class Land_House_C_5_EP1: Land_House_C_5_dam_EP1 {
 		ot_isPlayerHouse = 1;
