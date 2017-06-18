@@ -5,12 +5,12 @@ gotone = false;
 onMapSingleClick "posTravel = _pos;gotone=true;";
 hint "Click on a location";
 
-waitUntil {sleep 0.1; (gotone) or (not visiblemap)};
+waitUntil {sleep 0.2; (gotone) or (not visiblemap)};
 
 if(not visiblemap) exitWith{};
 
 while {visibleMap} do {
-	sleep 0.1;
+	sleep 0.2;
 	if(gotone) then {
 		_loc =  posTravel call OT_fnc_nearestLocation;
 		_loc params ["_name","_type","_data"];

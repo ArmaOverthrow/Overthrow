@@ -10,7 +10,7 @@ if(typename _this == "ARRAY") then {
 	_target = _this select 0;
 
 	if(_category == "Hardware") then {
-		_categoryItems = ["OT_Steel","OT_Wood","OT_Plastic"];
+		_categoryItems = ["OT_Steel","OT_Wood","OT_Plastic","OT_Fertilizer"];
 	};
 	if(_category == "Clothing") then {
 		_categoryItems = OT_allLegalClothing + OT_allGlasses + OT_allGoggles + OT_allFacewear;

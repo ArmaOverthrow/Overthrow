@@ -1,5 +1,8 @@
 //Let's find some NATO to shoot
 
+private _done = player getVariable ["OT_tutesDone",[]];
+player setVariable ["OT_tutesDone",_done+["NATO"],true];
+
 private _targets = [];
 private _destination = [];
 private _thistown = (getpos player) call OT_fnc_nearestTown;

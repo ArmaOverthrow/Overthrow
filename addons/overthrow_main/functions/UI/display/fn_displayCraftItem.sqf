@@ -16,6 +16,7 @@ if(count _def > 0) then {
     _def params ["_cls","_recipe","_qty"];
 
     _textctrl = (findDisplay 8000) displayCtrl 1100;
+    _itemName = "";
 
     _recipeText = "";
     {
@@ -25,21 +26,34 @@ if(count _def > 0) then {
             if(_rcls == "Uniform_Base") exitWith {
                 _name = "Clothing";
             };
-            _name = _rcls call OT_fnc_weaponGetName;
+            if(_rcls isKindOf ["Default", configFile >> "CfgMagazines"]) then {
+                _name = _rcls call OT_fnc_magazineGetName;
+            }else{
+                _name = _rcls call OT_fnc_weaponGetName;
+            };
         };
         _recipeText = _recipeText + format["%1 x %2<br/>",_rqty,_name];
     }foreach(_recipe);
+    _desc = "";
+    _pic = "";
 
-    _desc = getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort");
+    if(_cls isKindOf ["Default", configFile >> "CfgMagazines"]) then {
+        _desc = getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort");
+        _itemName = _cls call OT_fnc_magazineGetName;
+        _pic = _cls call OT_fnc_magazineGetPic;
+    }else{
+        _desc = getText(configFile >> "CfgMagazines" >> _cls >> "descriptionShort");
+        _itemName = _cls call OT_fnc_weaponGetName;
+        _pic = _cls call OT_fnc_weaponGetPic;
+    };
 
     _textctrl ctrlSetStructuredText parseText format["
     	<t align='center' size='1.1'>%1 x %2</t><br/>
         <t align='center' size='0.7'>%3</t><br/><br/>
         <t align='center' size='0.8'>Recipe:</t><br/>
         <t align='center' size='0.7'>%4</t><br/>
-    ",_qty,_cls call OT_fnc_weaponGetName,_desc,_recipeText];
+    ",_qty,_itemName,_desc,_recipeText];
 
-    _pic = _cls call OT_fnc_weaponGetPic;
     if !(isNil "_pic") then {
     	ctrlSetText [1200,_pic];
     };

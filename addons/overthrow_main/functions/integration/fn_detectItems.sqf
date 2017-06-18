@@ -148,3 +148,11 @@ private _getprice = {
         OT_allItems pushback _cls;
     };
 }foreach("(inheritsFrom _x in [configFile >> ""CfgWeapons"" >> ""ItemCore"",configFile >> ""CfgWeapons"" >> ""ACE_ItemCore""])" configClasses ( configFile >> "CfgWeapons" ));
+
+//add craftable magazines
+{
+    _cls = configName _x;
+    _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
+    _qty = getNumber ( _x >> "ot_craftQuantity" );
+    OT_craftableItems pushback [_cls,_recipe,_qty];
+}foreach("getNumber (_x >> ""ot_craftable"") isEqualTo 1" configClasses ( configFile >> "CfgMagazines" ));

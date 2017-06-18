@@ -13,7 +13,7 @@ if !(isNil "_data") then {
         _count = _count + 1;
         if(_count > 50) then {
             _count = 0;
-            sleep 0.1;
+            sleep 0.2;
         };
     }foreach(_data);
 

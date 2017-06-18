@@ -1,13 +1,21 @@
 hint "Get familiar with the basic controls, then press Y to continue";
-sleep 0.1;
+sleep 0.2;
 
 private _txt = "<t align='right'><t size='0.6' color='#ffffff'>Basic Controls</t><br/>";
 
+private _acekey = "Left Windows (default)";
+private _acebind = ["ACE3 Common","ace_interact_menu_InteractKey"] call CBA_fnc_getKeybind;
+if(count _acebind > 0) then {
+	_acekey = (cba_keybinding_keynames) getVariable [str ((_acebind select 5) select 0),_acekey];
+};
+
+_acekey = format["Hold %1",_acekey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Forward  <t size='0.6'>%2</t></t><br/>",_txt,"MoveForward" call OT_fnc_getAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Back  <t size='0.6'>%2</t></t><br/>",_txt,"MoveBack" call OT_fnc_getAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Left  <t size='0.6'>%2</t></t><br/>",_txt,"TurnLeft" call OT_fnc_getAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Move Right  <t size='0.6'>%2</t></t><br/><br/>",_txt,"TurnRight" call OT_fnc_getAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Vault  <t size='0.6'>%2</t></t><br/><br/>",_txt,"GetOver" call OT_fnc_getAssignedKey];
+_txt = format ["%1<t size='0.4' color='#ffffff'>Interact  <t size='0.6'>%2</t></t><br/>",_txt,_acekey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Open Inventory  <t size='0.6'>%2</t></t><br/>",_txt,"Gear" call OT_fnc_getAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Open Map  <t size='0.6'>%2</t></t><br/>",_txt,"ShowMap" call OT_fnc_getAssignedKey];
 _txt = format ["%1<t size='0.4' color='#ffffff'>Main Menu  <t size='0.6'>Y</t></t><br/>",_txt];
@@ -20,6 +28,12 @@ _txt = format["%1</t>",_txt];
 OT_menuHandler = {
 	hint format["Take some time to explore the main menu, when you're finished open the map (%1 key)","ShowMap" call OT_fnc_getAssignedKey];
 	OT_menuHandler = {};
+
+	private _acekey = "Left Windows (default)";
+	private _acebind = ["ACE3 Common","ace_interact_menu_InteractKey"] call CBA_fnc_getKeybind;
+	if(count _acebind > 0) then {
+		_acekey = (cba_keybinding_keynames) getVariable [str ((_acebind select 5) select 0),_acekey];
+	};
 
 	private _txt = "<t align='center'><t size='0.6' color='#ffffff'>Main Menu</t><br/><br/>";
 	_txt = format ["%1<t size='0.5' color='#ffffff'>From here you can perform basic actions such as recruiting civilians or fast travelling to buildings you own, friendly bases and camps that you place. As you can see on the bottom right, this shack is owned by you, so you can therefore fast travel back here when you need to, but not while wanted.<br/><br/>To continue, close this menu (Esc) and open the map (%2 key)</t>",_txt,"ShowMap" call OT_fnc_getAssignedKey];
@@ -41,15 +55,13 @@ OT_menuHandler = {
 	sleep 3;
 
 	_txt = "<t align='center'><t size='0.6' color='#ffffff'>Interaction</t><br/>";
-	_txt = format ["%1<t size='0.5' color='#ffffff'>Most interactions will be done via the 'Y' menu. However some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your scroll wheel or pressing %2 to open the action menu. Select 'inventory' with your scroll wheel and then use %2 or middle mouse button to perform the action.</t><br/><br/>",_txt,"Action" call OT_fnc_getAssignedKey];
+	_txt = format ["%1<t size='0.5' color='#ffffff'>Some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your Interact key (%2). Move the mouse over 'Open' and then release the key to perform that action.</t><br/><br/>",_txt,_acekey];
 
 	[_txt, 0, 0.2, 20, 1, 0, 2] spawn bis_fnc_dynamicText;
 
 	sleep 20;
 	_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 	[player,getpos _gundealer,"Gun Dealer"] call OT_fnc_givePlayerWaypoint;
-
-	//[player,getpos _gundealer,"Find the local dealer","Apparently the spokesperson of the 'Free Tanoa' movement was murdered at the protest last night. I don't know what's going on with this country anymore. I need some answers, and I think I know who could have them.",_whendone] spawn OT_fnc_assignMission;
 	sleep 3;
 	hint "Go and speak to the local gun dealer. Head towards the marked location, you have nothing to worry about as long as you are not carrying/wearing any illegal items.";
 
@@ -68,7 +80,6 @@ OT_menuHandler = {
 			[
 				"I am sick of NATO pushing us around, what can I do about it?",
 				{
-					player setVariable ["OT_tutesDone",["NATO"],true];
 					_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 					private _end = {
 						hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you, so best to keep it where it is until you uh... 'need' it", "Gear" call OT_fnc_getAssignedKey];
@@ -86,7 +97,6 @@ OT_menuHandler = {
 			[
 				"There's too much crime in Tanoa, and NATO isn't doing anything about it",
 				{
-					player setVariable ["OT_tutesDone",["CRIM"],true];
 					_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 					private _end = {
 						hint format["The gun is in your pocket, you can equip it in your inventory (%1 key) by dragging it to your hands. But be careful, if NATO sees any weapons they will open fire on you.", "Gear" call OT_fnc_getAssignedKey];
@@ -104,7 +114,6 @@ OT_menuHandler = {
 			[
 				"I want to make some cash, and I don't care about breaking the law",
 				{
-					player setVariable ["OT_tutesDone",["Drugs"],true];
 					_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 					private _end = {
 						hint format["The drugs are in your pocket, you can see it in your inventory (%1 key).", "Gear" call OT_fnc_getAssignedKey];
@@ -119,7 +128,6 @@ OT_menuHandler = {
 			[
 				"I want to make some cash, legally",
 				{
-					player setVariable ["OT_tutesDone",["Economy"],true];
 					_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 					private _end = {
 						hint format["Wrecked vehicles can be salvaged with a toolkit, there should be one in your ammo crate at home. Shops on your map are marked with a circle and icon representing what they buy/sell. Towns with lower stability and population will pay higher prices for all items.", "Gear" call OT_fnc_getAssignedKey];

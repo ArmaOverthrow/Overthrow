@@ -18,11 +18,28 @@ if(count _def > 0) then {
         if(_container distance player > 20) exitWith {"You need to be within 20m of an ammobox to craft" call OT_fnc_notifyMinor};
         _stock = _container call OT_fnc_unitStock;
 
+        _itemName = "";
+        if(_cls isKindOf ["Default", configFile >> "CfgMagazines"]) then {
+            _itemName = _cls call OT_fnc_magazineGetName;
+        }else{
+            _itemName = _cls call OT_fnc_weaponGetName;
+        };
+
         {
             _x params ["_needed","_qtyneeded"];
             _good = false;
             {
                 _x params ["_c","_amt"];
+                if(_c == _needed) exitWith {
+                    if(_amt >= _qtyneeded) then {
+                        _good = true;
+                    };
+                };
+                if(_c isKindOf [_needed,configFile >> "CfgMagazines"]) exitWith {
+                    if(_amt >= _qtyneeded) then {
+                        _good = true;
+                    };
+                };
                 if(_c isKindOf [_needed,configFile >> "CfgWeapons"]) exitWith {
                     if(_amt >= _qtyneeded) then {
                         _good = true;
@@ -38,6 +55,9 @@ if(count _def > 0) then {
                 _x params ["_needed","_qtyneeded"];
                 {
                     _x params ["_c","_amt"];
+                    if(_c isKindOf [_needed,configFile >> "CfgMagazines"]) exitWith {
+                        [_container, _c, _qtyneeded] call CBA_fnc_removeMagazineCargo;
+                    };
                     if(_c isKindOf [_needed,configFile >> "CfgWeapons"]) exitWith {
                         [_container, _c, _qtyneeded] call CBA_fnc_removeItemCargo;
                     };
@@ -45,7 +65,9 @@ if(count _def > 0) then {
             }foreach(_recipe);
 
             _container addItemCargoGlobal [_cls, _qty];
-            format["%1 x %2 added to closest ammobox",_qty,_cls call OT_fnc_weaponGetName] call OT_fnc_notifyMinor;
+
+            playSound "3DEN_notificationDefault";
+            format["%1 x %2 added to closest ammobox",_qty,_itemName] call OT_fnc_notifyMinor;
         };
     };
 };

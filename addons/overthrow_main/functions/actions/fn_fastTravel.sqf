@@ -49,16 +49,6 @@ openMap true;
 		};
 	};
 
-	private _ft = server getVariable ["OT_fastTravelType",1];
-	if(_handled and _ft == 1 and (vehicle player) == player and !OT_adminMode) then {
-		_cost = ceil((player distance _pos) / 150);
-		if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;format ["You need $%1 to fast travel that distance",_cost] call OT_fnc_notifyMinor};
-		[-_cost] call OT_fnc_money;
-	};
-
-
-	if(_exit) exitWith {};
-
 	_ob = _pos call OT_fnc_nearestObjective;
 	_valid = true;
 	_ob params ["_obpos","_obname"];
@@ -84,6 +74,15 @@ openMap true;
 		"You must click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 		openMap false;
 	}else{
+		private _ft = server getVariable ["OT_fastTravelType",1];
+		if(_handled and _ft == 1 and (vehicle player) == player and !OT_adminMode) then {
+			_cost = ceil((player distance _pos) / 150);
+			if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;format ["You need $%1 to fast travel that distance",_cost] call OT_fnc_notifyMinor};
+			[-_cost] call OT_fnc_money;
+		};
+
+		if(_exit) exitWith {};
+			
 		player allowDamage false;
 		disableUserInput true;
 

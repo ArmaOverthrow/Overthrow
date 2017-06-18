@@ -154,6 +154,7 @@ class CfgFunctions
 			class refreshEmployees {};
 			class displayJobDetails {};
 			class displayCraftItem {};
+			class factoryRefresh {};
 		};
 
 		/*
@@ -205,8 +206,9 @@ class CfgFunctions
 			class getMission {};
 
 			/* Factory */
-			class factoryRefresh {};
-			class factorySet {};
+			class factoryQueueAdd {};
+			class factoryQueueRemove {};
+			class factoryQueueRemoveAll {};
 
 			/* Resistance Screen */
 			class makeGeneral {};
@@ -333,6 +335,7 @@ class CfgFunctions
 			file = "\ot\functions\inventory";
 			class takeFromCargoContainers {};
 			class hasFromCargoContainers {};
+			class anythingGetName {};
 			class weaponGetName {};
 			class magazineGetName {};
 			class vehicleGetName {};

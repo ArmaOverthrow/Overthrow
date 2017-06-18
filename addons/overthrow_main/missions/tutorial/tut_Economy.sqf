@@ -1,5 +1,8 @@
 //Let's find some wrecks to salvage
 
+private _done = player getVariable ["OT_tutesDone",[]];
+player setVariable ["OT_tutesDone",_done+["Economy"],true];
+
 private _targets = [];
 private _destination = [];
 private _thistown = (getpos player) call OT_fnc_nearestTown;

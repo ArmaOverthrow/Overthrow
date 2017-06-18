@@ -1,5 +1,5 @@
 params ["_town","_spawnid"];
-sleep 0.1;
+sleep 0.2;
 spawner setvariable [format["townspawnid%1",_town],_spawnid,false];
 
 private _hometown = _town;
@@ -12,7 +12,7 @@ private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
 private _posTown = server getVariable _town;
 
-
+waitUntil {!isNil "OT_economyLoadDone"};
 
 private _mSize = 350;
 if(_town in OT_capitals) then {
@@ -45,7 +45,7 @@ if !(_church isEqualTo []) then {
 	_pos = [[[_church,20]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_civType_priest, _pos, [],0, "NONE"];
 	[_civ] call OT_fnc_initPriest;
-	sleep 0.1;
+	sleep 0.2;
 };*/
 
 _count = 0;
@@ -88,11 +88,11 @@ while {_count < _numCiv} do {
 		[_civ,_identity] call OT_fnc_applyIdentity;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
-		sleep 0.1;
+		sleep 0.2;
 	};
 	_group spawn OT_fnc_initCivilianGroup;
 };
-sleep 0.1;
+sleep 0.2;
 //Do gangs
 private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 {
@@ -130,7 +130,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			_civ setVariable ["OT_civid",_civid,true];
 			_civ setBehaviour "SAFE";
 			_civ setVariable ["hometown",_hometown,true];
-			sleep 0.1;
+			sleep 0.2;
 		}foreach(_members);
 		_group spawn OT_fnc_initCivilianGroup;
 	};

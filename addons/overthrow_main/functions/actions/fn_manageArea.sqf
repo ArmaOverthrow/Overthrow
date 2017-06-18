@@ -5,7 +5,7 @@ private _name = _ob select 1;
 if (_dist < 250 and _name in (server getVariable ["NATOabandoned",[]])) then {
 	[] call OT_fnc_buyVehicleDialog;
 }else{
-    b = (position player) call OT_fnc_nearestLocation;
+    _b = (position player) call OT_fnc_nearestLocation;
 	if((_b select 1) == "Business") then {
         [] call OT_fnc_buyBusiness;
     }else{

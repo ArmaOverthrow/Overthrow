@@ -62,7 +62,7 @@ if(_version < OT_economyVersion) then {
         };
         OT_civilians setVariable [format["civs%1",_x],_thistown,true];
         diag_log format["%1: %2 possible gang members",_x,_numgangs];
-        sleep 0.1;
+        sleep 0.2;
     }foreach(OT_allTowns);
     OT_civilians setVariable ["autocivid",_id,false];
 
@@ -86,6 +86,7 @@ if(_version < OT_economyVersion) then {
             		_pos = [[[_posTown,200]]] call BIS_fnc_randomPos;
             	};
             	server setVariable [format["factionrep%1",_cls],_pos,true];
+                server setVariable [format["factionname%1",_cls],_name,true];
             };
         };
     }foreach(OT_allFactions);
@@ -150,7 +151,7 @@ if(_version < OT_economyVersion) then {
 
 	_piers = server getVariable [format["activepiersin%1",_x],[]];
 	[_allActivePiers,_piers] call BIS_fnc_arrayPushStack;
-    sleep 0.1;
+    sleep 0.2;
 }foreach(OT_allTowns);
 
 OT_allEconomic = [];
@@ -166,7 +167,7 @@ OT_allEconomic = [];
     server setVariable [_name,_pos,true];
     cost setVariable [_name,_x,true];
 }foreach(OT_economicData);
-sleep 0.1;
+sleep 0.2;
 
 _mrk = createMarker ["Factory",OT_factoryPos];
 _mrk setMarkerShape "ICON";

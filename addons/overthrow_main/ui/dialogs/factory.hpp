@@ -1,4 +1,4 @@
-class OT_dialog_factory
+class OT_dialog_factoryold
 {
 	idd=8000;
 	movingenable=false;
@@ -131,6 +131,171 @@ class OT_dialog_factory
 
 	};
 };
+
+
+class OT_dialog_factory
+{
+	idd=8000;
+	movingenable=false;
+
+	class controlsBackground {
+		class RscStructuredText_1199: RscOverthrowStructuredText
+		{
+			idc = 1199;
+			x = 0.21125 * safezoneW + safezoneX;
+			y = 0.093 * safezoneH + safezoneY;
+			w = 0.562031 * safezoneW;
+			h = 0.803 * safezoneH;
+			colorBackground[] = {0.1,0.1,0.1,1};
+			colorActive[] = {0.1,0.1,0.1,1};
+		};
+	}
+
+	class controls
+	{
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Fotyke)
+		////////////////////////////////////////////////////////
+
+		class RscStructuredText_1104: RscOverthrowStructuredText
+		{
+			idc = 1104;
+			text = "<t align=""center"" size=""1.8"">Factory</t>"; //--- ToDo: Localize;
+			x = 0.381406 * safezoneW + safezoneX;
+			y = 0.104 * safezoneH + safezoneY;
+			w = 0.232031 * safezoneW;
+			h = 0.044 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};
+		class RscButton_1608: RscOverthrowButton
+		{
+			idc = 1608;
+			text = "Reverse-Engineer"; //--- ToDo: Localize;
+			x = 0.432969 * safezoneW + safezoneX;
+			y = 0.797 * safezoneH + safezoneY;
+			w = 0.128906 * safezoneW;
+			h = 0.066 * safezoneH;
+			action = "closeDialog 0;[] call OT_fnc_reverseEngineerDialog;";
+		};
+		class RscListbox_1500: RscOverthrowListbox
+		{
+			idc = 1500;
+			x = 0.216406 * safezoneW + safezoneX;
+			y = 0.181 * safezoneH + safezoneY;
+			w = 0.144375 * safezoneW;
+			h = 0.616 * safezoneH;
+			colorBackground[] = {0,0,0,0.9};
+			onLBSelChanged = "call OT_fnc_factoryRefresh";
+		};
+		class RscStructuredText_1100: RscOverthrowStructuredText
+		{
+			idc = 1100;
+			x = 0.438125 * safezoneW + safezoneX;
+			y = 0.181 * safezoneH + safezoneY;
+			w = 0.33 * safezoneW;
+			h = 0.11 * safezoneH;
+		};
+		class RscListbox_1501: RscOverthrowListbox
+		{
+			idc = 1501;
+			x = 0.438125 * safezoneW + safezoneX;
+			y = 0.324 * safezoneH + safezoneY;
+			w = 0.257813 * safezoneW;
+			h = 0.187 * safezoneH;
+		};
+		class RscButton_1603: RscOverthrowButton
+		{
+			idc = 1603;
+			text = "+1"; //--- ToDo: Localize;
+			x = 0.365937 * safezoneW + safezoneX;
+			y = 0.324 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "[1] call OT_fnc_factoryQueueAdd";
+		};
+		class RscButton_1604: RscOverthrowButton
+		{
+			idc = 1604;
+			text = "+10"; //--- ToDo: Localize;
+			x = 0.365937 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "[10] call OT_fnc_factoryQueueAdd";
+		};
+		class RscButton_1605: RscOverthrowButton
+		{
+			idc = 1605;
+			text = "+100"; //--- ToDo: Localize;
+			x = 0.365937 * safezoneW + safezoneX;
+			y = 0.456 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "[100] call OT_fnc_factoryQueueAdd";
+		};
+		class RscStructuredText_1101: RscOverthrowStructuredText
+		{
+			idc = 1101;
+			text = "<t size=""0.9"">Build Queue</t>"; //--- ToDo: Localize;
+			x = 0.438125 * safezoneW + safezoneX;
+			y = 0.291 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.033 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};
+		class RscStructuredText_1102: RscOverthrowStructuredText
+		{
+			idc = 1102;
+			text = "<t size=""0.9"">Blueprints</t>"; //--- ToDo: Localize;
+			x = 0.216406 * safezoneW + safezoneX;
+			y = 0.148 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.033 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};
+		class RscButton_1606: RscOverthrowButton
+		{
+			idc = 1606;
+			text = "Remove"; //--- ToDo: Localize;
+			x = 0.701094 * safezoneW + safezoneX;
+			y = 0.324 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "call OT_fnc_factoryQueueRemove";
+		};
+		class RscButton_1607: RscOverthrowButton
+		{
+			idc = 1607;
+			text = "Remove All"; //--- ToDo: Localize;
+			x = 0.701094 * safezoneW + safezoneX;
+			y = 0.39 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.055 * safezoneH;
+			action = "call OT_fnc_factoryQueueRemoveAll";
+		};
+		class RscPicture_1200: RscOverthrowPicture
+		{
+			idc = 1200;
+			text = "";
+			x = 0.365937 * safezoneW + safezoneX;
+			y = 0.181 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.11 * safezoneH;
+		};
+		class RscStructuredText_1103: RscOverthrowStructuredText
+		{
+			idc = 1103;
+			x = 0.365937 * safezoneW + safezoneX;
+			y = 0.522 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.275 * safezoneH;
+		};
+		////////////////////////////////////////////////////////
+		// GUI EDITOR OUTPUT END
+		////////////////////////////////////////////////////////
+	}
+}
+
 
 class OT_dialog_reverse
 {

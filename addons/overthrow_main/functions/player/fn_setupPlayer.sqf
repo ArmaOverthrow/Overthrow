@@ -37,12 +37,20 @@ _closestcount = 0;
 
 while {alive player} do {
 	sleep 1;
+	private _txt = "";
+	private _num = count OT_notifies;
 
-	{
-		[_x, -1, -0.2, 10, 0.5, 0, 2] spawn bis_fnc_dynamicText;
-		sleep 1;
-	}foreach(OT_notifies);
-	OT_notifies = [];
+	if(_num > 0) then {
+		if(_num == 1) then {
+			_txt = OT_notifies select 0;
+		}else{
+			{
+				_txt = format["%1<br/>%2",_txt,_x];
+			}foreach(OT_notifies);
+		};
+		OT_notifies = [];
+		[_txt, -1, -0.2, 10, 0.5, 0, 2] spawn bis_fnc_dynamicText;
+	};
 
 	if(_closestcount <= 0) then {
 		_closest = (getPos player) call OT_fnc_nearestTown;

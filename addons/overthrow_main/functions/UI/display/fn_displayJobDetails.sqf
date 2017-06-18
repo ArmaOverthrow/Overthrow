@@ -15,7 +15,7 @@ if(count _job > 0) then {
     _textctrl = (findDisplay 8000) displayCtrl 1100;
 
     _textctrl ctrlSetStructuredText parseText format["
-    	<t align='center' size='1.1'>%1</t><br/>
-    	<t align='center' size='0.7'>%2</t><br/>
+    	<t align='center' size='1.1'>%1</t><br/><br/>
+    	<t align='center' size='0.8'>%2</t><br/>
     ",_title,_desc];
 };

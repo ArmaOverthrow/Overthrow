@@ -82,11 +82,13 @@ while {sleep OT_jobWait;true} do {
                     _pos = server getVariable [format["factionrep%1",_cls],[]];
                     _town = "";
                     if(count _pos > 0) then {
+                        _standing = server getVariable [format["standing%1",_cls],0];
+                        _inSpawnDistance = _pos call OT_fnc_inSpawnDistance;
                         _town = _pos call OT_fnc_nearestTown;
                         _id = format["%1-%2",_name,_cls];
                         if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) then {
                             _activeJobs pushback _id;
-                            [_id,_jobdef,[_town,_cls]] call _assignJob;
+                            [_id,_jobdef,[_cls]] call _assignJob;
                         };
                     };
                 }foreach(OT_allFactions);

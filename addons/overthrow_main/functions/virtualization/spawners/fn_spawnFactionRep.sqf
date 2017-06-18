@@ -1,7 +1,7 @@
 private ["_id","_pos","_building","_tracked","_vehs","_group","_all","_shopkeeper","_groups"];
 
 params ["_faction","_name","_spawnid"];
-sleep 0.1;
+sleep 0.2;
 
 private _pos = server getVariable [format["factionrep%1",_faction],[]];
 

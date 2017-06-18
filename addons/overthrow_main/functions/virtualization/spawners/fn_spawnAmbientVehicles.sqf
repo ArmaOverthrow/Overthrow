@@ -1,5 +1,5 @@
 if (!isServer) exitwith {};
-sleep 0.1;
+sleep 0.2;
 private _count = 0;
 
 params ["_town","_spawnid"];
@@ -85,7 +85,7 @@ while {(_count < _numVeh)} do {
 			};
 		};
 	};
-	sleep 0.1;
+	sleep 0.2;
 	_count = _count + 1;
 };
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

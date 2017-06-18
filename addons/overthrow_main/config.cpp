@@ -197,4 +197,5 @@ class CfgWorlds
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"
 #include "CfgFunctions.hpp"
+#include "CfgMagazines.hpp"
 #include "missions\CfgOverthrowMissions.hpp"

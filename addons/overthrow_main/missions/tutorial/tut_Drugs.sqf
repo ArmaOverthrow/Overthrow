@@ -1,12 +1,15 @@
 //Let's find some civs to sell drugs to
 
+private _done = player getVariable ["OT_tutesDone",[]];
+player setVariable ["OT_tutesDone",_done+["Drugs"],true];
+
 private _targets = [];
 private _destination = [];
 private _thistown = (getpos player) call OT_fnc_nearestTown;
 
 //Is there some already spawned within spawn distance?
 {
-    if(side _x == civilian and !(captive _x)) then {
+    if(side _x == civilian and !(captive _x) and count(_x getVariable ["shop",[]]) == 0 and !(_x getVariable ["gundealer",false]) and !(_x call OT_fnc_hasOwner)) then {
         _targets pushback _x;
     };
 }foreach(player nearEntities ["CAManBase", OT_spawnDistance]);

@@ -5,6 +5,6 @@ private _unit = _this;
 		if((_lead distance _unit) < 800) then {
 			_lead reveal [_unit,1.5];					
 		};
-		sleep 0.1;
+		sleep 0.2;
 	};
 }foreach(allgroups);

@@ -129,7 +129,7 @@ if(_numNATO > 0) then {
 			}foreach(crew _veh);
 			_numNATO = _numNATO - 1;
 
-			sleep 0.1;
+			sleep 0.2;
 
 			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 13), [], 0, "CAN_COLLIDE"];
 			createVehicleCrew _veh;
@@ -145,7 +145,7 @@ if(_numNATO > 0) then {
 	}foreach(_buildings);
 };
 
-sleep 0.1;
+sleep 0.2;
 _range = 100;
 _groupcount = 0;
 while {_count < _numNATO} do {

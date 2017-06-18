@@ -85,17 +85,29 @@ class OT_dialog_vehicle
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
 		////////////////////////////////////////////////////////
-
 		class RscButton_1600: RscOverthrowButton
 		{
 			idc = 1600;
+			action = "closeDialog 0;[] spawn OT_fnc_fastTravel;";
+			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
+
 			text = "Fast Travel"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.126 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+		class RscButton_1613: RscOverthrowButton
+		{
+			idc = 1600;
+			text = "Jobs"; //--- ToDo: Localize;
+			action = "call OT_fnc_jobsDialog";
+
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.302 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "closeDialog 0;[] spawn OT_fnc_fastTravel;";
-			tooltip = "Fast travels this vehicle and it's occupants"; //--- ToDo: Localize;
+
 		};
 		class RscButton_1601: RscOverthrowButton
 		{

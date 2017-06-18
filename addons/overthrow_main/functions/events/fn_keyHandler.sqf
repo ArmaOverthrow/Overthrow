@@ -9,6 +9,10 @@ if(!dialog) then {
 	}else{
 		if((vehicle player) != player and count (player nearObjects [OT_portBuilding,30]) > 0) then {
 			createDialog "OT_dialog_vehicleport";
+			private _ft = server getVariable ["OT_fastTravelType",1];
+			if(!OT_adminMode and _ft > 1) then {
+				ctrlEnable [1600,false];
+			};
 		}else{
 			[] spawn OT_menuHandler;
 			if(hcShownBar and count (hcSelected player) > 0) exitWith {

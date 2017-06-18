@@ -56,7 +56,7 @@ _ctrl = (findDisplay 8001) displayCtrl 1106;
 _ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber];
 
 
-sleep 0.1;
+sleep 0.2;
 //Nearest building info
 _b = player call OT_fnc_nearestRealEstate;
 _buildingTxt = "";
