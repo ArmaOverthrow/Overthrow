@@ -1,73 +1,71 @@
+params ["_jobid","_jobparams"];
+_jobparams params ["_destinationName"];
 
 private _description = "";
 private _destination = [];
-private _destinationName = "";
 private _title = "";
 
-//Here is where we might randomize the parameters a bit
-_destinationName = (getpos player) call OT_fnc_nearestTown;
-private _abandoned = (server getVariable ["NATOabandoned",[]]) + [(server getVariable ["NATOattacking",""])];
-if(_destinationName in _abandoned) then {
-    _destinationName = selectRandom (OT_allTowns - _abandoned);
+_roads = (server getVariable [_destinationName,[]]) nearRoads 75;
+if(count _roads > 0) then {
+    _destination = getpos(_roads select 0);
+}else{
+    _destination = server getVariable [_destinationName,[]];
 };
 
-_destination = getpos([server getVariable [_destinationName,[]]] call BIS_fnc_nearestRoad);
-private _params = [_destination,_destinationName];
+private _items = [];
+{
+    _x params ["_cat","_i"];
+    if(_cat == "Pharmacy") exitWith {_items = _i};
+}foreach(OT_items);
+private _itemcls = selectRandom _items;
+private _itemName = _itemcls call OT_fnc_weaponGetName;
+private _cost = (cost getVariable [_itemcls,[1]]) select 0;
+if(_cost < 5) then {_cost = 5};
+private _numitems = floor(2 + random(400 / _cost));
+
+private _params = [_destination,_destinationName,_itemcls,_numitems];
 private _markerPos = _destination;
 
-//Build a mission description and title
-_description = format["%1 is in need of medical supplies. NATO has not been fulfilling the demands of the population so delivering these supplies will drop the stability there and raise your standing as the public warms to our cause. Deliver as many bandages of any type to the marker using a vehicle, the more you have in your vehicle inventory the more effect it will have.",_destinationName];
-_title = format["Medical supplies for %1",_destinationName];
+private _effect = "Stability in the town will decrease and the driver of the vehicle will be admired by the local community for their heroic efforts.";
+if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
+    _effect = "Stability in the town will increase and the driver of the vehicle will be admired by the local community for their heroic efforts.";
+};
 
-//This next number multiplies the reward
-_difficulty = 0.5;
+//Build a mission description and title
+_description = format["%1 is in need of medical supplies. Deliver %2 x %3 to the marked location using any vehicle, just pull up with the items in the inventory. %4",_destinationName,_numitems,_itemName,_effect];
+_title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
 [[_title,_description],_markerPos,{
     //No setup required for this mission
 },{
     //Fail check...
-    //If player is wanted
-    !(captive player);
+    false
 },{
     //Success Check
-    params ["_p","_faction","_factionName"];
-    _p params ["_destination","_destinationName","_lastwarning"];
-    _supplies = ["ACE_fieldDressing","ACE_elasticBandage"];
-
-    if(isNil "_lastwarning") then {
-        _lastwarning = 0;
-        _p set [2,0];
-    };
-
+    params ["_destination","_destinationName","_itemcls","_numitems"];
     _numavailable = 0;
-    _threshold = 10;
+
+    _driver = objNull;
     {
 		_c = _x;
-        if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
+        if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) exitWith {
 		     {
     			_x params ["_cls","_amt"];
-    			if(_cls in _supplies) then {
+    			if(_cls == _itemcls) then {
     				_numavailable = _numavailable + _amt;
+                    _driver = driver _c;
     			};
     		}foreach(_c call OT_fnc_unitStock);
         };
-	}foreach(_destination nearObjects ["Land", 10]);
+	}foreach(_destination nearObjects ["AllVehicles", 30]);
 
-    if((time - _lastwarning) > 5) then {
-        if((_numavailable > 0) and _numavailable < _threshold) then {
-            "At least 10 bandages required to complete mission" call OT_fnc_notifyMinor;
-        };
-        _p set [2,time];
-    };
-    _numavailable > _threshold
+    _numavailable >= _numitems
 },{
-    params ["_target","_pos","_p","_wassuccess"];
-    _p params ["_missionParams","_faction","_factionName","_finish","_rewards"];
+    params ["_destination","_destinationName","_itemcls","_numitems","_wassuccess"];
 
     //If mission was a success
     if(_wassuccess) then {
-        _supplies = ["ACE_fieldDressing","ACE_elasticBandage"];
         //Take the medical supplies and count them
         _numavailable = 0;
         {
@@ -75,27 +73,21 @@ _difficulty = 0.5;
             if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
     		     {
         			_x params ["_cls","_amt"];
-        			if(_cls in _supplies) then {
+        			if(_cls == _itemcls) then {
                         [_c, _cls, _amt] call CBA_fnc_removeItemCargo;
         				_numavailable = _numavailable + _amt;
         			};
         		}foreach(_c call OT_fnc_unitStock);
             };
-    	}foreach(_pos nearObjects ["Land", 10]);
-
-        //calculate the effect on stability
-        _effect = round(_numavailable * 0.2);
-        if(_effect > 20) then {
-            _effect = 20;
-        };
-        _town = _pos call OT_fnc_nearestTown;
+    	}foreach(_destination nearObjects ["Land", 10]);
 
         //apply stability and standing
-        [_town,round(_effect*0.5),format["Delivered %1 medical supplies",_numavailable]] call OT_fnc_standing;
-        [_town,-_effect] call OT_fnc_stability;
-    }else{
-        //slight positive effect on stability
-        _town = _pos call OT_fnc_nearestTown;
-        [_town,2] call OT_fnc_stability;
+        [_destinationName,5,format["Delivered %1 x %2 medical supplies",_numavailable,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_standing;
+
+        if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
+            [_destinationName,10] call OT_fnc_stability;
+        }else{
+            [_destinationName,-10] call OT_fnc_stability;
+        };
     };
-},_params,_difficulty];
+},_params];

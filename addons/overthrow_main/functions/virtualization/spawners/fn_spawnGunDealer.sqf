@@ -1,5 +1,6 @@
 private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_all","_shopkeeper","_groups"];
 if (!isServer) exitwith {};
+sleep 0.2;
 
 _count = 0;
 params ["_town","_spawnid"];
@@ -29,6 +30,6 @@ _dealer = _group createUnit [OT_civType_gunDealer, _gundealerpos, [],0, "NONE"];
 
 _dealer setVariable ["gundealer",true,true];
 spawner setVariable [format ["gundealer%1",_town],_dealer,true];
-sleep 0.1;
+sleep 0.2;
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

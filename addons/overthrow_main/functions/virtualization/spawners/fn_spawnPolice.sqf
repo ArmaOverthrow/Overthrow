@@ -28,7 +28,7 @@ while {_count < _numNATO} do {
 		_pos = [[[_start,20]]] call BIS_fnc_randomPos;
 
 		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
-		sleep 0.1;
+		sleep 0.2;
 		_civ setVariable ["polgarrison",_town,false];
 		[_civ] joinSilent _group;		
 		_civ setRank "SERGEANT";

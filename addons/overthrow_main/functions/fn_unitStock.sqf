@@ -10,7 +10,10 @@ if(typename _this == "ARRAY") then {
 	_target = _this select 0;
 
 	if(_category == "Hardware") then {
-		_categoryItems = ["OT_Steel","OT_Wood","OT_Plastic"];
+		_categoryItems = ["OT_Steel","OT_Wood","OT_Plastic","OT_Fertilizer"];
+	};
+	if(_category == "Clothing") then {
+		_categoryItems = OT_allLegalClothing + OT_allGlasses + OT_allGoggles + OT_allFacewear;
 	};
 	{
 		if((_x select 0) == _category) exitWith {
@@ -38,7 +41,7 @@ private _allCargo = {
 		}foreach(weaponsItemsCargo _target);
 		{
 			_x params ["_itemcls","_item"];
-			_myitems = _myitems + (_item call _allCargo);
+			_myitems = _myitems + (itemCargo _item) + (magazineCargo _item) + (backpackCargo _item) + (weaponCargo _item);
 		}foreach(everyContainer _target);
 	};
 	if(isnil "_myitems") then {_myitems = []};

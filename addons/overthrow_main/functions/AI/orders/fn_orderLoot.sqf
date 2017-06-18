@@ -158,5 +158,5 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			[_unit] orderGetIn true;
 		};
 	};
-	sleep 0.1;
+	sleep 0.2;
 }foreach(_myunits);

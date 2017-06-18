@@ -42,7 +42,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     	}foreach(crew _veh);
         _driver assignAsCommander _veh;
         _convoypos = [_convoypos,20,_dir+180] call BIS_fnc_relPos;
-    	sleep 0.1;
+    	sleep 0.2;
     }foreach(_vehtypes);
 
     {
@@ -68,7 +68,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
 
         _convoypos = [_convoypos,20,_dir] call BIS_fnc_relPos;
 
-    	sleep 0.1;
+    	sleep 0.2;
         _x set [2,"CONVOY"];
     }foreach(_hvts);
 
@@ -93,7 +93,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
             _driver assignAsCommander _veh;
             _convoypos = [_convoypos,20,-_dir] call BIS_fnc_relPos;
             _count = _count + 1;
-            sleep 0.1;
+            sleep 0.2;
         };
     };
     sleep 5;

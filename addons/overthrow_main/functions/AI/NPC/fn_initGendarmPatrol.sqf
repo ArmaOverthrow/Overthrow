@@ -8,6 +8,7 @@ if(isNil "_town") then {_town = _start};
 private _dest = _town call OT_fnc_getRandomRoadPosition;
 
 _wp = _group addWaypoint [_dest,5];
+_wp setWaypointFormation selectRandom ["WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "DIAMOND"];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "LIMITED";

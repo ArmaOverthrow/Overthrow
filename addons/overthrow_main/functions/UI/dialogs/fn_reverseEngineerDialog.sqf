@@ -32,7 +32,7 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 }foreach(_playerstock);
 
 {
-	if (!(_x isKindOf "CaManBase") and alive _x and (damage _x) == 0) then {
+	if (!(_x isKindOf "Animal") and !(_x isKindOf "CaManBase") and alive _x and (damage _x) == 0) then {
 		_cls = typeof _x;
 		_name = _cls call OT_fnc_vehicleGetName;
 		_pic = _cls call OT_fnc_vehicleGetPic;
@@ -41,7 +41,7 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 		lbSetData [1500,_idx,_cls];
 		_numitems = _numitems + 1;
 	};
-}foreach(OT_factoryPos nearObjects ["AllVehicles", 50]);
+}foreach(OT_factoryPos nearObjects ["AllVehicles", 100]);
 
 if(_cursel >= _numitems) then {_cursel = 0};
 lbSetCurSel [1500, _cursel];

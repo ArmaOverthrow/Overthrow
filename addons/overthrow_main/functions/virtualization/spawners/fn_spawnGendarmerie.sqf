@@ -1,6 +1,6 @@
 private ["_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
-
+sleep 0.2;
 _count = 0;
 params ["_town","_spawnid"];
 
@@ -27,7 +27,7 @@ while {_count < _numNATO} do {
 
 	_home = _town call OT_fnc_getRandomRoadPosition;
 	_civ = _group createUnit [OT_NATO_Unit_PoliceCommander, _home, [],0, "NONE"];
-	sleep 0.1;
+	sleep 0.2;
 	_civ setVariable ["garrison",_town,false];
 	[_civ] joinSilent _group;
 	_civ setRank "CORPORAL";
@@ -48,7 +48,7 @@ while {_count < _numNATO} do {
 
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
-		sleep 0.1;
+		sleep 0.2;
 	};
 	_group call OT_fnc_initGendarmPatrol;
 	_range = _range + 50;

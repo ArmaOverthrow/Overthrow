@@ -28,7 +28,7 @@ _groups = [_group];
 
 	[_shopkeeper] call OT_fnc_initHarbor;
 	_shopkeeper setVariable ["harbor",true,true];
-	sleep 0.1;
+	sleep 0.2;
 }foreach(_activeshops);
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

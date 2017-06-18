@@ -535,16 +535,16 @@ class RscOverthrowListBox
 	};
 	colorSelectBackground[] =
 	{
-		0.95,
-		0.95,
-		0.95,
+		0.5,
+		0.5,
+		0.5,
 		1
 	};
 	colorSelectBackground2[] =
 	{
-		1,
-		1,
-		1,
+		0.5,
+		0.5,
+		0.5,
 		0.5
 	};
 	colorBackground[] =

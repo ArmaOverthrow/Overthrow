@@ -9,6 +9,8 @@ if(count _this > 1) then {
 };
 
 if(count _this > 2) then {
-    format["%1 (%2 %3)",_this select 2,_this select 1,_town] call OT_fnc_notifyMinor;
+    _pl = "+";
+    if((_this select 1) < 0) then {_pl = ""};
+    format["%1 (%4%2 %3)",_this select 2,_this select 1,_town,_pl] call OT_fnc_notifyMinor;
 };
 _rep;

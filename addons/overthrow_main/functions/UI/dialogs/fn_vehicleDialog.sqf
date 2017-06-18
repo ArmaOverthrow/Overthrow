@@ -1,4 +1,9 @@
 
+private _ft = server getVariable ["OT_fastTravelType",1];
+if(!OT_adminMode and _ft > 1) then {
+	ctrlEnable [1600,false];
+};
+
 private _veh = vehicle player;
 
 private _isgen = call OT_fnc_playerIsGeneral;

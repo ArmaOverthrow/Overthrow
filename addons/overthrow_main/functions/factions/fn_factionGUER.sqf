@@ -226,26 +226,44 @@ while {true} do {
 		if("Factory" in (server getVariable ["GEURowned",[]])) then {
 			private _currentCls = server getVariable ["GEURproducing",""];
 			if(_currentCls != "") then {
+				_queue = server getVariable ["factoryQueue",[]];
+				_changed = false;
+				if(count _queue > 0) then {
+					_item = _queue select 0;
+					if((_item select 0) != _currentCls) then {
+						server setVariable ["GEURproducetime",0,true];
+						server setVariable ["GEURproducing","",true];
+						_changed = true;
+					};
+				};
+				if(_changed) exitWith {
+					_queue = server getVariable ["factoryQueue",[]];
+					if(count _queue > 0) then {
+						_item = _queue select 0;
+						server setVariable ["GEURproducing",_item select 0,true];
+					};
+				};
+
 				_cost = cost getVariable[_currentCls,[]];
 				if(count _cost > 0) then {
 					_cost params ["_base","_wood","_steel","_plastic"];
 					if(isNil "_plastic") then {
 						_plastic = 0;
 					};
-					_b = _base;
+					_b = 10;
 					if(_base > 240) then {
-						_b = 30;
-					};
-					if(_base > 10000) then {
-						_b = 60;
-					};
-					if(_base > 20000) then {
-						_b = 120;
-					};
-					if(_base > 50000) then {
-						_b = 240;
-					};
-					_timetoproduce = _b + (round (_wood+1)) + (round (_steel * 2)) + (round (_plastic * 5));
+				        _b = 10;
+				    };
+				    if(_base > 10000) then {
+				        _b = 20;
+				    };
+				    if(_base > 20000) then {
+				        _b = 30;
+				    };
+				    if(_base > 50000) then {
+				        _b = 60;
+				    };
+				    _timetoproduce = _b + (round (_wood+1)) + (round(_steel * 0.2)) + (round (_plastic * 5));
 					if(_timetoproduce > 360) then {_timetoproduce = 360};
 					if(_timetoproduce < 5) then {_timetoproduce = 5};
 					_timespent = server getVariable ["GEURproducetime",0];
@@ -295,6 +313,19 @@ while {true} do {
 					if(_timespent >= _timetoproduce) then {
 						_timespent = 0;
 
+						_queue = server getVariable ["factoryQueue",[]];
+						if(count _queue > 0) then {
+							_item = _queue select 0;
+							if(_item select 1 > 1) then {
+								_item set [1,(_item select 1)-1];
+							}else{
+								_queue deleteat 0;
+							};
+							server setVariable ["factoryQueue",_queue,true];
+						};
+
+						server setVariable ["GEURproducing",""]; //will grab a queue item nek minit
+
 						if(!(_currentCls isKindOf "Bag_Base") and _currentCls isKindOf "AllVehicles") then {
 							_p = OT_factoryVehicleSpawn findEmptyPosition [0,100,_currentCls];
 							if(count _p > 0) then {
@@ -343,6 +374,13 @@ while {true} do {
 						}
 					};
 					server setVariable ["GEURproducetime",_timespent,true];
+				};
+			}else{
+				//Check build queue
+				_queue = server getVariable ["factoryQueue",[]];
+				if(count _queue > 0) then {
+					_item = _queue select 0;
+					server setVariable ["GEURproducing",_item select 0,true];
 				};
 			};
 		};

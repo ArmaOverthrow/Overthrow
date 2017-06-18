@@ -57,7 +57,7 @@ OT_townSpawners = [
 			params ["_spawntown","_spawnid"];
 			{
 				_hdl = [_spawntown,_spawnid] spawn _x;
-				sleep 0.1;
+				sleep 0.2;
 			}foreach(OT_townSpawners);
 	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);
@@ -81,14 +81,14 @@ while{true} do {
                     if((time - _time) > 30) then { //Ensures it stays spawned for minimum 30 seconds
                         OT_allSpawned deleteAt _spawnidx;
     					_x spawn OT_fnc_despawn;
-    					sleep 0.1;
+    					sleep 0.2;
                     };
                 };
             }else{
                 if (_start call OT_fnc_inSpawnDistance) then {
                     OT_allSpawned pushback _id;
 					_x spawn OT_fnc_spawn;
-					sleep 0.1;
+					sleep 0.2;
                 };
             };
         }else{
@@ -97,14 +97,14 @@ while{true} do {
                     if((time - _time) > 30) then {
                         OT_allSpawned deleteAt _spawnidx;
     					_x spawn OT_fnc_despawn;
-    					sleep 0.1;
+    					sleep 0.2;
                     };
                 };
             }else{
                 if ((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
                     OT_allSpawned pushback _id;
 					_x spawn OT_fnc_spawn;
-					sleep 0.1;
+					sleep 0.2;
                 };
             };
         };

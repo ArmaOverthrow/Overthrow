@@ -110,6 +110,12 @@ private _cc = 0;
 								_veh setAmmo [_x select 0,_x select 1];
 							}foreach((_x select 7) select 4);
 						};
+						if(count (_x select 7) > 5) then {
+							//Attached
+							((_x select 7) select 5) params ["_attached","_am"];
+							_veh setVariable ["OT_attachedClass",_attached,true];
+							[_veh,_am] call OT_fnc_initAttached;
+						};
 					};
 
 					_veh setPosATL _pos;
@@ -201,7 +207,7 @@ private _cc = 0;
 				};
 				if(_ccc == 10) then {
 					_ccc = 0;
-					sleep 0.1;
+					sleep 0.2;
 				};
 			}foreach(_val);
 		};
@@ -221,10 +227,10 @@ private _cc = 0;
 	_cc = _cc + 1;
 	if(_cc == 100) then {
 		_cc = 0;
-		sleep 0.1;
+		sleep 0.2;
 	};
 }foreach(_data);
-sleep 0.1;
+sleep 0.2;
 
 {
 	_pos = _x select 0;

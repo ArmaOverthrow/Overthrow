@@ -27,6 +27,7 @@ _wp setWaypointType "MOVE";
 _wp setWaypointSpeed "LIMITED";
 _wp setWaypointCompletionRadius 40;
 _wp setWaypointTimeout [0, 4, 8];
+_wp setWaypointFormation selectRandom ["WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "DIAMOND"];
 
 _wp = _g addWaypoint [_start,0];
 _wp setWaypointType "MOVE";

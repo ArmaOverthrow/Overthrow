@@ -53,7 +53,7 @@ _unit addEventHandler ["Fired", {
 if(isPlayer _unit) then {
 	[] spawn {
 		private _unit = player;
-		while {sleep 0.1;alive _unit} do {
+		while {sleep 0.2;alive _unit} do {
 			if!(_unit getVariable["OT_healed",false]) then {
 				if(_unit getVariable ["ACE_isUnconscious", false]) then {
 					//Look for a medic
@@ -178,7 +178,7 @@ while {alive _unit} do {
 			};
 		}else{
 			if(_unit call OT_fnc_unitSeenCRIM) then {
-				sleep 0.1;
+				sleep 0.2;
 				//chance they will just notice you if your global rep is very high or low
 				if(count attachedObjects _unit > 0) exitWith {
 					{
@@ -236,7 +236,7 @@ while {alive _unit} do {
 				};
 			}else{
 				if(_unit call OT_fnc_unitSeenNATO) then {
-					sleep 0.1;
+					sleep 0.2;
 					_town = (getpos _unit) call OT_fnc_nearestTown;
 					_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
 
