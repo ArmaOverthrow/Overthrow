@@ -109,6 +109,7 @@ class CfgFunctions
 			class progressBar {};
 			class getAssignedKey {};
 			class formatTime {};
+			class notifyAndLog {};
 		};
 
 		class Dialogs
