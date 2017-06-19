@@ -75,14 +75,19 @@ openMap true;
 		openMap false;
 	}else{
 		private _ft = server getVariable ["OT_fastTravelType",1];
-		if(_handled and _ft == 1 and (vehicle player) == player and !OT_adminMode) then {
-			_cost = ceil((player distance _pos) / 150);
+		if(_handled and _ft == 1 and !OT_adminMode) then {
+			_cost = 0;
+			if((vehicle player) == player) then {
+				_cost = ceil((player distance _pos) / 150);
+			}else{
+				_cost = ceil((player distance _pos) / 300);
+			};
 			if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;format ["You need $%1 to fast travel that distance",_cost] call OT_fnc_notifyMinor};
 			[-_cost] call OT_fnc_money;
 		};
 
 		if(_exit) exitWith {};
-			
+
 		player allowDamage false;
 		disableUserInput true;
 

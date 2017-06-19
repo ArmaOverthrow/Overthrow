@@ -250,7 +250,7 @@ while {true} do {
 					if(isNil "_plastic") then {
 						_plastic = 0;
 					};
-					_b = 10;
+					_b = 1;
 					if(_base > 240) then {
 				        _b = 10;
 				    };

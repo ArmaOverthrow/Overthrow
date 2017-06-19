@@ -32,7 +32,7 @@ if(_currentCls != "") then {
 		if(isNil "_plastic") then {
 			_plastic = 0;
 		};
-		_b = 10;
+		_b = 1;
 		if(_base > 240) then {
 	        _b = 10;
 	    };
@@ -135,7 +135,7 @@ if(count _cost > 0) then {
     if(isNil "_plastic") then {
         _plastic = 0;
     };
-    _b = 10;
+    _b = 1;
     if(_base > 240) then {
         _b = 10;
     };

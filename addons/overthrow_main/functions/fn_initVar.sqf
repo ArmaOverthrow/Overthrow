@@ -308,7 +308,7 @@ private _allHelis = "
 	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower")) * _multiply;
 	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * _multiply);
 	_steel = round(getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"));
-	_numturrets = count("" configClasses(configFile >> "cfgVehicles" >> _cls >> "Turrets"));
+	_numturrets = count("true" configClasses(configFile >> "cfgVehicles" >> _cls >> "Turrets"));
 	_plastic = 2;
 	if(_numturrets > 0) then {
 		_cost = _cost + (_numturrets * _cost * _multiply);
@@ -384,7 +384,7 @@ private _allAmmo = "
 " configClasses ( configFile >> "cfgMagazines" );
 
 private _allVehicles = "
-    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
+    ( getNumber ( _x >> ""scope"" ) > 0 )
 " configClasses ( configFile >> "cfgVehicles" );
 
 private _allFactions = "
@@ -528,7 +528,7 @@ OT_allGoggles = [];
 	}foreach(_muzzles);
 
 	_cost = 500;
-	_steel = 1;
+	_steel = 2;
 	switch (_weaponType) do	{
 		case "SubmachineGun": {_steel = 0.5;_cost = 250;OT_allSubMachineGuns pushBack _name};
 
@@ -558,7 +558,7 @@ OT_allGoggles = [];
 		case "MachineGun": {_cost = 1500;OT_allMachineGuns pushBack _name};
 		case "SniperRifle": {_cost = 4000;OT_allSniperRifles pushBack _name};
 		case "Handgun": {
-			_steel = 0.2;
+			_steel = 1;
 			_cost = 100;
 			call {
 				if(_caliber == " .408") exitWith {_cost = 2000};
@@ -684,19 +684,20 @@ if(isServer) then {
 	//Remainding vehicle costs
 	{
 		_name = configName _x;
-		if(_name isKindOf "AllVehicles" and !(_name in OT_allVehicles)) then {
-			_multiply = 15;
-			if(_name isKindOf "Plane") then {_multiply = 50}; //Planes are light
+		if((_name isKindOf "AllVehicles") and !(_name in OT_allVehicles)) then {
+			_multiply = 80;
+			if(_name isKindOf "Air") then {_multiply = 700}; //Planes/Helis have less armor
 
-			_cost = (getNumber (configFile >> "cfgVehicles" >> _name >> "armor") + getNumber (configFile >> "cfgVehicles" >> _name >> "enginePower")) * _multiply;
-			_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _name >> "maximumLoad") * _multiply);
-			_steel = round(getNumber (configFile >> "cfgVehicles" >> _name >> "armor"));
-			_numturrets = count("" configClasses(configFile >> "cfgVehicles" >> _name >> "Turrets"));
+			_cost = getNumber (configFile >> "cfgVehicles" >> _name >> "armor") * _multiply;
+			_steel = round(getNumber (configFile >> "cfgVehicles" >> _name >> "armor") * 0.5);
+			_numturrets = count("!((configName _x) select [0,5] == ""Cargo"")" configClasses(configFile >> "cfgVehicles" >> _name >> "Turrets"));
 			_plastic = 2;
 			if(_numturrets > 0) then {
-				_cost = _cost + (_numturrets * _cost);
-				_steel = _steel * 3;
-				_plastic = 6;
+				_cost = _cost + (_numturrets * _cost * 10);
+				_steel = _steel + 50;
+				_plastic = 5 * _numturrets;
+
+				if(_name isKindOf "Air") then {_cost = _cost * 2};
 			};
 
 			cost setVariable [_name,[_cost,0,_steel,_plastic],true];

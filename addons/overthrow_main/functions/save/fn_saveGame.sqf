@@ -131,12 +131,12 @@ private _saved = 0;
 		};
 		_vehicles pushback _params;
 	};
-	if(_count > 2000) then {
+	if(_count > 200) then {
 		if !(_quiet) then {
 			format["Step 5/10 - Saving vehicles (%1 to save)",_tosave - _saved] remoteExec ["OT_fnc_notifyAndLog",0,false];
 		};
 		_count = 0;
-		sleep 0.01;
+		sleep 0.2;
 	};
 	_count = _count + 1;
 }foreach(_tocheck);
@@ -269,7 +269,7 @@ if !(_quiet) then {
 
 _data pushback ["timedate",date];
 if !(_quiet) then {
-	"Step 10/10 - saving loadouts" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 10/10 - Saving loadouts" remoteExec ["OT_fnc_notifyAndLog",0,false];
 };
 {
 	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];

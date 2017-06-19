@@ -112,9 +112,12 @@ private _cc = 0;
 						};
 						if(count (_x select 7) > 5) then {
 							//Attached
-							((_x select 7) select 5) params ["_attached","_am"];
-							_veh setVariable ["OT_attachedClass",_attached,true];
-							[_veh,_am] call OT_fnc_initAttached;
+							_a = (_x select 7) select 5;
+							if(count _a > 0) then {
+								_a params ["_attached","_am"];
+								_veh setVariable ["OT_attachedClass",_attached,true];
+								[_veh,_am] call OT_fnc_initAttached;
+							};
 						};
 					};
 
