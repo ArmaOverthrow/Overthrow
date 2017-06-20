@@ -69,6 +69,7 @@ class CfgFunctions
 			class generalIsOnline {};
 			class doConversation {};
 			class givePlayerWaypoint {};
+			class clearPlayerWaypoint {};
 		};
 
 		class Interaction

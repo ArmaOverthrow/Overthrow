@@ -244,26 +244,13 @@ sleep 0.2;
 		spawner setVariable [format["resgarrison",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
-			call {
-				if(_cls == "HMG") exitWith {
-					_p = _pos findEmptyPosition [0,50,"I_HMG_01_high_F"];
-			        _gun = "I_HMG_01_high_F" createVehicle _p;
-			        createVehicleCrew _gun;
-			        {
-			            [_x] joinSilent _group;
-			        }foreach(crew _gun);
-				};
-				if(_cls == "GMG") exitWith {
-					_p = _pos findEmptyPosition [0,50,"I_GMG_01_high_F"];
-			        _gun = "I_GMG_01_high_F" createVehicle _p;
-			        createVehicleCrew _gun;
-			        {
-			            [_x] joinSilent _group;
-			        }foreach(crew _gun);
-				};
+
+			if(_cls != "HMG" and _cls != "GMG") then {
 				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
+			}else{
+				[_pos,_cls,false] spawn OT_fnc_addGarrison;
 			};
 		}foreach(_garrison);
 	};
@@ -278,9 +265,13 @@ sleep 0.2;
 		spawner setVariable [format["resgarrison",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
-			private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
-			private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
-			_civ setUnitLoadout [_loadout,true];
+			if(_cls != "HMG" and _cls != "GMG") then {
+				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
+				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
+				_civ setUnitLoadout [_loadout,true];
+			}else{
+				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+			};
 		}foreach(_garrison);
 	};
 }foreach(OT_objectiveData + OT_airportData);

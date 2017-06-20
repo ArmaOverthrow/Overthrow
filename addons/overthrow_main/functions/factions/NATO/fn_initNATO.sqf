@@ -224,13 +224,12 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		};
 		server setVariable [format ["garrison%1",_x],_garrison,true];
 	}foreach (OT_allTowns);
+	sleep 0.2;
 };
 diag_log "Overthrow: NATO Init Done";
 
 publicVariable "OT_allComms";
 
-OT_NATOInitDone = true;
-publicVariable "OT_NATOInitDone";
 
 {
 	_pos = _x select 0;
@@ -247,6 +246,7 @@ publicVariable "OT_NATOInitDone";
 
 	OT_allObjectives pushback _name;
 }foreach(OT_NATOobjectives);
+sleep 0.2;
 
 publicVariable "OT_allObjectives";
 
@@ -265,7 +265,7 @@ publicVariable "OT_allObjectives";
 	OT_allComms pushback _name;
 	OT_allObjectives pushback _name;
 }foreach(OT_NATOcomms);
-
+sleep 0.2;
 {
 	_x params ["_pos","_garrison","_upgrades"];
 	OT_flag_NATO createVehicle _pos;
@@ -286,3 +286,7 @@ publicVariable "OT_allObjectives";
 
 	[_pos,_upgrades] call OT_fnc_NATOupgradeFOB;
 }foreach(server getVariable ["NATOfobs",[]]);
+
+
+OT_NATOInitDone = true;
+publicVariable "OT_NATOInitDone";

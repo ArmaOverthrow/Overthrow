@@ -45,8 +45,7 @@ _difficulty = 1.8;
     //Spawn the dude
     _group = creategroup blufor;
     _group deleteGroupWhenEmpty true;
-    _start = [[[_destination,40]]] call BIS_fnc_randomPos;
-    _civ = _group createUnit [OT_civType_gunDealer, _start, [],0, "NONE"];
+    _civ = _group createUnit [OT_civType_gunDealer, _destination, [],0, "NONE"];
     _civ setVariable ["notalk",true,true]; //Tells Overthrow this guy cannot be recruited etc
 
     //Set face,voice and uniform
@@ -62,11 +61,8 @@ _difficulty = 1.8;
     //reward to killer
     _civ setVariable ["OT_bounty",1000,true];
 
-    //And not wanted
-    _civ setCaptive true;
-
     //Save him for access later
-    spawner setVariable [format["fugitive%1",_faction],_civ,false];
+    spawner setVariable [format["fugitive%1",_jobid],_civ,false];
 
     //Goons
     _numGoons = 1+round(random 4);
@@ -85,17 +81,45 @@ _difficulty = 1.8;
 
 		_count = _count + 1;
 	};
+
+    _wp = _bgroup addWaypoint [_destination,0];
+    _wp setWaypointType "GUARD";
 },{
     //Fail check...
+    //no fail, just set anyone too close wanted
+    params ["_faction","_destination","_destinationName","_jobid"];
+
+    _civ = spawner getVariable [format["fugitive%1",_jobid],objNull];
+    _alreadyAlerted = _civ getVariable ["OT_fugitiveAlerted",false];
+    _alerted = false;
+    {
+        if((side _x == resistance or captive _x) and (_x call OT_fnc_unitSeenNATO)) then {
+            _x setCaptive false;
+            _alerted = true;
+        };
+    }foreach(_destination nearEntities ["CAManBase",15]);
+
+    if(_alerted and !_alreadyAlerted) then {
+        private _factionName = server getvariable format["factionname%1",_faction];
+        format ["Incoming message from %1: Traitor has been alerted.",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+        _wp = group _civ addWaypoint [[[[_destination,500]]] call BIS_fnc_randomPos,0];
+        _wp setWaypointSpeed "FULL";
+        _wp setWaypointCombatMode "COMBAT";
+        _civ setVariable ["OT_fugitiveAlerted",true,false];
+    };
 },{
     //Success.. easy.. if target is dedded
     !alive (spawner getVariable [format["fugitive%1",_this select 3],objNull]);
 },{
-    params ["_faction","_destination","_destinationName","_jobid"];
+    params ["_faction","_destination","_destinationName","_jobid","_wassuccess"];
 
     //If mission was a success
     if (_wassuccess) then {
+        sleep 2;
         private _factionName = server getvariable format["factionname%1",_faction];
-        format ["Incoming message from %1: Traitor neutralized. Sending our regards.",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+        format ["Incoming message from %1: Traitor neutralized. Sending our regards. (+5 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+        server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + 5,true];
     };
+    //Clean up
+    spawner setVariable [format["fugitive%1",_jobid],nil,false];
 },_params];

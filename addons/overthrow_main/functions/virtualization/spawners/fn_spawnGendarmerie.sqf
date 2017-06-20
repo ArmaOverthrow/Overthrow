@@ -17,7 +17,7 @@ private _range = 350;
 if(_town in OT_capitals) then {
 	_range = 900;
 };
-_pergroup = 4;
+_pergroup = 2;
 
 while {_count < _numNATO} do {
 	_groupcount = 0;

@@ -213,7 +213,7 @@ class OT_dialog_garrison
 			y = 0.291 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[0] spawn OT_fnc_addGarrison";
+			action = "[getpos player,0] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1601: RscOverthrowButton
 		{
@@ -223,7 +223,7 @@ class OT_dialog_garrison
 			y = 0.291 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[1] spawn OT_fnc_addGarrison";
+			action = "[getpos player,1] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1602: RscOverthrowButton
 		{
@@ -233,7 +233,7 @@ class OT_dialog_garrison
 			y = 0.291 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[13] spawn OT_fnc_addGarrison";
+			action = "[getpos player,13] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1603: RscOverthrowButton
 		{
@@ -243,7 +243,7 @@ class OT_dialog_garrison
 			y = 0.291 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[8] spawn OT_fnc_addGarrison";
+			action = "[getpos player,8] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1604: RscOverthrowButton
 		{
@@ -253,7 +253,7 @@ class OT_dialog_garrison
 			y = 0.379 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[9] spawn OT_fnc_addGarrison";
+			action = "[getpos player,9] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1605: RscOverthrowButton
 		{
@@ -263,7 +263,7 @@ class OT_dialog_garrison
 			y = 0.379 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[10] spawn OT_fnc_addGarrison";
+			action = "[getpos player,10] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1606: RscOverthrowButton
 		{
@@ -273,7 +273,7 @@ class OT_dialog_garrison
 			y = 0.379 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "['HMG'] spawn OT_fnc_addGarrison";
+			action = "[getpos player,'HMG'] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1607: RscOverthrowButton
 		{
@@ -283,7 +283,7 @@ class OT_dialog_garrison
 			y = 0.379 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "['GMG'] spawn OT_fnc_addGarrison";
+			action = "[getpos player,'GMG'] spawn OT_fnc_addGarrison";
 		};
 		class RscStructuredText_1101: RscOverthrowStructuredText
 		{
@@ -348,12 +348,23 @@ class OT_dialog_jobs
 		{
 			idc = 1600;
 			text = "Set Waypoint"; //--- ToDo: Localize;
-			x = 0.752656 * safezoneW + safezoneX;
+			x = 0.840312 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
-			w = 0.139219 * safezoneW;
+			w = 0.0515625 * safezoneW;
 			h = 0.099 * safezoneH;
 			colorBackground[] = {0,0,0,0.8};
 			action = "[] call OT_fnc_setJobWaypoint;";
+		};
+		class RscButton_1601: RscOverthrowButton
+		{
+			idc = 1601;
+			text = "Clear Waypoint"; //--- ToDo: Localize;
+			x = 0.778437 * safezoneW + safezoneX;
+			y = 0.676 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.099 * safezoneH;
+			colorBackground[] = {0,0,0,0.8};
+			action = "[] call OT_fnc_clearPlayerWaypoint;";
 		};
 		class RscStructuredText_1100: RscOverthrowStructuredText
 		{

@@ -57,7 +57,7 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
 }else{
 	"Loading" call OT_fnc_notifyStart;
 };
-waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
+waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 
 private _aplayers = server getVariable ["OT_allplayers",[]];
 if ((_aplayers find (getplayeruid player)) == -1) then {

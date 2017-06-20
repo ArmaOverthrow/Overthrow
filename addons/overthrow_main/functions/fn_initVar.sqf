@@ -136,7 +136,7 @@ OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck
 
 OT_NATOwait = 30; //Half the Average time between NATO orders (x 10 seconds)
 OT_CRIMwait = 500; //Half the Average time between crim changes
-OT_jobWait = 10;
+OT_jobWait = 60;
 
 OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer"];
 

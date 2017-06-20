@@ -107,27 +107,29 @@ private _saved = 0;
 		};
 		_params = [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
 		if(_x isKindOf "AllVehicles") then {
-			_ammo = [];
-			_veh = _x;
-			{
-				_ammo pushback [_x,_veh ammo _x];
-			}foreach(_x weaponsTurret [0]);
-			_attached = _x getVariable ["OT_attachedClass",""];
-			_att = [];
-			if(_attached != "") then {
-				_wpn = _veh getVariable ["OT_attachedClass",objNUll];
-				if(!isNull _wpn) then {
-					if(alive _wpn) then {
-						//get attached ammo (if applicable)
-						_am = [];
-						{
-							_am pushback [_x,_wpn ammo _x];
-						}foreach(_wpn weaponsTurret [0]);
-						_att = [_attached,_am];
+			if !(_x getVariable ["OT_garrison",false]) then {
+				_ammo = [];
+				_veh = _x;
+				{
+					_ammo pushback [_x,_veh ammo _x];
+				}foreach(_x weaponsTurret [0]);
+				_attached = _x getVariable ["OT_attachedClass",""];
+				_att = [];
+				if(_attached != "") then {
+					_wpn = _veh getVariable ["OT_attachedClass",objNUll];
+					if(!isNull _wpn) then {
+						if(alive _wpn) then {
+							//get attached ammo (if applicable)
+							_am = [];
+							{
+								_am pushback [_x,_wpn ammo _x];
+							}foreach(_wpn weaponsTurret [0]);
+							_att = [_attached,_am];
+						};
 					};
 				};
+				_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att];
 			};
-			_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att];
 		};
 		_vehicles pushback _params;
 	};
