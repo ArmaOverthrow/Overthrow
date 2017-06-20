@@ -67,6 +67,28 @@ class CfgVehicles {
 				statement = "_target call OT_fnc_talkToCiv";
 			}
 		}
+        class ACE_SelfActions {
+            class ACE_Equipment {
+                class OT_StartSpliff
+                {
+                    displayName = "Smoke a spliff";
+                    condition = "('OT_Ganja' in (items player)) and (!(_player getVariable ['ot_isSmoking', false]))";
+                    statement = "[_player] spawn ot_fnc_startSpliff";
+                    showDisabled = 0;
+                    exceptions[] = {"isNotInside", "isNotSitting"};
+                    icon = "ot\ui\icons\light_cig.paa";
+                };
+                class OT_StopSpliff
+                {
+                    displayName = "Ditch your spliff!";
+                    condition = "(goggles _player) in OT_cigsArray and ((_player getVariable ['ot_isSmoking', false]))";
+                    statement = "[_player] spawn ot_fnc_stopSpliff";
+                    showDisabled = 0;
+                    exceptions[] = {"isNotInside", "isNotSitting"};
+                    icon = "ot\ui\icons\light_cig.paa";
+                };
+            }
+        }
 	};
 
 	class Furniture_base_F;

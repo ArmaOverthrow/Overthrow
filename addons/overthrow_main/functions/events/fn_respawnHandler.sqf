@@ -41,6 +41,7 @@ removeGoggles player;
 removeBackpack player;
 removeVest player;
 
+player setVariable ["ot_isSmoking", false];
 player addWeapon "ItemMap";
 
 _housepos = _old getVariable "home";
