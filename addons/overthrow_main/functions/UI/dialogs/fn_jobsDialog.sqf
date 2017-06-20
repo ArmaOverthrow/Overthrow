@@ -8,4 +8,4 @@ createDialog "OT_dialog_jobs";
 
     _idx = lbAdd [1500,format["%1",_title]];
     lbSetData [1500,_idx,_id];
-}foreach(server getVariable ["OT_activeJobs",[]]);
+}foreach(spawner getVariable ["OT_activeJobs",[]]);

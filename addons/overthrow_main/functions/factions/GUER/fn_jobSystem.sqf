@@ -13,12 +13,12 @@ private _assignJob = {
 
     _jobdef params ["_name","_target","_condition","_code","_repeat"];
 
-    _active = server getVariable ["OT_activeJobs",[]];
+    _active = spawner getVariable ["OT_activeJobs",[]];
     _job = [_id,_params] call _code;
     _j = [_id,_job,_repeat];
     _active pushback _j;
 
-    server setVariable ["OT_activeJobs",_active,true];
+    spawner setVariable ["OT_activeJobs",_active,true];
 
     _j spawn {
         params ["_id","_job","_repeat"];
@@ -36,9 +36,9 @@ private _assignJob = {
                 _jobparams call _end;
             };
         };
-        _active = server getVariable ["OT_activeJobs",[]];
+        _active = spawner getVariable ["OT_activeJobs",[]];
         _active deleteAt (_active find _this);
-        server setVariable ["OT_activeJobs",_active,true];
+        spawner setVariable ["OT_activeJobs",_active,true];
 
         _active = server getVariable ["OT_activeJobIds",[]];
         _active deleteAt (_active find _id);
