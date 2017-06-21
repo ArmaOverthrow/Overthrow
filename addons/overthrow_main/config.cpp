@@ -100,6 +100,10 @@ class CfgMissions
 		{
 			directory="ot\campaign\missions\Overthrow.Altis";
 		};
+		class OverthrowMaldenScenario
+		{
+			directory="ot\campaign\missions\Overthrow.Malden";
+		};
 	};
 	class MPMissions
 	{
@@ -110,6 +114,10 @@ class CfgMissions
 		class OverthrowAltisMP
 		{
 			directory="ot\campaign\missions\Overthrow.Altis";
+		};
+		class OverthrowMaldenMP
+		{
+			directory="ot\campaign\missions\Overthrow.Malden";
 		};
 	};
 };

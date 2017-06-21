@@ -73,7 +73,7 @@ _title = format["%1 requests %2 x %3",_factionName,_numitems,_itemName];
         			};
         		}foreach(_c call OT_fnc_unitStock);
             };
-    	}foreach(_destination nearObjects ["Land", 10]);
+    	}foreach(_destination nearObjects ["AllVehicles", 30]);
 
         //apply standing and pay money
         _topay = ([OT_nation,_itemcls,0] call OT_fnc_getSellPrice) * _numitems;

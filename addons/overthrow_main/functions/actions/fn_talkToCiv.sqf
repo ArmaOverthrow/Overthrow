@@ -50,10 +50,7 @@ if (_canMission) then {
 	_faction = _civ getvariable ["faction",""];
 	private _standing = server getVariable [format["standing%1",_faction],0];
 	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
-	_options pushBack [format["Request Mission"], {
-		private _civ = OT_interactingWith;
-		[_civ getvariable ["faction",""],_civ getvariable ["factionrepname",""]] call OT_fnc_getMission;
-	}];
+
 	_options pushBack [format["Buy Gear"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];

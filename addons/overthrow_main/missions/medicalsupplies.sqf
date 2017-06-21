@@ -74,15 +74,15 @@ _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
     		     {
         			_x params ["_cls","_amt"];
         			if(_cls == _itemcls) then {
-                        [_c, _cls, _amt] call CBA_fnc_removeItemCargo;
+                        [_c, _cls, _numitems] call CBA_fnc_removeItemCargo;
         				_numavailable = _numavailable + _amt;
         			};
         		}foreach(_c call OT_fnc_unitStock);
             };
-    	}foreach(_destination nearObjects ["Land", 10]);
+    	}foreach(_destination nearObjects ["AllVehicles", 30]);
 
         //apply stability and standing
-        [_destinationName,5,format["Delivered %1 x %2 medical supplies",_numavailable,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_standing;
+        [_destinationName,5,format["Delivered %1 x %2 medical supplies",_numitems,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_standing;
 
         if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
             [_destinationName,10] call OT_fnc_stability;
