@@ -1,4 +1,5 @@
 params ["_posTown","_name","_spawnid"];
+sleep random 0.2;
 
 private _count = 0;
 private _groups = [];
@@ -18,7 +19,7 @@ if(_name in OT_allComms) then {
 	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
 
-	_start = [[[_posTown,50]]] call BIS_fnc_randomPos;
+	_start = _posTown findEmptyPosition [0,50];
 	_civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
@@ -29,7 +30,7 @@ if(_name in OT_allComms) then {
 	sleep 0.2;
 
 	if(_count < _numNATO) then {
-		_start = [[[_posTown,50]]] call BIS_fnc_randomPos;
+		_start = _posTown findEmptyPosition [0,50];
 		_civ = _group createUnit [OT_NATO_Unit_Spotter, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -43,7 +44,7 @@ if(_name in OT_allComms) then {
 	if(_count < _numNATO) then {
 		_group = createGroup blufor;
 		_groups pushBack _group;
-		_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
+		_start = _posTown findEmptyPosition [0,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -60,7 +61,7 @@ if(_name in OT_allComms) then {
 	};
 
 	if(_count < _numNATO) then {
-		_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
+		_start = _posTown findEmptyPosition [0,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -129,7 +130,7 @@ if(_numNATO > 0) then {
 			}foreach(crew _veh);
 			_numNATO = _numNATO - 1;
 
-			sleep 0.1;
+			sleep 0.2;
 
 			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 13), [], 0, "CAN_COLLIDE"];
 			createVehicleCrew _veh;
@@ -145,11 +146,11 @@ if(_numNATO > 0) then {
 	}foreach(_buildings);
 };
 
-sleep 0.1;
+sleep 0.2;
 _range = 100;
 _groupcount = 0;
 while {_count < _numNATO} do {
-	_start = [[[_posTown,200]]] call BIS_fnc_randomPos;
+	_start = _posTown findEmptyPosition [0,100];
 	_group = createGroup blufor;
 	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
@@ -167,7 +168,7 @@ while {_count < _numNATO} do {
 
 	_count = _count + 1;
 	while {(_count < _numNATO) and (_groupcount < 8)} do {
-		_start = [[[_start,50]]] call BIS_fnc_randomPos;
+		_start = _start findEmptyPosition [0,50];
 
 		_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];

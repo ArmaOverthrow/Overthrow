@@ -6,19 +6,19 @@ params ["_pos","_upgrades"];
         _v = OT_NATO_Barrier_Small createVehicle _p;
         _v setDir 180;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,8,180] call BIS_fnc_relPos;
         _v = OT_NATO_Barrier_Small createVehicle _p;
         _v setDir 0;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,7,270] call BIS_fnc_relPos;
         _v = OT_NATO_Barrier_Large createVehicle _p;
         _v setDir 270;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,7,90] call BIS_fnc_relPos;
         _v = OT_NATO_Barrier_Large createVehicle _p;
@@ -32,7 +32,7 @@ params ["_pos","_upgrades"];
         _v setDir 45;
         createVehicleCrew _v;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,10,45] call BIS_fnc_relPos;
         _v = OT_NATO_Sandbag_Curved createVehicle _p;
@@ -43,7 +43,7 @@ params ["_pos","_upgrades"];
         _v setDir 135;
         createVehicleCrew _v;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,10,135] call BIS_fnc_relPos;
         _v = OT_NATO_Sandbag_Curved createVehicle _p;
@@ -54,7 +54,7 @@ params ["_pos","_upgrades"];
         _v setDir 225;
         createVehicleCrew _v;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,10,225] call BIS_fnc_relPos;
         _v = OT_NATO_Sandbag_Curved createVehicle _p;
@@ -65,7 +65,7 @@ params ["_pos","_upgrades"];
         _v setDir 315;
         createVehicleCrew _v;
 
-        sleep 0.1;
+        sleep 0.2;
 
         _p = [_pos,10,315] call BIS_fnc_relPos;
         _v = OT_NATO_Sandbag_Curved createVehicle _p;
@@ -88,5 +88,5 @@ params ["_pos","_upgrades"];
         [_v,_g] spawn OT_fnc_NATOMortar;
     };
 
-    sleep 0.1;
+    sleep 0.2;
 }foreach(_upgrades);

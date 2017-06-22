@@ -59,6 +59,7 @@ class CfgFunctions
 			class playerIsOwner {};
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
+			class playerIsAtHardwareStore {};
 			class tutorial {};
 			class influence {};
 			class influenceSilent {};
@@ -67,6 +68,8 @@ class CfgFunctions
 			class getPlayerHome {};
 			class generalIsOnline {};
 			class doConversation {};
+			class givePlayerWaypoint {};
+			class clearPlayerWaypoint {};
 		};
 
 		class Interaction
@@ -106,6 +109,8 @@ class CfgFunctions
 			class notifyStart {};
 			class progressBar {};
 			class getAssignedKey {};
+			class formatTime {};
+			class notifyAndLog {};
 		};
 
 		class Dialogs
@@ -135,6 +140,10 @@ class CfgFunctions
 			class characterSheetDialog {};
 			class manageRecruitsDialog {};
 			class loadoutDialog {};
+			class buyHardwareDialog {};
+			class sellHardwareDialog {};
+			class jobsDialog {};
+			class craftDialog {};
 		};
 
 		class Display
@@ -145,6 +154,9 @@ class CfgFunctions
 			class showMemberInfo {};
 			class showBusinessInfo {};
 			class refreshEmployees {};
+			class displayJobDetails {};
+			class displayCraftItem {};
+			class factoryRefresh {};
 		};
 
 		/*
@@ -159,6 +171,8 @@ class CfgFunctions
 			/* Main Menu */
 			class salvageWreck {};
 			class buyBuilding {};
+			class buyBusiness {};
+			class manageArea {};
 			class fastTravel {};
 			class talkToCiv {};
 			class recruitCiv {};
@@ -191,12 +205,12 @@ class CfgFunctions
 			class sellAll {};
 
 			/* Gun Dealer */
-			class getLocalMission {};
 			class getMission {};
 
 			/* Factory */
-			class factoryRefresh {};
-			class factorySet {};
+			class factoryQueueAdd {};
+			class factoryQueueRemove {};
+			class factoryQueueRemoveAll {};
 
 			/* Resistance Screen */
 			class makeGeneral {};
@@ -205,6 +219,9 @@ class CfgFunctions
 			class transferFunds {};
 			class hireEmployee {};
 			class fireEmployee {};
+
+			/* Jobs */
+			class setJobWaypoint {};
 
 			/* Safe */
 			class safePutMoney {};
@@ -219,12 +236,23 @@ class CfgFunctions
 			class takeStuff {};
 
 			/* Other */
+			class craft {};
 			class recruitSoldier {};
 			class recruitSquad {};
 			class addGarrison {};
 			class addPolice {};
 			class lockVehicle {};
 			class reverseEngineer {};
+			class playSound {};
+		};
+		class SelfActions
+    	{
+        	file = "\ot\functions\actions\self";
+			/* Spliffs */
+			class startSpliff {};
+			class stopSpliff {};
+			class smokeAnimation {};
+			class smokePuffs {};
 		};
 
 		/*
@@ -319,6 +347,7 @@ class CfgFunctions
 			file = "\ot\functions\inventory";
 			class takeFromCargoContainers {};
 			class hasFromCargoContainers {};
+			class anythingGetName {};
 			class weaponGetName {};
 			class magazineGetName {};
 			class vehicleGetName {};
@@ -454,6 +483,18 @@ class CfgFunctions
 			class NATOMortar {};
 		};
 
+		class CRIM
+		{
+			file = "\ot\functions\factions\CRIM";
+			class formOrJoinGang {};
+		};
+
+		class GUER
+		{
+			file = "\ot\functions\factions\GUER";
+			class jobSystem {};
+		};
+
 		class Buildings
 		{
 			file = "\ot\functions\buildings";
@@ -473,6 +514,7 @@ class CfgFunctions
 			file = "\ot\functions\integration";
 			class initTFAR {};
 			class advancedTowingInit {};
+			class detectItems {};
 		};
 	};
 };

@@ -1,15 +1,20 @@
-params ["_create"];
+params ["_p","_create"];
 
-private _b = (getpos player) call OT_fnc_nearestBase;
+_charge = true;
+if(count _this > 2) then {
+    _charge = _this select 2;
+};
+
+private _b = _p call OT_fnc_nearestBase;
 private _pos = _b select 0;
 _code = format["fob%1",_pos];
 if(_pos distance player > 30) then {
-    _b = (getpos player) call OT_fnc_nearestObjective;
+    _b = _p call OT_fnc_nearestObjective;
     _pos = _b select 0;
     _code = _b select 1;
 };
 
-if(({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) exitWith {"You cannot garrison with enemies nearby" call OT_fnc_notifyMinor};
+if((({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) and _charge) exitWith {"You cannot garrison with enemies nearby" call OT_fnc_notifyMinor};
 
 _group = spawner getVariable [format["resgarrison%1",_code],grpNull];
 _doinit = false;
@@ -92,11 +97,14 @@ if(typename _create == "SCALAR") then {
         _cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
         _cost = _cost + 300;
 
-        private _money = player getVariable ["money",0];
-        if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
-        [-_cost] call OT_fnc_money;
+        if(_charge) then {
+            private _money = player getVariable ["money",0];
+            if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
+            [-_cost] call OT_fnc_money;
+        };
 
         _gun = "I_HMG_01_high_F" createVehicle _p;
+        _gun setVariable ["OT_garrison",true,true];
         [_gun,getplayeruid player] call OT_fnc_setOwner;
         _gun setDir _dir;
         _gun setPosATL _p;
@@ -161,11 +169,14 @@ if(typename _create == "SCALAR") then {
         _cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
         _cost = _cost + 300;
 
-        private _money = player getVariable ["money",0];
-        if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
-        [-_cost] call OT_fnc_money;
+        if(_charge) then {
+            private _money = player getVariable ["money",0];
+            if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
+            [-_cost] call OT_fnc_money;
+        };
 
         _gun = "I_GMG_01_high_F" createVehicle _p;
+        _gun setVariable ["OT_garrison",true,true];
         [_gun,getplayeruid player] call OT_fnc_setOwner;
         _gun setDir _dir;
         _gun setPosATL _p;

@@ -6,11 +6,10 @@ params ["_town","_spawnid"];
 private _activeshops = server getVariable [format["activeshopsin%1",_town],[]];
 
 if(count _activeshops > 0) exitWith {
-
-
 	private _groups = [];
 
 	{
+		_x params ["_pos","_category"];
 		private _pos = _x select 0;
 		_building = nearestBuilding _pos;
 
@@ -32,6 +31,7 @@ if(count _activeshops > 0) exitWith {
 		_shopkeeper setVariable ["NOAI",true,false];
 
 		_shopkeeper setVariable ["shop",format["%1",_pos],true];
+		_shopkeeper setVariable ["OT_shopCategory",_category,true];
 		[_shopkeeper] call OT_fnc_initShopkeeper;
 
 		//Put a light on
@@ -40,7 +40,7 @@ if(count _activeshops > 0) exitWith {
 		_light setLightAmbient[.9, .9, .6];
 		_light setLightColor[.5, .5, .4];
 		_groups pushback _light;
-		sleep 0.1;
+		sleep 0.2;
 	}foreach(_activeshops);
 	spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];
 };

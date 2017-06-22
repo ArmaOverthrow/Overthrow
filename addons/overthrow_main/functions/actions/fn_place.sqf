@@ -118,7 +118,7 @@ if(_cost > 0) then {
 	_cls = modeValues select modeValue;
 	_handlerId = (findDisplay 46) displayAddEventHandler ["KeyDown",_keyhandler];
 	modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
-	
+
 	clearWeaponCargoGlobal modeTarget;
 	clearMagazineCargoGlobal modeTarget;
 	clearBackpackCargoGlobal modeTarget;
@@ -137,7 +137,7 @@ if(_cost > 0) then {
 		modeTarget setDir _dir + 90;
 	};
 
-	waitUntil {sleep 0.1; modeFinished or modeCancelled or (count attachedObjects player == 0) or (vehicle player != player) or (!alive player) or (!isPlayer player)};
+	waitUntil {sleep 0.5; modeFinished or modeCancelled or (count attachedObjects player == 0) or (vehicle player != player) or (!alive player) or (!isPlayer player)};
 
 	(findDisplay 46) displayRemoveEventHandler ["KeyDown",_handlerId];
 

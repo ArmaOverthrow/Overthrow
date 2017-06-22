@@ -1,3 +1,6 @@
+private _ft = server getVariable ["OT_fastTravelType",1];
+if(!OT_adminMode and _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_notifyMinor};
+
 if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
 private _hasdrugs = false;
@@ -46,9 +49,6 @@ openMap true;
 		};
 	};
 
-
-	if(_exit) exitWith {};
-
 	_ob = _pos call OT_fnc_nearestObjective;
 	_valid = true;
 	_ob params ["_obpos","_obname"];
@@ -74,6 +74,20 @@ openMap true;
 		"You must click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 		openMap false;
 	}else{
+		private _ft = server getVariable ["OT_fastTravelType",1];
+		if(_handled and _ft == 1 and !OT_adminMode) then {
+			_cost = 0;
+			if((vehicle player) == player) then {
+				_cost = ceil((player distance _pos) / 150);
+			}else{
+				_cost = ceil((player distance _pos) / 300);
+			};
+			if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;format ["You need $%1 to fast travel that distance",_cost] call OT_fnc_notifyMinor};
+			[-_cost] call OT_fnc_money;
+		};
+
+		if(_exit) exitWith {};
+
 		player allowDamage false;
 		disableUserInput true;
 

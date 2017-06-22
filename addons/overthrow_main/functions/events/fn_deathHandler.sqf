@@ -34,6 +34,13 @@ _hvt = _me getvariable "hvt_id";
 
 _standingChange = 0;
 
+_bounty = _me getVariable ["OT_bounty",0];
+if(_bounty > 0) then {
+	[_killer,_bounty] call OT_fnc_rewardMoney;
+	[_killer,_bounty] call OT_fnc_experience;
+	_me setVariable ["OT_bounty",0,false];
+};
+
 call {
 	if(!isNil "_civ") exitWith {
 		_standingChange = -10;

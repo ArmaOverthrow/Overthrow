@@ -113,7 +113,7 @@ SA_Simulate_Towing_Speed = {
 			_vehicle setVariable ["SA_Max_Tow_Speed",_newMaxSpeed];
 		};
 
-		sleep 0.1;
+		sleep 0.2;
 
 	};
 };

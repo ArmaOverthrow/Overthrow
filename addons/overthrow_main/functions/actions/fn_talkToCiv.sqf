@@ -1,4 +1,6 @@
-private _civ = OT_interactingWith;
+private _civ = _this;
+
+OT_interactingWith = _civ;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
 private _standing = [_town] call OT_fnc_standing;
@@ -8,7 +10,7 @@ private _money = player getvariable "money";
 
 private _options = [];
 
-if (side _civ == west) exitWith {
+if (side _civ == west or side _civ == east) exitWith {
 	_options pushBack ["Cancel",{}];
 	_options spawn OT_fnc_playerDecision;
 };
@@ -16,7 +18,6 @@ if (side _civ == west) exitWith {
 private _canRecruit = true;
 
 private _canBuy = false;
-private _canBuyClothes = false;
 private _canBuyVehicles = false;
 private _canBuyBoats = false;
 private _canBuyGuns = false;
@@ -24,12 +25,12 @@ private _canSell = false;
 private _canSellDrugs = true;
 private _canIntel = true;
 private _canMission = false;
-private _canLocMission = false;
+private _canTute = false;
 
-if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true;_canBuyClothes=true};
+if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true};
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
-if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canLocMission=true};
+if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canTute =true};
 if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
@@ -44,27 +45,12 @@ if (_canRecruit) then {
 	];
 };
 
-if (_canLocMission) then {
-	_options pushBack [format["Request Mission"], {
-		[] call OT_fnc_getLocalMission;
-	}];
-	_missions = player getVariable ["mytasks",[]];
-	if(count _missions > 0) then {
-		_options pushBack [format["Cancel All Missions"], {
-			player setVariable ["mytasks",[],true];
-		}];
-	};
-};
-
 if (_canMission) then {
 	_factionName = _civ getvariable ["factionrepname",""];
 	_faction = _civ getvariable ["faction",""];
 	private _standing = server getVariable [format["standing%1",_faction],0];
 	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
-	_options pushBack [format["Request Mission"], {
-		private _civ = OT_interactingWith;
-		[_civ getvariable ["faction",""],_civ getvariable ["factionrepname",""]] call OT_fnc_getMission;
-	}];
+
 	_options pushBack [format["Buy Gear"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
@@ -109,12 +95,6 @@ if (_canMission) then {
 		createDialog "OT_dialog_buy";
 		[OT_nation,_standing,_s,10] call OT_fnc_buyDialog;
 	}];
-	_missions = player getVariable ["mytasks",[]];
-	if(count _missions > 0) then {
-		_options pushBack [format["Cancel All Missions"], {
-			player setVariable ["mytasks",[],true];
-		}];
-	};
 };
 
 if (_canBuy) then {
@@ -124,32 +104,69 @@ if (_canBuy) then {
 			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = [_town] call OT_fnc_standing;
 
-			_bp = _civ getVariable "shop";
-			_s = [];
-			{
-				_pos = _x select 0;
-				if(format["%1",_pos] == _bp) exitWith {
-					_s = _x select 1;
-				};
-			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+			_cat = _civ getVariable "OT_shopCategory";
+			player setVariable ["OT_shopTarget","Self",false];
 
-			player setVariable ["shopping",_civ,false];
 			createDialog "OT_dialog_buy";
-			[_town,_standing,_s] call OT_fnc_buyDialog;
+
+			if(_cat == "Clothing") then {
+				[_town,_standing] call OT_fnc_buyClothesDialog;
+			}else{
+				_s = [];
+				{
+					if((_x select 0) == _cat) exitWith {
+						{
+							_s pushback [_x,-1];
+						}foreach(_x select 1);
+					};
+				}foreach(OT_items);
+
+				if(_cat == "Surplus") then {
+					{
+						_s pushback [_x,-1];
+					}foreach(OT_allBackpacks);
+				};
+
+				[_town,_standing,_s] call OT_fnc_buyDialog;
+			};
 		}
 	];
 };
 
-if (_canBuyClothes) then {
-	_options pushBack [
-		"Buy Clothing",{
-			private _civ = OT_interactingWith;
-			private _town = (getpos player) call OT_fnc_nearestTown;
-			player setVariable ["shopping",_civ,false];
-			createDialog "OT_dialog_buy";
-			[_town,[_town] call OT_fnc_standing] call OT_fnc_buyClothesDialog;
-		}
-	];
+if (_canTute) then {
+	_done = player getVariable ["OT_tutesDone",[]];
+	if !("NATO" in _done) then {
+		_options pushBack [
+			"So, about those NATO soldiers...",{
+				private _civ = OT_interactingWith;
+				[player,_civ,["So, about those NATO soldiers...","Yes! I will gladly pay you $250 to get them off my back","Alright I'll see what I can do"],(OT_tutorialMissions select 0)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
+	if !("CRIM" in _done) then {
+		_options pushBack [
+			"So, about those gangs...",{
+				private _civ = OT_interactingWith;
+				[player,_civ,["So, about those gangs...","Sure, local businessmen usually pay quite well for them.","Alright I'll see what I can do"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
+	if !("Drugs" in _done) then {
+		_options pushBack [
+			"You sell Ganja right?",{
+				private _civ = OT_interactingWith;
+				[player,_civ,["You sell Ganja right?","I sure do, wanna blaze it?","Not right now, I need some cash first","Oh OK, sell it to the civilians then"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
+	if !("Economy" in _done) then {
+		_options pushBack [
+			"So how can I make money legally?",{
+				private _civ = OT_interactingWith;
+				[player,_civ,["You sell Ganja right?","I sure do, wanna blaze it?","Not right now, I need some cash first","Oh OK, sell it to the civilians then"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+			}
+		];
+	};
 };
 
 if (_canBuyBoats) then {
@@ -285,19 +302,14 @@ if (_canSell) then {
 			private _town = (getpos player) call OT_fnc_nearestTown;
 			private _standing = [_town] call OT_fnc_standing;
 
-			_bp = _civ getVariable "shop";
-			_s = [];
-			{
-				_pos = _x select 0;
-				if(format["%1",_pos] == _bp) exitWith {
-					_s = _x select 1;
-				};
-			}foreach(server getVariable [format["activeshopsin%1",_town],[]]);
+			_cat = _civ getVariable "OT_shopCategory";
+			_categorystock = [player,_cat] call OT_fnc_unitStock;
 
-			_playerstock = player call OT_fnc_unitStock;
-			player setVariable ["shopping",_civ,false];
+			player setVariable ["OT_shopTarget","Self",false];
+			player setVariable ["OT_shopTargetCategory",_cat,false];
+
 			createDialog "OT_dialog_sell";
-			[_playerstock,_town,_standing,_s] call OT_fnc_sellDialog;
+			[_categorystock,_town,_standing] call OT_fnc_sellDialog;
 		}
 	];
 };

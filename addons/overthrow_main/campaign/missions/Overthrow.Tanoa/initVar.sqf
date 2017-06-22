@@ -9,7 +9,7 @@ OT_startCameraPos = [1385.17,505.453,1.88826];
 OT_startCameraTarget = [1420,535,5.8];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 12;
+OT_economyVersion = 13;
 OT_NATOversion = 8;
 OT_CRIMversion = 1;
 
@@ -31,6 +31,7 @@ OT_item_Radio = "Land_PortableLongRangeRadio_F";
 OT_item_Map = "Mapboard_tanoa_F";
 OT_item_Tent = "Land_TentDome_F";
 OT_item_Safe = "Land_MetalCase_01_small_F";
+OT_item_Workbench = "Land_Workbench_01_F";
 
 //Animals to spawn (@todo: spawn animals)
 OT_allLowAnimals = ["Rabbit_F","Turtle_F"];
@@ -164,3 +165,4 @@ OT_barracks = "Land_Barracks_01_grey_F";
 OT_workshopBuilding = "Land_Cargo_House_V4_F";
 OT_refugeeCamp = "Land_Medevac_house_V1_F";
 OT_trainingCamp = "Land_IRMaskingCover_02_F";
+OT_hardwareStore = "Land_Shop_Town_02_F";

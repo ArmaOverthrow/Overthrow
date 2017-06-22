@@ -5,7 +5,7 @@ if (!isServer) exitwith {};
 _count = 0;
 params ["_town","_spawnid"];
 _posTown = server getVariable _town;
-
+sleep random 0.2;
 _shopkeeper = objNULL;
 private _activeshops = server getVariable [format["activecarshopsin%1",_town],[]];
 
@@ -37,7 +37,7 @@ private _groups = [];
 
 	[_shopkeeper] call OT_fnc_initCarDealer;
 	_shopkeeper setVariable ["carshop",true,true];
-	sleep 0.1;
+	sleep 0.2;
 }foreach(_activeshops);
 
 

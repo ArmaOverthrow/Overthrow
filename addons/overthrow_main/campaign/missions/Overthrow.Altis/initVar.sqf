@@ -9,7 +9,7 @@ OT_startCameraPos = [11646.6,6406.52,2];
 OT_startCameraTarget = [13808.2,6387.16,0];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 1;
+OT_economyVersion = 2;
 OT_NATOversion = 1;
 OT_CRIMversion = 1;
 
@@ -162,3 +162,4 @@ OT_barracks = "Land_Barracks_01_grey_F";
 OT_workshopBuilding = "Land_Cargo_House_V4_F";
 OT_refugeeCamp = "Land_Medevac_house_V1_F";
 OT_trainingCamp = "Land_IRMaskingCover_02_F";
+OT_hardwareStore = "Land_dp_smallFactory_F";

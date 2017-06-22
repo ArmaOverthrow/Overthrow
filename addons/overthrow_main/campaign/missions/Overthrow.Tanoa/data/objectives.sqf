@@ -6,7 +6,8 @@ OT_objectiveData = [
     [[3870.23,13412.4,0],"The Vehicle Range",300],
     [[3939.27,13915,0],"The Camp Remnants",250],
     [[3166.18,11038.8,0],"Belfort Naval Base",500],
-    [[5216.9,3656.3,0],"Chemical Plant",600]
+    [[5216.9,3656.3,0],"Chemical Plant",600],
+    [[7689.13,4191.38,0],"Le Port Base",300]
 ];
 OT_NATO_HQ = "Tuvanaka Airbase";
 OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","96FM Georgetown","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];

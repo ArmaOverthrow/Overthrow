@@ -9,6 +9,10 @@ if(!dialog) then {
 	}else{
 		if((vehicle player) != player and count (player nearObjects [OT_portBuilding,30]) > 0) then {
 			createDialog "OT_dialog_vehicleport";
+			private _ft = server getVariable ["OT_fastTravelType",1];
+			if(!OT_adminMode and _ft > 1) then {
+				ctrlEnable [1600,false];
+			};
 		}else{
 			[] spawn OT_menuHandler;
 			if(hcShownBar and count (hcSelected player) > 0) exitWith {
@@ -59,9 +63,16 @@ if(!dialog) then {
 						}foreach(_e);
 					};
 				};
-				if(call OT_fnc_playerIsAtWarehouse) then {
-					createDialog "OT_dialog_vehiclewarehouse";
-				}else{
+				call {
+					if(driver vehicle player != player) exitWith {
+						[] spawn OT_fnc_mainMenu;
+					};
+					if(call OT_fnc_playerIsAtWarehouse) exitWith {
+						createDialog "OT_dialog_vehiclewarehouse";
+					};
+					if(call OT_fnc_playerIsAtHardwareStore) exitWith {
+						createDialog "OT_dialog_vehiclehardware";
+					};
 					createDialog "OT_dialog_vehicle";
 					[] spawn OT_fnc_vehicleDialog;
 				};

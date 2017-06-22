@@ -1,4 +1,5 @@
 params ["_town","_spawnid"];
+sleep random 0.2;
 
 spawner setvariable [format["townspawnid%1",_town],_spawnid,false];
 
@@ -12,7 +13,7 @@ private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
 private _posTown = server getVariable _town;
 
-
+waitUntil {!isNil "OT_economyLoadDone"};
 
 private _mSize = 350;
 if(_town in OT_capitals) then {
@@ -45,7 +46,7 @@ if !(_church isEqualTo []) then {
 	_pos = [[[_church,20]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_civType_priest, _pos, [],0, "NONE"];
 	[_civ] call OT_fnc_initPriest;
-	sleep 0.1;
+	sleep 0.2;
 };*/
 
 _count = 0;
@@ -82,17 +83,17 @@ while {_count < _numCiv} do {
 				_identity = call OT_fnc_randomLocalIdentity;
 			};
 		};
-		if(count _identity == 0) then {
+		if(isNil "_identity" or count _identity == 0) then {
 			_identity = call OT_fnc_randomLocalIdentity;
 		};
 		[_civ,_identity] call OT_fnc_applyIdentity;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
-		sleep 0.2;
 	};
+	sleep 0.2;
 	_group spawn OT_fnc_initCivilianGroup;
 };
-
+sleep 0.2;
 //Do gangs
 private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 {
@@ -122,6 +123,10 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			[_civ] joinSilent _group;
 			spawner setVariable [format["civspawn%1",_civid],_civ,false];
 
+			if(isNil "_identity" or count _identity == 0) then {
+				_identity = call OT_fnc_randomLocalIdentity;
+			};
+
 			[_civ,_town,_vest] call OT_fnc_initCriminal;
 			[_civ,_identity] call OT_fnc_applyIdentity;
 			[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
@@ -130,8 +135,8 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			_civ setVariable ["OT_civid",_civid,true];
 			_civ setBehaviour "SAFE";
 			_civ setVariable ["hometown",_hometown,true];
-			sleep 0.2;
 		}foreach(_members);
+		sleep 0.2;
 		_group spawn OT_fnc_initCivilianGroup;
 	};
 }foreach(_gangs);

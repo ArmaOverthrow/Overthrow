@@ -89,7 +89,7 @@ while {true} do {
 				};
 			};
 		};
-		sleep 0.1;
+		sleep 0.2;
 	}foreach(allgroups);
 
 	{

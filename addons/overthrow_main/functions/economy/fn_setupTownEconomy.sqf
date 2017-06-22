@@ -1,61 +1,65 @@
 private _town    = _this select 0;
-private _dist = 400;
-if(_town in OT_sprawling or _town in OT_capitals) then {_dist = 700};
+private _dist = 600;
+if(_town in OT_sprawling or _town in OT_capitals) then {_dist = 1000};
 private _posTown = server getVariable _town;
 private _stability = server getVariable format["stability%1",_town];
+private _population = server getVariable format["population%1",_town];
 private _shops   = 0;
-private _active  = [];
+private _activeShops  = [];
 private _activecar  = [];
 private _piers  = [];
+private _activeHardware = [];
 
 private _churches = nearestObjects [_posTown, OT_churches, _dist,false];
 if(count _churches > 0) then {
 	server setVariable [format["churchin%1",_town],getpos (_churches select 0),true];
 };
 
+//Find hardware stores
 {
-    if !(_x call OT_fnc_hasOwner) then {
-        //spawn any main shops
-        if(_shops < 5) then {
-            _shops        = _shops + 1;
-            _stock        = [];
-            _itemsToStock = [];
+	private _pos = getpos _x;
+	if !(_pos in OT_allShops) exitWith {
+		_activeHardware pushback [_pos];
+		OT_allShops pushback _pos;
+	};
+}foreach(nearestObjects [_posTown, [OT_hardwareStore], _dist,false]);
+server setVariable [format["activehardwarein%1",_town],_activeHardware,true];
 
-            _numitems     = floor(random 6) + 4;
-            _count        = 0;
+private _chance = 100; //Chance that a shop will be a shop
+private _shops = nearestObjects [_posTown, OT_shops, _dist,false];
+if(count _shops > 15) then {_chance = 50};
+if(count _shops > 30) then {_chance = 30};
+if(count _shops > 50) then {_chance = 20};
+if(count _shops > 100) then {_chance = 10};
 
-            while {_count < _numitems} do {
-                _item = (OT_allItems - OT_illegalItems - OT_consumableItems) call BIS_Fnc_selectRandom;
-                if!(_item in _itemsToStock) then {
-                    _itemsToStock pushback _item;
-                    _count = _count + 1;
-                };
-            };
+//Find shop buildings and distribute categories to them
+{
+	private _pos = getpos _x;
+	//Ensure shops are not found twice (overlapping town search radius)
+	if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
+		_category = "General";
+		_rnd = random 100;
+		call {
+			if(_rnd > 90) exitWith {_category = "Surplus"};
+			if(_rnd > 80) exitWith {_category = "Electronics"};
+			if(_rnd > 60) exitWith {_category = "Pharmacy"};
+			if(_rnd > 40) exitWith {_category = "Clothing"};
+		};
+		_activeShops pushback [_pos,_category];
+		OT_allShops pushback _pos;
+	};
+}foreach(_shops);
 
-            //1 Backpack
-            _item = (OT_allBackpacks) call BIS_Fnc_selectRandom;
-            _itemsToStock pushback _item;
-
-            {
-                _num = floor(random 5) + 1;
-                _stock pushBack [_x,_num];
-            }foreach(_itemsToStock);
-            {
-                _num = floor(random 20) + 10;
-                _stock pushBack [_x,_num];
-            }foreach(OT_consumableItems);
-
-            _active pushback [(getpos _x),_stock];
-        };
-    };
-}foreach(nearestObjects [_posTown, OT_shops, _dist,false]);
+server setVariable [format["activeshopsin%1",_town],_activeShops,true];
 
 {
 	private _po = getpos _x;
-    if !(_x call OT_fnc_hasOwner or _po in _activecar) then {
+    if !(_x call OT_fnc_hasOwner or _po in _activecar or _po in OT_allShops) then {
+		OT_allShops pushback _po;
 		_activecar pushback _po;
     };
 }foreach(nearestObjects [_posTown, OT_carShops, _dist,false]);
+server setVariable [format["activecarshopsin%1",_town],_activecar,true];
 
 {
 	private _po = getpos _x;
@@ -69,41 +73,4 @@ if(count _churches > 0) then {
 		};
     };
 }foreach(nearestObjects [_posTown,OT_piers, _dist,false]);
-
-server setVariable [format["shopsin%1",_town],_shops,true];
-server setVariable [format["activeshopsin%1",_town],_active,true];
-server setVariable [format["activecarshopsin%1",_town],_activecar,true];
 server setVariable [format["activepiersin%1",_town],_piers,true];
-_active = [];
-{
-    if !(_x call OT_fnc_hasOwner) then {
-        if((random 100) > 60) then {
-			_bdgid = [_x] call OT_fnc_getBuildID;
-            _pos   = getpos _x;
-            _stock = [];
-            {
-                _cost = cost getVariable _x;
-                _base = _cost select 0;
-
-                _max = 20;
-                if(_base > 40) then {
-                    _max = 5;
-                };
-				if(_x in OT_allBackpacks) then {
-					_max = 2;
-				};
-
-                _num = floor(random _max);
-                if(_x in OT_consumableItems) then {
-                    _num = floor(_num * 2);
-                };
-                if(_num > 0) then {
-                    _stock pushBack [_x,_num];
-                };
-            }foreach(OT_allItems + OT_allBackpacks);
-            server setVariable [format["garrison%1",_bdgid],2 + round(random 4),true];
-            _active pushback [(getpos _x),_stock];
-        };
-    };
-}foreach(nearestObjects [_posTown, OT_warehouses, _dist,false]);
-server setVariable [format["activedistin%1",_town],_active,true];
