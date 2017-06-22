@@ -243,6 +243,16 @@ class CfgFunctions
 			class addPolice {};
 			class lockVehicle {};
 			class reverseEngineer {};
+			class playSound {};
+		};
+		class SelfActions
+    	{
+        	file = "\ot\functions\actions\self";
+			/* Spliffs */
+			class startSpliff {};
+			class stopSpliff {};
+			class smokeAnimation {};
+			class smokePuffs {};
 		};
 
 		/*
