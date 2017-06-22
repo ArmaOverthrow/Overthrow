@@ -188,12 +188,12 @@ OT_backpacks = [
 ];
 
 cost setVariable ["OT_Wood",[5,0,0,0],true];
-cost setVariable ["OT_Steel",[15,0,0,0],true];
-cost setVariable ["OT_Plastic",[10,0,0,0],true];
+cost setVariable ["OT_Steel",[25,0,0,0],true];
+cost setVariable ["OT_Plastic",[40,0,0,0],true];
 cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
 cost setVariable ["OT_Grapes",[5,0,0,0],true];
 cost setVariable ["OT_Sugar",[15,0,0,0],true];
-cost setVariable ["OT_Wine",[15,0,0,0],true];
+cost setVariable ["OT_Wine",[25,0,0,0],true];
 cost setVariable ["OT_Olives",[7,0,0,0],true];
 cost setVariable ["OT_Fertilizer",[20,0,0,0],true];
 
@@ -890,6 +890,7 @@ OT_cigsArray = ["EWK_Cigar1", "EWK_Cigar2", "EWK_Cig1", "EWK_Cig2", "EWK_Cig3", 
 
 
 if(isServer) then {
+	cost setVariable ["ToolKit",[80,0,0,0],true];
 	OT_varInitDone = true;
 	publicVariable "OT_varInitDone";
 };
