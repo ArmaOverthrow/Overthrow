@@ -31,7 +31,7 @@ class CfgOverthrowMissions
     {
         target = "Faction";
         repeatable = 1;
-        condition = "_standing > 0";
+        condition = "_inSpawnDistance";
         script = "\ot\missions\fugitive.sqf";
         chance = 10;
     };

@@ -187,6 +187,15 @@ class CfgMarkers
 		shadow = true;
 		scope = 1;
 	};
+	class flag_Malden
+	{
+		name = "Malden";
+		icon = "ot\flags\flag_malden.paa";
+		color[] = {1, 1, 1, 1};
+		size = 32;
+		shadow = true;
+		scope = 1;
+	};
 };
 
 class CfgWorlds

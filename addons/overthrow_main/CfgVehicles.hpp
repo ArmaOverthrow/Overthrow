@@ -60,7 +60,7 @@ class CfgVehicles {
     class CAManBase: Man {
         class ACE_Actions {
 			class OT_HeadActions {
-				condition = "(!isplayer _target) and (primaryWeapon player == """") and (secondaryWeapon player == """") and (handgunWeapon player == """")";
+				condition = "(!isplayer _target) and !(side _target == west)";
 				selection = "pilot";
 				distance = 20;
 				displayName = "Talk";
@@ -181,6 +181,15 @@ class CfgVehicles {
         ot_template = '[]';
     };
 	class Land_u_Shop_02_V1_F: Land_i_Shop_02_V1_F {
+        ot_isShop = 0;
+    };
+
+	//Shops (Malden)
+	class Land_i_Shop_02_V3_F: House_F {
+        ot_isShop = 1;
+        ot_template = '[]';
+    };
+	class Land_u_Shop_02_V3_F: Land_i_Shop_02_V3_F {
         ot_isShop = 0;
     };
 

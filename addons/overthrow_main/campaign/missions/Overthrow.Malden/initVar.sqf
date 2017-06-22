@@ -9,7 +9,7 @@ OT_startCameraPos = [2717.66,7298.14,15];
 OT_startCameraTarget = [3016.03,7171.53,0];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 2;
+OT_economyVersion = 1;
 OT_NATOversion = 1;
 OT_CRIMversion = 1;
 
@@ -19,8 +19,8 @@ OT_spawnFaction = "IND_G_F"; //This faction will have a rep in spawn town
 OT_flag_NATO = "Flag_NATO_F";
 OT_flag_CRIM = "Flag_Syndikat_F";
 OT_flag_IND = "Flag_Green_F";
-OT_flagImage = "\A3\ui_f\data\map\markers\flags\Altis_ca.paa";
-OT_flagMarker = "flag_Tanoa";
+OT_flagImage = "\ot\flags\flag_malden.paa";
+OT_flagMarker = "flag_Malden";
 
 OT_populationMultiplier = 0.5; //Used to tweak populations per map
 

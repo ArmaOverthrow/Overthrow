@@ -36,18 +36,8 @@ if(_handled) then {
 		[_building,getPlayerUID player] call OT_fnc_setOwner;
 		[-_price] call OT_fnc_money;
 
-		_mrk = createMarkerLocal [_mrkid,getpos _building];
-		_mrk setMarkerShape "ICON";
-		_mrk setMarkerColor "ColorWhite";
-		if(typeof _building == OT_warehouse) then {
-			_mrk setMarkerType "OT_warehouse";
-		}else{
-			_mrk setMarkerType "loc_Tourism";
-			_mrk setMarkerAlpha 0;
-			_mrk setMarkerAlphaLocal 1;
-		};
 		_id = [_building] call OT_fnc_getBuildID;
-		buildingpositions setVariable [str _id,position _building,true];
+		buildingpositions setVariable [_id,position _building,true];
 		_owned pushback _id;
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		if(_price > 10000) then {

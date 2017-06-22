@@ -40,13 +40,13 @@ diag_log format["Overthrow: %1 objectives virtualized",count _allobs];
 diag_log format["Overthrow: %1 checkpoints virtualized",count OT_NATO_control];
 
 OT_townSpawners = [
+	OT_fnc_spawnShops,
 	OT_fnc_spawnCivilians,
 	OT_fnc_spawnGendarmerie,
 	OT_fnc_spawnPolice,
 	OT_fnc_spawnCarDealers,
 	OT_fnc_spawnGunDealer,
 	OT_fnc_spawnAmbientVehicles,
-	OT_fnc_spawnShops,
 	OT_fnc_spawnBoatDealers
 ];
 

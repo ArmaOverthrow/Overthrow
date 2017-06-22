@@ -1,5 +1,6 @@
 params ["_town","_spawnid"];
-sleep 0.2;
+sleep random 0.2;
+
 spawner setvariable [format["townspawnid%1",_town],_spawnid,false];
 
 private _hometown = _town;
@@ -88,8 +89,8 @@ while {_count < _numCiv} do {
 		[_civ,_identity] call OT_fnc_applyIdentity;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
-		sleep 0.2;
 	};
+	sleep 0.2;
 	_group spawn OT_fnc_initCivilianGroup;
 };
 sleep 0.2;
@@ -134,8 +135,8 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			_civ setVariable ["OT_civid",_civid,true];
 			_civ setBehaviour "SAFE";
 			_civ setVariable ["hometown",_hometown,true];
-			sleep 0.2;
 		}foreach(_members);
+		sleep 0.2;
 		_group spawn OT_fnc_initCivilianGroup;
 	};
 }foreach(_gangs);

@@ -218,6 +218,23 @@ _handler = {
 
 	_scale = ctrlMapScale (_this select 0);
 	if(_scale <= 0.16) then {
+		private _leased = player getvariable ["leased",[]];
+		{
+			_pos = buildingpositions getVariable [_x,[]];
+			if(count _pos > 0) then {
+				_alpha = 1;
+				if(_x in _leased) then {_alpha = 0.3};
+				(_this select 0) drawIcon [
+					"\A3\ui_f\data\map\mapcontrol\Tourism_CA.paa",
+					[1,1,1,_alpha],
+					_pos,
+					0.3/ctrlMapScale (_this select 0),
+					0.3/ctrlMapScale (_this select 0),
+					""
+				];
+			};
+		}foreach(player getvariable ["owned",[]]);
+
 		{
 		    _x params ["_cls","_name","_side","_flag"];
 		    if(_side != 1) then {

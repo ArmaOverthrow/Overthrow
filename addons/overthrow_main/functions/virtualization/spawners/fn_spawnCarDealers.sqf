@@ -5,7 +5,7 @@ if (!isServer) exitwith {};
 _count = 0;
 params ["_town","_spawnid"];
 _posTown = server getVariable _town;
-sleep 0.2;
+sleep random 0.2;
 _shopkeeper = objNULL;
 private _activeshops = server getVariable [format["activecarshopsin%1",_town],[]];
 

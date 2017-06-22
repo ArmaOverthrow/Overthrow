@@ -1,5 +1,5 @@
 if (!isServer) exitwith {};
-sleep 0.2;
+sleep random 0.2;
 private _count = 0;
 
 params ["_town","_spawnid"];

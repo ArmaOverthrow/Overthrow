@@ -1,6 +1,8 @@
 private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_groups","_all","_shopkeeper"];
 if (!isServer) exitwith {};
 
+sleep random 0.2;
+
 params ["_town","_spawnid"];
 private _activeshops = server getVariable [format["activepiersin%1",_town],[]];
 

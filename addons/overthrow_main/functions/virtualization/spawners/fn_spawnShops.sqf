@@ -3,8 +3,6 @@ private ["_id","_pos","_building","_tracked","_vehs","_group","_all","_shopkeepe
 private _hour = date select 3;
 params ["_town","_spawnid"];
 
-sleep 0.2;
-
 private _activeshops = server getVariable [format["activeshopsin%1",_town],[]];
 
 if(count _activeshops > 0) exitWith {

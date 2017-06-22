@@ -8,7 +8,7 @@ class EditorData
 	toggles=521;
 	class ItemIDProvider
 	{
-		nextID=2177;
+		nextID=2185;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=454;
+		nextID=459;
 	};
 	class Camera
 	{
-		pos[]={4878.9897,421.46265,8576.2627};
-		dir[]={0.57461125,-0.51920396,0.63269687};
-		up[]={0.34907803,0.85463697,0.3843655};
-		aside[]={0.74029428,-3.3939432e-007,-0.67233282};
+		pos[]={9183.4248,278.67508,3141.479};
+		dir[]={-0.83506131,-0.27595153,0.47605035};
+		up[]={-0.23975331,0.96115732,0.13667786};
+		aside[]={0.49527794,1.3224781e-007,0.868792};
 	};
 };
 binarizationWanted=0;
@@ -54,13 +54,14 @@ addons[]=
 	"ace_explosives",
 	"ace_ui",
 	"A3_Modules_F_Curator_Curator",
-	"A3_Structures_F_Mil_Cargo"
+	"A3_Structures_F_Mil_Cargo",
+	"A3_Structures_F_Ind_DieselPowerPlant"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=23;
+		items=24;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -219,6 +220,13 @@ class AddonsMetaData
 		{
 			className="A3_Structures_F_Mil";
 			name="Arma 3 - Military Buildings and Structures";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item23
+		{
+			className="A3_Structures_F_Ind";
+			name="Arma 3 - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -676,7 +684,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=74;
+		items=81;
 		class Item0
 		{
 			dataType="Layer";
@@ -6730,6 +6738,122 @@ class Mission
 			id=2176;
 			type="Land_Cargo_Tower_V3_F";
 			atlOffset=0.085906982;
+		};
+		class Item74
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5368.0552,77.027695,3705.2329};
+				angles[]={0,5.5374861,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2177;
+			type="Land_Cargo_Tower_V3_F";
+		};
+		class Item75
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5411.8701,67.04258,3702.2561};
+				angles[]={0,5.3333111,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2179;
+			type="Land_dp_bigTank_F";
+			atlOffset=-7.6293945e-006;
+		};
+		class Item76
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5422.7881,69.028526,3693.3665};
+				angles[]={0,5.7288051,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2180;
+			type="Land_dp_smallTank_F";
+			atlOffset=-7.6293945e-006;
+		};
+		class Item77
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5108.8389,419.93533,7384.6309};
+				angles[]={0,0.018430473,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2181;
+			type="Land_Cargo_Tower_V3_F";
+			atlOffset=0.1027832;
+		};
+		class Item78
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5065.3218,413.8714,7372.1558};
+				angles[]={0,2.3546827,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2182;
+			type="Land_Cargo_Patrol_V3_F";
+			atlOffset=9.1552734e-005;
+		};
+		class Item79
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={9384.7773,16.578266,3743.9897};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2183;
+			type="Land_Cargo_Tower_V1_F";
+			atlOffset=3.5762787e-006;
+		};
+		class Item80
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={9341.4863,8.585,3735.6296};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2184;
+			type="Land_Cargo_Patrol_V1_F";
+			atlOffset=-2.3841858e-007;
 		};
 	};
 	class Connections

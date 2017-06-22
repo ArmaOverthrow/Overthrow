@@ -1,6 +1,6 @@
 private ["_town","_posTown","_groups","_group","_numNATO","_pop","_count","_range"];
 if (!isServer) exitwith {};
-
+sleep random 0.2;
 
 
 _count = 0;
@@ -30,7 +30,7 @@ while {_count < _numNATO} do {
 		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
 		sleep 0.2;
 		_civ setVariable ["polgarrison",_town,false];
-		[_civ] joinSilent _group;		
+		[_civ] joinSilent _group;
 		_civ setRank "SERGEANT";
 		[_civ,_town] spawn OT_fnc_initPolice;
 		_civ setBehaviour "SAFE";

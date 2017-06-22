@@ -301,8 +301,8 @@ private _built = (allMissionObjects "Static");
 						_pos = buildingpositions getVariable [str _x,[]];
 						_bdg = objNull;
 						if(count _pos == 0) then {
-							_bdg = OT_centerPos nearestObject _x;
-							buildingpositions setVariable [str _x,position _bdg,true];
+							_bdg = OT_centerPos nearestObject parseNumber _x;
+							buildingpositions setVariable [_x,position _bdg,true];
 						}else{
 							_bdg = _pos nearestObject _x;
 						};

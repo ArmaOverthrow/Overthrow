@@ -46,40 +46,45 @@ _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
     params ["_destination","_destinationName","_itemcls","_numitems"];
     _numavailable = 0;
 
+    _found = false;
+
     _driver = objNull;
     {
 		_c = _x;
-        if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) exitWith {
+
+        if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
 		     {
     			_x params ["_cls","_amt"];
-    			if(_cls == _itemcls) then {
-    				_numavailable = _numavailable + _amt;
-                    _driver = driver _c;
+    			if(_cls == _itemcls and _amt >= _numitems) exitWith {
+                    _found = true;
     			};
     		}foreach(_c call OT_fnc_unitStock);
         };
-	}foreach(_destination nearObjects ["AllVehicles", 30]);
+        if(_found) exitWith {};
+	}foreach(_destination nearObjects ["AllVehicles", 15]);
 
-    _numavailable >= _numitems
+    _found
 },{
     params ["_destination","_destinationName","_itemcls","_numitems","_wassuccess"];
 
     //If mission was a success
+
     if(_wassuccess) then {
-        //Take the medical supplies and count them
-        _numavailable = 0;
+        _found = false;
+        //Take the medical supplies
         {
     		_c = _x;
             if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
     		     {
         			_x params ["_cls","_amt"];
-        			if(_cls == _itemcls) then {
+        			if(_cls == _itemcls and _amt >= _numitems) exitWith {
+                        _found = true;
                         [_c, _cls, _numitems] call CBA_fnc_removeItemCargo;
-        				_numavailable = _numavailable + _amt;
         			};
         		}foreach(_c call OT_fnc_unitStock);
             };
-    	}foreach(_destination nearObjects ["AllVehicles", 30]);
+            if(_found) exitWith {};
+    	}foreach(_destination nearObjects ["AllVehicles", 15]);
 
         //apply stability and standing
         [_destinationName,5,format["Delivered %1 x %2 medical supplies",_numitems,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_standing;

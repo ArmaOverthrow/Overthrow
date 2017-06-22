@@ -1,4 +1,5 @@
 params ["_start","_name","_spawnid"];
+sleep random 0.2;
 
 private _count = 0;
 

@@ -100,57 +100,6 @@ if(isMultiplayer or _startup == "LOAD") then {
 		if(isNil "_housepos") exitWith {_newplayer = true};
 		_town = _housepos call OT_fnc_nearestTown;
 		_pos = server getVariable _town;
-
-		_owned = player getVariable ["owned",[]];
-		_nowowned = [];
-		_leased = player getVariable ["leased",[]];
-		{
-			if(typename _x == "ARRAY") then {
-				//old save with positions
-				_mrkName = format["bdg-%1",_x];
-				_buildings = (_x nearObjects ["Building",8]);
-				if(count _buildings > 0) then {
-					_bdg = _buildings select 0;
-					if((typeof _bdg) != OT_policeStation) then {
-						_mrkName = createMarkerLocal [_mrkName,_x];
-						_mrkName setMarkerShape "ICON";
-						_mrkName setMarkerType "loc_Tourism";
-						_mrkName setMarkerColor "ColorWhite";
-						_mrkName setMarkerAlpha 0;
-						_mrkName setMarkerAlphaLocal 1;
-					};
-					if(_x in _leased) then {
-						_mrkName setMarkerAlphaLocal 0.3;
-					};
-					_nowowned pushback ([_bdg] call OT_fnc_getBuildID);
-				};
-			}else{
-				//new save with IDs
-				if (typename _x == "SCALAR") then {
-					_mrkName = format["bdg-%1",_x];
-					_pos = buildingpositions getVariable [str _x,[]];
-					if(count _pos == 0) then {
-						_bdg = OT_centerPos nearestObject _x;
-						_pos = position _bdg;
-						buildingpositions setVariable [str _x,_pos,true];
-					};
-					_mrkName = createMarkerLocal [_mrkName,_pos];
-					_mrkName setMarkerShape "ICON";
-					_mrkName setMarkerType "loc_Tourism";
-					_mrkName setMarkerColor "ColorWhite";
-					_mrkName setMarkerAlpha 0;
-					_mrkName setMarkerAlphaLocal 1;
-					if(_x in _leased) then {
-						_mrkName setMarkerAlphaLocal 0.3;
-					};
-				};
-			};
-		}foreach(_owned);
-
-		if(count _nowowned > 0) then {
-			player setvariable ["owned",_nowowned,true];
-		};
-
 		{
 			if(_x call OT_fnc_hasOwner) then {
 				if ((_x call OT_fnc_playerIsOwner) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
@@ -307,16 +256,6 @@ if (_newplayer) then {
     }foreach(_furniture);
     player setVariable ["owned",[[_house] call OT_fnc_getBuildID],true];
 
-    _mrkName = format["home-%1",getPlayerUID player];
-    if((markerpos _mrkName) select 0 == 0) then {
-        _mrkName = createMarker [_mrkName,_housepos];
-        _mrkName setMarkerShape "ICON";
-        _mrkName setMarkerType "loc_Tourism";
-        _mrkName setMarkerColor "ColorWhite";
-        _mrkName setMarkerAlpha 0;
-    };
-    _mrkName setMarkerAlphaLocal 1;
-
 };
 _count = 0;
 {
@@ -422,6 +361,15 @@ if(_newplayer) then {
 		player setVariable ["OT_tute",true,true];
 	};
 };
+
+{
+	_pos = buildingpositions getVariable [_x,[]];
+	if(count _pos == 0) then {
+		_bdg = OT_centerPos nearestObject parseNumber _x;
+		_pos = position _bdg;
+		buildingpositions setVariable [_x,_pos,true];
+	};
+}foreach(player getvariable ["owned",[]]);
 
 if(isMultiplayer) then {
 	player addEventHandler ["Respawn",OT_fnc_respawnHandler];
