@@ -67,7 +67,7 @@ _title = format["%1 Recon",_destinationName];
             };
         }foreach(allunits);
         _need = round(_count * 0.5);
-        hint format["Military spotted: %1",_known];
+        hintSilent format["Military spotted: %1",_known];
         (_known >= _need) or _need <= 0
     };
     false

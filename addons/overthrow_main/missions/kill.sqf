@@ -22,7 +22,7 @@ _params = [0,_numtokill];
     params ["_p","_faction","_factionName"];
     _p params ["_start","_target"];
     _numkills = (player getVariable ["BLUkills",0]) - _start;
-    hint format["Kills: %1/%2",_numkills,_target];
+    hintSilent format["Kills: %1/%2",_numkills,_target];
     (_numkills >= _target)
 },{
     //No cleanup required

@@ -77,7 +77,7 @@ while {sleep 0.5; !_done} do {
         if(_num >= _total) then {
             _done = true;
         };
-        hint format["Kills: %1/%2",_num,_total];
+        hintSilent format["Kills: %1/%2",_num,_total];
     };
 };
 [player,250] call OT_fnc_rewardMoney;
