@@ -256,6 +256,13 @@ while {alive _unit} do {
 							_unit spawn OT_fnc_revealToNATO;
 						}
 					};
+					if(_unit getvariable ["ot_isSmoking",false]) exitWith {
+						_unit setCaptive false;
+						_unit spawn OT_fnc_revealToNATO;
+						if(isPlayer _unit) then {
+							"NATO has seen your spliff!" call OT_fnc_notifyMinor;
+						};
+					};
 					if(count attachedObjects _unit > 0) exitWith {
 						{
 							if(typeOf _x in OT_staticWeapons) exitWith {

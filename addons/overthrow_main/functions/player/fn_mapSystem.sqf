@@ -230,7 +230,7 @@ _handler = {
 					_pos,
 					0.3/ctrlMapScale (_this select 0),
 					0.3/ctrlMapScale (_this select 0),
-					""
+					0
 				];
 			};
 		}foreach(player getvariable ["owned",[]]);
