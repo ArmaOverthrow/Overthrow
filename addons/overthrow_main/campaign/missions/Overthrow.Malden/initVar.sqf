@@ -9,7 +9,7 @@ OT_startCameraPos = [2717.66,7298.14,15];
 OT_startCameraTarget = [3016.03,7171.53,0];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 1;
+OT_economyVersion = 2;
 OT_NATOversion = 1;
 OT_CRIMversion = 1;
 

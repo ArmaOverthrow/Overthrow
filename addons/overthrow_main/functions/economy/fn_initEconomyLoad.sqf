@@ -93,6 +93,15 @@ if(_version < OT_economyVersion) then {
     diag_log "Overthrow: Economy Load Complete";
 };
 
+//Save upgrade for existing factions > 0.7.5.1
+{
+    _x params ["_cls","_name","_side"];
+    _n = server getVariable [format["factionname%1",_cls],""];
+    if(_n == "") then {
+        server setVariable [format["factionname%1",_cls],_name,true];
+    };
+}foreach(OT_allFactions);
+
 //Stability markers
 {
     _stability = server getVariable format["stability%1",_x];

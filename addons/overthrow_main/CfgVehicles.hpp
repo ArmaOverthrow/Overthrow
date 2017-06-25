@@ -1,6 +1,11 @@
 #define MACRO_SALVAGEWRECK \
 	class ACE_Actions { \
 		class ACE_MainActions { \
+			class OT_Remove { \
+				condition = "!([player] call ace_repair_fnc_isInRepairFacility) and (_target call OT_fnc_hasOwner) and ((call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner))"; \
+				displayName = "Remove"; \
+				statement = "deleteVehicle _target"; \
+			} \
 			class OT_Salvage { \
 				condition = "((damage _target) > 0.99 and ""ToolKit"" in (items player)) or [player] call ace_repair_fnc_isInRepairFacility"; \
 				displayName = "Salvage"; \
@@ -60,7 +65,7 @@ class CfgVehicles {
     class CAManBase: Man {
         class ACE_Actions {
 			class OT_HeadActions {
-				condition = "(!isplayer _target) and !(side _target == west)";
+				condition = "(alive _target) and (!isplayer _target) and !(side _target == west)";
 				selection = "pilot";
 				distance = 20;
 				displayName = "Talk";
@@ -207,6 +212,10 @@ class CfgVehicles {
     };
 
 	//Shops (Malden)
+	class i_Shop_02_b_base_f : House_F {
+		ot_isShop = 1;
+        ot_template = '[]';
+	};
 	class Land_i_Shop_02_V3_F: House_F {
         ot_isShop = 1;
         ot_template = '[]';

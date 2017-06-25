@@ -10,7 +10,7 @@ OT_startCameraTarget = [1420,535,5.8];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 13;
-OT_NATOversion = 8;
+OT_NATOversion = 9;
 OT_CRIMversion = 1;
 
 OT_faction_NATO = "BLU_T_F";

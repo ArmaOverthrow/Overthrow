@@ -61,4 +61,6 @@ if(OT_hasACE) then {
 		_dir = 90;
 	};
 	[_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
+
+	[_this, 0, ["ACE_MainActions"], OT_ACEremoveAction] call ace_interact_menu_fnc_addActionToObject;
 };
