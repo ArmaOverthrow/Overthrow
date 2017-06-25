@@ -4,6 +4,8 @@
 
 [] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
 
+OT_ACEremoveAction = ["OT_Remove","Remove","",{deleteVehicle _target;},{(call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner)},{},[], [0,0,0], 10] call ace_interact_menu_fnc_createAction;
+
 //Find markers
 OT_ferryDestinations = [];
 OT_NATO_control = [];
@@ -426,28 +428,31 @@ OT_allGoggles = [];
 	_name = configName _x;
 	_title = getText (_x >> "displayname");
 	_m = getNumber(_x >> "mass");
-	if((_name find "Balaclava_TI_") > -1) then {
-		_m = _m * 2;
-	};
-
-	_protection = getNumber(_x >> "ACE_Protection");
-	if(_protection > 0) then {
-		_m = round(_m * 1.5);
-	};
-
-	call {
-		if(_name == "None") exitWith {};
-		if(_name == "G_Goggles_VR") exitWith {};
-		if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
-			OT_allGoggles pushback _name;
+	_ignore = getNumber(_x >> "ot_shopignore");
+	if(_ignore != 1) then {
+		if((_name find "Balaclava_TI_") > -1) then {
+			_m = _m * 2;
 		};
-		if((_title find "Balaclava") > -1 or (_title find "Bandana") > -1) exitWith {
-			OT_allFacewear pushback _name;
+
+		_protection = getNumber(_x >> "ACE_Protection");
+		if(_protection > 0) then {
+			_m = round(_m * 1.5);
 		};
-		OT_allGlasses pushback _name;
-	};
-	if(isServer and _name != "None") then {
-		cost setVariable [_name,[_m*3,0,0,ceil(_m*0.5)],true];
+
+		call {
+			if(_name == "None") exitWith {};
+			if(_name == "G_Goggles_VR") exitWith {};
+			if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
+				OT_allGoggles pushback _name;
+			};
+			if((_title find "Balaclava") > -1 or (_title find "Bandana") > -1) exitWith {
+				OT_allFacewear pushback _name;
+			};
+			OT_allGlasses pushback _name;
+		};
+		if(isServer and _name != "None") then {
+			cost setVariable [_name,[_m*3,0,0,ceil(_m*0.5)],true];
+		};
 	};
 }foreach(_allGlasses);
 

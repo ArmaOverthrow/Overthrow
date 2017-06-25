@@ -27,7 +27,7 @@ class CfgPatches
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;
-		units[] = {"OT_GanjaItem","OT_BlowItem","OT_SpliffItem"};
+		units[] = {"OT_GanjaItem","OT_BlowItem"};
 		weapons[] = {"OT_Ganja","OT_Blow"};
 	};
 };
@@ -122,82 +122,6 @@ class CfgMissions
 	};
 };
 
-class CfgMarkers
-{
-	class ot_Camp
-	{
-		name = "Camp";
-		icon = "ot\ui\markers\camp.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class ot_Shop
-	{
-		name = "Shop";
-		icon = "ot\ui\markers\shop.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class ot_Police
-	{
-		name = "Police";
-		icon = "ot\ui\markers\police.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class ot_Anarchy
-	{
-		name = "Anarchy";
-		icon = "ot\ui\markers\anarchy.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class ot_Warehouse
-	{
-		name = "Warehouse";
-		icon = "ot\ui\markers\warehouse.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class ot_Business
-	{
-		name = "Business";
-		icon = "ot\ui\markers\business.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class ot_Factory
-	{
-		name = "Factory";
-		icon = "ot\ui\markers\factory.paa";
-		color[] = {1, 0, 0, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-	class flag_Malden
-	{
-		name = "Malden";
-		icon = "ot\flags\flag_malden.paa";
-		color[] = {1, 1, 1, 1};
-		size = 32;
-		shadow = true;
-		scope = 1;
-	};
-};
-
 class CfgWorlds
 {
 	class Tanoa
@@ -210,68 +134,9 @@ class CfgWorlds
 	};
 };
 
-class CfgGlasses {
-    class None;
-
-    class murshun_cigs_cig0: None {
-        author = "Rebel / Facel";
-        mass = 0.02;
-        displayName = "Spliff";
-        model = "\ot\models\cig0.p3d";
-        picture = "\ot\ui\icons\gear_cig0_x_ca";
-        identityTypes[]={};
-    };
-
-    class murshun_cigs_cig1: murshun_cigs_cig0 {
-        author = "Rebel / Facel";
-        displayName = "Spliff (Stage 1)";
-        model = "\ot\models\cig1.p3d";
-        picture = "\ot\ui\icons\gear_cig1_x_ca";
-    };
-
-    class murshun_cigs_cig2: murshun_cigs_cig0 {
-        author = "Rebel / Facel";
-        displayName = "Spliff (Stage 2)";
-        model = "\ot\models\cig2.p3d";
-        picture = "\ot\ui\icons\gear_cig2_x_ca";
-    };
-
-    class murshun_cigs_cig3: murshun_cigs_cig0 {
-        author = "Rebel / Facel";
-        displayName = "Spliff (Stage 3)";
-        model = "\ot\models\cig3.p3d";
-        picture = "\ot\ui\icons\gear_cig3_x_ca";
-    };
-
-    class murshun_cigs_cig4: murshun_cigs_cig0 {
-        author = "Rebel / Facel";
-        displayName = "Spliff (Stage 4)";
-        model = "\ot\models\cig4.p3d";
-        picture = "\ot\ui\icons\gear_cig4_x_ca";
-    };
-};
-
-class CfgSounds
-{
-    sounds[] = {};
-
-    class ot_unwrap
-    {
-        sound[] = {"\ot\sounds\murshun_cigs_unwrap.ogg", 2, 1, 15};
-        titles[] = {};
-    };
-    class murshun_cigs_matches_01
-    {
-        sound[] = {"\ot\sounds\murshun_cigs_matches_01.ogg", 2, 1, 15};
-        titles[] = {};
-    };
-    class murshun_cigs_lighter_01
-    {
-        sound[] = {"\ot\sounds\murshun_cigs_lighter_01.ogg", 2, 1, 15};
-        titles[] = {};
-    };
-};
-
+#include "CfgMarkers.hpp"
+#include "CfgGlasses.hpp"
+#include "CfgSounds.hpp"
 #include "CfgSettings.hpp"
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"

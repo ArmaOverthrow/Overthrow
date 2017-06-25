@@ -294,24 +294,21 @@ private _built = (allMissionObjects "Static");
 						[_bdg,_uid] call OT_fnc_setOwner;
 					};
 				}else{
-					//new save with IDs
-					if (typename _x == "SCALAR") then {
-						[_x,_uid] call OT_fnc_setOwner;
+					[_x,_uid] call OT_fnc_setOwner;
 
-						_pos = buildingpositions getVariable [str _x,[]];
-						_bdg = objNull;
-						if(count _pos == 0) then {
-							_bdg = OT_centerPos nearestObject parseNumber _x;
-							buildingpositions setVariable [_x,position _bdg,true];
-						}else{
-							_bdg = _pos nearestObject _x;
-						};
-						if !(_bdg in _built) then {
-							_bdg addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
-						};
-						if(_x in _leased) then {
-							_leasedata pushback [_x,typeof _bdg,_pos,_pos call OT_fnc_nearestTown];
-						};
+					_pos = buildingpositions getVariable [_x,[]];
+					_bdg = objNull;
+					if(count _pos == 0) then {
+						_bdg = OT_centerPos nearestObject parseNumber _x;
+						buildingpositions setVariable [_x,position _bdg,true];
+					}else{
+						_bdg = _pos nearestObject _x;
+					};
+					if !(_bdg in _built) then {
+						_bdg addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
+					};
+					if(_x in _leased) then {
+						_leasedata pushback [_x,typeof _bdg,_pos,_pos call OT_fnc_nearestTown];
 					};
 				};
 			}foreach(_val);

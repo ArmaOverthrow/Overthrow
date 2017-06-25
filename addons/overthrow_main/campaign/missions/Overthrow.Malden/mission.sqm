@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=459;
+		nextID=464;
 	};
 	class Camera
 	{
@@ -507,7 +507,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Overthrow.Altis";
+		briefingName="Overthrow.Malden";
 		resistanceWest=0;
 		startWeather=0.29173625;
 		startWind=0;

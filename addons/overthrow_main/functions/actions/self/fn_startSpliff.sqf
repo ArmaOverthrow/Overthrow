@@ -40,12 +40,12 @@ _unit setVariable ["ot_lastSmoke",time,false];
 
 
 [_unit] spawn ot_fnc_smokeAnimation;
-player enablesimulation false;
+
 sleep (3.5 + random 2);
 [_unit] remoteExec ["ot_fnc_smokePuffs"];
 sleep (1 + random 1);
 [_unit] remoteExec ["ot_fnc_smokePuffs"];
-player enablesimulation true;
+
 
 while ({alive _unit && _gogglesCurrent in OT_cigsArray && (_unit getVariable ["ot_isSmoking", false]) && _cigTime <= 330}) do {
     _gogglesCurrent = goggles _unit;

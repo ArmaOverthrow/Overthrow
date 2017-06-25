@@ -3,13 +3,13 @@ if(count _this > 0) then {_quiet = _this select 0};
 
 if(OT_saving) exitWith {
 	if !(_quiet) then {
-		"Please wait, save still in progress" remoteExec ["OT_fnc_notifyAndLog",0,false];
+		"Please wait, save still in progress" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 	};
 };
 
 if((count alldeadmen) > 300) exitWith {
 	if !(_quiet) then {
-		"Too many dead bodies, please clean first" remoteExec ["OT_fnc_notifyAndLog",0,false];
+		"Too many dead bodies, please clean first" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 	};
 };
 
@@ -17,12 +17,12 @@ OT_saving = true;
 publicVariable "OT_saving";
 
 if !(_quiet) then {
-	"Persistent Saving..." remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Persistent Saving..." remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 sleep 0.2;
 waitUntil {!isNil "OT_NATOInitDone"};
 if !(_quiet) then {
-	"Step 1/10 - Saving game state" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 1/11 - Saving game state" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 private _data = [];
 //get all server data
@@ -46,7 +46,7 @@ private _data = [];
 	};
 }foreach(allVariables server);
 if !(_quiet) then {
-	"Step 2/10 - Saving buildings" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 2/11 - Saving buildings" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 _poses = [];
 {
@@ -54,7 +54,7 @@ _poses = [];
 }foreach(allVariables buildingpositions);
 _data pushback ["buildingpositions",_poses];
 if !(_quiet) then {
-	"Step 3/10 - Saving civilians" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 3/11 - Saving civilians" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 _civs = [];
 {
@@ -63,7 +63,7 @@ _civs = [];
 _data pushback ["civilians",_civs];
 
 if !(_quiet) then {
-	"Step 4/10 - Saving player data" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 4/11 - Saving player data" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 //get all online player data
 {
@@ -89,7 +89,7 @@ if !(_quiet) then {
 private _tocheck = (allMissionObjects "Static") + vehicles;
 private _tosave = count _tocheck;
 if !(_quiet) then {
-	format["Step 5/10 - Saving vehicles (%1 to save)",_tosave] remoteExec ["OT_fnc_notifyAndLog",0,false];
+	format["Step 5/11 - Saving vehicles (%1 to save)",_tosave] remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 private _vehicles = [];
 
@@ -135,7 +135,7 @@ private _saved = 0;
 	};
 	if(_count > 200) then {
 		if !(_quiet) then {
-			format["Step 5/10 - Saving vehicles (%1 to save)",_tosave - _saved] remoteExec ["OT_fnc_notifyAndLog",0,false];
+			format["Step 5/11 - Saving vehicles (%1 to save)",_tosave - _saved] remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 		};
 		_count = 0;
 		sleep 0.2;
@@ -148,7 +148,7 @@ sleep 0.2;
 _data pushback ["vehicles",_vehicles];
 
 if !(_quiet) then {
-	"Step 6/10 - Saving warehouse" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 6/11 - Saving warehouse" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 private _warehouse = [];
 {
@@ -159,7 +159,7 @@ private _warehouse = [];
 }foreach(allvariables warehouse);
 _data pushback ["warehouse",_warehouse];
 if !(_quiet) then {
-	"Step 7/10 - Saving recruits" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 7/11 - Saving recruits" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 private _recruits = [];
 {
@@ -188,7 +188,7 @@ private _recruits = [];
 _data pushback ["recruits",_recruits];
 
 if !(_quiet) then {
-	"Step 7/10 - Saving squads" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 8/11 - Saving squads" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 private _squads = [];
 {
@@ -211,7 +211,7 @@ private _squads = [];
 
 _data pushback ["squads",_squads];
 if !(_quiet) then {
-	"Step 8/10 - Saving bases" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 9/11 - Saving bases" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 {
 	_pos = _x select 0;
@@ -240,7 +240,7 @@ if !(_quiet) then {
 	};
 }foreach(server getVariable ["bases",[]]);
 if !(_quiet) then {
-	"Step 9/10 - Saving garrisons" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 10/11 - Saving garrisons" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 {
 	_pos = server getvariable _x;
@@ -271,7 +271,7 @@ if !(_quiet) then {
 
 _data pushback ["timedate",date];
 if !(_quiet) then {
-	"Step 10/10 - Saving loadouts" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Step 11/11 - Saving loadouts" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 {
 	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
@@ -280,14 +280,14 @@ if !(_quiet) then {
 profileNameSpace setVariable [OT_saveName,_data];
 if (isDedicated) then {
 	if !(_quiet) then {
-		"Saving to dedicated server.. not long now" remoteExec ["OT_fnc_notifyAndLog",0,false];;
+		"Saving to dedicated server.. not long now" remoteExecCall ["OT_fnc_notifyAndLog",0,false];;
 	};
 	sleep 0.01;
 	saveProfileNamespace
 };
 
 if !(_quiet) then {
-	"Persistent Save Completed" remoteExec ["OT_fnc_notifyAndLog",0,false];
+	"Persistent Save Completed" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
 OT_saving = false;

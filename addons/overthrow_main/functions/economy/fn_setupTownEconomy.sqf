@@ -27,28 +27,45 @@ server setVariable [format["activehardwarein%1",_town],_activeHardware,true];
 
 private _chance = 100; //Chance that a shop will be a shop
 private _shops = nearestObjects [_posTown, OT_shops, _dist,false];
-if(count _shops > 15) then {_chance = 50};
-if(count _shops > 30) then {_chance = 30};
-if(count _shops > 50) then {_chance = 20};
-if(count _shops > 100) then {_chance = 10};
-
-//Find shop buildings and distribute categories to them
-{
-	private _pos = getpos _x;
-	//Ensure shops are not found twice (overlapping town search radius)
-	if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
-		_category = "General";
-		_rnd = random 100;
-		call {
-			if(_rnd > 90) exitWith {_category = "Surplus"};
-			if(_rnd > 80) exitWith {_category = "Electronics"};
-			if(_rnd > 60) exitWith {_category = "Pharmacy"};
-			if(_rnd > 40) exitWith {_category = "Clothing"};
+if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
+	//More shops than there are definitions in this town, so make sure one of each is spawned
+	{
+		_category = _x select 0;
+		if(_category != "Hardware") then {
+			_x = objNull;
+			_c = 0;
+			_pos = [];
+			while {_c < 10} do{
+				_x = selectRandom _shops;
+				_pos = getpos _x;
+				if !(_pos in OT_allShops) exitWith {};
+				_c = _c + 1;
+			};
+			if(_c < 10) then {
+				_activeShops pushback [_pos,_category];
+				OT_allShops pushback _pos;
+			};
 		};
-		_activeShops pushback [_pos,_category];
-		OT_allShops pushback _pos;
-	};
-}foreach(_shops);
+	}foreach(OT_itemCategoryDefinitions);
+}else{
+	//Find shop buildings and distribute categories to them
+	{
+		private _pos = getpos _x;
+		//Ensure shops are not found twice (overlapping town search radius)
+		if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
+			_category = "General";
+			_rnd = random 100;
+			call {
+				if(_rnd > 90) exitWith {_category = "Surplus"};
+				if(_rnd > 80) exitWith {_category = "Electronics"};
+				if(_rnd > 60) exitWith {_category = "Pharmacy"};
+				if(_rnd > 40) exitWith {_category = "Clothing"};
+			};
+			_activeShops pushback [_pos,_category];
+			OT_allShops pushback _pos;
+		};
+	}foreach(_shops);
+};
 
 server setVariable [format["activeshopsin%1",_town],_activeShops,true];
 
