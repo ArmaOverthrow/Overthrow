@@ -59,3 +59,4 @@ while {sleep 0.5; !_reached} do {
         "Use your interaction key on the civilian to talk to them and see if they wanna buy your Ganja. Not everyone is into the sweet herb, but just keep trying until you get lucky." call OT_fnc_notifyMinor;
     };
 };
+call OT_fnc_clearPlayerWaypoint;

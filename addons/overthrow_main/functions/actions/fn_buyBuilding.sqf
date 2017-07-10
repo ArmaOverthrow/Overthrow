@@ -33,10 +33,10 @@ if(_handled) then {
 	_owned = player getVariable "owned";
 
 	if(_type == "buy") then {
-		[_building,getPlayerUID player] call OT_fnc_setOwner;
+		_id = [_building] call OT_fnc_getBuildID;
+		[_id,getPlayerUID player] call OT_fnc_setOwner;
 		[-_price] call OT_fnc_money;
 
-		_id = [_building] call OT_fnc_getBuildID;
 		buildingpositions setVariable [_id,position _building,true];
 		_owned pushback _id;
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
@@ -46,8 +46,8 @@ if(_handled) then {
 		_building addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
-			[_building,nil] call OT_fnc_setOwner;
 			_id = [_building] call OT_fnc_getBuildID;
+			[_id,nil] call OT_fnc_setOwner;
 			_leased = player getVariable ["leased",[]];
 			_leased deleteAt (_leased find _id);
 			player setVariable ["leased",_leased,true];

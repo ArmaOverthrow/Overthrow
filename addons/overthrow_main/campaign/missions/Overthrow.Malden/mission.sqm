@@ -8,7 +8,7 @@ class EditorData
 	toggles=521;
 	class ItemIDProvider
 	{
-		nextID=2185;
+		nextID=2191;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=464;
+		nextID=469;
 	};
 	class Camera
 	{
-		pos[]={9183.4248,278.67508,3141.479};
-		dir[]={-0.83506131,-0.27595153,0.47605035};
-		up[]={-0.23975331,0.96115732,0.13667786};
-		aside[]={0.49527794,1.3224781e-007,0.868792};
+		pos[]={7854.2075,43.982349,3087.0303};
+		dir[]={-0.43173364,-0.42325979,0.79659659};
+		up[]={-0.20169996,0.90598685,0.3721588};
+		aside[]={0.87922704,6.5295171e-007,0.4765175};
 	};
 };
 binarizationWanted=0;
@@ -55,13 +55,15 @@ addons[]=
 	"ace_ui",
 	"A3_Modules_F_Curator_Curator",
 	"A3_Structures_F_Mil_Cargo",
-	"A3_Structures_F_Ind_DieselPowerPlant"
+	"A3_Structures_F_Ind_DieselPowerPlant",
+	"A3_Structures_F_Exp_Industrial_Port",
+	"A3_Structures_F_Ind_Cargo"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=24;
+		items=25;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -227,6 +229,13 @@ class AddonsMetaData
 		{
 			className="A3_Structures_F_Ind";
 			name="Arma 3 - Industrial Structures";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item24
+		{
+			className="A3_Structures_F_Exp_Industrial";
+			name="Arma 3 Apex - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -684,7 +693,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=81;
+		items=83;
 		class Item0
 		{
 			dataType="Layer";
@@ -695,7 +704,7 @@ class Mission
 		class Item1
 		{
 			dataType="Marker";
-			position[]={7814.208,0,3132.3101};
+			position[]={7817.9106,0,3111.6802};
 			name="port_1";
 			type="loc_Quay";
 			id=1598;
@@ -6854,6 +6863,39 @@ class Mission
 			id=2184;
 			type="Land_Cargo_Patrol_V1_F";
 			atlOffset=-2.3841858e-007;
+		};
+		class Item81
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={7817.6577,9.1076508,3111.8335};
+				angles[]={0,4.4632244,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+			};
+			id=2185;
+			type="Land_WarehouseShelter_01_F";
+			atlOffset=4.7683716e-007;
+		};
+		class Item82
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={7811.9946,7.59831,3111.0527};
+				angles[]={-0,1.2748219,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2187;
+			type="Land_Cargo40_military_green_F";
 		};
 	};
 	class Connections

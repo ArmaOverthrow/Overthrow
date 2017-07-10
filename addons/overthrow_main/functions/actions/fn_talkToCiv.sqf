@@ -367,7 +367,7 @@ if (_canSellDrugs) then {
 								};
 							}] spawn OT_fnc_doConversation;
 						}else{
-							[_civ,player,["No, thank you"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
+							[_civ,player,["No, thank you"],{OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 						};
 					};
 				}else{
@@ -379,7 +379,7 @@ if (_canSellDrugs) then {
 							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call OT_fnc_money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 							[_town,-OT_drugQty] call OT_fnc_stability;
 						}else{
-							[_civ,player,["No, go away!"],{(player getvariable "hiringciv") setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;
+							[_civ,player,["No, go away!"],{OT_interactingWith setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;
 							if(player call OT_fnc_unitSeenCRIM) then {
 								hint "You are dealing on enemy turf";
 								player setCaptive false;

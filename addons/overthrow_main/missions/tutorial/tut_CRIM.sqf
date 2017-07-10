@@ -85,3 +85,4 @@ while {sleep 0.5; !_done} do {
         hintSilent format["Kills: %1/%2",_num,_total];
     };
 };
+call OT_fnc_clearPlayerWaypoint;
