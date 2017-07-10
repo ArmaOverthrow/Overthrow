@@ -5,9 +5,11 @@ private _possible = [];
 	if(typename _d == "ARRAY") then {
 		private _cls = _d select 0;
 		private _num = _d select 1;
-		if(typename _num == "SCALAR") then {
-			if(_num > 0 and (_cls in OT_allHelmets)) then {
-				_possible pushback _cls;
+		if(!isNil "_num") then {
+			if(typename _num == "SCALAR") then {
+				if(_num > 0 and (_cls in OT_allHelmets)) then {
+					_possible pushback _cls;
+				};
 			};
 		}else{
 			warehouse setvariable [_x,nil,true];
