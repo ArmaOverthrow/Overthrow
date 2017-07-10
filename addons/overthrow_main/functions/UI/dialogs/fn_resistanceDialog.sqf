@@ -52,7 +52,7 @@ _damaged = owners getVariable ["damagedBuildings",[]];
 private _lease = 0;
 {
     _x params ["_id","_cls","_pos","_town"];
-    if (!_id in _damaged) then {
+    if !(_id in _damaged) then {
         private _data = [_cls,_town] call OT_fnc_getRealEstateData;
         _tl = (_data select 2);
         _lease = _lease + _tl;
