@@ -6,11 +6,17 @@ private _possible = [];
 	if(typename _d == "ARRAY") then {
 		private _cls = _d select 0;
 		private _num = _d select 1;
-		if(_num > 0) then {
-			private _weapon = [_cls] call BIS_fnc_itemType;
-			private _weaponType = _weapon select 1;
-			if(_weaponType == "AssaultRifle" and (_cls find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
-			if(_weaponType == _type) then {_possible pushback _cls};
+		if(!isNil "_num") then {
+			if(typename _num == "SCALAR") then {
+				if(_num > 0) then {
+					private _weapon = [_cls] call BIS_fnc_itemType;
+					private _weaponType = _weapon select 1;
+					if(_weaponType == "AssaultRifle" and (_cls find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
+					if(_weaponType == _type) then {_possible pushback _cls};
+				};
+			};
+		}else{
+			warehouse setvariable [_x,nil,true];
 		};
 	};
 }foreach(allvariables warehouse);

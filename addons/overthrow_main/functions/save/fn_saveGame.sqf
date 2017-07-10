@@ -27,7 +27,7 @@ if !(_quiet) then {
 private _data = [];
 //get all server data
 {
-	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison") then {
+	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison" or (_x select [0,4]) == "ace_" or (_x select [0,4]) == "cba_" or (_x select [0,4]) == "bis_") then {
 		_val = server getVariable _x;
 		if !(isNil "_val") then {
 			if(typename _val == "ARRAY") then {
@@ -50,7 +50,9 @@ if !(_quiet) then {
 };
 _poses = [];
 {
-	_poses pushback [_x,buildingpositions getVariable _x];
+	if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		_poses pushback [_x,buildingpositions getVariable _x];
+	};
 }foreach(allVariables buildingpositions);
 _data pushback ["buildingpositions",_poses];
 if !(_quiet) then {
@@ -58,7 +60,9 @@ if !(_quiet) then {
 };
 _civs = [];
 {
-	_civs pushback [_x,OT_civilians getVariable _x];
+	if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		_civs pushback [_x,OT_civilians getVariable _x];
+	};
 }foreach(allVariables OT_civilians);
 _data pushback ["civilians",_civs];
 
@@ -154,7 +158,9 @@ private _warehouse = [];
 {
 	_var = warehouse getVariable _x;
 	if (!isNil "_var") then {
-		_warehouse pushback _var;
+		if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+			_warehouse pushback _var;
+		};
 	};
 }foreach(allvariables warehouse);
 _data pushback ["warehouse",_warehouse];

@@ -24,13 +24,19 @@ private _cc = 0;
 	_set = true;
 	if(_key == "civilians") then {
 		{
-			OT_civilians setVariable [_x select 0,_x select 1,true];
+			_y = _x select 0;
+			if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+				OT_civilians setVariable [_x select 0,_x select 1,true];
+			};
 		}foreach(_val);
 		_set = false;
 	};
 	if(_key == "buildingpositions") then {
 		{
-			buildingpositions setVariable [_x select 0,_x select 1,true];
+			_y = _x select 0;
+			if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+				buildingpositions setVariable [_x select 0,_x select 1,true];
+			};
 		}foreach(_val);
 		_set = false;
 	};
@@ -59,7 +65,10 @@ private _cc = 0;
 		_set = false;
 		{
 			if(typename _x == "ARRAY") then {
-				warehouse setVariable [_x select 0,_x,true];
+				_y = _x select 0;
+				if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+					warehouse setVariable [_x select 0,_x,true];
+				};
 			};
 		}foreach(_val);
 	};
@@ -217,15 +226,17 @@ private _cc = 0;
 	};
 
 	if(_set and !(isNil "_val")) then {
-		if(typename _val == "ARRAY") then {
-			//make a copy
-			_orig = _val;
-			_val = [];
-			{
-				_val pushback _x;
-			}foreach(_orig);
+		if((_key select [0,4]) != "ace_" and (_key select [0,4]) != "cba_" and (_key select [0,4]) != "bis_") then {
+			if(typename _val == "ARRAY") then {
+				//make a copy
+				_orig = _val;
+				_val = [];
+				{
+					_val pushback _x;
+				}foreach(_orig);
+			};
+			server setvariable [_key,_val,true];
 		};
-		server setvariable [_key,_val,true];
 	};
 	_cc = _cc + 1;
 	if(_cc == 100) then {

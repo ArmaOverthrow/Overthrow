@@ -18,7 +18,7 @@ if(random 100 > 80) then {
 	[_town,1] call OT_fnc_standing;
 };
 
-_civ = player getvariable "hiringciv";
+_civ = OT_interactingWith;
 [_civ,getPlayerUID player] call OT_fnc_setOwner;
 _civ removeAllEventHandlers "FiredNear";
 [_civ] joinSilent nil;

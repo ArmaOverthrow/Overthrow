@@ -81,3 +81,4 @@ while {sleep 0.5; !_done} do {
     };
 };
 [player,250] call OT_fnc_rewardMoney;
+call OT_fnc_clearPlayerWaypoint;

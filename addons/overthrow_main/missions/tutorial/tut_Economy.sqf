@@ -64,3 +64,4 @@ while {sleep 0.5; !_reached} do {
         "Use your interaction key on the wreck to talk to salvage it. The items you get can be sold at any Hardware store, just drive up to it and press 'Y'" call OT_fnc_notifyMinor;
     };
 };
+call OT_fnc_clearPlayerWaypoint;
