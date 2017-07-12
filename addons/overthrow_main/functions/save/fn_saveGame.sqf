@@ -104,6 +104,12 @@ private _saved = 0;
 	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_flag_IND)) then {
 		_owner = _x call OT_fnc_getOwner;
 		_s = _x call OT_fnc_unitStock;
+		
+		{
+			if(((_x call BIS_fnc_itemType) select 0) == "Weapon") then {
+				_s set [_forEachIndex, [(_x select 0) call BIS_fnc_baseWeapon, _x select 1]];
+			};
+		}foreach(_s);
 
 		if(typeof _x == OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];

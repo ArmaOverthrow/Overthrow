@@ -82,13 +82,13 @@ private _doTransfer = {
 						_veh addBackpackCargoGlobal [_cls,1];
 					};
 					if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,1];
+						_veh addWeaponCargoGlobal [_cls call BIS_fnc_baseWeapon,1];
 					};
 					if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,1];
+						_veh addWeaponCargoGlobal [_cls call BIS_fnc_baseWeapon,1];
 					};
 					if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,1];
+						_veh addWeaponCargoGlobal [_cls call BIS_fnc_baseWeapon,1];
 					};
 					if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
 						_veh addMagazineCargoGlobal [_cls,1];
