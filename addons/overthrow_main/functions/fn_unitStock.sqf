@@ -37,6 +37,11 @@ private _allCargo = {
 						_myitems pushback _x;
 					};
 				};
+				if(typename _x == "ARRAY") then {
+					if !((_x select 0) isEqualTo "") then {
+						_myitems pushback (_x select 0);
+					};
+				};
 			}foreach(_x);
 		}foreach(weaponsItemsCargo _target);
 		{
