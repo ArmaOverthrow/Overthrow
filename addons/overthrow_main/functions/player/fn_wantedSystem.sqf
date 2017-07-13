@@ -239,8 +239,6 @@ while {alive _unit} do {
 					sleep 0.2;
 					_town = (getpos _unit) call OT_fnc_nearestTown;
 					_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
-
-					_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
 					_replim = 50;
 					_skill = _unit getVariable ["OT_stealth",0];
 					if(_skill == 1) then {_replim = 75};
