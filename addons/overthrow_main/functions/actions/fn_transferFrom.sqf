@@ -31,6 +31,7 @@ _doTransfer = {
 	format["Transferring inventory from %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 	[5,false] call OT_fnc_progressBar;
 	_end = time + 5;
+	[_target, "FakeWeapon"] call CBA_fnc_removeWeaponCargo;
 	{
 		_count = 0;
 		_cls = _x select 0;
