@@ -74,7 +74,7 @@ if(primaryWeapon _unit != "") then {
 		_t addItemCargoGlobal [_x,1];
 	}foreach(primaryWeaponItems _unit);
 	removeAllPrimaryWeaponItems _unit;
-	_t addWeaponCargoGlobal [primaryWeapon _unit,1];
+	_t addWeaponCargoGlobal [(primaryWeapon _unit) call BIS_fnc_baseWeapon,1];
 	_unit removeWeapon primaryWeapon _unit;
 };
 if(_full and !_istruck) exitWith {false};

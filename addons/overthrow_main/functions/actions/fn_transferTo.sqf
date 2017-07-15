@@ -52,6 +52,7 @@ private _doTransfer = {
 	format["Transferring inventory to %1",_toname] call OT_fnc_notifyMinor;
 	[5,false] call OT_fnc_progressBar;
 	sleep 5;
+	[_target, "FakeWeapon"] call CBA_fnc_removeWeaponCargo;
 	if(_iswarehouse) then {
 		{
 			_cls = _x select 0;
