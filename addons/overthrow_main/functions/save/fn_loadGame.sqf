@@ -254,7 +254,7 @@ sleep 0.2;
 	_garrison = server getVariable [format["resgarrison%1",_code],[]];
 	if(count _garrison > 0) then {
 		_group = creategroup resistance;
-		spawner setVariable [format["resgarrison",_code],_group,true];
+		spawner setVariable [format["resgarrison%1",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
 
@@ -275,7 +275,7 @@ sleep 0.2;
 	_garrison = server getVariable [format["resgarrison%1",_code],[]];
 	if(count _garrison > 0) then {
 		_group = creategroup resistance;
-		spawner setVariable [format["resgarrison",_code],_group,true];
+		spawner setVariable [format["resgarrison%1",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
 			if(_cls != "HMG" and _cls != "GMG") then {
