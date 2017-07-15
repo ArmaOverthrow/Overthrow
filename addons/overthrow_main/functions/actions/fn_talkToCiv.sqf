@@ -349,14 +349,14 @@ if (_canSellDrugs) then {
 						if((random 100) > 68) then {
 							[_civ,player,["How much?",format["$%1",_price],"OK"],
 							{
-
+								private _drugSell = _this select 0;
 								[
 									round(
-										([(getpos player) call OT_fnc_nearestTown,OT_drugSelling] call OT_fnc_getDrugPrice)*1.2
+										([(getpos player) call OT_fnc_nearestTown,_drugSell] call OT_fnc_getDrugPrice)*1.2
 									)
 								] call OT_fnc_money;
-								player removeItem OT_drugSelling;
-								OT_interactingWith addItem OT_drugSelling;
+								player removeItem _drugSell;
+								OT_interactingWith addItem _drugSell;
 								OT_interactingWith setVariable ["OT_Talking",false,true];
 								private _town = (getpos player) call OT_fnc_nearestTown;
 								if((random 100 > 50) and !isNil "_town") then {
@@ -365,7 +365,7 @@ if (_canSellDrugs) then {
 								if(random 100 > 80) then {
 									1 call OT_fnc_influence;
 								};
-							}] spawn OT_fnc_doConversation;
+							}, [OT_drugSelling]] spawn OT_fnc_doConversation;
 						}else{
 							[_civ,player,["No, thank you"],{OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
 						};
