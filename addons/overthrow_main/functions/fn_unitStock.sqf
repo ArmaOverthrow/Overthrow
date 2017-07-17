@@ -34,7 +34,16 @@ private _allCargo = {
 			{
 				if(typename _x == "STRING") then {
 					if !(_x isEqualTo "") then {
-						_myitems pushback _x;
+						if((_x call BIS_fnc_itemType) select 0 == "Weapon") then {
+							_myitems pushback (_x call BIS_fnc_baseWeapon);
+						}else{
+							_myitems pushback _x;
+						};
+					};
+				};
+				if(typename _x == "ARRAY") then {
+					if !((_x select 0) isEqualTo "") then {
+						_myitems pushback (_x select 0);
 					};
 				};
 			}foreach(_x);
