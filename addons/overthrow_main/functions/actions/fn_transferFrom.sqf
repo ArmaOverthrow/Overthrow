@@ -31,6 +31,9 @@ _doTransfer = {
 	format["Transferring inventory from %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 	[5,false] call OT_fnc_progressBar;
 	_end = time + 5;
+	
+	// Dummy CBA remove calls to strip weapons and replace with non-preset types
+	[_target, "Bag_Base"] call CBA_fnc_removeBackpackCargo;
 	[_target, "FakeWeapon"] call CBA_fnc_removeWeaponCargo;
 	{
 		_count = 0;
