@@ -67,7 +67,7 @@ private _cc = 0;
 			if(typename _x == "ARRAY") then {
 				_y = _x select 0;
 				if(typeName _y != "CODE") then {
-					if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+					if((_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
 						warehouse setVariable [_x select 0,_x,true];
 					};
 				};
