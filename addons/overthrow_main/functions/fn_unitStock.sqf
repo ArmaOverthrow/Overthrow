@@ -72,6 +72,7 @@ private _allCargo = {
 		}foreach(everyContainer _target);
 	};
 	if(isnil "_myitems") then {_myitems = []};
+	_myitems = _myitems - OT_noCopyMags;
 	_myitems
 };
 
