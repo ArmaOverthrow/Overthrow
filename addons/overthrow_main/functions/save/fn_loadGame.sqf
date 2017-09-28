@@ -78,6 +78,7 @@ private _cc = 0;
 		if(typename _val == "ARRAY") then {
 			_set = false;
 			_ccc = 0;
+			_vehs = [];
 			{
 				_type = _x select 0;
 				if(_type == "Land_MapBoard_F") then {
@@ -93,8 +94,14 @@ private _cc = 0;
 					if(count _x > 5) then {
 						_name = _x select 5;
 					};
-					_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
-					_veh enableDynamicSimulation true;
+					_veh = createVehicle [_type, [0,0,1000], [], 0, "FLY"];
+					
+					//Protect vehicles while spawning, prevents damaged vehicles on load.
+					_veh enableSimulationGlobal false;
+					_veh allowDamage false;
+					_vehs pushBack _veh;
+					_veh setPosATL _pos;
+					
 
 					if(count _x > 7) then {
 						(_x select 7) params ["_fuel","_dmg"];
@@ -224,6 +231,20 @@ private _cc = 0;
 					sleep 0.2;
 				};
 			}foreach(_val);
+			//Remove spawn protection, check if local in case it has transferred to HC
+			{
+				if (!isNull _x) then {
+					_x enableSimulationGlobal true;
+					if (local _x ) then {
+						_x allowDamage true;
+						_x enableDynamicSimulation true;
+					} else {
+						[_x,true] remoteExecCall ["enableSimulation",_x];
+						[_x,true] remoteExecCall ["allowDamage",_x];
+						[_x,true] remoteExecCall ["enableDynamicSimulation",_x];
+					}
+				};
+			} foreach _vehs
 		};
 	};
 
