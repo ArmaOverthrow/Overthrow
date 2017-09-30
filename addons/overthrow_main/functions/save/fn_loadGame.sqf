@@ -231,6 +231,7 @@ private _cc = 0;
 					sleep 0.2;
 				};
 			}foreach(_val);
+			sleep 1;
 			//Remove spawn protection, check if local in case it has transferred to HC
 			{
 				if (!isNull _x) then {
