@@ -315,7 +315,7 @@ private _built = (allMissionObjects "Static");
 						_bdg = OT_centerPos nearestObject parseNumber _x;
 						buildingpositions setVariable [_x,position _bdg,true];
 					}else{
-						_bdg = _pos nearestObject _x;
+						_bdg = _pos nearestObject parseNumber _x;
 					};
 					if !(_bdg in _built) then {
 						_bdg addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
