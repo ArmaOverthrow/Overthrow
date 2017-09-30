@@ -240,7 +240,6 @@ private _cc = 0;
 						_x allowDamage true;
 						_x enableDynamicSimulation true;
 					} else {
-						[_x,true] remoteExecCall ["enableSimulation",_x];
 						[_x,true] remoteExecCall ["allowDamage",_x];
 						[_x,true] remoteExecCall ["enableDynamicSimulation",_x];
 					}
