@@ -94,7 +94,7 @@ private _cc = 0;
 					if(count _x > 5) then {
 						_name = _x select 5;
 					};
-					_veh = createVehicle [_type, [0,0,1000], [], 0, "FLY"];
+					_veh = createVehicle [_type, [0,0,0], [], 0, "NONE"];
 					
 					//Protect vehicles while spawning, prevents damaged vehicles on load.
 					_veh enableSimulationGlobal false;
