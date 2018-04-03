@@ -122,10 +122,6 @@ while {(count (waypoints _GroupUnit)) > 0} do
 
 _ResetWaypoint = _GroupUnit addwaypoint [getPosATL _Unit,15];
 
-//_OverWatch = [_myEnemyPos] call BIS_fnc_findOverwatch;
-
-//[_unit] call BIS_fnc_threat;
-
 _rnd = random 100;
 _dist = (_rnd + 100);
 _dir = random 360;
@@ -136,7 +132,8 @@ _group	= group _Unit;
 _index = currentWaypoint _group;
 
 
-_myPlaces = selectBestPlaces [_myEnemyPos, 400,"((6*hills + 2*forest + 4*houses + 2*meadow) - sea + (2*trees)) - (1000*deadbody)", 100, 5];
+_myPlaces = selectBestPlaces [_myEnemyPos, VCOM_WaypointDistance,"((6*hills + 2*forest + 4*houses + 2*meadow) - sea + (2*trees)) - (1000*deadbody)", 100, 5];
+if (_myPlaces isEqualTo []) then {_myPlaces = [_myEnemyPos];};
 _RandomArray = _myPlaces call BIS_fnc_selectrandom;
 _RandomLocation = _RandomArray select 0;
 
@@ -160,67 +157,3 @@ if (VCOM_AIDEBUG isEqualTo 1) then
 {
 	[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["3DText",0];
 };
-
-	//systemchat format ["%1 RAWR D",side _unit];
-
-
-/*
-//Lets try making the AI group move more aggressively to the waypoint. Test function will be inside this script here.
-_group spawn
-{
-
-	_CurrentStance = (leader _Unit) call VCOMAI_CurrentStance;
-	while {_CurrentStance isEqualTo "COMBAT"} do
-	{
-		//Pull the waypoint information
-		_index = currentWaypoint _Unit;
-		_WPPosition = getWPPos [_Unit,_index];
-		
-		//Exit if WPPosition isEqualTo [0,0,0];
-		if (_WPPosition isEqualTo [0,0,0]) exitWith {};
-	
-		//Force AI to move in that direction
-		{
-			_x doMove _WPPosition;
-			////systemchat format ["MOVE: %1",_x];
-		} foreach units _Unit;
-		
-		//Update stance information
-		_CurrentStance = (leader _Unit) call VCOMAI_CurrentStance;
-		
-		//For testing we will have it force move the troops every 15 seconds.
-		sleep 15;
-			
-	};
-
-
-};
-
-
-
-
-_index2 = currentWaypoint _group;
-_wPos = waypointPosition [_group, _index2];
-
-_UnitPosition = getPosATL _Unit;
-
-
-_x1 = _wPos select 0;
-_y1 = _wPos select 1;
-_x2 = _UnitPosition select 0;
-_y2 = _UnitPosition select 1;
-_Midpoint = [((_x1 + _x2)/2),((_y1 + _y2)/2),1];
-
-
-//Individual Commands. To get the AI to move around more. While some cover.
-
-_group_array = units _group;
-_GroupCount = count _group_array;
-_CoverCount = (round(_GroupCount * .33)); //10 -> 3
-for "_i" from 1 to _CoverCount do {
-	_group_array spawn {
-	_RandomUnit = _Unit call BIS_fnc_selectRandom;
-	_Unit = _Unit - [_RandomUnit];
-};
-};
-*/

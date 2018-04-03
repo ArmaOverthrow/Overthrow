@@ -1,26 +1,36 @@
-private["_group","_weapon","_position","_leader","_units","_gunner","_assistant","_type","_wait","_weaponBP","_tripodBP"];
+//This function will constantly monitor the unit and see if the static weapon needs to be dissassembled or not. The amount of time on a static will be a base variable with additional time every time an enemy is spotted.
+//Edited on: 8/8/2017 @ 0011
 
-//_group = 	[_this, 0, grpNull] call bis_fnc_param;
-_Unit = _this select 1;
-_group = group _Unit;
-sleep 2;
+params ["_Unit","_Backpack","_StaticCreated"];
 
-_UnitGroups = units _group;
-_weapon = 	_Unit getVariable "supportWeaponSetup";
-_position = (getPos _Unit);
-_leader = 	leader _group;
-_type = 	typeOf _weapon;
-_Unit leaveVehicle _weapon;
+sleep 10;
 
-_UnitStatic = _Unit getVariable "USEDSTATICWEAP";
+private _StaticGreen = true;
+private _Statictime = 180;
 
-sleep 0.25;
-_Unit action ["DisAssemble",_weapon];
-deleteVehicle _weapon;
-sleep 1;
-//_assistant action ["takeBag",_tripodBP];
-//_Unit action ["takeBag",_weaponBP];
-//_assistant action ["takeBag",_tripodBP];
-_Unit addBackpack _UnitStatic;
+while {_StaticGreen && {alive _unit} && {alive _StaticCreated} && {!(isNull (gunner _StaticCreated))}} do
+{
+	sleep 5;
+	private _Enemy = _Unit findNearestEnemy _Unit;
+	if (!(isNull _Enemy)) then 
+	{
+			private _cansee = [_Unit, "VIEW"] checkVisibility [eyePos _Unit, eyePos _Enemy];
+			if (_cansee > 0) then {_Statictime = _Statictime + 3;} else {_Statictime = _Statictime - 5;};
+	}
+	else
+	{
+		_Statictime = _Statictime - 5;
+	};
+	if (_Statictime < 1) then {_StaticGreen = false;};
+};
 
-//_Unit setVariable ["SETUPAMOUNT",false,false];
+//Okay, time to move!
+if (alive _Unit) then
+{
+	_Unit leaveVehicle _StaticCreated;
+	[_Unit,"AinvPknlMstpSnonWnonDnon_Putdown_AmovPknlMstpSnonWnonDnon"] remoteExec ["playMoveEverywhere",0];
+	sleep 3;
+	deleteVehicle _StaticCreated;
+	sleep 1;
+	_Unit addBackpackGlobal _Backpack;
+};
