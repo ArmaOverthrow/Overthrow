@@ -21,7 +21,7 @@ if !(_Return) then
 	_bullet = (_this select 0) select 6;
 	
 	
-	_TimeShot = _unit getVariable "VCOM_FiredTimeHearing";
+	_TimeShot = _unit getVariable ["VCOM_FiredTimeHearing",0];
 	
 	if ((diag_tickTime - _TimeShot) > 20) then 
 	{

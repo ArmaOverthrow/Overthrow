@@ -36,7 +36,7 @@ private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy"
 	//If the enemy is REALLY close, JUST OPEN FIRE!
 	//if ((count _intersections) isEqualTo 0 && ((_DistanceCheck) < 50)) exitwith 
 	
-	if (_cansee > 0 && {(_DistanceCheck) < 100}) exitwith 
+	if (_cansee > 0 && {(_DistanceCheck) < 25}) exitwith 
 	{
 			_VCOM_VisuallyCanSee = true;
 			_Unit forceSpeed 0;

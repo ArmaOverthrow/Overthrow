@@ -1,6 +1,7 @@
 private ["_Unit", "_coverObjects", "_startingdistance", "_class", "_return", "_parents", "_BoundingArray", "_p1", "_p2", "_maxWidth", "_maxLength", "_GroupLeader", "_unit", "_NearestEnemy", "_GuessLocation", "_coverObjectsClosest", "_Closestobject", "_coverObjectspos", "_arrow", "_UnitGroup", "_OriginalSpeed", "_WaitTime","_WeakListFinal"];
 
 _Unit = _this select 0;
+if !((vehicle _Unit) isEqualTo _Unit) exitWith {};
 
 waitUntil {VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit};
 
@@ -46,13 +47,23 @@ waitUntil {VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit};
 		};
 	
 		_WaitTime = diag_ticktime + 35;
+		_Unit doWatch ObjNull;
+		_Unit disableAI "TARGET";
+		_Unit disableAI "AUTOTARGET";																									
+		_Unit disableAI "SUPPRESSION";				
+		_Unit disableAI "AUTOCOMBAT";				
 		While {alive _Unit && diag_ticktime < _WaitTime && (_Unit distance _CoverPos) > 3} do 
 		{
 					_Unit forcespeed -1;
 					_Unit domove _CoverPos;
-			sleep 3;		
+			sleep 4;		
 		};
 		_Unit forcespeed 0;
+		_Unit doWatch _NearestEnemy;
+		_Unit enableAI "AUTOTARGET";
+		_Unit enableAI "TARGET";		
+		_Unit enableAI "SUPPRESSION";				
+		_Unit enableAI "AUTOCOMBAT";				
 	}
 	else
 	{

@@ -13,12 +13,12 @@ _nBuilding = nearestBuilding _Unit;
 _GrabVariable = _Unit getVariable ["VCOM_GARRISONED",false];
 
 //If the closest building is greate than 15 meters, exit
-if ((_nBuilding distance _Unit) > 15 || {_GrabVariable}) exitWith {};
+if ((_nBuilding distance _Unit) > 50 || {_GrabVariable}) exitWith {};
 
 
 //Find positions in a house.
 _BuildingPositions = [_nBuilding] call BIS_fnc_buildingPositions;
-
+private _OriginalPositions = _BuildingPositions;
 
 //If the array is not more than 0 - then exit.
 if ((count _BuildingPositions) isEqualTo 0) exitWith {};
@@ -26,37 +26,30 @@ if ((count _BuildingPositions) isEqualTo 0) exitWith {};
 //Find the units in the group!
 _GroupUnits = units _group;
 
-//Put each unit in a seperate group 
-{[_x] joinSilent nil} forEach _GroupUnits;
-
-if (isNil "_PassFunction") then
-{
-	[_GroupUnits,side _Unit] spawn VCOMAI_ReGroup;
-};
-
 {
 	if !((count _BuildingPositions) isEqualTo 0) then
 	{
-		_BuildingLocation = _BuildingPositions select 0;
-		_BuildingPositions = _BuildingPositions - [_BuildingLocation];
-		_GroupUnits = _GroupUnits - [_x];
+		_BuildingLocation = selectRandom _BuildingPositions;
 		_x doMove _BuildingLocation;
-		_x setUnitPosWeak "UP";
+		_x setUnitPos "UP";
 		_x setVariable ["VCOM_GARRISONED",true,false];
+		[_x,_BuildingLocation,_BuildingPositions] spawn
+		{
+			params ["_unit","_BuildingLocation","_BuildingPositions"];
+			private _group	= group _Unit;
+			private _index = currentWaypoint _group;
+			private _WaypointIs = waypointType [_group,_index];			
+			while {_WaypointIs isEqualTo "HOLD"} do
+			{
+				waitUntil {_unit distance _BuildingLocation < 1.3};
+				_unit disableAI "PATH";
+				sleep (30 + (random 60));
+				_unit enableAI "PATH";
+				_BuildingLocation = selectRandom _BuildingPositions;
+				_unit doMove _BuildingLocation;
+				_unit setUnitPos "UP";			
+			};
+		};
 	};
 } foreach _GroupUnits;
 
-
-if ((count _GroupUnits) > 0) then
-{
-	{
-		_CurrentPos = getPosASL _x;
-		_rnd = random 25;
-		_dist = (_rnd + 25);
-		_dir = random 360;
-		_positions = [(_CurrentPos select 0) + (sin _dir) * _dist, (_CurrentPos select 1) + (cos _dir) * _dist, 0];
-		_x doMove _positions;
-		sleep 15;
-		[_x,(group _x),false] spawn VCOMAI_Garrison;
-	} foreach _GroupUnits;
-};
