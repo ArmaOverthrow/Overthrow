@@ -18,7 +18,7 @@ else
 	_NewPosition = getpos _Target;
 	
 
-	if (_TargetPosition distance _NewPosition < 30) then
+	if (_TargetPosition distance _NewPosition < 30 && {(_unit knowsabout _target) > 0.1}) then
 	{
 		_Accuracy = _Unit skill "aimingAccuracy";
 		_Shake = _Unit skill "aimingShake";

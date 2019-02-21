@@ -31,7 +31,20 @@ _doTransfer = {
 	format["Transferring inventory from %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 	[5,false] call OT_fnc_progressBar;
 	_end = time + 5;
+	
+	// Dummy CBA remove calls to strip weapons and replace with non-preset types
+	[_target, "Bag_Base"] call CBA_fnc_removeBackpackCargo;
 	[_target, "FakeWeapon"] call CBA_fnc_removeWeaponCargo;
+	
+	// Strip out preloaded missile dummies from inventory.
+	// Only way to really clear them is a full magazine clear.
+	private _mags = magazineCargo _target;
+	_mags = _mags - OT_noCopyMags;
+	clearMagazineCargoGlobal _target;
+	{
+		_target addMagazineCargoGlobal[_x, 1];
+	}foreach(_mags);
+	
 	{
 		_count = 0;
 		_cls = _x select 0;

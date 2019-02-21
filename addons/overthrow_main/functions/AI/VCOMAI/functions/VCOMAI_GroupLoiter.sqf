@@ -10,7 +10,7 @@ _UnitArray = units _Group;
 	if (_x isEqualTo (vehicle _x)) then
 	{
 		//Each AI will need to join their own group. The plan is to make them re-form when combat starts.
-		[_x] joinSilent nil;
+		[_x] joinsilent grpnull;
 		_x setVariable ["VCOM_LOITERING",true];
 		_x setVariable ["VCOM_LOITERINGACT",0];
 		[_x,_UnitArray] spawn VCOMAI_LoiterAction;

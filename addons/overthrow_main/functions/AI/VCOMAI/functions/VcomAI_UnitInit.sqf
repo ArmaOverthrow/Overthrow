@@ -85,7 +85,7 @@ _Player = false;
 if (isPlayer _Unit) then {_Player = true;};
 
 //Determine if this AI should even execute new code
-_UseAI = _Unit getVariable "NOAI";
+_UseAI = _Unit getVariable ["VCOM_NOAI",false];
 if (isNil ("_UseAI")) then 
 {
 	_UseAI = false;

@@ -34,7 +34,7 @@ _text = _text + format["<t size='0.65'>Wages: $%1 /hr</t><br/>",_wages];
 
 _amgen = (getPlayerUID player) in (server getVariable ["generals",[]]);
 private _nexthr = ((date select 3) + 1);
-if(_nexthr < 10) then {_nexthr = "0"+_nexthr};
+if(_nexthr < 10) then {_nexthr = format ["0%1",_nexthr]};
 
 if(_amgen) then {
     ctrlEnable [1602,true];

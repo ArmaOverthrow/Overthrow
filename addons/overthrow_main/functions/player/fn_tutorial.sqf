@@ -95,7 +95,7 @@ OT_menuHandler = {
 				}
 			],
 			[
-				"There's too much crime in Tanoa, and NATO isn't doing anything about it",
+				format ["There's too much crime in %1, and NATO isn't doing anything about it",OT_nation],
 				{
 					_gundealer = spawner getVariable format["gundealer%1",(getpos player) call OT_fnc_nearestTown];
 					private _end = {

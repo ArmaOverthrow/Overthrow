@@ -158,7 +158,7 @@ private _warehouse = [];
 {
 	_var = warehouse getVariable _x;
 	if (!isNil "_var") then {
-		if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		if((_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
 			_warehouse pushback _var;
 		};
 	};

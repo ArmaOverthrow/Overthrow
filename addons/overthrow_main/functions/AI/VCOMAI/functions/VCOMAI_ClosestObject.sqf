@@ -1,6 +1,7 @@
 private ["_list", "_position"];
 _list = _this select 0;
 _object = _this select 1;
+//[_list,_object] call VCOMAI_ClosestObject;
 ////systemchat format ["%1",_object];
 
 

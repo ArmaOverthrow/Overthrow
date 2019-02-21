@@ -27,14 +27,32 @@ if(typename _this == "ARRAY") then {
 private _allCargo = {
 	private _myitems = [];
 	if(_target isKindOf "Man") then {
-		_myitems = (items _target) + (magazines _target);
+		_myitems = ((items _target) - (weapons _target)) + (magazines _target);
+		{
+			{
+				if(typename _x == "STRING") then {
+					if !(_x isEqualTo "") then {
+						if(_forEachIndex == 0) then {
+							_myitems pushback (_x call BIS_fnc_baseWeapon);
+						}else{
+							_myitems pushback _x;
+						};
+					};
+				};
+				if(typename _x == "ARRAY") then {
+					if !((_x select 0) isEqualTo "") then {
+						_myitems pushback (_x select 0);
+					};
+				};
+			}foreach(_x);
+		}foreach(weaponsItems _target);
 	}else{
 		_myitems = (itemCargo _target) + (magazineCargo _target) + (backpackCargo _target);
 		{
 			{
 				if(typename _x == "STRING") then {
 					if !(_x isEqualTo "") then {
-						if((_x call BIS_fnc_itemType) select 0 == "Weapon") then {
+						if(_forEachIndex == 0) then {
 							_myitems pushback (_x call BIS_fnc_baseWeapon);
 						}else{
 							_myitems pushback _x;
@@ -54,6 +72,7 @@ private _allCargo = {
 		}foreach(everyContainer _target);
 	};
 	if(isnil "_myitems") then {_myitems = []};
+	_myitems = _myitems - OT_noCopyMags;
 	_myitems
 };
 

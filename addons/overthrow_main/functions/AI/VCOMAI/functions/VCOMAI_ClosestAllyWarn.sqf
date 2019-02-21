@@ -1,61 +1,41 @@
 //Created on ???
-// Modified on : 9/7/14 - Added radio check.   9/10/14 - Added PRIVATE commandArtilleryFire
+// Modified on : 9/7/14 - Added radio check.   9/10/14 - Added PRIVATE commandArtilleryFire - 9/10/17, rewrote script.
 
-private ["_Unit","_Wall","_Direction","_Killer","_UnitSide","_NoFlanking","_GrabVariable","_CheckStatus","_Array1","_NoFlanking2","_CheckStatus2","_GrabVariable2","_CombatStance","_group","_index","_WaypointIs","_waypoint0"];
+private _Unit = _this select 0;
+private _UnitGroup = (group _Unit);
+if (_UnitGroup getVariable ["VCOM_CALLINGHELP",false]) exitWith {};
+_UnitGroup setVariable ["VCOM_CALLINGHELP",true];
 
-_Unit = _this select 0;
-_UnitGroup = (group _Unit);
-_DeathPosition = getpos _Unit;
-/*
-_Unit spawn
-{
-sleep 8;
-private ["_Wall"];
-	_Direction = 0;
-	for "_i" from 0 to 1 step 1 do
-	{
-		_Wall = "Land_InvisibleBarrier_F" createvehiclelocal (getpos _this);
-		_Wall disableCollisionWith _this;		
-		_Wall setDir _Direction;
-		_Wall setposATL (getposATL _this);		
-		
-		
-		//[[_Wall],"DisableCollisionALL"] call BIS_fnc_MP;
-		[_Wall] remoteExec ["DisableCollisionALL",0];
-		_Wall disableCollisionWith player;
-		
-		_Wall spawn {sleep 120;deletevehicle _this;};
-		_Direction = 90;
-	};
-};
-*/
+_UnitGroup spawn {sleep 300;_this setVariable ["VCOM_CALLINGHELP",false];};
 
-if !((side _UnitGroup) in VCOM_SideBasedMovement) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn1..: %1",_UnitGroup];};};
-
-
-_Killer = _this select 1;
+private _Killer = _this select 1;
+private _DeathPosition = getpos _Killer;
 
 //If this gets attached to a player, then exit before doing anything
 if (isPlayer _Unit) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn1a..: %1",_UnitGroup];};};
-
-//Let's pull the units group side
-_UnitSide = side _UnitGroup;
-
-//If the unit is in the ArtilleryArray, then remove it
-if (_Unit in ArtilleryArray) then {ArtilleryArray = ArtilleryArray - [_Unit];};
+if !((side _UnitGroup) in VCOM_SideBasedMovement) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn1..: %1",_UnitGroup];};};
 
 //Check to see if this unit should be moving to support others or not
 //Check to see if this unit is garrisoned. If so, don't do anything
 //Check to see if unit has radio. If the unit does not have a radio, then it will not move to support
-_NoFlanking = _Unit getVariable ["VCOM_NOPATHING_Unit",false];
-_NoAI = _Unit getVariable ["NOAI",false];
-_GrabVariable = _Unit getVariable ["VCOM_GARRISONED",false];;
-_CheckStatus = assignedItems _Unit;
+private _CheckStatus = assignedItems _Unit;
 
-if (_NoFlanking || {_GrabVariable} || {_NoAI} || {!("ItemRadio" in _CheckStatus)}) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn2..: %1",_UnitGroup];};};
+if ((_Unit getVariable ["VCOM_NOPATHING_Unit",false]) || {(_Unit getVariable ["VCOM_GARRISONED",false])} || {(_Unit getVariable ["VCOM_NOAI",false])} || {!("ItemRadio" in _CheckStatus)}) exitWith {if (VCOM_AIDEBUG isEqualTo 1) then {systemChat format ["Exited ClosestAllyWarn2..: %1",_UnitGroup];};};
 
-_Array1 = _Unit call VCOMAI_FriendlyArray;
-_Array1 = _Array1 - ArtilleryArray;
+private _ArrayOrg = _Unit call VCOMAI_FriendlyArray;
+_ArrayOrg = _ArrayOrg - ArtilleryArray;
+{if ((_x distance _Unit) < 600) then {(group _x) setVariable ["VCOM_CALLINGHELP",true];_x spawn {sleep 300;(group _this) setVariable ["VCOM_CALLINGHELP",false];};};} foreach _ArrayOrg;
+
+
+private _Array2 = _Killer call VCOMAI_FriendlyArray;
+_Array2 = _Array2 - ArtilleryArray;
+{
+	if (_x distance _Killer > 501) then {_Array2 = _Array2 - [_x];};
+} foreach _Array2;
+
+
+//Lets get a rough estimate of how many enemies we are facing.
+
 
 if (VCOM_AIDEBUG isEqualTo 1) then
 {
@@ -65,54 +45,69 @@ sleep (30 + (random 30));
 if (VCOM_AIDEBUG isEqualTo 1) then
 {
 	systemChat format ["Group is attempting to call for help...: %1",_UnitGroup];
-};	
+};
 
-_aliveCount = {alive _x} count (units _UnitGroup);
-
+private _EnemyCount = count _Array2;
+private _RespondCount = 0;
+private _aliveCount = {alive _x} count (units _UnitGroup);
 if (_aliveCount > 0) then
 {
-	if (VCOM_AIDEBUG isEqualTo 1) then
 	{
-		systemChat format ["Group successfully called for help: %1",_UnitGroup];
-	};
-	
-	{
-		_NoFlanking2 = _x getVariable ["VCOM_NOPATHING_Unit",false];
-		if !(_NoFlanking2) then 
+		if (_RespondCount < _EnemyCount) then
 		{
-			_CheckStatus2 = assignedItems _x;
-			if (isNil "_CheckStatus2") exitWith {};
-			if ("ItemRadio" in _CheckStatus2) then 
-				{
-					
-					_GrabVariable2 = _x getVariable ["VCOM_GARRISONED",false];
-					
-					
-					if !(_GrabVariable2) then 
-					{
-						_group	= group _x;
+
+			private _CheckStatus2 = assignedItems _x;
+			
+
+			if (!(isNil "_CheckStatus2") && {!(_x getVariable ["VCOM_NOPATHING_Unit",false])} && {!(_x getVariable ["VCOM_GARRISONED",false])} && {"ItemRadio" in _CheckStatus2} && {!((group _x) getVariable ["VCOM_MOVINGTOSUPPORT",false])}) then 
+			{
+
+
+						private _group	= group _x;
 						if ((count (waypoints _group)) < 2) then 
 						{
-							
-							_WaypointCheck = _group call VCOMAI_Waypointcheck;
+
+							private _WaypointCheck = _group call VCOMAI_Waypointcheck;
 							if (count _WaypointCheck < 1) then 
 							{
 							
-								if ((_x distance _Unit) <= (_x getVariable ["VCOM_Unit_AIWarnDistance",VCOM_Unit_AIWarnDistance]) ) then 
+
+								if ((_x distance _Unit) <= VCOM_Unit_AIWarnDistance) then 
 								{
+
 											_x setbehaviour "AWARE";
-											_x setVariable ["VCOM_MOVINGTOSUPPORT",true,false];
-											if (leader _x isEqualTo _x) then 
+											(group _x) setVariable ["VCOM_MOVINGTOSUPPORT",true];
+											if (!(vehicle _x isEqualTo _x)) then
 											{
-													_waypoint2 = (group _x) addwaypoint[_DeathPosition,15];
+													_RespondCount = _RespondCount + count (crew (vehicle _x));
+													private _Driver = (driver (vehicle _x));
+													//systemchat format ["_RespondCountDRIVER %1 GROUP: %2",[_EnemyCount,_RespondCount],(group _x)];
+													_waypoint2 = (group _Driver) addwaypoint[_DeathPosition,15,150];
+													_waypoint2 setwaypointtype "MOVE";
+													_waypoint2 setWaypointSpeed "NORMAL";
+													_waypoint2 setWaypointBehaviour "AWARE";												
+											}
+											else
+											{
+													_RespondCount = _RespondCount + (count (units (group _x)));
+													//systemchat format ["_RespondCount %1 GROUP: %2",[_EnemyCount,_RespondCount],(group _x)];
+													_waypoint2 = (group _x) addwaypoint[_DeathPosition,15,150];
 													_waypoint2 setwaypointtype "MOVE";
 													_waypoint2 setWaypointSpeed "NORMAL";
 													_waypoint2 setWaypointBehaviour "AWARE";
+
+														private _Driver = Driver (vehicle _x);
+														_waypoint2 = (group _Driver) addwaypoint[_DeathPosition,15,150];
+														_waypoint2 setwaypointtype "MOVE";
+														_waypoint2 setWaypointSpeed "NORMAL";
+														_waypoint2 setWaypointBehaviour "AWARE";											
 											};
-											_x spawn 
+
+
+											(group _x) spawn 
 											{
-												sleep 30;
-												_this setVariable ["VCOM_MOVINGTOSUPPORT",false,false];
+												sleep 300;
+												_this setVariable ["VCOM_MOVINGTOSUPPORT",false];
 											};
 											
 										if (VCOM_AIDEBUG isEqualTo 1) then
@@ -120,12 +115,17 @@ if (_aliveCount > 0) then
 											[_x,"Warned of Combat!",120,20000] remoteExec ["3DText",0];
 										};												
 								
+								};
 							};
-						};
 	
 						};
-					};
-				};
-			};
-	} forEach _Array1;
+						
+						
+
+
+	
+			
+			};	
+		};
+	} foreach _ArrayOrg;	
 };

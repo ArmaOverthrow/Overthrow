@@ -1,5 +1,9 @@
 private ["_unit", "_bullet", "_TimeShot","_FrameRateCheck", "_Unit", "_Array2", "_Point", "_ArrayCheck", "_UnitGroup", "_CheckVariable1", "_CheckDistance"];
 //An extra layer of suppression that will hopefully make AI go for cover better...
+//If framerate is below 20 - exit this script.
+_FrameRateCheck = diag_fps;
+if (_FrameRateCheck <= VCOM_FPSFreeze) exitWith {};
+
 _unit = (_this select 0) select 0;
 
 if (VCOM_CurrentlySuppressing < VCOM_CurrentlySuppressingLimit) then
@@ -9,9 +13,7 @@ if (VCOM_CurrentlySuppressing < VCOM_CurrentlySuppressingLimit) then
 	if ((diag_tickTime - _TimeShot) > 25) then 
 	{
 		
-		//If framerate is below 20 - exit this script.
-		_FrameRateCheck = diag_fps;
-		if (_FrameRateCheck <= 25) exitWith {};
+
 	
 		
 		_unit setVariable ["VCOM_FiredTime",diag_tickTime,true];
@@ -49,7 +51,6 @@ if (VCOM_CurrentlySuppressing < VCOM_CurrentlySuppressingLimit) then
 				_Kn = _unit knowsAbout _x;
 				if (_CheckDistance < 4 && (_Kn > 3.5)) then 
 				{
-					_x setSuppression 1;
 					if (VCOM_Suppression) then
 					{
 						if (isPlayer _x) then {remoteExec ["PSup",_x];}

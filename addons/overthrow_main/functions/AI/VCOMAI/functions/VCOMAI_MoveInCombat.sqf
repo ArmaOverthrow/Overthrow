@@ -47,10 +47,11 @@ if (VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit) then
 				{
 					[_x,_WPPosition,_VCOM_GARRISONED,_VCOM_MovedRecentlyCover,_VCOMAI_ActivelyClearing,_VCOMAI_StartedInside,_NearestEnemy] spawn 
 					{
+						_Unit = _this select 0;					
+						if !((vehicle _Unit) isEqualTo _Unit) exitWith {};
 						waitUntil {VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit};
 						VCOM_CurrentlyMoving = VCOM_CurrentlyMoving + 1;
 						sleep (random 10);
-						_Unit = _this select 0;
 						_Pos = _this select 1;
 						_VCOM_GARRISONED = _this select 2;
 						_VCOM_MovedRecentlyCover = _this select 3;
@@ -68,12 +69,7 @@ if (VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit) then
 						};			
 						_CoverPos = [_Unit,_MoveToPos,_VCOM_GARRISONED,_VCOM_MovedRecentlyCover,_VCOMAI_ActivelyClearing,_VCOMAI_StartedInside,_NearestEnemy] call VCOMAI_FindCoverPos;
 						//systemchat format ["_CoverPos: %1",_CoverPos];	
-						_Unit disableAI "SUPPRESSION";
-						_Unit disableAI "COVER";
-						_Unit disableAI "AUTOCOMBAT";
-						_Unit disableAI "TARGET";
-						_Unit disableAI "AUTOTARGET";								
-						_Unit disableAI "FSM";					
+				
 						if !(isNil "_CoverPos") then
 						{
 						if (VCOM_AIDEBUG isEqualTo 1) then
@@ -96,13 +92,18 @@ if (VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit) then
 							};
 						};
 						
+							_Unit doWatch ObjNull;
+							_Unit disableAI "TARGET";
+							_Unit disableAI "AUTOTARGET";																									
+							_Unit disableAI "SUPPRESSION";				
+							_Unit disableAI "AUTOCOMBAT";								
 							_WaitTime = diag_ticktime + 35;
 							While {alive _Unit && diag_ticktime < _WaitTime && (_Unit distance _CoverPos) > 3} do 
 							{
-										_Unit forcespeed -1;
+										_Unit forcespeed -1;							
 										_Unit domove _CoverPos;
 								//	};
-								sleep 3;		
+								sleep 4;		
 							};
 							//systemchat format ["MADE IT: %1",_Unit];
 							_Unit forcespeed 0;
@@ -112,12 +113,11 @@ if (VCOM_CurrentlyMoving < VCOM_CurrentlyMovingLimit) then
 							_Unit forcespeed -1;
 							_Unit doMove _MoveToPos;
 						};
-						_Unit enableAI "SUPPRESSION";
-						_Unit enableAI "COVER";
-						_Unit enableAI "AUTOCOMBAT";
-						_Unit enableAI "TARGET";
-						_Unit enableAI "AUTOTARGET";							
-						_Unit enableAI "FSM";
+						_Unit enableAI "AUTOTARGET";
+						_Unit enableAI "TARGET";				
+						_Unit enableAI "SUPPRESSION";				
+						_Unit enableAI "AUTOCOMBAT";	
+						_Unit doWatch _NearestEnemy;
 					};
 				} foreach _GroupDudes;
 			};
