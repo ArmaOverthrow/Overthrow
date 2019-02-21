@@ -75,6 +75,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 
 			[_deadguy,_unit] call OT_fnc_takeStuff;
 			sleep 2;
+            deleteVehicle _deadguy;
 			if(primaryWeapon _unit == "") then {
 				_weapon = objNull;
 				{
@@ -101,7 +102,6 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 					};
 				};
 			};
-			deleteVehicle _deadguy;
 			if(!alive _unit) exitWith {};
 			_timeout = time + 120;
 			_unit doMove getpos _t;

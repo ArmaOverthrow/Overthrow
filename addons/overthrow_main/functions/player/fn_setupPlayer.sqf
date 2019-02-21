@@ -1,8 +1,6 @@
 player spawn OT_fnc_statsSystem;
 player spawn OT_fnc_wantedSystem;
-if !(isNil "ace_advanced_fatigue_anreserve") then {
-	player spawn OT_fnc_perkSystem;
-};
+player spawn OT_fnc_perkSystem;
 player spawn OT_fnc_mapSystem;
 disableUserInput false;
 
