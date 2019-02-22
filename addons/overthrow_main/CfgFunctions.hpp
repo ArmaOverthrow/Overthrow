@@ -85,8 +85,6 @@ class CfgFunctions
 		class Events
 		{
 			file = "\ot\functions\events";
-			class preInit {preInit = 1;};
-			class postInit {postInit = 1;};
 			class deathHandler {};
 			class buildingDamagedHandler {};
 			class cargoLoadedHandler {};
