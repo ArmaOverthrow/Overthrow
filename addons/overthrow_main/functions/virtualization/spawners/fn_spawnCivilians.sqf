@@ -83,7 +83,7 @@ while {_count < _numCiv} do {
 				_identity = call OT_fnc_randomLocalIdentity;
 			};
 		};
-		if(isNil "_identity" or count _identity == 0) then {
+		if(isNil "_identity" || { count _identity == 0 }) then {
 			_identity = call OT_fnc_randomLocalIdentity;
 		};
 		[_civ,_identity] call OT_fnc_applyIdentity;
@@ -123,7 +123,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			[_civ] joinSilent _group;
 			spawner setVariable [format["civspawn%1",_civid],_civ,false];
 
-			if(isNil "_identity" or count _identity == 0) then {
+			if(isNil "_identity" || { count _identity == 0 }) then {
 				_identity = call OT_fnc_randomLocalIdentity;
 			};
 
