@@ -112,7 +112,7 @@ if (_aliveCount > 0) then
 											
 										if (VCOM_AIDEBUG isEqualTo 1) then
 										{
-											[_x,"Warned of Combat!",120,20000] remoteExec ["3DText",0];
+											[_x,"Warned of Combat!",120,20000] remoteExec ["DebugText",0];
 										};												
 								
 								};

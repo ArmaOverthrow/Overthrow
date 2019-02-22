@@ -46,7 +46,7 @@ private _Vehicle = (vehicle _Driver);
 					//[_x,false,false,false,false] spawn VCOMAI_MoveToCover;
 					if (VCOM_AIDEBUG isEqualTo 1) then
 					{
-						[_U,"Disembark! Scatter!",30,20000] remoteExec ["3DText",0];
+						[_U,"Disembark! Scatter!",30,20000] remoteExec ["DebugText",0];
 					};							
 					if ((leader _U) isEqualTo _U) then 
 					{
@@ -87,7 +87,7 @@ private _Vehicle = (vehicle _Driver);
 						//[_x,false,false,false,false] spawn VCOMAI_MoveToCover;
 						if (VCOM_AIDEBUG isEqualTo 1) then
 						{
-							[_U,"Disembark! Scatter!",30,20000] remoteExec ["3DText",0];
+							[_U,"Disembark! Scatter!",30,20000] remoteExec ["DebugText",0];
 						};							
 						if ((leader _U) isEqualTo _U) then 
 						{

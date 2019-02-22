@@ -101,7 +101,7 @@ if (_RandomChance < 25) then
 	
 	if (VCOM_AIDEBUG isEqualTo 1) then
 	{
-		[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["3DText",0];
+		[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["DebugText",0];
 	};		
 
 	
@@ -155,5 +155,5 @@ _waypoint2 setWaypointBehaviour "COMBAT";
 
 if (VCOM_AIDEBUG isEqualTo 1) then
 {
-	[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["3DText",0];
+	[_Unit,"Flank Waypoint set. I am a good leader >:D!!",30,20000] remoteExec ["DebugText",0];
 };

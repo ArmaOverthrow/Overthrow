@@ -7,16 +7,12 @@ class CfgFunctions
 			file = "\ot\functions";
 			class initVar {};
 			class initOverthrow {};
-			class assignMission {};
-			class canPlace {};
+		};
+
+        class Cleanup
+		{
+			file = "\ot\functions\cleanup";
 			class cleanup {};
-			class hasOwner {};
-			class spawnTemplate {};
-			class spawnTemplateAttached {};
-			class unitStock {};
-			class setOwner {};
-			class getOwner {};
-			class vehicleCanMove {};
 			class cleanDead {};
 		};
 
@@ -204,6 +200,7 @@ class CfgFunctions
 
 			/* Gun Dealer */
 			class getMission {};
+			class assignMission {};
 
 			/* Factory */
 			class factoryQueueAdd {};
@@ -242,7 +239,11 @@ class CfgFunctions
 			class lockVehicle {};
 			class reverseEngineer {};
 			class playSound {};
+            class canPlace {};
+			class vehicleCanMove {};
+			
 		};
+
 		class SelfActions
     	{
         	file = "\ot\functions\actions\self";
@@ -285,7 +286,6 @@ class CfgFunctions
 			file = "\ot\functions\virtualization";
 			class initVirtualization {};
 			class runVirtualization {};
-
 			class spawn {};
 			class despawn {};
 			class inSpawnDistance {};
@@ -502,6 +502,16 @@ class CfgFunctions
 			class initWorkshop {};
 			class initTrainingCamp {};
 			class initWarehouse {};
+		};
+
+        class Util
+		{
+			file = "\ot\functions\util";
+			class getOwner {};
+            class hasOwner {};
+			class setOwner {};
+			class unitStock {};
+            class spawnTemplate {};			
 		};
 
 		/*

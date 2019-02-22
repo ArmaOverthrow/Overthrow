@@ -86,7 +86,7 @@ if (_RoundsToFire < 2) then {_RoundsToFire = 2};
 	//_x commandArtilleryFire [(getPos _Enemy),_RandomAmmoArray,(floor(random 4))];
 	if (VCOM_AIDEBUG isEqualTo 1) then
 	{
-		[_x,"I am firing my ARTY >:D!!!",120,20000] remoteExec ["3DText",0];
+		[_x,"I am firing my ARTY >:D!!!",120,20000] remoteExec ["DebugText",0];
 	};	
 	
 } foreach _ArtilleryGroupActual;

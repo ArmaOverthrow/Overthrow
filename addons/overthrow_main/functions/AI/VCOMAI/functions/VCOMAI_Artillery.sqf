@@ -32,6 +32,6 @@ if (_ArtyScan isEqualTo 1) then
 	ArtilleryArray pushBack _Vehicle;
 	if (VCOM_AIDEBUG isEqualTo 1) then
 	{
-		[_Vehicle,"I am Artillery :D!!!!",500,20000] remoteExec ["3DText",0];
+		[_Vehicle,"I am Artillery :D!!!!",500,20000] remoteExec ["DebugText",0];
 	};	
 };

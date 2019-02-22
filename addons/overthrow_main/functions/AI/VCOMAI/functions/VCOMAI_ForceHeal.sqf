@@ -15,7 +15,7 @@ private _Friendlies = allUnits select {Side _x isEqualTo _USide && (_x distance 
 				sleep 5;
 				if (VCOM_AIDEBUG isEqualTo 1) then
 				{
-					[_this,"Moving to heal. Like a good medic.",5,20000] remoteExec ["3DText",0];
+					[_this,"Moving to heal. Like a good medic.",5,20000] remoteExec ["DebugText",0];
 				};				
 			};
 			if (alive _x && alive _this && _this distance _x <= 3) then
@@ -25,7 +25,7 @@ private _Friendlies = allUnits select {Side _x isEqualTo _USide && (_x distance 
 				if (ACEACTIVATED) then {[objNull, _x] call ace_medical_fnc_treatmentAdvanced_fullHealLocal};
 				if (VCOM_AIDEBUG isEqualTo 1) then
 				{
-					[_this,"Healing. Like a good medic.",15,20000] remoteExec ["3DText",0];
+					[_this,"Healing. Like a good medic.",15,20000] remoteExec ["DebugText",0];
 				};				
 			};
 	}; 

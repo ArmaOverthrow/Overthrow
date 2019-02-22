@@ -35,7 +35,7 @@ if !(_Return) then
 				_x reveal [_unit,(_kv + 0.5)];
 				if (VCOM_AIDEBUG isEqualTo 1) then
 				{
-					[_x,"What was that? +0.5 to knowsAbout",10,20000] remoteExec ["3DText",0];
+					[_x,"What was that? +0.5 to knowsAbout",10,20000] remoteExec ["DebugText",0];
 				};					
 			};
 		} foreach _Array1;
@@ -48,7 +48,7 @@ else
 
 				if (VCOM_AIDEBUG isEqualTo 1) then
 				{
-					[_unit,"I am sneaky snake...",10,20000] remoteExec ["3DText",0];
+					[_unit,"I am sneaky snake...",10,20000] remoteExec ["DebugText",0];
 				};	
 
 };

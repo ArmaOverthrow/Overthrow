@@ -24,5 +24,5 @@ if ((random 100) < 5) then
 //[_Unit,false,false,false,false] spawn VCOMAI_MoveToCover;
 if (VCOM_AIDEBUG isEqualTo 1) then
 {
-	[_Unit,"I am hit!",30,20000] remoteExec ["3DText",0];
+	[_Unit,"I am hit!",30,20000] remoteExec ["DebugText",0];
 };

@@ -78,8 +78,8 @@ playMoveEverywhere = compileFinal "(_this select 0) playMoveNow (_this select 1)
 switchMoveEverywhere = compileFinal "(_this select 0) switchMove (_this select 1);";
 playActionNowEverywhere = compileFinal "(_this select 0) playActionNow (_this select 1);";
 DisableCollisionALL = compileFinal "(_this select 0) disableCollisionWith player";
-3DText = compile "[_this select 0,_this select 1,_this select 2,_this select 3] call VCOMAI_DebugText;";
-PSup = compile "[] spawn VCOMAI_SuppressedEffect;";
+DebugText = compileFinal "[_this select 0,_this select 1,_this select 2,_this select 3] call VCOMAI_DebugText;";
+PSup = compileFinal "[] spawn VCOMAI_SuppressedEffect;";
 
 //Below is loop to check for new AI spawning in to be added to the list
 if !(isDedicated) then

@@ -1,6 +1,6 @@
 //Execute Example
 //
-//[BOB,"Guard: Please stand back",15,50] remoteExec ["3DText",0];
+//[BOB,"Guard: Please stand back",15,50] remoteExec ["DebugText",0];
 //
 private ["_Message","_Unit","_WaitTime","_Display","_Distance"];
 

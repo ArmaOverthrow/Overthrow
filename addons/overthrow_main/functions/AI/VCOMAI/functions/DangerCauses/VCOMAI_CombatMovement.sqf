@@ -24,7 +24,7 @@ private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy"
 			_Unit doMove (getpos _ReturnedFriendly);_Unit forcespeed -1;
 			if (VCOM_AIDEBUG isEqualTo 1) then
 			{
-				[_Unit,"I wandered too far :(. Returning to group.",15,20000] remoteExec ["3DText",0];
+				[_Unit,"I wandered too far :(. Returning to group.",15,20000] remoteExec ["DebugText",0];
 			};						
 		
 		};
@@ -44,7 +44,7 @@ private ["_Unit", "_VCOM_MovedRecently", "_VCOM_VisuallyCanSee", "_NearestEnemy"
 			_Unit doSuppressiveFire _NearestEnemy;
 			if (VCOM_AIDEBUG isEqualTo 1) then
 			{
-				[_Unit,"Enemy is close! Fire fire fire!",15,20000] remoteExec ["3DText",0];
+				[_Unit,"Enemy is close! Fire fire fire!",15,20000] remoteExec ["DebugText",0];
 			};					
 			_VCOM_VisuallyCanSee
 			

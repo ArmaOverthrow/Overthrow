@@ -57,7 +57,7 @@ _SatchelOfUse = _Unit getVariable "VCOM_SATCHELBOMB";
 
 if (VCOM_AIDEBUG isEqualTo 1) then
 {
-	[_Unit,"Blowing up a building! >:D!!!!",30,20000] remoteExec ["3DText",0];
+	[_Unit,"Blowing up a building! >:D!!!!",30,20000] remoteExec ["DebugText",0];
 };		
 
 

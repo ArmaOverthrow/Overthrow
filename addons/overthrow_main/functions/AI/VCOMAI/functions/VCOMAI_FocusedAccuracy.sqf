@@ -46,7 +46,7 @@ else
 		
 		if (VCOM_AIDEBUG isEqualTo 1) then
 		{
-			[_Unit,"Target has not moved...Increasing accuracy :D",15,20000] remoteExec ["3DText",0];
+			[_Unit,"Target has not moved...Increasing accuracy :D",15,20000] remoteExec ["DebugText",0];
 		};		
 	}
 	else
@@ -78,7 +78,7 @@ else
 		
 		if (VCOM_AIDEBUG isEqualTo 1) then
 		{
-			[_Unit,"Target has moved...Reset Accuracy :<",15,20000] remoteExec ["3DText",0];
+			[_Unit,"Target has moved...Reset Accuracy :<",15,20000] remoteExec ["DebugText",0];
 		};				
 	};
 	_TargetPosition = _NewPosition;

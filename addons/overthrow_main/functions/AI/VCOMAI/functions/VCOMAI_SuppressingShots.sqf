@@ -67,7 +67,7 @@ if (VCOM_CurrentlySuppressing < VCOM_CurrentlySuppressingLimit) then
 					};
 					if (VCOM_AIDEBUG isEqualTo 1) then
 					{
-						[_x,"I am suppressed!",30,20000] remoteExec ["3DText",0];
+						[_x,"I am suppressed!",30,20000] remoteExec ["DebugText",0];
 					};		
 					
 				};		
