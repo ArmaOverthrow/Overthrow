@@ -16,7 +16,7 @@ while {visibleMap} do {
 		_loc params ["_name","_type","_data"];
 		_txt = "";
 		call {
-			if (_type == "Town") exitWith {
+			if (_type isEqualTo "Town") exitWith {
 				_town = _name;
 				_pop = server getVariable format["population%1",_town];
 				_stability = server getVariable format["stability%1",_town];
@@ -42,7 +42,7 @@ while {visibleMap} do {
 				};
 				_txt = format ["<t size='1.2' color='#222222'>%1</t><br/><t size='0.5' color='#222222'>Status: %2</t>",_name,_abandon];
 			};
-			if (_type == "Business") exitWith {
+			if (_type isEqualTo "Business") exitWith {
 				_abandon = "Inactive";
 				if(_name in (server getVariable ["GEURowned",[]])) then {
 					_abandon = "Owned";

@@ -2,7 +2,7 @@ closedialog 0;
 createDialog "OT_dialog_choose";
 openMap false;
 
-if(typename (_this select 0) == "STRING") then {
+if(typename (_this select 0) isEqualTo "STRING") then {
 	disableSerialization;
 	_ctrl = (findDisplay 8002) displayCtrl 1100;
 	_ctrl ctrlSetStructuredText parseText (_this select 0);

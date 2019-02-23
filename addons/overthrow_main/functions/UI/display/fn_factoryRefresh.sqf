@@ -124,7 +124,7 @@ call {
 	};
 };
 
-if !(_pic == "") then {
+if !(_pic isEqualTo "") then {
 	ctrlSetText [1200,_pic];
 };
 

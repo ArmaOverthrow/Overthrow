@@ -9,12 +9,12 @@ _description = "";
 modeFinished = false;
 modeCancelled = false;
 call {
-	if(_typecls == "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for all friendlies. Only one allowed per player, will remove any existing camps."};
-	if(_typecls == "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_flag_IND];_cost=250;_description="Creates a fast travel destination for all friendlies and enables build mode for basic military structures"};
-	if(_typecls == "Ammobox") exitWith {modeValues = [OT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
-	if(_typecls == "Whiteboard") exitWith {modeValues = [OT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
+	if(_typecls isEqualTo "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for all friendlies. Only one allowed per player, will remove any existing camps."};
+	if(_typecls isEqualTo "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_flag_IND];_cost=250;_description="Creates a fast travel destination for all friendlies and enables build mode for basic military structures"};
+	if(_typecls isEqualTo "Ammobox") exitWith {modeValues = [OT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
+	if(_typecls isEqualTo "Whiteboard") exitWith {modeValues = [OT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
 	{
-		if((_x select 0) == _typecls) exitWith {modeValues = _x select 2;_cost = _x select 1;attachAt = _x select 3};
+		if((_x select 0) isEqualTo _typecls) exitWith {modeValues = _x select 2;_cost = _x select 1;attachAt = _x select 3};
 	}foreach(OT_Placeables);
 };
 //Price check (on aisle 3)
@@ -23,8 +23,8 @@ if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost
 
 if !([getpos player,_typecls] call OT_fnc_canPlace) exitWith {
 	call {
-		if(_typecls == "Camp") exitWith {"Camps cannot be near another building" call OT_fnc_notifyMinor};
-		if(_typecls == "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call OT_fnc_notifyMinor};
+		if(_typecls isEqualTo "Camp") exitWith {"Camps cannot be near another building" call OT_fnc_notifyMinor};
+		if(_typecls isEqualTo "Base") exitWith {"Bases cannot be too close to a town, NATO installation or existing base" call OT_fnc_notifyMinor};
 		"You must be near a base or owned structure" call OT_fnc_notifyMinor
 	};
 };
@@ -51,11 +51,11 @@ if(_cost > 0) then {
 		_dir = modeRotation;
 
 		call {
-			if(_key == 19) exitWith {
+			if(_key isEqualTo 19) exitWith {
 				//R
 
 			};
-			if (_key == 16) exitWith {
+			if (_key isEqualTo 16) exitWith {
 				//Q
 				_handled = true;
 				_amt = 1;
@@ -65,7 +65,7 @@ if(_cost > 0) then {
 				modeTarget setDir (_newdir);
 				modeRotation = _newDir;
 			};
-			if (_key == 18) exitWith {
+			if (_key isEqualTo 18) exitWith {
 				//E
 				_handled = true;
 				_amt = 1;
@@ -75,7 +75,7 @@ if(_cost > 0) then {
 				modeTarget setDir (_newdir);
 				modeRotation = _newDir;
 			};
-			if(_key == 57) exitWith {
+			if(_key isEqualTo 57) exitWith {
 				//Space
 				_handled = true;
 				detach modeTarget;
@@ -87,7 +87,7 @@ if(_cost > 0) then {
 
 				modeTarget = createVehicle [_cls, [0,0,0], [], 0, "CAN_COLLIDE"];
 				modeTarget enableDynamicSimulation true;
-				if(_cls == "B_Boat_Transport_01_F") then {
+				if(_cls isEqualTo "B_Boat_Transport_01_F") then {
 					_dir = _dir + 90;
 				};
 
@@ -99,7 +99,7 @@ if(_cost > 0) then {
 				modeTarget attachTo [player,attachAt];
 				modeTarget setDir _dir;
 			};
-			if(_key == 28) exitWith {
+			if(_key isEqualTo 28) exitWith {
 				//Enter
 				_handled = true;
 				modeFinished = true;
@@ -107,7 +107,7 @@ if(_cost > 0) then {
 					modeRedo = true;
 				};
 			};
-			if(_key == 1) exitWith {
+			if(_key isEqualTo 1) exitWith {
 				//ESC
 				_handled = true;
 				modeCancelled = true;
@@ -126,7 +126,7 @@ if(_cost > 0) then {
 
 	modeTarget attachTo [player,attachAt];
 	modeTarget setDir modeRotation;
-	if(_cls == "B_Boat_Transport_01_F") then {
+	if(_cls isEqualTo "B_Boat_Transport_01_F") then {
 		_p = getDir modeTarget;
 		_v = getDir player;
 		_c = 360;
@@ -137,7 +137,7 @@ if(_cost > 0) then {
 		modeTarget setDir _dir + 90;
 	};
 
-	waitUntil {sleep 0.5; modeFinished or modeCancelled or (count attachedObjects player == 0) or (vehicle player != player) or (!alive player) or (!isPlayer player)};
+	waitUntil {sleep 0.5; modeFinished or modeCancelled or (count attachedObjects player isEqualTo 0) or (vehicle player != player) or (!alive player) or (!isPlayer player)};
 
 	(findDisplay 46) displayRemoveEventHandler ["KeyDown",_handlerId];
 
@@ -152,11 +152,11 @@ if(_cost > 0) then {
 			modeTarget setPosATL [getPosATL modeTarget select 0,getPosATL modeTarget select 1,getPosATL player select 2];
 			[modeTarget,getPlayerUID player] call OT_fnc_setOwner;
 			modeTarget remoteExec["OT_fnc_initObjectLocal",0,modeTarget];
-			if(_typecls == "Base" or _typecls == "Camp") then {
+			if(_typecls isEqualTo "Base" or _typecls isEqualTo "Camp") then {
 				_veh = createVehicle ["Land_ClutterCutter_large_F", (getpos modeTarget), [], 0, "CAN_COLLIDE"];
 			};
 
-			if(_typecls == "Base") then {
+			if(_typecls isEqualTo "Base") then {
 				createDialog "OT_dialog_name";
 				ctrlSetText [1400,"Base"];
 
@@ -189,13 +189,13 @@ if(_cost > 0) then {
 				onNameKeyDown = {
 					_key = _this select 1;
 					_name = ctrltext 1400;
-					if(_key == 28 and _name != "") exitWith {
+					if(_key isEqualTo 28 and _name != "") exitWith {
 						[] call onNameDone;
 						true
 					};
 				};
 			};
-			if(_typecls == "Camp") then {
+			if(_typecls isEqualTo "Camp") then {
 				_mrkid = format["%1-camp",getplayeruid player];
 				createMarker [_mrkid,getpos modeTarget];
 				_mrkid setMarkerPos (getpos modeTarget);
@@ -203,8 +203,8 @@ if(_cost > 0) then {
 				if(count _camp > 0) then {
 					{
 						_t = typeof _x;
-						if((_x call OT_fnc_getOwner) == getplayeruid player) then {
-							if(_t == OT_item_Tent or _t == "Land_ClutterCutter_large_F") then {
+						if((_x call OT_fnc_getOwner) isEqualTo getplayeruid player) then {
+							if(_t isEqualTo OT_item_Tent or _t isEqualTo "Land_ClutterCutter_large_F") then {
 								deleteVehicle _x;
 							};
 						}
@@ -224,8 +224,8 @@ if(_cost > 0) then {
 			};
 		}else{
 			call {
-				if(_typecls == "Camp") exitWith {"Camps cannot be near a structure you already own" call OT_fnc_notifyMinor};
-				if(_typecls == "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call OT_fnc_notifyMinor};
+				if(_typecls isEqualTo "Camp") exitWith {"Camps cannot be near a structure you already own" call OT_fnc_notifyMinor};
+				if(_typecls isEqualTo "Base") exitWith {"Bases cannot be near a town, NATO installation or existing base" call OT_fnc_notifyMinor};
 				"You must be near a base or owned building" call OT_fnc_notifyMinor
 			};
 			detach modeTarget;

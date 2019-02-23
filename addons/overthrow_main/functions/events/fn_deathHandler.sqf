@@ -11,13 +11,18 @@ if(_killer call OT_fnc_unitSeen) then {
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
-	_myuid = getPlayerUID _me;
-	{
-		_uid = _x getVariable ["player_uid",""];
-		if(_uid == _myuid and _x != _me) then {
-			deleteVehicle _x;
-		}
-	}foreach(allDeadMen);
+	hideBody _me;
+	if !(isMultiplayer) then {
+		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
+		if (_unit isEqualTo player) then {
+			private _new_unit = (creategroup resistance) createUnit ["I_G_Soldier_F",_unit getVariable ["home",[worldSize/2,worldSize/2,0]],[],0,"NONE"];
+			selectPlayer _new_unit;
+			private _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
+			player forceAddUniform _clothes;
+	    player setVariable ["uniform",_clothes,true];
+			cutText ["","BLACK IN",2];
+		};
+	};
 };
 
 _civ = _me getvariable "civ";
@@ -49,7 +54,7 @@ call {
 	if(!isNil "_hvt") exitWith {
 		_idx = 0;
 		{
-			if((_x select 0) == _hvt) exitWith {};
+			if((_x select 0) isEqualTo _hvt) exitWith {};
 			_idx = _idx + 1;
 		}foreach(OT_NATOhvts);
 		OT_NATOhvts deleteAt _idx;
@@ -64,7 +69,7 @@ call {
 		_active = server getVariable ["activemobsters",[]];
 		_t = 0;
 		{
-			if((_x select 1) == _mobsterid) exitWith {};
+			if((_x select 1) isEqualTo _mobsterid) exitWith {};
 			_t = _t + 1;
 		}foreach(_active);
 		_active deleteAt _t;
@@ -114,7 +119,7 @@ call {
 				if(count _gang > 0) then {
 					_members = _gang select 0;
 					_members deleteAt (_members find _civid);
-					if(count _members == 0) then {
+					if(count _members isEqualTo 0) then {
 						OT_civilians setVariable [format["gang%1",_gangid],nil,true];
 						_reward = 200 + ((round random 6) * 50);
 						_stability = 10;
@@ -147,7 +152,7 @@ call {
 					format["You claimed the bounty in %1",_town] call OT_fnc_notifyMinor;
 				};
 			}else{
-				if(side _killer == west) then {
+				if(side _killer isEqualTo west) then {
 					format["NATO has removed the bounty in %1",_town] remoteExec ["OT_fnc_notifyMinor",0,false];;
 				}else{
 					format["The gang leader in %1 is dead",_town] remoteExec ["OT_fnc_notifyMinor",0,false];;
@@ -157,7 +162,7 @@ call {
 		};
 
 		_leader = server getVariable [format["crimleader%1",_town],false];
-		if (typename _leader == "ARRAY") then {
+		if (typename _leader isEqualTo "ARRAY") then {
 			server setVariable [format["crimleader%1",_town],false,true];
 		};
 		[_killer,50] call OT_fnc_experience;
@@ -212,10 +217,10 @@ call {
 			server setVariable [format["airgarrison%1",_airgarrison],_vg,false];
 		};
 	}else{
-		if(side _me == west) then {
+		if(side _me isEqualTo west) then {
 			[_town,-1] call OT_fnc_stability;
 		};
-		if(side _me == east) then {
+		if(side _me isEqualTo east) then {
 			[_town,1] call OT_fnc_stability;
 		};
 	};
@@ -246,7 +251,7 @@ if((_killer call OT_fnc_unitSeen) or (_standingChange < -9)) then {
 	};
 };
 if(isPlayer _killer) then {
-	if (_standingChange == -10) then {
+	if (_standingChange isEqualTo -10) then {
 		[_town,_standingChange,"You killed a civilian"] remoteExec ["OT_fnc_standing",_killer,false];
 	}else{
 		[_town,_standingChange] remoteExec ["OT_fnc_standing",_killer,false];

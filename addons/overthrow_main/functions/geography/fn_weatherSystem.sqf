@@ -8,28 +8,28 @@ private _getWeather = {
 	private _temp = 30;
 	private _hour = date select 3;
 	call {
-		if(_forecast == "Storm") exitWith {
+		if(_forecast isEqualTo "Storm") exitWith {
 			_overtarget = 1;
 			_fogtarget = 0.01;
 			_wavetarget = 1;
 			_raintarget = 0.8 + (random 0.2);
 			_lightning = random 1;
 		};
-		if(_forecast == "Rain") exitWith {
+		if(_forecast isEqualTo "Rain") exitWith {
 			_overtarget = 0.7 + (random 0.1);
 			_fogtarget = 0.002;
 			_wavetarget = 0.3 + (random 0.4);
 			_raintarget = 0.6 + (random 0.2);
 			_lightning = 0;
 		};
-		if(_forecast == "Cloudy") exitWith {
+		if(_forecast isEqualTo "Cloudy") exitWith {
 			_overtarget = 0.3 + (random 0.7);
 			_fogtarget = 0.001;
 			_wavetarget = 0 + (random 0.2);
 			_raintarget = 0;
 			_lightning = 0;
 		};
-		if(_forecast == "Clear") exitWith {
+		if(_forecast isEqualTo "Clear") exitWith {
 			_overtarget = random 0.2;
 			_fogtarget = 0;
 			_wavetarget = random 0.2;
@@ -41,7 +41,7 @@ private _getWeather = {
 		_temp = 28 + round(random 5);
 	}else{
 		_temp = 16 + round(random 5);
-		if(_hour == 6) then {
+		if(_hour isEqualTo 6) then {
 			//morning fog
 			_fogtarget = _fogtarget + 0.002;
 		};
@@ -56,7 +56,7 @@ private _getWeather = {
 };
 private _forecast = "Clear";
 
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherversion",0]) < 1) then {
+if((server getVariable "StartupType") isEqualTo "NEW" or (server getVariable ["weatherversion",0]) < 1) then {
 	server setVariable ["weatherversion",1,false];
 
 	_mode = ["Clear","Cloudy"] call BIS_fnc_selectRandom;
@@ -147,17 +147,17 @@ while {true} do {
 	_forecast = "Clear";
 	_count = 0;
 	call {
-		if(_mode == "Clear") exitWith {
+		if(_mode isEqualTo "Clear") exitWith {
 			if((random 100) < _cloudychance) exitWith {_forecast = "Cloudy"};
 		};
-		if(_mode == "Storm") exitWith {
+		if(_mode isEqualTo "Storm") exitWith {
 			_forecast = "Rain";
 		};
-		if(_mode == "Rain") exitWith {
+		if(_mode isEqualTo "Rain") exitWith {
 			if((random 100) < _stormchance) exitWith {_forecast = "Storm"};
 			if((random 100) < 50) exitWith {_forecast = "Cloudy"};
 		};
-		if(_mode == "Cloudy") exitWith {
+		if(_mode isEqualTo "Cloudy") exitWith {
 			if((random 100) < _rainchance) exitWith {_forecast = "Rain"};
 			if((random 100) > _cloudychance) exitWith {_forecast = "Clear"};
 		};

@@ -19,11 +19,11 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                 sleep 3;
                 _mortargroup setCombatMode "BLUE";
                 //Did anyone hear that?
-                if({side _x == resistance or captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
+                if({side _x isEqualTo resistance or captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
                     private _icons = spawner getVariable ["NATOmortars",[]];
                     _found = false;
                     {
-                        if((_x select 0) == _mortar) exitWith {
+                        if((_x select 0) isEqualTo _mortar) exitWith {
                             _range = (_x select 1) - round((_x select 0) * 0.25);
                             _x set [1,_range];
                             _x set [2,[_mortarpos,random 360,_range] call SHK_pos];
@@ -55,11 +55,11 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                 sleep 3;
                 _mortargroup setCombatMode "BLUE";
                 //Did anyone hear that?
-                if({side _x == resistance or captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
+                if({side _x isEqualTo resistance or captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
                     private _icons = spawner getVariable ["NATOmortars",[]];
                     _found = false;
                     {
-                        if((_x select 0) == _mortar) exitWith {
+                        if((_x select 0) isEqualTo _mortar) exitWith {
                             _range = (_x select 1) - round((_x select 1) * 0.25);
                             _x set [1,_range];
                             _x set [2,[_mortarpos,random 360,_range] call SHK_pos];

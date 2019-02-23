@@ -14,7 +14,7 @@ if(_obpos distance player < 250) then {
 		}else{
 			_items = OT_vehicles + OT_boats + OT_staticBackpacks + [["Set_HMG"]];
 		};
-		if(_obname == "Chemical Plant") then {
+		if(_obname isEqualTo "Chemical Plant") then {
 			_items = OT_explosives + OT_detonators + OT_vehicles + OT_boats + OT_staticBackpacks + [["Set_HMG"]];
 		};
 	}
@@ -30,7 +30,7 @@ createDialog "OT_dialog_buy";
 	_cls = _x select 0;
 	if((_cls select [0,3]) != "IED") then {
 		_price = 0;
-		if !(_cls == "Set_HMG") then {
+		if !(_cls isEqualTo "Set_HMG") then {
 			_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 		};
 		if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
@@ -39,7 +39,7 @@ createDialog "OT_dialog_buy";
 		_name = "";
 		_pic = "";
 		call {
-			if(_cls == "Set_HMG") exitWith {
+			if(_cls isEqualTo "Set_HMG") exitWith {
 				_p = (cost getVariable "I_HMG_01_high_weapon_F") select 0;
 				_p = _p + ((cost getVariable "I_HMG_01_support_high_F") select 0);
 				private _quad = ((cost getVariable "C_Quadbike_01_F") select 0) + 60;

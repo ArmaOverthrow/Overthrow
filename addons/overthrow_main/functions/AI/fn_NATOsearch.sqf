@@ -1,15 +1,15 @@
 private _target = objNull;
 private _cop = objNull;
 
-if((count _this) == 3) then {
+if((count _this) isEqualTo 3) then {
 	//its a position
 	{
 		_c = leader (group _x);
-		if(side _c == west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
+		if(side _c isEqualTo west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
 	}foreach(_this nearEntities ["CAManBase",300]);
 	if(isNil "_cop") exitWith {};
 	{
-		if !(side _x == west or side _x == east) exitWith{_target = _x};
+		if !(side _x isEqualTo west or side _x isEqualTo east) exitWith{_target = _x};
 	}foreach(_cop nearEntities ["CAManBase",50]);
 }else{
 	_target = _this select 0;
@@ -18,7 +18,7 @@ if((count _this) == 3) then {
 	}else{
 		{
 			_c = leader (group _x);
-			if(side _c == west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
+			if(side _c isEqualTo west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
 		}foreach(_target nearEntities ["CAManBase",150]);
 	};
 };

@@ -25,7 +25,7 @@ if((random 100) > 50) then { // 50/50 chance of either
     //Pick a random building as the dropoff
     _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
 	_destination = position _building;
-    if((_destination select 0) == 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
+    if((_destination select 0) isEqualTo 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
     _type = "insertion";
 }else{
     //Extraction
@@ -92,7 +92,7 @@ _difficulty = 1.5;
 
     _civ = player getVariable [format["vip%1",_faction],objNull];
     //near the destination and not in a vehicle
-    ((_civ distance _destination) < 50) and (vehicle _civ) == _civ
+    ((_civ distance _destination) < 50) and (vehicle _civ) isEqualTo _civ
 },{
     //Cleanup
     _civ = player getVariable [format["vip%1",_this select 1],objNull];

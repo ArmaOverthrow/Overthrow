@@ -6,14 +6,14 @@ _building = _this;
 private _type = typeOf(_building);
 if(isNil {templates getVariable _type}) then {
 	_tpl = getText(configFile >> "CfgVehicles" >> _type >> "ot_template");
-	if(isNil "_tpl" or _tpl == "" or _tpl == "''") exitWith {
+	if(isNil "_tpl" or _tpl isEqualTo "" or _tpl isEqualTo "''") exitWith {
 		ERROR_MSG(format["%1 has no furniture template defined",_type]);
 	};
 	_template = call compile call compile _tpl;
 	if(isNil "_template") exitWith {
 		ERROR_MSG(format["%1 furniture template is defined incorrectly",_type]);
 	};
-	if !(typename _template == "ARRAY") exitWith {};
+	if !(typename _template isEqualTo "ARRAY") exitWith {};
 	{
 		_x set [8,true];
 	}forEach(_template);
@@ -38,7 +38,7 @@ _objects = [];
 
 {
 	_type = _x select 0;
-	if(_type == "MapBoard_altis_F" or _type == "Mapboard_tanoa_F" or _type == "Land_MapBoard_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
+	if(_type isEqualTo "MapBoard_altis_F" or _type isEqualTo "Mapboard_tanoa_F" or _type isEqualTo "Land_MapBoard_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
 	_rel = _x select 1;
 	_dir = (_x select 2);
 

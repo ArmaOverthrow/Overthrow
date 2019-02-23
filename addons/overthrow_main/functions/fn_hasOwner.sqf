@@ -15,7 +15,7 @@ private _item = _this;
 private _owner = _item call OT_fnc_getOwner;
 private _ret = false;
 if !(isNil "_owner") then {
-	if(typename _owner == "STRING") then {
+	if(typename _owner isEqualTo "STRING") then {
 		if(_owner != "self") then {
 			_ret = true;
 		};

@@ -3,7 +3,7 @@
 //Find NATO HQ
 {
     _x params ["_pos","_name"];
-    if(_name == OT_NATO_HQ) then {
+    if(_name isEqualTo OT_NATO_HQ) then {
         OT_NATO_HQPos = _pos;
     };
 }foreach (OT_objectiveData + OT_airportData);
@@ -72,7 +72,7 @@ if(_version < OT_economyVersion) then {
             _reppos = server getVariable [format["factionrep%1",_cls],false];
             if(typename _reppos != "ARRAY") then {
                 _town = selectRandom OT_allTowns;
-                if(_cls == OT_spawnFaction) then {_town = server getvariable "spawntown"};
+                if(_cls isEqualTo OT_spawnFaction) then {_town = server getvariable "spawntown"};
                 _posTown = server getVariable _town;
                 _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
                 _pos = _posTown;
@@ -97,7 +97,7 @@ if(_version < OT_economyVersion) then {
 {
     _x params ["_cls","_name","_side"];
     _n = server getVariable [format["factionname%1",_cls],""];
-    if(_n == "") then {
+    if(_n isEqualTo "") then {
         server setVariable [format["factionname%1",_cls],_name,true];
     };
 }foreach(OT_allFactions);

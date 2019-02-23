@@ -11,11 +11,11 @@ lbClear 1500;
 {			
 	_name = _x select 0;
 	_type = _x select 1;
-	if(_type == "" or _type == (typeof _veh)) then {
+	if(_type isEqualTo "" or _type isEqualTo (typeof _veh)) then {
 		_price = _x select 2;
 		_free = _x select 3;
 		
-		if((backpack player) == _free) then {
+		if((backpack player) isEqualTo _free) then {
 			_price = 0;
 		};	
 		

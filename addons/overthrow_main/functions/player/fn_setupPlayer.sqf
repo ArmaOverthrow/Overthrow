@@ -41,7 +41,7 @@ while {alive player} do {
 	private _num = count OT_notifies;
 
 	if(_num > 0) then {
-		if(_num == 1) then {
+		if(_num isEqualTo 1) then {
 			_txt = OT_notifies select 0;
 		}else{
 			{

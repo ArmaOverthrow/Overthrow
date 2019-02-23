@@ -56,12 +56,12 @@ OT_NATO_Unit_HVT = "B_T_Officer_F";
 			_role = getText (_x >> "role");
 			if(_role in ["MachineGunner","Rifleman","CombatLifeSaver"]) then {OT_NATO_Units_LevelOne pushback _name};
 			if(_role in ["MissileSpecialist","Assistant","Grenadier","Marksman"]) then {OT_NATO_Units_LevelTwo pushback _name};
-			if(_role == "Marksman" and (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
-			if(_role == "Marksman" and (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
-			if(_role == "MissileSpecialist" and (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
+			if(_role isEqualTo "Marksman" and (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
+			if(_role isEqualTo "Marksman" and (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
+			if(_role isEqualTo "MissileSpecialist" and (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
 		};
 	};
-}foreach(format["(getNumber(_x >> 'scope') == 2) && (getText(_x >> 'faction') == '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
+}foreach(format["(getNumber(_x >> 'scope') isEqualTo 2) && (getText(_x >> 'faction') isEqualTo '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
 
 OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + OT_NATO_Units_LevelTwo;
 
@@ -76,7 +76,7 @@ OT_allComms = [];
 
 private _diff = server getVariable ["OT_difficulty",1];
 
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
+if((server getVariable "StartupType") isEqualTo "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
 	diag_log "Overthrow: Generating NATO";
 	server setVariable ["NATOversion",OT_NATOversion,false];
 	_abandoned = server getVariable ["NATOabandoned",[]];
@@ -100,8 +100,8 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	server setVariable ["NATOhvts",OT_NATOhvts,false];
 
 	_numHVTs = 6;
-	if(_diff == 0) then {_numHVTs = 4};
-	if(_diff == 2) then {_numHVTs = 8};
+	if(_diff isEqualTo 0) then {_numHVTs = 4};
+	if(_diff isEqualTo 2) then {_numHVTs = 8};
 
 	//Find military objectives
 	{
@@ -123,7 +123,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			_garrison = floor(_base + random(8));
 			server setVariable [format ["vehgarrison%1",_name],_statics,true];
 
-			if(_name == OT_NATO_HQ) then {
+			if(_name isEqualTo OT_NATO_HQ) then {
 				_garrison = 48;
 				server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_T_APC_Tracked_01_AA_F","B_GMG_01_high_F","B_GMG_01_high_F","B_GMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];
 				server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
@@ -132,7 +132,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			};
 			server setVariable [format ["garrison%1",_name],_garrison,true];
 
-			if(_name == OT_NATO_HQ) then {
+			if(_name isEqualTo OT_NATO_HQ) then {
 				OT_NATO_HQPos = _pos;
 			};
 		}else{

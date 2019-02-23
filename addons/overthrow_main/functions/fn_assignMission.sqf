@@ -35,15 +35,15 @@ if((count _this) > 9) then {
 	_params = _this select 9;
 };
 
-if(typename _condition == "ARRAY") then {
+if(typename _condition isEqualTo "ARRAY") then {
 	//array of targets that need to be deaded
 	{
 		_targets pushback _x;
 	}foreach(_condition);
-	_condition = {{alive _x} count(_targets) == 0};
+	_condition = {{alive _x} count(_targets) isEqualTo 0};
 };
 
-if(typename _condition == "STRING") then {
+if(typename _condition isEqualTo "STRING") then {
 	_string = _condition;
 	_condition = {typename(server getvariable [_string,false]) != "ARRAY"};
 };

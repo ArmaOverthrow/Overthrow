@@ -1,7 +1,7 @@
 _target = vehicle player;
 
 private _notvehicle = false;
-if(_target == player) then {
+if(_target isEqualTo player) then {
 	_target = OT_warehouseTarget;
 	_notvehicle = true;
 };
@@ -12,9 +12,9 @@ private _objects = [];
 
 private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
-if(typename _b == "ARRAY") then {
+if(typename _b isEqualTo "ARRAY") then {
 	_building = _b select 0;
-	if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+	if((typeof _building) isEqualTo OT_warehouse and _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
 		_objects pushback _building;
 	};
@@ -27,11 +27,11 @@ if(!_iswarehouse and !_notvehicle) then {
 };
 
 
-if(!_notvehicle  and count _objects == 0) exitWith {
+if(!_notvehicle  and count _objects isEqualTo 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 
-if(_notvehicle and count _objects == 0) exitWith {
+if(_notvehicle and count _objects isEqualTo 0) exitWith {
 	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 
@@ -39,13 +39,13 @@ private _doTransfer = {
 	private _veh = _this;
 	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	_iswarehouse = false;
-	if((typeof _veh) == OT_warehouse) then {
+	if((typeof _veh) isEqualTo OT_warehouse) then {
 		_toname = "Warehouse";
 		_iswarehouse = true;
 	};
 
 	_target = vehicle player;
-	if(_target == player) then {
+	if(_target isEqualTo player) then {
 		_target = OT_warehouseTarget;
 	};
 
@@ -70,7 +70,7 @@ private _doTransfer = {
 		{
 			_cls = _x select 0;
 			_d = warehouse getVariable [(_x select 0),[_cls,0]];
-			if(typename _d == "ARRAY") then {
+			if(typename _d isEqualTo "ARRAY") then {
 				_num = _x select 1;
 				_in =  _d select 1;
 				warehouse setVariable[_cls,[_cls,_in + _num],true];
@@ -137,7 +137,7 @@ private _doTransfer = {
 
 
 
-if(count _objects == 1) then {
+if(count _objects isEqualTo 1) then {
 	(_objects select 0) call _doTransfer;
 }else{
 	private _options = [];

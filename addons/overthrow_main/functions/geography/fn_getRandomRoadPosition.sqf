@@ -1,6 +1,6 @@
 private _msize = 150;
 private _test = _this;
-if(typename _test == "STRING") then {
+if(typename _test isEqualTo "STRING") then {
     if((_test in OT_capitals) or (_test in OT_sprawling)) then {_msize = 500};
     _test = server getvariable _test;
 };

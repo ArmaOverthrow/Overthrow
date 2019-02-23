@@ -1,12 +1,16 @@
 private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture"];
 waitUntil {!isNull player};
-waitUntil {player == player};
+waitUntil {player isEqualTo player};
+
+if !(isMultiplayer) then {
+	enableSaving [false,false];
+};
 
 [] spawn {
 	while {true} do {
 		sleep 3;
 		{
-			if(local _x and count (units _x) == 0) then {
+			if(local _x and count (units _x) isEqualTo 0) then {
 				deleteGroup _x;
 			};
 		}foreach(allGroups);
@@ -14,8 +18,8 @@ waitUntil {player == player};
 };
 
 if (!hasInterface) exitWith {};
-if(isNil "bigboss" and typeof player == "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
-if(count ([] call CBA_fnc_players) == 1 and isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
+if(isNil "bigboss" and typeof player isEqualTo "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
+if(count ([] call CBA_fnc_players) isEqualTo 1 and isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
 if(isNil {server getVariable "generals"}) then {server setVariable ["generals",[getplayeruid player]]};
 
@@ -50,7 +54,7 @@ showCinemaBorder false;
 introcam = _introcam;
 
 
-if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
+if(player isEqualTo bigboss and (server getVariable ["StartupType",""] isEqualTo "")) then {
     waitUntil {!(isnull (findDisplay 46)) and OT_varInitDone};
     sleep 1;
     _nul = createDialog "OT_dialog_start";
@@ -60,13 +64,13 @@ if(player == bigboss and (server getVariable ["StartupType",""] == "")) then {
 waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 
 private _aplayers = server getVariable ["OT_allplayers",[]];
-if ((_aplayers find (getplayeruid player)) == -1) then {
+if ((_aplayers find (getplayeruid player)) isEqualTo -1) then {
 	_aplayers pushback (getplayeruid player);
 	server setVariable ["OT_allplayers",_aplayers,true];
 };
 if(!isMultiplayer) then {
 	private _generals = server getVariable ["generals",[]];
-	if ((_generals find (getplayeruid player)) == -1) then {
+	if ((_generals find (getplayeruid player)) isEqualTo -1) then {
 		_generals pushback (getplayeruid player);
 		server setVariable ["generals",_generals,true];
 	};
@@ -83,7 +87,7 @@ _town = "";
 _pos = [];
 _housepos = [];
 
-if(isMultiplayer or _startup == "LOAD") then {
+if(isMultiplayer or _startup isEqualTo "LOAD") then {
 	player remoteExec ["OT_fnc_loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
@@ -119,19 +123,19 @@ if(isMultiplayer or _startup == "LOAD") then {
 		_loadout = _x select 4;
 		_type = _x select 5;
 		_xp = _x select 6;
-		if(_owner == (getplayeruid player)) then {
-			if(typename _civ == "ARRAY") then {
+		if(_owner isEqualTo (getplayeruid player)) then {
+			if(typename _civ isEqualTo "ARRAY") then {
 				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
 				[_civ,getplayeruid player] call OT_fnc_setOwner;
 				_civ setVariable ["OT_xp",_xp,true];
 				_civ setVariable ["NOAI",true,true];
 				_civ setRank _rank;
-				if(_rank == "PRIVATE") then {_civ setSkill 0.1 + (random 0.3)};
-				if(_rank == "CORPORAL") then {_civ setSkill 0.2 + (random 0.3)};
-				if(_rank == "SERGEANT") then {_civ setSkill 0.3 + (random 0.3)};
-				if(_rank == "LIEUTENANT") then {_civ setSkill 0.5 + (random 0.3)};
-				if(_rank == "CAPTAIN") then {_civ setSkill 0.6 + (random 0.3)};
-				if(_rank == "MAJOR") then {_civ setSkill 0.8 + (random 0.2)};
+				if(_rank isEqualTo "PRIVATE") then {_civ setSkill 0.1 + (random 0.3)};
+				if(_rank isEqualTo "CORPORAL") then {_civ setSkill 0.2 + (random 0.3)};
+				if(_rank isEqualTo "SERGEANT") then {_civ setSkill 0.3 + (random 0.3)};
+				if(_rank isEqualTo "LIEUTENANT") then {_civ setSkill 0.5 + (random 0.3)};
+				if(_rank isEqualTo "CAPTAIN") then {_civ setSkill 0.6 + (random 0.3)};
+				if(_rank isEqualTo "MAJOR") then {_civ setSkill 0.8 + (random 0.2)};
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
@@ -157,14 +161,14 @@ if(isMultiplayer or _startup == "LOAD") then {
 	_cc = 1;
 	{
 		_x params ["_owner","_cls","_group","_units"];
-		if(_owner == (getplayeruid player)) then {
+		if(_owner isEqualTo (getplayeruid player)) then {
 			if(typename _group != "GROUP") then {
 				_name = _cls;
 				if(count _x > 4) then {
 					_name = _x select 4;
 				}else{
 					{
-						if((_x select 0) == _cls) then {
+						if((_x select 0) isEqualTo _cls) then {
 							_name = _x select 2;
 						};
 					}foreach(OT_Squadables);
@@ -195,10 +199,10 @@ if (_newplayer) then {
     player setVariable ["uniform",_clothes,true];
 	private _money = 100;
 	private _diff = server getVariable ["OT_difficulty",1];
-	if(_diff == 0) then {
+	if(_diff isEqualTo 0) then {
 		_money = 1000;
 	};
-	if(_diff == 2) then {
+	if(_diff isEqualTo 2) then {
 		_money = 0;
 	};
     player setVariable ["money",_money,true];
@@ -247,7 +251,7 @@ if (_newplayer) then {
     _furniture = (_house call OT_fnc_spawnTemplate) select 0;
 
     {
-		if(typeof _x == OT_item_Storage) then {
+		if(typeof _x isEqualTo OT_item_Storage) then {
             _x addItemCargoGlobal ["ToolKit", 1];
 			_x addBackpackCargoGlobal ["B_AssaultPack_khk", 1];
 			_x addItemCargoGlobal ["NVGoggles_INDEP", 1];
@@ -315,7 +319,7 @@ player addEventHandler ["GetInMan",{
 	call OT_fnc_notifyVehicle;
 	private _isgen = call OT_fnc_playerIsGeneral;
 
-	if(_position == "driver") then {
+	if(_position isEqualTo "driver") then {
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
@@ -332,7 +336,7 @@ player addEventHandler ["GetInMan",{
 		};
 	};
 	_g = _v getVariable ["vehgarrison",false];
-	if(typename _g == "STRING") then {
+	if(typename _g isEqualTo "STRING") then {
 		_vg = server getVariable format["vehgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["vehgarrison%1",_g],_vg,false];
@@ -343,7 +347,7 @@ player addEventHandler ["GetInMan",{
 		_veh spawn OT_fnc_revealToNATO;
 	};
 	_g = _v getVariable ["airgarrison",false];
-	if(typename _g == "STRING") then {
+	if(typename _g isEqualTo "STRING") then {
 		_vg = server getVariable format["airgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["airgarrison%1",_g],_vg,false];
@@ -364,7 +368,7 @@ if(_newplayer) then {
 
 {
 	_pos = buildingpositions getVariable [_x,[]];
-	if(count _pos == 0) then {
+	if(count _pos isEqualTo 0) then {
 		_bdg = OT_centerPos nearestObject parseNumber _x;
 		_pos = position _bdg;
 		buildingpositions setVariable [_x,_pos,true];

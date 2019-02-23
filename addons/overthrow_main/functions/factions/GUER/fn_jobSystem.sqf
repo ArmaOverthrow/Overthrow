@@ -66,7 +66,7 @@ while {sleep OT_jobWait;true} do {
         _jobdef = _x;
         _numAbandoned = count(server getVariable ["NATOabandoned",[]]);
         call {
-            if(_target == "Global") exitWith {
+            if(_target isEqualTo "Global") exitWith {
                 _id = _name;
                 if((random 100) < _chance) then {
                     if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) then {
@@ -76,7 +76,7 @@ while {sleep OT_jobWait;true} do {
                 };
             };
 
-            if(_target == "Town") exitWith {
+            if(_target isEqualTo "Town") exitWith {
                 if((random 100) < _chance) then {
                     {
                         _id = format["%1-%2",_name,_x];
@@ -91,7 +91,7 @@ while {sleep OT_jobWait;true} do {
                 };
             };
 
-            if(_target == "Faction") exitWith {
+            if(_target isEqualTo "Faction") exitWith {
                 if((random 100) < _chance) then {
                     _done = false;
                     {

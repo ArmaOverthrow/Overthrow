@@ -9,19 +9,19 @@ private _thistown = (getpos player) call OT_fnc_nearestTown;
 
 //Is there some already spawned within spawn distance?
 {
-    if(side _x == west) then {
+    if(side _x isEqualTo west) then {
         _targets pushback _x;
     };
 }foreach(player nearEntities ["CAManBase", OT_spawnDistance]);
 
 //No? well where is a town that they control
-if(count _targets == 0) exitWith {
+if(count _targets isEqualTo 0) exitWith {
     private _towns = [OT_townData,[],{(_x select 0) distance player},"ASCEND"] call BIS_fnc_SortBy;
     private _town = "";
     private _done = false;
     {
         _x params ["_pos","_t"];
-        if !((_t in (server getvariable ["NATOabandoned",[]])) or (_t == _thistown)) exitWith {
+        if !((_t in (server getvariable ["NATOabandoned",[]])) or (_t isEqualTo _thistown)) exitWith {
             _destination = _pos;
             _town = _t;
             _done = true;

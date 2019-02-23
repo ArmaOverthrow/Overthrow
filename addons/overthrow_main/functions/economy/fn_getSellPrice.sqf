@@ -9,7 +9,7 @@ _price = 0;
 if(_cls in (OT_allWeapons + OT_allMagazines) and (_town in OT_allTowns)) then {
 	_stock = server getVariable format["gunstock%1",_town];
 	{
-		if((_x select 0) == _cls) exitWith {_price = _x select 1};
+		if((_x select 0) isEqualTo _cls) exitWith {_price = _x select 1};
 	}foreach(_stock);
 }else{
 	_cost = cost getVariable [_cls,[10,0,0,0]];
@@ -22,7 +22,7 @@ if(_cls in (OT_allWeapons + OT_allMagazines) and (_town in OT_allTowns)) then {
 
 	if(_standing < -100) then {_standing = -100};
 	if(_standing > 100) then {_standing = 100};
-	if(_standing == 0) then {_standing = 1};
+	if(_standing isEqualTo 0) then {_standing = 1};
 	_standing = (_standing/100)+1;
 
 	_price = _baseprice + ((_baseprice * 0.55) + (_baseprice * _stability * _population));

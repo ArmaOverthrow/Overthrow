@@ -26,7 +26,7 @@ if !("ToolKit" in items player) then {
 
 
 //No? well where is the closest town?
-if(count _targets == 0) exitWith {
+if(count _targets isEqualTo 0) exitWith {
     private _towns = [OT_townData,[],{(_x select 0) distance player},"ASCEND"] call BIS_fnc_SortBy;
     private _town = _towns select 1;
     private _destination = _town select 0;

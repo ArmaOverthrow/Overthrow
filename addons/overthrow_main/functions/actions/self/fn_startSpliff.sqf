@@ -27,7 +27,7 @@ if !(_goggles in OT_cigsArray) exitWith {};
 
 private _gogglesCurrent = _goggles;
 
-private _states = _ot_cigsStatesArray select {_x select 0 == _goggles};
+private _states = _ot_cigsStatesArray select {_x select 0 isEqualTo _goggles};
 
 {
     _x params ["_cigState", "_cigStateTime", ["_cigStateNext", ""]];
@@ -51,11 +51,11 @@ while ({alive _unit && _gogglesCurrent in OT_cigsArray && (_unit getVariable ["o
     _gogglesCurrent = goggles _unit;
     private _gogglesNew = "";
 
-    _states = _ot_cigsStatesArray select {_x select 0 == _gogglesCurrent};
+    _states = _ot_cigsStatesArray select {_x select 0 isEqualTo _gogglesCurrent};
 
     {
         _x params ["_cigState", "_cigStateTime", ["_cigStateNext", ""]];
-        private _statesNew = _ot_cigsStatesArray select {_x select 0 == _cigStateNext};
+        private _statesNew = _ot_cigsStatesArray select {_x select 0 isEqualTo _cigStateNext};
 
         {
             _x params ["_cigState", "_cigStateTime", ["_cigStateNext", ""]];

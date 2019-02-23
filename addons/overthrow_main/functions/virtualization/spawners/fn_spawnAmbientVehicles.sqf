@@ -18,7 +18,7 @@ private _numVeh = 4;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
-if(_town == (server getVariable "spawntown")) then {
+if(_town isEqualTo (server getVariable "spawntown")) then {
 	_numVeh = 12;
 };
 if(_numVeh > 12) then {_numVeh = 12};
@@ -38,7 +38,7 @@ while {(_count < _numVeh)} do {
 		if !(_vehtype in OT_vehTypes_civignore) then {
 			_dirveh = 0;
 			_roadscon = roadsConnectedto _road;
-			if (count _roadscon == 2) then {
+			if (count _roadscon isEqualTo 2) then {
 				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 				if(isNil "_dirveh") then {_dirveh = random 359};
 				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,15,_vehtype];

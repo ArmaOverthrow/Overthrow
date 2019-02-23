@@ -65,7 +65,7 @@ class CfgVehicles {
     class CAManBase: Man {
         class ACE_Actions {
 			class OT_HeadActions {
-				condition = "(alive _target) and (!isplayer _target) and !(side _target == west)";
+				condition = "(alive _target) and (!isplayer _target) and !(side _target isEqualTo west)";
 				selection = "pilot";
 				distance = 20;
 				displayName = "Talk";

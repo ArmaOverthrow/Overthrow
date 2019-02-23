@@ -35,7 +35,7 @@ _handler = {
 	if(isMultiplayer) then {
 		{
 			_veh = vehicle _x;
-			if(_veh == _x) then {
+			if(_veh isEqualTo _x) then {
 				_color = [0,0.5,0,1];
 				if!(captive _x) then {
 					_color = [0,0.2,0,1];
@@ -58,16 +58,16 @@ _handler = {
 	};
 	_t = 1;
 	{
-		if (!(isPlayer _x) and (side _x == resistance)) then {
+		if (!(isPlayer _x) and (side _x isEqualTo resistance)) then {
 			_veh = vehicle _x;
-			if(_veh == _x) then {
+			if(_veh isEqualTo _x) then {
 				_color = [0,0.5,0,1];
 				if !(captive _x) then {
 					_color = [0,0.2,0,1];
 				};
 
 				_txt = "";
-				if(leader _x == player) then {
+				if(leader _x isEqualTo player) then {
 					_dest = expectedDestination _x;
 					_destpos = _dest select 0;
 					if ((_dest select 1)== "LEADER PLANNED") then {
@@ -152,7 +152,7 @@ _handler = {
 	}foreach(_vehs);
 
 	{
-		if(side _x == west) then {
+		if(side _x isEqualTo west) then {
 			_u = leader _x;
 			_alive = false;
 			if(!alive _u) then {
@@ -180,7 +180,7 @@ _handler = {
 			}
 		};
 
-		if(side _x == east) then {
+		if(side _x isEqualTo east) then {
 			_u = leader _x;
 			_alive = false;
 			if(!alive _u) then {
@@ -211,7 +211,7 @@ _handler = {
 	}foreach(allGroups);
 
 	{
-		if(side _x == resistance) then {
+		if(side _x isEqualTo resistance) then {
 
 		};
 	}foreach(vehicles);
@@ -297,7 +297,7 @@ _handler = {
 			};
 		}foreach(alldeadmen);
 		{
-			if(((typeof _x == OT_item_CargoContainer) or (_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
+			if(((typeof _x isEqualTo OT_item_CargoContainer) or (_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x isEqualTo 0) and (_x call OT_fnc_hasOwner)) then {
 				(_this select 0) drawIcon [
 					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 					[1,1,1,1],
@@ -308,7 +308,7 @@ _handler = {
 				];
 			};
 			if((_x isKindOf "StaticWeapon") and (isNull attachedTo _x) and (alive _x)) then {
-				if(side _x == civilian or side _x == resistance or captive _x) then {
+				if(side _x isEqualTo civilian or side _x isEqualTo resistance or captive _x) then {
 					_col = [0.5,0.5,0.5,1];
 					if(!(isNull gunner _x) and (alive gunner _x)) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";

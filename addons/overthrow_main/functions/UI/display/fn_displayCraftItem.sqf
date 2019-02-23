@@ -9,7 +9,7 @@ _qty = parseNumber _qty;
 _def = [];
 {
     _x params ["_c","_r","_q"];
-    if(_cls == _c and _q == _qty) exitWith {_def = _x};
+    if(_cls isEqualTo _c and _q isEqualTo _qty) exitWith {_def = _x};
 }foreach(OT_craftableItems);
 
 if(count _def > 0) then {
@@ -23,7 +23,7 @@ if(count _def > 0) then {
         _x params ["_rcls","_rqty"];
         _name = "";
         call {
-            if(_rcls == "Uniform_Base") exitWith {
+            if(_rcls isEqualTo "Uniform_Base") exitWith {
                 _name = "Clothing";
             };
             if(_rcls isKindOf ["Default", configFile >> "CfgMagazines"]) then {

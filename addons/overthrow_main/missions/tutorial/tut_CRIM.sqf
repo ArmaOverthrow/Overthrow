@@ -9,20 +9,20 @@ private _thistown = (getpos player) call OT_fnc_nearestTown;
 
 //Is there some already spawned within spawn distance?
 {
-    if(side _x == east) then {
+    if(side _x isEqualTo east) then {
         _targets pushback _x;
     };
 }foreach(player nearEntities ["CAManBase", OT_spawnDistance]);
 
 //No? well where is a town with an active gang
-if(count _targets == 0) exitWith {
+if(count _targets isEqualTo 0) exitWith {
     private _towns = [OT_townData,[],{(_x select 0) distance player},"ASCEND"] call BIS_fnc_SortBy;
     private _town = "";
     private _done = false;
     {
         _x params ["_pos","_t"];
         _gangshere = OT_civilians getVariable [format["gangs%1",_t],[]];
-        if !(_t == _thistown) then {
+        if !(_t isEqualTo _thistown) then {
             if(count _gangshere > 0) then {
                 _gang = OT_civilians getVariable [format["gang%1",_gangshere select 0],[]];
                 if(count _gang > 0) then {

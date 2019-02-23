@@ -6,10 +6,10 @@ if(_numPlayers > 3) then {
 	_strength = round(_strength * 1.5);
 };
 private _diff = server getVariable ["OT_difficulty",1];
-if(_diff == 0) then {
+if(_diff isEqualTo 0) then {
 	_strength = round(_strength * 0.5);
 };
-if(_diff == 2) then {
+if(_diff isEqualTo 2) then {
 	_strength = round(_strength * 2);
 };
 
@@ -163,15 +163,15 @@ while {sleep 5; !_over} do {
 	_enemyin = 0;
 	{
 		if(_x distance _pos < 100) then {
-			if((side _x == west) and (alive _x)) then {
+			if((side _x isEqualTo west) and (alive _x)) then {
 				_alive = _alive + 1;
 			};
-			if((side _x == resistance or captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+			if((side _x isEqualTo resistance or captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
 				_enemy = _enemy + 1;
 			};
 		};
 	}foreach(allunits);
-	if(time > _timeout and _alive == 0 and _enemy == 0) then {_enemy = 1};
+	if(time > _timeout and _alive isEqualTo 0 and _enemy isEqualTo 0) then {_enemy = 1};
 	_progresschange = (_alive - _enemy);
 	if(_progresschange < -20) then {_progresschange = -20};
 	if(_progresschange > 10) then {_progresschange = 10};
@@ -192,12 +192,12 @@ if(_progress > 0) then {
 	//Recover resources
 	server setVariable ["NATOresources",round(_strength * 0.5),true];
 	{
-		if(side _x == west) then {
+		if(side _x isEqualTo west) then {
 			if(count (units _x) > 0) then {
 				_lead = (units _x) select 0;
 				private _g = (_lead getVariable ["garrison",""]);
 				if(typename _g != "STRING") then {_g = "HQ"};
-				if(_g == "HQ") then {
+				if(_g isEqualTo "HQ") then {
 					if((vehicle _lead) != _lead) then {
 						[vehicle _lead] spawn OT_fnc_cleanup;
 					}else{
@@ -216,8 +216,8 @@ if(_progress > 0) then {
 		}
 	}foreach(allgroups);
 	{
-		if(side _x == west) then {
-			if(_x getVariable ["garrison",""] == "HQ") then {
+		if(side _x isEqualTo west) then {
+			if(_x getVariable ["garrison",""] isEqualTo "HQ") then {
 				[_x] spawn OT_fnc_cleanup;
 			};
 		}

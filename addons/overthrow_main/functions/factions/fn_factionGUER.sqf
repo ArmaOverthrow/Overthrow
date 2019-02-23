@@ -1,6 +1,6 @@
 
 private _blueprints = server getVariable ["GEURblueprints",[]];
-if(count _blueprints == 0) then {
+if(count _blueprints isEqualTo 0) then {
 	_blueprints = OT_item_DefaultBlueprints;
 	server setVariable ["GEURblueprints",_blueprints,true];
 };
@@ -39,13 +39,13 @@ while {true} do {
 	};
 
 	{
-		if (typename _x == "GROUP") then {
+		if (typename _x isEqualTo "GROUP") then {
 			{
 				deleteVehicle _x;
 			}foreach(units _x);
 			deleteGroup _x;
 		};
-		if (typename _x == "OBJECT") then {
+		if (typename _x isEqualTo "OBJECT") then {
 			deleteVehicle _x;
 		};
 	}foreach(spawner getVariable ["_noid_",[]]);
@@ -74,12 +74,12 @@ while {true} do {
 					_innum = 2 * _num;
 					_intotal = _innum;
 					if(_num > 0) then {
-						if(count _data == 2 and _x != "Factory") then {
+						if(count _data isEqualTo 2 and _x != "Factory") then {
 							//Just passive income
 							_income = _enum * 200;
 							[_income] call OT_fnc_resistanceFunds;
 						};
-						if(count _data == 3) then {
+						if(count _data isEqualTo 3) then {
 							//Turns something into money
 							_input = _data select 2;
 							_income = 0;
@@ -99,7 +99,7 @@ while {true} do {
 								_c = _x;
 								{
 									_x params ["_cls","_amt"];
-									if(_cls == _input) exitWith {
+									if(_cls isEqualTo _input) exitWith {
 										if(_amt >= _innum) then {
 											[_c, _cls, _innum] call CBA_fnc_removeItemCargo;
 											_income = _income + (_sellprice * _innum);
@@ -113,7 +113,7 @@ while {true} do {
 							}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
 							[_income] call OT_fnc_resistanceFunds;
 						};
-						if(count _data == 4) then {
+						if(count _data isEqualTo 4) then {
 							//Turns something into something (or creates something from nothing)
 							_input = _data select 2;
 							_output = _data select 3;
@@ -133,7 +133,7 @@ while {true} do {
 									_c = _x;
 									{
 										_x params ["_cls","_amt"];
-										if(_cls == _input) exitWith {
+										if(_cls isEqualTo _input) exitWith {
 											if(_amt >= _innum) then {
 												[_c, _cls, _innum] call CBA_fnc_removeItemCargo;
 												_inputnum = _inputnum + _innum;
@@ -154,7 +154,7 @@ while {true} do {
 										_c = _x;
 										{
 											_x params ["_cls","_amt"];
-											if(_cls == "OT_Fertilizer") exitWith {
+											if(_cls isEqualTo "OT_Fertilizer") exitWith {
 												[_c, _cls, 1] call CBA_fnc_removeItemCargo;
 												_foundFertilizer = true;
 											};
@@ -194,14 +194,14 @@ while {true} do {
 				_townpos = server getvariable _x;
 				if !(_town in _abandoned) then {
 					if(_townpos call OT_fnc_inSpawnDistance) then {
-						_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
-						if(_numcops == 0) then {
+						_numcops = {side _x isEqualTo west} count (_townpos nearObjects ["CAManBase",600]);
+						if(_numcops isEqualTo 0) then {
 							[_town,-1] call OT_fnc_stability;
 						};
 					};
 				}else{
 					_stabchange = 0;
-					_numcops = {side _x == west} count (_townpos nearObjects ["CAManBase",600]);
+					_numcops = {side _x isEqualTo west} count (_townpos nearObjects ["CAManBase",600]);
 					if(_numcops > 0) then {
 						_stabchange = _stabchange - _numcops;
 					};
@@ -280,7 +280,7 @@ while {true} do {
 					};
 					_costtoproduce = round((_base * _numtoproduce) * 0.8);
 
-					if(_timespent == 0) then {
+					if(_timespent isEqualTo 0) then {
 						//take items
 						private _veh = OT_factoryPos nearestObject OT_item_CargoContainer;
 						if(_veh isEqualTo objNull) then {
@@ -388,34 +388,34 @@ while {true} do {
 		//Do ranking
 		{
 			_x params ["_owner","_name","_unit","_rank"];
-			if(typename _unit == "OBJECT") then {
+			if(typename _unit isEqualTo "OBJECT") then {
 				_xp = _unit getVariable ["OT_xp",0];
 				_player = spawner getvariable [_owner,objNULL];
-				if(_rank == "PRIVATE" and _xp > (OT_rankXP select 0)) then {
+				if(_rank isEqualTo "PRIVATE" and _xp > (OT_rankXP select 0)) then {
 					_x set [3,"CORPORAL"];
 					_unit setRank "CORPORAL";
 					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.2 + (random 0.3);
 				};
-				if(_rank == "CORPORAL" and _xp > (OT_rankXP select 1)) then {
+				if(_rank isEqualTo "CORPORAL" and _xp > (OT_rankXP select 1)) then {
 					_x set [3,"SERGEANT"];
 					_unit setRank "SERGEANT";
 					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.3 + (random 0.3);
 				};
-				if(_rank == "SERGEANT" and _xp > (OT_rankXP select 2)) then {
+				if(_rank isEqualTo "SERGEANT" and _xp > (OT_rankXP select 2)) then {
 					_x set [3,"LIEUTENANT"];
 					_unit setRank "LIEUTENANT";
 					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.5 + (random 0.3);
 				};
-				if(_rank == "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
+				if(_rank isEqualTo "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
 					_x set [3,"CAPTAIN"];
 					_unit setRank "CAPTAIN";
 					format["%1 has been promoted to Captain",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.6 + (random 0.3);
 				};
-				if(_rank == "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
+				if(_rank isEqualTo "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
 					_x set [3,"MAJOR"];
 					_unit setRank "MAJOR";
 					format["%1 has been promoted to Major",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];

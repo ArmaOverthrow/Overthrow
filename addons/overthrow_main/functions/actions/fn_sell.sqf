@@ -10,7 +10,7 @@ _standing = (player getVariable format['rep%1',_town]) * -1;
 _idx = lbCurSel 1500;
 _cls = lbData [1500,_idx];
 
-if(isNil "_cls" or _cls == "") exitWith {OT_selling = false};
+if(isNil "_cls" or _cls isEqualTo "") exitWith {OT_selling = false};
 
 _price = [_town,_cls,_standing] call OT_fnc_getSellPrice;
 
@@ -22,14 +22,14 @@ if(_price > 100) then {[_town,round(_price / 100)] call OT_fnc_standing};
 
 if(OT_hasTFAR) then {
 	_c = _cls splitString "_";
-	if((_c select 0) == "tf") then {
+	if((_c select 0) isEqualTo "tf") then {
 		{
-			if(_x find _cls == 0) exitWith {_cls = _x};
+			if(_x find _cls isEqualTo 0) exitWith {_cls = _x};
 		}foreach(items player);
 	};
 };
 _target = player;
-if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
+if((player getVariable ["OT_shopTarget","Self"]) isEqualTo "Vehicle") then {
 	_target = vehicle player;
 
 	[_target, _cls, 1] call CBA_fnc_removeItemCargo;

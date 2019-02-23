@@ -35,10 +35,10 @@ while {alive player} do {
 
 		_replim = 50;
 		_skill = player getVariable ["OT_stealth",0];
-		if(_skill == 1) then {_replim = 75};
-		if(_skill == 2) then {_replim = 100};
-		if(_skill == 3) then {_replim = 150};
-		if(_skill == 4) then {_replim = 200};
+		if(_skill isEqualTo 1) then {_replim = 75};
+		if(_skill isEqualTo 2) then {_replim = 100};
+		if(_skill isEqualTo 3) then {_replim = 150};
+		if(_skill isEqualTo 4) then {_replim = 200};
 		if(_skill < 5) then {
 			if(_rep < -_replim) then {
 				_seen = "<t color='#5D8AA8'>O_O</t>";
@@ -50,10 +50,10 @@ while {alive player} do {
 			_totalrep = (abs _rep);
 			_replim = 50;
 			_skill = player getVariable ["OT_stealth",0];
-			if(_skill == 1) then {_replim = 75};
-			if(_skill == 2) then {_replim = 100};
-			if(_skill == 3) then {_replim = 150};
-			if(_skill == 4) then {_replim = 200};
+			if(_skill isEqualTo 1) then {_replim = 75};
+			if(_skill isEqualTo 2) then {_replim = 100};
+			if(_skill isEqualTo 3) then {_replim = 150};
+			if(_skill isEqualTo 4) then {_replim = 200};
 			if(_skill < 5) then {
 				if(_totalrep > _replim) then {
 					_seen = "<t color='#B2282f'>O_O</t>";

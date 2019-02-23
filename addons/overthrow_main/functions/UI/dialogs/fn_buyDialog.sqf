@@ -43,7 +43,7 @@ lbClear 1500;
 		_pic = _cls call OT_fnc_weaponGetPic;
 	};
 	_text = format["%1 x %2",_num,_name];
-	if(_num == -1) then {_text = _name};
+	if(_num isEqualTo -1) then {_text = _name};
 	_idx = lbAdd [1500,_text];
 	lbSetPicture [1500,_idx,_pic];
 	if !(_enabled) then {

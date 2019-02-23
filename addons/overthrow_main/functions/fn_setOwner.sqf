@@ -1,8 +1,8 @@
 params ["_obj","_owner"];
-if(typename _obj == "SCALAR") exitWith {
+if(typename _obj isEqualTo "SCALAR") exitWith {
     owners setVariable [str _obj,_owner,true];
 };
-if(typename _obj == "STRING") exitWith {
+if(typename _obj isEqualTo "STRING") exitWith {
     owners setVariable [_obj,_owner,true];
 };
 if(typename _obj != "OBJECT") exitWith {};

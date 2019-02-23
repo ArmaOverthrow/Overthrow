@@ -10,15 +10,15 @@ while {true} do {
 	_lasthour = date select 3;
 
 	if(OT_fastTime) then {		
-		if(_lasthour == 19) then {
+		if(_lasthour isEqualTo 19) then {
 			setTimeMultiplier 8;
 		};
-		if(_lasthour == 7) then {
+		if(_lasthour isEqualTo 7) then {
 			setTimeMultiplier 4;
 		};
 	};
 
-	if((_lasthour == 0) or (_lasthour == 6) or (_lasthour == 12) or (_lasthour == 18)) then {
+	if((_lasthour isEqualTo 0) or (_lasthour isEqualTo 6) or (_lasthour isEqualTo 12) or (_lasthour isEqualTo 18)) then {
 		private _inf = 1;
 		private _total = 0;
 
@@ -62,8 +62,8 @@ while {true} do {
 			_perPlayer = round(_total / _numPlayers);
 			if(_perPlayer > 0) then {
 				private _diff = server getVariable ["OT_difficulty",1];
-				if(_diff == 0) then {_perPlayer = round(_perPlayer * 1.2)};
-				if(_diff == 2) then {_perPlayer = round(_perPlayer * 0.8)};
+				if(_diff isEqualTo 0) then {_perPlayer = round(_perPlayer * 1.2)};
+				if(_diff isEqualTo 2) then {_perPlayer = round(_perPlayer * 0.8)};
 
 				_inf remoteExec ["OT_fnc_influenceSilent",0,false];
 				{

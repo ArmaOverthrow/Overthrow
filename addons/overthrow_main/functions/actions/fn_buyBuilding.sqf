@@ -2,13 +2,13 @@ _b = player call OT_fnc_nearestRealEstate;
 private _handled = false;
 private _type = "buy";
 private _isfactory = false;
-if(typename _b == "ARRAY") then {
+if(typename _b isEqualTo "ARRAY") then {
 	_building = (_b select 0);
 	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
 		_owner = _building call OT_fnc_getOwner;
-		if(_owner == getplayeruid player) then {
+		if(_owner isEqualTo getplayeruid player) then {
 			_home = player getVariable "home";
 			if(_home distance _building < 5) exitWith {"You cannot sell your home" call OT_fnc_notifyMinor;_err = true};
 			_type = "sell";
@@ -26,13 +26,13 @@ if(_handled) then {
 
 	_money = player getVariable "money";
 
-	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
+	if(_type isEqualTo "buy" and _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
 
 
 	_mrkid = format["bdg-%1",_building];
 	_owned = player getVariable "owned";
 
-	if(_type == "buy") then {
+	if(_type isEqualTo "buy") then {
 		_id = [_building] call OT_fnc_getBuildID;
 		[_id,getPlayerUID player] call OT_fnc_setOwner;
 		[-_price] call OT_fnc_money;

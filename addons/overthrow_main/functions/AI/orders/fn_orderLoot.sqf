@@ -12,13 +12,13 @@ if(vehicle _tt != _tt) then {
 	_sorted = [vehicle _tt];
 }else{
 	_objects = _tt nearEntities [["Car","ReammoBox_F","Air","Ship"],20];
-	if(count _objects == 0) exitWith {
+	if(count _objects isEqualTo 0) exitWith {
 		"Cannot find any containers or vehicles within 20m of first selected unit" call OT_fnc_notifyMinor;
 	};
 	_sorted = [_objects,[],{_x distance _tt},"ASCEND"] call BIS_fnc_SortBy;
 };
 
-if(count _sorted == 0) exitWith {};
+if(count _sorted isEqualTo 0) exitWith {};
 private _target = _sorted select 0;
 
 format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
@@ -60,7 +60,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");
-			if(count _deadguys == 0) exitWith {};
+			if(count _deadguys isEqualTo 0) exitWith {};
 			_sorted = [_deadguys,[],{_x distance _t},"ASCEND"] call BIS_fnc_SortBy;
 
 			_timeout = time + 120;
@@ -76,7 +76,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			[_deadguy,_unit] call OT_fnc_takeStuff;
 			sleep 2;
             deleteVehicle _deadguy;
-			if(primaryWeapon _unit == "") then {
+			if(primaryWeapon _unit isEqualTo "") then {
 				_weapon = objNull;
 				{
 					if !(_x getVariable ["looted",false]) exitWith {

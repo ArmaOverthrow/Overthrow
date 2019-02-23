@@ -102,8 +102,8 @@ buildOnMouseMove = {
 		modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];
 		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
 
-		if(modeMode == 0) then {
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
+		if(modeMode isEqualTo 0) then {
+			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x isEqualTo modeTarget) and !(_x isEqualTo modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
@@ -160,7 +160,7 @@ buildMoveCam = {
 
 buildOnKeyUp = {
 	_key = _this select 1;
-	if (_key == 42 or _key == 54) then {
+	if (_key isEqualTo 42 or _key isEqualTo 54) then {
 		//Shift
 		OT_shiftHeld = false;
 	};
@@ -180,29 +180,29 @@ buildOnKeyDown = {
 		buildCamRotating = true;
 	};
 	call {
-		if (_key == 42 or _key == 54) exitWith {
+		if (_key isEqualTo 42 or _key isEqualTo 54) exitWith {
 			//Shift
 			OT_shiftHeld = true;
 		};
-		if (_key == 17) exitWith {
+		if (_key isEqualTo 17) exitWith {
 			//W
 			_handled = true;
 			_rel = [[0,0,0],2,(getDir buildCam)+90] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		if (_key == 31) exitWith {
+		if (_key isEqualTo 31) exitWith {
 			//S
 			_handled = true;
 			_rel = [[0,0,0],-2,(getDir buildCam)+90] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		if (_key == 30) exitWith {
+		if (_key isEqualTo 30) exitWith {
 			//A
 			_handled = true;
 			_rel = [[0,0,0],-2,(getDir buildCam)] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		if (_key == 32) exitWith {
+		if (_key isEqualTo 32) exitWith {
 			//D
 			_handled = true;
 			_rel = [[0,0,0],2,(getDir buildCam)] call BIS_fnc_relPos;
@@ -212,7 +212,7 @@ buildOnKeyDown = {
 		if(isNull modeTarget) exitWith {};
 		_dir = buildRotation;
 
-		if(_key == 57 and modeMode == 1) exitWith {
+		if(_key isEqualTo 57 and modeMode isEqualTo 1) exitWith {
 			//Space
 			_handled = true;
 			deleteVehicle modeTarget;
@@ -229,7 +229,7 @@ buildOnKeyDown = {
 		if(_this select 2) then {
 			_amt = 1;
 		};
-		if (_key == 16) exitWith {
+		if (_key isEqualTo 16) exitWith {
 			//Q
 			_handled = true;
 			_newdir = _dir - _amt;
@@ -237,7 +237,7 @@ buildOnKeyDown = {
 			modeTarget setDir (_newdir);
 			buildRotation = _newDir;
 		};
-		if (_key == 18) exitWith {
+		if (_key isEqualTo 18) exitWith {
 			//E
 			_handled = true;
 			_newdir = _dir + _amt;
@@ -251,7 +251,7 @@ buildOnKeyDown = {
 
 buildOnMouseDown = {
 	_btn = _this select 1;
-	if(_btn == 1) then {
+	if(_btn isEqualTo 1) then {
 		buildCamMoving = true;
 	};
 };
@@ -259,13 +259,13 @@ buildOnMouseDown = {
 buildOnMouseUp = {
 	_btn = _this select 1;
 	_sx = _this select 2;
-	if(_btn == 1) then {
+	if(_btn isEqualTo 1) then {
 		buildCamMoving = false;
 	};
-	if(_btn == 2) then {
+	if(_btn isEqualTo 2) then {
 		buildCamRotating = false;
 	};
-	if(_btn == 0 and _sx > (safezoneX + (0.1 * safezoneW)) and _sx < (safezoneX + (0.9 * safezoneW))) then {
+	if(_btn isEqualTo 0 and _sx > (safezoneX + (0.1 * safezoneW)) and _sx < (safezoneX + (0.9 * safezoneW))) then {
 		//Click LMB
 		if(!isNull modeTarget and canBuildHere) then {
 			_money = player getVariable "money";
@@ -275,7 +275,7 @@ buildOnMouseUp = {
 				_created = objNULL;
 				playSound "3DEN_notificationDefault";
 				player setVariable ["money",_money-modePrice,true];
-				if(modeMode == 0) then {
+				if(modeMode isEqualTo 0) then {
 					_objects = [modeValue,getDir modeTarget,modeValues] call BIS_fnc_objectsMapper;
 					{
 						clearWeaponCargoGlobal _x;
@@ -348,7 +348,7 @@ build = {
 	modeSelected = _this;
 	_def = [];
 	{
-		if((_x select 0) == modeSelected) exitWith {_def = _x};
+		if((_x select 0) isEqualTo modeSelected) exitWith {_def = _x};
 	}foreach(OT_Buildables);
 	modeIndex = 0;
 	_name = _def select 0;

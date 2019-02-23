@@ -21,16 +21,16 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 	{
 		_unit = _x;
 		_iscar = false;
-		if(_unit isKindOf "LandVehicle" and !(side _x == west)) then {
+		if(_unit isKindOf "LandVehicle" and !(side _x isEqualTo west)) then {
 			_unit = driver _unit;
 			_iscar = true;
 			_f = false;
 
-			if (_vehs find _x == -1) then {
+			if (_vehs find _x isEqualTo -1) then {
 				_vehs pushBack _x;
 			};
 		};
-		if(_unit isKindOf "LandVehicle" and (side _x == west)) then {
+		if(_unit isKindOf "LandVehicle" and (side _x isEqualTo west)) then {
 			_friendly pushback _x;
 		};
 		if !(_unit in _inrange or _unit in _searching or _unit in _searched) then {
@@ -126,7 +126,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 								_msg = "What's this??!?";
 								_unit setCaptive false;
 								{
-									if(side _x == west) then {
+									if(side _x isEqualTo west) then {
 										_x reveal [_unit,1.5];
 										sleep 0.2;
 									};

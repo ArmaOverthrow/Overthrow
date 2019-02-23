@@ -14,7 +14,7 @@ private _cc = 0;
 {
 	_key = _x select 0;
 	_val = _x select 1;
-	if(typename _val == "ARRAY") then {
+	if(typename _val isEqualTo "ARRAY") then {
 		_new = [];
 		{
 			_new pushback _x;
@@ -22,7 +22,7 @@ private _cc = 0;
 		_val = _new;
 	};
 	_set = true;
-	if(_key == "civilians") then {
+	if(_key isEqualTo "civilians") then {
 		{
 			_y = _x select 0;
 			if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
@@ -31,7 +31,7 @@ private _cc = 0;
 		}foreach(_val);
 		_set = false;
 	};
-	if(_key == "buildingpositions") then {
+	if(_key isEqualTo "buildingpositions") then {
 		{
 			_y = _x select 0;
 			if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
@@ -40,7 +40,7 @@ private _cc = 0;
 		}foreach(_val);
 		_set = false;
 	};
-	if(_key == "bases") then {
+	if(_key isEqualTo "bases") then {
 		{
 			_pos = _x select 0;
 			_name = _x select 1;
@@ -61,10 +61,10 @@ private _cc = 0;
 			_mrkid setMarkerText _name;
 		}foreach(_val);
 	};
-	if((_key == "warehouse") and (typename _val) == "ARRAY") then {
+	if((_key isEqualTo "warehouse") and (typename _val) isEqualTo "ARRAY") then {
 		_set = false;
 		{
-			if(typename _x == "ARRAY") then {
+			if(typename _x isEqualTo "ARRAY") then {
 				_y = _x select 0;
 				if(typeName _y != "CODE") then {
 					if((_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
@@ -74,13 +74,13 @@ private _cc = 0;
 			};
 		}foreach(_val);
 	};
-	if(_key == "vehicles") then {
-		if(typename _val == "ARRAY") then {
+	if(_key isEqualTo "vehicles") then {
+		if(typename _val isEqualTo "ARRAY") then {
 			_set = false;
 			_ccc = 0;
 			{
 				_type = _x select 0;
-				if(_type == "Land_MapBoard_F") then {
+				if(_type isEqualTo "Land_MapBoard_F") then {
 					//Backwards-compatability map upgrade for old saves
 					_type = OT_item_Map;
 				};
@@ -137,7 +137,7 @@ private _cc = 0;
 						_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 						_clu enableDynamicSimulation true;
 					};
-					if(typename _dir == "SCALAR") then {
+					if(typename _dir isEqualTo "SCALAR") then {
 						//Pre 0.6.8 save, scalar direction
 						_veh setDir _dir;
 					}else{
@@ -156,10 +156,10 @@ private _cc = 0;
 						_num = _x select 1;
 
 						call {
-							if(_cls == "money") exitWith {
+							if(_cls isEqualTo "money") exitWith {
 								_veh setVariable ["money",_num,true];
 							};
-							if(_cls == "password") exitWith {
+							if(_cls isEqualTo "password") exitWith {
 								_veh setVariable ["password",_num,true];
 							};
 							if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
@@ -190,7 +190,7 @@ private _cc = 0;
 						_veh setVariable ["OT_init",_code,true];
 					};
 
-					if(_type == OT_policeStation) then {
+					if(_type isEqualTo OT_policeStation) then {
 						_town = _pos call OT_fnc_nearestTown;
 						_mrkid = format["%1-police",_town];
 						createMarker [_mrkid,_pos];
@@ -200,7 +200,7 @@ private _cc = 0;
 						_mrkid setMarkerAlpha 1;
 					};
 
-					if(_type == OT_warehouse) then {
+					if(_type isEqualTo OT_warehouse) then {
 						_mrkid = format["bdg-%1",_veh];
 						createMarker [_mrkid,_pos];
 						_mrkid setMarkerShape "ICON";
@@ -209,7 +209,7 @@ private _cc = 0;
 						_mrkid setMarkerAlpha 1;
 					};
 
-					if(_type == OT_item_tent) then {
+					if(_type isEqualTo OT_item_tent) then {
 						_mrkid = format["%1-camp",_owner];
 						createMarker [_mrkid,_pos];
 						_mrkid setMarkerShape "ICON";
@@ -219,7 +219,7 @@ private _cc = 0;
 						_mrkid setMarkerText format ["Camp %1",server getvariable [format["name%1",_owner],""]];
 					};
 				};
-				if(_ccc == 10) then {
+				if(_ccc isEqualTo 10) then {
 					_ccc = 0;
 					sleep 0.2;
 				};
@@ -229,7 +229,7 @@ private _cc = 0;
 
 	if(_set and !(isNil "_val")) then {
 		if((_key select [0,4]) != "ace_" and (_key select [0,4]) != "cba_" and (_key select [0,4]) != "bis_") then {
-			if(typename _val == "ARRAY") then {
+			if(typename _val isEqualTo "ARRAY") then {
 				//make a copy
 				_orig = _val;
 				_val = [];
@@ -241,7 +241,7 @@ private _cc = 0;
 		};
 	};
 	_cc = _cc + 1;
-	if(_cc == 100) then {
+	if(_cc isEqualTo 100) then {
 		_cc = 0;
 		sleep 0.2;
 	};
@@ -297,9 +297,9 @@ private _built = (allMissionObjects "Static");
 	private _leasedata = [];
 	{
 		_x params ["_name","_val"];
-		if(_name == "owned") then {
+		if(_name isEqualTo "owned") then {
 			{
-				if(typename _x == "ARRAY") then {
+				if(typename _x isEqualTo "ARRAY") then {
 					//old save with positions
 					_buildings = (_x nearObjects ["Building",8]);
 					if(count _buildings > 0) then {
@@ -311,7 +311,7 @@ private _built = (allMissionObjects "Static");
 
 					_pos = buildingpositions getVariable [_x,[]];
 					_bdg = objNull;
-					if(count _pos == 0) then {
+					if(count _pos isEqualTo 0) then {
 						_bdg = OT_centerPos nearestObject parseNumber _x;
 						buildingpositions setVariable [_x,position _bdg,true];
 					}else{

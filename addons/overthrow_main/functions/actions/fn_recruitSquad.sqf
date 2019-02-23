@@ -4,12 +4,12 @@ private _cls = _this select 0;
 private _pos = _this select 1;
 private _cc = player getVariable ["OT_squadcount",0];
 
-if(({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) exitWith {"You cannot recruit squads with enemies nearby" call OT_fnc_notifyMinor};
+if(({side _x isEqualTo west or side _x isEqualTo east} count (_pos nearEntities 50)) > 0) exitWith {"You cannot recruit squads with enemies nearby" call OT_fnc_notifyMinor};
 
 _d = [];
 {
 	_name = _x select 0;
-	if(_name == _cls) exitWith {_d = _x};
+	if(_name isEqualTo _cls) exitWith {_d = _x};
 }foreach(OT_squadables);
 
 _comp = _d select 1;

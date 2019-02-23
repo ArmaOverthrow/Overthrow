@@ -2,7 +2,7 @@ private _g = _this;
 
 private _start = getpos ((units _g) select 0);
 if(isNil "_start") exitWith {};
-if(typename _start == "BOOL") exitWith {};
+if(typename _start isEqualTo "BOOL") exitWith {};
 
 _g setBehaviour "SAFE";
 

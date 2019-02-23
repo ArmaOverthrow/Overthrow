@@ -10,7 +10,7 @@ _isonline = false;
 _on = "Offline";
 _player = objNull;
 {
-    if(getplayeruid _x == _uid) exitWith {_isonline = true;_on = "Online";_player = _x};
+    if(getplayeruid _x isEqualTo _uid) exitWith {_isonline = true;_on = "Online";_player = _x};
 }foreach(allplayers);
 
 _money = 0;

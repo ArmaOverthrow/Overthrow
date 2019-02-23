@@ -6,7 +6,7 @@ _town = (getPos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
 _price = lbValue [1500,_idx];
-if(_price == -1) exitWith {};
+if(_price isEqualTo -1) exitWith {};
 
 private _chems = server getVariable ["reschems",0];
 private _cost = cost getVariable [_cls,[0,0,0,0]];
@@ -16,9 +16,9 @@ _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
 call {
-	if(_cls == "Set_HMG") exitWith {
+	if(_cls isEqualTo "Set_HMG") exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,"C_Quadbike_01_F"];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
+		if (count _pos isEqualTo 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 		_veh = "C_Quadbike_01_F" createVehicle _pos;
@@ -50,9 +50,9 @@ call {
 	if(_cls in OT_allSquads) exitWith {
 		[_cls,getpos player] call OT_fnc_recruitSquad;
 	};
-	if(_cls == OT_item_UAV) exitWith {
+	if(_cls isEqualTo OT_item_UAV) exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
+		if (count _pos isEqualTo 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 
@@ -82,7 +82,7 @@ call {
 	};
 	if(_cls in OT_allVehicles) exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
+		if (count _pos isEqualTo 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 		_veh = _cls createVehicle _pos;
@@ -92,7 +92,7 @@ call {
 		clearBackpackCargoGlobal _veh;
 		clearItemCargoGlobal _veh;
 
-		if(_cls == OT_vehType_service) then {
+		if(_cls isEqualTo OT_vehType_service) then {
 			_veh addItemCargoGlobal ["ToolKit", 1];
 			[_veh,3,"ACE_Wheel"] call ace_repair_fnc_addSpareParts;
 		};
@@ -103,7 +103,7 @@ call {
 	};
 	if(_cls isKindOf "Ship") exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
-		if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
+		if (count _pos isEqualTo 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
 		player setVariable ["money",_money-_price,true];
 		_veh = _cls createVehicle _pos;
@@ -128,7 +128,7 @@ call {
 		};
 		playSound "3DEN_notificationDefault";
 	};
-	if(_cls == "V_RebreatherIA") exitWith {
+	if(_cls isEqualTo "V_RebreatherIA") exitWith {
 		[-_price] call OT_fnc_money;
 
 		if((backpack player != "") and (player canAdd _cls)) then {
@@ -146,7 +146,7 @@ call {
 		{
 			_owner = _x call OT_fnc_getOwner;
 			if(!isNil "_owner") then {
-				if(_owner == getplayerUID player) exitWith {_box = _x};
+				if(_owner isEqualTo getplayerUID player) exitWith {_box = _x};
 			};
 		}foreach(nearestObjects [getpos player, [OT_item_Storage],1200]);
 
@@ -196,7 +196,7 @@ call {
 		player setVariable ["money",_money-_price,true];
 
 
-		if(_b == "Vehicle") then {
+		if(_b isEqualTo "Vehicle") then {
 			if(_cls isKindOf "Bag_Base") then {
 				(vehicle player) addBackpackCargoGlobal [_cls,1];
 			}else{

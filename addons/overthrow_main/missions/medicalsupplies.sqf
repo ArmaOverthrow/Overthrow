@@ -15,7 +15,7 @@ if(count _roads > 0) then {
 private _items = [];
 {
     _x params ["_cat","_i"];
-    if(_cat == "Pharmacy") exitWith {_items = _i};
+    if(_cat isEqualTo "Pharmacy") exitWith {_items = _i};
 }foreach(OT_items);
 private _itemcls = selectRandom _items;
 private _itemName = _itemcls call OT_fnc_weaponGetName;
@@ -55,7 +55,7 @@ _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
         if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
 		     {
     			_x params ["_cls","_amt"];
-    			if(_cls == _itemcls and _amt >= _numitems) exitWith {
+    			if(_cls isEqualTo _itemcls and _amt >= _numitems) exitWith {
                     _found = true;
     			};
     		}foreach(_c call OT_fnc_unitStock);
@@ -77,7 +77,7 @@ _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
             if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
     		     {
         			_x params ["_cls","_amt"];
-        			if(_cls == _itemcls and _amt >= _numitems) exitWith {
+        			if(_cls isEqualTo _itemcls and _amt >= _numitems) exitWith {
                         _found = true;
                         [_c, _cls, _numitems] call CBA_fnc_removeItemCargo;
         			};

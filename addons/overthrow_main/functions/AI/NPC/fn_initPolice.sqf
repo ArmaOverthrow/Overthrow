@@ -33,11 +33,11 @@ removeAllWeapons _unit;
 
 private _cost = 0;
 private _wpn = ["SubmachineGun"] call OT_fnc_findWeaponInWarehouse;
-if(_wpn == "") then {
+if(_wpn isEqualTo "") then {
 	_possible = [];
 	{
 		_weapon = [_x] call BIS_fnc_itemType;
-		if((_weapon select 1) == "SubmachineGun") then {_possible pushback _x};
+		if((_weapon select 1) isEqualTo "SubmachineGun") then {_possible pushback _x};
 	}foreach(OT_allWeapons);
 	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
 	_wpn = _sorted select 0;

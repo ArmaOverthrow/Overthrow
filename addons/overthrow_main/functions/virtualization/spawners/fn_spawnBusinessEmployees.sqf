@@ -4,7 +4,7 @@ private _count = 0;
 private _groups = [];
 
 private _numciv = server getVariable[format["%1employ",_name],0];
-if(_numciv == 0) exitWith {[]};
+if(_numciv isEqualTo 0) exitWith {[]};
 
 private _group = createGroup resistance;
 _group setBehaviour "SAFE";

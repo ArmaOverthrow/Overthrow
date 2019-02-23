@@ -10,14 +10,14 @@ _ret = "";
 
 switch (tolower(markershape _this)) do {
   case "rectangle": {
-    if (_x == _y) then {
+    if (_x isEqualTo _y) then {
       _ret = "SQUARE";
     } else {
       _ret = "RECTANGLE";
     };
   };
   case "ellipse": {
-    if (_x == _y) then {
+    if (_x isEqualTo _y) then {
       _ret = "CIRCLE";
     } else {
       _ret = "ELLIPSE";

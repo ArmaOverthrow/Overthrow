@@ -6,7 +6,7 @@ private _id = _ctrl lbData _index;
 private _job = [];
 {
     _x params ["_jobid","_j"];
-    if(_jobid == _id) exitWith {_job = _j};
+    if(_jobid isEqualTo _id) exitWith {_job = _j};
 }foreach(spawner getVariable ["OT_activeJobs",[]]);
 
 if(count _job > 0) then {

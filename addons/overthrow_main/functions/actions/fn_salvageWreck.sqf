@@ -70,7 +70,7 @@ _filtered = [];
     if !(_x isEqualTo OT_salvageVehicle) then {_filtered pushback _x};
 }foreach(_objects);
 
-if(count _filtered == 1) then {
+if(count _filtered isEqualTo 1) then {
 	(_filtered select 0) call _doSalvage;
 }else{
     if(count _filtered > 1) then {

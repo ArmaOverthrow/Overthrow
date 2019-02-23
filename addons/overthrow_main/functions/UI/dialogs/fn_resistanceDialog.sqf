@@ -29,7 +29,7 @@ lbClear 1500;
     };
     _col = [0.8,0.8,0.8,1];
     {
-        if(getplayeruid _x == _uid) exitWith {_col = [1,1,1,1]};
+        if(getplayeruid _x isEqualTo _uid) exitWith {_col = [1,1,1,1]};
     }foreach(allplayers);
 
     lbSetColor [1500, _idx, _col]
@@ -87,7 +87,7 @@ private _income = 0;
         _wages = _wages + (_num * _perhr);
         if(_num > 20) then {_num = 20};
         _data = _x call OT_fnc_getBusinessData;
-        if(count _data == 2) then {
+        if(count _data isEqualTo 2) then {
             _income = _income + ((_num * 200) * 6);
         };
     };

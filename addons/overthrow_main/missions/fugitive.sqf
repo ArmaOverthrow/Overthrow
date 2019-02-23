@@ -16,7 +16,7 @@ private _outofspawndistance = [];
 {
     if !((server getVariable _x) call OT_fnc_inSpawnDistance) then {
         _stability = server getVariable [format["stability%1"],100];
-        if !(_x in _abandoned or _x == _currentTown or _stability < 50) then {
+        if !(_x in _abandoned or _x isEqualTo _currentTown or _stability < 50) then {
             _outofspawndistance pushback _x;
         };
     };
@@ -26,7 +26,7 @@ private _posTown = server getVariable [_destinationName,[]];
 
 _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
 _destination = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
-if((_destination select 0) == 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
+if((_destination select 0) isEqualTo 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
 private _params = [_faction,_destination,_destinationName,_jobid];
 private _markerPos = _destination; //randomize the marker position a bit
 
@@ -93,7 +93,7 @@ _difficulty = 1.8;
     _alreadyAlerted = _civ getVariable ["OT_fugitiveAlerted",false];
     _alerted = false;
     {
-        if((side _x == resistance or captive _x) and (_x call OT_fnc_unitSeenNATO)) then {
+        if((side _x isEqualTo resistance or captive _x) and (_x call OT_fnc_unitSeenNATO)) then {
             _x setCaptive false;
             _alerted = true;
         };

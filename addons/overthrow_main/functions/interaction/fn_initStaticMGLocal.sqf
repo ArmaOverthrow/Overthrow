@@ -7,7 +7,7 @@ if !(_wpn getVariable ["actioned",false]) then {
 		if(_p call OT_fnc_unitSeen) then {
 			_p setCaptive false;
 		};
-		_ammocount = {_x == OT_ammo_50cal} count (magazineCargo _p);
+		_ammocount = {_x isEqualTo OT_ammo_50cal} count (magazineCargo _p);
 		if(_ammocount >= 4) then {
 			disableUserInput true;
 			_p removeMagazineGlobal OT_ammo_50cal;

@@ -88,12 +88,12 @@ SHK_pos = {
   _pos = [];
 
   // Only marker is given as parameter
-  if (typename _this == "STRING") then {
+  if (typename _this isEqualTo "STRING") then {
     _pos = [_this] call SHK_pos_getPosMarker;
 
   // Parameter array
   } else {
-    if (typename (_this select 0) == "STRING") then {
+    if (typename (_this select 0) isEqualTo "STRING") then {
       _pos = _this call SHK_pos_getPosMarker;
     } else {
       _pos = _this call SHK_pos_getPos;

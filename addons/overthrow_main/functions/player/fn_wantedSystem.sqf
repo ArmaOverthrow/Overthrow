@@ -42,7 +42,7 @@ _unit addEventHandler ["Fired", {
 			_range = 50;
 		};
 
-		if({(side _x == west || side _x == east) and ((leader _x) distance _me) < _range} count (allgroups) > 0) exitWith {
+		if({(side _x isEqualTo west || side _x isEqualTo east) and ((leader _x) distance _me) < _range} count (allgroups) > 0) exitWith {
 			_me setCaptive false;
 			_me spawn OT_fnc_revealToNATO;
 		};
@@ -61,7 +61,7 @@ if(isPlayer _unit) then {
 					private _havepi = false;
 					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
 					{
-						if(((side _x == resistance) or captive _x) and _unit != _x and _havepi and !(isPlayer _x) and (items _x) find "ACE_epinephrine" > -1) exitWith {
+						if(((side _x isEqualTo resistance) or captive _x) and _unit != _x and _havepi and !(isPlayer _x) and (items _x) find "ACE_epinephrine" > -1) exitWith {
 							_medic = _x;
 						};
 					}foreach(player nearentities["CAManBase",50]);
@@ -83,7 +83,7 @@ if(isPlayer _unit) then {
 							player allowdamage false;
 							titleText ["You are unconscious, there is no one nearby with Epinephrine to revive you. Respawning...", "BLACK FADED", 2];
 							{
-								if((_x select [0,4]) == "ace_") then {
+								if((_x select [0,4]) isEqualTo "ace_") then {
 									player setVariable [_x,nil];
 								};
 							}foreach(allvariables player);
@@ -100,7 +100,7 @@ if(isPlayer _unit) then {
 							removeHeadgear player;
 
 							{
-								if((_x select [0,4]) == "ace_") then {
+								if((_x select [0,4]) isEqualTo "ace_") then {
 									player setVariable [_x,nil];
 								};
 							}foreach(allvariables player);
@@ -197,7 +197,7 @@ while {alive _unit} do {
 						if !(typeof (vehicle _unit) in (OT_allVehicles+OT_allBoats)) exitWith {
 							_bad = true; //They are driving or in a non-civilian vehicle including statics
 						};
-						if(driver (vehicle _unit) == _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
+						if(driver (vehicle _unit) isEqualTo _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
 						if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in OT_illegalHeadgear) or ((vest _unit) in OT_illegalVests)) then {
 							_bad = true;
 						};
@@ -221,10 +221,10 @@ while {alive _unit} do {
 				_totalrep = abs(_unit getVariable ["rep",0]) * 0.5;
 				_replim = 50;
 				_skill = _unit getVariable ["OT_stealth",0];
-				if(_skill == 1) then {_replim = 75};
-				if(_skill == 2) then {_replim = 100};
-				if(_skill == 3) then {_replim = 150};
-				if(_skill == 4) then {_replim = 200};
+				if(_skill isEqualTo 1) then {_replim = 75};
+				if(_skill isEqualTo 2) then {_replim = 100};
+				if(_skill isEqualTo 3) then {_replim = 150};
+				if(_skill isEqualTo 4) then {_replim = 200};
 				if(_skill < 5) then {
 					if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
 						_unit setCaptive false;
@@ -241,10 +241,10 @@ while {alive _unit} do {
 					_totalrep = ((_unit getVariable ["rep",0]) * -0.25) + ((_unit getVariable [format["rep%1",_town],0]) * -1);
 					_replim = 50;
 					_skill = _unit getVariable ["OT_stealth",0];
-					if(_skill == 1) then {_replim = 75};
-					if(_skill == 2) then {_replim = 100};
-					if(_skill == 3) then {_replim = 150};
-					if(_skill == 4) then {_replim = 200};
+					if(_skill isEqualTo 1) then {_replim = 75};
+					if(_skill isEqualTo 2) then {_replim = 100};
+					if(_skill isEqualTo 3) then {_replim = 150};
+					if(_skill isEqualTo 4) then {_replim = 200};
 					if(_skill < 5) then {
 						if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
 							_unit setCaptive false;
@@ -278,7 +278,7 @@ while {alive _unit} do {
 							if !(typeof (vehicle _unit) in (OT_allVehicles+OT_allBoats)) exitWith {
 								_bad = true; //They are driving or in a non-civilian vehicle including statics
 							};
-							if(driver (vehicle _unit) == _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
+							if(driver (vehicle _unit) isEqualTo _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
 							if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in OT_illegalHeadgear) or ((vest _unit) in OT_illegalVests)) then {
 								_bad = true;
 							};

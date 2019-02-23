@@ -8,7 +8,7 @@ _canplace = true;
 
 if(_typecls != "Base") then {
 	private _ob = (getpos player) call OT_fnc_nearestLocation;
-	if((_ob select 1) == "Business") then {
+	if((_ob select 1) isEqualTo "Business") then {
 		_obpos = (_ob select 2) select 0;
 		_obname = (_ob select 0);
 
@@ -60,9 +60,9 @@ if(!_canplace) exitWith {false};
 if !(_isbase) then {
 	//Building proximity check
 	_estate = _pos call OT_fnc_nearestRealEstate;
-	if(typename _estate == "ARRAY") then {
+	if(typename _estate isEqualTo "ARRAY") then {
 		_b = _estate select 0;
-		if(typeof _b == OT_item_Tent) exitWith {_canplace = false};
+		if(typeof _b isEqualTo OT_item_Tent) exitWith {_canplace = false};
 		if(_b call OT_fnc_hasOwner) then {
 			_owner = _b call OT_fnc_getOwner;
 			if(_owner != getplayeruid player) then {
@@ -70,7 +70,7 @@ if !(_isbase) then {
 					_canplace = false;
 				};
 			}else{
-				if(_typecls == "Camp" or _typecls == "Base") then {
+				if(_typecls isEqualTo "Camp" or _typecls isEqualTo "Base") then {
 					_canplace = false;
 				};
 			};
@@ -85,7 +85,7 @@ if !(_isbase) then {
 };
 
 
-if(_typecls == "Base") then {
+if(_typecls isEqualTo "Base") then {
 	_town = _pos call OT_fnc_nearestTown;
 	_postown = server getVariable _town;
 	_dist = 200;

@@ -1,12 +1,12 @@
 params ["_input","_num","_pos"];
-if(_num == 0) exitWith {true};
+if(_num isEqualTo 0) exitWith {true};
 if(_num < 1) then {_num = 1};
 _gotit = false;
 {
    _c = _x;
    {
        _x params ["_cls","_amt"];
-       if(_cls == _input and _amt >= _num) exitWith {
+       if(_cls isEqualTo _input and _amt >= _num) exitWith {
            [_c, _cls, _num] call CBA_fnc_removeItemCargo;
            _gotit = true;
        };

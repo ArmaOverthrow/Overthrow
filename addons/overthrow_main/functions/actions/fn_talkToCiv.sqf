@@ -10,7 +10,7 @@ private _money = player getvariable "money";
 
 private _options = [];
 
-if (side _civ == west or side _civ == east) exitWith {
+if (side _civ isEqualTo west or side _civ isEqualTo east) exitWith {
 	_options pushBack ["Cancel",{}];
 	_options spawn OT_fnc_playerDecision;
 };
@@ -109,19 +109,19 @@ if (_canBuy) then {
 
 			createDialog "OT_dialog_buy";
 
-			if(_cat == "Clothing") then {
+			if(_cat isEqualTo "Clothing") then {
 				[_town,_standing] call OT_fnc_buyClothesDialog;
 			}else{
 				_s = [];
 				{
-					if((_x select 0) == _cat) exitWith {
+					if((_x select 0) isEqualTo _cat) exitWith {
 						{
 							_s pushback [_x,-1];
 						}foreach(_x select 1);
 					};
 				}foreach(OT_items);
 
-				if(_cat == "Surplus") then {
+				if(_cat isEqualTo "Surplus") then {
 					{
 						_s pushback [_x,-1];
 					}foreach(OT_allBackpacks);
@@ -204,7 +204,7 @@ if (_canBuyBoats) then {
 					player setVariable ["OT_ferryDestination",_destpos,false];
 					private _desttown = _destpos call OT_fnc_nearestTown;
 					private _pos = (getpos player) findEmptyPosition [10,100,OT_vehType_ferry];
-					if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
+					if (count _pos isEqualTo 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 					private _cost = floor((player distance _destpos) * 0.005);
 					player setVariable ["OT_ferryCost",_cost,false];
 					_money = player getVariable "money";
@@ -248,13 +248,13 @@ if (_canBuyBoats) then {
 
 					systemChat format["Departing for %1, press Y to skip (-$%2)",_desttown,_cost];
 
-					waitUntil {!alive player or !alive _veh or !alive _driver or (vehicle player == player) or (player distance _destpos < 80)};
+					waitUntil {!alive player or !alive _veh or !alive _driver or (vehicle player isEqualTo player) or (player distance _destpos < 80)};
 
-					if(vehicle player == _veh and alive _driver) then {
+					if(vehicle player isEqualTo _veh and alive _driver) then {
 						_driver globalchat format["We've arrived in %1, enjoy your stay",_desttown];
 					};
 					sleep 30;
-					if(vehicle player == _veh and alive _driver) then {
+					if(vehicle player isEqualTo _veh and alive _driver) then {
 						moveOut player;
 						_driver globalchat "k, bye";
 					};
@@ -326,10 +326,10 @@ if (_canSellDrugs) then {
 				OT_drugSelling = _this;
 				_drugcls = _this;
 				_drugname = _drugcls call OT_fnc_weaponGetName;
-				if(((items player) find _drugcls) == -1) exitWith {};
+				if(((items player) find _drugcls) isEqualTo -1) exitWith {};
 				_num = 0;
 				{
-					if(_x select 0 == _drugcls) exitWith {_num = _x select 1};
+					if(_x select 0 isEqualTo _drugcls) exitWith {_num = _x select 1};
 				}foreach(player call OT_fnc_unitStock);
 				OT_drugQty = _num;
 
@@ -341,7 +341,7 @@ if (_canSellDrugs) then {
 
 				player globalchat ([format["Would you like to buy some %1?",_drugname],format["Wanna buy some %1?",_drugname],format["Hey, want some %1?",_drugname],format["You wanna buy some %1?",_drugname],format["Pssst! %1?",_drugname],format["Hey you looking for any %1?",_drugname]] call BIS_fnc_selectRandom);
 
-				if(side _civ == civilian) then {
+				if(side _civ isEqualTo civilian) then {
 					_price = round(_price * 1.2);
 					if(player call OT_fnc_unitSeenNATO) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];

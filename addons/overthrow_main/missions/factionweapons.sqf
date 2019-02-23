@@ -46,7 +46,7 @@ _title = format["%1 requests %2 x %3",_factionName,_numitems,_itemName];
 		     {
     			_x params ["_cls","_amt"];
                 _cls = _cls call BIS_fnc_baseWeapon;
-    			if(_cls == _itemcls) then {
+    			if(_cls isEqualTo _itemcls) then {
     				_numavailable = _numavailable + _amt;
                     _driver = driver _c;
     			};
@@ -69,7 +69,7 @@ _title = format["%1 requests %2 x %3",_factionName,_numitems,_itemName];
     		     {
         			_x params ["_cls","_amt"];
                     _basecls = _cls call BIS_fnc_baseWeapon;
-        			if(_basecls == _itemcls) then {
+        			if(_basecls isEqualTo _itemcls) then {
                         _driver = driver _c;
                         [_c, _cls, _amt] call CBA_fnc_removeWeaponCargo;
                         _numavailable = _numavailable + _amt;

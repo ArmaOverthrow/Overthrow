@@ -1,20 +1,20 @@
 _veh = vehicle player;
 
-if(_veh == player) exitWith {};
+if(_veh isEqualTo player) exitWith {};
 
 _objects = [];
 {
 	if(_x != _veh) then {_objects pushback _x};
 }foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 
-if(count _objects == 0) exitWith {
+if(count _objects isEqualTo 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
 _target = _sorted select 0;
 
 if(_veh call OT_fnc_unitSeen) then {
-	if(typename (_target getVariable ["stockof",""]) == "SCALAR") then {
+	if(typename (_target getVariable ["stockof",""]) isEqualTo "SCALAR") then {
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
@@ -101,7 +101,7 @@ _doTransfer = {
 	disableUserInput false;
 };
 
-if(count _objects == 1) then {
+if(count _objects isEqualTo 1) then {
 	(_objects select 0) call _doTransfer;
 }else{
 	private _options = [];

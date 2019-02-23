@@ -75,9 +75,9 @@ openMap true;
 		openMap false;
 	}else{
 		private _ft = server getVariable ["OT_fastTravelType",1];
-		if(_handled and _ft == 1 and !OT_adminMode) then {
+		if(_handled and _ft isEqualTo 1 and !OT_adminMode) then {
 			_cost = 0;
-			if((vehicle player) == player) then {
+			if((vehicle player) isEqualTo player) then {
 				_cost = ceil((player distance _pos) / 150);
 			}else{
 				_cost = ceil((player distance _pos) / 300);
@@ -97,7 +97,7 @@ openMap true;
 			sleep 2;
 
 			if((vehicle player) != player) then {
-				if ((driver vehicle player) == player) then {
+				if ((driver vehicle player) isEqualTo player) then {
 					_tam = 10;
 					_roads = [];
 					while {true} do {

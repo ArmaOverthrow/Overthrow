@@ -20,7 +20,7 @@ _centerY = _center select 1;
 private ["_shape"];
 _shape = _area call SHK_pos_fnc_getMarkerShape;
 
-if (_shape == "ICON") then {
+if (_shape isEqualTo "ICON") then {
   // Icon has only one position, so if it equals to the given position, then it's blacklisted.
   if ([_pos,_center] call SHK_pos_fnc_isSamePosition) then {
     _return = true;
@@ -73,7 +73,7 @@ if (_shape == "ICON") then {
     // Check if the position is within the marker area.
     _return = [_pos,_corners] call SHK_pos_fnc_isInRectangle;
   } else {
-    if (_shape == "CIRCLE") then {
+    if (_shape isEqualTo "CIRCLE") then {
       _return = [_pos,_area] call SHK_pos_fnc_isInCircle;
     } else {
       _return = [_pos,_area] call SHK_pos_fnc_isInEllipse;

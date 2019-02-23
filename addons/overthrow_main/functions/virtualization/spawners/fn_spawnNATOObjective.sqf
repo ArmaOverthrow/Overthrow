@@ -90,7 +90,7 @@ if(_numNATO > 0) then {
 
 		call {
 			if((damage _building) > 0.95) exitWith {};
-			if 	((_type == "Land_Cargo_HQ_V1_F") or (_type == "Land_Cargo_HQ_V2_F") or (_type == "Land_Cargo_HQ_V3_F") or (_type == "Land_Cargo_HQ_V4_F")) exitWith {
+			if 	((_type isEqualTo "Land_Cargo_HQ_V1_F") or (_type isEqualTo "Land_Cargo_HQ_V2_F") or (_type isEqualTo "Land_Cargo_HQ_V3_F") or (_type isEqualTo "Land_Cargo_HQ_V4_F")) exitWith {
 				_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 8), [],0, "CAN_COLLIDE"];
 				_veh setPosATL [(getPos _building select 0),(getPos _building select 1),(getPosATL _veh select 2)];
 				_veh setDir (getDir _building);
@@ -104,7 +104,7 @@ if(_numNATO > 0) then {
 				_numNATO = _numNATO - 1;
 			};
 
-			if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
+			if 	((_type isEqualTo "Land_Cargo_Patrol_V1_F") or (_type isEqualTo "Land_Cargo_Patrol_V2_F") or (_type isEqualTo "Land_Cargo_Patrol_V3_F") or (_type isEqualTo "Land_Cargo_Patrol_V4_F")) exitWith {
 				_ang = (getDir _building) - 190;
 				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
 				_veh = createVehicle [OT_NATO_HMG, _p, [], 0, "CAN_COLLIDE"];
@@ -193,7 +193,7 @@ if(count _terminal > 0) then {
 	_tp = getpos (_terminal select 0);
 	_dir = getdir (_terminal select 0);
 	_dist = 35;
-	if(typeof (_terminal select 0) == "Land_Hangar_F") then {
+	if(typeof (_terminal select 0) isEqualTo "Land_Hangar_F") then {
 		_dir = _dir + 180;
 		_dist = 50;
 	};
@@ -268,7 +268,7 @@ _road = objNull;
 //HVTs
 {
 	_x params ["_id","_loc","_status"];
-	if(_loc == _name and _status == "") then {
+	if(_loc isEqualTo _name and _status isEqualTo "") then {
 		_group = createGroup blufor;
 		_groups pushBack _group;
 		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;

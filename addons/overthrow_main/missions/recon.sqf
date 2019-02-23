@@ -13,8 +13,8 @@ private _nearestOb = (getpos player) call OT_fnc_nearestObjective;
 _destinationName = _nearestOb select 1;
 private _known = 0;
 {
-    if(side _x == west) then {
-        if(_x getVariable ["garrison",""] == _destinationName) then {
+    if(side _x isEqualTo west) then {
+        if(_x getVariable ["garrison",""] isEqualTo _destinationName) then {
             if((resistance knowsAbout _x) > 0) then {
                 _known = _known + 1;
             };
@@ -57,8 +57,8 @@ _title = format["%1 Recon",_destinationName];
     _known = 0;
     if(_active) exitWith {
         {
-            if(side _x == west) then {
-                if(_x getVariable ["garrison",""] == _destinationName) then {
+            if(side _x isEqualTo west) then {
+                if(_x getVariable ["garrison",""] isEqualTo _destinationName) then {
                     _count = _count + 1;
                     if((resistance knowsAbout _x) > 0) then {
                         _known = _known + 1;

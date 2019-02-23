@@ -7,24 +7,24 @@ private _num = _this select 0;
 private _d = warehouse getVariable [_cls,[_cls,0]];
 _in = _d select 1;
 
-if(_num > _in or _num == -1) then {
+if(_num > _in or _num isEqualTo -1) then {
 	_num = _in;
 };
 
 _count = 0;
 private _veh = (vehicle player);
 private	_iswarehouse = false;
-if(_veh == player) then {
+if(_veh isEqualTo player) then {
 	_b = OT_warehouseTarget call OT_fnc_nearestRealEstate;
-	if(typename _b == "ARRAY") then {
+	if(typename _b isEqualTo "ARRAY") then {
 		_building = _b select 0;
-		if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+		if((typeof _building) isEqualTo OT_warehouse and _building call OT_fnc_hasOwner) then {
 			_iswarehouse = true;
 			_veh = OT_warehouseTarget;
 		};
 	};
 };
-if(_veh == player) exitWith {
+if(_veh isEqualTo player) exitWith {
 	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 

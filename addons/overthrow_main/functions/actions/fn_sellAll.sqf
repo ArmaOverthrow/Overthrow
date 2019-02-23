@@ -11,7 +11,7 @@ _standing = (player getVariable format['rep%1',_town]) * -1;
 _idx = lbCurSel 1500;
 _sellcls = lbData [1500,_idx];
 
-if(isNil "_sellcls" or _sellcls == "") exitWith {OT_selling = false};
+if(isNil "_sellcls" or _sellcls isEqualTo "") exitWith {OT_selling = false};
 
 _price = [_town,_sellcls,_standing] call OT_fnc_getSellPrice;
 _done = false;
@@ -20,14 +20,14 @@ _mynum = 0;
 if(isNil "_price") exitWith {OT_selling = false};
 
 _target = player;
-if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
+if((player getVariable ["OT_shopTarget","Self"]) isEqualTo "Vehicle") then {
 	_target = vehicle player;
 };
 
 _qty = 0;
 {
 	_c = _x select 0;
-	if(_c == _sellcls) exitWith {_qty = _x select 1};
+	if(_c isEqualTo _sellcls) exitWith {_qty = _x select 1};
 }foreach(_target call OT_fnc_unitStock);
 
 private _total = (_price*_qty);
@@ -35,15 +35,15 @@ private _total = (_price*_qty);
 if(_total > 100) then {[_town,round(_total / 100)] call OT_fnc_standing};
 _ocls = _sellcls;
 
-if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
+if((player getVariable ["OT_shopTarget","Self"]) isEqualTo "Vehicle") then {
 	[_target, _sellcls, _qty] call CBA_fnc_removeItemCargo;
 }else{
 	for "_i" from 0 to _qty do {
 		if(OT_hasTFAR) then {
 			_c = _ocls splitString "_";
-			if((_c select 0) == "tf") then {
+			if((_c select 0) isEqualTo "tf") then {
 				{
-					if(_x find _ocls == 0) exitWith {_sellcls = _x};
+					if(_x find _ocls isEqualTo 0) exitWith {_sellcls = _x};
 				}foreach(items player);
 			};
 		};

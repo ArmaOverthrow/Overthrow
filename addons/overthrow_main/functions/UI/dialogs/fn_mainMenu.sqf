@@ -61,7 +61,7 @@ sleep 0.2;
 _b = player call OT_fnc_nearestRealEstate;
 _buildingTxt = "";
 
-if(typename _b == "ARRAY") then {
+if(typename _b isEqualTo "ARRAY") then {
 	_building = _b select 0;
 	_price = _b select 1;
 	_sell = _b select 2;
@@ -83,11 +83,11 @@ if(typename _b == "ARRAY") then {
 		_ownername = server getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
 
-		if(typeof _building == OT_warehouse) exitWith {
+		if(typeof _building isEqualTo OT_warehouse) exitWith {
 			ctrlEnable [1609,true];
 			ctrlSetText [1609,"Procurement"];
 
-			if(_owner == getplayerUID player) then {
+			if(_owner isEqualTo getplayerUID player) then {
 				ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
 				ctrlEnable [1608,true];
 			}else{
@@ -102,14 +102,14 @@ if(typename _b == "ARRAY") then {
 			",_ownername,round((damage _building) * 100),"%"];
 		};
 
-		if(_owner == getplayerUID player) then {
+		if(_owner isEqualTo getplayerUID player) then {
 			_leased = player getVariable ["leased",[]];
 			_id = [_building] call OT_fnc_getBuildID;
 			if(_id in _leased) then {
 				_ownername = format["%1 (Leased)",_ownername];
 			};
 
-			if(typeof _building == OT_item_Tent) exitWith {
+			if(typeof _building isEqualTo OT_item_Tent) exitWith {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
 				ctrlEnable [1609,false];
@@ -127,7 +127,7 @@ if(typename _b == "ARRAY") then {
 				ctrlEnable [1609,false];
 				ctrlEnable [1610,false];
 			};
-			if(damage _building == 1) then {
+			if(damage _building isEqualTo 1) then {
 				_lease = 0;
 			};
 			_buildingTxt = format["
@@ -141,10 +141,10 @@ if(typename _b == "ARRAY") then {
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
 			ctrlEnable [1610,false];
-			if(typeof _building == OT_item_Tent) then {
+			if(typeof _building isEqualTo OT_item_Tent) then {
 				_name = "Camp";
 			};
-			if(typeof _building == OT_flag_IND) then {
+			if(typeof _building isEqualTo OT_flag_IND) then {
 				_name = _building getVariable "name";
 			};
 			_buildingTxt = format["
@@ -153,7 +153,7 @@ if(typename _b == "ARRAY") then {
 				<t align='left' size='0.65'>Damage: %3%4</t>
 			",_name,_ownername,round((damage _building) * 100),"%"];
 		};
-		if(typeof _building == OT_barracks) then {
+		if(typeof _building isEqualTo OT_barracks) then {
 			_owner = _building call OT_fnc_getOwner;
 			_ownername = server getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
@@ -169,7 +169,7 @@ if(typename _b == "ARRAY") then {
 				<t align='left' size='0.65'>Damage: %2%3</t>
 			",_ownername,round((damage _building) * 100),"%"];
 		};
-		if(typeof _building == OT_trainingCamp) then {
+		if(typeof _building isEqualTo OT_trainingCamp) then {
 			_owner = _building call OT_fnc_getOwner;
 			_ownername = server getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
@@ -186,7 +186,7 @@ if(typename _b == "ARRAY") then {
 			",_ownername,round((damage _building) * 100),"%"];
 		};
 
-		if(typeof _building == OT_refugeeCamp) then {
+		if(typeof _building isEqualTo OT_refugeeCamp) then {
 			_owner = _building call OT_fnc_getOwner;
 			_ownername = server getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
@@ -201,7 +201,7 @@ if(typename _b == "ARRAY") then {
 			",_ownername,round((damage _building) * 100),"%"];
 		};
 
-		if(typeof _building == OT_flag_IND) then {
+		if(typeof _building isEqualTo OT_flag_IND) then {
 			_base = [];
 			{
 				if((_x select 0) distance _building < 5) exitWith {_base = _x};
@@ -221,8 +221,8 @@ if(typename _b == "ARRAY") then {
 			",_base select 1,_ownername];
 		};
 
-		if(damage _building == 1) then {
-			if((_owner == getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {
+		if(damage _building isEqualTo 1) then {
+			if((_owner isEqualTo getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {
 				ctrlEnable [1608,false]; //Not allowed to sell
 				ctrlSetText [1609,"Repair"]; //Replace lease/manage with repair
 				ctrlEnable [1609,true];
@@ -244,7 +244,7 @@ if(typename _b == "ARRAY") then {
 				<t align='left' size='0.65'>Lease Value: $%2/6hrs</t>
 			",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
 
-			if(typeof _building == OT_barracks) then {
+			if(typeof _building isEqualTo OT_barracks) then {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
 				ctrlEnable [1609,false];
@@ -257,7 +257,7 @@ if(typename _b == "ARRAY") then {
 		};
 	};
 
-	if(typeof _building == OT_policeStation) then {
+	if(typeof _building isEqualTo OT_policeStation) then {
 		_owner = _building call OT_fnc_getOwner;
 		if(!isNil "_owner") then {
 			_ownername = server getVariable format["name%1",_owner];
@@ -274,7 +274,7 @@ if(typename _b == "ARRAY") then {
 		};
 	};
 
-	if(typeof _building == "Land_Cargo_House_V4_F") then {
+	if(typeof _building isEqualTo "Land_Cargo_House_V4_F") then {
 		_owner = _building call OT_fnc_getOwner;
 		if(!isNil "_owner") then {
 			_ownername = server getVariable format["name%1",_owner];
@@ -327,7 +327,7 @@ if(_obpos distance player < 250) then {
 	};
 }else{
 	private _ob = (getpos player) call OT_fnc_nearestLocation;
-	if((_ob select 1) == "Business") then {
+	if((_ob select 1) isEqualTo "Business") then {
 		_obpos = (_ob select 2) select 0;
 		_obname = (_ob select 0);
 
@@ -403,21 +403,21 @@ _opacity = "FF";
 for "_x" from 0 to (count OT_notifyHistory - 1) do {
 	_txt = format["%1<t size='0.7' align='left' color='#%2FFFFFF'>%3</t><br/>",_txt,_opacity,OT_notifyHistory select ((count OT_notifyHistory) - _x - 1)];
 	call {
-		if(_opacity == "FF") exitWith {_opacity = "EF"};
-		if(_opacity == "EF") exitWith {_opacity = "DF"};
-		if(_opacity == "DF") exitWith {_opacity = "CF"};
-		if(_opacity == "CF") exitWith {_opacity = "BF"};
-		if(_opacity == "BF") exitWith {_opacity = "AF"};
-		if(_opacity == "AF") exitWith {_opacity = "9F"};
-		if(_opacity == "9F") exitWith {_opacity = "8F"};
-		if(_opacity == "8F") exitWith {_opacity = "7F"};
-		if(_opacity == "7F") exitWith {_opacity = "6F"};
-		if(_opacity == "6F") exitWith {_opacity = "5F"};
-		if(_opacity == "5F") exitWith {_opacity = "4F"};
-		if(_opacity == "4F") exitWith {_opacity = "3F"};
-		if(_opacity == "3F") exitWith {_opacity = "2F"};
-		if(_opacity == "2F") exitWith {_opacity = "1F"};
-		if(_opacity == "1F") exitWith {_opacity = "0F"};
+		if(_opacity isEqualTo "FF") exitWith {_opacity = "EF"};
+		if(_opacity isEqualTo "EF") exitWith {_opacity = "DF"};
+		if(_opacity isEqualTo "DF") exitWith {_opacity = "CF"};
+		if(_opacity isEqualTo "CF") exitWith {_opacity = "BF"};
+		if(_opacity isEqualTo "BF") exitWith {_opacity = "AF"};
+		if(_opacity isEqualTo "AF") exitWith {_opacity = "9F"};
+		if(_opacity isEqualTo "9F") exitWith {_opacity = "8F"};
+		if(_opacity isEqualTo "8F") exitWith {_opacity = "7F"};
+		if(_opacity isEqualTo "7F") exitWith {_opacity = "6F"};
+		if(_opacity isEqualTo "6F") exitWith {_opacity = "5F"};
+		if(_opacity isEqualTo "5F") exitWith {_opacity = "4F"};
+		if(_opacity isEqualTo "4F") exitWith {_opacity = "3F"};
+		if(_opacity isEqualTo "3F") exitWith {_opacity = "2F"};
+		if(_opacity isEqualTo "2F") exitWith {_opacity = "1F"};
+		if(_opacity isEqualTo "1F") exitWith {_opacity = "0F"};
 	};
 };
 

@@ -1,8 +1,8 @@
 _target = vehicle player;
 
-if(_target == player) exitWith {};
+if(_target isEqualTo player) exitWith {};
 
-if(count (player nearObjects [OT_portBuilding,30]) == 0) exitWith {};
+if(count (player nearObjects [OT_portBuilding,30]) isEqualTo 0) exitWith {};
 
 private _town = player call OT_fnc_nearestTown;
 _doillegal = false;

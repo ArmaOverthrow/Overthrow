@@ -75,7 +75,7 @@ while{true} do {
 		private _spawnidx = OT_allSpawned find _id;
         private _val = (_spawnidx > -1);
 
-        if((_start select 0) == (_end select 0)) then {
+        if((_start select 0) isEqualTo (_end select 0)) then {
             if(_val) then {
                 if !(_start call OT_fnc_inSpawnDistance) then {
                     if((time - _time) > 30) then { //Ensures it stays spawned for minimum 30 seconds

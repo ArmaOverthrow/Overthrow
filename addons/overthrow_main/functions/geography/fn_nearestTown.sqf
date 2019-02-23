@@ -1,8 +1,8 @@
 private _ret = "";
 private _testpos = _this;
 private _sel = 0;
-if(typename _this == "ARRAY") then {
-    if(count _this == 2) then {
+if(typename _this isEqualTo "ARRAY") then {
+    if(count _this isEqualTo 2) then {
         _testpos = _this select 0;
         _sel = 1;
     };

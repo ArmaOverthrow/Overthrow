@@ -5,7 +5,7 @@ private _s = [
 ];
 
 {
-    if((_x select 0) == "Hardware") exitWith {
+    if((_x select 0) isEqualTo "Hardware") exitWith {
         {
             _s pushback [_x,-1];
         }foreach(_x select 1);

@@ -28,7 +28,7 @@ if(!dialog) then {
 			};
 			if(vehicle player != player) exitWith {
 				private _ferry = player getVariable ["OT_ferryDestination",[]];
-				if(count _ferry == 3) exitWith {
+				if(count _ferry isEqualTo 3) exitWith {
 					_veh = vehicle player;
 
 					disableUserInput true;

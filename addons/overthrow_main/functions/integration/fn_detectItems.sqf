@@ -14,7 +14,7 @@ private _categorize = {
     params ["_c","_cat"];
     _done = false;
     {
-        if((_x select 0) == _cat) exitWith {
+        if((_x select 0) isEqualTo _cat) exitWith {
             _items = _x select 1;
             if !(_c in _items) then {
                 _items pushback _c;
@@ -44,14 +44,14 @@ private _getprice = {
     _wood = 0;
     _plastic = 0;
     _steel = ceil(_mass * 0.2);
-    if(_mass == 1) then {
+    if(_mass isEqualTo 1) then {
         _steel = 0.1;
     };
-    if(_primaryCategory == "Pharmacy") then {
+    if(_primaryCategory isEqualTo "Pharmacy") then {
         _price = _mass * 4;
         _steel = 0;
         _plastic = ceil(_mass * 0.2);
-        if(_mass == 1) then {
+        if(_mass isEqualTo 1) then {
             _plastic = 0.1;
         };
         call {
@@ -81,7 +81,7 @@ private _getprice = {
             };
         };
     };
-    if(_primaryCategory == "Electronics") then {
+    if(_primaryCategory isEqualTo "Electronics") then {
         _price = _mass * 4;
         _steel = 0;
         _plastic = ceil(_mass * 0.2);
@@ -103,11 +103,11 @@ private _getprice = {
             };
         };
     };
-    if(_primaryCategory == "Hardware") then {
+    if(_primaryCategory isEqualTo "Hardware") then {
         _price = _mass;
     };
     _cls = configName _x;
-    if(_cls == "ToolKit") then {
+    if(_cls isEqualTo "ToolKit") then {
         _price = 80;
     };
     [_price,_wood,_steel,_plastic];

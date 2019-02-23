@@ -73,7 +73,7 @@ if(count _vest > 0) then {
 		_unit addVest _vestCls;
 		{
 			_cc = _x select 0;
-			if(typename _cc == "ARRAY") then {_cc = _cc select 0};
+			if(typename _cc isEqualTo "ARRAY") then {_cc = _cc select 0};
 			_num = _x select 1;
 			_count = 0;
 			
@@ -105,7 +105,7 @@ if(count _backpack > 0) then {
 		_unit addBackpack _bpCls;
 		{
 			_cc = _x select 0;
-			if(typename _cc == "ARRAY") then {_cc = _cc select 0};
+			if(typename _cc isEqualTo "ARRAY") then {_cc = _cc select 0};
 			_num = _x select 1;
 			_count = 0;
 			
@@ -141,7 +141,7 @@ _unit forceAddUniform _uniformCls;
 
 {
 	_cc = _x select 0;	
-	if(typename _cc == "ARRAY") then {_cc = _cc select 0};
+	if(typename _cc isEqualTo "ARRAY") then {_cc = _cc select 0};
 	_num = _x select 1;
 	_count = 0;
 	

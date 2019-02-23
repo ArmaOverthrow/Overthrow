@@ -10,7 +10,7 @@ OT_inputHandler = {
 		_player = objNull;
 		private _uid = inputData;
 		{
-		    if(getplayeruid _x == _uid) exitWith {_player = _x};
+		    if(getplayeruid _x isEqualTo _uid) exitWith {_player = _x};
 		}foreach(allplayers);
 		if !(isNull _player) then {
 			[_val] remoteExec ["OT_fnc_money",_player,false];

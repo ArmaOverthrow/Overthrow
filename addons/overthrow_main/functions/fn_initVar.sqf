@@ -11,10 +11,10 @@ OT_ferryDestinations = [];
 OT_NATO_control = [];
 OT_regions = [];
 {
-	if((_x select [0,12]) == "destination_") then {OT_ferryDestinations pushback _x};
-	if((_x select [0,8]) == "control_") then {OT_NATO_control pushback _x};
-	if((_x select [0,7]) == "island_") then {OT_regions pushback _x};
-	if((_x select [0,7]) == "region_") then {OT_regions pushback _x};
+	if((_x select [0,12]) isEqualTo "destination_") then {OT_ferryDestinations pushback _x};
+	if((_x select [0,8]) isEqualTo "control_") then {OT_NATO_control pushback _x};
+	if((_x select [0,7]) isEqualTo "island_") then {OT_regions pushback _x};
+	if((_x select [0,7]) isEqualTo "region_") then {OT_regions pushback _x};
 }foreach(allMapMarkers);
 
 OT_missions = [];
@@ -49,7 +49,7 @@ OT_faces_eastern = [];
 	if(OT_identity_local in _types) then {OT_faces_local pushback configName _x};
 	if(OT_identity_western in _types) then {OT_faces_western pushback configName _x};
 	if(OT_identity_eastern in _types) then {OT_faces_eastern pushback configName _x};
-}foreach("getNumber(_x >> 'disabled') == 0" configClasses (configfile >> "CfgFaces" >> "Man_A3"));
+}foreach("getNumber(_x >> 'disabled') isEqualTo 0" configClasses (configfile >> "CfgFaces" >> "Man_A3"));
 
 OT_voices_local = [];
 OT_voices_western = [];
@@ -59,7 +59,7 @@ OT_voices_eastern = [];
 	if(OT_language_local in _types) then {OT_voices_local pushback configName _x};
 	if(OT_language_western in _types) then {OT_voices_western pushback configName _x};
 	if(OT_language_eastern in _types) then {OT_voices_eastern pushback configName _x};
-}foreach("getNumber(_x >> 'scope') == 2" configClasses (configfile >> "CfgVoice"));
+}foreach("getNumber(_x >> 'scope') isEqualTo 2" configClasses (configfile >> "CfgVoice"));
 
 //Find houses
 OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F"]; //buildings with potentially lots of people living in them
@@ -75,7 +75,7 @@ OT_highPopHouses = [];
         if(_cost > 25000) then {OT_medPopHouses pushback configName _x};
         OT_lowPopHouses pushback configName _x
     };
-}foreach("(getNumber (_x >> 'scope') == 2) && (configName _x isKindOf 'House') && (configName _x find '_House' > -1)" configClasses (configfile >> "CfgVehicles"));
+}foreach("(getNumber (_x >> 'scope') isEqualTo 2) && (configName _x isKindOf 'House') && (configName _x find '_House' > -1)" configClasses (configfile >> "CfgVehicles"));
 
 OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_item_Tent,OT_flag_IND];
 
@@ -233,10 +233,10 @@ OT_spawnHouses = [];
 {
 	_cls = configName _x;
 	OT_spawnHouses pushback _cls;
-	if((OT_allBuyableBuildings find _cls) == -1) then {
+	if((OT_allBuyableBuildings find _cls) isEqualTo -1) then {
 		OT_allBuyableBuildings pushback _cls;
 	};
-	if((OT_allRealEstate find _cls) == -1) then {
+	if((OT_allRealEstate find _cls) isEqualTo -1) then {
 		OT_allRealEstate pushback _cls;
 	};
 }foreach(_allHouses);
@@ -280,7 +280,7 @@ private _allVehs = "
 
 	OT_vehicles pushback [_cls,_cost,0,getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"),2];
 	OT_allVehicles pushback _cls;
-	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") == "CIV_F") then {
+	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") isEqualTo "CIV_F") then {
 		if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" and getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
 			OT_vehTypes_civ pushback _cls;
 
@@ -440,8 +440,8 @@ OT_allGoggles = [];
 		};
 
 		call {
-			if(_name == "None") exitWith {};
-			if(_name == "G_Goggles_VR") exitWith {};
+			if(_name isEqualTo "None") exitWith {};
+			if(_name isEqualTo "G_Goggles_VR") exitWith {};
 			if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
 				OT_allGoggles pushback _name;
 			};
@@ -539,15 +539,15 @@ OT_allGoggles = [];
 
 		case "AssaultRifle": {
 			call {
-				if(_caliber == " 5.56" or _caliber == "5.56" or _caliber == " 5.45" or _caliber == " 5.8") exitWith {_cost = 500};
-				if(_caliber == " 12 gauge") exitWith {_cost = 1200};
-				if(_caliber == " .408") exitWith {_cost = 4000};
-				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
-				if(_caliber == " 9") exitWith {_cost = 400}; //9x21mm
-				if(_caliber == " 6.5") exitWith {_cost = 1000};
-				if(_caliber == " 7.62") exitWith {_cost = 1500};
-				if(_caliber == " 9.3" or _caliber == "9.3") exitWith {_cost = 1700};
-				if(_caliber == " 12.7") exitWith {_cost = 3000};
+				if(_caliber isEqualTo " 5.56" or _caliber isEqualTo "5.56" or _caliber isEqualTo " 5.45" or _caliber isEqualTo " 5.8") exitWith {_cost = 500};
+				if(_caliber isEqualTo " 12 gauge") exitWith {_cost = 1200};
+				if(_caliber isEqualTo " .408") exitWith {_cost = 4000};
+				if(_caliber isEqualTo " .338 Lapua Magnum" or _caliber isEqualTo " .303") exitWith {_cost = 700};
+				if(_caliber isEqualTo " 9") exitWith {_cost = 400}; //9x21mm
+				if(_caliber isEqualTo " 6.5") exitWith {_cost = 1000};
+				if(_caliber isEqualTo " 7.62") exitWith {_cost = 1500};
+				if(_caliber isEqualTo " 9.3" or _caliber isEqualTo "9.3") exitWith {_cost = 1700};
+				if(_caliber isEqualTo " 12.7") exitWith {_cost = 3000};
 				//I dunno what caliber this is
 				_cost = 1500;
 			};
@@ -566,15 +566,15 @@ OT_allGoggles = [];
 			_steel = 1;
 			_cost = 100;
 			call {
-				if(_caliber == " .408") exitWith {_cost = 2000};
-				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
+				if(_caliber isEqualTo " .408") exitWith {_cost = 2000};
+				if(_caliber isEqualTo " .338 Lapua Magnum" or _caliber isEqualTo " .303") exitWith {_cost = 700};
 			};
 			if(_short != "Metal Detector") then {
 				OT_allHandGuns pushBack _name
 			}
 		};
 		case "MissileLauncher": {_cost=15000;OT_allMissileLaunchers pushBack _name};
-		case "RocketLauncher": {_cost = 1500;if(_name == "launch_NLAW_F") then {_cost=1000};OT_allRocketLaunchers pushBack _name};
+		case "RocketLauncher": {_cost = 1500;if(_name isEqualTo "launch_NLAW_F") then {_cost=1000};OT_allRocketLaunchers pushBack _name};
 		case "Vest": {
 			if !(_name in ["V_RebreatherB","V_RebreatherIA","V_RebreatherIR","V_Rangemaster_belt"]) then {
 				_cost = 40 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 20);
@@ -609,7 +609,7 @@ OT_allLegalClothing = [];
 	OT_allClothing pushback _name;
 	_c = _name splitString "_";
 	_side = _c select 1;
-	if((_name == "V_RebreatherIA" or _side == "C" or _side == "I") and (_c select (count _c - 1) != "VR")) then {
+	if((_name isEqualTo "V_RebreatherIA" or _side isEqualTo "C" or _side isEqualTo "I") and (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
 	cost setVariable [_name,[_cost,0,0,1],true];
@@ -640,7 +640,7 @@ OT_allLegalClothing = [];
 		_exp = false;
 		_steel = 0.1;
 		_plastic = 0;
-		if(getNumber(_x >> "ace_explosives_Placeable") == 1) then {
+		if(getNumber(_x >> "ace_explosives_Placeable") isEqualTo 1) then {
 			_exp = true;
 		};
 		if((_desc find "Smoke") > -1) then {
@@ -656,7 +656,7 @@ OT_allLegalClothing = [];
 			_exp = false;
 		};
 
-		if(_name == OT_ammo_50cal) then {_cost = 50};
+		if(_name isEqualTo OT_ammo_50cal) then {_cost = 50};
 
 		if(_exp) then {
 			_steel = 0;
@@ -695,7 +695,7 @@ if(isServer) then {
 
 			_cost = getNumber (configFile >> "cfgVehicles" >> _name >> "armor") * _multiply;
 			_steel = round(getNumber (configFile >> "cfgVehicles" >> _name >> "armor") * 0.5);
-			_numturrets = count("!((configName _x) select [0,5] == ""Cargo"")" configClasses(configFile >> "cfgVehicles" >> _name >> "Turrets"));
+			_numturrets = count("!((configName _x) select [0,5] isEqualTo ""Cargo"")" configClasses(configFile >> "cfgVehicles" >> _name >> "Turrets"));
 			_plastic = 2;
 			if(_numturrets > 0) then {
 				_cost = _cost + (_numturrets * _cost * 10);
@@ -715,11 +715,11 @@ OT_attachments = [];
 	_name = configName _x;
 	_cost = 75;
 	_t = getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "type");
-	if(_t == 302) then {
+	if(_t isEqualTo 302) then {
 		//Bipods
 		_cost = 150;
 	};
-	if(_t == 101) then {
+	if(_t isEqualTo 101) then {
 		//Suppressors
 		_cost = 350;
 	};
@@ -738,8 +738,8 @@ OT_attachments = [];
 		_mode = configName _x;
 		_max = getNumber (configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" >> _mode >> "distanceZoomMax");
 		_mul = 0.1;
-		if(_mode == "NVS") then {_mul = 0.2};
-		if(_mode == "TWS") then {_mul = 0.5};
+		if(_mode isEqualTo "NVS") then {_mul = 0.2};
+		if(_mode isEqualTo "TWS") then {_mul = 0.5};
 		_cost = _cost + floor(_max * _mul);
 	}foreach(_allModes);
 
@@ -885,10 +885,10 @@ OT_ferryDestinations = [];
 OT_NATO_control = [];
 OT_regions = [];
 {
-	if((_x select [0,12]) == "destination_") then {OT_ferryDestinations pushback _x};
-	if((_x select [0,8]) == "control_") then {OT_NATO_control pushback _x};
-	if((_x select [0,7]) == "island_") then {OT_regions pushback _x};
-	if((_x select [0,7]) == "region_") then {OT_regions pushback _x};
+	if((_x select [0,12]) isEqualTo "destination_") then {OT_ferryDestinations pushback _x};
+	if((_x select [0,8]) isEqualTo "control_") then {OT_NATO_control pushback _x};
+	if((_x select [0,7]) isEqualTo "island_") then {OT_regions pushback _x};
+	if((_x select [0,7]) isEqualTo "region_") then {OT_regions pushback _x};
 }foreach(allMapMarkers);
 
 OT_cigsArray = ["EWK_Cigar1", "EWK_Cigar2", "EWK_Cig1", "EWK_Cig2", "EWK_Cig3", "EWK_Cig4", "EWK_Glasses_Cig1", "EWK_Glasses_Cig2", "EWK_Glasses_Cig3", "EWK_Glasses_Cig4", "EWK_Glasses_Shemag_GRE_Cig6", "EWK_Glasses_Shemag_NB_Cig6", "EWK_Glasses_Shemag_tan_Cig6", "EWK_Cig5", "EWK_Glasses_Cig5", "EWK_Cig6", "EWK_Glasses_Cig6", "EWK_Shemag_GRE_Cig6", "EWK_Shemag_NB_Cig6", "EWK_Shemag_tan_Cig6", "murshun_cigs_cig0", "murshun_cigs_cig1", "murshun_cigs_cig2", "murshun_cigs_cig3", "murshun_cigs_cig4"];

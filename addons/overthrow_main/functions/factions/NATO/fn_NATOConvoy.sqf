@@ -18,7 +18,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     private _road = [_convoypos] call BIS_fnc_nearestRoad;
     if (!isNull _road) then {
         _roadscon = roadsConnectedto _road;
-        if (count _roadscon == 2) then {
+        if (count _roadscon isEqualTo 2) then {
             _posVeh = (getpos _road) findEmptyPosition [0,15,_vehtypes select 0];
             if(count _posVeh > 0) then {
                 _convoypos = _posVeh;

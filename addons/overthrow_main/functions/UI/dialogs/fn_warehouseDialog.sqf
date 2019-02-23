@@ -4,7 +4,7 @@ _sorted = [allVariables warehouse,[],{_x},"ASCEND"] call BIS_fnc_SortBy;
 _numitems = 0;
 {
 	_d = warehouse getVariable [_x,[_x,0]];
-	if(typename _d == "ARRAY") then {
+	if(typename _d isEqualTo "ARRAY") then {
 		_cls = _d select 0;
 		if(typename _cls != "CODE") then {
 			_num = _d select 1;

@@ -2,7 +2,7 @@ OT_context = _this select 0;
 
 private _password = OT_context getVariable ["password",""];
 
-if(_password == "") exitWith {
+if(_password isEqualTo "") exitWith {
 	private _in = OT_context getVariable ["money",0];
 
 	OT_inputHandler = {

@@ -86,7 +86,7 @@ createDialog "OT_dialog_buy";
 		_pic = "";
 
 		call {
-			if(_cls == "Set_HMG") exitWith {
+			if(_cls isEqualTo "Set_HMG") exitWith {
 				_txt = "Quadbike w/ HMG Backpacks";
 				_pic = "C_Quadbike_01_F" call OT_fnc_magazineGetPic;
 			};

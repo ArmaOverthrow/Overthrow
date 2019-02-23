@@ -27,17 +27,17 @@ if !(_quiet) then {
 private _data = [];
 //get all server data
 {
-	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison" or (_x select [0,4]) == "ace_" or (_x select [0,4]) == "cba_" or (_x select [0,4]) == "bis_") then {
+	if !(_x isEqualTo "StartupType" or _x isEqualTo "recruits" or _x isEqualTo "squads" or (_x select [0,11]) isEqualTo "resgarrison" or (_x select [0,4]) isEqualTo "ace_" or (_x select [0,4]) isEqualTo "cba_" or (_x select [0,4]) isEqualTo "bis_") then {
 		_val = server getVariable _x;
 		if !(isNil "_val") then {
-			if(typename _val == "ARRAY") then {
+			if(typename _val isEqualTo "ARRAY") then {
 				//Copy the array
 				_old = _val;
 				_val = [];
 				{
 					_val pushback _x;
 				}foreach(_old);
-				if(_x == "natoabandoned") then {
+				if(_x isEqualTo "natoabandoned") then {
 					_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
 				};
 			};
@@ -105,7 +105,7 @@ private _saved = 0;
 		_owner = _x call OT_fnc_getOwner;
 		_s = _x call OT_fnc_unitStock;
 
-		if(typeof _x == OT_item_safe) then {
+		if(typeof _x isEqualTo OT_item_safe) then {
 			_s pushback ["money",_x getVariable ["money",0]];
 			_s pushback ["password",_x getVariable ["password",""]];
 		};
@@ -177,7 +177,7 @@ private _recruits = [];
 	}else{
 		_d set [6,0];
 	};
-	if(typename _unitorpos == "OBJECT") then {
+	if(typename _unitorpos isEqualTo "OBJECT") then {
 		if(alive _unitorpos) then {
 			_d set [4,getUnitLoadout _unitorpos];
 			_d set [2,getpos _unitorpos];
@@ -200,9 +200,9 @@ private _squads = [];
 {
 	_do = true;
 	_x params ["_owner","_cls","_group"];
-	if(typeName _group == "GROUP") then {
-		if(count units _group == 0) then {_do = false};
-		if(({alive _x} count units _group) == 0) then {_do = false};
+	if(typeName _group isEqualTo "GROUP") then {
+		if(count units _group isEqualTo 0) then {_do = false};
+		if(({alive _x} count units _group) isEqualTo 0) then {_do = false};
 		if(_do) then {
 			_units = [];
 			{
@@ -227,14 +227,14 @@ if !(_quiet) then {
 		_soldiers = [];
 		{
 			if(alive _x) then {
-				if(vehicle _x == _x) then {
+				if(vehicle _x isEqualTo _x) then {
 					_soldiers pushback [typeof _x,getUnitLoadout _x];
 				}else{
 					_veh = vehicle _x;
-					if(someAmmo _veh and (typeof _veh == "I_HMG_01_high_F")) then {
+					if(someAmmo _veh and (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
 						_soldiers pushback ["HMG",[]];
 					};
-					if(someAmmo _veh and (typeof _veh == "I_GMG_01_high_F")) then {
+					if(someAmmo _veh and (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
 						_soldiers pushback ["GMG",[]];
 					};
 				};
@@ -256,14 +256,14 @@ if !(_quiet) then {
 		_soldiers = [];
 		{
 			if(alive _x) then {
-				if(vehicle _x == _x) then {
+				if(vehicle _x isEqualTo _x) then {
 					_soldiers pushback [typeof _x,getUnitLoadout _x];
 				}else{
 					_veh = vehicle _x;
-					if(someAmmo _veh and (typeof _veh == "I_HMG_01_high_F")) then {
+					if(someAmmo _veh and (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
 						_soldiers pushback ["HMG",[]];
 					};
-					if(someAmmo _veh and (typeof _veh == "I_GMG_01_high_F")) then {
+					if(someAmmo _veh and (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
 						_soldiers pushback ["GMG",[]];
 					};
 				};

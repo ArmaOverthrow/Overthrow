@@ -9,7 +9,7 @@ _blist = if (count _this > 2) then {_this select 2} else {[]};
 _empty = if (count _this > 3) then {_this select 3} else {[]};
 _pos = [];
 
-if (typename _blist == "STRING") then {_blist = [_blist]};
+if (typename _blist isEqualTo "STRING") then {_blist = [_blist]};
 
 private ["_shape"];
 _shape = _area call SHK_pos_fnc_getMarkerShape;
@@ -38,7 +38,7 @@ for [{_i = 0}, {_i < 1000 && !_exit}, {_i = _i + 1}] do {
       if (count _empty > 0) then {
         _dst = _empty select 0;
         _veh = _empty select 1;
-        if (typename _veh == typename objNull) then { _veh = typeof _veh };
+        if (typename _veh isEqualTo typename objNull) then { _veh = typeof _veh };
       };
     };
   };
@@ -51,7 +51,7 @@ for [{_i = 0}, {_i < 1000 && !_exit}, {_i = _i + 1}] do {
   };
 
 	// Water position
-	if (typeName _water == "SCALAR") then {
+	if (typeName _water isEqualTo "SCALAR") then {
 	  switch _water do {
 	  
 		case 0: { // Water position is not allowed

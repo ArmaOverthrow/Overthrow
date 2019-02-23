@@ -67,7 +67,7 @@ _civ linkItem "ItemRadio";
 
 while {true} do {
 	sleep 5;
-	if(count (units _group) == 0) exitWith {deleteGroup _group};
+	if(count (units _group) isEqualTo 0) exitWith {deleteGroup _group};
 
 	private _spotDistance = OT_spawnDistance;
 	_hour = date select 3;
@@ -76,7 +76,7 @@ while {true} do {
 	if(overcast > 0.5) then {_spotDistance = _spotDistance * 0.9};
 	_upos = "UP";
 	{
-		if(side _x == west or side _x == east) then {
+		if(side _x isEqualTo west or side _x isEqualTo east) then {
 			_lead = leader _x;
 			if((_lead distance _lospos) < _spotDistance) then {
 				if((_lead distance _lospos) < 300) then {

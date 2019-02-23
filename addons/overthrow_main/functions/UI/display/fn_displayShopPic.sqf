@@ -12,7 +12,7 @@ if(_price > -1) then {
     _price = "$" + ([_ctrl lbValue _index, 1, 0, true] call CBA_fnc_formatNumber);
     ctrlEnable [1600,true];
     call {
-        if(_cls == "Set_HMG") exitWith {
+        if(_cls isEqualTo "Set_HMG") exitWith {
             _pic = getText(configFile >> "cfgVehicles" >> "C_Quadbike_01_F" >> "editorPreview");
             _desc = "A Quad-bike containing the backpacks required to set up a Static HMG";
             _txt = "Quad Bike w/ HMG Backpacks";
@@ -31,7 +31,7 @@ if(_price > -1) then {
     		_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
     		_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");
 
-            if(_cls == "C_Quadbike_01_F") then {
+            if(_cls isEqualTo "C_Quadbike_01_F") then {
                 _desc = "Gets you from A to B, not guaranteed to stay upright.";
             };
     	};
@@ -55,7 +55,7 @@ if(_price > -1) then {
     	if(_cls in OT_allSquads) exitWith {
             _d = [];
             {
-            	if((_x select 0) == _cls) exitWith {_d = _x};
+            	if((_x select 0) isEqualTo _cls) exitWith {_d = _x};
             }foreach(OT_squadables);
 
             _comp = _d select 1;

@@ -1,5 +1,5 @@
 _b = (position player) call OT_fnc_nearestLocation;
-if((_b select 1) == "Business") then {
+if((_b select 1) isEqualTo "Business") then {
     if (call OT_fnc_playerIsGeneral) then {
         _name = (_b select 0);
         _pos = (_b select 2) select 0;
@@ -9,7 +9,7 @@ if((_b select 1) == "Business") then {
         if(_money >= _price) then {
             [-_price] call OT_fnc_resistanceFunds;
             _owned = server getVariable ["GEURowned",[]];
-            if(_owned find _name == -1) then {
+            if(_owned find _name isEqualTo -1) then {
                 server setVariable ["GEURowned",_owned + [_name],true];
                 server setVariable [format["%1employ",_name],2];
                 _pos remoteExec ["OT_fnc_resetSpawn",2,false];
@@ -26,7 +26,7 @@ if((_b select 1) == "Business") then {
             _name = "Factory";
 
             _owned = server getVariable ["GEURowned",[]];
-            if(_owned find _name == -1) then {
+            if(_owned find _name isEqualTo -1) then {
                 _pos = OT_factoryPos;
                 _price = _name call OT_fnc_getBusinessPrice;
                 _err = true;

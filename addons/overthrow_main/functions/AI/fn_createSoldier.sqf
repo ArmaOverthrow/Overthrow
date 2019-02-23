@@ -80,7 +80,7 @@ if(_tertiary != "") then {
 	_civ addMagazineGlobal _magazine;
 };
 
-if(_cls == "I_Medic_F") then {
+if(_cls isEqualTo "I_Medic_F") then {
 	clearBackpackCargoGlobal _civ;
 	if(OT_hasACE) then {
 		for "_i" from 1 to 10 do {_civ addItemToBackpack "ACE_fieldDressing";};

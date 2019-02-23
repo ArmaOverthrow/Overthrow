@@ -1,7 +1,7 @@
 params ["_vehicle"];
 
-if(typename _vehicle == "GROUP") exitWith {
-	if(count (units _vehicle) == 0) exitWith {deleteGroup _vehicle};
+if(typename _vehicle isEqualTo "GROUP") exitWith {
+	if(count (units _vehicle) isEqualTo 0) exitWith {deleteGroup _vehicle};
 	private _l = (units _vehicle) select 0;
 	_vehs = [];
 	waitUntil {sleep 15;!(_l call OT_fnc_inSpawnDistance)};

@@ -14,7 +14,7 @@ if(_pos distance player > 30) then {
     _code = _b select 1;
 };
 
-if((({side _x == west or side _x == east} count (_pos nearEntities 50)) > 0) and _charge) exitWith {"You cannot garrison with enemies nearby" call OT_fnc_notifyMinor};
+if((({side _x isEqualTo west or side _x isEqualTo east} count (_pos nearEntities 50)) > 0) and _charge) exitWith {"You cannot garrison with enemies nearby" call OT_fnc_notifyMinor};
 
 _group = spawner getVariable [format["resgarrison%1",_code],grpNull];
 _doinit = false;
@@ -24,7 +24,7 @@ if(isNull _group) then {
     _doinit = true;
 };
 private _sol = [];
-if(typename _create == "SCALAR") then {
+if(typename _create isEqualTo "SCALAR") then {
     _sol = OT_recruitables select _create;
     _cls = _sol select 0;
 
@@ -42,7 +42,7 @@ if(typename _create == "SCALAR") then {
         _group call OT_fnc_initMilitaryPatrol;
     };
 }else{
-    if(_create == "HMG") then {
+    if(_create isEqualTo "HMG") then {
         private _buildings = nearestObjects [_pos, OT_garrisonBuildings, 250];
         _done = false;
         _dir = 0;
@@ -52,21 +52,21 @@ if(typename _create == "SCALAR") then {
     		private _type = typeof _x;
     		call {
     			if((damage _building) > 0.95) exitWith {};
-    			if ((_type == "Land_Cargo_HQ_V1_F") or (_type == "Land_Cargo_HQ_V2_F") or (_type == "Land_Cargo_HQ_V3_F") or (_type == "Land_Cargo_HQ_V4_F")) exitWith {
+    			if ((_type isEqualTo "Land_Cargo_HQ_V1_F") or (_type isEqualTo "Land_Cargo_HQ_V2_F") or (_type isEqualTo "Land_Cargo_HQ_V3_F") or (_type isEqualTo "Land_Cargo_HQ_V4_F")) exitWith {
                     _p = (_building buildingPos 8);
                     _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                    if(_guns == 0) then {
+                    if(_guns isEqualTo 0) then {
                         _done = true;
                         _dir = getDir _building;
                     };
                 };
-                if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
+                if 	((_type isEqualTo "Land_Cargo_Patrol_V1_F") or (_type isEqualTo "Land_Cargo_Patrol_V2_F") or (_type isEqualTo "Land_Cargo_Patrol_V3_F") or (_type isEqualTo "Land_Cargo_Patrol_V4_F")) exitWith {
                     _ang = (getDir _building) - 190;
     				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				_dir = (getDir _building) - 180;
 
                     _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                    if(_guns == 0) then {
+                    if(_guns isEqualTo 0) then {
                         _done = true;
                         _dir = getDir _building;
                     };
@@ -74,14 +74,14 @@ if(typename _create == "SCALAR") then {
 
                 _p = _building buildingPos 11;
                 _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                if(_guns == 0) exitWith {
+                if(_guns isEqualTo 0) exitWith {
                     _done = true;
                     _dir = getDir _building;
                 };
 
                 _p = _building buildingPos 13;
                 _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                if(_guns == 0) exitWith {
+                if(_guns isEqualTo 0) exitWith {
                     _done = true;
                     _dir = getDir _building;
                 };
@@ -113,7 +113,7 @@ if(typename _create == "SCALAR") then {
             [_x] joinSilent _group;
         }foreach(crew _gun);
     };
-    if(_create == "GMG") then {
+    if(_create isEqualTo "GMG") then {
         private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 250];
         _done = false;
         _dir = 0;
@@ -124,21 +124,21 @@ if(typename _create == "SCALAR") then {
 
     		call {
     			if((damage _building) > 0.95) exitWith {};
-    			if ((_type == "Land_Cargo_HQ_V1_F") or (_type == "Land_Cargo_HQ_V2_F") or (_type == "Land_Cargo_HQ_V3_F") or (_type == "Land_Cargo_HQ_V4_F")) exitWith {
+    			if ((_type isEqualTo "Land_Cargo_HQ_V1_F") or (_type isEqualTo "Land_Cargo_HQ_V2_F") or (_type isEqualTo "Land_Cargo_HQ_V3_F") or (_type isEqualTo "Land_Cargo_HQ_V4_F")) exitWith {
                     _p = (_building buildingPos 8);
                     _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                    if(_guns == 0) then {
+                    if(_guns isEqualTo 0) then {
                         _done = true;
                         _dir = getDir _building;
                     };
                 };
-                if 	((_type == "Land_Cargo_Patrol_V1_F") or (_type == "Land_Cargo_Patrol_V2_F") or (_type == "Land_Cargo_Patrol_V3_F") or (_type == "Land_Cargo_Patrol_V4_F")) exitWith {
+                if 	((_type isEqualTo "Land_Cargo_Patrol_V1_F") or (_type isEqualTo "Land_Cargo_Patrol_V2_F") or (_type isEqualTo "Land_Cargo_Patrol_V3_F") or (_type isEqualTo "Land_Cargo_Patrol_V4_F")) exitWith {
                     _ang = (getDir _building) - 190;
     				_p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				_dir = (getDir _building) - 180;
 
                     _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                    if(_guns == 0) then {
+                    if(_guns isEqualTo 0) then {
                         _done = true;
                         _dir = getDir _building;
                     };
@@ -146,14 +146,14 @@ if(typename _create == "SCALAR") then {
 
                 _p = _building buildingPos 11;
                 _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                if(_guns == 0) exitWith {
+                if(_guns isEqualTo 0) exitWith {
                     _done = true;
                     _dir = getDir _building;
                 };
 
                 _p = _building buildingPos 13;
                 _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                if(_guns == 0) exitWith {
+                if(_guns isEqualTo 0) exitWith {
                     _done = true;
                     _dir = getDir _building;
                 };

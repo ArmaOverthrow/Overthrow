@@ -19,12 +19,12 @@ if(!alive _veh) exitWith {};
 
 	private _item = [];
 	{
-		if((_x select 4) == _cls and (typeof _veh) == (_x select 1)) exitWith {_item = _x};
+		if((_x select 4) isEqualTo _cls and (typeof _veh) isEqualTo (_x select 1)) exitWith {_item = _x};
 	}foreach(OT_workshop);
 
 	if(count _item > 0) then {
 		_free = _item select 3;
-		if(backpack player == _free) then {
+		if(backpack player isEqualTo _free) then {
 			removeBackpack player;
 		};
 	};
