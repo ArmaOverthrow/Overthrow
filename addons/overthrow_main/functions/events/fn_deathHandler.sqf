@@ -14,7 +14,7 @@ if(isPlayer _me) exitWith {
 	hideBody _me;
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
-		if (_unit isEqualTo player && false) then {
+		if (_unit isEqualTo player) then {
 			private _new_unit = (creategroup resistance) createUnit ["I_G_Soldier_F",_unit getVariable ["home",[worldSize/2,worldSize/2,0]],[],0,"NONE"];
 			selectPlayer _new_unit;
 			private _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
