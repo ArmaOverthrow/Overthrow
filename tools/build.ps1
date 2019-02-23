@@ -5,8 +5,8 @@ If(!(Test-Path $pathAddons))
     New-Item -ItemType -type Directory -Force -Path $pathAddons
 }
 
-Copy-Item "../logo_overthrow.paa" $path -Force
-Copy-Item "../mod.cpp" $path -Force
+Copy-Item "$PSScriptRoot/../logo_overthrow.paa" $path -Force
+Copy-Item "$PSScriptRoot/../mod.cpp" $path -Force
 
 $biPath = switch((Get-WmiObject Win32_OperatingSystem).OSArchitecture)
 {
@@ -26,8 +26,8 @@ else
     $includes = "$PSScriptRoot/includes.txt"
     if (!(Test-Path $includes))
     {
-        "*.xml;*.pac;*.paa;*.sqf;*.sqs;*.bikb;*.fsm;*.wss;*.ogg;*.wav;*.fxy;*.csv;*.html;*.lip;*.txt;*.wrp;*.bisurf;*.rvmat;*.sqm;*.ext;*.hpp" | Out-File $includes -Encoding "UTF8"
+        "*.xml;*.pac;*.paa;*.jpg;*.png;*.sqf;*.sqs;*.bikb;*.fsm;*.wss;*.ogg;*.wav;*.fxy;*.csv;*.html;*.lip;*.txt;*.wrp;*.bisurf;*.rvmat;*.sqm;*.ext;*.hpp" | Out-File $includes -Encoding "UTF8"
     }
 
-    & $abpath "$PSScriptRoot/../addons/overthrow_main" "$pathAddons" "-prefix=ot" "-include=$PSScriptRoot/includes.txt"
+    & $abpath "$PSScriptRoot/../addons/overthrow_main" "$pathAddons" "-clear" "-prefix=ot" "-include=$PSScriptRoot/includes.txt" "-project=$PSScriptRoot/../addons/overthrow_main"
 }
