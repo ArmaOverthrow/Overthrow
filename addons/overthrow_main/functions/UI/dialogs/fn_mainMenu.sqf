@@ -32,7 +32,7 @@ _standing = [_town] call OT_fnc_standing;
 _plusmin = "";
 if(_standing > -1) then {_plusmin = "+"};
 
-_rep = player getVariable "rep";
+_rep = player getVariable ["rep",0];
 _pm = "";
 if(_rep > -1) then {_pm = "+"};
 

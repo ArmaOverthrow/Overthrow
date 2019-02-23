@@ -22,7 +22,7 @@ while {alive player} do {
 		};
 	};
 	_standing = "";
-	_rep = player getVariable "rep";
+	_rep = player getVariable ["rep",0];
 	if(_rep > -1) then {
 		_standing = format["+%1",_rep];
 	}else{
