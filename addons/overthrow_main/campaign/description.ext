@@ -13,39 +13,39 @@ class Campaign
 	{
 		lives = -1;
 
-		lost = ;
-		end1 = ;
-		end2 = ;
-		end3 = ;
-		end4 = ;
-		end5 = ;
-		end6 = ;
+		lost = "";
+		end1 = "";
+		end2 = "";
+		end3 = "";
+		end4 = "";
+		end5 = "";
+		end6 = "";
 	};
 
 	class Missions
 	{
 		name = "Overthrow";
-		cutScene = ;
-		firstMission = Tanoa;
-		end1 = ;
-		end2 = ;
-		end3 = ;
-		end4 = ;
-		end5 = ;
-		end6 = ;
-		lost = ;
+		cutScene = "";
+		firstMission = "Tanoa";
+		end1 = "";
+		end2 = "";
+		end3 = "";
+		end4 = "";
+		end5 = "";
+		end6 = "";
+		lost = "";
 
 		#define _CAMPAIGN 1
 
 		class Tanoa: MissionDefault
 		{
-			end1 = Altis;
-			template = Overthrow.Tanoa;
+			end1 = "Altis";
+			template = "Overthrow.Tanoa";
 		};
 
 		class Altis: MissionDefault
 		{
-			template = Overthrow.Altis;
+			template = "Overthrow.Altis";
 		};
 	};
 };
