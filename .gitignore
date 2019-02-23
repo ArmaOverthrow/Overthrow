@@ -25,3 +25,6 @@ $RECYCLE.BIN/
 *.swo
 *.biprivatekey
 *.log
+
+# Build Directory
+@Overthrow
