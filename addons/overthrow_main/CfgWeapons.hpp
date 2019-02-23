@@ -133,30 +133,30 @@ class CfgWeapons {
 	class ACE_fieldDressing : ACE_ItemCore {
 		ot_craftable = 1;
 		ot_craftQuantity = 5;
-		ot_craftRecipe = "[[""Uniform_Base"",1]]"
+		ot_craftRecipe = "[[""Uniform_Base"",1]]";
 	};
 
 	class ACE_CableTie : ACE_ItemCore {
 		ot_craftable = 1;
 		ot_craftQuantity = 10;
-		ot_craftRecipe = "[[""OT_Plastic"",1]]"
+		ot_craftRecipe = "[[""OT_Plastic"",1]]";
 	};
 
 	class ACE_Clacker : ACE_ItemCore {
 		ot_craftable = 1;
 		ot_craftQuantity = 5;
-		ot_craftRecipe = "[[""OT_Steel"",1]]"
+		ot_craftRecipe = "[[""OT_Steel"",1]]";
 	};
 
 	class ACE_DeadManSwitch : ACE_ItemCore {
 		ot_craftable = 1;
 		ot_craftQuantity = 7;
-		ot_craftRecipe = "[[""OT_Steel"",1]]"
+		ot_craftRecipe = "[[""OT_Steel"",1]]";
 	};
 
 	class ACE_EarPlugs : ACE_ItemCore {
 		ot_craftable = 1;
 		ot_craftQuantity = 2;
-		ot_craftRecipe = "[[""OT_Plastic"",1]]"
+		ot_craftRecipe = "[[""OT_Plastic"",1]]";
 	};
 };

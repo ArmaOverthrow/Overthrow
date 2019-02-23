@@ -1273,7 +1273,7 @@ class OT_dialog_newgame
             y = 0.467 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_fastTravelType"",0,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_fastTravelType"",0,true];call OT_fnc_newGameDialog;";
         };
         class RscButton_1604: RscOverthrowButton
         {
@@ -1284,7 +1284,7 @@ class OT_dialog_newgame
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
 			color[] = {0,0.8,0,1};
-			action = "server setvariable [""OT_fastTravelType"",1,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_fastTravelType"",1,true];call OT_fnc_newGameDialog;";
         };
         class RscButton_1605: RscOverthrowButton
         {
@@ -1294,7 +1294,7 @@ class OT_dialog_newgame
             y = 0.467 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
             h = 0.077 * safezoneH;
-			action = "server setvariable [""OT_fastTravelType"",2,true];call OT_fnc_newGameDialog;"
+			action = "server setvariable [""OT_fastTravelType"",2,true];call OT_fnc_newGameDialog;";
         };
         class RscButton_1606: RscOverthrowButton
         {
