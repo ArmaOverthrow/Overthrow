@@ -2,40 +2,23 @@
 [target,position,text,description,onFinish,condition] spawn OT_fnc_assignMission
 
 */
-private _target = _this select 0;
-private _pos = _this select 1;
-private _text = _this select 2;
-private _desc = _this select 3;
-private _onFinish = {};
-private _condition = {(_target distance _pos) < 4};
+params [
+	"_target",
+	"_pos",
+	"_text",
+	"_desc",
+	["_onFinish",{}],
+	["_condition", {(_target distance _pos) < 4}],
+	["_reward", 0],
+	["_infreward", 0],
+	["_fail", {time > (_start + 7200)}],
+	["_params"]
+];
 private _start = date;
-private _fail = {time > (_start + 7200)};
 private _targets = [];
 private _string = "";
-private _reward = 0;
-private _infreward = 0;
-private _params = [];
 
-if((count _this) > 4) then {
-	_onFinish = _this select 4;
-};
-if((count _this) > 5) then {
-	_condition = _this select 5;
-};
-if((count _this) > 6) then {
-	_reward = _this select 6;
-};
-if((count _this) > 7) then {
-	_infreward = _this select 7;
-};
-if((count _this) > 8) then {
-	_fail = _this select 8;
-};
-if((count _this) > 9) then {
-	_params = _this select 9;
-};
-
-if(typename _condition == "ARRAY") then {
+if(_condition isEqualType []) then {
 	//array of targets that need to be deaded
 	{
 		_targets pushback _x;
@@ -43,9 +26,9 @@ if(typename _condition == "ARRAY") then {
 	_condition = {{alive _x} count(_targets) == 0};
 };
 
-if(typename _condition == "STRING") then {
+if(_condition isEqualType "") then {
 	_string = _condition;
-	_condition = {typename(server getvariable [_string,false]) != "ARRAY"};
+	_condition = {!((server getvariable [_string,false]) isEqualType [])};
 };
 
 private _start = time;
