@@ -34,24 +34,6 @@ class CfgPatches
 
 class RscStandardDisplay;
 class RscControlsGroup;
-class RscPicture;
-class RscPictureKeepAspect;
-class RscDisplayStart: RscStandardDisplay
-{
-	class controls
-	{
-		class LoadingStart: RscControlsGroup
-		{
-			class controls {
-				class Logo: RscPictureKeepAspect
-				{
-					text = "\ot\ui\logo_overthrow.paa";
-					onLoad = "";
-				};
-			};
-		};
-	};
-};
 class RscDisplayMain: RscStandardDisplay
 {
 	class Spotlight
