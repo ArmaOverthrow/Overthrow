@@ -58,7 +58,7 @@ _handler = {
 	};
 	_t = 1;
 	{
-		if (!(isPlayer _x) and (side _x == resistance)) then {
+		if (!(isPlayer _x) && (side _x == resistance)) then {
 			_veh = vehicle _x;
 			if(_veh == _x) then {
 				_color = [0,0.5,0,1];
@@ -134,7 +134,7 @@ _handler = {
 		_passengers = "";
 		_color = [0,0.5,0,1];
 		{
-			if(isPlayer _x and _x != player) then {
+			if(isPlayer _x && _x != player) then {
 				_passengers = format["%1 %2",_passengers,name _x];
 			};
 			if !(captive _x) then {_color = [0,0.2,0,1];};
@@ -285,7 +285,7 @@ _handler = {
 			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 		}foreach(OT_allTowns);
 		{
-			if ((typeof _x != "B_UAV_AI") and !(_x getVariable ["looted",false])) then {
+			if ((typeof _x != "B_UAV_AI") && !(_x getVariable ["looted",false])) then {
 				(_this select 0) drawIcon [
 					"\overthrow_main\ui\markers\death.paa",
 					[1,1,1,0.5],
@@ -297,7 +297,7 @@ _handler = {
 			};
 		}foreach(alldeadmen);
 		{
-			if(((typeof _x == OT_item_CargoContainer) || (_x isKindOf "Ship") || (_x isKindOf "Air") || (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
+			if(((typeof _x == OT_item_CargoContainer) || (_x isKindOf "Ship") || (_x isKindOf "Air") || (_x isKindOf "Car")) && (count crew _x == 0) && (_x call OT_fnc_hasOwner)) then {
 				(_this select 0) drawIcon [
 					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 					[1,1,1,1],
@@ -307,10 +307,10 @@ _handler = {
 					getdir _x
 				];
 			};
-			if((_x isKindOf "StaticWeapon") and (isNull attachedTo _x) and (alive _x)) then {
+			if((_x isKindOf "StaticWeapon") && (isNull attachedTo _x) && (alive _x)) then {
 				if(side _x == civilian || side _x == resistance || captive _x) then {
 					_col = [0.5,0.5,0.5,1];
-					if(!(isNull gunner _x) and (alive gunner _x)) then {_col = [0,0.5,0,1]};
+					if(!(isNull gunner _x) && (alive gunner _x)) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";
 					if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
 					if !(someAmmo _x) then {_col set [3,0.4]};

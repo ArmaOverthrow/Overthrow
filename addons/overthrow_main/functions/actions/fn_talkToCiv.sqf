@@ -219,7 +219,7 @@ if (_canBuyBoats) then {
 					clearItemCargoGlobal _veh;
 
 					private _dir = 0;
-					while {!(surfaceIsWater ([_pos,800,_dir] call BIS_fnc_relPos)) and _dir < 360} do {
+					while {!(surfaceIsWater ([_pos,800,_dir] call BIS_fnc_relPos)) && _dir < 360} do {
 						_dir = _dir + 45;
 					};
 
@@ -250,11 +250,11 @@ if (_canBuyBoats) then {
 
 					waitUntil {!alive player || !alive _veh || !alive _driver || (vehicle player == player) || (player distance _destpos < 80)};
 
-					if(vehicle player == _veh and alive _driver) then {
+					if(vehicle player == _veh && alive _driver) then {
 						_driver globalchat format["We've arrived in %1, enjoy your stay",_desttown];
 					};
 					sleep 30;
-					if(vehicle player == _veh and alive _driver) then {
+					if(vehicle player == _veh && alive _driver) then {
 						moveOut player;
 						_driver globalchat "k, bye";
 					};
@@ -319,7 +319,7 @@ OT_drugQty = 0;
 if (_canSellDrugs) then {
 	{
 		_drugcls = _x;
-		if(((items player) find _x) > -1 and !(_civ getVariable["OT_askedDrugs",false])) then {
+		if(((items player) find _x) > -1 && !(_civ getVariable["OT_askedDrugs",false])) then {
 
 			_drugname = _x call OT_fnc_weaponGetName;
 			_options pushBack [format ["Sell %1",_drugname],{
@@ -359,7 +359,7 @@ if (_canSellDrugs) then {
 								OT_interactingWith addItem _drugSell;
 								OT_interactingWith setVariable ["OT_Talking",false,true];
 								private _town = (getpos player) call OT_fnc_nearestTown;
-								if((random 100 > 50) and !isNil "_town") then {
+								if((random 100 > 50) && !isNil "_town") then {
 									[_town,-1] call OT_fnc_stability;
 								};
 								if(random 100 > 80) then {

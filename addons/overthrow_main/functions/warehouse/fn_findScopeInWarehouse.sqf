@@ -8,7 +8,7 @@ private _possible = [];
 		private _num = _d select 1;
 		if(!isNil "_num") then {
 			if(typename _num == "SCALAR") then {
-				if(_num > 0 and (_cls in OT_allOptics)) then {
+				if(_num > 0 && (_cls in OT_allOptics)) then {
 					private _allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _cls >> "ItemInfo" >> "OpticsModes" );
 					_max = 0;
 					{

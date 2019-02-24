@@ -2,7 +2,7 @@ private _lasthr = date select 3;
 
 while {sleep 1; true} do {
     private _hr = (date select 3);
-    if (_hr != _lasthr and _hr > 8 and _hr < 18) then {
+    if (_hr != _lasthr && _hr > 8 && _hr < 18) then {
         _lasthr = _hr;
         {
             _pop = server getVariable [format["population%1",_x],0];
@@ -15,7 +15,7 @@ while {sleep 1; true} do {
                 _civ = OT_civilians getVariable [format["%1",_x],[]];
                 _civ params ["_identity","_hasjob","_cash"];
 
-                if(_stability > 50 and !_hasjob) then {
+                if(_stability > 50 && !_hasjob) then {
                     _hasjob = true;
                     _civ set [1,true];
                 };
@@ -29,7 +29,7 @@ while {sleep 1; true} do {
                     _cash = 0;
                 };
                 _civ set [2,_cash];
-                if(_stability < 50 and (random 1000) > 998) then {
+                if(_stability < 50 && (random 1000) > 998) then {
                     //Civ lost his job
                     _civ set [1,false];
                 };

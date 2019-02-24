@@ -74,7 +74,7 @@ while {true} do {
 					_innum = 2 * _num;
 					_intotal = _innum;
 					if(_num > 0) then {
-						if(count _data == 2 and _x != "Factory") then {
+						if(count _data == 2 && _x != "Factory") then {
 							//Just passive income
 							_income = _enum * 200;
 							[_income] call OT_fnc_resistanceFunds;
@@ -147,7 +147,7 @@ while {true} do {
 								}foreach(_pos nearObjects [OT_item_CargoContainer, 50]);
 								_outnum = round (_outnum * (_inputnum / _intotal));
 							};
-							if(_output != "" and _outnum > 0) then {
+							if(_output != "" && _outnum > 0) then {
 								if(_output in ["OT_Sugarcane","ACE_Banana"]) then {
 									_foundFertilizer = false;
 									{
@@ -179,7 +179,7 @@ while {true} do {
 	if ((date select 4) != _lastmin) then {
 		_lastmin = date select 4;
 
-		if(!(call OT_fnc_generalIsOnline) and _dead > 300) then {
+		if(!(call OT_fnc_generalIsOnline) && _dead > 300) then {
 			format["There are %1 dead bodies, initiating auto-cleanup",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];
 			call OT_fnc_cleanDead;
 		};
@@ -269,13 +269,13 @@ while {true} do {
 					_timespent = server getVariable ["GEURproducetime",0];
 
 					_numtoproduce = 1;
-					if(_wood < 1 and _wood > 0) then {
+					if(_wood < 1 && _wood > 0) then {
 						_numtoproduce = round (1 / _wood);
 					};
-					if(_steel < 1 and _steel > 0) then {
+					if(_steel < 1 && _steel > 0) then {
 						_numtoproduce = round (1 / _steel);
 					};
-					if(_plastic < 1 and _plastic > 0) then {
+					if(_plastic < 1 && _plastic > 0) then {
 						_numtoproduce = round (1 / _plastic);
 					};
 					_costtoproduce = round((_base * _numtoproduce) * 0.8);
@@ -300,7 +300,7 @@ while {true} do {
 						_dosteel = ["OT_steel",_steel,OT_factoryPos] call OT_fnc_hasFromCargoContainers;
 						_doplastic = ["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_hasFromCargoContainers;
 						_domoney = ([] call OT_fnc_resistanceFunds >= _costtoproduce);
-						if(_dowood and _dosteel and _doplastic and _domoney) then {
+						if(_dowood && _dosteel && _doplastic && _domoney) then {
 							["OT_wood",_wood,OT_factoryPos] call OT_fnc_takeFromCargoContainers;
 							["OT_steel",_steel,OT_factoryPos] call OT_fnc_takeFromCargoContainers;
 							["OT_plastic",_plastic,OT_factoryPos] call OT_fnc_takeFromCargoContainers;
@@ -326,7 +326,7 @@ while {true} do {
 
 						server setVariable ["GEURproducing",""]; //will grab a queue item nek minit
 
-						if(!(_currentCls isKindOf "Bag_Base") and _currentCls isKindOf "AllVehicles") then {
+						if(!(_currentCls isKindOf "Bag_Base") && _currentCls isKindOf "AllVehicles") then {
 							_p = OT_factoryVehicleSpawn findEmptyPosition [0,100,_currentCls];
 							if(count _p > 0) then {
 								_veh = _currentCls createVehicle _p;
@@ -391,31 +391,31 @@ while {true} do {
 			if(typename _unit == "OBJECT") then {
 				_xp = _unit getVariable ["OT_xp",0];
 				_player = spawner getvariable [_owner,objNULL];
-				if(_rank == "PRIVATE" and _xp > (OT_rankXP select 0)) then {
+				if(_rank == "PRIVATE" && _xp > (OT_rankXP select 0)) then {
 					_x set [3,"CORPORAL"];
 					_unit setRank "CORPORAL";
 					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.2 + (random 0.3);
 				};
-				if(_rank == "CORPORAL" and _xp > (OT_rankXP select 1)) then {
+				if(_rank == "CORPORAL" && _xp > (OT_rankXP select 1)) then {
 					_x set [3,"SERGEANT"];
 					_unit setRank "SERGEANT";
 					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.3 + (random 0.3);
 				};
-				if(_rank == "SERGEANT" and _xp > (OT_rankXP select 2)) then {
+				if(_rank == "SERGEANT" && _xp > (OT_rankXP select 2)) then {
 					_x set [3,"LIEUTENANT"];
 					_unit setRank "LIEUTENANT";
 					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.5 + (random 0.3);
 				};
-				if(_rank == "LIEUTENANT" and _xp > (OT_rankXP select 3)) then {
+				if(_rank == "LIEUTENANT" && _xp > (OT_rankXP select 3)) then {
 					_x set [3,"CAPTAIN"];
 					_unit setRank "CAPTAIN";
 					format["%1 has been promoted to Captain",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.6 + (random 0.3);
 				};
-				if(_rank == "CAPTAIN" and _xp > (OT_rankXP select 4)) then {
+				if(_rank == "CAPTAIN" && _xp > (OT_rankXP select 4)) then {
 					_x set [3,"MAJOR"];
 					_unit setRank "MAJOR";
 					format["%1 has been promoted to Major",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];

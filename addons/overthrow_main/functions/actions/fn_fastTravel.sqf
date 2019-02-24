@@ -72,7 +72,7 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 		openMap false;
 	}else{
 		private _ft = server getVariable ["OT_fastTravelType",1];
-		if(_handled and _ft == 1 and !OT_adminMode) then {
+		if(_handled && _ft == 1 && !OT_adminMode) then {
 			private _cost = 0;
 			if((vehicle player) == player) then {
 				_cost = ceil((player distance _pos) / 150);

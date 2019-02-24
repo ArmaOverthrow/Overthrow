@@ -45,7 +45,7 @@ _title = format["%1 requests %2 x %3",_factionName,_numitems,_itemName];
         private _numavailable = 0;
         {
             private _c = _x;
-            if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) exitWith {
+            if((_x call OT_fnc_hasOwner) && (speed _x) < 0.1) exitWith {
                 {
                     _x params ["_cls","_amt"];
                     _cls = _cls call BIS_fnc_baseWeapon;
@@ -68,7 +68,7 @@ _title = format["%1 requests %2 x %3",_factionName,_numitems,_itemName];
             private _driver = objNull;
             {
                 private _c = _x;
-                if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
+                if((_x call OT_fnc_hasOwner) && (speed _x) < 0.1) then {
                     {
                         _x params ["_cls","_amt"];
                         private _basecls = _cls call BIS_fnc_baseWeapon;

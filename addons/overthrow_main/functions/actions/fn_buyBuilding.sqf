@@ -26,7 +26,7 @@ if(_handled) then {
 
 	_money = player getVariable "money";
 
-	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
+	if(_type == "buy" && _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
 
 
 	_mrkid = format["bdg-%1",_building];

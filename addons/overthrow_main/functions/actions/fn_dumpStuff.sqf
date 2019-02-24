@@ -27,7 +27,7 @@ if(count _this == 2) then {
 	};
 }foreach(_unit call OT_fnc_unitStock);
 
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(headgear _unit != "") then {
 	if !(_t canAdd headgear _unit) exitWith {
@@ -36,7 +36,7 @@ if(headgear _unit != "") then {
 	_t addItemCargoGlobal [headgear _unit,1];
 	removeHeadgear _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(backpack _unit != "") then {
 	_cls = (backpack _unit) call BIS_fnc_basicBackpack;
@@ -46,7 +46,7 @@ if(backpack _unit != "") then {
 	_t addBackpackCargoGlobal [_cls,1];
 	removeBackpack _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(vest _unit != "") then {
 	if !(_t canAdd vest _unit) exitWith {
@@ -55,7 +55,7 @@ if(vest _unit != "") then {
 	_t addItemCargoGlobal [vest _unit,1];
 	removeVest _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(goggles _unit != "") then {
 	if !(_t canAdd goggles _unit) exitWith {
@@ -64,7 +64,7 @@ if(goggles _unit != "") then {
 	_t addItemCargoGlobal [goggles _unit,1];
 	removeGoggles _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(primaryWeapon _unit != "") then {
 	if !(_t canAdd primaryWeapon _unit) exitWith {
@@ -77,7 +77,7 @@ if(primaryWeapon _unit != "") then {
 	_t addWeaponCargoGlobal [(primaryWeapon _unit) call BIS_fnc_baseWeapon,1];
 	_unit removeWeapon primaryWeapon _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(secondaryWeapon _unit != "") then {
 	if !(_t canAdd secondaryWeapon _unit) exitWith {
@@ -86,7 +86,7 @@ if(secondaryWeapon _unit != "") then {
 	_t addWeaponCargoGlobal [secondaryWeapon _unit,1];
 	_unit removeWeapon secondaryWeapon _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 
 if(handgunWeapon _unit != "") then {
@@ -100,7 +100,7 @@ if(handgunWeapon _unit != "") then {
 	_t addWeaponCargoGlobal [handgunWeapon _unit,1];
 	_unit removeWeapon handgunWeapon _unit;
 };
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 if(!isplayer _unit) then {
 	{
@@ -117,6 +117,6 @@ if(!isplayer _unit) then {
 	}foreach(assignedItems _unit);
 };
 
-if(_full and !_istruck) exitWith {false};
+if(_full && !_istruck) exitWith {false};
 
 true

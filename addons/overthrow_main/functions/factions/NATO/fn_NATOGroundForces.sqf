@@ -103,7 +103,7 @@ if !(_byair) then {
 };
 
 sleep 15;
-if(_byair and (typename _tgroup == "GROUP")) then {
+if(_byair && (typename _tgroup == "GROUP")) then {
 	_wp = _tgroup addWaypoint [_frompos,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
@@ -195,7 +195,7 @@ if(typename _tgroup == "GROUP") then {
 			if(isNull _tgroup) exitWith {};
 			if(!alive _veh) exitWith {};
 			private _eject = false;
-			if((damage _veh) > 0 and ((getpos _veh) select 2) < 2) then {
+			if((damage _veh) > 0 && ((getpos _veh) select 2) < 2) then {
 				//Vehicle damaged (and on the ground)
 				_eject = true;
 			};

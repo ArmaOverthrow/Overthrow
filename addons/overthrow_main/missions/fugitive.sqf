@@ -97,7 +97,7 @@ _difficulty = 1.8;
         _alreadyAlerted = _civ getVariable ["OT_fugitiveAlerted",false];
         _alerted = false;
         {
-            if((side _x == resistance || captive _x) and (_x call OT_fnc_unitSeenNATO)) then {
+            if((side _x == resistance || captive _x) && (_x call OT_fnc_unitSeenNATO)) then {
                 _x setCaptive false;
                 _alerted = true;
             };

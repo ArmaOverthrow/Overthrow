@@ -18,7 +18,7 @@ if(_veh == player) then {
 	_b = OT_warehouseTarget call OT_fnc_nearestRealEstate;
 	if(typename _b == "ARRAY") then {
 		_building = _b select 0;
-		if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+		if((typeof _building) == OT_warehouse && _building call OT_fnc_hasOwner) then {
 			_iswarehouse = true;
 			_veh = OT_warehouseTarget;
 		};
@@ -29,7 +29,7 @@ if(_veh == player) exitWith {
 };
 
 while {_count < _num} do {
-	if ((!(_veh isKindOf "Truck_F")) and (!(_veh isKindOf OT_item_Storage)) and (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
+	if ((!(_veh isKindOf "Truck_F")) && (!(_veh isKindOf OT_item_Storage)) && (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
 	[_cls, _veh] call {
 		params ["_cls", "_veh"];
 		if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {

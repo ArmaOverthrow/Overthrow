@@ -37,7 +37,7 @@ _abandoned = server getvariable ["NATOabandoned",[]];
 }foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
 diag_log format["Overthrow: NATO QRF spend is %1",_strength];
 
-if(_strength > 250 and (count _air) > 0) then {
+if(_strength > 250 && (count _air) > 0) then {
 	//Send CAS
 	_obpos = (_air select 0) select 0;
 	_name = (_air select 0) select 1;
@@ -68,7 +68,7 @@ if(count _ground > 0) then {
 	[_obpos,_ao,_pos,false,10] spawn OT_fnc_NATOGroundForces;
 	diag_log format["Overthrow: NATO Sent ground forces from %1",_name];
 	_strength = _strength - 150;
-	if((_obpos inArea _region) and _strength >= 150) then {
+	if((_obpos inArea _region) && _strength >= 150) then {
 		_ao = [_pos,_dir] call OT_fnc_getAO;
 		[_obpos,_ao,_pos,false,30] spawn OT_fnc_NATOGroundForces;
 		_strength = _strength - 150;
@@ -87,7 +87,7 @@ if(_strength >= 75) then {
 		diag_log format["Overthrow: NATO Sent ground forces by air from %1",_name];
 		_strength = _strength - 75;
 
-		if(_pri > 600 and _strength >= 75) then {
+		if(_pri > 600 && _strength >= 75) then {
 			_ao = [_pos,_dir] call OT_fnc_getAO;
 			[_obpos,_ao,_pos,true,30] spawn OT_fnc_NATOGroundForces;
 			_strength = _strength - 75;
@@ -130,7 +130,7 @@ call {
 diag_log format["Overthrow: Attack start on %1",_pos];
 private _delay = 0;
 
-if(_isCoastal and !(OT_NATO_Navy_HQ in _abandoned) and (random 100) > 70) then {
+if(_isCoastal && !(OT_NATO_Navy_HQ in _abandoned) && (random 100) > 70) then {
 	private _numgroups = 1;
 	if(_strength > 100) then {_numgroups = 2};
 	if(_strength > 200) then {_numgroups = 3};
@@ -163,15 +163,15 @@ while {sleep 5; !_over} do {
 	_enemyin = 0;
 	{
 		if(_x distance _pos < 100) then {
-			if((side _x == west) and (alive _x)) then {
+			if((side _x == west) && (alive _x)) then {
 				_alive = _alive + 1;
 			};
-			if((side _x == resistance|| captive _x) and (alive _x) and !(_x getvariable ["ace_isunconscious",false])) then {
+			if((side _x == resistance|| captive _x) && (alive _x) && !(_x getvariable ["ace_isunconscious",false])) then {
 				_enemy = _enemy + 1;
 			};
 		};
 	}foreach(allunits);
-	if(time > _timeout and _alive == 0 and _enemy == 0) then {_enemy = 1};
+	if(time > _timeout && _alive == 0 && _enemy == 0) then {_enemy = 1};
 	_progresschange = (_alive - _enemy);
 	if(_progresschange < -20) then {_progresschange = -20};
 	if(_progresschange > 10) then {_progresschange = 10};

@@ -267,7 +267,7 @@ private _road = objNull;
 //HVTs
 {
 	_x params ["_id","_loc","_status"];
-	if(_loc == _name and _status == "") then {
+	if(_loc == _name && _status == "") then {
 		private _group = createGroup blufor;
 		_groups pushBack _group;
 		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;

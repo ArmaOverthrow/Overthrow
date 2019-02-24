@@ -5,7 +5,7 @@ if((count _this) == 3) then {
 	//its a position
 	{
 		_c = leader (group _x);
-		if(side _c == west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
+		if(side _c == west && !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
 	}foreach(_this nearEntities ["CAManBase",300]);
 	if(isNil "_cop") exitWith {};
 	{
@@ -18,7 +18,7 @@ if((count _this) == 3) then {
 	}else{
 		{
 			_c = leader (group _x);
-			if(side _c == west and !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
+			if(side _c == west && !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
 		}foreach(_target nearEntities ["CAManBase",150]);
 	};
 };
@@ -26,7 +26,7 @@ if(isNil "_cop" || isNil "_target") exitWith{};
 
 _cop setVariable ["OT_searching",true,true];
 
-if((isplayer _target) and !(captive _target)) exitWith{};
+if((isplayer _target) && !(captive _target)) exitWith{};
 
 private _group = group _cop;
 private _hdl = objNull;
@@ -77,7 +77,7 @@ waitUntil {sleep 1;(_cop distance _target) < 7 || (_target distance _posnow) > 2
 if(isNil "_cop" || isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
 if(!alive _cop || !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
 
-if((isplayer _target and !captive _target) || (!alive _cop) || ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
+if((isplayer _target && !captive _target) || (!alive _cop) || ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
 if((_target distance _posnow) > 2) then {
 	if(isplayer _target) then {
@@ -114,7 +114,7 @@ if(isplayer _target) then {
 	sleep 15;
 };
 
-if((isplayer _target and !captive _target) || (!alive _cop) || ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
+if((isplayer _target && !captive _target) || (!alive _cop) || ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
 if((_target distance _posnow) > 2) exitWith {
 	if(isplayer _target) then {

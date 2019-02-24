@@ -1,16 +1,16 @@
 params ["_mortar","_mortargroup"];
 
-while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) and (alive _mortar) and ({alive _x} count (units _mortargroup)) > 0} do {
+while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) && (alive _mortar) && ({alive _x} count (units _mortargroup)) > 0} do {
     private _attacking = server getVariable ["NATOattacking",""];
     private _mortarpos = position _mortar;
 
-    if(_attacking != "" and !(_attacking in OT_allTowns)) then {
+    if(_attacking != "" && !(_attacking in OT_allTowns)) then {
         _pos = server getvariable _attacking;
         _distance = (_pos distance _mortar);
 
         _timesince = time - (server getVariable ["NATOattackstart",time]);
         if(_timesince < 300) then {
-            if (_distance < 4000 and _distance > 500) then {
+            if (_distance < 4000 && _distance > 500) then {
                 _mortargroup setCombatMode "RED";
                 _p = [_pos,random 360,150] call SHK_pos;
                 _mortar commandArtilleryFire [_p, "8Rnd_82mm_Mo_shells", 1];
@@ -43,7 +43,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
             _distance = (_pos distance _mortar);
             _town = _pos call OT_fnc_nearestTown;
             _towndist = _pos distance (server getvariable [_town,_pos]); //make sure we dont shell towns
-            if (_towndist > 600 and _distance < 4000 and _distance > 250 and !_done) exitWith {
+            if (_towndist > 600 && _distance < 4000 && _distance > 250 && !_done) exitWith {
                 _x set [4,true];
                 _mortargroup setCombatMode "RED";
 

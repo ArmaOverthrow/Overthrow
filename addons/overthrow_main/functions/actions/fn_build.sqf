@@ -40,7 +40,7 @@ if(!_isBase) then {
 
 
 
-if ((!_isbase) and !(_closest in (server getVariable ["NATOabandoned",[]]))) exitWith {
+if ((!_isbase) && !(_closest in (server getVariable ["NATOabandoned",[]]))) exitWith {
 	if(_isobj) then {
 		format ["NATO does not allow construction this close to %1.",_closest] call OT_fnc_notifyMinor;
 	}else{
@@ -103,7 +103,7 @@ buildOnMouseMove = {
 		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
 
 		if(modeMode == 0) then {
-			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax) || ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
+			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax) || ({!(_x isKindOf "Man") && (typeof _x != OT_flag_IND) && !(_x == modeTarget) && !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
@@ -128,7 +128,7 @@ buildOnMouseMove = {
 			};
 		};
 	};
-	if(buildCamRotating and buildCamMoving) exitWith {
+	if(buildCamRotating && buildCamMoving) exitWith {
 		_pos = getpos buildcam;
 		buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)+_relY,(_pos select 2)];
 		buildcam camSetTarget buildFocus;
@@ -213,7 +213,7 @@ buildOnKeyDown = {
 		if(isNull modeTarget) exitWith {};
 		_dir = buildRotation;
 
-		if(_key == 57 and modeMode == 1) exitWith {
+		if(_key == 57 && modeMode == 1) exitWith {
 			//Space
 			_handled = true;
 			deleteVehicle modeTarget;
@@ -265,9 +265,9 @@ buildOnMouseUp = {
 	if(_btn == 2) then {
 		buildCamRotating = false;
 	};
-	if(_btn == 0 and _sx > (safezoneX + (0.1 * safezoneW)) and _sx < (safezoneX + (0.9 * safezoneW))) then {
+	if(_btn == 0 && _sx > (safezoneX + (0.1 * safezoneW)) && _sx < (safezoneX + (0.9 * safezoneW))) then {
 		//Click LMB
-		if(!isNull modeTarget and canBuildHere) then {
+		if(!isNull modeTarget && canBuildHere) then {
 			_money = player getVariable "money";
 			if(_money < modePrice) then {
 				"You cannot afford that" call OT_fnc_notifyMinor;

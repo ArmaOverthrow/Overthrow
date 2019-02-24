@@ -37,7 +37,7 @@ private _getWeather = {
 			_lightning = 0;
 		};
 	};
-	if(_hour > 8 and _hour < 18) then {
+	if(_hour > 8 && _hour < 18) then {
 		_temp = 28 + round(random 5);
 	}else{
 		_temp = 16 + round(random 5);

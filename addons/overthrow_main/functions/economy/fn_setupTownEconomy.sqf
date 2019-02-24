@@ -52,7 +52,7 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 	{
 		private _pos = getpos _x;
 		//Ensure shops are not found twice (overlapping town search radius)
-		if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
+		if (!(_pos in OT_allShops) && (random 100 < _chance)) then {
 			_category =	call {
 				private _rnd = random 100;
 				if(_rnd > 90) exitWith {"Surplus"};

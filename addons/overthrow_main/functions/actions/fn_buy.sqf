@@ -119,7 +119,7 @@ if(_cls isKindOf "Ship") exitWith {
 if(_cls in OT_allClothing) exitWith {
 	[-_price] call OT_fnc_money;
 
-	if((backpack player != "") and (player canAdd _cls)) then {
+	if((backpack player != "") && (player canAdd _cls)) then {
 		player addItemToBackpack _cls;
 		"Clothing added to your backpack" call OT_fnc_notifyMinor;
 	}else{

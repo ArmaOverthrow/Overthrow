@@ -2,7 +2,7 @@ private _ob = (position player) call OT_fnc_nearestObjective;
 private _dist = (_ob select 0) distance player;
 private _name = _ob select 1;
 
-if (_dist < 250 and _name in (server getVariable ["NATOabandoned",[]])) then {
+if (_dist < 250 && _name in (server getVariable ["NATOabandoned",[]])) then {
 	[] call OT_fnc_buyVehicleDialog;
 }else{
     _b = (position player) call OT_fnc_nearestLocation;

@@ -1,7 +1,7 @@
 _town = (getpos player) call OT_fnc_nearestTown;
 _standing = player getVariable format['rep%1',_town];
 
-if(_standing < 10 and count (player nearObjects [OT_refugeeCamp,50]) == 0) exitWith {
+if(_standing < 10 && count (player nearObjects [OT_refugeeCamp,50]) == 0) exitWith {
 	"+10 Standing required to recruit, or you must be within 50m of a refugee camp" call OT_fnc_notifyMinor
 };
 

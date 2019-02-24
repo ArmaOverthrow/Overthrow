@@ -51,7 +51,7 @@ while {(_count < _numVeh)} do {
 
 					_veh setDir _dirveh;
 
-					if((random 100) > 90 and (count allunits < 300)) then {
+					if((random 100) > 90 && (count allunits < 300)) then {
 						_group = createGroup CIVILIAN;
 						_groups pushback _group;
 						_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
@@ -76,7 +76,7 @@ while {(_count < _numVeh)} do {
 						_wp setWaypointCompletionRadius 60;
 						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup;unassignVehicle this;[group this] spawn OT_fnc_cleanup;"];
 					}else{
-						if(_stability < 50 and (random 100) > 75) then {
+						if(_stability < 50 && (random 100) > 75) then {
 							_veh setDamage [1,false]; //salvage wreck
 						};
 					};

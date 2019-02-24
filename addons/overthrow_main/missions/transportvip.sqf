@@ -97,7 +97,7 @@ _difficulty = 1.5;
 
         _civ = player getVariable [format["vip%1",_faction],objNull];
         //near the destination and not in a vehicle
-        ((_civ distance _destination) < 50) and (vehicle _civ) == _civ
+        ((_civ distance _destination) < 50) && (vehicle _civ) == _civ
     },
     {
         //Cleanup

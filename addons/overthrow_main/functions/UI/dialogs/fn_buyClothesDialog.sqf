@@ -10,7 +10,7 @@ lbClear 1500;
 
 	_c = _cls splitString "_";
 	_side = _c select 1;
-	if((_cls == "V_RebreatherIA" || _side == "C" || _side == "I") and (_c select (count _c - 1) != "VR")) then {
+	if((_cls == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
 		_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 		_name = "";
 		_pic = "";

@@ -15,7 +15,7 @@ while {alive player} do {
 	_wanted = "<br/>";
 	if !(captive player) then {
 		_hiding = player getVariable "hiding";
-		if((_hiding > 0) and (_hiding < 30)) then {
+		if((_hiding > 0) && (_hiding < 30)) then {
 			_wanted = format["(%1) WANTED",_hiding];
 		}else{
 			_wanted = "WANTED";

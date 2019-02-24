@@ -26,7 +26,7 @@ while {sleep OT_jobWait;true} do {
             if(_target == "Global") exitWith {
                 _id = _name;
                 if((random 100) < _chance) then {
-                    if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) then {
+                    if((call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
                         _activeJobs pushback _id;
                         spawner setVariable ["OT_activeJobIds",_activeJobs,false];
                         [_id,_jobdef,[_x]] spawn OT_fnc_assignJob;
@@ -41,7 +41,7 @@ while {sleep OT_jobWait;true} do {
                         _stability = server getVariable [format["stability%1",_x],100];
                         _loc = server getVariable _x;
                         _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
-                        if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) exitWith {
+                        if((call _condition) && !(_id in _completed) && !(_id in _activeJobs)) exitWith {
                             private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
                         _activeJobs pushback _id;
                         spawner setVariable ["OT_activeJobIds",_activeJobs,false];
@@ -64,7 +64,7 @@ while {sleep OT_jobWait;true} do {
                             _town = _pos call OT_fnc_nearestTown;
                             _id = format["%1-%2",_name,_cls];
 
-                            if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) then {
+                            if((call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
                                 private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
                                 _activeJobs pushback _id;
                                 spawner setVariable ["OT_activeJobIds",_activeJobs,false];

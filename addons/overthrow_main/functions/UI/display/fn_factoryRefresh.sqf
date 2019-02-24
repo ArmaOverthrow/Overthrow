@@ -48,15 +48,15 @@ if(_currentCls != "") then {
 		private _timespent = server getVariable ["GEURproducetime",0];
 
 		private _numtoproduce = 1;
-		if(_wood < 1 and _wood > 0) then {
+		if(_wood < 1 && _wood > 0) then {
 			_numtoproduce = round (1 / _wood);
 			_wood = 1;
 		};
-		if(_steel < 1 and _steel > 0) then {
+		if(_steel < 1 && _steel > 0) then {
 			_numtoproduce = round (1 / _steel);
 			_steel = 1;
 		};
-		if(_plastic < 1 and _plastic > 0) then {
+		if(_plastic < 1 && _plastic > 0) then {
 			_numtoproduce = round (1 / _plastic);
 			_plastic = 1;
 		};
@@ -146,15 +146,15 @@ if(count _cost > 0) then {
     if(_timetoproduce < 5) then {_timetoproduce = 5};
 
     private _numtoproduce = 1;
-    if(_wood < 1 and _wood > 0) then {
+    if(_wood < 1 && _wood > 0) then {
         _numtoproduce = round (1 / _wood);
         _wood = 1;
     };
-    if(_steel < 1 and _steel > 0) then {
+    if(_steel < 1 && _steel > 0) then {
         _numtoproduce = round (1 / _steel);
         _steel = 1;
     };
-    if(_plastic < 1 and _plastic > 0) then {
+    if(_plastic < 1 && _plastic > 0) then {
         _numtoproduce = round (1 / _plastic);
         _plastic = 1;
     };

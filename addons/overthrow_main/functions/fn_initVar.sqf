@@ -605,7 +605,7 @@ OT_allGoggles = [];
 					if(_cost > 300) then {
 						OT_allExpensiveVests pushback _name;
 					};
-					if(_cost < 300 and _cost > 40) then {
+					if(_cost < 300 && _cost > 40) then {
 						OT_allCheapVests pushback _name;
 					};
 				};
@@ -632,7 +632,7 @@ OT_allLegalClothing = [];
 	OT_allClothing pushback _name;
 	private _c = _name splitString "_";
 	private _side = _c select 1;
-	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") and (_c select (count _c - 1) != "VR")) then {
+	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
 	cost setVariable [_name,[_cost,0,0,1],true];
@@ -654,7 +654,7 @@ OT_allLegalClothing = [];
 {
 	private _name = configName _x;
 	private _m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and (_name != "NLAW_F") and !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
+	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
 		private _cost = round(_m * 4);
 		private _desc = getText(_x >> "descriptionShort");
 		if((_desc find ".408") > -1) then {
@@ -712,7 +712,7 @@ if(isServer) then {
 	//Remainding vehicle costs
 	{
 		private _name = configName _x;
-		if((_name isKindOf "AllVehicles") and !(_name in OT_allVehicles)) then {
+		if((_name isKindOf "AllVehicles") && !(_name in OT_allVehicles)) then {
 			private _multiply = 80;
 			if(_name isKindOf "Air") then {_multiply = 700}; //Planes/Helis have less armor
 

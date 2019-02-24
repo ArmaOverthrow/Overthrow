@@ -16,7 +16,7 @@ while {sleep 10;true} do {
             }else{
                 _civ params ["_identity","_hasjob","_cash","_superior"];
                 if(isNil "_superior") then {_superior = -1};
-                if (!_hasjob and _cash == 0 and _superior == -1) then {
+                if (!_hasjob && _cash == 0 && _superior == -1) then {
                     [_civid,_town] call OT_fnc_formOrJoinGang;
                 };
             };

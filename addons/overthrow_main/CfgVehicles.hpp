@@ -2,12 +2,12 @@
 	class ACE_Actions { \
 		class ACE_MainActions { \
 			class OT_Remove { \
-				condition = "!([player] call ace_repair_fnc_isInRepairFacility) and (_target call OT_fnc_hasOwner) and ((call OT_fnc_playerIsGeneral) || (_target call OT_fnc_playerIsOwner))"; \
+				condition = "!([player] call ace_repair_fnc_isInRepairFacility) && (_target call OT_fnc_hasOwner) && ((call OT_fnc_playerIsGeneral) || (_target call OT_fnc_playerIsOwner))"; \
 				displayName = "Remove"; \
 				statement = "deleteVehicle _target"; \
 			}; \
 			class OT_Salvage { \
-				condition = "((damage _target) > 0.99 and ""ToolKit"" in (items player)) || [player] call ace_repair_fnc_isInRepairFacility"; \
+				condition = "((damage _target) > 0.99 && ""ToolKit"" in (items player)) || [player] call ace_repair_fnc_isInRepairFacility"; \
 				displayName = "Salvage"; \
 				statement = "_target spawn OT_fnc_salvageWreck"; \
 			}; \
@@ -65,7 +65,7 @@ class CfgVehicles {
     class CAManBase: Man {
         class ACE_Actions {
 			class OT_HeadActions {
-				condition = "(alive _target) and (!isplayer _target) and !(side _target == west)";
+				condition = "(alive _target) && (!isplayer _target) && !(side _target == west)";
 				selection = "pilot";
 				distance = 20;
 				displayName = "Talk";
@@ -77,7 +77,7 @@ class CfgVehicles {
                 class OT_StartSpliff
                 {
                     displayName = "Smoke a spliff";
-                    condition = "('OT_Ganja' in (items player)) and (!(_player getVariable ['ot_isSmoking', false]))";
+                    condition = "('OT_Ganja' in (items player)) && (!(_player getVariable ['ot_isSmoking', false]))";
                     statement = "[_player] spawn ot_fnc_startSpliff";
                     showDisabled = 0;
                     exceptions[] = {"isNotInside", "isNotSitting"};
@@ -86,7 +86,7 @@ class CfgVehicles {
                 class OT_StopSpliff
                 {
                     displayName = "Ditch your spliff!";
-                    condition = "(goggles _player) in OT_cigsArray and ((_player getVariable ['ot_isSmoking', false]))";
+                    condition = "(goggles _player) in OT_cigsArray && ((_player getVariable ['ot_isSmoking', false]))";
                     statement = "[_player] spawn ot_fnc_stopSpliff";
                     showDisabled = 0;
                     exceptions[] = {"isNotInside", "isNotSitting"};

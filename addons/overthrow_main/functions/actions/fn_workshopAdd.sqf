@@ -19,7 +19,7 @@ if(!alive _veh) exitWith {};
 
 	private _item = [];
 	{
-		if((_x select 4) == _cls and (typeof _veh) == (_x select 1)) exitWith {_item = _x};
+		if((_x select 4) == _cls && (typeof _veh) == (_x select 1)) exitWith {_item = _x};
 	}foreach(OT_workshop);
 
 	if(count _item > 0) then {

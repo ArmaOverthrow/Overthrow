@@ -4,7 +4,7 @@ class CfgOverthrowMissions
     {
         target = "Town";
         repeatable = 1;
-        condition = "_inSpawnDistance and _stability < 50";
+        condition = "_inSpawnDistance && _stability < 50";
         script = "\overthrow_main\missions\medicalsupplies.sqf";
         chance = 100;
     };

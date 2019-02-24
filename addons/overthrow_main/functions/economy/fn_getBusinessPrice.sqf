@@ -9,11 +9,11 @@ if(count _data == 3) then {
     _baseprice = round(_baseprice * 1.3);
 };
 if(count _data == 4) then {
-    if((_data select 2) != "" and (_data select 3) != "") then {
+    if((_data select 2) != "" && (_data select 3) != "") then {
         //turns something into something
         _baseprice = round(_baseprice * 1.2);
     };
-    if((_data select 2) == "" and (_data select 3) != "") then {
+    if((_data select 2) == "" && (_data select 3) != "") then {
         if((_data select 3) == "OT_Steel") then {
             _baseprice = round(_baseprice * 2.4);
         };

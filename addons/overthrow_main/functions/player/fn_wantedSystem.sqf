@@ -20,7 +20,7 @@ _unit addEventHandler ["take", {
 					hideBody _n;
 				}
 			};
-			if (!(_container call OT_fnc_hasOwner) and (_me call OT_fnc_unitSeen)) then {
+			if (!(_container call OT_fnc_hasOwner) && (_me call OT_fnc_unitSeen)) then {
 				//Looting dead bodies is illegal
 				_me setCaptive false;
 				_me spawn OT_fnc_revealToNATO;
@@ -42,7 +42,7 @@ _unit addEventHandler ["Fired", {
 			_range = 50;
 		};
 
-		if({(side _x == west || side _x == east) and ((leader _x) distance _me) < _range} count (allgroups) > 0) exitWith {
+		if({(side _x == west || side _x == east) && ((leader _x) distance _me) < _range} count (allgroups) > 0) exitWith {
 			_me setCaptive false;
 			_me spawn OT_fnc_revealToNATO;
 		};
@@ -61,7 +61,7 @@ if(isPlayer _unit) then {
 					private _havepi = false;
 					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
 					{
-						if(((side _x == resistance) || captive _x) and _unit != _x and _havepi and !(isPlayer _x) and (items _x) find "ACE_epinephrine" > -1) exitWith {
+						if(((side _x == resistance) || captive _x) && _unit != _x && _havepi && !(isPlayer _x) && (items _x) find "ACE_epinephrine" > -1) exitWith {
 							_medic = _x;
 						};
 					}foreach(player nearentities["CAManBase",50]);
@@ -157,7 +157,7 @@ while {alive _unit} do {
 		private _playerpos = getpos _unit;
 		private _altitude = _playerpos select 2;
 
-		if(((vehicle player) isKindOf "Air") and _altitude > 5) then {
+		if(((vehicle player) isKindOf "Air") && _altitude > 5) then {
 			if(captive _unit) then {
 				_base = (getpos player) call OT_fnc_nearestObjective;
 				if !(isNil "_base") then {
@@ -226,7 +226,7 @@ while {alive _unit} do {
 				if(_skill == 3) then {_replim = 150};
 				if(_skill == 4) then {_replim = 200};
 				if(_skill < 5) then {
-					if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
+					if((_totalrep > _replim) && (random 1000 < _totalrep)) exitWith {
 						_unit setCaptive false;
 						if(isPlayer _unit) then {
 							"A gang has recognized you" call OT_fnc_notifyMinor;
@@ -246,7 +246,7 @@ while {alive _unit} do {
 					if(_skill == 3) then {_replim = 150};
 					if(_skill == 4) then {_replim = 200};
 					if(_skill < 5) then {
-						if((_totalrep > _replim) and (random 1000 < _totalrep)) exitWith {
+						if((_totalrep > _replim) && (random 1000 < _totalrep)) exitWith {
 							_unit setCaptive false;
 							if(isPlayer _unit) then {
 								"NATO has recognized you" call OT_fnc_notifyMinor;

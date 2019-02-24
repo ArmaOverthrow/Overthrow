@@ -57,10 +57,10 @@ _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
         {
             _c = _x;
 
-            if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
+            if((_x call OT_fnc_hasOwner) && (speed _x) < 0.1) then {
                 {
                     _x params ["_cls","_amt"];
-                    if(_cls == _itemcls and _amt >= _numitems) exitWith {
+                    if(_cls == _itemcls && _amt >= _numitems) exitWith {
                         _found = true;
                     };
                 }foreach(_c call OT_fnc_unitStock);
@@ -80,10 +80,10 @@ _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
             //Take the medical supplies
             {
                 _c = _x;
-                if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
+                if((_x call OT_fnc_hasOwner) && (speed _x) < 0.1) then {
                     {
                         _x params ["_cls","_amt"];
-                        if(_cls == _itemcls and _amt >= _numitems) exitWith {
+                        if(_cls == _itemcls && _amt >= _numitems) exitWith {
                             _found = true;
                             [_c, _cls, _numitems] call CBA_fnc_removeItemCargo;
                         };

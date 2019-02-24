@@ -7,18 +7,18 @@ if(!dialog) then {
 	if(count (player nearObjects [OT_workshopBuilding,10]) > 0) then {
 		[] call OT_fnc_workshopDialog;
 	}else{
-		if((vehicle player) != player and count (player nearObjects [OT_portBuilding,30]) > 0) then {
+		if((vehicle player) != player && count (player nearObjects [OT_portBuilding,30]) > 0) then {
 			createDialog "OT_dialog_vehicleport";
 			private _ft = server getVariable ["OT_fastTravelType",1];
-			if(!OT_adminMode and _ft > 1) then {
+			if(!OT_adminMode && _ft > 1) then {
 				ctrlEnable [1600,false];
 			};
 		}else{
 			[] spawn OT_menuHandler;
-			if(hcShownBar and count (hcSelected player) > 0) exitWith {
+			if(hcShownBar && count (hcSelected player) > 0) exitWith {
 				createDialog "OT_dialog_squad";
 			};
-			if(!hcShownBar and ({!isplayer _x} count (groupSelectedUnits player) > 0)) exitWith {
+			if(!hcShownBar && ({!isplayer _x} count (groupSelectedUnits player) > 0)) exitWith {
 				{
 					if(isPlayer _x) then {
 						player groupSelectUnit [_x,false];

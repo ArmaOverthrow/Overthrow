@@ -13,7 +13,7 @@ private _vehs = [];
 
 private _bargates = _start nearobjects ["Land_BarGate_F",50];
 
-while {!(isNil "_group") and count (units _group) > 0} do {
+while {!(isNil "_group") && count (units _group) > 0} do {
 	_vehs = [];
 	_friendly = [];
 
@@ -21,7 +21,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 	{
 		_unit = _x;
 		_iscar = false;
-		if(_unit isKindOf "LandVehicle" and !(side _x == west)) then {
+		if(_unit isKindOf "LandVehicle" && !(side _x == west)) then {
 			_unit = driver _unit;
 			_iscar = true;
 			_f = false;
@@ -30,13 +30,13 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 				_vehs pushBack _x;
 			};
 		};
-		if(_unit isKindOf "LandVehicle" and (side _x == west)) then {
+		if(_unit isKindOf "LandVehicle" && (side _x == west)) then {
 			_friendly pushback _x;
 		};
 		if !(_unit in _inrange || _unit in _searching || _unit in _searched) then {
 			if(_unit call OT_fnc_unitSeenNATO) then {
 
-				if((isPlayer _unit) and (captive _unit)) then {
+				if((isPlayer _unit) && (captive _unit)) then {
 					if(_iscar) then {
 						_leader globalchat "Please approach the checkpoint slowly, do NOT exit your vehicle";
 						_inrange pushback _unit;
@@ -66,7 +66,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 		if(_x distance _start > _outerRange) then {
 			//Unit has left the area
 			_gone pushback _x;
-			if(isPlayer _x and !(_x in _searched)) then {
+			if(isPlayer _x && !(_x in _searched)) then {
 				_x setCaptive false;
 				_x spawn OT_fnc_revealToNATO;
 			};
@@ -88,7 +88,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 						};
 					};
 				}else{
-					if(isPlayer _x and !(_x in _searched)) then {
+					if(isPlayer _x && !(_x in _searched)) then {
 						_msg = "Search complete, be on your way";
 						_items = [];
 						_unit = _x;
@@ -141,7 +141,7 @@ while {!(isNil "_group") and count (units _group) > 0} do {
 					};
 				};
 			}else{
-				if (_x in _searching and isPlayer _x) then {
+				if (_x in _searching && isPlayer _x) then {
 					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,false];
 					_searching deleteAt(_searching find _x);
 				}
