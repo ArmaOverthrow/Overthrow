@@ -16,14 +16,14 @@ if (isServer) then
 		}
 		else
 		{
-			private _Settings = compile preprocessFileLineNumbers "Vcom\Functions\VCOMAI_DefaultSettings.sqf";
+			private _Settings = compile preprocessFileLineNumbers "\ot\functions\AI\VCOMAI\Functions\VCOMAI_DefaultSettings.sqf";
 			[] call _Settings;
 			[Vcm_Settings] remoteExec ["VCM_PublicScript",0,false];
 		};
 	}
 	else
 	{
-			private _Settings = compile preprocessFileLineNumbers "Vcom\Functions\VCOMAI_DefaultSettings.sqf";
+			private _Settings = compile preprocessFileLineNumbers "\ot\functions\AI\VCOMAI\Functions\VCOMAI_DefaultSettings.sqf";
 			[] call _Settings;
 			[Vcm_Settings] remoteExec ["VCM_PublicScript",0,false];
 	};
@@ -51,7 +51,7 @@ VCOM_MINEARRAY = [];
 [] spawn VCM_fnc_MineMonitor;
 
 //Begin Artillery function created by Rydygier - https://forums.bohemia.net/forums/topic/159152-fire-for-effect-the-god-of-war-smart-simple-ai-artillery/
-if (VCM_FFEARTILLERY) then {nul = [] execVM "Vcom\RYD_FFE\FFE.sqf";VCM_ARTYENABLE = false;};
+if (VCM_FFEARTILLERY) then {nul = [] execVM "\ot\functions\AI\VCOMAI\RYD_FFE\FFE.sqf";VCM_ARTYENABLE = false;};
 
 //Below is loop to check for new AI spawning in to be added to the list
 [] spawn

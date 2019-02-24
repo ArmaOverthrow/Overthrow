@@ -1,3 +1,3 @@
 //Exec Vcom AI function
-[] execVM "Vcom\VcomInit.sqf";
+[] execVM "\ot\functions\AI\VCOMAI\VcomInit.sqf";
 //End of Vcom commands
