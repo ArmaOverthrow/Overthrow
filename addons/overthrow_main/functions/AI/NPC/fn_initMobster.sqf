@@ -59,7 +59,8 @@ _weapon = (OT_CRIM_Weapons) call BIS_fnc_selectRandom;
 
 _unit addWeapon _weapon;
 
-call {
+[_unit] call {
+	params ["_unit"];
 	if((random 100) > 98) exitWith {
 		//This guy has a launcher
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
