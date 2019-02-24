@@ -152,10 +152,9 @@ private _cc = 0;
 
 					[_veh,_owner] call OT_fnc_setOwner;
 					{
-						_cls = _x select 0;
-						_num = _x select 1;
-
-						call {
+						[_x,_veh] call {
+							params ["_it", "_veh"];
+							_it params ["_cls", "_num"];
 							if(_cls == "money") exitWith {
 								_veh setVariable ["money",_num,true];
 							};
