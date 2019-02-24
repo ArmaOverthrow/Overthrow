@@ -172,6 +172,8 @@ class CfgFunctions
 			class recruitCiv {};
 			class leaseBuilding {};
 			class place {};
+			class onNameDone {};
+			class onNameKeyDown {};
 			class setHome {};
 			class build {};
 
