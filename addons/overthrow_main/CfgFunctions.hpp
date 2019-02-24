@@ -491,6 +491,7 @@ class CfgFunctions
 		{
 			file = "\overthrow_main\functions\factions\GUER";
 			class jobSystem {};
+			class assignJob {};
 		};
 
 		class Buildings

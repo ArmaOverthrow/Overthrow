@@ -1,77 +1,35 @@
 
 OT_allJobs = [];
 {
-    _code = gettext (_x >> "condition");
-    _target = gettext (_x >> "target");
-    _script = gettext (_x >> "script");
-    _repeat = getnumber (_x >> "repeatable");
-    _chance = getnumber (_x >> "chance");
+    private _code = gettext (_x >> "condition");
+    private _target = gettext (_x >> "target");
+    private _script = gettext (_x >> "script");
+    private _repeat = getnumber (_x >> "repeatable");
+    private _chance = getnumber (_x >> "chance");
 
     OT_allJobs pushback [configName _x, _target, compileFinal _code, compileFinal preprocessFileLineNumbers _script, _repeat, _chance];
 }foreach("true" configClasses ( configFile >> "CfgOverthrowMissions" ));
 
-private _assignJob = {
-    params ["_id","_jobdef","_params"];
-
-    _jobdef params ["_name","_target","_condition","_code","_repeat"];
-
-    _active = spawner getVariable ["OT_activeJobs",[]];
-    _job = [_id,_params] call _code;
-    _j = [_id,_job,_repeat];
-    _active pushback _j;
-
-    spawner setVariable ["OT_activeJobs",_active,true];
-
-    _j spawn {
-        params ["_id","_job","_repeat"];
-        _job params ["_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];
-        _jobparams spawn _setup;
-        sleep 10; //allow time for setup
-
-        private _done = false;
-        while {sleep 1; !_done} do {
-            if(_jobparams call _success) exitWith {
-                _jobparams pushback true;
-                _jobparams call _end;
-            };
-            if(_jobparams call _fail) exitWith {
-                _jobparams pushback false;
-                _jobparams call _end;
-            };
-        };
-        _active = spawner getVariable ["OT_activeJobs",[]];
-        _active deleteAt (_active find _this);
-        spawner setVariable ["OT_activeJobs",_active,true];
-
-        _active = server getVariable ["OT_activeJobIds",[]];
-        _active deleteAt (_active find _id);
-
-        if(_repeat < 1) then {
-            _completed = server getVariable ["OT_completedJobIds",[]];
-            _completed pushback _id;
-        };
-    };
-};
-
-_completed = server getVariable "OT_completedJobIds";
-if(isNil "_completed") then {
-    server setVariable ["OT_completedJobIds",[],false];
-    _completed = server getVariable "OT_completedJobIds";
-};
-
 while {sleep OT_jobWait;true} do {
-    _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
     {
-        _x params ["_name","_target","_condition","_code","_repeat","_chance"];
-        _jobdef = _x;
-        _numAbandoned = count(server getVariable ["NATOabandoned",[]]);
-        call {
+        _x call {
+            params ["_name","_target","_condition","_code","_repeat","_chance"];
+            private _jobdef = _this;
+
+            private _completed = server getVariable "OT_completedJobIds";
+            if(isNil "_completed") then {
+                server setVariable ["OT_completedJobIds",[],false];
+                _completed = server getVariable "OT_completedJobIds";
+            };
+            private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
+
             if(_target == "Global") exitWith {
                 _id = _name;
                 if((random 100) < _chance) then {
                     if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) then {
                         _activeJobs pushback _id;
-                        [_id,_jobdef,[_x]] spawn _assignJob;
+                        spawner setVariable ["OT_activeJobIds",_activeJobs,false];
+                        [_id,_jobdef,[_x]] spawn OT_fnc_assignJob;
                     };
                 };
             };
@@ -84,8 +42,10 @@ while {sleep OT_jobWait;true} do {
                         _loc = server getVariable _x;
                         _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
                         if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) exitWith {
-                            _activeJobs pushback _id;
-                            [_id,_jobdef,[_x]] call _assignJob;
+                            private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
+                        _activeJobs pushback _id;
+                        spawner setVariable ["OT_activeJobIds",_activeJobs,false];
+                            [_id,_jobdef,[_x]] call OT_fnc_assignJob;
                         };                        
                     }foreach(OT_allTowns);
                 };
@@ -105,8 +65,10 @@ while {sleep OT_jobWait;true} do {
                             _id = format["%1-%2",_name,_cls];
 
                             if((call _condition) and !(_id in _completed) and !(_id in _activeJobs)) then {
+                                private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
                                 _activeJobs pushback _id;
-                                [_id,_jobdef,[_cls]] call _assignJob;
+                                spawner setVariable ["OT_activeJobIds",_activeJobs,false];
+                                [_id,_jobdef,[_cls]] call OT_fnc_assignJob;
                                 _done = true;
                             };
                         };
@@ -117,5 +79,4 @@ while {sleep OT_jobWait;true} do {
         };
         sleep 0.2;
     }foreach(OT_allJobs);
-    spawner setVariable ["OT_activeJobIds",_activeJobs,false];
 };
