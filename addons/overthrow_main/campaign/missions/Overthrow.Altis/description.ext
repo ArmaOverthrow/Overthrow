@@ -2,7 +2,7 @@
 
 overviewPicture = "\ot\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
 briefingName = "Overthrow: Altis";
-OnLoadName = "Overthrow: Altis";
+OnLoadName = "Overthrow: Altis: DEV";
 loadScreen = "\ot\campaign\missions\Overthrow.Tanoa\pic.jpg";
 
 overviewText = "@todo";
