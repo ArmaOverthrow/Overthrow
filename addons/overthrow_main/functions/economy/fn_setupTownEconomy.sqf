@@ -53,13 +53,13 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 		private _pos = getpos _x;
 		//Ensure shops are not found twice (overlapping town search radius)
 		if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
-			_category = "General";
-			_rnd = random 100;
-			call {
-				if(_rnd > 90) exitWith {_category = "Surplus"};
-				if(_rnd > 80) exitWith {_category = "Electronics"};
-				if(_rnd > 60) exitWith {_category = "Pharmacy"};
-				if(_rnd > 40) exitWith {_category = "Clothing"};
+			_category =	call {
+				private _rnd = random 100;
+				if(_rnd > 90) exitWith {"Surplus"};
+				if(_rnd > 80) exitWith {"Electronics"};
+				if(_rnd > 60) exitWith {"Pharmacy"};
+				if(_rnd > 40) exitWith {"Clothing"};
+				"General"
 			};
 			_activeShops pushback [_pos,_category];
 			OT_allShops pushback _pos;
