@@ -15,12 +15,26 @@ if(isPlayer _me) exitWith {
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
 		if (_unit isEqualTo player) then {
-			private _new_unit = (creategroup resistance) createUnit ["I_G_Soldier_F",_unit getVariable ["home",[worldSize/2,worldSize/2,0]],[],0,"NONE"];
+			cutText ["", "BLACK FADED", 15];
+			private _new_unit = (creategroup resistance) createUnit ["I_G_Soldier_F",(player getVariable ["home",[worldSize/2,worldSize/2,0]]),[],0,"NONE"];
 			selectPlayer _new_unit;
-			private _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
-			player forceAddUniform _clothes;
-	    player setVariable ["uniform",_clothes,true];
-			cutText ["","BLACK IN",2];
+
+			player setCaptive true;
+			player forceAddUniform (player getVariable ["uniform",""]);
+			player setdamage 0;
+			sleep 0.5;
+			player setpos (player getVariable "home");
+			removeAllWeapons player;
+			removeAllItems player;
+			removeAllAssignedItems player;
+			removeBackpack player;
+			removeVest player;
+			removeGoggles player;
+			removeHeadgear player;
+			player setDamage 0;
+			player linkItem "ItemMap";
+			player switchMove "";
+			cutText ["", "BLACK IN", 5];
 		};
 	};
 };
