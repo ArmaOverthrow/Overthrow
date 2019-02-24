@@ -95,6 +95,7 @@ _difficulty = 1.5;
     ((_civ distance _destination) < 50) and (vehicle _civ) == _civ
 },{
     //Cleanup
+    params ["_p","_faction","_factionName"];
     _civ = player getVariable [format["vip%1",_this select 1],objNull];
     player setVariable [format["vip%1",_faction],nil,false];
     _group = createGroup civilian;
