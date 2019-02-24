@@ -56,8 +56,8 @@ _posnow = position _target;
 _timenow = time;
 
 private _cleanup = {
-	[_target, ""] remoteExec ["switchMove",_target,false];
 	params ["_group","_cop","_target","_handler"];
+	[_target, ""] remoteExec ["switchMove",_target,false];
 	if(!isNil "_group") then {
 		_group setBehaviour "SAFE";
 		_group call OT_fnc_initGendarmPatrol;
