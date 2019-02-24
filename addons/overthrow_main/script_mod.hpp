@@ -9,7 +9,7 @@
  *
  * Examples:
  *     in script_component.hpp
- *     #include "\ot\script_mod.hpp"
+ *     #include "\overthrow_main\script_mod.hpp"
  *
  * Ref:
  *     @see https://github.com/CBATeam/CBA_A3/tree/master/addons/main
@@ -26,7 +26,7 @@
 
 #define MOD_NAME Overthrow
 
-#define PREFIX OT
+#define PREFIX overthrow_main
 
 #define MOD_AUTHOR ARMAzac
 

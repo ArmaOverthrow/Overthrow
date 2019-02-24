@@ -263,7 +263,7 @@ _handler = {
 				];
 			};
 			{
-				_icon = format["ot\ui\markers\shop-%1.paa",_x select 1];
+				_icon = format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1];
 				(_this select 0) drawIcon [
 					_icon,
 					[1,1,1,1],
@@ -275,7 +275,7 @@ _handler = {
 			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
 			{
 				(_this select 0) drawIcon [
-					"ot\ui\markers\shop-Hardware.paa",
+					"\overthrow_main\ui\markers\shop-Hardware.paa",
 					[1,1,1,1],
 					_x select 0,
 					0.3/ctrlMapScale (_this select 0),
@@ -287,7 +287,7 @@ _handler = {
 		{
 			if ((typeof _x != "B_UAV_AI") and !(_x getVariable ["looted",false])) then {
 				(_this select 0) drawIcon [
-					"ot\ui\markers\death.paa",
+					"\overthrow_main\ui\markers\death.paa",
 					[1,1,1,0.5],
 					getpos _x,
 					0.2/ctrlMapScale (_this select 0),

@@ -6,7 +6,7 @@ class Campaign
 
 	briefingName = "Overthrow";
 	author = "ARMAzac";
-	overviewPicture = "\ot\campaign\overthrow_campaign.jpg";
+	overviewPicture = "\overthrow_main\campaign\overthrow_campaign.jpg";
 	overviewText = "";
 
 	class MissionDefault

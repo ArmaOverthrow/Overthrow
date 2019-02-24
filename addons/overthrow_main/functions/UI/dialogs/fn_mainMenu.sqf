@@ -343,7 +343,7 @@ if(_obpos distance player < 250) then {
 				ctrlEnable [1621,false];
 			}else{
 				_price = _obname call OT_fnc_getBusinessPrice;
-				ctrlSetText [1201,"\ot\ui\closed.paa"];
+				ctrlSetText [1201,"\overthrow_main\ui\closed.paa"];
 				_areaText = format["
 					<t align='left' size='0.8'>%1</t><br/>
 					<t align='left' size='0.65'>Out Of Operation</t><br/>

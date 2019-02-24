@@ -2,7 +2,7 @@
 
 [] call OT_fnc_initVCOMAI;
 
-[] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
+[] execVM "\overthrow_main\functions\geography\SHK_pos\shk_pos_init.sqf";
 
 OT_ACEremoveAction = ["OT_Remove","Remove","",{deleteVehicle _target;},{(call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner)},{},[], [0,0,0], 10] call ace_interact_menu_fnc_createAction;
 
@@ -28,10 +28,10 @@ private _allMissions = "true" configClasses ( configFile >> "CfgOverthrowMission
 }foreach(_allMissions);
 
 OT_tutorialMissions = [];
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_NATO.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_CRIM.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_Drugs.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_Economy.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_NATO.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_CRIM.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Drugs.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Economy.sqf");
 
 call compileFinal preprocessFileLineNumbers "data\names.sqf";
 call compileFinal preprocessFileLineNumbers "data\towns.sqf";

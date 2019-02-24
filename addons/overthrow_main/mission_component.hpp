@@ -1,12 +1,12 @@
 /* Included at top of mission's description.ext for default Overthrow settings
- * #include "\ot\mission_component.hpp"
+ * #include "\overthrow_main\mission_component.hpp"
  *
  * Override values after if required
  */
-#include "script_component.hpp"
+#include "\overthrow_main\script_component.hpp"
 
 author=QUOTE(MOD_AUTHOR);
-OnLoadMission=QUOTE(VERSION - Please read http://wiki.armaoverthrow.com/);
+OnLoadMission=QUOTE(VERSION - Please read wiki.armaoverthrow.com);
 
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;

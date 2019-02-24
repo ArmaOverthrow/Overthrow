@@ -49,7 +49,7 @@ class OT_dialog_start
 		class RscPicture_1200: RscOverthrowPicture
 		{
 			idc = 1200;
-			text = "\ot\ui\logo_overthrow.paa";
+			text = "\overthrow_main\ui\logo_overthrow.paa";
 			x = 0.399969 * safezoneW + safezoneX;
 			y = 0.038 * safezoneH + safezoneY;
 			w = 0.216563 * safezoneW;
@@ -930,7 +930,7 @@ class OT_dialog_main
 		class RscPicture_1200: RscOverthrowPicture
 		{
 			idc = 1200;
-			text = "\ot\ui\logo_overthrow.paa";
+			text = "\overthrow_main\ui\logo_overthrow.paa";
 			x = 0.00499997 * safezoneW + safezoneX;
 			y = 0.103 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;

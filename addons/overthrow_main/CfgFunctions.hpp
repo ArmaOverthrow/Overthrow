@@ -4,21 +4,21 @@ class CfgFunctions
 	{
 		class Base
 		{
-			file = "\ot\functions";
+			file = "\overthrow_main\functions";
 			class initVar {};
 			class initOverthrow {};
 		};
 
         class Cleanup
 		{
-			file = "\ot\functions\cleanup";
+			file = "\overthrow_main\functions\cleanup";
 			class cleanup {};
 			class cleanDead {};
 		};
 
 		class Factions
 		{
-			file = "\ot\functions\factions";
+			file = "\overthrow_main\functions\factions";
 			class factionNATO {};
 			class factionGUER {};
 			class factionCIV {};
@@ -35,7 +35,7 @@ class CfgFunctions
 		/* Persistent Save */
 		class Save
 		{
-			file = "\ot\functions\save";
+			file = "\overthrow_main\functions\save";
 			class saveGame {};
 			class loadGame {};
 			class setOfflinePlayerAttribute {};
@@ -45,7 +45,7 @@ class CfgFunctions
 
 		class Player
 		{
-			file = "\ot\functions\player";
+			file = "\overthrow_main\functions\player";
 			class initPlayerLocal {};
 			class mapSystem {};
 			class perkSystem {};
@@ -70,7 +70,7 @@ class CfgFunctions
 
 		class Interaction
 		{
-			file = "\ot\functions\interaction";
+			file = "\overthrow_main\functions\interaction";
 			class mountAttached {};
 			class initAttached {};
 			class updateAttached {};
@@ -80,7 +80,7 @@ class CfgFunctions
 
 		class Events
 		{
-			file = "\ot\functions\events";
+			file = "\overthrow_main\functions\events";
 			class deathHandler {};
 			class buildingDamagedHandler {};
 			class cargoLoadedHandler {};
@@ -94,7 +94,7 @@ class CfgFunctions
 
 		class UI
 		{
-			file = "\ot\functions\UI";
+			file = "\overthrow_main\functions\UI";
 			class notifyMinor {};
 			class notifyBig {};
 			class notifyGood {};
@@ -109,7 +109,7 @@ class CfgFunctions
 
 		class Dialogs
 		{
-			file = "\ot\functions\UI\dialogs";
+			file = "\overthrow_main\functions\UI\dialogs";
 
 			class mainMenu {};
 			class buyDialog {};
@@ -142,7 +142,7 @@ class CfgFunctions
 
 		class Display
 		{
-			file = "\ot\functions\UI\display";
+			file = "\overthrow_main\functions\UI\display";
 			class displayShopPic {};
 			class displayWarehousePic {};
 			class showMemberInfo {};
@@ -158,7 +158,7 @@ class CfgFunctions
 		*/
 		class Actions
 		{
-			file = "\ot\functions\actions";
+			file = "\overthrow_main\functions\actions";
 
 			class newGame {};
 
@@ -246,7 +246,7 @@ class CfgFunctions
 
 		class SelfActions
     	{
-        	file = "\ot\functions\actions\self";
+        	file = "\overthrow_main\functions\actions\self";
 			/* Spliffs */
 			class startSpliff {};
 			class stopSpliff {};
@@ -259,7 +259,7 @@ class CfgFunctions
 		*/
 		class Geography
 		{
-			file = "\ot\functions\geography";
+			file = "\overthrow_main\functions\geography";
 			class getRandomBuilding {};
 			class nearestBase {};
 			class nearestCheckpoint {};
@@ -283,7 +283,7 @@ class CfgFunctions
 		*/
 		class Virtualization
 		{
-			file = "\ot\functions\virtualization";
+			file = "\overthrow_main\functions\virtualization";
 			class initVirtualization {};
 			class runVirtualization {};
 			class spawn {};
@@ -297,7 +297,7 @@ class CfgFunctions
 
 		class Spawners
 		{
-			file = "\ot\functions\virtualization\spawners";
+			file = "\overthrow_main\functions\virtualization\spawners";
 
 			class spawnAmbientVehicles {};
 			class spawnBoatDealers {};
@@ -318,7 +318,7 @@ class CfgFunctions
 		*/
 		class Economy
 		{
-			file = "\ot\functions\economy";
+			file = "\overthrow_main\functions\economy";
 			class initEconomy {};
 			class initEconomyLoad {};
 			class setupTownEconomy {};
@@ -342,7 +342,7 @@ class CfgFunctions
 		*/
 		class Inventory
 		{
-			file = "\ot\functions\inventory";
+			file = "\overthrow_main\functions\inventory";
 			class takeFromCargoContainers {};
 			class hasFromCargoContainers {};
 			class anythingGetName {};
@@ -364,7 +364,7 @@ class CfgFunctions
 		*/
 		class Warehouse
 		{
-			file = "\ot\functions\warehouse";
+			file = "\overthrow_main\functions\warehouse";
 			class removeFromWarehouse {};
 			class findHelmetInWarehouse {};
 			class findScopeInWarehouse {};
@@ -377,7 +377,7 @@ class CfgFunctions
 		*/
 		class AI
 		{
-			file = "\ot\functions\AI";
+			file = "\overthrow_main\functions\AI";
 			class createSoldier {};
 			class getSoldier {};
 			class parachuteAll {};
@@ -392,7 +392,7 @@ class CfgFunctions
 		*/
 		class Orders
 		{
-			file = "\ot\functions\AI\orders";
+			file = "\overthrow_main\functions\AI\orders";
 			class orderLoot {};
 			class orderOpenInventory {};
 			class orderRevivePlayer {};
@@ -407,7 +407,7 @@ class CfgFunctions
 		*/
 		class NPC
 		{
-			file = "\ot\functions\AI\NPC";
+			file = "\overthrow_main\functions\AI\NPC";
 			class randomLocalIdentity {};
 			class applyIdentity {};
 			class initCarDealer {};
@@ -437,7 +437,7 @@ class CfgFunctions
 		*/
 		class Math
 		{
-			file = "\ot\functions\math";
+			file = "\overthrow_main\functions\math";
 			class rotationMatrix {};
 			class matrixMultiply {};
 			class matrixRotate {};
@@ -448,7 +448,7 @@ class CfgFunctions
 		*/
 		class NATO
 		{
-			file = "\ot\functions\factions\NATO";
+			file = "\overthrow_main\functions\factions\NATO";
 			class initNATO {};
 
 			class NATOQRF {};
@@ -476,26 +476,26 @@ class CfgFunctions
 
 		class NATOAI
 		{
-			file = "\ot\functions\factions\NATO\AI";
+			file = "\overthrow_main\functions\factions\NATO\AI";
 			class NATODrone {};
 			class NATOMortar {};
 		};
 
 		class CRIM
 		{
-			file = "\ot\functions\factions\CRIM";
+			file = "\overthrow_main\functions\factions\CRIM";
 			class formOrJoinGang {};
 		};
 
 		class GUER
 		{
-			file = "\ot\functions\factions\GUER";
+			file = "\overthrow_main\functions\factions\GUER";
 			class jobSystem {};
 		};
 
 		class Buildings
 		{
-			file = "\ot\functions\buildings";
+			file = "\overthrow_main\functions\buildings";
 			class initBuilding {};
 			class initObservationPost {};
 			class initPoliceStation {};
@@ -506,7 +506,7 @@ class CfgFunctions
 
         class Util
 		{
-			file = "\ot\functions\util";
+			file = "\overthrow_main\functions\util";
 			class getOwner {};
             class hasOwner {};
 			class setOwner {};
@@ -519,7 +519,7 @@ class CfgFunctions
 		*/
 		class Integration
 		{
-			file = "\ot\functions\integration";
+			file = "\overthrow_main\functions\integration";
 			class initTFAR {};
 			class advancedTowingInit {};
 			class detectItems {};

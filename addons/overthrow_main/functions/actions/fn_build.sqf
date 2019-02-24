@@ -58,7 +58,7 @@ _start = [position player select 0, position player select 1, 2];
 buildcam = "camera" camCreate _start;
 
 buildFocus = createVehicle ["Sign_Sphere10cm_F", [_start,1000,getDir player] call BIS_fnc_relPos, [], 0, "NONE"];
-buildFocus setObjectTexture [0,"\ot\ui\clear.paa"];
+buildFocus setObjectTexture [0,"\overthrow_main\ui\clear.paa"];
 
 buildcam camSetTarget buildFocus;
 buildcam cameraEffect ["internal", "BACK"];
@@ -107,24 +107,24 @@ buildOnMouseMove = {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
-				}
+				};
 			}else{
 				if !(canBuildHere) then {
 					canBuildHere = true;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(0,1,0,0.5)'];
-				}
+				};
 			};
 		}else{
 			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
-				}
+				};
 			}else{
 				if !(canBuildHere) then {
 					canBuildHere = true;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(0,1,0,0.5)'];
-				}
+				};
 			};
 		};
 	};

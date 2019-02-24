@@ -37,7 +37,7 @@ class CfgVehicles {
 	};
 	class Mapboard_tanoa_F: Land_MapBoard_F {
 		displayName = "Map (Tanoa)";
-		hiddenSelectionsTextures[] = {"\ot\ui\maptanoa.paa"};
+		hiddenSelectionsTextures[] = {"\overthrow_main\ui\maptanoa.paa"};
 	};
     class OT_GanjaItem: Item_Base_F {
         scope = 2;
@@ -81,7 +81,7 @@ class CfgVehicles {
                     statement = "[_player] spawn ot_fnc_startSpliff";
                     showDisabled = 0;
                     exceptions[] = {"isNotInside", "isNotSitting"};
-                    icon = "ot\ui\icons\light_cig.paa";
+                    icon = "\overthrow_main\ui\icons\light_cig.paa";
                 };
                 class OT_StopSpliff
                 {
@@ -90,7 +90,7 @@ class CfgVehicles {
                     statement = "[_player] spawn ot_fnc_stopSpliff";
                     showDisabled = 0;
                     exceptions[] = {"isNotInside", "isNotSitting"};
-                    icon = "ot\ui\icons\light_cig.paa";
+                    icon = "\overthrow_main\ui\icons\light_cig.paa";
                 };
             };
         };

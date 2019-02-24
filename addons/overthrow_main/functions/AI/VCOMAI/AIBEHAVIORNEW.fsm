@@ -908,7 +908,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"" \n
        "if ((leader _unit) isEqualTo _Unit && {!((behaviour _unit) isEqualTo ""COMBAT"")} ) then" \n
        "{" \n
-       "	[_Unit,_VCOM_MovedRecently,_VCOMAI_ActivelyClearing,_VCOM_MovedRecentlyCover] execFSM ""\ot\functions\AI\VCOMAI\DangerIdentify.fsm"";" \n
+       "	[_Unit,_VCOM_MovedRecently,_VCOMAI_ActivelyClearing,_VCOM_MovedRecentlyCover] execFSM ""\overthrow_main\functions\AI\VCOMAI\DangerIdentify.fsm"";" \n
        "};" \n
        "" \n
        "" \n
@@ -2104,7 +2104,7 @@ class FSM
        "_wait = 4;" \n
        "_MyNearestEnemy = _Unit call VCOMAI_ClosestEnemy;" \n
        "" \n
-       "//[_Unit,_VCOM_MovedRecently,_VCOMAI_ActivelyClearing,_VCOM_MovedRecentlyCover] execFSM ""\ot\functions\AI\VCOMAI\DangerIdentify.fsm"";" \n
+       "//[_Unit,_VCOM_MovedRecently,_VCOMAI_ActivelyClearing,_VCOM_MovedRecentlyCover] execFSM ""\overthrow_main\functions\AI\VCOMAI\DangerIdentify.fsm"";" \n
        "" \n
        "_CheckClass = true;" \n
        "if (!(isNil ""_MyNearestEnemy"") && !(typename _MyNearestEnemy isEqualTo ""ARRAY"")) then" \n
@@ -2603,7 +2603,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"private [""_t"", ""_wait""];" \n
        "_t = time;" \n
        "_wait = 4;" \n
-       "//[_Unit,_VCOM_MovedRecently,_VCOMAI_ActivelyClearing,_VCOM_MovedRecentlyCover] execFSM ""\ot\functions\AI\VCOMAI\DangerIdentify.fsm"";" \n
+       "//[_Unit,_VCOM_MovedRecently,_VCOMAI_ActivelyClearing,_VCOM_MovedRecentlyCover] execFSM ""\overthrow_main\functions\AI\VCOMAI\DangerIdentify.fsm"";" \n
        "" \n
        "_MyNearestEnemy = _Unit call VCOMAI_ClosestEnemy;" \n
        "" \n

@@ -45,7 +45,7 @@ class RscDisplayStart: RscStandardDisplay
 			class controls {
 				class Logo: RscPictureKeepAspect
 				{
-					text = "\ot\ui\logo_overthrow.paa";
+					text = "\overthrow_main\ui\logo_overthrow.paa";
 					onLoad = "";
 				};
 			};
@@ -60,7 +60,7 @@ class RscDisplayMain: RscStandardDisplay
 		{
 			text = "Overthrow"; // Text displayed on the square button, converted to upper-case
 			textIsQuote = 1; // 1 to add quotation marks around the text
-			picture = "\ot\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
+			picture = "\overthrow_main\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
 			video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
 			action = "ctrlactivate ((ctrlparent (_this select 0)) displayctrl 101);";
 			actionText = $STR_A3_RscDisplayMain_Spotlight_Play; // Text displayed in top left corner of on-hover white frame
@@ -87,37 +87,37 @@ class CfgMissions
 	{
 		class Overthrow
 		{
-			directory = "ot\campaign";
+			directory = "\overthrow_main\campaign";
 		};
 	};
 	class Missions
 	{
 		class OverthrowTanoaScenario
 		{
-			directory="ot\campaign\missions\Overthrow.Tanoa";
+			directory="\overthrow_main\campaign\missions\Overthrow.Tanoa";
 		};
 		class OverthrowAltisScenario
 		{
-			directory="ot\campaign\missions\Overthrow.Altis";
+			directory="\overthrow_main\campaign\missions\Overthrow.Altis";
 		};
 		class OverthrowMaldenScenario
 		{
-			directory="ot\campaign\missions\Overthrow.Malden";
+			directory="\overthrow_main\campaign\missions\Overthrow.Malden";
 		};
 	};
 	class MPMissions
 	{
 		class OverthrowTanoaMP
 		{
-			directory="ot\campaign\missions\Overthrow.Tanoa";
+			directory="\overthrow_main\campaign\missions\Overthrow.Tanoa";
 		};
 		class OverthrowAltisMP
 		{
-			directory="ot\campaign\missions\Overthrow.Altis";
+			directory="\overthrow_main\campaign\missions\Overthrow.Altis";
 		};
 		class OverthrowMaldenMP
 		{
-			directory="ot\campaign\missions\Overthrow.Malden";
+			directory="\overthrow_main\campaign\missions\Overthrow.Malden";
 		};
 	};
 };
