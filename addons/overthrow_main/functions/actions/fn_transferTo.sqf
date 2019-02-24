@@ -6,7 +6,7 @@ if(_target == player) then {
 	_notvehicle = true;
 };
 
-if(isNull _target or isNil "_target") exitWith {};
+if(isNull _target || isNil "_target") exitWith {};
 
 private _objects = [];
 

@@ -1,6 +1,6 @@
 private _town    = _this select 0;
 private _dist = 600;
-if(_town in OT_sprawling or _town in OT_capitals) then {_dist = 1000};
+if(_town in OT_sprawling || _town in OT_capitals) then {_dist = 1000};
 private _posTown = server getVariable _town;
 private _stability = server getVariable format["stability%1",_town];
 private _population = server getVariable format["population%1",_town];
@@ -71,7 +71,7 @@ server setVariable [format["activeshopsin%1",_town],_activeShops,true];
 
 {
 	private _po = getpos _x;
-    if !(_x call OT_fnc_hasOwner or _po in _activecar or _po in OT_allShops) then {
+    if !(_x call OT_fnc_hasOwner || _po in _activecar || _po in OT_allShops) then {
 		OT_allShops pushback _po;
 		_activecar pushback _po;
     };

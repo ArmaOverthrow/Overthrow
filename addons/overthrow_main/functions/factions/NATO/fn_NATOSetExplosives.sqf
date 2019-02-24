@@ -17,7 +17,7 @@ if(_gotexp) then {
     _expert setVariable ["NOAI",true,true];
     _group setCombatMode "COMBAT";
     _expert commandMove _p;
-    waitUntil {sleep 1;(!alive _expert) or (_expert distance _targetPos) < 10};
+    waitUntil {sleep 1;(!alive _expert) || (_expert distance _targetPos) < 10};
     if(alive _expert) then {
         _expert removeMagazineGlobal "DemoCharge_Remote_Mag";
         _p set [2,1];

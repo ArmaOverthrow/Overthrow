@@ -70,7 +70,7 @@ if !(_isbase) then {
 					_canplace = false;
 				};
 			}else{
-				if(_typecls == "Camp" or _typecls == "Base") then {
+				if(_typecls == "Camp"|| _typecls == "Base") then {
 					_canplace = false;
 				};
 			};

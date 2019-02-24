@@ -10,7 +10,7 @@ private _money = player getvariable "money";
 
 private _options = [];
 
-if (side _civ == west or side _civ == east) exitWith {
+if (side _civ == west || side _civ == east) exitWith {
 	_options pushBack ["Cancel",{}];
 	_options spawn OT_fnc_playerDecision;
 };
@@ -248,7 +248,7 @@ if (_canBuyBoats) then {
 
 					systemChat format["Departing for %1, press Y to skip (-$%2)",_desttown,_cost];
 
-					waitUntil {!alive player or !alive _veh or !alive _driver or (vehicle player == player) or (player distance _destpos < 80)};
+					waitUntil {!alive player || !alive _veh || !alive _driver || (vehicle player == player) || (player distance _destpos < 80)};
 
 					if(vehicle player == _veh and alive _driver) then {
 						_driver globalchat format["We've arrived in %1, enjoy your stay",_desttown];
@@ -268,7 +268,7 @@ if (_canBuyBoats) then {
 					_wp setWaypointType "MOVE";
 					_wp setWaypointSpeed "NORMAL";
 
-					waitUntil {_veh distance _pos < 100 or time > _timeout};
+					waitUntil {_veh distance _pos < 100 || time > _timeout};
 					if(!alive _driver) exitWith{};
 
 					deleteVehicle _driver;

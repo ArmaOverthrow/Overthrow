@@ -21,7 +21,7 @@ if(count _targets == 0) exitWith {
     private _done = false;
     {
         _x params ["_pos","_t"];
-        if !((_t in (server getvariable ["NATOabandoned",[]])) or (_t == _thistown)) exitWith {
+        if !((_t in (server getvariable ["NATOabandoned",[]])) || (_t == _thistown)) exitWith {
             _destination = _pos;
             _town = _t;
             _done = true;

@@ -222,7 +222,7 @@ if(typename _b == "ARRAY") then {
 		};
 
 		if(damage _building == 1) then {
-			if((_owner == getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {
+			if((_owner == getplayerUID player) || (call OT_fnc_playerIsGeneral)) then {
 				ctrlEnable [1608,false]; //Not allowed to sell
 				ctrlSetText [1609,"Repair"]; //Replace lease/manage with repair
 				ctrlEnable [1609,true];

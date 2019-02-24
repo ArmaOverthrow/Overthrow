@@ -35,7 +35,7 @@ if(!alive _veh) exitWith {};
 	[30,false] call OT_fnc_progressBar;
 	sleep 30;
 	disableUserInput false;
-	if((!alive player) or (!alive _veh)) exitWith {};
+	if((!alive player) || (!alive _veh)) exitWith {};
 
 	_money = player getVariable "money";
 	_money = _money - _price;

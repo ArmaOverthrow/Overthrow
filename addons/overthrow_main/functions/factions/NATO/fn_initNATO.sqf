@@ -41,7 +41,7 @@ OT_NATO_Unit_HVT = "B_T_Officer_F";
 			if((_name find "_SL_") > -1) exitWith {
 				OT_NATO_Unit_SquadLeader = _name;
 			};
-			if((_name find "_Officer_") > -1 or (_name find "_officer_") > -1) exitWith {
+			if((_name find "_Officer_") > -1 || (_name find "_officer_") > -1) exitWith {
 				OT_NATO_Unit_HVT = _name
 			};
 			if((_name find "_CTRG_") > -1) exitWith {

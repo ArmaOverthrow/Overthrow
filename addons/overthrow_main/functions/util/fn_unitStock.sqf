@@ -80,7 +80,7 @@ private _theseitems = _target call _allCargo;
 if !(isNil "_theseitems") then {
 	{
 		private _cls = _x;
-		if(_category == "" or _cls in _categoryItems) then {
+		if(_category == "" || _cls in _categoryItems) then {
 			if(OT_hasTFAR) then {
 				_c = _cls splitString "_";
 				if((_c select 0) == "tf") then {

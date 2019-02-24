@@ -11,7 +11,7 @@ _standing = (player getVariable format['rep%1',_town]) * -1;
 _idx = lbCurSel 1500;
 _sellcls = lbData [1500,_idx];
 
-if(isNil "_sellcls" or _sellcls == "") exitWith {OT_selling = false};
+if(isNil "_sellcls" || _sellcls == "") exitWith {OT_selling = false};
 
 _price = [_town,_sellcls,_standing] call OT_fnc_getSellPrice;
 _done = false;

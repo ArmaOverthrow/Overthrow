@@ -83,7 +83,7 @@ _town = "";
 _pos = [];
 _housepos = [];
 
-if(isMultiplayer or _startup == "LOAD") then {
+if(isMultiplayer || _startup == "LOAD") then {
 	player remoteExec ["OT_fnc_loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];

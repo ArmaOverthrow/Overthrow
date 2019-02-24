@@ -56,7 +56,7 @@ private _getWeather = {
 };
 private _forecast = "Clear";
 
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["weatherversion",0]) < 1) then {
+if((server getVariable "StartupType") == "NEW" || (server getVariable ["weatherversion",0]) < 1) then {
 	server setVariable ["weatherversion",1,false];
 
 	_mode = ["Clear","Cloudy"] call BIS_fnc_selectRandom;
@@ -135,7 +135,7 @@ while {true} do {
 	private _rainchance = 2;
 	private _cloudychance = 4;
 
-	if(_month < 5 or _month > 10) then {
+	if(_month < 5 || _month > 10) then {
 		//Wet season
 		_stormchance = 2;
 		_rainchance = 5;

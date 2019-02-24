@@ -9,7 +9,7 @@ private _numitems = 0;
 private _blueprints = server getVariable ["GEURblueprints",[]];
 {
 	_cls = _x select 0;
-	if !((_cls in _blueprints) or (_cls in OT_allExplosives)) then {
+	if !((_cls in _blueprints) || (_cls in OT_allExplosives)) then {
 		_name = "";
 		_pic = "";
 		if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {

@@ -38,11 +38,11 @@ while {sleep 10;true} do {
 			_lastmin = date select 4;
 			if(count _schedule > 0) then {
 				_item = [];
-				if((_lastsched == -1 or _lastsched == 0) and _lastmin >= 30) then {
+				if((_lastsched == -1 || _lastsched == 0) and _lastmin >= 30) then {
 					_lastsched = 30;
 					_item = _schedule select 0;
 				}else{
-					if((_lastsched == -1 or _lastsched == 30) and _lastmin < 30) then {
+					if((_lastsched == -1 || _lastsched == 30) and _lastmin < 30) then {
 						_lastsched = 0;
 						_item = _schedule select 0;
 					};
@@ -75,7 +75,7 @@ while {sleep 10;true} do {
 				if !(_name in _abandoned) then {
 					if(_pos call OT_fnc_inSpawnDistance) then {
 						_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",500]);
-						_numres = {side _x == resistance or captive _x} count (_pos nearObjects 500);
+						_numres = {side _x == resistance || captive _x} count (_pos nearObjects 500);
 						if(_nummil < _numres) then {
 							_countered = true;
 							server setVariable ["NATOattacking",_name,true];
@@ -146,7 +146,7 @@ while {sleep 10;true} do {
 			if !(_name in _abandoned) then {
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-					_numres = {side _x == resistance or captive _x} count (_pos nearObjects ["CAManBase",100]);
+					_numres = {side _x == resistance || captive _x} count (_pos nearObjects ["CAManBase",100]);
 					if(_nummil < _numres) then {
 						_abandoned pushback _name;
 						server setVariable ["NATOabandoned",_abandoned,true];
@@ -167,7 +167,7 @@ while {sleep 10;true} do {
 		{
 			_x params ["_pos","_garrison"];
 			_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-			_numres = {side _x == resistance or captive _x} count (_pos nearObjects 50);
+			_numres = {side _x == resistance || captive _x} count (_pos nearObjects 50);
 			if(_nummil == 0 and _numres > 0) then {
 				_clearedFOBs pushback _x;
 				"Cleared NATO FOB" remoteExec ["OT_fnc_notifyMinor",0,false];
@@ -204,7 +204,7 @@ while {sleep 10;true} do {
 			//expire targets
 			private _expired = [];
 			{
-				if((_x select 4) or (time - (_x select 5)) > 2400) then {
+				if((_x select 4) || (time - (_x select 5)) > 2400) then {
 					_expired pushback _x;
 				};
 			}foreach(_knownTargets);
@@ -224,7 +224,7 @@ while {sleep 10;true} do {
 				_population = server getVariable format ["population%1",_town];
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					_nummil = {side _x == west} count (_pos nearObjects ["CAManBase",300]);
-					_numres = {side _x == resistance or captive _x} count (_pos nearObjects 200);
+					_numres = {side _x == resistance || captive _x} count (_pos nearObjects 200);
 					if(_nummil < 3 and _numres > 0) then {
 						if(_population < 100) then {
 							if(_stability < 10 and !(_town in _abandoned)) then {
@@ -260,7 +260,7 @@ while {sleep 10;true} do {
 						};
 					};
 				};
-				if(_abandonedSomething or _countered) exitWith {};
+				if(_abandonedSomething || _countered) exitWith {};
 			}foreach (OT_allTowns);
 
 			//Spawn missing drones & counter objectives
@@ -279,14 +279,14 @@ while {sleep 10;true} do {
 
 				if !(_name in _abandoned) then {
 					_drone = spawner getVariable [format["drone%1",_name],objNull];
-					if((isNull _drone or !alive _drone) and _resources > 10) then {
+					if((isNull _drone || !alive _drone) and _resources > 10) then {
 						_targets = [];
 						{
 							_town = _x;
 							_p = server getVariable _town;
 							if((_p distance _pos) < 3000) then {
 								_stability = server getVariable format["stability%1",_town];
-								if((_town in _abandoned) or (_stability < 50)) then {
+								if((_town in _abandoned) || (_stability < 50)) then {
 									_targets pushback _p;
 								};
 							};
@@ -375,7 +375,7 @@ while {sleep 10;true} do {
 				_lowest = "";
 				{
 					_stability = server getVariable [format["stability%1",_x],100];
-					if((_x in _abandoned) or _stability < 50) exitWith {
+					if((_x in _abandoned) || _stability < 50) exitWith {
 						_lowest = _x;
 					};
 				}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
@@ -442,7 +442,7 @@ while {sleep 10;true} do {
 				{
 					_x params ["_ty","_pos","_pri","_obj","_done"];
 					if !(_done) then {
-						if(_ty == "WH" or _ty == "PS" or _ty == "WS") then {
+						if(_ty == "WH" || _ty == "PS" || _ty == "WS") then {
 							if(_spend > 250 and (random 100) > _chance) then {
 								_schedule pushback ["DESTROY",_ty,_pos];
 								_spend = _spend - 250;

@@ -7,7 +7,7 @@ private _num = _this select 0;
 private _d = warehouse getVariable [_cls,[_cls,0]];
 _in = _d select 1;
 
-if(_num > _in or _num == -1) then {
+if(_num > _in|| _num == -1) then {
 	_num = _in;
 };
 

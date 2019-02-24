@@ -30,7 +30,7 @@ onEachFrame {
 
 _handler = {
 	private ["_vehs","_dest","_destpos","_passengers"];
-	if !(visibleMap or visibleGPS) exitWith {};
+	if !(visibleMap || visibleGPS) exitWith {};
 	_vehs = [];
 	if(isMultiplayer) then {
 		{
@@ -297,7 +297,7 @@ _handler = {
 			};
 		}foreach(alldeadmen);
 		{
-			if(((typeof _x == OT_item_CargoContainer) or (_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
+			if(((typeof _x == OT_item_CargoContainer) || (_x isKindOf "Ship") || (_x isKindOf "Air") || (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
 				(_this select 0) drawIcon [
 					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 					[1,1,1,1],
@@ -308,7 +308,7 @@ _handler = {
 				];
 			};
 			if((_x isKindOf "StaticWeapon") and (isNull attachedTo _x) and (alive _x)) then {
-				if(side _x == civilian or side _x == resistance or captive _x) then {
+				if(side _x == civilian || side _x == resistance || captive _x) then {
 					_col = [0.5,0.5,0.5,1];
 					if(!(isNull gunner _x) and (alive gunner _x)) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";

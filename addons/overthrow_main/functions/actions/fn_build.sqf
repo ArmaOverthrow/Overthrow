@@ -103,7 +103,7 @@ buildOnMouseMove = {
 		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
 
 		if(modeMode == 0) then {
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
+			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax) || ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
@@ -115,7 +115,7 @@ buildOnMouseMove = {
 				};
 			};
 		}else{
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax)) then {
+			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
@@ -160,7 +160,7 @@ buildMoveCam = {
 
 buildOnKeyUp = {
 	_key = _this select 1;
-	if (_key == 42 or _key == 54) then {
+	if (_key == 42 || _key == 54) then {
 		//Shift
 		OT_shiftHeld = false;
 	};
@@ -181,6 +181,7 @@ buildOnKeyDown = {
 	};
 	call {
 		if (_key == 42 or _key == 54) exitWith {
+		if (_key == 42 || _key == 54) exitWith {
 			//Shift
 			OT_shiftHeld = true;
 		};
@@ -391,7 +392,7 @@ build = {
 
 createDialog format["OT_dialog_build%1",_buildlocation];
 
-waitUntil {sleep 1;modeFinished or modeCancelled or !dialog};
+waitUntil {sleep 1;modeFinished || modeCancelled || !dialog};
 
 if(!isNull modeTarget) then {
 	deleteVehicle modeTarget;

@@ -262,7 +262,7 @@ private _allVehs = "
     &&
 	{ (getArray ( _x >> ""threat"" ) select 0) < 0.5}
 	&&
-    { (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") or (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Support"")}
+    { (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") || (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Support"")}
 	&&
     { (getText ( _x >> ""faction"" ) isEqualTo ""CIV_F"") or
      (getText ( _x >> ""faction"" ) isEqualTo ""IND_F"")})
@@ -354,7 +354,7 @@ private _allWeapons = "
 private _allAttachments = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
-    { _t = getNumber ( _x >> ""ItemInfo"" >> ""type"" ); _t isEqualTo 301 or _t isEqualTo 302 or _t isEqualTo 101})
+    { _t = getNumber ( _x >> ""ItemInfo"" >> ""type"" ); _t isEqualTo 301 || _t isEqualTo 302 || _t isEqualTo 101})
 " configClasses ( configFile >> "cfgWeapons" );
 
 private _allOptics = "
@@ -442,10 +442,10 @@ OT_allGoggles = [];
 		call {
 			if(_name == "None") exitWith {};
 			if(_name == "G_Goggles_VR") exitWith {};
-			if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
+			if((_title find "Tactical") > -1 || (_title find "Diving") > -1 || (_title find "Goggles") > -1) exitWith {
 				OT_allGoggles pushback _name;
 			};
-			if((_title find "Balaclava") > -1 or (_title find "Bandana") > -1) exitWith {
+			if((_title find "Balaclava") > -1 || (_title find "Bandana") > -1) exitWith {
 				OT_allFacewear pushback _name;
 			};
 			OT_allGlasses pushback _name;
@@ -484,14 +484,14 @@ OT_allGoggles = [];
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
 			//Get ammo
 			{
-				if !(_x in _blacklist or _x in OT_allExplosives) then {
+				if !(_x in _blacklist || _x in OT_allExplosives) then {
 					if !(_x in _weapons) then {_weapons pushback _x};
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
 		}else{
 			//It's a vehicle
-			if !(_cls isKindOf "Bag_Base" or _cls isKindOf "StaticWeapon") then {
-				if(_cls isKindOf "LandVehicle" or _cls isKindOf "Air" or _cls isKindOf "Ship") then {
+			if !(_cls isKindOf "Bag_Base" || _cls isKindOf "StaticWeapon") then {
+				if(_cls isKindOf "LandVehicle" || _cls isKindOf "Air" || _cls isKindOf "Ship") then {
 					_vehicles pushback _cls;
 					_numblueprints = _numblueprints + 1;
 				};
@@ -539,14 +539,14 @@ OT_allGoggles = [];
 
 		case "AssaultRifle": {
 			call {
-				if(_caliber == " 5.56" or _caliber == "5.56" or _caliber == " 5.45" or _caliber == " 5.8") exitWith {_cost = 500};
+				if(_caliber == " 5.56" || _caliber == "5.56" || _caliber == " 5.45" || _caliber == " 5.8") exitWith {_cost = 500};
 				if(_caliber == " 12 gauge") exitWith {_cost = 1200};
 				if(_caliber == " .408") exitWith {_cost = 4000};
-				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
+				if(_caliber == " .338 Lapua Magnum" || _caliber == " .303") exitWith {_cost = 700};
 				if(_caliber == " 9") exitWith {_cost = 400}; //9x21mm
 				if(_caliber == " 6.5") exitWith {_cost = 1000};
 				if(_caliber == " 7.62") exitWith {_cost = 1500};
-				if(_caliber == " 9.3" or _caliber == "9.3") exitWith {_cost = 1700};
+				if(_caliber == " 9.3" || _caliber == "9.3") exitWith {_cost = 1700};
 				if(_caliber == " 12.7") exitWith {_cost = 3000};
 				//I dunno what caliber this is
 				_cost = 1500;
@@ -567,7 +567,7 @@ OT_allGoggles = [];
 			_cost = 100;
 			call {
 				if(_caliber == " .408") exitWith {_cost = 2000};
-				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
+				if(_caliber == " .338 Lapua Magnum" || _caliber == " .303") exitWith {_cost = 700};
 			};
 			if(_short != "Metal Detector") then {
 				OT_allHandGuns pushBack _name
@@ -609,7 +609,7 @@ OT_allLegalClothing = [];
 	OT_allClothing pushback _name;
 	_c = _name splitString "_";
 	_side = _c select 1;
-	if((_name == "V_RebreatherIA" or _side == "C" or _side == "I") and (_c select (count _c - 1) != "VR")) then {
+	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") and (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
 	cost setVariable [_name,[_cost,0,0,1],true];
@@ -651,7 +651,7 @@ OT_allLegalClothing = [];
 				_exp = true;
 			};
 		};
-		if((_desc find "Flare") > -1 or (_desc find "flare") > -1) then {
+		if((_desc find "Flare") > -1 || (_desc find "flare") > -1) then {
 			_cost = round(_m * 0.6);
 			_exp = false;
 		};

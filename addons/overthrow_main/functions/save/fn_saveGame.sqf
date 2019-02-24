@@ -27,7 +27,7 @@ if !(_quiet) then {
 private _data = [];
 //get all server data
 {
-	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison" or (_x select [0,4]) == "ace_" or (_x select [0,4]) == "cba_" or (_x select [0,4]) == "bis_") then {
+	if !(_x == "StartupType" || _x == "recruits" || _x == "squads" || (_x select [0,11]) == "resgarrison" || (_x select [0,4]) == "ace_" || (_x select [0,4]) == "cba_" || (_x select [0,4]) == "bis_") then {
 		_val = server getVariable _x;
 		if !(isNil "_val") then {
 			if(typename _val == "ARRAY") then {

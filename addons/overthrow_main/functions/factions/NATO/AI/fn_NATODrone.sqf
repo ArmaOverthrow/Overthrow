@@ -27,7 +27,7 @@ _drone spawn {
                     if(_ty == OT_workshopBuilding) exitWith {
                         _targets pushback ["WS",position _x,50,_x];
                     };
-                    if(((_x isKindOf "Car") or (_x isKindOf "Air") or (_x isKindOf "Ship")) and !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
+                    if(((_x isKindOf "Car") || (_x isKindOf "Air") || (_x isKindOf "Ship")) and !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
                         if !(side _x == west) then {
                             if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
                                 _targets pushback ["V",position _x,0,_x];

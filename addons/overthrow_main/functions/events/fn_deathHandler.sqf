@@ -169,7 +169,7 @@ call {
 		};
 		[_town,-1] call OT_fnc_stability;
 	};
-	if(!isNil "_garrison" or !isNil "_vehgarrison" or !isNil "_airgarrison") then {
+	if(!isNil "_garrison" || !isNil "_vehgarrison" || !isNil "_airgarrison") then {
 		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
 		if(!isNil "_garrison") then {
 			server setVariable ["NATOresourceGain",(server getVariable ["NATOresourceGain",0])+1,true];
@@ -237,7 +237,7 @@ if(_standingChange != 0) then {
 		};
 	}foreach (_me nearObjects 15);
 };
-if((_killer call OT_fnc_unitSeen) or (_standingChange < -9)) then {
+if((_killer call OT_fnc_unitSeen) || (_standingChange < -9)) then {
 	_killer setCaptive false;
 	if(vehicle _killer != _killer) then {
 		{
