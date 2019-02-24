@@ -13,7 +13,7 @@
 
     Optional Parameters:
       1 Number            Water position. Default is only land positions allowed.
-                            0   Find closest land. Search outwards 360 degrees (20 degree steps) and 20m steps.
+                            0   Find closest land. Search outwards 360 degrees (20 degree steps) && 20m steps.
                             1   Allow water positions.
                             2   Find only water positions.
       2 Array or String   One or multiple blacklist area markers which are excluded from the main marker area.
@@ -22,7 +22,7 @@
                             1   Vehicle or vehicle type to fit into an empty space.
 
                             Examples:
-                              [...,[300,heli]]       Array with distance and vehicle object.
+                              [...,[300,heli]]       Array with distance && vehicle object.
                               [...,350]              Only distance given
                               [...,(typeof heli)]    Only vehicle type given
                               [...,heli]             Only vehicle object given
@@ -33,9 +33,9 @@
       1 Array or Number     Distance from anchor.
 
     Optional Parameters:
-      2 Array of Number     Direction from anchor. Default is random between 0 and 360.
+      2 Array of Number     Direction from anchor. Default is random between 0 && 360.
       3 Number              Water position. Default is only land positions allowed.
-                              0   Find closest land. Search outwards 360 degrees (20 degree steps) and 20m steps.
+                              0   Find closest land. Search outwards 360 degrees (20 degree steps) && 20m steps.
                               1   Allow water positions.
                               2   Find only water positions.
       4 Array               Road positions.
@@ -49,7 +49,7 @@
                               1   Vehicle or vehicle type to fit into an empty space.
 
                             Examples:
-                              [...,[300,heli]]       Array with distance and vehicle object.
+                              [...,[300,heli]]       Array with distance && vehicle object.
                               [...,350]              Only distance given
                               [...,(typeof heli)]    Only vehicle type given
                               [...,heli]             Only vehicle object given

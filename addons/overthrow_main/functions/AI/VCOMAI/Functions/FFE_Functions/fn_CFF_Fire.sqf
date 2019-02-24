@@ -83,7 +83,7 @@ while {(_rest > 0)} do
 	}
 	foreach _guns;
 		
-	if (not (_rest0 > _rest) and (_rest > 0)) exitWith {_bad = true}
+	if (not (_rest0 > _rest) && (_rest > 0)) exitWith {_bad = true}
 };
 		
 if (_bad) exitWith {-1};
@@ -113,7 +113,7 @@ if (_bad) exitWith {-1};
 				
 				_newEta = _vh getArtilleryETA [_pos,_ammoC];
 				
-				if (not (isNil "_newEta") and {((_newEta < _eta) or (_eta < 0))}) then
+				if (not (isNil "_newEta") && {((_newEta < _eta) or (_eta < 0))}) then
 				{
 					_eta = _newEta
 				};

@@ -32,7 +32,7 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 }foreach(_playerstock);
 
 {
-	if (!(_x isKindOf "Animal") and !(_x isKindOf "CaManBase") and alive _x and (damage _x) isEqualTo 0) then {
+	if (!(_x isKindOf "Animal") && !(_x isKindOf "CaManBase") && alive _x && (damage _x) isEqualTo 0) then {
 		_cls = typeof _x;
 		_name = _cls call OT_fnc_vehicleGetName;
 		_pic = _cls call OT_fnc_vehicleGetPic;

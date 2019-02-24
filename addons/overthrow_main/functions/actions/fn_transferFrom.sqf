@@ -32,7 +32,7 @@ _doTransfer = {
 	[5,false] call OT_fnc_progressBar;
 	_end = time + 5;
 	
-	// Dummy CBA remove calls to strip weapons and replace with non-preset types
+	// Dummy CBA remove calls to strip weapons && replace with non-preset types
 	[_target, "Bag_Base"] call CBA_fnc_removeBackpackCargo;
 	[_target, "FakeWeapon"] call CBA_fnc_removeWeaponCargo;
 	
@@ -51,7 +51,7 @@ _doTransfer = {
 
 		_full = false;
 		while {_count < (_x select 1)} do {
-			if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd _cls)) exitWith {
+			if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") && !(_veh canAdd _cls)) exitWith {
 				_full = true;
 			};
 			_count = _count + 1;

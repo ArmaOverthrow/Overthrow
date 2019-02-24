@@ -6,7 +6,7 @@ _standing = _this select 2;
 _price = 0;
 
 
-if(_cls in (OT_allWeapons + OT_allMagazines) and (_town in OT_allTowns)) then {
+if(_cls in (OT_allWeapons + OT_allMagazines) && (_town in OT_allTowns)) then {
 	_stock = server getVariable format["gunstock%1",_town];
 	{
 		if((_x select 0) isEqualTo _cls) exitWith {_price = _x select 1};

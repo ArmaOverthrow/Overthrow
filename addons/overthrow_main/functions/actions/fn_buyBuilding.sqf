@@ -24,9 +24,9 @@ if(_handled) then {
 	_totaloccupants = _b select 4;
 	_town = (getpos _building) call OT_fnc_nearestTown;
 
-	_money = player getVariable "money";
+	_money = player getVariable ["money",0];
 
-	if(_type isEqualTo "buy" and _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
+	if(_type isEqualTo "buy" && _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
 
 
 	_mrkid = format["bdg-%1",_building];

@@ -11,7 +11,7 @@ if(_trade > 1) then {
 	_discount = 0.02 * (_trade - 1);
 };
 
-if((_town in OT_allTowns) and _cls in (OT_allWeapons + OT_allMagazines + OT_illegalItems + OT_allStaticBackpacks)) then {
+if((_town in OT_allTowns) && _cls in (OT_allWeapons + OT_allMagazines + OT_illegalItems + OT_allStaticBackpacks)) then {
 	_stock = server getVariable format["gunstock%1",_town];
 	{
 		if((_x select 0) isEqualTo _cls) exitWith {_price = _x select 1};
@@ -30,7 +30,7 @@ if((_town in OT_allTowns) and _cls in (OT_allWeapons + OT_allMagazines + OT_ille
 	if(_town isEqualTo OT_nation) then {_population = 100};
 	if(_population > 2000) then {_population = 2000};
 	_population = 1-(_population / 2000);
-	if(_cls isEqualTo "WAGE" and _town != OT_nation) then {
+	if(_cls isEqualTo "WAGE" && _town != OT_nation) then {
 		_population = (_population / 2000);
 	};
 

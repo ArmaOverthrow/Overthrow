@@ -56,9 +56,9 @@ OT_NATO_Unit_HVT = "B_T_Officer_F";
 			_role = getText (_x >> "role");
 			if(_role in ["MachineGunner","Rifleman","CombatLifeSaver"]) then {OT_NATO_Units_LevelOne pushback _name};
 			if(_role in ["MissileSpecialist","Assistant","Grenadier","Marksman"]) then {OT_NATO_Units_LevelTwo pushback _name};
-			if(_role isEqualTo "Marksman" and (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
-			if(_role isEqualTo "Marksman" and (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
-			if(_role isEqualTo "MissileSpecialist" and (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
+			if(_role isEqualTo "Marksman" && (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
+			if(_role isEqualTo "Marksman" && (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
+			if(_role isEqualTo "MissileSpecialist" && (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
 		};
 	};
 }foreach(format["(getNumber(_x >> 'scope') isEqualTo 2) && (getText(_x >> 'faction') isEqualTo '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
@@ -85,7 +85,7 @@ if((server getVariable "StartupType") isEqualTo "NEW" or (server getVariable ["N
 	sleep 0.2;
 	{
 		_stability = server getVariable format ["stability%1",_x];
-		if(_stability < 11 and !(_x in _abandoned)) then {
+		if(_stability < 11 && !(_x in _abandoned)) then {
 			_abandoned pushback _x;
 		};
 	}foreach (OT_allTowns);

@@ -10,7 +10,7 @@ modeFinished = false;
 modeCancelled = false;
 call {
 	if(_typecls isEqualTo "Camp") exitWith {attachAt = [0,3.5,1.1];modeValues = [OT_item_Tent];_cost=40;_description="Creates a fast travel destination for all friendlies. Only one allowed per player, will remove any existing camps."};
-	if(_typecls isEqualTo "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_flag_IND];_cost=250;_description="Creates a fast travel destination for all friendlies and enables build mode for basic military structures"};
+	if(_typecls isEqualTo "Base") exitWith {attachAt = [0,6,4];modeValues = [OT_flag_IND];_cost=250;_description="Creates a fast travel destination for all friendlies && enables build mode for basic military structures"};
 	if(_typecls isEqualTo "Ammobox") exitWith {modeValues = [OT_item_Storage];_cost=60;_description="Another empty ammobox to fill with items you have acquired through.. various means."};
 	if(_typecls isEqualTo "Whiteboard") exitWith {modeValues = [OT_item_Map];_cost=20;_description="Plan out your next assault in the middle of the jungle."};
 	{
@@ -18,7 +18,7 @@ call {
 	}foreach(OT_Placeables);
 };
 //Price check (on aisle 3)
-_money = player getVariable "money";
+_money = player getVariable ["money",0];
 if(_cost > _money) exitWith {format["You cannot afford that, you need $%1",_cost] call OT_fnc_notifyMinor};
 
 if !([getpos player,_typecls] call OT_fnc_canPlace) exitWith {
@@ -189,7 +189,7 @@ if(_cost > 0) then {
 				onNameKeyDown = {
 					_key = _this select 1;
 					_name = ctrltext 1400;
-					if(_key isEqualTo 28 and _name != "") exitWith {
+					if(_key isEqualTo 28 && _name != "") exitWith {
 						[] call onNameDone;
 						true
 					};
@@ -233,7 +233,7 @@ if(_cost > 0) then {
 		};
 	};
 }else{
-	if(_typecls != "Camp" and _typecls != "Base") then {
+	if(_typecls != "Camp" && _typecls != "Base") then {
 		"To place this item you must be near a base or a building that you own" call OT_fnc_notifyMinor;
 	}else{
 		"You cannot place a camp/base near a building you own. Bases must also be built away from towns." call OT_fnc_notifyMinor;

@@ -125,7 +125,7 @@ while {RydFFE_Active} do
 
 				if not (_isCiv) then
 				{
-					if (not (isNull _gp) and (alive (leader _gp))) then
+					if (not (isNull _gp) && (alive (leader _gp))) then
 					{
 						if ((side _gp) in _eSides) then
 						{

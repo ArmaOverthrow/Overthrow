@@ -1,4 +1,4 @@
-/*  Select a random position based on anchor position, direction and distance.
+/*  Select a random position based on anchor position, direction && distance.
      In: [position,distance,direction,water,road,emptySpace]
     Out: position
 */
@@ -13,7 +13,7 @@ _empty = if (count _this > 5) then {_this select 5} else {[]};
 // Object instead of position array given
 if (typename _org isEqualTo "OBJECT") then {_org = getpos _org};
 
-// Distance given as an array of min and max. Pick a random between them.
+// Distance given as an array of min && max. Pick a random between them.
 if (typename _dst isEqualTo "ARRAY") then {
   private ["_min","_max"];
   _min = _dst select 0;
@@ -21,7 +21,7 @@ if (typename _dst isEqualTo "ARRAY") then {
   _dst = (_min + random(_max - _min));
 };
 
-// Direction given as an array of min and max. Pick a random dir between them.
+// Direction given as an array of min && max. Pick a random dir between them.
 if (typename _dir isEqualTo "ARRAY") then {
   private ["_min","_max","_ang"];
   _min = _dir select 0;

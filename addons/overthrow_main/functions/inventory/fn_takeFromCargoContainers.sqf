@@ -6,7 +6,7 @@ _gotit = false;
    _c = _x;
    {
        _x params ["_cls","_amt"];
-       if(_cls isEqualTo _input and _amt >= _num) exitWith {
+       if(_cls isEqualTo _input && _amt >= _num) exitWith {
            [_c, _cls, _num] call CBA_fnc_removeItemCargo;
            _gotit = true;
        };

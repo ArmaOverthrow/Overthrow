@@ -25,7 +25,7 @@ private _cc = 0;
 	if(_key isEqualTo "civilians") then {
 		{
 			_y = _x select 0;
-			if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+			if((_y select [0,4]) != "ace_" && (_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
 				OT_civilians setVariable [_x select 0,_x select 1,true];
 			};
 		}foreach(_val);
@@ -34,7 +34,7 @@ private _cc = 0;
 	if(_key isEqualTo "buildingpositions") then {
 		{
 			_y = _x select 0;
-			if((_y select [0,4]) != "ace_" and (_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+			if((_y select [0,4]) != "ace_" && (_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
 				buildingpositions setVariable [_x select 0,_x select 1,true];
 			};
 		}foreach(_val);
@@ -61,13 +61,13 @@ private _cc = 0;
 			_mrkid setMarkerText _name;
 		}foreach(_val);
 	};
-	if((_key isEqualTo "warehouse") and (typename _val) isEqualTo "ARRAY") then {
+	if((_key isEqualTo "warehouse") && (typename _val) isEqualTo "ARRAY") then {
 		_set = false;
 		{
 			if(typename _x isEqualTo "ARRAY") then {
 				_y = _x select 0;
 				if(typeName _y != "CODE") then {
-					if((_y select [0,4]) != "cba_" and (_y select [0,4]) != "bis_") then {
+					if((_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
 						warehouse setVariable [_x select 0,_x,true];
 					};
 				};
@@ -227,8 +227,8 @@ private _cc = 0;
 		};
 	};
 
-	if(_set and !(isNil "_val")) then {
-		if((_key select [0,4]) != "ace_" and (_key select [0,4]) != "cba_" and (_key select [0,4]) != "bis_") then {
+	if(_set && !(isNil "_val")) then {
+		if((_key select [0,4]) != "ace_" && (_key select [0,4]) != "cba_" && (_key select [0,4]) != "bis_") then {
 			if(typename _val isEqualTo "ARRAY") then {
 				//make a copy
 				_orig = _val;
@@ -258,7 +258,7 @@ sleep 0.2;
 		{
 			_x params ["_cls","_loadout"];
 
-			if(_cls != "HMG" and _cls != "GMG") then {
+			if(_cls != "HMG" && _cls != "GMG") then {
 				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
@@ -278,7 +278,7 @@ sleep 0.2;
 		spawner setVariable [format["resgarrison%1",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
-			if(_cls != "HMG" and _cls != "GMG") then {
+			if(_cls != "HMG" && _cls != "GMG") then {
 				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];

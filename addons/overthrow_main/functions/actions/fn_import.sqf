@@ -9,7 +9,7 @@ _total = (_num * _price);
 private _veh = (vehicle player);
 
 if((player getVariable ["money",0]) < _total) exitWith {format["You need $%1",[_total, 1, 0, true] call CBA_fnc_formatNumber] call OT_fnc_notifyMinor;OT_taking = false};
-if ((!(_veh isKindOf "Truck_F")) and (!(_veh canAdd [_cls,_num]))) exitWith {hint "This vehicle cannot fit that, use a truck for more storage";OT_taking = false};
+if ((!(_veh isKindOf "Truck_F")) && (!(_veh canAdd [_cls,_num]))) exitWith {hint "This vehicle cannot fit that, use a truck for more storage";OT_taking = false};
 
 _count = 0;
 

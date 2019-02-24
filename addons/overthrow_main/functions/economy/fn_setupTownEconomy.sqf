@@ -48,11 +48,11 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 		};
 	}foreach(OT_itemCategoryDefinitions);
 }else{
-	//Find shop buildings and distribute categories to them
+	//Find shop buildings && distribute categories to them
 	{
 		private _pos = getpos _x;
 		//Ensure shops are not found twice (overlapping town search radius)
-		if (!(_pos in OT_allShops) and (random 100 < _chance)) then {
+		if (!(_pos in OT_allShops) && (random 100 < _chance)) then {
 			_category = "General";
 			_rnd = random 100;
 			call {

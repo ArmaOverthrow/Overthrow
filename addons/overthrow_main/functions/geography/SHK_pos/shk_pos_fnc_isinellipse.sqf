@@ -12,7 +12,7 @@ _size  = getMarkerSize _area;
 _sizeX = _size select 0;
 _sizeY = _size select 1;
 
-// Direction and make sure it's between 0 and 360.
+// Direction && make sure it's between 0 && 360.
 private ["_dir"];
 _dir = markerDir _area;
 _dir = _dir % 360;
@@ -39,7 +39,7 @@ private ["_posX","_posY"];
 _posX = _pos select 0;
 _posY = _pos select 1;
 
-// Distance between dot and ellipse center
+// Distance between dot && ellipse center
 private ["_dstX","_dstY"];
 _dstX = abs(_posX - _centerX);
 _dstY = abs(_posY - _centerY);

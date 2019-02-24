@@ -37,7 +37,7 @@ if (_shape isEqualTo "ICON") then {
       // Add the point position to the array to have it shifted by the FOR below
       _corners set [4,_pos];
       
-      // Rotate each corner position so that the rectangle is aligned with x and y axises
+      // Rotate each corner position so that the rectangle is aligned with x && y axises
       // Use origo as center while rotating, but for comparison shift positions back
       private ["_posCor","_posNew","_orgX","_orgY","_shiftedX","_shiftedY","_newX","_newY"];
       for "_i" from 0 to (count _corners - 1) do {

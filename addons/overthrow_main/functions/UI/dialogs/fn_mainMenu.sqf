@@ -6,7 +6,7 @@ createDialog "OT_dialog_main";
 openMap false;
 
 private _ft = server getVariable ["OT_fastTravelType",1];
-if(!OT_adminMode and _ft > 1) then {
+if(!OT_adminMode && _ft > 1) then {
 	ctrlEnable [1600,false];
 };
 
@@ -53,7 +53,7 @@ _ctrl ctrlSetStructuredText parseText format["
 ",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0],_extra,[OT_nation,"FUEL",100] call OT_fnc_getPrice,OT_nation];
 
 _ctrl = (findDisplay 8001) displayCtrl 1106;
-_ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber];
+_ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber];
 
 
 sleep 0.2;

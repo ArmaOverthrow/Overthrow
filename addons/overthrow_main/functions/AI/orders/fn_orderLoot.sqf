@@ -53,7 +53,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			_active = false;
 		};
 
-		while {true and _active} do {
+		while {true && _active} do {
 			_deadguys = [];
 			{
 				if !((_x distance _unit > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
@@ -87,7 +87,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 				if !(isNull _weapon) then {
 					_unit doMove getpos _weapon;
 					waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 12) or (_timeOut < time)};
-					if(alive _unit and (_timeOut > time)) then {
+					if(alive _unit && (_timeOut > time)) then {
 						_s = (weaponsItems _weapon) select 0;
 
 						_unit addWeapon ([(_s select 0)] call BIS_fnc_baseWeapon);
@@ -115,7 +115,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 
 			sleep 1;
 		};
-		while {true and _active} do {
+		while {true && _active} do {
 			_got = false;
 			_weapon = objNull;
 			{
@@ -131,7 +131,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			_timeout = time + 120;
 			_unit doMove getpos _weapon;
 			waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 10) or (_timeOut < time) or (unitReady _unit)};
-			if(alive _unit and (_timeOut > time)) then {
+			if(alive _unit && (_timeOut > time)) then {
 				_s = (weaponsItems _weapon) select 0;
 				_cls = (_s select 0);
 				_unit addWeapon ([(_s select 0)] call BIS_fnc_baseWeapon);

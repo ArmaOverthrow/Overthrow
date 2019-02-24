@@ -208,7 +208,7 @@ if(OT_hasTFAR) then {
 	]] call BIS_fnc_arrayPushStack;
 };
 
-//Detecting vehicles and weapons
+//Detecting vehicles && weapons
 
 OT_boats = [
 	["C_Scooter_Transport_01_F",150,1,0,1],
@@ -281,7 +281,7 @@ private _allVehs = "
 	OT_vehicles pushback [_cls,_cost,0,getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"),2];
 	OT_allVehicles pushback _cls;
 	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") isEqualTo "CIV_F") then {
-		if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" and getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
+		if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" && getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
 			OT_vehTypes_civ pushback _cls;
 
 			if(_cost > _mostExpensive)then {
@@ -450,7 +450,7 @@ OT_allGoggles = [];
 			};
 			OT_allGlasses pushback _name;
 		};
-		if(isServer and _name != "None") then {
+		if(isServer && _name != "None") then {
 			cost setVariable [_name,[_m*3,0,0,ceil(_m*0.5)],true];
 		};
 	};
@@ -463,7 +463,7 @@ OT_allGoggles = [];
 	_flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
 	_numblueprints = 0;
 
-	//Get vehicles and weapons
+	//Get vehicles && weapons
 	private _vehicles = [];
 	private _weapons = [];
 	private _blacklist = ["Throw","Put","NLAW_F"];
@@ -503,7 +503,7 @@ OT_allGoggles = [];
 		spawner setVariable [format["facweapons%1",_name],_weapons,true];
 		spawner setVariable [format["facvehicles%1",_name],_vehicles,true];
 	};
-	if(_side > -1 and _numblueprints > 0) then {
+	if(_side > -1 && _numblueprints > 0) then {
 		OT_allFactions pushback [_name,_title,_side,_flag];
 	};
 }foreach(_allFactions);
@@ -586,7 +586,7 @@ OT_allGoggles = [];
 					if(_cost > 300) then {
 						OT_allExpensiveVests pushback _name;
 					};
-					if(_cost < 300 and _cost > 40) then {
+					if(_cost < 300 && _cost > 40) then {
 						OT_allCheapVests pushback _name;
 					};
 				};
@@ -609,7 +609,7 @@ OT_allLegalClothing = [];
 	OT_allClothing pushback _name;
 	_c = _name splitString "_";
 	_side = _c select 1;
-	if((_name isEqualTo "V_RebreatherIA" or _side isEqualTo "C" or _side isEqualTo "I") and (_c select (count _c - 1) != "VR")) then {
+	if((_name isEqualTo "V_RebreatherIA" or _side isEqualTo "C" or _side isEqualTo "I") && (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
 	cost setVariable [_name,[_cost,0,0,1],true];
@@ -631,7 +631,7 @@ OT_allLegalClothing = [];
 {
 	_name = configName _x;
 	_m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and (_name != "NLAW_F") and !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
+	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
 		_cost = round(_m * 4);
 		_desc = getText(_x >> "descriptionShort");
 		if((_desc find ".408") > -1) then {
@@ -689,7 +689,7 @@ if(isServer) then {
 	//Remainding vehicle costs
 	{
 		_name = configName _x;
-		if((_name isKindOf "AllVehicles") and !(_name in OT_allVehicles)) then {
+		if((_name isKindOf "AllVehicles") && !(_name in OT_allVehicles)) then {
 			_multiply = 80;
 			if(_name isKindOf "Air") then {_multiply = 700}; //Planes/Helis have less armor
 
@@ -798,11 +798,11 @@ OT_Buildables = [
 		["Land_CampingTable_F",[-0.0490456,-1.74478,0],0,1,0,[],"","",true,false],
 		["Land_CampingChair_V2_F",[-1.44146,-1.7173,0],223.485,1,0,[],"","",true,false],
 		["Land_ClutterCutter_large_F",[0,0,0],0,1,0,[],"","",true,false]
-	],"OT_fnc_initTrainingCamp",true,"Allows training of recruits and hiring of mercenaries"],
+	],"OT_fnc_initTrainingCamp",true,"Allows training of recruits && hiring of mercenaries"],
 	["Bunkers",500,["Land_BagBunker_01_small_green_F","Land_HBarrier_01_big_tower_green_F","Land_HBarrier_01_tower_green_F"],"",false,"Small Defensive Structures. Press space to change type."],
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Informs helicopter pilots of where might be a nice place to land"],
-	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"OT_fnc_initObservationPost",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
+	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"OT_fnc_initObservationPost",false,"Includes unarmed personnel to keep an eye over the area && provide intel on enemy positions"],
 	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
 	["Guard Tower",5000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need?."],
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
@@ -813,8 +813,8 @@ OT_Buildables = [
 		["Land_WeldingTrolley_01_F",[-3.53163,1.73366,0],87.0816,1,0,[],"","",true,false],
 		["Land_ToolTrolley_02_F",[-3.47775,3.5155,0],331.186,1,0,[],"","",true,false]
 	],"OT_fnc_initWorkshop",true,"Attach weapons to vehicles"],
-	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
-	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."],
+	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
+	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town && keep the peace. Comes with 2 units."],
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
 	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"]
 ];
@@ -832,14 +832,14 @@ OT_Buildables = [
 //Items you can place
 OT_Placeables = [
 	["Sandbags",20,["Land_BagFence_01_long_green_F","Land_BagFence_01_short_green_F","Land_BagFence_01_round_green_F","Land_BagFence_01_corner_green_F","Land_BagFence_01_end_green_F"],[0,3,0.8],"Bags filled with lots of sand. Apparently this can stop bullets or something?"],
-	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2],"Large and terribly flimsy structures that may or may not obscure your forces from airborne units."],
+	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2],"Large && terribly flimsy structures that may or may not obscure your forces from airborne units."],
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2],"Really big sandbags, basically."],
 	["Map",30,[OT_item_Map],[0,2,1.2],"Use these to save your game, change options or check town info."],
-	["Safe",50,[OT_item_Safe],[0,2,0.5],"Store and retrieve money"],
-	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels and lights"]
+	["Safe",50,[OT_item_Safe],[0,2,0.5],"Store && retrieve money"],
+	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels && lights"]
 ];
 
-//People you can recruit, and squads are composed of
+//People you can recruit, && squads are composed of
 OT_Recruitables = [
 	["I_soldier_F","AssaultRifle","",200,"",""], //0
 	["I_soldier_AR_F","MachineGun","",200,"",""], //1

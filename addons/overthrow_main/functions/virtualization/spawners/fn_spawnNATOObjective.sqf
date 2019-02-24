@@ -12,7 +12,7 @@ if(isNil "_numNATO") then {
 	server setVariable [format["garrison%1",_name],_numNATO,true];
 };
 
-//Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
+//Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist && AA assistant
 _count = 0;
 if(_name in OT_allComms) then {
 	_group = createGroup blufor;
@@ -167,7 +167,7 @@ while {_count < _numNATO} do {
 	}foreach(allcurators);
 
 	_count = _count + 1;
-	while {(_count < _numNATO) and (_groupcount < 8)} do {
+	while {(_count < _numNATO) && (_groupcount < 8)} do {
 		_start = _start findEmptyPosition [0,50];
 
 		_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
@@ -268,7 +268,7 @@ _road = objNull;
 //HVTs
 {
 	_x params ["_id","_loc","_status"];
-	if(_loc isEqualTo _name and _status isEqualTo "") then {
+	if(_loc isEqualTo _name && _status isEqualTo "") then {
 		_group = createGroup blufor;
 		_groups pushBack _group;
 		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;

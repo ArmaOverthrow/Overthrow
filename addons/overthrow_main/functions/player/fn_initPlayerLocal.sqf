@@ -10,7 +10,7 @@ if !(isMultiplayer) then {
 	while {true} do {
 		sleep 3;
 		{
-			if(local _x and count (units _x) isEqualTo 0) then {
+			if(local _x && count (units _x) isEqualTo 0) then {
 				deleteGroup _x;
 			};
 		}foreach(allGroups);
@@ -18,8 +18,8 @@ if !(isMultiplayer) then {
 };
 
 if (!hasInterface) exitWith {};
-if(isNil "bigboss" and typeof player isEqualTo "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
-if(count ([] call CBA_fnc_players) isEqualTo 1 and isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
+if(isNil "bigboss" && typeof player isEqualTo "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
+if(count ([] call CBA_fnc_players) isEqualTo 1 && isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
 if(isNil {server getVariable "generals"}) then {server setVariable ["generals",[getplayeruid player]]};
 
@@ -33,7 +33,7 @@ removeVest player;
 
 player linkItem "ItemMap";
 
-if(isMultiplayer and (!isServer)) then {
+if(isMultiplayer && (!isServer)) then {
 	//TFAR Support, thanks to Dedmen for the help
 	[] call OT_fnc_initTFAR;
 	call compile preprocessFileLineNumbers "initVar.sqf";
@@ -54,8 +54,8 @@ showCinemaBorder false;
 introcam = _introcam;
 
 
-if(player isEqualTo bigboss and (server getVariable ["StartupType",""] isEqualTo "")) then {
-    waitUntil {!(isnull (findDisplay 46)) and OT_varInitDone};
+if(player isEqualTo bigboss && (server getVariable ["StartupType",""] isEqualTo "")) then {
+    waitUntil {!(isnull (findDisplay 46)) && OT_varInitDone};
     sleep 1;
     _nul = createDialog "OT_dialog_start";
 }else{
@@ -106,7 +106,7 @@ if(isMultiplayer or _startup isEqualTo "LOAD") then {
 		_pos = server getVariable _town;
 		{
 			if(_x call OT_fnc_hasOwner) then {
-				if ((_x call OT_fnc_playerIsOwner) and !(_x isKindOf "LandVehicle") and !(_x isKindOf "Building")) then {
+				if ((_x call OT_fnc_playerIsOwner) && !(_x isKindOf "LandVehicle") && !(_x isKindOf "Building")) then {
 					_furniture pushback _x
 				};
 			};
@@ -323,12 +323,12 @@ player addEventHandler ["GetInMan",{
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
-			if((_veh getVariable ["ambient",false]) and (player call OT_fnc_unitSeenAny)) then {
+			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
 				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
 			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {
-				if(!_isgen and (_veh getVariable ["OT_locked",false])) then {
+				if(!_isgen && (_veh getVariable ["OT_locked",false])) then {
 					moveOut player;
 					format["This vehicle has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)] call OT_fnc_notifyMinor;
 				};

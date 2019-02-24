@@ -509,7 +509,7 @@ class FSM
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
                                         condition=/*%FSM<CONDITION""">*/"((behaviour _leader) isEqualTo ""COMBAT"") && {!(_VCOM_GARRISONED)} && {_leader distance (_leader call VCM_fnc_ClstEmy) > 400}" \n
                                          ""/*%FSM</CONDITION""">*/;
-                                        action=/*%FSM<ACTION""">*/"// return behaviour and speed to normal" \n
+                                        action=/*%FSM<ACTION""">*/"// return behaviour && speed to normal" \n
                                          "_Beh = ""SAFE"";" \n
                                          "_leader setBehaviour _StartingBehavior;" \n
                                          "(group _leader) setSpeedMode ""NORMAL"";" \n

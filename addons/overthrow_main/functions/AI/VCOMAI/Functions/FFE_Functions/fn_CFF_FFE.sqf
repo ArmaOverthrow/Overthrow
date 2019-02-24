@@ -29,7 +29,7 @@ _batname = str _battery1;
 //_artyGp = group _batlead;
 
 _isTaken = (group _target) getVariable ["CFF_Taken",false];
-if ((_isTaken) and (RydFFE_Monogamy)) exitWith 
+if ((_isTaken) && (RydFFE_Monogamy)) exitWith 
 {
 	{
 		if not (isNull _x) then
@@ -43,7 +43,7 @@ if ((_isTaken) and (RydFFE_Monogamy)) exitWith
 (group _target) setVariable ["CFF_Taken",true];
 
 _phaseF = [1,2];
-if ((RydFFE_OnePhase) or ((count RydFFE_FO) == 0) and not (RydFFE_2PhWithoutFO)) then {_phaseF = [1]};
+if ((RydFFE_OnePhase) or ((count RydFFE_FO) == 0) && not (RydFFE_2PhWithoutFO)) then {_phaseF = [1]};
 
 _targlead = vehicle (leader _target);
 
@@ -113,7 +113,7 @@ _amount2 = _amount - _amount1;
 		{
 			_vh = vehicle _x;
 			_vhMags = magazines _vh; 
-			if (not (_vh isEqualTo _x) and {(count _vhMags) > 0}) then
+			if (not (_vh isEqualTo _x) && {(count _vhMags) > 0}) then
 			{
 				_ammoC = _vhMags select 0;
 				
@@ -127,7 +127,7 @@ _amount2 = _amount - _amount1;
 				
 				_newEta = _vh getArtilleryETA [_targetPosATL,_ammoC];
 				
-				if (not (isNil "_newEta") and {((_newEta < _eta) or (_eta < 0))}) then
+				if (not (isNil "_newEta") && {((_newEta < _eta) or (_eta < 0))}) then
 				{
 					_eta = _newEta
 				}
@@ -230,7 +230,7 @@ _amount2 = _amount - _amount1;
 		{
 			_vh = vehicle _x;
 			_vhMags = magazines _vh; 
-			if (not (_vh isEqualTo _x) and {(count _vhMags) > 0}) then
+			if (not (_vh isEqualTo _x) && {(count _vhMags) > 0}) then
 			{
 				_ammoC = _vhMags select 0;
 				
@@ -244,7 +244,7 @@ _amount2 = _amount - _amount1;
 				
 				_newEta = _vh getArtilleryETA [_exTargetPosATL,_ammoC];
 				
-				if (not (isNil "_newEta") and {((_newEta < _eta) or (_eta < 0))}) then
+				if (not (isNil "_newEta") && {((_newEta < _eta) or (_eta < 0))}) then
 				{
 					_eta = _newEta
 				}
@@ -418,7 +418,7 @@ _amount2 = _amount - _amount1;
 	_spotterF = 0.2 + (random 0.2);
 	_anotherA = 1 + _gauss1b;
 	if not (isNil ("RydFFE_FOAccGain")) then {_spotterF = RydFFE_FOAccGain + (random 0.2)};
-	if (((count _phaseF) == 2) and (_x == 1) or ((count _phaseF) == 1)) then {_spotterF = 1};
+	if (((count _phaseF) == 2) && (_x == 1) or ((count _phaseF) == 1)) then {_spotterF = 1};
 
 	_acc = _spotterF * _againF * _accF * ((_AdistF * _AdamageF) + (50 * _AweatherF * _anotherA)) / _Areduct;
 
@@ -610,7 +610,7 @@ _amount2 = _amount - _amount1;
 			_mark = _markers select ((count _markers) -1);
 		};
 
-		while {(not (_rEta < 5) and not (_TOF > 200) and (_alive))} do
+		while {(not (_rEta < 5) && not (_TOF > 200) && (_alive))} do
 		{
 			if (
 				({not (isNull _x)} count _batlead) < 1 ||
@@ -685,7 +685,7 @@ _amount2 = _amount - _amount1;
 
 		if not (_alive) exitWith {_waitFor = false};
 
-		if (((count _phaseF) == 2) and (_x == 1)) then 
+		if (((count _phaseF) == 2) && (_x == 1)) then 
 		{
 			_alive = true;
 			_splash = false;

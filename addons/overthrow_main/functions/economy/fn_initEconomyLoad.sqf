@@ -33,7 +33,7 @@ if(_version < OT_economyVersion) then {
         while {_count < _num} do {
             _hasjob = true;
             if(_stability < 50) then {
-                if (!_donegang and _x != _spawntown) then {
+                if (!_donegang && _x != _spawntown) then {
                     _hasjob = false;
                 }else{
                     _hasjob = (random 50) > _stability;
@@ -41,7 +41,7 @@ if(_version < OT_economyVersion) then {
             };
 
             //Generate a civilian [identity, has job, cash, superior]
-            //@todo: generate beliefs and traits
+            //@todo: generate beliefs && traits
             _cash = 0;
             if(_hasjob) then {_cash = round random 200} else {
                 if (_x != _spawntown) then {

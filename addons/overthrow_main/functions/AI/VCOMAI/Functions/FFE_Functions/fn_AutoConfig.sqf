@@ -40,7 +40,7 @@ params ["_allArty"];
 						}
 					};
 					
-					if ((_actHit > _maxHit) and {_actHit < 100}) then
+					if ((_actHit > _maxHit) && {_actHit < 100}) then
 					{
 						_maxHit = _actHit;
 						_prim = _x
@@ -75,28 +75,28 @@ params ["_allArty"];
 
 					switch (true) do
 					{
-						case ((isArray _lc) and {not (_illumChosen)}) : 
+						case ((isArray _lc) && {not (_illumChosen)}) : 
 						{
 							_illum = _x;
 							_mags = _mags - [_x];
 							_illumChosen = true
 						};
 					
-					case ((_hit <= 10) and {(_subM isEqualTo "smokeshellarty") and {not (_smokeChosen)}}) : 
+					case ((_hit <= 10) && {(_subM isEqualTo "smokeshellarty") && {not (_smokeChosen)}}) : 
 						{
 							_smoke = _x;
 							_mags = _mags - [_x];
 							_smokeChosen = true
 						};
 					
-					case ((_sim isEqualTo "shotsubmunitions") and {not (_rareChosen)}) : 
+					case ((_sim isEqualTo "shotsubmunitions") && {not (_rareChosen)}) : 
 						{
 							_rare = _x;
 							_mags = _mags - [_x];
 							_rareChosen = true
 						};
 					
-					case ((_hit > 10) and {not ((_secChosen) or {(_rare == _x)})})  : 
+					case ((_hit > 10) && {not ((_secChosen) or {(_rare == _x)})})  : 
 						{
 							_sec = _x;
 							_mags = _mags - [_x];

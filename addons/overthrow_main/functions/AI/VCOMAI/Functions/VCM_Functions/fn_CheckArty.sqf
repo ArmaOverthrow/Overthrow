@@ -29,7 +29,7 @@ private _artyScan = getNumber(configfile/"CfgVehicles"/_class/"artilleryScanner"
 if (isNil "_artyScan") exitWith 
 {
 
-//Check if unit somehow is in the Vcm_ArtilleryArray and remove them.  This can happen to units who were inside artillery pieces but ejected or moved out due to a divine intervention.
+//Check if unit somehow is in the Vcm_ArtilleryArray && remove them.  This can happen to units who were inside artillery pieces but ejected or moved out due to a divine intervention.
 	if (_veh in Vcm_ArtilleryArray) then 
 	{
 		private _t = Vcm_ArtilleryArray findIf {_veh isEqualTo _x};

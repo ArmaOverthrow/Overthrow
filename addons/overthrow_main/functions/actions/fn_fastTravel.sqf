@@ -1,5 +1,5 @@
 private _ft = server getVariable ["OT_fastTravelType",1];
-if(!OT_adminMode and _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_notifyMinor};
+if(!OT_adminMode && _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_notifyMinor};
 
 if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
@@ -23,7 +23,7 @@ if((vehicle player) != player) then {
 };
 if(_exit) exitWith {};
 
-if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
+if(((vehicle player) != player) && (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
 
 if !((vehicle player) call OT_fnc_vehicleCanMove)  exitWith {"This vehicle is unable to move" call OT_fnc_notifyMinor};
 
@@ -52,9 +52,9 @@ openMap true;
 	_ob = _pos call OT_fnc_nearestObjective;
 	_valid = true;
 	_ob params ["_obpos","_obname"];
-	_validob = (_obpos distance _pos < 50) and (_obname in OT_allAirports);
+	_validob = (_obpos distance _pos < 50) && (_obname in OT_allAirports);
 	if !(_validob) then {
-		if (!OT_adminMode and !(_pos inArea _region)) then {
+		if (!OT_adminMode && !(_pos inArea _region)) then {
 			if !([_region,_pos] call OT_fnc_regionIsConnected) then {
 				_valid = false;
 				"You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield" call OT_fnc_notifyMinor;
@@ -75,7 +75,7 @@ openMap true;
 		openMap false;
 	}else{
 		private _ft = server getVariable ["OT_fastTravelType",1];
-		if(_handled and _ft isEqualTo 1 and !OT_adminMode) then {
+		if(_handled && _ft isEqualTo 1 && !OT_adminMode) then {
 			_cost = 0;
 			if((vehicle player) isEqualTo player) then {
 				_cost = ceil((player distance _pos) / 150);

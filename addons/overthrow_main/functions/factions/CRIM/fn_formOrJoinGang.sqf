@@ -18,7 +18,7 @@ if(count _gangs > 0) then {
             _civ set [3,(_gang select 0) select 0];
             if(_townpos call OT_fnc_inSpawnDistance) then {
                 _unit = OT_civilians getVariable [format["spawn%1",_civid],objNull];
-                if(!isNull _unit and alive _unit) then {
+                if(!isNull _unit && alive _unit) then {
                     _group = OT_civilians getVariable [format["gangspawn%1",_gangid],grpNull];
                     _unit setVariable ["OT_gangid",_gangid,true];
                     if(!isNull _group) then {
@@ -44,7 +44,7 @@ if(count _gangs > 0) then {
 
     if(_townpos call OT_fnc_inSpawnDistance) then {
         _unit = OT_civilians getVariable [format["spawn%1",_civid],objNull];
-        if(!isNull _unit and alive _unit and !(_unit call OT_fnc_unitSeenPlayer)) then {
+        if(!isNull _unit && alive _unit && !(_unit call OT_fnc_unitSeenPlayer)) then {
             _group = creategroup opfor;
             _spawnid = spawner getVariable [format["townspawnid%1",_town],"spawn0"];
             spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + [_group],false];

@@ -114,7 +114,7 @@ if((random 100) > 50) then {
 	_unit addItem "MiniGrenade";
 };
 
-if(OT_hasACE and ((random 100) > 90)) then {
+if(OT_hasACE && ((random 100) > 90)) then {
 	_unit addItem "ACE_M84";
 };
 

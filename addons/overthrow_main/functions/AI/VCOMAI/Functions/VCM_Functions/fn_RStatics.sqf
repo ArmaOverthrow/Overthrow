@@ -3,7 +3,7 @@
 	Author: Genesis
 
 	Description:
-		Function for defining the list of units with statics and etc.
+		Function for defining the list of units with statics && etc.
 
 	Parameter(s):
 		0: GROUP - Group to check for statics.

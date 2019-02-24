@@ -10,9 +10,9 @@ if(_price isEqualTo -1) exitWith {};
 
 private _chems = server getVariable ["reschems",0];
 private _cost = cost getVariable [_cls,[0,0,0,0]];
-if(_cls in OT_allExplosives and _chems < (_cost select 3)) exitWith {format["You need %1 chemicals",_cost select 3] call OT_fnc_notifyMinor};
+if(_cls in OT_allExplosives && _chems < (_cost select 3)) exitWith {format["You need %1 chemicals",_cost select 3] call OT_fnc_notifyMinor};
 
-_money = player getVariable "money";
+_money = player getVariable ["money",0];
 if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
 call {
@@ -34,7 +34,7 @@ call {
 		format["You bought a Quad Bike w/ HMG for $%1",_price] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
 	};
-	if(OT_interactingWith getVariable ["factionrep",false] and ((_cls isKindOf "Land") or (_cls isKindOf "Air"))) exitWith {
+	if(OT_interactingWith getVariable ["factionrep",false] && ((_cls isKindOf "Land") or (_cls isKindOf "Air"))) exitWith {
 		_blueprints = server getVariable ["GEURblueprints",[]];
 		if !(_cls in _blueprints) then {
 			_blueprints pushback _cls;
@@ -78,7 +78,7 @@ call {
 		player reveal _veh;
 		format["You bought a Quadcopter",_cls call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 		playSound "3DEN_notificationDefault";
-		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
+		hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground && 'Connect terminal to UAV'";
 	};
 	if(_cls in OT_allVehicles) exitWith {
 		_pos = (getpos player) findEmptyPosition [5,100,_cls];
@@ -120,7 +120,7 @@ call {
 	if(_cls in OT_allClothing) exitWith {
 		[-_price] call OT_fnc_money;
 
-		if((backpack player != "") and (player canAdd _cls)) then {
+		if((backpack player != "") && (player canAdd _cls)) then {
 			player addItemToBackpack _cls;
 			"Clothing added to your backpack" call OT_fnc_notifyMinor;
 		}else{
@@ -131,7 +131,7 @@ call {
 	if(_cls isEqualTo "V_RebreatherIA") exitWith {
 		[-_price] call OT_fnc_money;
 
-		if((backpack player != "") and (player canAdd _cls)) then {
+		if((backpack player != "") && (player canAdd _cls)) then {
 			player addItemToBackpack _cls;
 			"Rebreather added to your backpack" call OT_fnc_notifyMinor;
 		}else{
@@ -172,7 +172,7 @@ call {
 		};
 	}else{
 		_veh = vehicle player;
-		if ((!(_veh isKindOf "Truck_F")) and (!(_veh canAdd [_cls,1]))) exitWith {"This vehicle is full, use a truck for more storage" call OT_fnc_notifyMinor;_handled = false};
+		if ((!(_veh isKindOf "Truck_F")) && (!(_veh canAdd [_cls,1]))) exitWith {"This vehicle is full, use a truck for more storage" call OT_fnc_notifyMinor;_handled = false};
 	};
 
 	if(_handled) then {

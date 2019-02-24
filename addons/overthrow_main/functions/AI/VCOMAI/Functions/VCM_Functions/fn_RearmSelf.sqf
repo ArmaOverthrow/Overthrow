@@ -3,7 +3,7 @@
 	Author: Genesis
 
 	Description:
-		This function will determine if an group is low on ammo and needs to re-arm.
+		This function will determine if an group is low on ammo && needs to re-arm.
 
 	Parameter(s):
 		0: GROUP - Group to check ammo
@@ -20,7 +20,7 @@ if !(vehicle _x isEqualTo _x) exitWith {};
 //The first thing we want to do. Is figure out what ammo this unit is using.
 private _curMag = currentMagazine _x;
 
-//Now, we want to compare this classname to all the other ammo classnames this unit may have and count the number.
+//Now, we want to compare this classname to all the other ammo classnames this unit may have && count the number.
 private _mags = magazines _x;
 
 //Count the total number of mags.

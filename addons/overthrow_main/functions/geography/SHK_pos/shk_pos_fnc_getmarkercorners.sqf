@@ -10,7 +10,7 @@ _center  = getMarkerPos _area;
 _centerX = _center select 0;
 _centerY = _center select 1;
 
-// Direction and make sure it's between 0 and 360.
+// Direction && make sure it's between 0 && 360.
 private ["_dir","_dirCos","_dirSin"];
 _dir    = (markerDir _area) * -1;
 _dir    = _dir % 360;

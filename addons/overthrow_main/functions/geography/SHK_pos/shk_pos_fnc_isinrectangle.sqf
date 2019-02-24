@@ -17,8 +17,8 @@ _topRight   = _corners select 2;
 _right      = _topRight select 0;
 _top        = _topRight select 1;
 
-// x is between left and right
-// y is between bottom and top
+// x is between left && right
+// y is between bottom && top
 if (_dotX >= _left && _dotX < _right && _dotY >= _bottom && _dotY < _top) then {
   _return = true;
 };

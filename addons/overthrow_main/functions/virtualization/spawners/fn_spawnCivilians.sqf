@@ -64,7 +64,7 @@ while {_count < _numCiv} do {
 	_groups pushback _group;
 
 	_home = _town call OT_fnc_getRandomRoadPosition;
-	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
+	while {(_groupcount < _pergroup) && (_count < _numCiv)} do {
 		_pos = [_home,random 360,10] call SHK_pos;
 		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";

@@ -50,7 +50,7 @@ if !(_quiet) then {
 };
 _poses = [];
 {
-	if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+	if((_x select [0,4]) != "ace_" && (_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
 		_poses pushback [_x,buildingpositions getVariable _x];
 	};
 }foreach(allVariables buildingpositions);
@@ -60,7 +60,7 @@ if !(_quiet) then {
 };
 _civs = [];
 {
-	if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+	if((_x select [0,4]) != "ace_" && (_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
 		_civs pushback [_x,OT_civilians getVariable _x];
 	};
 }foreach(allVariables OT_civilians);
@@ -77,7 +77,7 @@ if !(_quiet) then {
 	_d = [];
 	_all = [];
 	{
-		if(_x != "ot_loaded" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,11]) != "MissionData" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		if(_x != "ot_loaded" && _x != "morale" && _x != "player_uid" && _x != "sa_tow_actions_loaded" && _x != "hiding" && _x != "randomValue" && _x != "saved3deninventory" && (_x select [0,11]) != "MissionData" && (_x select [0,4]) != "ace_" && (_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
@@ -101,7 +101,7 @@ _count = 0;
 private _saved = 0;
 {
 	_saved = _saved + 1;
-	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_flag_IND)) then {
+	if(!(_x isKindOf "Man") && (alive _x) && (_x call OT_fnc_hasOwner) && (typeof _x != OT_flag_IND)) then {
 		_owner = _x call OT_fnc_getOwner;
 		_s = _x call OT_fnc_unitStock;
 
@@ -158,7 +158,7 @@ private _warehouse = [];
 {
 	_var = warehouse getVariable _x;
 	if (!isNil "_var") then {
-		if((_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
+		if((_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
 			_warehouse pushback _var;
 		};
 	};
@@ -231,10 +231,10 @@ if !(_quiet) then {
 					_soldiers pushback [typeof _x,getUnitLoadout _x];
 				}else{
 					_veh = vehicle _x;
-					if(someAmmo _veh and (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
 						_soldiers pushback ["HMG",[]];
 					};
-					if(someAmmo _veh and (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
 						_soldiers pushback ["GMG",[]];
 					};
 				};
@@ -260,10 +260,10 @@ if !(_quiet) then {
 					_soldiers pushback [typeof _x,getUnitLoadout _x];
 				}else{
 					_veh = vehicle _x;
-					if(someAmmo _veh and (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
 						_soldiers pushback ["HMG",[]];
 					};
-					if(someAmmo _veh and (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
 						_soldiers pushback ["GMG",[]];
 					};
 				};

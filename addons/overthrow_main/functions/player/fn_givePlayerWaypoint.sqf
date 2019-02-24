@@ -18,7 +18,7 @@ OT_missionMarkerText = _txt;
 
 [_target,_radius,_wp] spawn {
     params ["_target","_radius","_wp"];
-    while {!isNil "_wp" and (player distance waypointPosition _wp) > _radius} do {};
+    while {!isNil "_wp" && (player distance waypointPosition _wp) > _radius} do {};
     if(!isNil "_wp") then {
         while {(count (waypoints group _target)) > 0} do {
             deleteWaypoint ((waypoints group _target) select 0);

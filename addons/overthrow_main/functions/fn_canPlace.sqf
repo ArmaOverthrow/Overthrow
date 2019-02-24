@@ -34,7 +34,7 @@ if(_typecls != "Base") then {
 	if(!_isbase) then {
 		_base = _pos call OT_fnc_nearestObjective;
 		if !(isNil "_base") then {
-			if(((_base select 1) in (server getvariable "NATOabandoned")) and ((_base select 0) distance _pos) < 100) then {
+			if(((_base select 1) in (server getvariable "NATOabandoned")) && ((_base select 0) distance _pos) < 100) then {
 				_isbase = true;
 			};
 		};
@@ -66,7 +66,7 @@ if !(_isbase) then {
 		if(_b call OT_fnc_hasOwner) then {
 			_owner = _b call OT_fnc_getOwner;
 			if(_owner != getplayeruid player) then {
-				if(_typecls != "Camp" and _typecls != "Base") then {
+				if(_typecls != "Camp" && _typecls != "Base") then {
 					_canplace = false;
 				};
 			}else{
@@ -78,7 +78,7 @@ if !(_isbase) then {
 			_canplace = false;
 		};
 	}else{
-		if(_typecls != "Camp" and _typecls != "Base") then {
+		if(_typecls != "Camp" && _typecls != "Base") then {
 			_canplace = false;
 		};
 	};

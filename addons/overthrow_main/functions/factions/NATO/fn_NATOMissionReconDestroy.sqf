@@ -8,7 +8,7 @@ private _abandoned = server getVariable["NATOabandoned",[]];
 {
 	_pos = _x select 0;
 	_name = _x select 1;
-	if(([_pos,_knownPos] call OT_fnc_regionIsConnected) and !(_name in _abandoned)) then {
+	if(([_pos,_knownPos] call OT_fnc_regionIsConnected) && !(_name in _abandoned)) then {
 		_d = (_pos distance _knownPos);
 		if(_d < _dist) then {
 			_dist = _d;

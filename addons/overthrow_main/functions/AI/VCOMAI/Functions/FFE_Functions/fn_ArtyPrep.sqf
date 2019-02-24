@@ -18,7 +18,7 @@ _amount = ceil _amount;
 					(_this select 0) setVariable ["RydFFE_ShotFired",true];
 					(_this select 0) setVariable ["RydFFE_ShotFired2",((_this select 0) getVariable ["RydFFE_ShotFired2",0]) + 1];
 				
-					//if ((RydFFE_SVStart) and (RydFFE_Debug)) then
+					//if ((RydFFE_SVStart) && (RydFFE_Debug)) then
 					//{
 					_shells = missionNameSpace getVariable ["RydFFE_FiredShells",[]];
 					_shells set [(count _shells),(_this select 6)];

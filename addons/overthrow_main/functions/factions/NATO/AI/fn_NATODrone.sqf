@@ -8,7 +8,7 @@ _drone spawn {
             _ty = typeof _x;
             if((damage _x) < 1) then {
                 call {
-                    if((_x isKindOf "StaticWeapon") and (side _x != west)) exitWith {
+                    if((_x isKindOf "StaticWeapon") && (side _x != west)) exitWith {
                         if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
                             _targets pushback ["SW",position _x,100,_x];
                         };
@@ -27,7 +27,7 @@ _drone spawn {
                     if(_ty isEqualTo OT_workshopBuilding) exitWith {
                         _targets pushback ["WS",position _x,50,_x];
                     };
-                    if(((_x isKindOf "Car") or (_x isKindOf "Air") or (_x isKindOf "Ship")) and !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
+                    if(((_x isKindOf "Car") or (_x isKindOf "Air") or (_x isKindOf "Ship")) && !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
                         if !(side _x isEqualTo west) then {
                             if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
                                 _targets pushback ["V",position _x,0,_x];

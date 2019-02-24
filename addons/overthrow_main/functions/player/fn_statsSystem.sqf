@@ -15,7 +15,7 @@ while {alive player} do {
 	_wanted = "<br/>";
 	if !(captive player) then {
 		_hiding = player getVariable "hiding";
-		if((_hiding > 0) and (_hiding < 30)) then {
+		if((_hiding > 0) && (_hiding < 30)) then {
 			_wanted = format["(%1) WANTED",_hiding];
 		}else{
 			_wanted = "WANTED";
@@ -76,7 +76,7 @@ while {alive player} do {
 		};
 	};
 
-	_txt = format ["<t size='0.9' align='right'>$%1<br/>%2<br/>%3<br/>%4</t>", [player getVariable "money", 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted,_qrf];
+	_txt = format ["<t size='0.9' align='right'>$%1<br/>%2<br/>%3<br/>%4</t>", [player getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber,_seen,_wanted,_qrf];
 	_setText ctrlSetStructuredText (parseText format ["%1", _txt]);
 	_setText ctrlCommit 0;
 	_currentTxt = _txt;

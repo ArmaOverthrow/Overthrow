@@ -34,7 +34,7 @@ if(_amgen) then {
 _textctrl = (findDisplay 8000) displayCtrl 1102;
 _textctrl ctrlSetStructuredText parseText _text;
 
-if(_amgen and _uid != (getplayeruid player)) then {
+if(_amgen && _uid != (getplayeruid player)) then {
     ctrlEnable [1601,true];
     if !(_uid in (server getVariable ["generals",[]])) then {
         ctrlEnable [1600,true];

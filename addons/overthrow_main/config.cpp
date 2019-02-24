@@ -40,7 +40,7 @@ class RscDisplayMain: RscStandardDisplay
 	{
 		class Overthrow
 		{
-			text = "Overthrow"; // Text displayed on the square button, converted to upper-case
+			text = "Overthrow Development Build"; // Text displayed on the square button, converted to upper-case
 			textIsQuote = 1; // 1 to add quotation marks around the text
 			picture = "\ot\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
 			video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover

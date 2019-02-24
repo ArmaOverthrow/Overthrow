@@ -6,7 +6,7 @@ _building = objNULL;
 {
 	_owner = _x call OT_fnc_getOwner;
 	if(!isNil "_owner") then {
-		if ((typeof _x) in OT_allBuyableBuildings and _owner isEqualTo getplayerUID player) exitWith {
+		if ((typeof _x) in OT_allBuyableBuildings && _owner isEqualTo getplayerUID player) exitWith {
 			_handled = true;
 			player setVariable ["home",getpos _x,true];
 			"This is now your home" call OT_fnc_notifyMinor;

@@ -12,7 +12,7 @@
 		ARRAY - Format [_medicArray, _itemList]
 */
 
-//First let's find who the medics are in the team and return that list.
+//First let's find who the medics are in the team && return that list.
 private _medicArray = _this call VCM_fnc_RMedics; //Returns _mList
 
 private _itemList = _this call VCM_fnc_RStatics; //Returns [_staticList,_satchelList,_mineList];

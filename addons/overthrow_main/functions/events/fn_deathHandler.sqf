@@ -208,7 +208,7 @@ call {
 			};
 			_townpop = server getVariable [format["population%1",_town],0];
 			_stab = -1;
-			if(_townpop < 350 and (random 100) > 50) then {
+			if(_townpop < 350 && (random 100) > 50) then {
 				_stab = -2;
 			};
 			if(_townpop < 100) then {

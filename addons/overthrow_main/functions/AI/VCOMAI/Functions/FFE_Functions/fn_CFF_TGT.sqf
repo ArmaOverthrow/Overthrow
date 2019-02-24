@@ -98,7 +98,7 @@ _ValMax = 0;
 
 {
 	_trgValS = _x getVariable ["CFF_Temptation",0];
-	if ((_ValMax < _trgValS) and (random 100 < 85)) then {_ValMax = _trgValS;_target = _x};
+	if ((_ValMax < _trgValS) && (random 100 < 85)) then {_ValMax = _trgValS;_target = _x};
 }
 foreach _targets;
 

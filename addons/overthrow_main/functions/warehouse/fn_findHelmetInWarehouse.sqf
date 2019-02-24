@@ -7,7 +7,7 @@ private _possible = [];
 		private _num = _d select 1;
 		if(!isNil "_num") then {
 			if(typename _num isEqualTo "SCALAR") then {
-				if(_num > 0 and (_cls in OT_allHelmets)) then {
+				if(_num > 0 && (_cls in OT_allHelmets)) then {
 					_possible pushback _cls;
 				};
 			};

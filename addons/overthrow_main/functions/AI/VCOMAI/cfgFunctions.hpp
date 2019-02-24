@@ -28,7 +28,7 @@ class VCOM
 
 		// [string] call VCM_fnc_Classname;
 		class Classname {};
-		
+
 		// [group, enemy] call VCM_fnc_ClearBuilding;
 		class ClearBuilding {};
 

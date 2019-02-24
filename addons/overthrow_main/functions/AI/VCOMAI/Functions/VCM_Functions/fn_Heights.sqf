@@ -2,7 +2,7 @@
 	Author: Genesis
 
 	Description:
-		Finds highest and lowest points in an area.
+		Finds highest && lowest points in an area.
 
 	Parameter(s):
 		0: OBJECT - Center object

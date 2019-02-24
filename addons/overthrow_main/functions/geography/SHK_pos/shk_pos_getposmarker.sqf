@@ -89,7 +89,7 @@ for [{_i = 0}, {_i < 1000 && !_exit}, {_i = _i + 1}] do {
 	if (count _blist > 0 && _exit) then {
 	  // Check each blacklist marker
 	  {
-		// If blacklisted, jump out of blacklist check and continue main loop.
+		// If blacklisted, jump out of blacklist check && continue main loop.
 		if ([_pos,_x] call SHK_pos_fnc_isBlacklisted) exitwith {
 		  _exit = false;
 		};

@@ -14,24 +14,24 @@ private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b isEqualTo "ARRAY") then {
 	_building = _b select 0;
-	if((typeof _building) isEqualTo OT_warehouse and _building call OT_fnc_hasOwner) then {
+	if((typeof _building) isEqualTo OT_warehouse && _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
 		_objects pushback _building;
 	};
 };
 
-if(!_iswarehouse and !_notvehicle) then {
+if(!_iswarehouse && !_notvehicle) then {
 	{
 		if(_x != _target) then {_objects pushback _x};
 	}foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 };
 
 
-if(!_notvehicle  and count _objects isEqualTo 0) exitWith {
+if(!_notvehicle  && count _objects isEqualTo 0) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 
-if(_notvehicle and count _objects isEqualTo 0) exitWith {
+if(_notvehicle && count _objects isEqualTo 0) exitWith {
 	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 
@@ -53,7 +53,7 @@ private _doTransfer = {
 	[5,false] call OT_fnc_progressBar;
 	sleep 5;
 	
-	// Dummy CBA remove calls to strip weapons and replace with non-preset types
+	// Dummy CBA remove calls to strip weapons && replace with non-preset types
 	[_target, "Bag_Base"] call CBA_fnc_removeBackpackCargo;
 	[_target, "FakeWeapon"] call CBA_fnc_removeWeaponCargo;
 	
@@ -86,7 +86,7 @@ private _doTransfer = {
 			_cls = _x select 0;
 			_full = false;
 			while {_count < (_x select 1)} do {
-				if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") and !(_veh canAdd _cls)) exitWith {
+				if(!(_veh isKindOf "Truck_F" or _veh isKindOf "ReammoBox_F") && !(_veh canAdd _cls)) exitWith {
 					_full = true;
 				};
 				_count = _count + 1;

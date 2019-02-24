@@ -17,7 +17,7 @@ OnMapSingleClick
 		missionNamespace setVariable ["shellVMark",_i];
 		};
 
-	if ((RydFFE_SVStart) and (_shift)) then 
+	if ((RydFFE_SVStart) && (_shift)) then 
 		{
 		RydFFE_SVStart = false;
 		_svcircle = missionNamespace getVariable ["shellVMark",""];
@@ -38,7 +38,7 @@ OnMapSingleClick
 
 while {RydFFE_ShellView} do
 	{
-	while {((RydFFE_SVStart) and (RydFFE_Debug))} do
+	while {((RydFFE_SVStart) && (RydFFE_Debug))} do
 		{
 		_shells = missionNameSpace getVariable ["RydFFE_FiredShells",[]];
 		

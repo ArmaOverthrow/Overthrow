@@ -7,7 +7,7 @@ _center  = getMarkerPos _this;
 _centerX = _center select 0;
 _centerY = _center select 1;
 
-// Direction and make sure it's between 0 and 360.
+// Direction && make sure it's between 0 && 360.
 private ["_dirMrk"];
 _dirMrk = (markerDir _this) * -1;
 _dirMrk = _dirMrk % 360;
@@ -18,7 +18,7 @@ _size  = getMarkerSize _this;
 _sizeX = _size select 0;
 _sizeY = _size select 1;
 
-// If B axis is longer than A, switch them and fix direction.
+// If B axis is longer than A, switch them && fix direction.
 if (_sizeX < _sizeY) then {
   _sizeX = _size select 1;
   _sizeY = _size select 0;

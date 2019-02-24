@@ -2,12 +2,12 @@ _pos = server getVariable _this;
 _range = 200;
 _found = false;
 _house = objNull;
-while {!_found and _range < 1200} do {
+while {!_found && _range < 1200} do {
 	_houses = nearestObjects [_pos, ["house"], _range,false];
 	_possible = [];
 	if(count _houses > 0) then {
 		{
-			if (!(_x call OT_fnc_hasOwner) and (typeof _x) in OT_spawnHouses) then {
+			if (!(_x call OT_fnc_hasOwner) && (typeof _x) in OT_spawnHouses) then {
 				_possible pushback _x
 			};
 		}foreach(_houses);

@@ -16,7 +16,7 @@ _groups pushback _group;
 
 _shopkeeper = _group createUnit [OT_civType_shopkeeper, _pos, [],0, "NONE"];
 
-//Set face/voice and uniform
+//Set face/voice && uniform
 [_shopkeeper, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _shopkeeper];
 [_shopkeeper, "NoVoice"] remoteExecCall ["setSpeaker", 0, _shopkeeper];
 _shopkeeper forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);

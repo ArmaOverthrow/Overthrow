@@ -8,7 +8,7 @@ private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b isEqualTo "ARRAY") then {
 	_building = _b select 0;
-	if((typeof _building) isEqualTo OT_warehouse and _building call OT_fnc_hasOwner) then {
+	if((typeof _building) isEqualTo OT_warehouse && _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
 		_objects pushback _building;
 	};

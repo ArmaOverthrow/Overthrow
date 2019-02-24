@@ -34,11 +34,11 @@ VCOM_AIMagLimit = 1;
 VCOM_RainImpact = true;
 //How much should rain impact the accuracy of AI? Default = 3. Default formula is -> _WeatherCheck = (rain)/3; "rain" is on a scale from 0 to 1. 1 Being very intense rain.
 VCOM_RainPercent = 3;
-//Should AI and players have an additional layer of suppression that decreases aiming when suppressed? Default = true;
+//Should AI && players have an additional layer of suppression that decreases aiming when suppressed? Default = true;
 VCOM_Suppression = true;
-//How much should suppression impact both AI and player aiming? Default is 5. Normal ArmA is 1.
+//How much should suppression impact both AI && player aiming? Default is 5. Normal ArmA is 1.
 VCOM_SuppressionVar = 2;
-//Should AI/players be impacted by adrenaline? This provides players and AI with a small speed boost to animations to assist with cover seeking and positioning for a short time. Default = true;
+//Should AI/players be impacted by adrenaline? This provides players && AI with a small speed boost to animations to assist with cover seeking && positioning for a short time. Default = true;
 VCOM_Adrenaline = true;
 //How much of a speed boost should players/AI recieve? Default = 1.35; (1 is ArmA's normal speed).
 VCOM_AdrenalineVar = 1.35;
@@ -48,9 +48,9 @@ VCOM_CurrentlyMovingLimit = 6;
 VCOM_CurrentlySuppressingLimit = 12;
 
 
-//The longer an AI's target stays in 1 location, the more accurate and aware of the target the AI becomes.DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
+//The longer an AI's target stays in 1 location, the more accurate && aware of the target the AI becomes.DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
 VCOM_IncreasingAccuracy = true;
-//VCOM_SideBasedMovement- Remove sides from the array below to force that specific AI side to not execute any advance movement code. (I.E. Moving to reinforce allies, being alerted by distant gunshots and etc). AI with this will still react normally in combat. DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
+//VCOM_SideBasedMovement- Remove sides from the array below to force that specific AI side to not execute any advance movement code. (I.E. Moving to reinforce allies, being alerted by distant gunshots && etc). AI with this will still react normally in combat. DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
 VCOM_SideBasedMovement = [WEST,EAST];
 //VCOM_SideBasedExecution- Remove sides from the array below to remove that specific AI side from executing any of the VCOMAI scripts at all. DEFAULT = [WEST,EAST,CIVILIAN,RESISTANCE];
 VCOM_SideBasedExecution = [WEST,EAST];

@@ -2,7 +2,7 @@ private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 private _price = lbValue [1500,_idx];
 
-private _money = player getVariable "money";
+private _money = player getVariable ["money",0];
 if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
 _veh = cursorTarget;
@@ -19,7 +19,7 @@ if(!alive _veh) exitWith {};
 
 	private _item = [];
 	{
-		if((_x select 4) isEqualTo _cls and (typeof _veh) isEqualTo (_x select 1)) exitWith {_item = _x};
+		if((_x select 4) isEqualTo _cls && (typeof _veh) isEqualTo (_x select 1)) exitWith {_item = _x};
 	}foreach(OT_workshop);
 
 	if(count _item > 0) then {
@@ -37,7 +37,7 @@ if(!alive _veh) exitWith {};
 	disableUserInput false;
 	if((!alive player) or (!alive _veh)) exitWith {};
 
-	_money = player getVariable "money";
+	_money = player getVariable ["money",0];
 	_money = _money - _price;
 	player setvariable ["money",_money,true];
 

@@ -6,7 +6,7 @@ _qty = parseNumber _qty;
 _def = [];
 {
     _x params ["_c","_r","_q"];
-    if(_cls isEqualTo _c and _q isEqualTo _qty) exitWith {_def = _x};
+    if(_cls isEqualTo _c && _q isEqualTo _qty) exitWith {_def = _x};
 }foreach(OT_craftableItems);
 
 if(count _def > 0) then {

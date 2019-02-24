@@ -13,7 +13,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         Vcm_ActivateAI = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -26,7 +26,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_Debug = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -39,7 +39,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_SIDEENABLED = _this;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -52,7 +52,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_ARTYENABLE = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -65,7 +65,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_StealVeh = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -78,7 +78,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_FullSpeed = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -91,7 +91,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_ADVANCEDMOVEMENT = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -104,7 +104,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_FRMCHANGE = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -117,7 +117,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_SKILLCHANGE = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -130,7 +130,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_AIDISTANCEVEHPATH = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -143,7 +143,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_RAGDOLL = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -156,7 +156,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_RAGDOLLCHC = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 
@@ -170,7 +170,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_HEARINGDISTANCE = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -183,7 +183,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_WARNDIST = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -196,7 +196,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_WARNDELAY = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -209,7 +209,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_STATICARMT = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 
@@ -223,7 +223,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_MINECHANCE = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -236,7 +236,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_ARTYDELAY = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -249,7 +249,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_ARTYSPREAD = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 
@@ -263,7 +263,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
         VCM_AIMagLimit = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 //Ryd FFE settings
@@ -278,7 +278,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
 		VCM_FFEARTILLERY = _value;
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -290,7 +290,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -304,7 +304,7 @@ if !(CBAACT) exitwith {};
         params ["_value"];
 		RydFFE_FO = [];
 		{RydFFE_FO pushBack (missionNamespace getVariable _x)} forEach (_value splitstring ", ");
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -317,7 +317,7 @@ if !(CBAACT) exitwith {};
     {  
         params ["_value"];
 		RydFFE_FOClass = _value splitstring ", ";
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -329,7 +329,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -341,7 +341,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -353,7 +353,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -365,7 +365,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -377,7 +377,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -389,7 +389,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -401,7 +401,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 [
@@ -413,7 +413,7 @@ if !(CBAACT) exitwith {};
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {  
         params ["_value"];
-    } // function that will be executed once on mission start and every time the setting is changed.
+    } // function that will be executed once on mission start && every time the setting is changed.
 ] call CBA_Settings_fnc_init;
 
 };

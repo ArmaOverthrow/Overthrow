@@ -3,7 +3,7 @@
 	Author: Genesis
 
 	Description:
-		This function will constantly monitor the unit and see if the static weapon needs to be dissassembled or not. 
+		This function will constantly monitor the unit && see if the static weapon needs to be dissassembled or not. 
 		The amount of time on a static will be a base variable with additional time every time an enemy is spotted.
 
 	Parameter(s):
