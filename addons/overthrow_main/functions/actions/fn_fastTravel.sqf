@@ -1,17 +1,16 @@
 private _ft = server getVariable ["OT_fastTravelType",1];
-if(!OT_adminMode and _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_notifyMinor};
+if(!OT_adminMode && _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_notifyMinor};
 
 if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
 private _hasdrugs = false;
-
 {
 	if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
 }foreach(items player);
 
 if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor};
 
-_exit = false;
+private _exit = false;
 if((vehicle player) != player) then {
 	{
 		if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
@@ -23,25 +22,23 @@ if((vehicle player) != player) then {
 };
 if(_exit) exitWith {};
 
-if(((vehicle player) != player) and (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
+if(((vehicle player) != player) && (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
 
 if !((vehicle player) call OT_fnc_vehicleCanMove)  exitWith {"This vehicle is unable to move" call OT_fnc_notifyMinor};
 
-"Click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
-openMap true;
-
-["fastTravel", "onMapSingleClick", {
+OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
+	params ["", "_pos"];
 	private _starttown = player call OT_fnc_nearestTown;
 	private _region = server getVariable format["region_%1",_starttown];
 
 	private _handled = false;
 
-	_buildings =  _pos nearObjects [OT_item_Tent,30];
+	private _buildings =  _pos nearObjects [OT_item_Tent,30];
 	if !(_buildings isEqualTo []) then {
 		_handled = true;
 	};
 
-	_exit = false;
+	private _exit = false;
 
 	if !(_handled) then {
 		if([_pos,"Misc"] call OT_fnc_canPlace) then {
@@ -49,12 +46,12 @@ openMap true;
 		};
 	};
 
-	_ob = _pos call OT_fnc_nearestObjective;
-	_valid = true;
+	private _ob = _pos call OT_fnc_nearestObjective;
+	private _valid = true;
 	_ob params ["_obpos","_obname"];
-	_validob = (_obpos distance _pos < 50) and (_obname in OT_allAirports);
+	private _validob = (_obpos distance _pos < 50) && (_obname in OT_allAirports);
 	if !(_validob) then {
-		if (!OT_adminMode and !(_pos inArea _region)) then {
+		if (!OT_adminMode && !(_pos inArea _region)) then {
 			if !([_region,_pos] call OT_fnc_regionIsConnected) then {
 				_valid = false;
 				"You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield" call OT_fnc_notifyMinor;
@@ -76,7 +73,7 @@ openMap true;
 	}else{
 		private _ft = server getVariable ["OT_fastTravelType",1];
 		if(_handled and _ft == 1 and !OT_adminMode) then {
-			_cost = 0;
+			private _cost = 0;
 			if((vehicle player) == player) then {
 				_cost = ceil((player distance _pos) / 150);
 			}else{
@@ -98,15 +95,15 @@ openMap true;
 
 			if((vehicle player) != player) then {
 				if ((driver vehicle player) == player) then {
-					_tam = 10;
-					_roads = [];
+					private _tam = 10;
+					private _roads = [];
 					while {true} do {
 						_roads = _pos nearRoads _tam;
 						if (count _roads < 1) then {_tam = _tam + 10};
 						if (count _roads > 0) exitWith {};
 					};
 					{_x allowDamage false} foreach(crew vehicle player);
-					_road = _roads select 0;
+					private _road = _roads select 0;
 					_pos = position _road findEmptyPosition [1,120,typeOf (vehicle player)];
 					vehicle player setPos _pos;
 				};
@@ -118,15 +115,24 @@ openMap true;
 			cutText ["","BLACK IN",3];
 
 			if((vehicle player) != player) then {
-				_crew = crew vehicle player;
-				{_x allowDamage true} foreach(_crew);
+				{_x allowDamage true} foreach(crew vehicle player);
 			};
 			player allowDamage true;
 			openMap false;
 		};
 	};
-}, nil] call BIS_fnc_addStackedEventHandler;
+}];
 
-waitUntil {!visibleMap};
+OT_FastTravel_MapEHId = addMissionEventHandler ["Map", {
+	params ["_mapIsOpened"];
+	if (!_mapIsOpened) then {
+		if (isNil "OT_FastTravel_MapEHId" || isNil "OT_FastTravel_MapSingleClickEHId") exitWith {};
+		removeMissionEventHandler["Map", OT_FastTravel_MapEHId];
+		removeMissionEventHandler["MapSingleClick", OT_FastTravel_MapSingleClickEHId];
+		OT_FastTravel_MapEHId = nil;
+		OT_FastTravel_MapSingleClickEHId = nil;
+	};
+}];
 
-["fastTravel", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+"Click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
+openMap true;
