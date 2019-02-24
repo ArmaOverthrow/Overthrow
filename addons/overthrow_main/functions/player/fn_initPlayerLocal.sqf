@@ -331,7 +331,7 @@ player addEventHandler ["GetInMan",{
 			};
 		};
 	};
-	_g = _v getVariable ["vehgarrison",false];
+	_g = _veh getVariable ["vehgarrison",false];
 	if(typename _g == "STRING") then {
 		_vg = server getVariable format["vehgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
@@ -342,7 +342,7 @@ player addEventHandler ["GetInMan",{
 		}foreach(crew _veh);
 		_veh spawn OT_fnc_revealToNATO;
 	};
-	_g = _v getVariable ["airgarrison",false];
+	_g = _veh getVariable ["airgarrison",false];
 	if(typename _g == "STRING") then {
 		_vg = server getVariable format["airgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
