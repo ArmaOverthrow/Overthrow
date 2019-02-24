@@ -22,7 +22,7 @@ private _known = 0;
     };
 }foreach(allunits);
 
-if(_known > 0 or (_destinationName in (server getVariable ["NATOabandoned",[]])) or (random 100) > 90) then {
+if(_known > 0 || (_destinationName in (server getVariable ["NATOabandoned",[]])) || (random 100) > 90) then {
     _destinationName = selectRandom OT_allObjectives;
     _difficulty = 1;
 }else{
@@ -38,39 +38,48 @@ _title = format["%1 Recon",_destinationName];
 
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
-[[_title,_description],_markerPos,{
-    //No setup required for this mission
-},{
-    //Fail check...
-    //If player is wanted
-    !(captive player);
-},{
-    //Success Check
-    params ["_p","_faction","_factionName"];
-    _p params ["_destination","_destinationName","_lastKnown","_active"];
-    if !(_active) then {
-        if((player distance _destination) < OT_spawnDistance) then {_p set [3,true];}
-    }else{
-        if((player distance _destination) > OT_spawnDistance) then {_p set [3,false];_active = false;}
-    };
-    _count = 0;
-    _known = 0;
-    if(_active) exitWith {
-        {
-            if(side _x == west) then {
-                if(_x getVariable ["garrison",""] == _destinationName) then {
-                    _count = _count + 1;
-                    if((resistance knowsAbout _x) > 0) then {
-                        _known = _known + 1;
+[
+    [_title,_description],
+    _markerPos,
+    {
+        //No setup required for this mission
+    },
+    {
+        //Fail check...
+        //If player is wanted
+        !(captive player);
+    },
+    {
+        //Success Check
+        params ["_p","_faction","_factionName"];
+        _p params ["_destination","_destinationName","_lastKnown","_active"];
+        if !(_active) then {
+            if((player distance _destination) < OT_spawnDistance) then {_p set [3,true];};
+        }else{
+            if((player distance _destination) > OT_spawnDistance) then {_p set [3,false];_active = false;};
+        };
+        _count = 0;
+        _known = 0;
+        if(_active) exitWith {
+            {
+                if(side _x == west) then {
+                    if(_x getVariable ["garrison",""] == _destinationName) then {
+                        _count = _count + 1;
+                        if((resistance knowsAbout _x) > 0) then {
+                            _known = _known + 1;
+                        };
                     };
                 };
-            };
-        }foreach(allunits);
-        _need = round(_count * 0.5);
-        hintSilent format["Military spotted: %1",_known];
-        (_known >= _need) or _need <= 0
-    };
-    false
-},{
-    //No cleanup required
-},_params,_difficulty];
+            }foreach(allunits);
+            _need = round(_count * 0.5);
+            hintSilent format["Military spotted: %1",_known];
+            (_known >= _need) || _need <= 0
+        };
+        false
+    },
+    {
+        //No cleanup required
+    },
+    _params,
+    _difficulty
+];

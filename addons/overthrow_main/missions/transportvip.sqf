@@ -56,51 +56,59 @@ _title = format["Operative %1",_type];
 _difficulty = 1.5;
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
-[[_title,_description],_markerPos,{
-    params ["_p","_faction","_factionName"];
-    _p params ["_pickup","_destination","_fullname"];
+[
+    [_title,_description],
+    _markerPos,
+    {
+        params ["_p","_faction","_factionName"];
+        _p params ["_pickup","_destination","_fullname"];
 
-    //Spawn the dude
-    _civ = (group player) createUnit [OT_civType_gunDealer, _pickup, [],0, "NONE"];
-    _civ setVariable ["notalk",true,true]; //Tells Overthrow this guy cannot be recruited etc
-    _civ setName _fullname;
+        //Spawn the dude
+        _civ = (group player) createUnit [OT_civType_gunDealer, _pickup, [],0, "NONE"];
+        _civ setVariable ["notalk",true,true]; //Tells Overthrow this guy cannot be recruited etc
+        _civ setName _fullname;
 
-    //Set face,voice and uniform
-    [_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
-    [_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
-    _civ forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
+        //Set face,voice and uniform
+        [_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+        [_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+        _civ forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 
-    //Make sure hes in our group
-    [_civ] joinSilent nil;
-    [_civ] joinSilent (group player);
-    commandStop _civ;
+        //Make sure hes in our group
+        [_civ] joinSilent nil;
+        [_civ] joinSilent (group player);
+        commandStop _civ;
 
-    //And not wanted
-    _civ setCaptive true;
-    _civ addItem "ItemRadio";
+        //And not wanted
+        _civ setCaptive true;
+        _civ addItem "ItemRadio";
 
-    //Save him for access later
-    player setVariable [format["vip%1",_faction],_civ,false];
-},{
-    //Fail check...
-    //If target is dead
-    !alive (player getVariable [format["vip%1",_this select 1],objNull]);
-},{
-    //Success Check
-    params ["_p","_faction","_factionName"];
-    _p params ["_pickup","_destination"];
+        //Save him for access later
+        player setVariable [format["vip%1",_faction],_civ,false];
+    },
+    {
+        //Fail check...
+        //If target is dead
+        !alive (player getVariable [format["vip%1",_this select 1],objNull]);
+    },
+    {
+        //Success Check
+        params ["_p","_faction","_factionName"];
+        _p params ["_pickup","_destination"];
 
-    _civ = player getVariable [format["vip%1",_faction],objNull];
-    //near the destination and not in a vehicle
-    ((_civ distance _destination) < 50) and (vehicle _civ) == _civ
-},{
-    //Cleanup
-    params ["_p","_faction","_factionName"];
-    _civ = player getVariable [format["vip%1",_this select 1],objNull];
-    player setVariable [format["vip%1",_faction],nil,false];
-    _group = createGroup civilian;
-    [_group] spawn OT_fnc_cleanup;
-    [_civ] joinSilent nil;
-    [_civ] joinSilent _group;
-
-},_params,_difficulty];
+        _civ = player getVariable [format["vip%1",_faction],objNull];
+        //near the destination and not in a vehicle
+        ((_civ distance _destination) < 50) and (vehicle _civ) == _civ
+    },
+    {
+        //Cleanup
+        params ["_p","_faction","_factionName"];
+        _civ = player getVariable [format["vip%1",_this select 1],objNull];
+        player setVariable [format["vip%1",_faction],nil,false];
+        _group = createGroup civilian;
+        [_group] spawn OT_fnc_cleanup;
+        [_civ] joinSilent nil;
+        [_civ] joinSilent _group;
+    },
+    _params,
+    _difficulty
+];
