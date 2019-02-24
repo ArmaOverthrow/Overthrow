@@ -66,7 +66,8 @@ if((random 100) < 15) then {
 	_unit addItem "OT_Ganja";
 };
 
-call {
+[_unit] call {
+	params ["_unit"];
 	if((random 100) > 80) exitWith {
 		//This is a medic
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
