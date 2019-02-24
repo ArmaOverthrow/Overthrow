@@ -5,13 +5,13 @@
 				condition = "!([player] call ace_repair_fnc_isInRepairFacility) and (_target call OT_fnc_hasOwner) and ((call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner))"; \
 				displayName = "Remove"; \
 				statement = "deleteVehicle _target"; \
-			} \
+			}; \
 			class OT_Salvage { \
 				condition = "((damage _target) > 0.99 and ""ToolKit"" in (items player)) or [player] call ace_repair_fnc_isInRepairFacility"; \
 				displayName = "Salvage"; \
 				statement = "_target spawn OT_fnc_salvageWreck"; \
-			} \
-		} \
+			}; \
+		}; \
 	};
 
 
@@ -33,7 +33,7 @@ class CfgVehicles {
 	                statement = "[] spawn OT_fnc_setupPlayer;";
 				};
 			};
-		}
+		};
 	};
 	class Mapboard_tanoa_F: Land_MapBoard_F {
 		displayName = "Map (Tanoa)";
@@ -46,7 +46,7 @@ class CfgVehicles {
         author = "ARMAzac";
         vehicleClass = "Items";
         class TransportItems {
-            MACRO_ADDITEM(OT_GanjaItem,1);
+            MACRO_ADDITEM(OT_GanjaItem,1)
         };
     };
 	class OT_BlowItem: Item_Base_F {
@@ -56,7 +56,7 @@ class CfgVehicles {
         author = "ARMAzac";
         vehicleClass = "Items";
         class TransportItems {
-            MACRO_ADDITEM(OT_BlowItem,1);
+            MACRO_ADDITEM(OT_BlowItem,1)
         };
     };
 
@@ -70,8 +70,8 @@ class CfgVehicles {
 				distance = 20;
 				displayName = "Talk";
 				statement = "_target call OT_fnc_talkToCiv";
-			}
-		}
+			};
+		};
         class ACE_SelfActions {
             class ACE_Equipment {
                 class OT_StartSpliff
@@ -92,8 +92,8 @@ class CfgVehicles {
                     exceptions[] = {"isNotInside", "isNotSitting"};
                     icon = "ot\ui\icons\light_cig.paa";
                 };
-            }
-        }
+            };
+        };
 	};
 
 	class Furniture_base_F;
@@ -106,9 +106,9 @@ class CfgVehicles {
 					condition = "true";
 					displayName = "Craft";
 					statement = "call OT_fnc_craftDialog";
-				}
+				};
 			};
-		}
+		};
 	};
 
 	class LandVehicle;
@@ -172,7 +172,7 @@ class CfgVehicles {
 	class i_House_Small_02_b_base_F : House_Small_f {
 		ot_isPlayerHouse = 1;
         ot_template = '[["Land_Workbench_01_F", [-1.36485,0.870917,0],90,1,0,[0,-0],"","",true,false],["Land_MetalCase_01_small_F",[1.28859,-1.0394,0.23],92.8353,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[2.5086,-1.0345,0.23],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[2.71048,-0.444679,0.23],7.55273,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.61679,-2.76766,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.48146,2.91809,0.23],41.3345,1,0,[0,0],"","",true,false]]';
-	}
+	};
 
 	//Houses (CUP)
 	class Land_House_C_5_EP1: House_Small_F {
