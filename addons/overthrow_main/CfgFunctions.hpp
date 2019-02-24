@@ -184,6 +184,7 @@ class CfgFunctions
 			/* Vehicle */
 			class transferTo {};
 			class transferFrom {};
+			class transferHelper {};
 			class transferLegit {};
 			class takeLegit {};
 			class warehouseTake {};
