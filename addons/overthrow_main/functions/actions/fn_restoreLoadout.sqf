@@ -1,7 +1,7 @@
 closeDialog 0;
 params ["_unit","_ammobox","_name"];
 
-_loadout = profileNamespace getVariable format["OT_loadout_%1",_name];
+private _loadout = profileNamespace getVariable format["OT_loadout_%1",_name];
 _loadout params ["_primary","_secondary","_tertiary","_uniform","_vest","_backpack","_headgear","_goggles","_optic","_assigned"];
 
 [_unit,_ammobox] call OT_fnc_dumpStuff;
@@ -64,7 +64,6 @@ if(count _tertiary > 0) then {
 private _uniformCls = _uniform select 0;
 private _uniformItems = _uniform select 1;
 
-
 if(count _vest > 0) then {
 	private _vestCls = _vest select 0;
 	private _vestItems = _vest select 1;
@@ -72,13 +71,13 @@ if(count _vest > 0) then {
 	if([_ammobox,_vestCls,1] call CBA_fnc_removeItemCargo) then {
 		_unit addVest _vestCls;
 		{
-			_cc = _x select 0;
-			if(typename _cc == "ARRAY") then {_cc = _cc select 0};
-			_num = _x select 1;
-			_count = 0;
+			_x params ["_cc", "_num"];
+			if(_cc isEqualType []) then {_cc = _cc select 0};
+			private _count = 0;
 			
-			_func = CBA_fnc_removeWeaponCargo;
-			[] call {
+			private _func = CBA_fnc_removeWeaponCargo;
+			[_cc] call {
+				params ["_cc"];
 				if(_cc isKindOf ["ItemCore",configFile >> "CfgWeapons"]) exitWith {					
 					_func = CBA_fnc_removeItemCargo;
 				};
@@ -104,13 +103,13 @@ if(count _backpack > 0) then {
 	if([_ammobox,_bpCls,1] call CBA_fnc_removeBackpackCargo) then {
 		_unit addBackpack _bpCls;
 		{
-			_cc = _x select 0;
-			if(typename _cc == "ARRAY") then {_cc = _cc select 0};
-			_num = _x select 1;
-			_count = 0;
+			params ["_cc","_num"];
+			if(_cc isEqualType []) then {_cc = _cc select 0;};
+			private _count = 0;
 			
-			_func = CBA_fnc_removeWeaponCargo;
-			[] call {
+			private _func = CBA_fnc_removeWeaponCargo;
+			[_cc] call {
+				params ["_cc"];
 				if(_cc isKindOf ["ItemCore",configFile >> "CfgWeapons"]) exitWith {					
 					_func = CBA_fnc_removeItemCargo;
 				};
@@ -140,13 +139,13 @@ if(count _optic > 0) then {
 _unit forceAddUniform _uniformCls;
 
 {
-	_cc = _x select 0;	
-	if(typename _cc == "ARRAY") then {_cc = _cc select 0};
-	_num = _x select 1;
-	_count = 0;
+	params ["_cc", "_num"];
+	if(_cc isEqualType []) then {_cc = _cc select 0};
+	private _count = 0;
 	
-	_func = CBA_fnc_removeWeaponCargo;
-	[] call {
+	private _func = CBA_fnc_removeWeaponCargo;
+	[_cc] call {
+		params ["_cc"];
 		if(_cc isKindOf ["ItemCore",configFile >> "CfgWeapons"]) exitWith {					
 			_func = CBA_fnc_removeItemCargo;
 		};

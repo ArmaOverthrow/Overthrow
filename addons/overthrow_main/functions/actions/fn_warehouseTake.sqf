@@ -30,7 +30,8 @@ if(_veh == player) exitWith {
 
 while {_count < _num} do {
 	if ((!(_veh isKindOf "Truck_F")) and (!(_veh isKindOf OT_item_Storage)) and (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
-	call {
+	[_cls, _veh] call {
+		params ["_cls", "_veh"];
 		if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 			_veh addWeaponCargoGlobal [_cls,1];
 		};
@@ -51,8 +52,6 @@ while {_count < _num} do {
 	};
 	_count = _count + 1;
 };
-
-
 
 private _newnum = _in - _num;
 if(_newnum > 0) then {

@@ -174,13 +174,13 @@ OT_shiftHeld = false;
 buildRotation = 0;
 
 buildOnKeyDown = {
-	_key = _this select 1;
-	_handled = false;
+	params ["", "_key"];
+	private _handled = false;
 	if(_this select 2) then {
 		buildCamRotating = true;
 	};
-	call {
-		if (_key == 42 or _key == 54) exitWith {
+	[_key] call {
+		params ["_key"];
 		if (_key == 42 || _key == 54) exitWith {
 			//Shift
 			OT_shiftHeld = true;
@@ -251,15 +251,14 @@ buildOnKeyDown = {
 };
 
 buildOnMouseDown = {
-	_btn = _this select 1;
+	params ["", "_btn"];
 	if(_btn == 1) then {
 		buildCamMoving = true;
 	};
 };
 
 buildOnMouseUp = {
-	_btn = _this select 1;
-	_sx = _this select 2;
+	params ["", "_btn", "_sx"];
 	if(_btn == 1) then {
 		buildCamMoving = false;
 	};
