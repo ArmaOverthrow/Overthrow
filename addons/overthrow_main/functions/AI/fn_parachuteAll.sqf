@@ -1,41 +1,7 @@
-private ["_paras","_vehicle","_chuteHeight","_dir"];
-_vehicle = _this select 0;
-_chuteheight = if ( count _this > 1 ) then { _this select 1 } else { 100 };
+params ["_vehicle", ["_chuteheight", 100]];
 
-_paras = assignedcargo _vehicle;
-_dir = direction _vehicle;
-
-paraLandSafe =
-{
-	private ["_unit"];
-	_unit = _this select 0;
-	_chuteheight = _this select 1;
-	if (isPlayer _unit) then {[_unit,_chuteheight] spawn OpenPlayerchute};
-	waitUntil { !(alive _unit) or isTouchingGround _unit or (position _unit select 2) < 20 };
-
-	_unit allowDamage false; //So they dont hit trees or die on ground impact
-
-	waitUntil { !(alive _unit) or isTouchingGround _unit or (position _unit select 2) < 1 };
-
-	_unit action ["eject",_unit];
-	sleep 1;
-	_inv = name _unit;
-	_id = [_unit] call OT_fnc_getBuildID;
-	_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
-	spawner setvariable [format["eject_%1",_id],nil,false];
-	_unit allowDamage true;
-};
-
-OpenPlayerChute =
-{
-	private ["_paraPlayer"];
-	_paraPlayer = _this select 0;
-	_chuteheight = _this select 1;
-	waitUntil {(position _paraPlayer select 2) <= _chuteheight};
-	_paraPlayer action ["openParachute",_unit];
-};
-
-
+private _paras = assignedcargo _vehicle;
+private _dir = direction _vehicle;
 
 {
 	spawner setvariable [format["eject_%1",[_x] call OT_fnc_getBuildID],getUnitLoadout _x,false];
@@ -50,5 +16,29 @@ OpenPlayerChute =
 
 
 {
-	[_x,_chuteheight] spawn paraLandSafe;
+	[_x,_chuteheight] spawn {
+		params ["_unit", "_chuteheight"];
+		
+		// land safe if player
+		if (isPlayer _unit) then {
+			[_unit,_chuteheight] spawn {
+				params ["_paraPlayer","_chuteheight"];
+				waitUntil {(position _paraPlayer select 2) <= _chuteheight};
+				_paraPlayer action ["openParachute",_paraPlayer];
+			};
+		};
+		waitUntil { !(alive _unit) || isTouchingGround _unit || (position _unit select 2) < 20 };
+
+		_unit allowDamage false; //So they dont hit trees or die on ground impact
+
+		waitUntil { !(alive _unit) || isTouchingGround _unit || (position _unit select 2) < 1 };
+
+		_unit action ["eject",_unit];
+		sleep 1;
+		private _inv = name _unit;
+		private _id = [_unit] call OT_fnc_getBuildID;
+		_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
+		spawner setvariable [format["eject_%1",_id],nil,false];
+		_unit allowDamage true;
+	};
 } forEach _paras;
