@@ -216,7 +216,7 @@ _handler = {
 		};
 	}foreach(vehicles);
 
-	_scale = ctrlMapScale (_this select 0);
+	private _scale = ctrlMapScale (_this select 0);
 	if(_scale <= 0.16) then {
 		private _leased = player getvariable ["leased",[]];
 		{
@@ -370,7 +370,6 @@ _handler = {
 			];
 		};
 	};
-	mapCenter
 };
 
 if(!isNil "OT_OnDraw") then {
