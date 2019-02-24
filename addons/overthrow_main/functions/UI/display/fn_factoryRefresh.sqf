@@ -4,10 +4,10 @@ private _currentCls = server getVariable ["GEURproducing",""];
 
 private _text = "<t size='0.8' align='center'>Factory is not currently produce anything. Add to the queue above or Reverse-Engineer nearby items to gain blueprints.</t><br/>";
 private _currentPic = "";
+private _currentName = "";
 
 if(_currentCls != "") then {
 	_text = format["<t size='0.8' align='center'>Currently Producing</t><br/><t size='1.1' align='center'>%1</t><br/><br/>",_currentCls call OT_fnc_anythingGetName];
-	private _currentName = "";
 	if(_currentCls isKindOf "AllVehicles") then {
 		_currentName = _currentCls call OT_fnc_vehicleGetName;
 		_currentPic = _currentCls call OT_fnc_vehicleGetPic;
@@ -25,14 +25,10 @@ if(_currentCls != "") then {
 		_currentPic = _currentCls call OT_fnc_vehicleGetPic;
 	};
 
-
-	_cost = cost getVariable[_currentCls,[]];
+	private _cost = cost getVariable[_currentCls,[]];
 	if(count _cost > 0) then {
-		_cost params ["_base","_wood","_steel","_plastic"];
-		if(isNil "_plastic") then {
-			_plastic = 0;
-		};
-		_b = 1;
+		_cost params ["_base","_wood","_steel",["_plastic",0]];
+		private _b = 1;
 		if(_base > 240) then {
 	        _b = 10;
 	    };
@@ -45,13 +41,13 @@ if(_currentCls != "") then {
 	    if(_base > 50000) then {
 	        _b = 60;
 	    };
-	    _timetoproduce = _b + (round (_wood+1)) + (round(_steel * 0.2)) + (round (_plastic * 5));
+	    private _timetoproduce = _b + (round (_wood+1)) + (round(_steel * 0.2)) + (round (_plastic * 5));
 		if(_timetoproduce > 360) then {_timetoproduce = 360};
 		if(_timetoproduce < 5) then {_timetoproduce = 5};
 
-		_timespent = server getVariable ["GEURproducetime",0];
+		private _timespent = server getVariable ["GEURproducetime",0];
 
-		_numtoproduce = 1;
+		private _numtoproduce = 1;
 		if(_wood < 1 and _wood > 0) then {
 			_numtoproduce = round (1 / _wood);
 			_wood = 1;
@@ -85,19 +81,19 @@ _textctrl ctrlSetStructuredText parseText _text;
 lbClear 1501;
 {
 	_x params ["_cls","_qty"];
-
 	_idx = lbAdd [1501,format["%1 x %2",_qty,_cls call OT_fnc_anythingGetName]];
 	lbSetData [1501,_idx,_cls];
 }foreach(server getVariable ["factoryQueue",[]]);
 
-_index = lbCurSel 1500;
-_cls = lbData [1500,_index];
+private _index = lbCurSel 1500;
+private _cls = lbData [1500,_index];
 
-_pic = "";
-_txt = "";
-_desc = "";
+private _pic = "";
+private _txt = "";
+private _desc = "";
 
-call {
+[_cls] call {
+	params["_cls"];
 	if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 		_txt = _cls call OT_fnc_magazineGetName;
 		_pic = _cls call OT_fnc_magazineGetPic;
@@ -128,14 +124,11 @@ if !(_pic == "") then {
 	ctrlSetText [1200,_pic];
 };
 
-_cost = cost getVariable[_cls,[]];
-_recipe = "";
+private _cost = cost getVariable[_cls,[]];
+private _recipe = "";
 if(count _cost > 0) then {
-    _cost params ["_base","_wood","_steel","_plastic"];
-    if(isNil "_plastic") then {
-        _plastic = 0;
-    };
-    _b = 1;
+    _cost params ["_base","_wood","_steel",["_plastic",0]];
+    private _b = 1;
     if(_base > 240) then {
         _b = 10;
     };
@@ -148,11 +141,11 @@ if(count _cost > 0) then {
     if(_base > 50000) then {
         _b = 60;
     };
-    _timetoproduce = _b + (round (_wood+1)) + (round(_steel * 0.2)) + (round (_plastic * 5));
+    private _timetoproduce = _b + (round (_wood+1)) + (round(_steel * 0.2)) + (round (_plastic * 5));
     if(_timetoproduce > 360) then {_timetoproduce = 360};
     if(_timetoproduce < 5) then {_timetoproduce = 5};
 
-    _numtoproduce = 1;
+    private _numtoproduce = 1;
     if(_wood < 1 and _wood > 0) then {
         _numtoproduce = round (1 / _wood);
         _wood = 1;
@@ -180,7 +173,7 @@ if(count _cost > 0) then {
     _recipe = _recipe + format["Output: %1 x %2<br/></t>",_numtoproduce,_cls call OT_fnc_anythingGetName];
 };
 
-_textctrl = (findDisplay 8000) displayCtrl 1100;
+private _textctrl = (findDisplay 8000) displayCtrl 1100;
 
 _textctrl ctrlSetStructuredText parseText format["
 	<t align='center' size='0.9'>%1</t><br/>
