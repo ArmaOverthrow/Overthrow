@@ -9,7 +9,7 @@ private _thistown = (getpos player) call OT_fnc_nearestTown;
 
 //Is there some already spawned within spawn distance?
 {
-    if(side _x isEqualTo civilian and !(captive _x) and count(_x getVariable ["shop",[]]) isEqualTo 0 and !(_x getVariable ["gundealer",false]) and !(_x call OT_fnc_hasOwner)) then {
+    if(side _x isEqualTo civilian && !(captive _x) && count(_x getVariable ["shop",[]]) isEqualTo 0 && !(_x getVariable ["gundealer",false]) && !(_x call OT_fnc_hasOwner)) then {
         _targets pushback _x;
     };
 }foreach(player nearEntities ["CAManBase", OT_spawnDistance]);

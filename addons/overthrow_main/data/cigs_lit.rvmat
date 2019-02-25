@@ -12,7 +12,7 @@ PixelShaderID = "NormalMapSpecularDIMap";
 VertexShaderID = "NormalMap";
 class Stage1
 {
-	texture = "ot\data\cigs_nohq.paa";
+	texture = "overthrow_main\data\cigs_nohq.paa";
 	uvSource = "tex";
 	class uvTransform
 	{
@@ -24,7 +24,7 @@ class Stage1
 };
 class Stage2
 {
-	texture = "ot\data\cigs_smdi.paa";
+	texture = "overthrow_main\data\cigs_smdi.paa";
 	uvSource = "tex";
 	class uvTransform
 	{

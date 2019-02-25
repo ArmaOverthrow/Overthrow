@@ -3,7 +3,7 @@ class CfgMarkers
 	class ot_Camp
 	{
 		name = "Camp";
-		icon = "ot\ui\markers\camp.paa";
+		icon = "\overthrow_main\ui\markers\camp.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -12,7 +12,7 @@ class CfgMarkers
 	class ot_Shop
 	{
 		name = "Shop";
-		icon = "ot\ui\markers\shop.paa";
+		icon = "\overthrow_main\ui\markers\shop.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -21,7 +21,7 @@ class CfgMarkers
 	class ot_Police
 	{
 		name = "Police";
-		icon = "ot\ui\markers\police.paa";
+		icon = "\overthrow_main\ui\markers\police.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -30,7 +30,7 @@ class CfgMarkers
 	class ot_Anarchy
 	{
 		name = "Anarchy";
-		icon = "ot\ui\markers\anarchy.paa";
+		icon = "\overthrow_main\ui\markers\anarchy.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -39,7 +39,7 @@ class CfgMarkers
 	class ot_Warehouse
 	{
 		name = "Warehouse";
-		icon = "ot\ui\markers\warehouse.paa";
+		icon = "\overthrow_main\ui\markers\warehouse.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -48,7 +48,7 @@ class CfgMarkers
 	class ot_Business
 	{
 		name = "Business";
-		icon = "ot\ui\markers\business.paa";
+		icon = "\overthrow_main\ui\markers\business.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -57,7 +57,7 @@ class CfgMarkers
 	class ot_Factory
 	{
 		name = "Factory";
-		icon = "ot\ui\markers\factory.paa";
+		icon = "\overthrow_main\ui\markers\factory.paa";
 		color[] = {1, 0, 0, 1};
 		size = 32;
 		shadow = true;
@@ -66,7 +66,7 @@ class CfgMarkers
 	class flag_Malden
 	{
 		name = "Malden";
-		icon = "ot\flags\flag_malden.paa";
+		icon = "\overthrow_main\flags\flag_malden.paa";
 		color[] = {1, 1, 1, 1};
 		size = 32;
 		shadow = true;

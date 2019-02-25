@@ -6,8 +6,7 @@ _unit setCaptive true;
 _unit setVariable ["hiding",0,false];
 
 _unit addEventHandler ["take", {
-	_me = _this select 0;
-	_container = _this select 1;
+	params ["_me","_container"];
 
 	if (captive _me) then {
 		_type = typeof _container;
@@ -61,7 +60,7 @@ if(isPlayer _unit) then {
 					private _havepi = false;
 					if((items player) find "ACE_epinephrine" > -1) then {_havepi = true};
 					{
-						if(((side _x isEqualTo resistance) or captive _x) && _unit != _x && _havepi && !(isPlayer _x) && (items _x) find "ACE_epinephrine" > -1) exitWith {
+						if(((side _x isEqualTo resistance) || captive _x) && _unit != _x && _havepi && !(isPlayer _x) && (items _x) find "ACE_epinephrine" > -1) exitWith {
 							_medic = _x;
 						};
 					}foreach(player nearentities["CAManBase",50]);
@@ -197,8 +196,8 @@ while {alive _unit} do {
 						if !(typeof (vehicle _unit) in (OT_allVehicles+OT_allBoats)) exitWith {
 							_bad = true; //They are driving or in a non-civilian vehicle including statics
 						};
-						if(driver (vehicle _unit) isEqualTo _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot && drive, otherwise...
-						if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in OT_illegalHeadgear) or ((vest _unit) in OT_illegalVests)) then {
+						if(driver (vehicle _unit) isEqualTo _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
+						if (!(primaryWeapon _unit isEqualTo "") || !(secondaryWeapon _unit isEqualTo "") || !(handgunWeapon _unit isEqualTo "") || ((headgear _unit) in OT_illegalHeadgear) || ((vest _unit) in OT_illegalVests)) then {
 							_bad = true;
 						};
 					};
@@ -211,7 +210,7 @@ while {alive _unit} do {
 						(vehicle _unit) spawn OT_fnc_revealToCRIM;
 					};
 				};
-				if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {
+				if ((primaryWeapon _unit != "") || (secondaryWeapon _unit != "") || (handgunWeapon _unit != "")) exitWith {
 					if(isPlayer _unit) then {
 						"A gang has seen your weapon" call OT_fnc_notifyMinor;
 					};
@@ -278,8 +277,8 @@ while {alive _unit} do {
 							if !(typeof (vehicle _unit) in (OT_allVehicles+OT_allBoats)) exitWith {
 								_bad = true; //They are driving or in a non-civilian vehicle including statics
 							};
-							if(driver (vehicle _unit) isEqualTo _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot && drive, otherwise...
-							if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "") or ((headgear _unit) in OT_illegalHeadgear) or ((vest _unit) in OT_illegalVests)) then {
+							if(driver (vehicle _unit) isEqualTo _unit) exitWith{};//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
+							if (!(primaryWeapon _unit isEqualTo "") || !(secondaryWeapon _unit isEqualTo "") || !(handgunWeapon _unit isEqualTo "") || ((headgear _unit) in OT_illegalHeadgear) || ((vest _unit) in OT_illegalVests)) then {
 								_bad = true;
 							};
 						};
@@ -290,12 +289,12 @@ while {alive _unit} do {
 							(vehicle _unit) spawn OT_fnc_revealToNATO;
 						};
 					};
-					if ((primaryWeapon _unit != "") or (secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) exitWith {
+					if ((primaryWeapon _unit != "") || (secondaryWeapon _unit != "") || (handgunWeapon _unit != "")) exitWith {
 						_bad = false;
 						if((primaryWeapon _unit) != "ACE_FakePrimaryWeapon") then {
 							_bad = true;
 						};
-						if((secondaryWeapon _unit != "") or (handgunWeapon _unit != "")) then {
+						if((secondaryWeapon _unit != "") || (handgunWeapon _unit != "")) then {
 							_bad = true;
 						};
 						if(_bad) then {
@@ -303,7 +302,7 @@ while {alive _unit} do {
 							_unit spawn OT_fnc_revealToNATO;
 						};
 					};
-					if ((headgear _unit in OT_illegalHeadgear) or (vest _unit in OT_illegalVests)) exitWith {
+					if ((headgear _unit in OT_illegalHeadgear) || (vest _unit in OT_illegalVests)) exitWith {
 						if(isPlayer _unit) then {
 							"You are wearing Gendarmerie gear" call OT_fnc_notifyMinor;
 						};

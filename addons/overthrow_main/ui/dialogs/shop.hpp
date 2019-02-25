@@ -14,7 +14,7 @@ class OT_dialog_buy
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -157,11 +157,11 @@ class OT_dialog_workshop
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
-				////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Jimepa)
 		////////////////////////////////////////////////////////
 
@@ -261,7 +261,7 @@ class OT_dialog_warehouse
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -351,8 +351,8 @@ class OT_dialog_warehouse
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};
 
 class OT_dialog_import
 {
@@ -370,7 +370,7 @@ class OT_dialog_import
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -448,8 +448,8 @@ class OT_dialog_import
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};
 
 class OT_dialog_loadout
 {
@@ -498,5 +498,5 @@ class OT_dialog_loadout
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};

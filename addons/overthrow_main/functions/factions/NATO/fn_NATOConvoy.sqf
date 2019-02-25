@@ -110,7 +110,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
 
 
 if(isNull _track) exitWith {};
-waitUntil {(_track distance _topos) < 100 or !alive _track};
+waitUntil {(_track distance _topos) < 100 || !alive _track};
 
 if(alive _track) then {
     {

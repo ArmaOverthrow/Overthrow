@@ -30,7 +30,7 @@ if((_town in OT_allTowns) && _cls in (OT_allWeapons + OT_allMagazines + OT_illeg
 	if(_town isEqualTo OT_nation) then {_population = 100};
 	if(_population > 2000) then {_population = 2000};
 	_population = 1-(_population / 2000);
-	if(_cls isEqualTo "WAGE" && _town != OT_nation) then {
+	if(_cls == "WAGE" && _town != OT_nation) then {
 		_population = (_population / 2000);
 	};
 

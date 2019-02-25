@@ -71,12 +71,12 @@ while {true} do {
 
 	private _spotDistance = OT_spawnDistance;
 	_hour = date select 3;
-	if(_hour > 19 or _hour < 6) then {_spotDistance = _spotDistance * 0.7};
+	if(_hour > 19 || _hour < 6) then {_spotDistance = _spotDistance * 0.7};
 	if(rain > 0) then {_spotDistance = _spotDistance * 0.8};
 	if(overcast > 0.5) then {_spotDistance = _spotDistance * 0.9};
 	_upos = "UP";
 	{
-		if(side _x isEqualTo west or side _x isEqualTo east) then {
+		if(side _x isEqualTo west || side _x isEqualTo east) then {
 			_lead = leader _x;
 			if((_lead distance _lospos) < _spotDistance) then {
 				if((_lead distance _lospos) < 300) then {

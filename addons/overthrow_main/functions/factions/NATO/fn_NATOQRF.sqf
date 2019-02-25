@@ -26,7 +26,7 @@ _air = [];
 _abandoned = server getvariable ["NATOabandoned",[]];
 {
 	_x params ["_obpos","_name","_pri"];
-	if !((_name in _abandoned) or (_obpos distance _pos) < 300) then {
+	if !((_name in _abandoned) || (_obpos distance _pos) < 300) then {
 		if([_pos,_obpos] call OT_fnc_regionIsConnected) then {
 			_ground pushback _x;
 		};
@@ -166,7 +166,7 @@ while {sleep 5; !_over} do {
 			if((side _x isEqualTo west) && (alive _x)) then {
 				_alive = _alive + 1;
 			};
-			if((side _x isEqualTo resistance or captive _x) && (alive _x) && !(_x getvariable ["ace_isunconscious",false])) then {
+			if((side _x isEqualTo resistance || captive _x) && (alive _x) && !(_x getvariable ["ace_isunconscious",false])) then {
 				_enemy = _enemy + 1;
 			};
 		};

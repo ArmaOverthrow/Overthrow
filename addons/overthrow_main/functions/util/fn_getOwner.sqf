@@ -1,7 +1,7 @@
-if(typename _this isEqualTo "SCALAR") exitWith {
+if(_this isEqualType 1) exitWith {
     owners getVariable [str _this,nil];
 };
-if(typename _this isEqualTo "STRING") exitWith {
+if(_this isEqualType "") exitWith {
     owners getVariable [_this,nil];
 };
 if((getObjectType _this) != 8 && (_this isKindOf "Building")) exitWith {

@@ -222,7 +222,7 @@ if(typename _b isEqualTo "ARRAY") then {
 		};
 
 		if(damage _building isEqualTo 1) then {
-			if((_owner isEqualTo getplayerUID player) or (call OT_fnc_playerIsGeneral)) then {
+			if((_owner isEqualTo getplayerUID player) || (call OT_fnc_playerIsGeneral)) then {
 				ctrlEnable [1608,false]; //Not allowed to sell
 				ctrlSetText [1609,"Repair"]; //Replace lease/manage with repair
 				ctrlEnable [1609,true];
@@ -343,7 +343,7 @@ if(_obpos distance player < 250) then {
 				ctrlEnable [1621,false];
 			}else{
 				_price = _obname call OT_fnc_getBusinessPrice;
-				ctrlSetText [1201,"\ot\ui\closed.paa"];
+				ctrlSetText [1201,"\overthrow_main\ui\closed.paa"];
 				_areaText = format["
 					<t align='left' size='0.8'>%1</t><br/>
 					<t align='left' size='0.65'>Out Of Operation</t><br/>

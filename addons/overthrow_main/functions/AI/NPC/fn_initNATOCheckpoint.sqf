@@ -33,7 +33,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 		if(_unit isKindOf "LandVehicle" && (side _x isEqualTo west)) then {
 			_friendly pushback _x;
 		};
-		if !(_unit in _inrange or _unit in _searching or _unit in _searched) then {
+		if !(_unit in _inrange || _unit in _searching || _unit in _searched) then {
 			if(_unit call OT_fnc_unitSeenNATO) then {
 
 				if((isPlayer _unit) && (captive _unit)) then {
@@ -49,7 +49,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 		};
 	}foreach(_start nearentities [["CaManBase","LandVehicle"],_outerRange]);
 
-	if((count _vehs) > 0 or (count _friendly) > 0) then {
+	if((count _vehs) > 0 || (count _friendly) > 0) then {
 		{
 			_x animate ["Door_1_rot",1];
 		}foreach(_bargates);
@@ -75,7 +75,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 			_veh = false;
 
 			if(_x distance _start < _innerRange) then {
-				if !(_x in _searching or _x in _searched) then {
+				if !(_x in _searching || _x in _searched) then {
 					if(isPlayer _x) then {
 						_searching pushback _x;
 						_leader globalchat "Please wait... personal items will be stored in your vehicle";
@@ -121,7 +121,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 						if(secondaryWeapon _unit != "") then {_foundweapons = true};
 						if(handgunWeapon _unit != "") then {_foundweapons = true};
 
-						if(_foundillegal or _foundweapons) then {
+						if(_foundillegal || _foundweapons) then {
 							if(_foundweapons) then {
 								_msg = "What's this??!?";
 								_unit setCaptive false;
@@ -132,7 +132,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 									};
 								}foreach(_unit nearentities ["Man",500]);
 							}else{
-								_msg = "We found some illegal items && confiscated them, be on your way";
+								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
 						};
 						_msg remoteExec ["OT_fnc_notifyMinor",_x,false];
@@ -142,7 +142,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 				};
 			}else{
 				if (_x in _searching && isPlayer _x) then {
-					"Return to the checkpoint immediately && wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,false];
+					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,false];
 					_searching deleteAt(_searching find _x);
 				}
 			};

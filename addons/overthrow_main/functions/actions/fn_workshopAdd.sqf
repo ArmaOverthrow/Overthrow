@@ -19,7 +19,7 @@ if(!alive _veh) exitWith {};
 
 	private _item = [];
 	{
-		if((_x select 4) isEqualTo _cls && (typeof _veh) isEqualTo (_x select 1)) exitWith {_item = _x};
+		if((_x select 4) == _cls && (typeof _veh) == (_x select 1)) exitWith {_item = _x};
 	}foreach(OT_workshop);
 
 	if(count _item > 0) then {
@@ -35,7 +35,7 @@ if(!alive _veh) exitWith {};
 	[30,false] call OT_fnc_progressBar;
 	sleep 30;
 	disableUserInput false;
-	if((!alive player) or (!alive _veh)) exitWith {};
+	if((!alive player) || (!alive _veh)) exitWith {};
 
 	_money = player getVariable ["money",0];
 	_money = _money - _price;

@@ -4,12 +4,12 @@ private _cop = objNull;
 if((count _this) isEqualTo 3) then {
 	//its a position
 	{
-		_c = leader (group _x);
+		private _c = leader (group _x);
 		if(side _c isEqualTo west && !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
 	}foreach(_this nearEntities ["CAManBase",300]);
 	if(isNil "_cop") exitWith {};
 	{
-		if !(side _x isEqualTo west or side _x isEqualTo east) exitWith{_target = _x};
+		if !(side _x == west || side _x == east) exitWith{_target = _x};
 	}foreach(_cop nearEntities ["CAManBase",50]);
 }else{
 	_target = _this select 0;
@@ -17,12 +17,13 @@ if((count _this) isEqualTo 3) then {
 		_cop = _this select 1;
 	}else{
 		{
-			_c = leader (group _x);
+			private _c = leader (group _x);
 			if(side _c isEqualTo west && !(_c getVariable ["OT_searching",false])) exitWith{_cop = _c};
 		}foreach(_target nearEntities ["CAManBase",150]);
 	};
 };
-if(isNil "_cop" or isNil "_target") exitWith{};
+if(isNil "_cop" || isNil "_target") exitWith{};
+if(isNull "_cop" || isNull "_target") exitWith{};
 
 _cop setVariable ["OT_searching",true,true];
 
@@ -52,12 +53,12 @@ if(isplayer _target) then {
 	[_target, "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon"] remoteExec ["playMove",_target,false];
 	[_target, "MOVE"] remoteExec ["disableAI",_target,false];
 };
-_posnow = position _target;
-_timenow = time;
+private _posnow = position _target;
+private _timenow = time;
 
 private _cleanup = {
-	[_target, ""] remoteExec ["switchMove",_target,false];
 	params ["_group","_cop","_target","_handler"];
+	[_target, ""] remoteExec ["switchMove",_target,false];
 	if(!isNil "_group") then {
 		_group setBehaviour "SAFE";
 		_group call OT_fnc_initGendarmPatrol;
@@ -73,18 +74,18 @@ private _cleanup = {
 	};
 };
 [_cop,(position _target)] remoteExec["doMove",_cop,false];
-waitUntil {sleep 1;(_cop distance _target) < 7 or (_target distance _posnow) > 2 or (time - _timenow) > 120};
-if(isNil "_cop" or isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
-if(!alive _cop or !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+waitUntil {sleep 1;(_cop distance _target) < 7 || (_target distance _posnow) > 2 || (time - _timenow) > 120};
+if(isNil "_cop" || isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+if(!alive _cop || !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
 
-if((isplayer _target && !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
+if((isplayer _target && !captive _target) || (!alive _cop) || ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
 if((_target distance _posnow) > 2) then {
 	if(isplayer _target) then {
 		[_cop,"I said stop! move again && we WILL open fire"] remoteExec ["globalchat",_target,false];
 		"sectorLost" remoteExec ["playsound",_target,false];
 
-		while {(count(waypoints _group))>0} do
+		while {!((waypoints _group) isEqualTo [])} do
 		{
 			deletewaypoint ((waypoints _group) select 0);
 		};
@@ -97,15 +98,15 @@ if((_target distance _posnow) > 2) then {
 		_posnow = position _target;
 		_timenow = time;
 		_cop doMove (position _target);
-		waitUntil {sleep 2;(_cop distance _target) < 7 or (_target distance _posnow) > 2 or (time - _timenow) > 120};
+		waitUntil {sleep 2;(_cop distance _target) < 7|| (_target distance _posnow) > 2|| (time - _timenow) > 120};
 		if((_target distance _posnow) > 2) then {
 			_target setCaptive false;
 			[_group,_cop,_target,_hdl] call _cleanup;
 		};
 	};
 };
-if(isNil "_cop" or isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
-if(!alive _cop or !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+if(isNil "_cop" || isNil "_target") exitWith{[_group,_cop,_target,_hdl] call _cleanup};
+if(!alive _cop || !alive _target) exitWith{[_group,_cop,_target,_hdl] call _cleanup};
 [_cop, "Amovpknlmstpsraswrfldnon_gear"] remoteExec ["playMove",_cop,false];
 if(isplayer _target) then {
 	[_cop,"This is a random search, stay perfectly still"] remoteExec ["globalchat",_target,false];
@@ -114,7 +115,7 @@ if(isplayer _target) then {
 	sleep 15;
 };
 
-if((isplayer _target && !captive _target) or (!alive _cop) or ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
+if((isplayer _target && !captive _target) || (!alive _cop) || ((time - _timenow) > 120)) exitWith {[_group,_cop,_target,_hdl] call _cleanup};
 
 if((_target distance _posnow) > 2) exitWith {
 	if(isplayer _target) then {
@@ -151,7 +152,7 @@ if(isplayer _target) then {
 		};
 	}foreach(_target call OT_fnc_getSearchStock);
 
-	if(_foundillegal or _foundweapons) then {
+	if(_foundillegal || _foundweapons) then {
 		if(_foundweapons) then {			
 			if(isplayer _target) then {
 				[_cop,"What's this!?"] remoteExec ["globalchat",_target,false];

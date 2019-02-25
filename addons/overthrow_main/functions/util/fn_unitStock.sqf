@@ -5,7 +5,7 @@ private _target = _this;
 private _categoryItems = [];
 
 
-if(typename _this isEqualTo "ARRAY") then {
+if(_this isEqualType []) then {
 	_category = _this select 1;
 	_target = _this select 0;
 
@@ -25,6 +25,7 @@ if(typename _this isEqualTo "ARRAY") then {
 };
 
 private _allCargo = {
+	private _target = _this;
 	private _myitems = [];
 	if(_target isKindOf "Man") then {
 		_myitems = ((items _target) - (weapons _target)) + (magazines _target);
@@ -80,10 +81,10 @@ private _theseitems = _target call _allCargo;
 if !(isNil "_theseitems") then {
 	{
 		private _cls = _x;
-		if(_category isEqualTo "" or _cls in _categoryItems) then {
+		if(_category isEqualTo "" || _cls in _categoryItems) then {
 			if(OT_hasTFAR) then {
-				_c = _cls splitString "_";
-				if((_c select 0) isEqualTo "tf") then {
+				private _c = _cls splitString "_";
+				if((_c select 0) == "tf") then {
 					_cls = "tf";
 					{
 						if(_forEachIndex isEqualTo (count _c)-1) exitWith {};

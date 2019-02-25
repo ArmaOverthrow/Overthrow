@@ -27,7 +27,7 @@ if !(_quiet) then {
 private _data = [];
 //get all server data
 {
-	if !(_x isEqualTo "StartupType" or _x isEqualTo "recruits" or _x isEqualTo "squads" or (_x select [0,11]) isEqualTo "resgarrison" or (_x select [0,4]) isEqualTo "ace_" or (_x select [0,4]) isEqualTo "cba_" or (_x select [0,4]) isEqualTo "bis_") then {
+	if !(_x == "StartupType" || _x == "recruits" || _x == "squads" || (_x select [0,11]) == "resgarrison" || (_x select [0,4]) == "ace_" || (_x select [0,4]) == "cba_" || (_x select [0,4]) == "bis_") then {
 		_val = server getVariable _x;
 		if !(isNil "_val") then {
 			if(typename _val isEqualTo "ARRAY") then {
@@ -231,10 +231,10 @@ if !(_quiet) then {
 					_soldiers pushback [typeof _x,getUnitLoadout _x];
 				}else{
 					_veh = vehicle _x;
-					if(someAmmo _veh && (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh == "I_HMG_01_high_F")) then {
 						_soldiers pushback ["HMG",[]];
 					};
-					if(someAmmo _veh && (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh == "I_GMG_01_high_F")) then {
 						_soldiers pushback ["GMG",[]];
 					};
 				};
@@ -260,10 +260,10 @@ if !(_quiet) then {
 					_soldiers pushback [typeof _x,getUnitLoadout _x];
 				}else{
 					_veh = vehicle _x;
-					if(someAmmo _veh && (typeof _veh isEqualTo "I_HMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh == "I_HMG_01_high_F")) then {
 						_soldiers pushback ["HMG",[]];
 					};
-					if(someAmmo _veh && (typeof _veh isEqualTo "I_GMG_01_high_F")) then {
+					if(someAmmo _veh && (typeof _veh == "I_GMG_01_high_F")) then {
 						_soldiers pushback ["GMG",[]];
 					};
 				};

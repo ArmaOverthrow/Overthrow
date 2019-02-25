@@ -18,8 +18,8 @@ if !(isMultiplayer) then {
 };
 
 if (!hasInterface) exitWith {};
-if(isNil "bigboss" && typeof player isEqualTo "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
-if(count ([] call CBA_fnc_players) isEqualTo 1 && isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
+if(isNil "bigboss" && typeof player == "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
+if(count ([] call CBA_fnc_players) == 1 && isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
 if(isNil {server getVariable "generals"}) then {server setVariable ["generals",[getplayeruid player]]};
 
@@ -87,7 +87,7 @@ _town = "";
 _pos = [];
 _housepos = [];
 
-if(isMultiplayer or _startup isEqualTo "LOAD") then {
+if(isMultiplayer || _startup == "LOAD") then {
 	player remoteExec ["OT_fnc_loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
 	_newplayer = player getVariable ["OT_newplayer",true];
@@ -335,8 +335,8 @@ player addEventHandler ["GetInMan",{
 			};
 		};
 	};
-	_g = _v getVariable ["vehgarrison",false];
-	if(typename _g isEqualTo "STRING") then {
+	_g = _veh getVariable ["vehgarrison",false];
+	if(typename _g == "STRING") then {
 		_vg = server getVariable format["vehgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["vehgarrison%1",_g],_vg,false];
@@ -346,8 +346,8 @@ player addEventHandler ["GetInMan",{
 		}foreach(crew _veh);
 		_veh spawn OT_fnc_revealToNATO;
 	};
-	_g = _v getVariable ["airgarrison",false];
-	if(typename _g isEqualTo "STRING") then {
+	_g = _veh getVariable ["airgarrison",false];
+	if(_g isEqualType "") then {
 		_vg = server getVariable format["airgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["airgarrison%1",_g],_vg,false];
@@ -363,7 +363,12 @@ if(_newplayer) then {
 	if!(player getVariable ["OT_tute",false]) then {
 		createDialog "OT_dialog_tute";
 		player setVariable ["OT_tute",true,true];
+		player setVariable ["OT_tute_trigger",false,true];
+	} else {
+		player setVariable ["OT_tute_trigger",true,true];
 	};
+} else {
+	player setVariable ["OT_tute_trigger",true,true];
 };
 
 {

@@ -3,7 +3,7 @@ class VCOM
 	tag = "VCM";
 	class Functions
 	{
-		file = "\ot\functions\AI\VCOMAI\Functions\VCM_Functions";
+		file = "\overthrow_main\functions\AI\VCOMAI\Functions\VCM_Functions";
 
 		// [unitToRearm, rearmLocation] spawn VCM_fnc_ActRearm
 		class ActRearm {};
@@ -123,7 +123,7 @@ class RYD
 	// Fire For Effect: The God of War
 	class FFE_Functions
 	{
-		file = "\ot\functions\AI\VCOMAI\Functions\FFE_Functions";
+		file = "\overthrow_main\functions\AI\VCOMAI\Functions\FFE_Functions";
 		class AngTowards {};
 		class ArtyMission {};
 		class ArtyPrep {};
@@ -137,7 +137,7 @@ class RYD
 	};
 	class FFE_Shellview
 	{
-		file = "\ot\functions\AI\VCOMAI\Functions\FFE_Shellview";
+		file = "\overthrow_main\functions\AI\VCOMAI\Functions\FFE_Shellview";
 		class Shellview {};
 	};
 };

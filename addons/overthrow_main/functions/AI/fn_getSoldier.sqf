@@ -21,16 +21,16 @@ private _cost = floor(([OT_nation,"CIV",0] call OT_fnc_getPrice) * 1.5);
 
 private _wpn = [_primary] call OT_fnc_findWeaponInWarehouse;
 if(_wpn isEqualTo "") then {
-	_possible = [];
+	private _possible = [];
 	{
-		_weapon = [_x] call BIS_fnc_itemType;
-		_weaponType = _weapon select 1;
-		if(_weaponType isEqualTo "AssaultRifle" && (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
-		if(_weaponType isEqualTo _primary) then {_possible pushback _x};
+		private _weapon = [_x] call BIS_fnc_itemType;
+		private _weaponType = _weapon select 1;
+		if(_weaponType == "AssaultRifle" && (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
+		if(_weaponType == _primary) then {_possible pushback _x};
 	}foreach(OT_allWeapons);
-	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
+	private _sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
 	_wpn = _sorted select 0;
-	_price =((cost getVariable [_wpn,[200]]) select 0);
+	private _price =((cost getVariable [_wpn,[200]]) select 0);
 	_cost = _cost + _price;
 }else{
 	_warehouseWpn = true;
@@ -42,21 +42,20 @@ if(_pwpn != "") then {
 
 private _scope = [_range] call OT_fnc_findScopeInWarehouse;
 if(_scope isEqualTo "") then {
-	_possible = [];
+	private _possible = [];
 	{
-		_name = _x;
-		_max = 0;
-		_allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" );
+		private _name = _x;
+		private _max = 0;
+		private _allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" );
 		{
-			_mode = configName _x;
-			_max = _max max getNumber (configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" >> _mode >> "distanceZoomMax");
+			_max = _max max getNumber (_x >> "distanceZoomMax");
 		}foreach(_allModes);
 		if(_max >= _range) then {_possible pushback _name};
 	}foreach(OT_allOptics);
-	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
+	private _sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
 	_scope = _sorted select 0;
 	if(_scope != "") then {
-		_price = ((cost getVariable [_scope,[200]]) select 0);
+		private _price = ((cost getVariable [_scope,[200]]) select 0);
 		_cost = _cost + _price;
 	};
 }else{
@@ -64,10 +63,10 @@ if(_scope isEqualTo "") then {
 };
 
 if(_tertiary != "") then {
-	_d = warehouse getvariable [_tertiary,[_tertiary,0]];
-	_num = _d select 1;
+	private _d = warehouse getvariable [_tertiary,[_tertiary,0]];
+	private _num = _d select 1;
 	if(_num isEqualTo 0) then {
-		_price = ((cost getVariable [_tertiary,[1000]]) select 0);
+		private _price = ((cost getVariable [_tertiary,[1000]]) select 0);
 		_cost = _cost + _price;
 	}else{
 		_warehouseTertiary = true;

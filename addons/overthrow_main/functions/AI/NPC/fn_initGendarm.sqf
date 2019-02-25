@@ -15,7 +15,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenNATO)) then {
+		if((vehicle _src) != _src || (_src call OT_fnc_unitSeenNATO)) then {
 			_src setCaptive false;
 		};
 	};
@@ -39,7 +39,7 @@ removeAllWeapons _unit;
 
 _hour = date select 3;
 if(_skill > 0.8) then {
-	if(_hour > 17 or _hour < 6) then {
+	if(_hour > 17 || _hour < 6) then {
 		_unit linkItem "NVGoggles_OPFOR";
 	};
 	_unit addGoggles "G_Bandanna_aviator";
@@ -62,7 +62,7 @@ _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
 _unit addWeaponGlobal _weapon;
 
-if(_hour > 17 or _hour < 6) then {
+if(_hour > 17 || _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
 };
 

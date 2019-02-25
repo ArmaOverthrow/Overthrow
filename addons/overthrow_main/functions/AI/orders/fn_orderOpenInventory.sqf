@@ -25,7 +25,7 @@ if(((vehicle _unit) != _unit) && (vehicle _unit) != _target) then {
 };
 if(vehicle _unit != _target) then {
 	_unit doMove position _target;
-	waitUntil {sleep 1;!alive _unit or (_unit distance _target < 10)};
+	waitUntil {sleep 1;!alive _unit || (_unit distance _target < 10)};
 };
 
 if(alive _unit) then {
