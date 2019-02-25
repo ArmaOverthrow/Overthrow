@@ -29,7 +29,7 @@ class OT_dialog_name
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.242344 * safezoneW;
 			h = 0.055 * safezoneH;
-			onKeyDown = "_this call onNameKeyDown;";
+			onKeyDown = "_this call OT_fnc_onNameKeyDown;";
 			text = "Base";
 		};
 		class RscStructuredText_1100: RscOverthrowStructuredText
