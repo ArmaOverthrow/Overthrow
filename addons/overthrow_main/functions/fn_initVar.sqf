@@ -4,7 +4,8 @@
 
 [] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
 
-OT_ACEremoveAction = ["OT_Remove","Remove","",{deleteVehicle _target;},{(call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner)},{},[], [0,0,0], 10] call ace_interact_menu_fnc_createAction;
+OT_ACEremoveAction = ["OT_Remove","Remove","",{},{(call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner)},{},[], [0,0,0], 10] call ace_interact_menu_fnc_createAction;
+OT_ACEremoveActionConfirm = ["OT_Remove_Confirm","Confirm","",{deleteVehicle _target;},{(call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner)},{},[], [0,0,0], 10] call ace_interact_menu_fnc_createAction;
 
 //Find markers
 OT_ferryDestinations = [];

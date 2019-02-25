@@ -4,14 +4,19 @@
 			class OT_Remove { \
 				condition = "!([player] call ace_repair_fnc_isInRepairFacility) and (_target call OT_fnc_hasOwner) and ((call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner))"; \
 				displayName = "Remove"; \
-				statement = "deleteVehicle _target"; \
-			} \
+				statement = ""; \
+					class OT_Remove_Confirm { \
+						condition = "true"; \
+						displayName = "Confirm"; \
+						statement = "deleteVehicle _target"; \
+					}; \
+			}; \
 			class OT_Salvage { \
 				condition = "((damage _target) > 0.99 and ""ToolKit"" in (items player)) or [player] call ace_repair_fnc_isInRepairFacility"; \
 				displayName = "Salvage"; \
 				statement = "_target spawn OT_fnc_salvageWreck"; \
-			} \
-		} \
+			}; \
+		}; \
 	};
 
 
