@@ -13,8 +13,7 @@ if(isNil "_numNATO") then {
 
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 if(_name in OT_allComms) then {
-	private _group = createGroup blufor;
-	_group deleteGroupWhenEmpty true;
+	private _group = createGroup [blufor,true];
 	_groups pushBack _group;
 
 	private _start = _posTown findEmptyPosition [0,50];
@@ -115,7 +114,7 @@ if(_numNATO > 0) then {
 
 				createVehicleCrew _veh;
 				_numNATO = _numNATO - 1;
-				_veh
+				[_veh]
 			};
 
 			private _vehs = [];
