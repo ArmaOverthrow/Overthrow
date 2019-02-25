@@ -363,7 +363,12 @@ if(_newplayer) then {
 	if!(player getVariable ["OT_tute",false]) then {
 		createDialog "OT_dialog_tute";
 		player setVariable ["OT_tute",true,true];
+		player setVariable ["OT_tute_trigger",false,true];
+	} else {
+		player setVariable ["OT_tute_trigger",true,true];
 	};
+} else {
+	player setVariable ["OT_tute_trigger",true,true];
 };
 
 {

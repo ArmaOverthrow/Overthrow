@@ -125,7 +125,6 @@ if(isServer) then {
 
 //Global overthrow variables related to any map
 
-OT_menuHandler = {};
 OT_currentMissionFaction = "";
 OT_rankXP = [100,250,500,1000,4000,10000,100000];
 
