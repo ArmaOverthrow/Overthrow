@@ -26,7 +26,8 @@ while {sleep OT_jobWait;true} do {
             if(_target == "Global") exitWith {
                 private _id = _name;
                 if((random 100) < _chance) then {
-                    if(([] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
+                    private _numAbandoned = count(server getVariable ["NATOabandoned",[]]);
+                    if(([_numAbandoned] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
                         _activeJobs pushback _id;
                         spawner setVariable ["OT_activeJobIds",_activeJobs,false];
                         [_id,_jobdef,[_x]] spawn OT_fnc_assignJob;

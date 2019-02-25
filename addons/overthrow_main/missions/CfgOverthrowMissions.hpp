@@ -13,7 +13,7 @@ class CfgOverthrowMissions
     {
         target = "Global";
         repeatable = 1;
-        condition = "true";
+        condition = "params['_numAbandoned'];_numAbandoned > 0";
         script = "\overthrow_main\missions\informant.sqf";
         chance = 15;
     };
