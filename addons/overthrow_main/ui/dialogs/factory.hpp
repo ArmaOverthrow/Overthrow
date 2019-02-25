@@ -14,7 +14,7 @@ class OT_dialog_factoryold
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -149,7 +149,7 @@ class OT_dialog_factory
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -293,8 +293,8 @@ class OT_dialog_factory
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
+	};
+};
 
 
 class OT_dialog_reverse
@@ -362,7 +362,7 @@ class OT_dialog_craft
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{

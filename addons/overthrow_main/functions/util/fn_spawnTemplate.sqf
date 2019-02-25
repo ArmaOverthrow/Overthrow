@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "\overthrow_main\script_component.hpp"
 
 private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template","_objects","_type"];
 
@@ -6,12 +6,26 @@ _building = _this;
 private _type = typeOf(_building);
 if(isNil {templates getVariable _type}) then {
 	_tpl = getText(configFile >> "CfgVehicles" >> _type >> "ot_template");
-	if(isNil "_tpl" or _tpl isEqualTo "" or _tpl isEqualTo "''") exitWith {
-		ERROR_MSG(format["%1 has no furniture template defined",_type]);
+	if(isNil "_tpl" || {_tpl isEqualTo ""} || {_tpl isEqualTo "''"}) exitWith {
+		[
+			"OT",
+			"",
+			"TEMPLATE ERROR",
+			format["%1 has no furniture template defined",_type],
+			__FILE__,
+			__LINE__
+		] call CBA_fnc_error;
 	};
 	_template = call compile call compile _tpl;
 	if(isNil "_template") exitWith {
-		ERROR_MSG(format["%1 furniture template is defined incorrectly",_type]);
+		[
+			"OT",
+			"",
+			"TEMPLATE ERROR",
+			format["%1 furniture template is defined incorrectly",_type],
+			__FILE__,
+			__LINE__
+		] call CBA_fnc_error;
 	};
 	if !(typename _template isEqualTo "ARRAY") exitWith {};
 	{
@@ -38,7 +52,7 @@ _objects = [];
 
 {
 	_type = _x select 0;
-	if(_type isEqualTo "MapBoard_altis_F" or _type isEqualTo "Mapboard_tanoa_F" or _type isEqualTo "Land_MapBoard_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
+	if(_type == "MapBoard_altis_F" || _type == "Mapboard_tanoa_F" || _type == "Land_MapBoard_F") then {_type = OT_item_Map}; //Change map object to one defined in initVar
 	_rel = _x select 1;
 	_dir = (_x select 2);
 

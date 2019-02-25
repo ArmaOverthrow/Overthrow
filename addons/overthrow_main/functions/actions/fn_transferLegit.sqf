@@ -1,4 +1,4 @@
-_veh = vehicle player;
+private _veh = vehicle player;
 
 if(_veh isEqualTo player) exitWith {};
 
@@ -7,7 +7,7 @@ private _objects = [];
 private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
 if(typename _b isEqualTo "ARRAY") then {
-	_building = _b select 0;
+	private _building = _b select 0;
 	if((typeof _building) isEqualTo OT_warehouse && _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
 		_objects pushback _building;
@@ -15,10 +15,10 @@ if(typename _b isEqualTo "ARRAY") then {
 };
 
 {
-	if(_x != _veh) then {_objects pushback _x};
+	if!(_x isEqualTo _veh) then {_objects pushback _x};
 }foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 
-if(count _objects isEqualTo 0) exitWith {
+if(_objects isEqualTo []) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;

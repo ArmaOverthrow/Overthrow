@@ -1,11 +1,8 @@
 params ["_jobid","_jobparams"];
 _jobparams params ["_destinationName"];
 
-private _description = "";
+private _roads = (server getVariable [_destinationName,[]]) nearRoads 75;
 private _destination = [];
-private _title = "";
-
-_roads = (server getVariable [_destinationName,[]]) nearRoads 75;
 if(count _roads > 0) then {
     _destination = getpos(_roads select 0);
 }else{
@@ -32,67 +29,73 @@ if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
 };
 
 //Build a mission description and title
-_description = format["%1 is in need of medical supplies. Deliver %2 x %3 to the marked location using any vehicle, just pull up with the items in the inventory. %4",_destinationName,_numitems,_itemName,_effect];
-_title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
+private _description = format["%1 is in need of medical supplies. Deliver %2 x %3 to the marked location using any vehicle, just pull up with the items in the inventory. %4",_destinationName,_numitems,_itemName,_effect];
+private _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
-[[_title,_description],_markerPos,{
-    //No setup required for this mission
-},{
-    //Fail check...
-    false
-},{
-    //Success Check
-    params ["_destination","_destinationName","_itemcls","_numitems"];
-    _numavailable = 0;
-
-    _found = false;
-
-    _driver = objNull;
+[
+    [_title,_description],
+    _markerPos,
     {
-		_c = _x;
-
-        if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
-		     {
-    			_x params ["_cls","_amt"];
-    			if(_cls isEqualTo _itemcls and _amt >= _numitems) exitWith {
-                    _found = true;
-    			};
-    		}foreach(_c call OT_fnc_unitStock);
-        };
-        if(_found) exitWith {};
-	}foreach(_destination nearObjects ["AllVehicles", 15]);
-
-    _found
-},{
-    params ["_destination","_destinationName","_itemcls","_numitems","_wassuccess"];
-
-    //If mission was a success
-
-    if(_wassuccess) then {
-        _found = false;
-        //Take the medical supplies
+        //No setup required for this mission
+    },
+    {
+        //Fail check...
+        false
+    },
+    {
+        //Success Check
+        params ["_destination","_destinationName","_itemcls","_numitems"];
+        private _numavailable = 0;
+        private _found = false;
+        private _driver = objNull;
         {
-    		_c = _x;
-            if((_x call OT_fnc_hasOwner) and (speed _x) < 0.1) then {
-    		     {
-        			_x params ["_cls","_amt"];
-        			if(_cls isEqualTo _itemcls and _amt >= _numitems) exitWith {
+            private _c = _x;
+
+            if((_x call OT_fnc_hasOwner) && (speed _x) < 0.1) then {
+                {
+                    _x params ["_cls","_amt"];
+                    if(_cls == _itemcls && _amt >= _numitems) exitWith {
                         _found = true;
-                        [_c, _cls, _numitems] call CBA_fnc_removeItemCargo;
-        			};
-        		}foreach(_c call OT_fnc_unitStock);
+                    };
+                }foreach(_c call OT_fnc_unitStock);
             };
             if(_found) exitWith {};
-    	}foreach(_destination nearObjects ["AllVehicles", 15]);
+        }foreach(_destination nearObjects ["AllVehicles", 15]);
 
-        //apply stability and standing
-        [_destinationName,5,format["Delivered %1 x %2 medical supplies",_numitems,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_standing;
+        _found
+    },
+    {
+        params ["_destination","_destinationName","_itemcls","_numitems","_wassuccess"];
 
-        if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
-            [_destinationName,10] call OT_fnc_stability;
-        }else{
-            [_destinationName,-10] call OT_fnc_stability;
+        //If mission was a success
+
+        if(_wassuccess) then {
+            private _found = false;
+            //Take the medical supplies
+            {
+                private _c = _x;
+                if((_x call OT_fnc_hasOwner) && (speed _x) < 0.1) then {
+                    {
+                        _x params ["_cls","_amt"];
+                        if(_cls == _itemcls && _amt >= _numitems) exitWith {
+                            _found = true;
+                            [_c, _cls, _numitems] call CBA_fnc_removeItemCargo;
+                        };
+                    }foreach(_c call OT_fnc_unitStock);
+                };
+                if(_found) exitWith {};
+            }foreach(_destination nearObjects ["AllVehicles", 15]);
+
+            //apply stability and standing
+            [_destinationName,5,format["Delivered %1 x %2 medical supplies",_numitems,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_standing;
+
+            if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
+                [_destinationName,10] call OT_fnc_stability;
+            }else{
+                [_destinationName,-10] call OT_fnc_stability;
+            };
         };
-    };
-},_params];
+    },
+    _params
+];

@@ -18,7 +18,7 @@ while {true} do {
 		};
 	};
 
-	if((_lasthour isEqualTo 0) or (_lasthour isEqualTo 6) or (_lasthour isEqualTo 12) or (_lasthour isEqualTo 18)) then {
+	if((_lasthour isEqualTo 0) || (_lasthour isEqualTo 6) || (_lasthour isEqualTo 12) || (_lasthour isEqualTo 18)) then {
 		private _inf = 1;
 		private _total = 0;
 

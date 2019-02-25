@@ -352,7 +352,8 @@ while {true} do {
 								clearBackpackCargoGlobal _veh;
 								clearItemCargoGlobal _veh;
 							};
-							call {
+							[_veh,_currentCls,_numtoproduce] call {
+								params ["_veh","_currentCls","_numtoproduce"];
 								if(_currentCls isKindOf "Bag_Base") exitWith {
 									_currentCls = _currentCls call BIS_fnc_basicBackpack;
 									_veh addBackpackCargoGlobal [_currentCls,_numtoproduce];
@@ -391,31 +392,31 @@ while {true} do {
 			if(typename _unit isEqualTo "OBJECT") then {
 				_xp = _unit getVariable ["OT_xp",0];
 				_player = spawner getvariable [_owner,objNULL];
-				if(_rank isEqualTo "PRIVATE" && _xp > (OT_rankXP select 0)) then {
+				if(_rank == "PRIVATE" && _xp > (OT_rankXP select 0)) then {
 					_x set [3,"CORPORAL"];
 					_unit setRank "CORPORAL";
 					format["%1 has been promoted to Corporal",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.2 + (random 0.3);
 				};
-				if(_rank isEqualTo "CORPORAL" && _xp > (OT_rankXP select 1)) then {
+				if(_rank == "CORPORAL" && _xp > (OT_rankXP select 1)) then {
 					_x set [3,"SERGEANT"];
 					_unit setRank "SERGEANT";
 					format["%1 has been promoted to Sergeant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.3 + (random 0.3);
 				};
-				if(_rank isEqualTo "SERGEANT" && _xp > (OT_rankXP select 2)) then {
+				if(_rank == "SERGEANT" && _xp > (OT_rankXP select 2)) then {
 					_x set [3,"LIEUTENANT"];
 					_unit setRank "LIEUTENANT";
 					format["%1 has been promoted to Lieutenant",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.5 + (random 0.3);
 				};
-				if(_rank isEqualTo "LIEUTENANT" && _xp > (OT_rankXP select 3)) then {
+				if(_rank == "LIEUTENANT" && _xp > (OT_rankXP select 3)) then {
 					_x set [3,"CAPTAIN"];
 					_unit setRank "CAPTAIN";
 					format["%1 has been promoted to Captain",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];
 					_unit setSkill 0.6 + (random 0.3);
 				};
-				if(_rank isEqualTo "CAPTAIN" && _xp > (OT_rankXP select 4)) then {
+				if(_rank == "CAPTAIN" && _xp > (OT_rankXP select 4)) then {
 					_x set [3,"MAJOR"];
 					_unit setRank "MAJOR";
 					format["%1 has been promoted to Major",_name select 0] remoteExec ["OT_fnc_notifyMinor",_player,false];

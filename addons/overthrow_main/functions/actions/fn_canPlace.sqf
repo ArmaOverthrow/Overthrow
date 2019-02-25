@@ -1,8 +1,6 @@
-private ["_canplace","_base","_isbase","_owner","_typecls","_estate","_pos","_typecls"];
+params ["_pos","_typecls"];
 
-_pos = _this select 0;
-_typecls = _this select 1;
-
+private ["_canplace","_base","_isbase","_owner","_typecls","_estate"];
 _isbase = false;
 _canplace = true;
 
@@ -70,7 +68,7 @@ if !(_isbase) then {
 					_canplace = false;
 				};
 			}else{
-				if(_typecls isEqualTo "Camp" or _typecls isEqualTo "Base") then {
+				if(_typecls == "Camp"|| _typecls == "Base") then {
 					_canplace = false;
 				};
 			};

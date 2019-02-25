@@ -1,17 +1,15 @@
-private ["_sorted","_target","_deadguys","_wasincar","_unit","_t","_got","_timeout","_weapon","_myunits"];
-
-_sorted = [];
+private _sorted = [];
 private _myunits = groupSelectedUnits player;
 
 {
     player groupSelectUnit [_x, false];
 } forEach (groupSelectedUnits player);
 
-_tt = _myunits select 0;
+_myunits params ["_tt"];
 if(vehicle _tt != _tt) then {
 	_sorted = [vehicle _tt];
 }else{
-	_objects = _tt nearEntities [["Car","ReammoBox_F","Air","Ship"],20];
+	private _objects = _tt nearEntities [["Car","ReammoBox_F","Air","Ship"],20];
 	if(count _objects isEqualTo 0) exitWith {
 		"Cannot find any containers or vehicles within 20m of first selected unit" call OT_fnc_notifyMinor;
 	};
@@ -45,8 +43,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 		_unit doMove getpos _t;
 
 		_timeout = time + 120;
-		waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 10) or (_timeOut < time) or (unitReady _unit)};
-		if(!alive _unit or (isNull _t) or (_timeOut < time)) exitWith {};
+		waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _t < 10) || (_timeOut < time) || (unitReady _unit)};
+		if(!alive _unit || (isNull _t) || (_timeOut < time)) exitWith {};
 
 		if !([_unit,_t] call OT_fnc_dumpStuff) then {
 			_unit globalchat "This vehicle is full, cancelling loot order";
@@ -56,7 +54,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 		while {true && _active} do {
 			_deadguys = [];
 			{
-				if !((_x distance _unit > 100) or (alive _x) or (_x getVariable ["looted",false])) then {
+				if !((_x distance _unit > 100) || (alive _x) || (_x getVariable ["looted",false])) then {
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");
@@ -70,8 +68,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			_unit doMove getpos _deadguy;
 			[_unit,1] call OT_fnc_experience;
 
-			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _deadguy < 12) or (_timeOut < time)};
-			if((!alive _unit) or (_timeOut < time)) exitWith {};
+			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _deadguy < 12) || (_timeOut < time)};
+			if((!alive _unit) || (_timeOut < time)) exitWith {};
 
 			[_deadguy,_unit] call OT_fnc_takeStuff;
 			sleep 2;
@@ -86,7 +84,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 				}foreach(_unit nearentities ["WeaponHolderSimulated",10]);
 				if !(isNull _weapon) then {
 					_unit doMove getpos _weapon;
-					waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 12) or (_timeOut < time)};
+					waitUntil {sleep 1; (!alive _unit) || (_unit distance _weapon < 12) || (_timeOut < time)};
 					if(alive _unit && (_timeOut > time)) then {
 						_s = (weaponsItems _weapon) select 0;
 
@@ -105,8 +103,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			if(!alive _unit) exitWith {};
 			_timeout = time + 120;
 			_unit doMove getpos _t;
-			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 12) or (_timeOut < time)};
-			if((!alive _unit) or (_timeOut < time)) exitWith {};
+			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _t < 12) || (_timeOut < time)};
+			if((!alive _unit) || (_timeOut < time)) exitWith {};
 
 			if !([_unit,_t] call OT_fnc_dumpStuff) exitWith {
 				_unit globalchat "This vehicle is full, cancelling loot order";
@@ -130,7 +128,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 
 			_timeout = time + 120;
 			_unit doMove getpos _weapon;
-			waitUntil {sleep 1; (!alive _unit) or (_unit distance _weapon < 10) or (_timeOut < time) or (unitReady _unit)};
+			waitUntil {sleep 1; (!alive _unit) || (_unit distance _weapon < 10) || (_timeOut < time) || (unitReady _unit)};
 			if(alive _unit && (_timeOut > time)) then {
 				_s = (weaponsItems _weapon) select 0;
 				_cls = (_s select 0);
@@ -147,8 +145,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			if(!alive _unit) exitWith {};
 			_timeout = time + 120;
 			_unit doMove getpos _t;
-			waitUntil {sleep 1; (!alive _unit) or (isNull _t) or (_unit distance _t < 10) or (_timeOut < time) or (unitReady _unit)};
-			if((!alive _unit) or (_timeOut < time)) exitWith {};
+			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _t < 10) || (_timeOut < time) || (unitReady _unit)};
+			if((!alive _unit) || (_timeOut < time)) exitWith {};
 
 			[_unit,_t] call OT_fnc_dumpStuff;
 		};

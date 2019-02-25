@@ -8,28 +8,28 @@ private _getWeather = {
 	private _temp = 30;
 	private _hour = date select 3;
 	call {
-		if(_forecast isEqualTo "Storm") exitWith {
+		if(_forecast == "Storm") exitWith {
 			_overtarget = 1;
 			_fogtarget = 0.01;
 			_wavetarget = 1;
 			_raintarget = 0.8 + (random 0.2);
 			_lightning = random 1;
 		};
-		if(_forecast isEqualTo "Rain") exitWith {
+		if(_forecast == "Rain") exitWith {
 			_overtarget = 0.7 + (random 0.1);
 			_fogtarget = 0.002;
 			_wavetarget = 0.3 + (random 0.4);
 			_raintarget = 0.6 + (random 0.2);
 			_lightning = 0;
 		};
-		if(_forecast isEqualTo "Cloudy") exitWith {
+		if(_forecast == "Cloudy") exitWith {
 			_overtarget = 0.3 + (random 0.7);
 			_fogtarget = 0.001;
 			_wavetarget = 0 + (random 0.2);
 			_raintarget = 0;
 			_lightning = 0;
 		};
-		if(_forecast isEqualTo "Clear") exitWith {
+		if(_forecast == "Clear") exitWith {
 			_overtarget = random 0.2;
 			_fogtarget = 0;
 			_wavetarget = random 0.2;
@@ -56,7 +56,7 @@ private _getWeather = {
 };
 private _forecast = "Clear";
 
-if((server getVariable "StartupType") isEqualTo "NEW" or (server getVariable ["weatherversion",0]) < 1) then {
+if((server getVariable "StartupType") == "NEW" || (server getVariable ["weatherversion",0]) < 1) then {
 	server setVariable ["weatherversion",1,false];
 
 	_mode = ["Clear","Cloudy"] call BIS_fnc_selectRandom;
@@ -135,7 +135,7 @@ while {true} do {
 	private _rainchance = 2;
 	private _cloudychance = 4;
 
-	if(_month < 5 or _month > 10) then {
+	if(_month < 5 || _month > 10) then {
 		//Wet season
 		_stormchance = 2;
 		_rainchance = 5;

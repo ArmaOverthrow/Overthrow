@@ -54,30 +54,38 @@ private _getprice = {
         if(_mass isEqualTo 1) then {
             _plastic = 0.1;
         };
-        call {
+        [_name,_price,_plastic] call {
+            params ["_name", "_price", "_plastic"];
             if(_name find "Blood" > -1) exitWith {
                 _price = round(_price * 1.3);
+                [_name,_price,_plastic]
             };
             if(_name find "Saline" > -1) exitWith {
                 _price = round(_price * 0.3);
+                [_name,_price,_plastic]
             };
             if(_name find "(250 ml)" > -1) exitWith {
                 _price = round(_price * 0.5);
+                [_name,_price,_plastic]
             };
             if(_name find "(Basic)" > -1) exitWith {
                 _price = 1;
+                [_name,_price,_plastic]
             };
             if(_name find "Epinephrine" > -1) exitWith {
                 _price = 30;
                 _plastic = 0;
+                [_name,_price,_plastic]
             };
             if(_name find "autoinjector" > -1) exitWith {
                 _price = 10;
                 _plastic = 0;
+                [_name,_price,_plastic]
             };
             if(_name find "Bodybag" > -1) exitWith {
                 _price = 2;
                 _plastic = 0.1;
+                [_name,_price,_plastic]
             };
         };
     };
@@ -123,7 +131,7 @@ private _getprice = {
     {
         _x params ["_category","_types"];
         {
-            if((_name find _x > -1) or (_desc find _x > -1)) exitWith {
+            if((_name find _x > -1) || (_desc find _x > -1)) exitWith {
                 [_cls,_category] call _categorize;
                 _categorized = true;
                 if(_category != "General") then {

@@ -30,7 +30,7 @@ onEachFrame {
 
 _handler = {
 	private ["_vehs","_dest","_destpos","_passengers"];
-	if !(visibleMap or visibleGPS) exitWith {};
+	if !(visibleMap || visibleGPS) exitWith {};
 	_vehs = [];
 	if(isMultiplayer) then {
 		{
@@ -216,7 +216,7 @@ _handler = {
 		};
 	}foreach(vehicles);
 
-	_scale = ctrlMapScale (_this select 0);
+	private _scale = ctrlMapScale (_this select 0);
 	if(_scale <= 0.16) then {
 		private _leased = player getvariable ["leased",[]];
 		{
@@ -263,7 +263,7 @@ _handler = {
 				];
 			};
 			{
-				_icon = format["ot\ui\markers\shop-%1.paa",_x select 1];
+				_icon = format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1];
 				(_this select 0) drawIcon [
 					_icon,
 					[1,1,1,1],
@@ -275,7 +275,7 @@ _handler = {
 			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
 			{
 				(_this select 0) drawIcon [
-					"ot\ui\markers\shop-Hardware.paa",
+					"\overthrow_main\ui\markers\shop-Hardware.paa",
 					[1,1,1,1],
 					_x select 0,
 					0.3/ctrlMapScale (_this select 0),
@@ -287,7 +287,7 @@ _handler = {
 		{
 			if ((typeof _x != "B_UAV_AI") && !(_x getVariable ["looted",false])) then {
 				(_this select 0) drawIcon [
-					"ot\ui\markers\death.paa",
+					"\overthrow_main\ui\markers\death.paa",
 					[1,1,1,0.5],
 					getpos _x,
 					0.2/ctrlMapScale (_this select 0),
@@ -297,7 +297,16 @@ _handler = {
 			};
 		}foreach(alldeadmen);
 		{
-			if(((typeof _x isEqualTo OT_item_CargoContainer) or (_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) && (count crew _x isEqualTo 0) && (_x call OT_fnc_hasOwner)) then {
+			if(
+				(
+					(typeof _x == OT_item_CargoContainer)
+					|| (_x isKindOf "Ship")
+					|| (_x isKindOf "Air")
+					|| (_x isKindOf "Car")
+				)
+				&& (crew _x isEqualTo [])
+				&& (_x call OT_fnc_hasOwner)
+			) then {
 				(_this select 0) drawIcon [
 					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 					[1,1,1,1],
@@ -308,7 +317,7 @@ _handler = {
 				];
 			};
 			if((_x isKindOf "StaticWeapon") && (isNull attachedTo _x) && (alive _x)) then {
-				if(side _x isEqualTo civilian or side _x isEqualTo resistance or captive _x) then {
+				if(side _x isEqualTo civilian || side _x isEqualTo resistance || captive _x) then {
 					_col = [0.5,0.5,0.5,1];
 					if(!(isNull gunner _x) && (alive gunner _x)) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";
@@ -370,7 +379,6 @@ _handler = {
 			];
 		};
 	};
-	mapCenter
 };
 
 if(!isNil "OT_OnDraw") then {

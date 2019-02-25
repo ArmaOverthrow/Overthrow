@@ -103,7 +103,7 @@ if !(_byair) then {
 };
 
 sleep 15;
-if(_byair && (typename _tgroup isEqualTo "GROUP")) then {
+if(_byair && _tgroup isEqualType grpNull) then {
 	_wp = _tgroup addWaypoint [_frompos,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";

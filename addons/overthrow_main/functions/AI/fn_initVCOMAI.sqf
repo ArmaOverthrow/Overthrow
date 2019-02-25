@@ -169,5 +169,5 @@ _Unit setSkill ["endurance",0.5];
 _Unit setSkill ["reloadSpeed",(0.4 + (random 0.3))];
 };
 };
-[] execVM "\ot\functions\AI\VCOMAI\init.sqf";
+[] execVM "\overthrow_main\functions\AI\VCOMAI\init.sqf";
 call VCOMAI_Func;

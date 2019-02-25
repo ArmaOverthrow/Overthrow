@@ -4,7 +4,7 @@ _unit setVariable ["OT_healed",true,true];
 
 _medic doMove (position _unit);
 
-waitUntil {!(alive _medic) or (_medic distance _unit < 5)};
+waitUntil {!(alive _medic) || (_medic distance _unit < 5)};
 
 if(!alive _medic) exitWith {_unit setVariable ["OT_healed",false,true]};
 

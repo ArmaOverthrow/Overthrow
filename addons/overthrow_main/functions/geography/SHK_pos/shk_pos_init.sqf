@@ -62,24 +62,24 @@
       pos = [parameters] call SHK_pos;
 */
 // Functions
-SHK_pos_getPos = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_getpos.sqf";
-SHK_pos_getPosMarker = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_getposmarker.sqf";
+SHK_pos_getPos = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_getpos.sqf";
+SHK_pos_getPosMarker = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_getposmarker.sqf";
 
 // Sub functions
-SHK_pos_fnc_findClosestPosition = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_findclosestposition.sqf";
-SHK_pos_fnc_getMarkerCorners = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getmarkercorners.sqf";
-SHK_pos_fnc_getMarkerShape = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getmarkershape.sqf";
-SHK_pos_fnc_getPos = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getpos.sqf";
-SHK_pos_fnc_getPosFromCircle = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getposfromcircle.sqf";
-SHK_pos_fnc_getPosFromEllipse = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getposfromellipse.sqf";
-SHK_pos_fnc_getPosFromRectangle = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getposfromrectangle.sqf";
-SHK_pos_fnc_getPosFromSquare = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_getposfromsquare.sqf";
-SHK_pos_fnc_isBlacklisted = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_isblacklisted.sqf";
-SHK_pos_fnc_isInCircle = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_isincircle.sqf";
-SHK_pos_fnc_isInEllipse = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_isinellipse.sqf";
-SHK_pos_fnc_isInRectangle = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_isinrectangle.sqf";
-SHK_pos_fnc_isSamePosition = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_issameposition.sqf";
-SHK_pos_fnc_rotatePosition = compileFinal preprocessfilelinenumbers "\ot\functions\geography\shk_pos\shk_pos_fnc_rotateposition.sqf";
+SHK_pos_fnc_findClosestPosition = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_findclosestposition.sqf";
+SHK_pos_fnc_getMarkerCorners = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getmarkercorners.sqf";
+SHK_pos_fnc_getMarkerShape = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getmarkershape.sqf";
+SHK_pos_fnc_getPos = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getpos.sqf";
+SHK_pos_fnc_getPosFromCircle = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getposfromcircle.sqf";
+SHK_pos_fnc_getPosFromEllipse = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getposfromellipse.sqf";
+SHK_pos_fnc_getPosFromRectangle = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getposfromrectangle.sqf";
+SHK_pos_fnc_getPosFromSquare = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_getposfromsquare.sqf";
+SHK_pos_fnc_isBlacklisted = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_isblacklisted.sqf";
+SHK_pos_fnc_isInCircle = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_isincircle.sqf";
+SHK_pos_fnc_isInEllipse = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_isinellipse.sqf";
+SHK_pos_fnc_isInRectangle = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_isinrectangle.sqf";
+SHK_pos_fnc_isSamePosition = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_issameposition.sqf";
+SHK_pos_fnc_rotatePosition = compileFinal preprocessfilelinenumbers "\overthrow_main\functions\geography\shk_pos\shk_pos_fnc_rotateposition.sqf";
 
 // Wrapper function
 // Decide which function to call based on parameters.

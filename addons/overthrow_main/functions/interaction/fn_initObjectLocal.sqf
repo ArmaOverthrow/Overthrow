@@ -53,7 +53,7 @@ if(typeof _this isEqualTo "Land_Cargo_House_V4_F") then {
 	};
 };
 
-if(_this isKindOf "Building" or _this isKindOf "Man" or _this isKindOf "LandVehicle") exitWith{};
+if(_this isKindOf "Building" || _this isKindOf "Man" || _this isKindOf "LandVehicle") exitWith{};
 
 if(OT_hasACE) then {
 	_dir = 0;

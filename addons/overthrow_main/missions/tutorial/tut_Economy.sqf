@@ -59,7 +59,7 @@ private _done = false;
 private _reached = false;
 
 while {sleep 0.5; !_reached} do {
-    if(player distance _veh < 10 and "ToolKit" in items player) then {
+    if(player distance _veh < 10 && "ToolKit" in items player) then {
         _reached = true;
         "Use your interaction key on the wreck to talk to salvage it. The items you get can be sold at any Hardware store, just drive up to it and press 'Y'" call OT_fnc_notifyMinor;
     };

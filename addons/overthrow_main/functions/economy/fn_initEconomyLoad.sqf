@@ -45,7 +45,7 @@ if(_version < OT_economyVersion) then {
             _cash = 0;
             if(_hasjob) then {_cash = round random 200} else {
                 if (_x != _spawntown) then {
-                    if(!_donegang or (random 100) < 50) then {
+                    if(!_donegang || (random 100) < 50) then {
                         _donegang = true;
                         _cash = floor random 50;
                         [_id,_x] call OT_fnc_formOrJoinGang;

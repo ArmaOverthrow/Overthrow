@@ -1,6 +1,6 @@
-#include "\ot\mission_component.hpp"
+#include "\overthrow_main\mission_component.hpp"
 
-overviewPicture = "\ot\campaign\missions\Overthrow.Malden\overthrow_tanoa.jpg";
+overviewPicture = "\overthrow_main\campaign\missions\Overthrow.Malden\overthrow_tanoa.jpg";
 briefingName = "Overthrow: Malden";
 OnLoadName = "Overthrow: Malden: DEV";
 loadScreen = "\ot\campaign\missions\Overthrow.Malden\pic.jpg";

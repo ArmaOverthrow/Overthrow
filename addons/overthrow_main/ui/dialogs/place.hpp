@@ -14,7 +14,7 @@ class OT_dialog_name
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -50,7 +50,7 @@ class OT_dialog_name
 			y = 0.478 * safezoneH + safezoneY;
 			w = 0.04125 * safezoneW;
 			h = 0.055 * safezoneH;
-			action = "_this call onNameDone";
+			action = "_this call OT_fnc_onNameDone";
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
@@ -74,7 +74,7 @@ class OT_dialog_input
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -86,7 +86,7 @@ class OT_dialog_input
 		{
 			idc = 1400;
 
-			onKeyDown = "_key = _this select 1;_name = ctrltext 1400;if(_key isEqualTo 28 and _name != """") then {[] call inputHandler;closeDialog 0;}";
+			onKeyDown = "_key = _this select 1;_name = ctrltext 1400;if(_key == 28 && _name != """") then {[] call inputHandler;closeDialog 0;}";
 			text = ""; //--- ToDo: Localize;
 			x = 0.37625 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
@@ -117,9 +117,8 @@ class OT_dialog_input
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-	}
-}
-
+	};
+};
 
 class OT_dialog_place
 {
@@ -137,7 +136,7 @@ class OT_dialog_place
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -256,7 +255,6 @@ class OT_dialog_place
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
-
 
 	};
 };

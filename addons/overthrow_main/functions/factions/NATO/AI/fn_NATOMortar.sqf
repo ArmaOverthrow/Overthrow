@@ -19,7 +19,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                 sleep 3;
                 _mortargroup setCombatMode "BLUE";
                 //Did anyone hear that?
-                if({side _x isEqualTo resistance or captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
+                if({side _x isEqualTo resistance || captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
                     private _icons = spawner getVariable ["NATOmortars",[]];
                     _found = false;
                     {
@@ -55,7 +55,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                 sleep 3;
                 _mortargroup setCombatMode "BLUE";
                 //Did anyone hear that?
-                if({side _x isEqualTo resistance or captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
+                if({side _x isEqualTo resistance || captive _x} count (_mortarpos nearObjects ["CAManBase",3000]) > 0) then {
                     private _icons = spawner getVariable ["NATOmortars",[]];
                     _found = false;
                     {

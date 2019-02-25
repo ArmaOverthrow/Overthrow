@@ -6,7 +6,7 @@ _t = _this select 1;
 _full = false;
 _istruck = true;
 if(count _this isEqualTo 2) then {
-	_istruck = (_t isKindOf "Truck_F") or (_t isKindOf "ReammoBox_F");
+	_istruck = (_t isKindOf "Truck_F") || (_t isKindOf "ReammoBox_F");
 };
 
 {
