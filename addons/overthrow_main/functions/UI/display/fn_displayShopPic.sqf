@@ -39,7 +39,7 @@ if(_price > -1) then {
 				[
 					getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc"),
 					"Gets you from A to B, not guaranteed to stay upright."
-				] select _cls == "C_Quadbike_01_F",
+				] select (_cls == "C_Quadbike_01_F"),
 				_cls call OT_fnc_vehicleGetName
 			]
     	};
