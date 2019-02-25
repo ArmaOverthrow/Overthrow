@@ -13,5 +13,5 @@
 		NOTHING
 */
 
-_this execFSM "\ot\functions\AI\VCOMAI\FSMS\SQUADBEH.fsm";
+_this execFSM "\overthrow_main\functions\AI\VCOMAI\FSMS\SQUADBEH.fsm";
 VcmAI_ActiveList pushback _this;

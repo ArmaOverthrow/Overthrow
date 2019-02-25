@@ -2,7 +2,7 @@
 
 [] call OT_fnc_initVCOMAI;
 
-[] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
+[] execVM "\overthrow_main\functions\geography\SHK_pos\shk_pos_init.sqf";
 
 OT_ACEremoveAction = [
 	"OT_Remove",

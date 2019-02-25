@@ -3,17 +3,17 @@
 overviewPicture = "\overthrow_main\campaign\missions\Overthrow.Malden\overthrow_tanoa.jpg";
 briefingName = "Overthrow: Malden";
 OnLoadName = "Overthrow: Malden: DEV";
-loadScreen = "\ot\campaign\missions\Overthrow.Malden\pic.jpg";
+loadScreen = "\overthrow_main\campaign\missions\Overthrow.Malden\pic.jpg";
 
 overviewText = "@todo";
 
 class CfgFunctions 
 {
-	#include "\ot\functions\AI\VCOMAI\cfgFunctions.hpp"
+	#include "\overthrow_main\functions\AI\VCOMAI\cfgFunctions.hpp"
 };
 
 class Extended_PreInit_EventHandlers {
-	VCM_CBASettings = call compile preprocessFileLineNumbers "\ot\functions\AI\VCOMAI\Functions\VCM_CBASettings.sqf";
+	VCM_CBASettings = call compile preprocessFileLineNumbers "\overthrow_main\functions\AI\VCOMAI\Functions\VCM_CBASettings.sqf";
 };
 
 class CfgRemoteExec
