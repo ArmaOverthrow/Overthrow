@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "\overthrow_main\script_component.hpp"
 
 private ["_building","_pos","_rel","_DCM","_o","_dir","_bdir","_vdir","_template","_objects","_type"];
 
