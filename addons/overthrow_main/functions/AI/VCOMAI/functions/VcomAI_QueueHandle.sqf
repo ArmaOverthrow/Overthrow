@@ -11,7 +11,7 @@ while {true} do
 		{
 			if (side _ConsideringUnit in VCOM_SideBasedExecution) then
 			{
-				[_ConsideringUnit] execFSM "VCOMAI\AIBEHAVIORNEW.fsm";
+				[_ConsideringUnit] execFSM "overthrow_main\function\AI\VCOMAI\AIBEHAVIORNEW.fsm";
 			};
 				VcomAI_ActiveList pushback _ConsideringUnit;
 				VcomAI_UnitQueue deleteAt 0;
