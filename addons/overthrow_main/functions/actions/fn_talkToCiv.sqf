@@ -163,7 +163,7 @@ if (_canTute) then {
 		_options pushBack [
 			"So how can I make money legally?",{
 				private _civ = OT_interactingWith;
-				[player,_civ,["You sell Ganja right?","I sure do, wanna blaze it?","Not right now, I need some cash first","Oh OK, sell it to the civilians then"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+				[player,_civ,["How can I make some legal money?","Legal money? Where's the fun in that. I guess you could try selling to stores or leasing houses.","Thanks."],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
 			}
 		];
 	};
@@ -256,7 +256,7 @@ if (_canBuyBoats) then {
 					sleep 30;
 					if(vehicle player isEqualTo _veh && alive _driver) then {
 						moveOut player;
-						_driver globalchat "k, bye";
+						_driver globalchat "Alright, bye";
 					};
 					if(random 100 > 90) then {
 						[player] spawn OT_fnc_NATOsearch;
