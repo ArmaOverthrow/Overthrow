@@ -32,35 +32,63 @@ class CfgPatches
 	};
 };
 
-class RscStandardDisplay;
-class RscControlsGroup;
-class RscDisplayMain: RscStandardDisplay
+class CfgMainMenuSpotlight
 {
-	class Spotlight
+	class Overthrow
 	{
-		class Overthrow
-		{
-			text = "Overthrow Development Build"; // Text displayed on the square button, converted to upper-case
-			textIsQuote = 0; // 1 to add quotation marks around the text
-			picture = "\overthrow_main\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
-			video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
-			action = "ctrlactivate ((ctrlparent (_this select 0)) displayctrl 101);";
-			actionText = $STR_A3_RscDisplayMain_Spotlight_Play; // Text displayed in top left corner of on-hover white frame
-			condition = "true"; // Condition for showing the spotlight
-		};
-		class Bootcamp
-		{
-			condition = "false";
-		};
-		class ApexProtocol
-		{
-			condition = "false";
-		};
-		class EastWind
-		{
-			condition = "false";
-		};
+		text = "Overthrow Development Build"; // Text displayed on the square button, converted to upper-case
+		textIsQuote = 0; // 1 to add quotation marks around the text
+		picture = "\overthrow_main\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
+		video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
+		action = "ctrlactivate ((ctrlparent (_this select 0)) displayctrl 101);";
+		actionText = $STR_A3_RscDisplayMain_Spotlight_Play; // Text displayed in top left corner of on-hover white frame
+		condition = "true"; // Condition for showing the spotlight
 	};
+	class ApexProtocol
+	{
+		condition = "false";
+	};
+	class Bootcamp
+	{
+		condition = "false";
+	};
+	class Orange_Campaign
+	{
+		condition = "false";
+	};
+	class Orange_CampaignGerman
+	{
+		condition = "false";
+	};
+	class Orange_Showcase_IDAP
+	{
+		condition = "false";
+	};
+	class Orange_Showcase_LoW
+	{
+		condition = "false";
+	};
+	class Showcase_TankDestroyers
+	{
+		condition = "false";
+	};
+	class Tacops_Campaign_01
+	{
+		condition = "false";
+	};
+	class Tacops_Campaign_02
+	{
+		condition = "false";
+	};
+	class Tacops_Campaign_03
+	{
+		condition = "false";
+	};
+	class Tanks_Campaign_01
+	{
+		condition = "false";
+	};
+	
 };
 
 class CfgMissions
