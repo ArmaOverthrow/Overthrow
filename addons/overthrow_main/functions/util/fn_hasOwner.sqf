@@ -10,16 +10,8 @@ Author:
     ARMAzac
 -----------------------------------------------------------------------------*/
 
-private _item = _this;
-
-private _owner = _item call OT_fnc_getOwner;
-private _ret = false;
-if !(isNil "_owner") then {
-	if(typename _owner isEqualTo "STRING") then {
-		if(_owner != "self") then {
-			_ret = true;
-		};
-	};
+private _owner = _this call OT_fnc_getOwner;
+if (!isNil "_owner" && { _owner isEqualType "" } && {_owner != "self"}) exitWith {
+	true
 };
-
-_ret;
+false

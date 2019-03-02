@@ -1,11 +1,10 @@
-private _ret = "";
-private _testpos = _this;
-private _sel = 0;
-if(typename _this isEqualTo "ARRAY") then {
-    if(count _this isEqualTo 2) then {
-        _testpos = _this select 0;
-        _sel = 1;
+private _shortest = 99999;
+private _town = "";
+{
+    private _dis = (_x select 0) distance _this;
+    if (_dis < _shortest) then {
+        _shortest = _dis;
+        _town = _x select 1;
     };
-};
-private _towns = [OT_townData,[],{(_x select 0) distance _testpos},"ASCEND"] call BIS_fnc_SortBy;
-(_towns select _sel) select 1
+}forEach(OT_townData);
+_town
