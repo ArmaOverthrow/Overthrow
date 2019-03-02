@@ -69,13 +69,15 @@ class CfgVehicles {
     class Man;
     class CAManBase: Man {
         class ACE_Actions {
-			class OT_HeadActions {
-				condition = "(alive _target) && (!isplayer _target) && !(side _target isEqualTo west)";
-				selection = "pilot";
-				distance = 20;
-				displayName = "Talk";
-				statement = "_target call OT_fnc_talkToCiv";
-			};
+            class ACE_Head {
+                class OT_HeadActions {
+                    condition = "(alive _target) && (!isplayer _target) && !(side _target isEqualTo west)";
+                    selection = "pilot";
+                    distance = 20;
+                    displayName = "Talk";
+                    statement = "_target call OT_fnc_talkToCiv";
+                };
+            };
 		};
         class ACE_SelfActions {
             class ACE_Equipment {

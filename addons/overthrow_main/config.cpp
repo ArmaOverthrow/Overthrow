@@ -1,16 +1,6 @@
 #include "script_mod.hpp"
 #include "headers\config_macros.hpp"
 
-#include "ui\dialogs\defines.hpp"
-#include "ui\dialogs\stats.hpp"
-#include "ui\dialogs\shop.hpp"
-#include "ui\dialogs\main.hpp"
-#include "ui\dialogs\place.hpp"
-#include "ui\dialogs\build.hpp"
-#include "ui\dialogs\recruits.hpp"
-#include "UI\dialogs\resistance.hpp"
-#include "UI\dialogs\factory.hpp"
-
 class CfgPatches
 {
 	class OT_Overthrow_Main
@@ -23,7 +13,9 @@ class CfgPatches
 			"cba_ui",
             "cba_xeh",
             "cba_jr",
-			"ace_main"
+			"ace_main",
+			"ace_medical",
+			"a3_ui_f"
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;
@@ -153,3 +145,13 @@ class CfgWorlds
 #include "CfgFunctions.hpp"
 #include "CfgMagazines.hpp"
 #include "missions\CfgOverthrowMissions.hpp"
+
+#include "ui\dialogs\defines.hpp"
+#include "ui\dialogs\stats.hpp"
+#include "ui\dialogs\shop.hpp"
+#include "ui\dialogs\main.hpp"
+#include "ui\dialogs\place.hpp"
+#include "ui\dialogs\build.hpp"
+#include "ui\dialogs\recruits.hpp"
+#include "ui\dialogs\resistance.hpp"
+#include "ui\dialogs\factory.hpp"
