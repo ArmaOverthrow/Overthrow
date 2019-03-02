@@ -2,7 +2,7 @@
 
 [] call OT_fnc_initVCOMAI;
 
-[] execVM "\overthrow_main\functions\geography\SHK_pos\shk_pos_init.sqf";
+[] call compile preprocessFileLineNumbers "\overthrow_main\functions\geography\SHK_pos\shk_pos_init.sqf";
 
 OT_ACEremoveAction = [
 	"OT_Remove",
@@ -40,13 +40,12 @@ OT_regions = [];
 
 OT_missions = [];
 OT_localMissions = [];
-private _allMissions = "true" configClasses ( configFile >> "CfgOverthrowMissions" );
 {
 	_name = configName _x;
 	_script = getText (_x >> "script");
 	_code = compileFinal preprocessFileLineNumbers _script;
 	OT_missions pushback _code;
-}foreach(_allMissions);
+}foreach("true" configClasses ( configFile >> "CfgOverthrowMissions" ));
 
 OT_tutorialMissions = [];
 OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_NATO.sqf");
@@ -55,12 +54,12 @@ OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow
 OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Economy.sqf");
 
 // inside mission
-call compileFinal preprocessFileLineNumbers "data\names.sqf";
-call compileFinal preprocessFileLineNumbers "data\towns.sqf";
-call compileFinal preprocessFileLineNumbers "data\airports.sqf";
-call compileFinal preprocessFileLineNumbers "data\objectives.sqf";
-call compileFinal preprocessFileLineNumbers "data\economy.sqf";
-call compileFinal preprocessFileLineNumbers "data\comms.sqf";
+call compile preprocessFileLineNumbers "data\names.sqf";
+call compile preprocessFileLineNumbers "data\towns.sqf";
+call compile preprocessFileLineNumbers "data\airports.sqf";
+call compile preprocessFileLineNumbers "data\objectives.sqf";
+call compile preprocessFileLineNumbers "data\economy.sqf";
+call compile preprocessFileLineNumbers "data\comms.sqf";
 
 //Identity
 OT_faces_local = [];
@@ -115,13 +114,9 @@ OT_allTownPositions = [];
 	if(isServer) then {
 		server setVariable [_name,_pos,true];
 	};
-}foreach (OT_townData);
+}foreach(OT_townData);
 
 OT_allAirports = OT_airportData apply { _x select 1 };
-
-if(isServer) then {
-	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
-};
 
 //Global overthrow variables related to any map
 
@@ -207,25 +202,27 @@ OT_backpacks = [
 	["B_Carryall_oli",60,0,0,1],
 	["B_Parachute",50,0,0,1]
 ];
-
-cost setVariable ["OT_Wood",[5,0,0,0],true];
-cost setVariable ["OT_Steel",[25,0,0,0],true];
-cost setVariable ["OT_Plastic",[40,0,0,0],true];
-cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
-cost setVariable ["OT_Grapes",[5,0,0,0],true];
-cost setVariable ["OT_Sugar",[15,0,0,0],true];
-cost setVariable ["OT_Wine",[25,0,0,0],true];
-cost setVariable ["OT_Olives",[7,0,0,0],true];
-cost setVariable ["OT_Fertilizer",[20,0,0,0],true];
-
 if(OT_hasTFAR) then {
-	[OT_backpacks,[
+	OT_backpacks append [
 		["tf_anprc155",100,0,0,0.1],
 		["tf_anarc210",150,0,0,0.1],
 		["tf_anarc164",20,0,0,0.5],
 		["tf_anprc155_coyote",10,0,0,0.5]
-	]] call BIS_fnc_arrayPushStack;
+	];
 };
+
+if (isServer) then {
+	cost setVariable ["OT_Wood",[5,0,0,0],true];
+	cost setVariable ["OT_Steel",[25,0,0,0],true];
+	cost setVariable ["OT_Plastic",[40,0,0,0],true];
+	cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
+	cost setVariable ["OT_Grapes",[5,0,0,0],true];
+	cost setVariable ["OT_Sugar",[15,0,0,0],true];
+	cost setVariable ["OT_Wine",[25,0,0,0],true];
+	cost setVariable ["OT_Olives",[7,0,0,0],true];
+	cost setVariable ["OT_Fertilizer",[20,0,0,0],true];
+};
+
 
 //Detecting vehicles && weapons
 
@@ -246,14 +243,13 @@ OT_allStaticBackpacks = [];
 OT_vehWeights_civ = [];
 OT_mostExpensiveVehicle = "";
 
-private _allHouses = "getNumber ( _x >> ""ot_isPlayerHouse"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_spawnHouses = [];
 {
 	private _cls = configName _x;
 	OT_spawnHouses pushBack _cls;
 	OT_allBuyableBuildings pushBackUnique _cls;
 	OT_allRealEstate pushBackUnique _cls;
-}foreach(_allHouses);
+}foreach( "getNumber ( _x >> ""ot_isPlayerHouse"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" ) );
 
 OT_gunDealerHouses = OT_spawnHouses;
 
@@ -335,11 +331,11 @@ private _allHelis = "
 	OT_allVehicles pushback _cls;
 }foreach(_allHelis);
 
+//Chinook (unarmed) special case for production logistics
+OT_helis pushback ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
+OT_allVehicles pushBackUnique "B_Heli_Transport_03_unarmed_F";
 if(isServer) then {
-	//Chinook (unarmed) special case for production logistics
 	cost setVariable ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
-	OT_helis pushback ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
-	OT_allVehicles pushback "B_Heli_Transport_03_unarmed_F";
 };
 
 {
@@ -645,7 +641,9 @@ OT_allLegalClothing = [];
 	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
-	cost setVariable [_name,[_cost,0,0,1],true];
+	if (isServer) then {
+		cost setVariable [_name,[_cost,0,0,1],true];
+	};
 } foreach (_allUniforms);
 
 {
@@ -900,11 +898,7 @@ OT_Squadables = [
 	["Fire Team",[7,0,1,2,3,8],"FIR"],
 	["Infantry Team",[7,0,1,2,3,8,9,10],"INF"]
 ];
-OT_allSquads = [];
-{
-	_x params ["_name"];
-	OT_allSquads pushback _name;
-}foreach(OT_Squadables);
+OT_allSquads = OT_Squadables apply { _x params ["_name"]; _name };
 
 OT_workshop = [
 	["Static MG","C_Offroad_01_F",600,"I_HMG_01_high_weapon_F","I_HMG_01_high_F",[[0.25,-2,1]],0],
@@ -932,7 +926,7 @@ OT_cigsArray = ["EWK_Cigar1", "EWK_Cigar2", "EWK_Cig1", "EWK_Cig2", "EWK_Cig3", 
 OT_noCopyMags = ["ACE_PreloadedMissileDummy"];
 
 if(isServer) then {
+	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
 	cost setVariable ["ToolKit",[80,0,0,0],true];
-	OT_varInitDone = true;
-	publicVariable "OT_varInitDone";
+	missionNamespace setVariable ["OT_varInitDone",true,true];
 };
