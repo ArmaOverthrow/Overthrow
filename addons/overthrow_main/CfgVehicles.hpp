@@ -68,6 +68,7 @@ class CfgVehicles {
 	//ACE Interactions
     class Man;
     class CAManBase: Man {
+        fsmDanger = "overthrow_main\fsm\danger.fsm";
         class ACE_Actions {
             class ACE_Head {
                 class OT_HeadActions {

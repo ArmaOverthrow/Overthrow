@@ -388,6 +388,7 @@ class CfgFunctions
 			class createSquad {};
 			class experience {};
 			class initVCOMAI {};
+			class dangerCaused {};
 		};
 
 		/*
