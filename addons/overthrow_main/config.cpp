@@ -15,7 +15,9 @@ class CfgPatches
             "cba_jr",
 			"ace_main",
 			"ace_medical",
-			"a3_ui_f"
+			"a3_ui_f",
+			"a3_characters_f",
+			"A3_Map_Tanoabuka"
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;
@@ -126,9 +128,11 @@ class CfgMissions
 
 class CfgWorlds
 {
-	class Tanoa
+	class CAWorld;
+	class Tanoa : CAWorld
 	{
-		class Names {
+		class Names
+		{
 			class RailwayDepot01 {
 				name = "factory";
 			};
