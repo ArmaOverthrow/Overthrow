@@ -5,4 +5,4 @@
  *
  */
 
-[] spawn OT_fnc_initPlayerLocal;
+[] call OT_fnc_initPlayerLocal;

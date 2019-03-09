@@ -5,4 +5,4 @@
  *
  */
 
-[] spawn OT_fnc_initOverthrow;
+[] call OT_fnc_initOverthrow;

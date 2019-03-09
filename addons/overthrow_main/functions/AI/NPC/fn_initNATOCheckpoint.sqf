@@ -68,7 +68,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 			_gone pushback _x;
 			if(isPlayer _x && !(_x in _searched)) then {
 				_x setCaptive false;
-				_x spawn OT_fnc_revealToNATO;
+				[_x] call OT_fnc_revealToNATO;
 			};
 		}else{
 			_iscar = false;

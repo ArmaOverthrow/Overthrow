@@ -18,7 +18,7 @@ if(_veh call OT_fnc_unitSeen) then {
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
-		_veh spawn OT_fnc_revealToNATO;
+		[_veh] call OT_fnc_revealToNATO;
 		hint "You were caught stealing!";
 	};
 };

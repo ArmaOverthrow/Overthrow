@@ -245,12 +245,12 @@ if(_standingChange != 0) then {
 		if(captive _x) then {
 			_x setCaptive false;
 		};
-		_x spawn OT_fnc_revealToNATO;
+		[_x] call OT_fnc_revealToNATO;
 		if(_x isKindOf "AllVehicles") then {
 			{
 				if(captive _x) then {
 					_x setCaptive false;
-					_x spawn OT_fnc_revealToNATO;
+					[_x] call OT_fnc_revealToNATO;
 				};
 			}foreach(units _x);
 		};
