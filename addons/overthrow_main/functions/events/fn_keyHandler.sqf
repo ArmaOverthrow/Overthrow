@@ -1,7 +1,4 @@
-private ["_handled","_key","_showing"];
-_handled = false;
-_showing = false;
-
+private _handled = false;
 
 if(!dialog) then {
 	if(count (player nearObjects [OT_workshopBuilding,10]) > 0) then {
@@ -14,7 +11,7 @@ if(!dialog) then {
 				ctrlEnable [1600,false];
 			};
 		}else{
-			if (player getVariable ["OT_tute_trigger",false]) then {
+			if !(player getVariable ["OT_tute_trigger",false]) then {
 				player setVariable ["OT_tute_trigger",true,true];
 				[] spawn {
 					hint format["Take some time to explore the main menu, when you're finished open the map (%1 key)","ShowMap" call OT_fnc_getAssignedKey];
