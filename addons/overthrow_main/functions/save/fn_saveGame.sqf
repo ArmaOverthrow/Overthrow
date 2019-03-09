@@ -27,7 +27,16 @@ if !(_quiet) then {
 private _data = [];
 //get all server data
 {
-	if !(_x == "StartupType" || _x == "recruits" || _x == "squads" || (_x select [0,11]) == "resgarrison" || (_x select [0,4]) == "ace_" || (_x select [0,4]) == "cba_" || (_x select [0,4]) == "bis_") then {
+	if !(
+		_x == "StartupType"
+		|| _x == "recruits"
+		|| _x == "squads"
+		|| (_x select [0,11]) == "resgarrison"
+		|| (_x select [0,9]) == "SeenCache"
+		|| (_x select [0,4]) == "ace_"
+		|| (_x select [0,4]) == "cba_"
+		|| (_x select [0,4]) == "bis_"
+	) then {
 		_val = server getVariable _x;
 		if !(isNil "_val") then {
 			if(typename _val isEqualTo "ARRAY") then {
@@ -77,7 +86,7 @@ if !(_quiet) then {
 	_d = [];
 	_all = [];
 	{
-		if(_x != "ot_loaded" && _x != "morale" && _x != "player_uid" && _x != "sa_tow_actions_loaded" && _x != "hiding" && _x != "randomValue" && _x != "saved3deninventory" && (_x select [0,11]) != "MissionData" && (_x select [0,4]) != "ace_" && (_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
+		if(_x != "ot_loaded" && _x != "morale" && _x != "player_uid" && _x != "sa_tow_actions_loaded" && _x != "ot_hiding" && _x != "randomValue" && _x != "saved3deninventory" && (_x select [0,11]) != "MissionData" && (_x select [0,4]) != "ace_" && (_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
 			_all pushback _x;
 			_val = _me getVariable _x;
 			if !(isNil "_val") then {
