@@ -54,7 +54,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 		while {true && _active} do {
 			_deadguys = [];
 			{
-				if !((_x distance _unit > 100) || (alive _x) || (_x getVariable ["looted",false])) then {
+				if !((_x distance _unit > 100) || (alive _x) || (_x getVariable ["OT_looted",false])) then {
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");
@@ -63,7 +63,8 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 
 			_timeout = time + 120;
 			_deadguy = _sorted select 0;
-			_deadguy setVariable ["looted",true,true];
+			_deadguy setVariable ["OT_looted",true,true];
+			_deadguy setvariable ["OT_lootedAt",time,true];
 
 			_unit doMove getpos _deadguy;
 			[_unit,1] call OT_fnc_experience;
@@ -77,9 +78,10 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			if(primaryWeapon _unit isEqualTo "") then {
 				_weapon = objNull;
 				{
-					if !(_x getVariable ["looted",false]) exitWith {
+					if !(_x getVariable ["OT_looted",false]) exitWith {
 						_weapon = _x;
-						_weapon setVariable ["looted",true,true];
+						_weapon setVariable ["OT_looted",true,true];
+						_weapon setvariable ["OT_lootedAt",time,true];
 					};
 				}foreach(_unit nearentities ["WeaponHolderSimulated",10]);
 				if !(isNull _weapon) then {
@@ -117,10 +119,11 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			_got = false;
 			_weapon = objNull;
 			{
-				if !(_x getVariable ["looted",false]) exitWith {
+				if !(_x getVariable ["OT_looted",false]) exitWith {
 					_weapon = _x;
 					_got = true;
-					_weapon setVariable ["looted",true,true];
+					_weapon setVariable ["OT_looted",true,true];
+					_weapon setvariable ["OT_lootedAt",time,true];
 				};
 			}foreach(_unit nearentities ["WeaponHolderSimulated",100]);
 

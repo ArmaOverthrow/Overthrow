@@ -1,49 +1,30 @@
-private ["_town","_house","_housepos","_pos","_pop","_houses","_mrk","_furniture"];
-waitUntil {!isNull player};
-waitUntil {player isEqualTo player};
-
-if !(isMultiplayer) then {
-	enableSaving [false,false];
-};
-
-[] spawn {
-	while {true} do {
-		sleep 3;
-		{
-			if(local _x && count (units _x) isEqualTo 0) then {
-				deleteGroup _x;
-			};
-		}foreach(allGroups);
-	};
-};
-
 if (!hasInterface) exitWith {};
-if(isNil "bigboss" && typeof player == "I_G_officer_F") then {bigboss = player;publicVariable "bigboss";};
-if(count ([] call CBA_fnc_players) == 1 && isNil "bigboss") then {bigboss = player;publicVariable "bigboss";};
 
-if(isNil {server getVariable "generals"}) then {server setVariable ["generals",[getplayeruid player]]};
+waitUntil {!isNull player && player isEqualTo player};
 
-removeAllWeapons player;
-removeAllAssignedItems player;
-removeGoggles player;
-removeBackpack player;
-removeHeadgear player;
-removeVest player;
+enableSaving [false,false];
 
+if(isServer) then {
+	missionNameSpace setVariable ["OT_HOST", player, true];
+};
 
-player linkItem "ItemMap";
+if(isNil {server getVariable "generals"}) then {
+	server setVariable ["generals",[getplayeruid player]]
+};
 
 if(isMultiplayer && (!isServer)) then {
 	//TFAR Support, thanks to Dedmen for the help
 	[] call OT_fnc_initTFAR;
+
+	// both done on server too, no need to exec them again
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 }else{
 	OT_varInitDone = true;
 };
 
-_start = OT_startCameraPos;
-_introcam = "camera" camCreate _start;
+private _start = OT_startCameraPos;
+private _introcam = "camera" camCreate _start;
 _introcam camSetTarget OT_startCameraTarget;
 _introcam cameraEffect ["internal", "BACK"];
 _introcam camSetFocus [15, 1];
@@ -51,13 +32,14 @@ _introcam camsetfov 1.1;
 _introcam camCommit 0;
 waitUntil {camCommitted _introcam};
 showCinemaBorder false;
-introcam = _introcam;
 
-
-if(player isEqualTo bigboss && (server getVariable ["StartupType",""] isEqualTo "")) then {
+if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["StartupType",""] isEqualTo "")) then {
     waitUntil {!(isnull (findDisplay 46)) && OT_varInitDone};
-    sleep 1;
-    _nul = createDialog "OT_dialog_start";
+
+	if (isServer || count ([] call CBA_fnc_players) == 1) then {
+		sleep 1;
+		createDialog "OT_dialog_start";
+	};
 }else{
 	"Loading" call OT_fnc_notifyStart;
 };
@@ -80,22 +62,30 @@ server setVariable [format["uid%1",name player],getplayeruid player,true];
 spawner setVariable [format["%1",getplayeruid player],player,true];
 
 player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
-_startup = server getVariable "StartupType";
-_newplayer = true;
-_furniture = [];
-_town = "";
-_pos = [];
-_housepos = [];
+// clear player
+removeAllWeapons player;
+removeAllAssignedItems player;
+removeGoggles player;
+removeBackpack player;
+removeHeadgear player;
+removeVest player;
+player linkItem "ItemMap";
+
+private _startup = server getVariable "StartupType";
+private _newplayer = true;
+private _furniture = [];
+private _town = "";
+private _pos = [];
+private _housepos = [];
 
 if(isMultiplayer || _startup == "LOAD") then {
 	player remoteExec ["OT_fnc_loadPlayerData",2,false];
     waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
-	_newplayer = player getVariable ["OT_newplayer",true];
+	private _newplayer = player getVariable ["OT_newplayer",true];
 
 	if(isMultiplayer) then {
 		//ensure player is in own group, not one someone else left
-		_group = creategroup resistance;
-		[player] joinSilent nil;
+		private  _group = creategroup resistance;
 		[player] joinSilent _group;
 	};
 
@@ -282,9 +272,8 @@ player setPos _housepos;
 titleText ["", "BLACK IN", 5];
 
 player addEventHandler ["WeaponAssembled",{
-	_me = _this select 0;
-	_wpn = _this select 1;
-	_pos = position _wpn;
+	params ["_me","_wpn"];
+	private _pos = getPosATL _wpn;
 	if(typeof _wpn in OT_staticMachineGuns) then {
 		_wpn remoteExec["OT_fnc_initStaticMGLocal",0,_wpn];
 	};
@@ -299,27 +288,24 @@ player addEventHandler ["WeaponAssembled",{
 }];
 
 player addEventHandler ["InventoryOpened", {
-	_veh = _this select 1;
-	_ret = false;
-	if((_veh call OT_fnc_getOwner) != (getplayeruid player)) then {
-		if(_veh getVariable ["OT_locked",false]) then {
-			_ret = true;
-			format["This inventory has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)] call OT_fnc_notifyMinor;
-		};
+	params ["","_veh"];
+	if(
+		(_veh getVariable ["OT_locked",false])
+		&&
+		{ !((_veh call OT_fnc_getOwner) isEqualTo getplayeruid player) }
+	) exitWith {
+		format["This inventory has been locked by %1",server getVariable ("name"+(_veh call OT_fnc_getOwner))] call OT_fnc_notifyMinor;
+		true
 	};
-	_ret;
+	false
 }];
 
 player addEventHandler ["GetInMan",{
-	_unit = _this select 0;
-	_position = _this select 1;
-	_veh = _this select 2;
-	_notified = false;
-
+	params ["_unit","_position","_veh"];
+	
 	call OT_fnc_notifyVehicle;
-	private _isgen = call OT_fnc_playerIsGeneral;
 
-	if(_position isEqualTo "driver") then {
+	if(_position == "driver") then {
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
@@ -328,6 +314,7 @@ player addEventHandler ["GetInMan",{
 			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {
+				private _isgen = call OT_fnc_playerIsGeneral;
 				if(!_isgen && (_veh getVariable ["OT_locked",false])) then {
 					moveOut player;
 					format["This vehicle has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)] call OT_fnc_notifyMinor;
@@ -336,7 +323,7 @@ player addEventHandler ["GetInMan",{
 		};
 	};
 	_g = _veh getVariable ["vehgarrison",false];
-	if(typename _g == "STRING") then {
+	if(_g isEqualType "") then {
 		_vg = server getVariable format["vehgarrison%1",_g];
 		_vg deleteAt (_vg find (typeof _veh));
 		server setVariable [format["vehgarrison%1",_g],_vg,false];
@@ -344,7 +331,7 @@ player addEventHandler ["GetInMan",{
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
-		_veh spawn OT_fnc_revealToNATO;
+		[_veh] call OT_fnc_revealToNATO;
 	};
 	_g = _veh getVariable ["airgarrison",false];
 	if(_g isEqualType "") then {
@@ -355,7 +342,7 @@ player addEventHandler ["GetInMan",{
 		{
 			_x setCaptive false;
 		}foreach(crew _veh);
-		_veh spawn OT_fnc_revealToNATO;
+		[_veh] call OT_fnc_revealToNATO;
 	};
 }];
 
@@ -384,8 +371,8 @@ if(isMultiplayer) then {
 	player addEventHandler ["Respawn",OT_fnc_respawnHandler];
 };
 
-_introcam cameraEffect ["Terminate", "BACK" ];
-_introcam = nil;
-
 OT_keyHandlerID = [21, [false, false, false], OT_fnc_keyHandler] call CBA_fnc_addKeyHandler;
-[] spawn OT_fnc_setupPlayer;
+[] call OT_fnc_setupPlayer;
+_introcam cameraEffect ["Terminate", "BACK" ];
+camDestroy _introcam;
+

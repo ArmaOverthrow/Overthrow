@@ -48,5 +48,5 @@ while {_count < _amt} do {
 _group call OT_fnc_initPolicePatrol;
 
 _despawn = spawner getVariable [format["despawn%1",_town],[]];
-[_despawn,_spawned] call BIS_fnc_arrayPushStack;
+_despawn append _spawned;
 spawner setVariable [format["despawn%1",_town],_despawn,false];

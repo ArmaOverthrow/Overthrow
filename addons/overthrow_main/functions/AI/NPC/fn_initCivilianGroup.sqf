@@ -1,15 +1,15 @@
 private _g = _this;
 
-private _start = getpos ((units _g) select 0);
+private _start = getPosATL ((units _g) select 0);
 if(isNil "_start") exitWith {};
 if(typename _start isEqualTo "BOOL") exitWith {};
 
 _g setBehaviour "SAFE";
 
-private _start = getpos ((units _g) select 0);
+private _start = getPosATL ((units _g) select 0);
 if(isNil "_start") exitWith {};
 private _town = (leader _g) getVariable "hometown";
-if(isNil "_town") then {_town = position(leader _g) call OT_fnc_nearestTown};
+if(isNil "_town") then {_town = getPosATL(leader _g) call OT_fnc_nearestTown};
 
 private _activeshops = server getVariable [format["activeshopsin%1",_town],[]];
 

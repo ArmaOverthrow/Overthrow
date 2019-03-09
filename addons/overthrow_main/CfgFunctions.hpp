@@ -50,10 +50,15 @@ class CfgFunctions
 			class initPlayerLocal {};
 			class mapSystem {};
 			class mapHandler {};
+			class notificationLoop {};
+			class townCheckLoop {};
 			class perkSystem {};
 			class setupPlayer {};
 			class statsSystem {};
+			class statsSystemLoop {};
 			class wantedSystem {};
+			class wantedLoop {};
+			class unconsciousNoHelpPossible {};
 			class playerIsOwner {};
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
