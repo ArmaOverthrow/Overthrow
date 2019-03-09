@@ -48,6 +48,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions\player";
 			class initPlayerLocal {};
 			class mapSystem {};
+			class mapHandler {};
 			class perkSystem {};
 			class setupPlayer {};
 			class statsSystem {};
@@ -105,6 +106,7 @@ class CfgFunctions
 			class getAssignedKey {};
 			class formatTime {};
 			class notifyAndLog {};
+			class dynamicText {};
 		};
 
 		class Dialogs

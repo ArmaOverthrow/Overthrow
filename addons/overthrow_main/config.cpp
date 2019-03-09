@@ -159,3 +159,4 @@ class CfgWorlds
 #include "ui\dialogs\recruits.hpp"
 #include "ui\dialogs\resistance.hpp"
 #include "ui\dialogs\factory.hpp"
+#include "ui\overrides.hpp"
