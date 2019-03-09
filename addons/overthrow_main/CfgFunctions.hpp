@@ -26,8 +26,9 @@ class CfgFunctions
 			class unitSeen {};
 			class unitSeenNATO {};
 			class unitSeenCRIM {};
-			class unitSeenAny {};
+			class unitSeenCIV {};
 			class unitSeenPlayer {};
+			class unitSeenAny {};
 			class revealToNATO {};
 			class revealToCRIM {};
 		};

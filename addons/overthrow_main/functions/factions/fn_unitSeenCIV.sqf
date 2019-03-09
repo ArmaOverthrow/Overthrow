@@ -1,12 +1,12 @@
 if!((vehicle _this) isEqualTo _this) then {_this = vehicle _this};
 
-private _cache = _this getVariable "SeenCacheCRIM";
+private _cache = _this getVariable "SeenCacheCIV";
 if (isNil "_cache" || {time > (_cache select 1)}) then {
     _cache = [
         !(
             ((_this nearEntities 1200) findIf {
                 _x = driver _x;
-                side _x isEqualTo east
+                side _x isEqualTo civilian
                 && {
                     (_x distance _this < 7)
                     ||
@@ -16,6 +16,6 @@ if (isNil "_cache" || {time > (_cache select 1)}) then {
         ),
         time + 7
     ];
-    _this setVariable ["SeenCacheCRIM",_cache];
+    _this setVariable ["SeenCacheCIV",_cache];
 };
 _cache select 0
