@@ -83,23 +83,16 @@ SHK_pos_fnc_rotatePosition = compileFinal preprocessfilelinenumbers "\overthrow_
 
 // Wrapper function
 // Decide which function to call based on parameters.
-SHK_pos = {
-  private ["_pos"];
-  _pos = [];
-
-  // Only marker is given as parameter
-  if (typename _this isEqualTo "STRING") then {
-    _pos = [_this] call SHK_pos_getPosMarker;
-
-  // Parameter array
-  } else {
-    if (typename (_this select 0) isEqualTo "STRING") then {
-      _pos = _this call SHK_pos_getPosMarker;
-    } else {
-      _pos = _this call SHK_pos_getPos;
-    };
-  };
-
-  // Return position
-  _pos
-};
+SHK_pos = compileFinal (
+    'if (_this isEqualType "") then {'
+       // Only marker is given as parameter
+  + '  [_this] call SHK_pos_getPosMarker;'
+  + '} else {'
+       // Parameter array
+  + '  if ((_this select 0) isEqualType "") then {'
+  + '    _this call SHK_pos_getPosMarker;'
+  + '  } else {'
+  + '    _this call SHK_pos_getPos;'
+  + '  };'
+  + '};'
+);
