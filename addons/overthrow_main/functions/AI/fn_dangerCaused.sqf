@@ -16,4 +16,6 @@ DEFINE_ENUM_BEG(DangerCause)
 DEFINE_ENUM_END(DangerCause)
 */
 
-diag_log format ["DangerCaused: %1", _this];
+if (OT_deepDebug) then {
+    diag_log format ["DangerCaused: %1", _this];
+};
