@@ -74,7 +74,7 @@ for [{_i = 0}, {_i < 1000 && !_exit}, {_i = _i + 1}] do {
 	  };
 	} else { // For backward compatibility
 	  // Water position is not allowed
-	  if !_water then {
+	  if !(_water) then {
 		// Position is on land, try to exit script.
 		if !(surfaceIsWater _pos) then {
 		  _exit = true;

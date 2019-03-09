@@ -78,7 +78,7 @@ if (typeName _water isEqualTo "SCALAR") then {
   };
 } else { // For backward compatibility
   // Water position is not allowed
-  if !_water then {
+  if !(_water) then {
     if (surfaceIsWater _pos) then {
       private ["_p","_d","_l"];
       _d = 0; _l = true;
