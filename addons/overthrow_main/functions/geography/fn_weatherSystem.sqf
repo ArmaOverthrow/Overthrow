@@ -7,29 +7,29 @@ private _getWeather = {
 	private _lightning = 0;
 	private _temp = 30;
 	private _hour = date select 3;
-	call {
-		if(_forecast == "Storm") exitWith {
+	_this call {
+		if(_this == "Storm") exitWith {
 			_overtarget = 1;
 			_fogtarget = 0.01;
 			_wavetarget = 1;
 			_raintarget = 0.8 + (random 0.2);
 			_lightning = random 1;
 		};
-		if(_forecast == "Rain") exitWith {
+		if(_this == "Rain") exitWith {
 			_overtarget = 0.7 + (random 0.1);
 			_fogtarget = 0.002;
 			_wavetarget = 0.3 + (random 0.4);
 			_raintarget = 0.6 + (random 0.2);
 			_lightning = 0;
 		};
-		if(_forecast == "Cloudy") exitWith {
+		if(_this == "Cloudy") exitWith {
 			_overtarget = 0.3 + (random 0.7);
 			_fogtarget = 0.001;
 			_wavetarget = 0 + (random 0.2);
 			_raintarget = 0;
 			_lightning = 0;
 		};
-		if(_forecast == "Clear") exitWith {
+		if(_this == "Clear") exitWith {
 			_overtarget = random 0.2;
 			_fogtarget = 0;
 			_wavetarget = random 0.2;
@@ -146,7 +146,8 @@ while {true} do {
 	private _mode = server getVariable ["forecast","Clear"];
 	_forecast = "Clear";
 	_count = 0;
-	call {
+	[_mode, _stormchance, _cloudychance, _rainchance] call {
+		params ["_mode", "_stormchance", "_cloudychance", "_rainchance"];
 		if(_mode isEqualTo "Clear") exitWith {
 			if((random 100) < _cloudychance) exitWith {_forecast = "Cloudy"};
 		};
