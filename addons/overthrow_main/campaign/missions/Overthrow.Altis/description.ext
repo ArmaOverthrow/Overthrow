@@ -7,15 +7,6 @@ loadScreen = "\overthrow_main\campaign\missions\Overthrow.Tanoa\pic.jpg";
 
 overviewText = "@todo";
 
-class CfgFunctions 
-{
-	#include "\overthrow_main\functions\AI\VCOMAI\cfgFunctions.hpp"
-};
-
-class Extended_PreInit_EventHandlers {
-	VCM_CBASettings = call compile preprocessFileLineNumbers "\overthrow_main\functions\AI\VCOMAI\Functions\VCM_CBASettings.sqf";
-};
-
 class CfgRemoteExec
 {
 	// List of script functions allowed to be sent from client via remoteExec
@@ -31,7 +22,5 @@ class CfgRemoteExec
 		class enableSimulationGlobal { allowedTargets = 0;jip = 1; };
 		class VCM_fnc_KnowAbout { allowedTargets = 0;jip = 1; };
 		
-	};
-	
-	
+	};	
 };

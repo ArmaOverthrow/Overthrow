@@ -7,15 +7,6 @@ loadScreen = "\overthrow_main\campaign\missions\Overthrow.Tanoa\pic.jpg";
 
 overviewText = "This is Tanoa, a small island nation in the South Pacific with a history of British and French colonialism. Tanoa is currently under occupation by NATO forces and has been at the center of international attention since the Vunakece regime was ousted in 2020. The Tanoan population is currently in dissaray and there are many conspiracy theories as to the economic and political future of this small but strategically valuable archipelago. A massive protest against the NATO occupation recently took place in the nation's capital of Georgetown, where the spokesperson for the 'Free Tanoa' movement was assassinated by an unknown assailant. In response, NATO forces have issued a strict curfew and increased security to extreme levels; fuelling tension and conspiracy theories even further.";
 
-class CfgFunctions 
-{
-	#include "\overthrow_main\functions\AI\VCOMAI\cfgFunctions.hpp"
-};
-
-class Extended_PreInit_EventHandlers {
-	VCM_CBASettings = call compile preprocessFileLineNumbers "\overthrow_main\functions\AI\VCOMAI\Functions\VCM_CBASettings.sqf";
-};
-
 class CfgRemoteExec
 {
 	// List of script functions allowed to be sent from client via remoteExec
@@ -30,8 +21,5 @@ class CfgRemoteExec
 		class SpawnScript { allowedTargets = 0;jip = 1; };
 		class enableSimulationGlobal { allowedTargets = 0;jip = 1; };
 		class VCM_fnc_KnowAbout { allowedTargets = 0;jip = 1; };
-		
 	};
-	
-	
 };
