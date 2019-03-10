@@ -1,7 +1,7 @@
 params ["_frompos","_ao","_attackpos","_byair","_delay"];
 if !(isNil "_delay") then {sleep _delay};
 private _squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
-private _spawnpos = [_frompos,[50,75]] call SHK_pos;
+private _spawnpos = [_frompos,[50,75]] call SHK_pos_fnc_pos;
 private _group1 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 _group1 deleteGroupWhenEmpty true;
 private _group2 = "";
@@ -9,7 +9,7 @@ private _tgroup = false;
 if !(_byair) then {
 	sleep 0.2;
 	_squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
-	_spawnpos = [_frompos,[50,75]] call SHK_pos;
+	_spawnpos = [_frompos,[50,75]] call SHK_pos_fnc_pos;
 	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 	_group2 deleteGroupWhenEmpty true;
 };
@@ -26,7 +26,7 @@ if(_frompos distance _attackpos > 600) then {
 	};
 
 	private _dir = [_frompos,_ao] call BIS_fnc_dirTo;
-	_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos;
+	_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
 
 	if !(_byair) then {
 		_roads = (_frompos nearRoads 200);

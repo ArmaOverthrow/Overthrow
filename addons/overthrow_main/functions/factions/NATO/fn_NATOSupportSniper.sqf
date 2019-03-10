@@ -58,7 +58,7 @@ if(_isHQ) then {
 
 	sleep 2;
 
-	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
+	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos_fnc_pos;
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
@@ -83,7 +83,7 @@ if(_isHQ) then {
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 	_wp setWaypointTimeout [15,15,15];
 
-	_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
+	_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos_fnc_pos;
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "LOITER";
@@ -100,7 +100,7 @@ if(_isHQ) then {
 	} forEach allCurators;
 
 }else{
-	_moveto = [_start,50,_dir] call SHK_pos;
+	_moveto = [_start,50,_dir] call SHK_pos_fnc_pos;
 	_wp = _group addWaypoint [_moveto,5];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "SAFE";

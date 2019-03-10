@@ -41,7 +41,7 @@ if(_strength > 250 && (count _air) > 0) then {
 	//Send CAS
 	_obpos = (_air select 0) select 0;
 	_name = (_air select 0) select 1;
-	[[_obpos,[0,100],random 360] call SHK_pos,_pos,10] spawn OT_fnc_NATOAirSupport;
+	[[_obpos,[0,100],random 360] call SHK_pos_fnc_pos,_pos,10] spawn OT_fnc_NATOAirSupport;
 	diag_log format["Overthrow: NATO Sent CAS from %1",_name];
 };
 
@@ -139,7 +139,7 @@ if(_isCoastal && !(OT_NATO_Navy_HQ in _abandoned) && (random 100) > 70) then {
 	private _count = 0;
 	while {_count < _numgroups} do {
 		diag_log format["Overthrow: NATO Sent navy support from %1",OT_NATO_Navy_HQ];
-		[[_p,[0,100],random 360] call SHK_pos,_seaAO,_delay] spawn OT_fnc_NATOSeaSupport;
+		[[_p,[0,100],random 360] call SHK_pos_fnc_pos,_seaAO,_delay] spawn OT_fnc_NATOSeaSupport;
 		_count = _count + 1;
 		_delay = _delay + 20;
 	};

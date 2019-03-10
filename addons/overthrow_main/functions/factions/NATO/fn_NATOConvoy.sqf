@@ -14,7 +14,7 @@ _group setBehaviour "CARELESS";
 private _track = objNull;
 
 if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
-    _convoypos = [_frompos,random 360,120] call SHK_pos;
+    _convoypos = [_frompos,random 360,120] call SHK_pos_fnc_pos;
     private _road = [_convoypos] call BIS_fnc_nearestRoad;
     if (!isNull _road) then {
         _roadscon = roadsConnectedto _road;
@@ -46,7 +46,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     }foreach(_vehtypes);
 
     {
-        _pos = [_convoypos,0,120,false,[0,0],[250,OT_NATO_Vehicle_HVT]] call SHK_pos;
+        _pos = [_convoypos,0,120,false,[0,0],[250,OT_NATO_Vehicle_HVT]] call SHK_pos_fnc_pos;
         _veh = createVehicle [OT_NATO_Vehicle_HVT, _pos, [], 0,""];
     	_veh setVariable ["garrison","HQ",false];
 
@@ -78,7 +78,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         private _count = 0;
         while {_count < _numsupport} do {
             _vehtype = selectRandom OT_NATO_Vehicles_GroundSupport;
-            _pos = [_convoypos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos;
+            _pos = [_convoypos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos_fnc_pos;
             _veh = createVehicle [_vehtype, _pos, [], 0,""];
         	_veh setVariable ["garrison","HQ",false];
         	_veh setDir (_dir);

@@ -25,7 +25,7 @@ if(_gotexp) then {
         _charge setPosATL _p;
 
         //run away!
-        _runto = [_p,[1000,2000],random 360] call SHK_pos;
+        _runto = [_p,[1000,2000],random 360] call SHK_pos_fnc_pos;
         _wp = _group addWaypoint [_runto,0];
         _wp setWaypointType "MOVE";
         _wp setWaypointBehaviour "COMBAT";

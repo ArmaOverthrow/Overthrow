@@ -294,6 +294,31 @@ class CfgFunctions
 			class getRandomRoadPosition {};
 		};
 
+		class SHK_pos {
+			tag="SHK_pos";
+			file="\overthrow_main\functions\geography\SHK_pos";
+
+			class findClosestPosition {};
+			class getMarkerCorners {};
+			class getMarkerShape {};
+			class getPos {};
+			class getPosFromCircle {};
+			class getPosFromEllipse {};
+			class getPosFromRectangle {};
+			class getPosFromSquare {};
+			class isBlacklisted {};
+			class isInCircle {};
+			class isInEllipse {};
+			class isInRectangle {};
+			class isSamePosition {};
+			class rotatePosition {};
+
+			class getPosWrapper {};
+			class getPosMarkerWrapper {};
+			class pos {};
+
+		};
+
 		/*
 		* The spawner
 		*/

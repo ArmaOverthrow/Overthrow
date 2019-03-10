@@ -61,7 +61,7 @@ while {_count < _numCiv} do {
 
 	private _home = _town call OT_fnc_getRandomRoadPosition;
 	while {(_groupcount < _pergroup) && (_count < _numCiv)} do {
-		_pos = [_home,random 360,10] call SHK_pos;
+		_pos = [_home,random 360,10] call SHK_pos_fnc_pos;
 		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
 		_civ setVariable ["hometown",_hometown,true];
@@ -113,7 +113,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			private _ident = (OT_civilians getVariable [format["%1",_civid],[]]);
 			_ident params ["_identity"];
 
-			private _pos = [_home,random 360,10] call SHK_pos;
+			private _pos = [_home,random 360,10] call SHK_pos_fnc_pos;
 			private _civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 			[_civ] joinSilent nil;
 			[_civ] joinSilent _group;

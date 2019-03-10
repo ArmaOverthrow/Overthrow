@@ -312,7 +312,7 @@ while {sleep 10;true} do {
 							_targets = [_targets,[],{random 100},"ASCEND"] call BIS_fnc_sortBy;
 							_group = createGroup blufor;
 							_group deleteGroupWhenEmpty true;
-							_p = [_pos,0,0,false,[0,0],[100,OT_NATO_Vehicles_ReconDrone]] call SHK_pos;
+							_p = [_pos,0,0,false,[0,0],[100,OT_NATO_Vehicles_ReconDrone]] call SHK_pos_fnc_pos;
 							_drone = createVehicle [OT_NATO_Vehicles_ReconDrone, _p, [], 0,""];
 
 							createVehicleCrew _drone;
@@ -381,7 +381,7 @@ while {sleep 10;true} do {
 				}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
 				if(_lowest != "") then {
 					_townPos = (server getVariable _lowest);
-					_pp = [_townPos,random 360,2000] call SHK_pos;
+					_pp = [_townPos,random 360,2000] call SHK_pos_fnc_pos;
 					_gotpos = [];
 					{
 						_pos = _x select 0;

@@ -23,7 +23,7 @@ if((random 100) > 50) then { // 50/50 chance of either
     //Pick a random building as the dropoff
     private _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
 	_destination = position _building;
-    if((_destination select 0) isEqualTo 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos};
+    if((_destination select 0) isEqualTo 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos_fnc_pos};
     _type = "insertion";
 }else{
     //Extraction
