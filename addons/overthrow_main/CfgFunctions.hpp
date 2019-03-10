@@ -73,6 +73,11 @@ class CfgFunctions
 			class doConversation {};
 			class givePlayerWaypoint {};
 			class clearPlayerWaypoint {};
+			class hasWeaponEquipped {};
+			class carriesStaticWeapon {};
+			class illegalInCar {};
+			class detectedByReputation {};
+			class detectedByReputationNATO {};
 		};
 
 		class Interaction

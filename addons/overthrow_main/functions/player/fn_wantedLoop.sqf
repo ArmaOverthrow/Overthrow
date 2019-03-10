@@ -58,66 +58,9 @@ if !(captive _unit) then {
 		};
 	}else{
 
-		private _hasWeaponEq = { !([secondaryWeapon _this,handgunWeapon _this] isEqualTo ["",""]) || !(primaryWeapon _this in ["ACE_FakePrimaryWeapon",""]) };
-
-		private _carriesStaticWeapon = {
-			{
-				if(typeOf _x in OT_staticWeapons) exitWith {
-					true
-				};
-				false
-			}foreach(attachedObjects _this)
-		};
-
-		private _illegalInCar = {
-			//They are driving or in a non-civilian vehicle including statics
-			if !(typeof (vehicle _this) in (OT_allVehicles+OT_allBoats)) exitWith {
-				true;
-			};
-			//Drivers are not checked for weapons because you cannot shoot and drive, otherwise...
-			if(driver (vehicle _this) isEqualTo _this) exitWith{false};
-			// carrying a weapon or illegal gear
-			if (
-				_this call _hasWeaponEq
-				|| { ((headgear _this) in OT_illegalHeadgear) || ((vest _this) in OT_illegalVests) }
-			) exitWith {
-				true
-			};
-			false
-		};
-
-		private _detectedByReputation = {
-			private _totalrep = abs(_this getVariable ["rep",0]) * 0.5;
-			private _skill = _this getVariable ["OT_stealth",0];
-			if (_skill isEqualTo 5) exitWith {false};
-			private _replim = _skill call {
-				if(_this isEqualTo 1) exitWith {75};
-				if(_this isEqualTo 2) exitWith {100};
-				if(_this isEqualTo 3) exitWith {150};
-				if(_this isEqualTo 4) exitWith {200};
-				50
-			};
-			(_totalrep > _replim && random 1000 < _totalrep)
-		};
-
-		private _detectedByReputationNATO = {
-			private _skill = _this getVariable ["OT_stealth",0];
-			if (_skill isEqualTo 5) exitWith {false};
-			private _town = getPosATL _this call OT_fnc_nearestTown; // @todo try to fetch townChangeVar
-			private _totalrep = ((_this getVariable ["rep",0]) * -0.25) + ((_this getVariable [format["rep%1",_town],0]) * -1);
-			private _replim = _skill call {
-				if(_this isEqualTo 1) exitWith {75};
-				if(_this isEqualTo 2) exitWith {100};
-				if(_this isEqualTo 3) exitWith {150};
-				if(_this isEqualTo 4) exitWith {200};
-				50
-			};
-			(_totalrep > _replim && random 1000 < _totalrep)
-		};
-
 		if(_unit call OT_fnc_unitSeenCRIM) then {
 			// carrying a static weapon .. illegal
-			if (_unit call _carriesStaticWeapon) exitWith {
+			if (_unit call OT_fnc_carriesStaticWeapon) exitWith {
 				_unit setCaptive false;
 				[_unit] call OT_fnc_revealToNATO;
 				if(isPlayer _unit) then {
@@ -126,7 +69,7 @@ if !(captive _unit) then {
 			};
 
 			// driving with weapons, illegal clothing/gear, in illegal vehicles
-			if(!(_vehicle isEqualTo _unit) && { _unit call _illegalInCar }) exitWith {
+			if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
 				//Set the whole car wanted
 				{
 					_x setCaptive false;
@@ -135,7 +78,7 @@ if !(captive _unit) then {
 			};
 
 			// carrying a weapon .. illegal
-			if (_unit call _hasWeaponEq) exitWith {
+			if (_unit call OT_fnc_hasWeaponEquipped) exitWith {
 				if(isPlayer _unit) then {
 					"A gang has seen your weapon" call OT_fnc_notifyMinor;
 				};
@@ -144,7 +87,7 @@ if !(captive _unit) then {
 			};
 			
 			// detected because fame
-			if(_unit call _detectedByReputation) exitWith {
+			if(_unit call OT_fnc_detectedByReputation) exitWith {
 				_unit setCaptive false;
 				if(isPlayer _unit) then {
 					"A gang has recognized you" call OT_fnc_notifyMinor;
@@ -154,7 +97,7 @@ if !(captive _unit) then {
 		}else{
 			if(_unit call OT_fnc_unitSeenNATO) then {
 				// fame
-				if(_unit call _detectedByReputationNATO) exitWith {
+				if(_unit call OT_fnc_detectedByReputationNATO) exitWith {
 					_unit setCaptive false;
 					if(isPlayer _unit) then {
 						"NATO has recognized you" call OT_fnc_notifyMinor;
@@ -169,19 +112,19 @@ if !(captive _unit) then {
 						"NATO has seen your spliff!" call OT_fnc_notifyMinor;
 					};
 				};
-				if(_unit call _carriesStaticWeapon) exitWith {
+				if(_unit call OT_fnc_carriesStaticWeapon) exitWith {
 					_unit setCaptive false;
 					[_unit] call OT_fnc_revealToNATO;
 					if(isPlayer _unit) then {
 						"NATO has seen the static weapon" call OT_fnc_notifyMinor;
 					};
 				};
-				if(!(_vehicle isEqualTo _unit) && { _unit call _illegalInCar }) exitWith {
+				if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
 					//Set the whole car wanted
 					_unit setcaptive false;
 					[vehicle _unit] call OT_fnc_revealToNATO;
 				};
-				if(_unit call _hasWeaponEq) exitWith {
+				if(_unit call OT_fnc_hasWeaponEquipped) exitWith {
 					_unit setCaptive false;
 					[_unit] call OT_fnc_revealToNATO;
 				};
