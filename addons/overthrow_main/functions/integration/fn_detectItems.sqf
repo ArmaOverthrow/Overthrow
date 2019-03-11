@@ -1,15 +1,3 @@
-OT_itemCategoryDefinitions = [
-    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass"]],
-    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
-    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
-    ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],
-    ["Surplus",["Rangefinder","Binocular","Compass"]]
-];
-
-OT_items = [];
-OT_allItems = [];
-OT_craftableItems = [];
-
 private _categorize = {
     params ["_c","_cat"];
     private _done = false;
@@ -45,54 +33,44 @@ private _getprice = {
         _steel = 0.1;
     };
     if(_primaryCategory isEqualTo "Pharmacy") then {
-        _price = _mass * 4;
         _steel = 0;
         _plastic = ceil(_mass * 0.2);
         if(_mass isEqualTo 1) then {
             _plastic = 0.1;
         };
-        private _res = [_name,_price,_plastic] call {
-            params ["_name", "_price", "_plastic"];
+        private _res = [_name,_mass] call {
+            params ["_name", "_mass"];
+            _price = _mass * 4;
             if(_name find "Blood" > -1) exitWith {
                 _price = round(_price * 1.3);
-                [_name,_price,_plastic]
             };
             if(_name find "Saline" > -1) exitWith {
                 _price = round(_price * 0.3);
-                [_name,_price,_plastic]
             };
             if(_name find "(250 ml)" > -1) exitWith {
                 _price = round(_price * 0.5);
-                [_name,_price,_plastic]
             };
             if(_name find "(Basic)" > -1) exitWith {
                 _price = 1;
-                [_name,_price,_plastic]
             };
             if(_name find "Epinephrine" > -1) exitWith {
                 _price = 30;
                 _plastic = 0;
-                [_name,_price,_plastic]
             };
             if(_name find "autoinjector" > -1) exitWith {
                 _price = 10;
                 _plastic = 0;
-                [_name,_price,_plastic]
             };
             if(_name find "Bodybag" > -1) exitWith {
                 _price = 2;
                 _plastic = 0.1;
-                [_name,_price,_plastic]
             };
         };
-        _name = _res select 0;
-        _price = _res select 1;
-        _plastic = _res select 2;
     };
     if(_primaryCategory isEqualTo "Electronics") then {
         _steel = 0;
         _plastic = ceil(_mass * 0.2);
-        _price = _mass * 4
+        _price = _mass * 4;
         private _factor = [_name] call {
             params ["_name"];
             if(_name find "Altimeter" > -1) exitWith {3};
