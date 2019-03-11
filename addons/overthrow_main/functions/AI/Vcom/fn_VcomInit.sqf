@@ -27,7 +27,10 @@ VCOM_MINEARRAY = [];
 	sleep 2;
 	
 	//Begin Artillery function created by Rydygier - https://forums.bohemia.net/forums/topic/159152-fire-for-effect-the-god-of-war-smart-simple-ai-artillery/
-	if (VCM_FFEARTILLERY) then {nul = [] execVM "Vcom\RYD_FFE\FFE.sqf";VCM_ARTYENABLE = false;};
+	if (VCM_FFEARTILLERY) then {
+		nul = [] spawn RYD_fnc_FFE;
+		VCM_ARTYENABLE = false;
+	};
 	
 	[] spawn VCM_fnc_AIDRIVEBEHAVIOR;
 	
@@ -44,7 +47,8 @@ VCOM_MINEARRAY = [];
 					{
 						if !(((units _Grp) findIf {alive _x}) isEqualTo -1) then
 						{
-							_x call VCM_fnc_SquadExc;
+							_x spawn VCM_fnc_SQUADBEH;
+							VcmAI_ActiveList pushback _x;
 						};
 					};
 				};

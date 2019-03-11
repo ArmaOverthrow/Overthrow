@@ -22,7 +22,7 @@ if (!VCM_SKILLCHANGE) exitWith {};
 
 	if (VCM_SIDESPECIFICSKILL) then
 	{
-		_unit call VCM_AISIDESPEC;
+		_unit call VCM_fnc_AISIDESPEC;
 	};
 
 } forEach (units _this);
