@@ -27,7 +27,7 @@ if(!dialog) then {
 					sleep 3;
 					[_txt, 0, 0.2, 120, 1, 0, 2] spawn bis_fnc_dynamicText;
 
-					waitUntil {sleep 1; visibleMap};
+					waitUntil {uisleep 1; visibleMap};
 
 					hint format["Holding RMB will pan the map, zoom with the scrollwheel. When you are finished exploring the map, close it with the Esc key.","Action" call OT_fnc_getAssignedKey];
 					sleep 3;
@@ -37,7 +37,7 @@ if(!dialog) then {
 
 					[_txt, -0.5, 0.5, 240, 1, 0, 2] spawn bis_fnc_dynamicText;
 
-					waitUntil {sleep 1; !visibleMap};
+					waitUntil {uisleep 1; !visibleMap};
 					hint "";
 					sleep 3;
 
@@ -52,7 +52,7 @@ if(!dialog) then {
 					sleep 3;
 					hint "Go and speak to the local gun dealer. Head towards the marked location, you have nothing to worry about as long as you are not carrying/wearing any illegal items.";
 
-					waitUntil {(player distance getpos _gundealer) < 5};
+					waitUntil {uisleep 1; (player distance2d getPosASL _gundealer) < 5};
 
 
 					_lines = [
@@ -74,7 +74,19 @@ if(!dialog) then {
 										playSound "3DEN_notificationDefault";
 										[] spawn (OT_tutorialMissions select 0);
 									};
-									[player,_gundealer,[(_this select 0),"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.","What am I supposed to do with this?","I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.","Um.. thanks I guess","No problem, anything you can do to help me stay under their radar is great, I'll pay you $250 if you can take care of them."],_end] spawn OT_fnc_doConversation;
+									[
+										player,
+										_gundealer,
+										[
+											(_this select 0),
+											"I hear you. I bet it was even them who shot the protester... I tell you what, take this spare pistol I have laying around.",
+											"What am I supposed to do with this?",
+											"I don't know. But every other guy that's come in here recently that was angry with NATO wanted a gun, and I won't ask questions.",
+											"Um.. thanks I guess",
+											"No problem, anything you can do to help me stay under their radar is great, I'll pay you $250 if you can take care of them."
+										],
+										_end
+									] spawn OT_fnc_doConversation;
 									player addItemToUniform OT_item_BasicGun;
 									player addItemToUniform OT_item_BasicAmmo;
 									player addItemToUniform OT_item_BasicAmmo;
@@ -128,7 +140,7 @@ if(!dialog) then {
 							]
 						];
 
-						_options spawn OT_fnc_playerDecision;
+						_options call OT_fnc_playerDecision;
 					};
 					[_gundealer,player,_lines,_done] spawn OT_fnc_doConversation;
 				};
