@@ -115,10 +115,17 @@ private _difficulty = 1.8;
 
         //If mission was a success
         if (_wassuccess) then {
-            sleep 2;
-            private _factionName = server getvariable format["factionname%1",_faction];
-            format ["Incoming message from %1: Traitor neutralized. Sending our regards. (+5 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
-            server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + 5,true];
+            [
+                {
+                    params ["_faction"];
+                    private _factionName = server getvariable format["factionname%1",_faction];
+                    format ["Incoming message from %1: Traitor neutralized. Sending our regards. (+5 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+                    server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + 5,true];
+                },
+                [_faction],
+                2
+            ] call CBA_fnc_waitAndExecute;
+            
         };
         //Clean up
         spawner setVariable [format["fugitive%1",_jobid],nil,false];
