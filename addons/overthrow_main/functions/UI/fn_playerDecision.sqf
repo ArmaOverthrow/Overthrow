@@ -1,10 +1,10 @@
 closedialog 0;
-createDialog "OT_dialog_choose";
 openMap false;
+createDialog "OT_dialog_choose";
 
-if(typename (_this select 0) isEqualTo "STRING") then {
+if((_this select 0) isEqualType "") then {
 	disableSerialization;
-	_ctrl = (findDisplay 8002) displayCtrl 1100;
+	private _ctrl = (findDisplay 8002) displayCtrl 1100;
 	_ctrl ctrlSetStructuredText parseText (_this select 0);
 	_this deleteAt 0;
 }else{
@@ -12,8 +12,8 @@ if(typename (_this select 0) isEqualTo "STRING") then {
 };
 
 OT_choices = _this;
-_idc = 1600;
 
+private _idc = 1600;
 {
 	private _text = _x select 0;
 	ctrlSetText [_idc,_text];
@@ -26,16 +26,5 @@ if(_idc < 1606) then {
 	while{_idc < 1606} do {
 		ctrlShow [_idc,false];
 		_idc = _idc + 1;
-	};
-};
-
-OT_choiceMade = {
-	_choice = OT_choices select _this;
-	_text = _choice select 0;
-	_code = _choice select 1;
-	if(count _choice > 2) then {
-		(_choice select 2) spawn _code;
-	}else{
-		[_text] spawn _code;
 	};
 };
