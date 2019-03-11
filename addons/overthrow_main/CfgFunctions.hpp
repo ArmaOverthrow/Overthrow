@@ -112,6 +112,7 @@ class CfgFunctions
 			class notifyGood {};
 			class notifyVehicle {};
 			class playerDecision {};
+			class choiceMade {};
 			class notifyStart {};
 			class progressBar {};
 			class getAssignedKey {};
