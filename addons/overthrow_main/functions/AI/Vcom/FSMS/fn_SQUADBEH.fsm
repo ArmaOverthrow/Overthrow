@@ -182,7 +182,7 @@ class FSM
                                          "" \n
                                          "_Group call VCM_fnc_ArtyManage;" \n
                                          "private _isskilldisabled = _Group getVariable ""VCM_Skilldisable"";" \n
-                                         "if (VCM_SKILLCHANGE && isnil ""_isskilldisabled"") then {_Group call VCM_AIDIFSET};" \n
+                                         "if (VCM_SKILLCHANGE && isnil ""_isskilldisabled"") then {_Group call VCM_fnc_AIDIFSET};" \n
                                          "" \n
                                          "" \n
                                          "{" \n
@@ -229,7 +229,7 @@ class FSM
                          "private _NewUnit = (units _Group) findIf {!(_x in _CurUnits)};" \n
                          "if !(_NewUnit isEqualTo -1) then" \n
                          "{" \n
-                         "	_Group call VCM_AIDIFSET;" \n
+                         "	_Group call VCM_fnc_AIDIFSET;" \n
                          "	_Group call VCM_fnc_ArtyManage;" \n
                          "	" \n
                          "	{" \n
