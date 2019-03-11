@@ -52,37 +52,44 @@ private _missions = _target getVariable ["mytasks",[]];
 _missions pushback _name;
 _target setVariable ["mytasks",_missions,true];
 
-waitUntil {
-	sleep 1;
-	!(_name in (_target getvariable ["mytasks",[]]))
+private _endCode = {
+	params ["_thisCode","_endCode","_params","_name","_target","_start","_condition","_fail","_reward","_infreward","_pos","_onFinish","_failed"];
+	if(_failed) then {
+		[_name, "FAILED",true] call BIS_fnc_taskSetState;
+	}else{
+		if(_reward > 0) then {
+			[_reward] remoteExec ["OT_fnc_money",_target];
+		};
+
+		if(_infreward > 0) then {
+			_infreward remoteExec ["OT_fnc_influence",_target,false];
+		};
+		[_name, "SUCCEEDED",true] call BIS_fnc_taskSetState;
+	};
+	[_target,_pos,_params,!_failed] call _onFinish;
+};
+
+private _thisCode = {
+	params ["_thisCode","_endCode","_params","_name","_target","_start","_condition","_fail"];
+	private _failed = !(_name in (_target getvariable ["mytasks",[]]))
 	||
 	((time - _start) > 7200)
 	||
-	(_params call _condition)
-	||
-	(_params call _fail)
+	(_params call _fail);
+	if (_failed || (_params call _condition)) then {
+		_this pushBack _failed;
+		_this call _endCode;
+	} else {
+		[
+			_thisCode,
+			_this,
+			1
+		] call CBA_fnc_waitAndExecute;
+	};
 };
 
-private _success = false;
-if(
-	((time - _start) > 7200)
-	||
-	(_params call _fail)
-	||
-	!(_name in (_target getvariable ["mytasks",[]]))
-) then {
-	[_name, "FAILED",true] spawn BIS_fnc_taskSetState;
-}else{
-	if(_reward > 0) then {
-		[_reward] remoteExec ["OT_fnc_money",_target];
-	};
-
-	if(_infreward > 0) then {
-		_infreward remoteExec ["OT_fnc_influence",_target,false];
-	};
-	_success = true;
-	[_name, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-
-};
-
-[_target,_pos,_params,_success] spawn _onFinish;
+[
+	_thisCode,
+	[_thisCode,_endCode,_params,_name,_target,_start,_condition,_fail,_reward,_infreward,_pos,_onFinish],
+	1
+] call CBA_fnc_waitAndExecute;

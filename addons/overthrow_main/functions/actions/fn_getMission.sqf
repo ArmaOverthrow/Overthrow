@@ -1,7 +1,9 @@
 params ["_faction","_factionName"];
 
 private _haveMission = player getVariable [format["MissionData%1",_faction],[]];
-if(count _haveMission > 0) exitWith {"You already have an active mission for this faction" call OT_fnc_notifyMinor};
+if(count _haveMission > 0) exitWith {
+    "You already have an active mission for this faction" call OT_fnc_notifyMinor;
+};
 
 private _standing = server getvariable [format["standing%1",_faction],0];
 if(_faction != OT_currentMissionFaction) then {OT_currentMissionData = nil};
@@ -80,9 +82,10 @@ _options pushback ["Accept",{
 	    /*_infreward*/  0,
 	    /*_fail*/       _fail,
 	    /*_params*/     [OT_currentMissionData select 6,OT_currentMissionFaction,OT_currentMissionFactionName,OT_currentMissionData select 5,OT_currentMissionRewards]
-    ] spawn OT_fnc_assignMission;
+    ] call OT_fnc_assignMission;
 
-    [OT_currentMissionData select 6,OT_currentMissionFaction,OT_currentMissionFactionName] spawn (OT_currentMissionData select 2);
+    // call setup code
+    [OT_currentMissionData select 6,OT_currentMissionFaction,OT_currentMissionFactionName] call (OT_currentMissionData select 2);
 }];
 
 _options pushback ["Decline",{
@@ -96,4 +99,4 @@ _options pushback ["Cancel",{
     OT_currentMissionData = nil;
 }];
 
-_options spawn OT_fnc_playerDecision;
+_options call OT_fnc_playerDecision;
