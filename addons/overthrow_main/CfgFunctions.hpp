@@ -426,7 +426,6 @@ class CfgFunctions
 			class NATOsearch {};
 			class createSquad {};
 			class experience {};
-			class initVCOMAI {};
 			class dangerCaused {};
 		};
 

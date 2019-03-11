@@ -1,9 +1,5 @@
 //VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less
 
-[] call OT_fnc_initVCOMAI;
-
-[] call compile preprocessFileLineNumbers "\overthrow_main\functions\geography\SHK_pos\shk_pos_init.sqf";
-
 OT_ACEremoveAction = [
 	"OT_Remove",
 	"Remove",
