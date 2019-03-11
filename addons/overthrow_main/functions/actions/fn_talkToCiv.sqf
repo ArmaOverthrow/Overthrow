@@ -12,7 +12,7 @@ private _options = [];
 
 if (side _civ isEqualTo west || side _civ isEqualTo east) exitWith {
 	_options pushBack ["Cancel",{}];
-	_options spawn OT_fnc_playerDecision;
+	_options call OT_fnc_playerDecision;
 };
 
 private _canRecruit = true;
@@ -278,7 +278,7 @@ if (_canBuyBoats) then {
 					_ferryoptions pushback [format["%1 (-$%2)",_t,_cost],_go,_p];
 				};
 			}foreach(OT_ferryDestinations);
-			_ferryoptions spawn OT_fnc_playerDecision;
+			_ferryoptions call OT_fnc_playerDecision;
 		}
 	];
 };
@@ -392,8 +392,6 @@ if (_canSellDrugs) then {
 	}foreach(OT_allDrugs);
 };
 
-_options pushBack ["Cancel",{
+_options pushBack ["Cancel",{}];
 
-}];
-
-_options spawn OT_fnc_playerDecision;
+_options call OT_fnc_playerDecision;

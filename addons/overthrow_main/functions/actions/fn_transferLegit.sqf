@@ -87,5 +87,5 @@ if(count _objects isEqualTo 1) then {
 		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer legal items from which container?" call OT_fnc_notifyBig;
-	_options spawn OT_fnc_playerDecision;
+	_options call OT_fnc_playerDecision;
 };

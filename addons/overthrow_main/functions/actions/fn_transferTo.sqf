@@ -49,5 +49,5 @@ if(count _objects isEqualTo 1) then {
 		];
 	}foreach(_objects);
 	"Transfer to which container?" call OT_fnc_notifyBig;
-	_options spawn OT_fnc_playerDecision;
+	_options call OT_fnc_playerDecision;
 };
