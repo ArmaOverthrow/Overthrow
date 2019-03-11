@@ -529,7 +529,8 @@ class CfgFunctions
             class hasOwner {};
 			class setOwner {};
 			class unitStock {};
-            class spawnTemplate {};			
+            class spawnTemplate {};
+			class sortBy {};
 		};
 
 		/*
