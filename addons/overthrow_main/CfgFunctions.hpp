@@ -477,6 +477,9 @@ class CfgFunctions
 			tag = "VCM";
 			file = "\overthrow_main\functions\AI\Vcom\Functions\VCM_Functions";
 			
+			class AIDIFSET {};
+			class AISIDESPEC {};
+
 			// [unitToRearm, rearmLocation] spawn VCM_fnc_ActRearm
 			class ActRearm {};
 			
