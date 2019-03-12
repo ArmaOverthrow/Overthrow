@@ -76,7 +76,7 @@ _control ctrlcommit _fade;
 				disableSerialization;
 				params ["_control","","","","",["_delayDone", -1]];
 				if (isNil "_control" || {isNull _control}) exitWith {true};
-				if (_delayDone isEqualTo -1) then {
+				if !(_delayDone isEqualTo -1) then {
 					time >= _delayDone
 				} else {
 					ctrlCommitted _control
@@ -85,14 +85,12 @@ _control ctrlcommit _fade;
 			{
 				disableserialization;
 				params ["_control","","","","_layer"];
-
 				if (isNil "_control" || {isNull _control}) exitWith {};
 
 				_control ctrlsetfade 1;
 				_control ctrlcommit 1;
 
 				[
-					
 					{
 						disableSerialization;
 						params ["_control"];
