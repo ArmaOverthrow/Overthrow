@@ -382,8 +382,20 @@ build = {
 	modeTarget setDir buildRotation;
 	modeTarget allowDamage false;
 
-	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom<br/>Shift = Build multiple</t>",_name,[modePrice, 1, 0, true] call CBA_fnc_formatNumber,_description];
-	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[
+		format [
+			"<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom<br/>Shift = Build multiple</t>",
+			_name,
+			[modePrice, 1, 0, true] call CBA_fnc_formatNumber,
+			_description
+		],
+		[safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)],
+		0.5,
+		10,
+		0,
+		0,
+		2
+	] call OT_fnc_dynamicText;
 };
 
 createDialog format["OT_dialog_build%1",_buildlocation];

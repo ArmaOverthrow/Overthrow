@@ -11,4 +11,4 @@ OT_inputHandler = {
 	};	
 };
 
-["Name this loadout",""] spawn OT_fnc_inputDialog;
+["Name this loadout",""] call OT_fnc_inputDialog;

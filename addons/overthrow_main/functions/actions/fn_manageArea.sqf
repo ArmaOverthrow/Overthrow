@@ -16,7 +16,7 @@ if (_dist < 250 && _name in (server getVariable ["NATOabandoned",[]])) then {
     			if(_owned find _name isEqualTo -1) then {
                     [] call OT_fnc_buyBusiness;
                 }else{
-                    [] spawn OT_fnc_factoryDialog;
+                    [] call OT_fnc_factoryDialog;
                 };
             };
         };

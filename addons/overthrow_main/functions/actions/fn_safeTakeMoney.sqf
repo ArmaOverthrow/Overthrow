@@ -16,7 +16,7 @@ if(_password isEqualTo "") exitWith {
 		};
 	};
 
-	[format["How much to take? ($%1 Total)",[_in, 1, 0, true] call CBA_fnc_formatNumber],100] spawn OT_fnc_inputDialog;
+	[format["How much to take? ($%1 Total)",[_in, 1, 0, true] call CBA_fnc_formatNumber],100] call OT_fnc_inputDialog;
 };
 
 OT_inputHandler = {
@@ -36,7 +36,7 @@ OT_inputHandler = {
 		};
 	};
 
-	[format["How much to take? ($%1 Total)",[_in, 1, 0, true] call CBA_fnc_formatNumber],100] spawn OT_fnc_inputDialog;
+	[format["How much to take? ($%1 Total)",[_in, 1, 0, true] call CBA_fnc_formatNumber],100] call OT_fnc_inputDialog;
 };
 
-["Please enter password",""] spawn OT_fnc_inputDialog;
+["Please enter password",""] call OT_fnc_inputDialog;

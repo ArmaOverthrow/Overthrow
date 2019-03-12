@@ -22,4 +22,4 @@ OT_inputHandler = {
 	};
 };
 
-["How much to send to this player?",1000] spawn OT_fnc_inputDialog;
+["How much to send to this player?",1000] call OT_fnc_inputDialog;

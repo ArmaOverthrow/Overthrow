@@ -61,7 +61,7 @@ OT_MapSingleClickEHId = addMissionEventHandler["MapSingleClick", {
 			];
 		};
 	};
-	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] call OT_fnc_dynamicText;
 }];
 
 OT_MapEHId = addMissionEventHandler["Map", {
