@@ -11,12 +11,11 @@ if(!OT_adminMode && _ft > 1) then {
 };
 
 disableSerialization;
-_buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
+private _buildingtextctrl = (findDisplay 8001) displayCtrl 1102;
 
-_town = (getpos player) call OT_fnc_nearestTown;
-_standing = player getVariable format['rep%1',_town];
+private _town = (getposATL player) call OT_fnc_nearestTown;
 
-_weather = "Clear";
+private _weather = "Clear";
 if(overcast > 0.4) then {
 	_weather = "Cloudy";
 };
@@ -27,33 +26,41 @@ if(rain > 0.9) then {
 	_weather = "Storm";
 };
 
-_ctrl = (findDisplay 8001) displayCtrl 1100;
-_standing = [_town] call OT_fnc_standing;
-_plusmin = "";
-if(_standing > -1) then {_plusmin = "+"};
+private _ctrl = (findDisplay 8001) displayCtrl 1100;
+private _standing = [_town] call OT_fnc_standing;
 
-_rep = player getVariable ["rep",0];
-_pm = "";
-if(_rep > -1) then {_pm = "+"};
+private _rep = player getVariable ["rep",0];
+private _extra = "";
 
-_extra = "";
-
-if(isMultiplayer) then {
-	if((getplayeruid player) in (server getVariable ["generals",[]])) then {
-		_extra = format["<t align='left' size='0.65'>Resistance Funds: $%1 (Tax Rate %2%3)</t>",[server getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber,server getVariable ["taxrate",0],"%"];
-	};
+if(isMultiplayer && { ((getplayeruid player) in (server getVariable ["generals",[]])) }) then {
+	_extra = format[
+		"<t align='left' size='0.65'>Resistance Funds: $%1 (Tax Rate %2%3)</t>",
+		[server getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber,
+		server getVariable ["taxrate",0],
+		"%"
+	];
 };
 
-_ctrl ctrlSetStructuredText parseText format["
-	<t align='left' size='0.65'>Standing: %2 (%3%4) %12 (%5%6)</t><br/>
-	<t align='left' size='0.65'>Influence: %9</t><br/>
-	<t align='left' size='0.65'>Weather: %7 (Forecast: %8)</t><br/>
-	<t align='left' size='0.65'>Fuel Price: $%11/L</t><br/>
-	%10
-",name player,_town,_plusmin,_standing,_pm,_rep,_weather,server getVariable "forecast",player getVariable ["influence",0],_extra,[OT_nation,"FUEL",100] call OT_fnc_getPrice,OT_nation];
+_ctrl ctrlSetStructuredText parseText format[
+	"
+		<t align='left' size='0.65'>Standing: %1 (%2%3) %4 (%5%6)</t><br/>
+		<t align='left' size='0.65'>Influence: %7</t><br/>
+		<t align='left' size='0.65'>Weather: %8 (Forecast: %9)</t><br/>
+		<t align='left' size='0.65'>Fuel Price: $%10/L</t><br/>
+		%11
+	",
+	_town, ["","+"] select (_standing > -1), _standing, OT_nation, ["","+"] select (_rep > -1), _rep,
+	player getVariable ["influence",0],
+	_weather, server getVariable "forecast",
+	[OT_nation,"FUEL",100] call OT_fnc_getPrice,
+	_extra
+];
 
 _ctrl = (findDisplay 8001) displayCtrl 1106;
-_ctrl ctrlSetStructuredText parseText format["<t align='right' size='0.9'>$%1</t>",[player getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber];
+_ctrl ctrlSetStructuredText parseText format[
+	"<t align='right' size='0.9'>$%1</t>",
+	[player getVariable ["money",0], 1, 0, true] call CBA_fnc_formatNumber
+];
 
 
 sleep 0.2;
