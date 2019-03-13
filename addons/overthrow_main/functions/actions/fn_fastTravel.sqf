@@ -89,37 +89,40 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 		disableUserInput true;
 
 		cutText ["Fast travelling","BLACK",2];
-		_pos spawn {
-			private _pos = _this;
-			sleep 2;
-
-			if((vehicle player) != player) then {
-				if ((driver vehicle player) isEqualTo player) then {
-					private _tam = 10;
-					private _roads = [];
-					while {true} do {
-						_roads = _pos nearRoads _tam;
-						if (count _roads < 1) then {_tam = _tam + 10};
-						if (count _roads > 0) exitWith {};
+		[
+			{
+				private _pos = _this;
+				
+				if((vehicle player) != player) then {
+					if ((driver vehicle player) isEqualTo player) then {
+						private _tam = 10;
+						private _roads = [];
+						while {true} do {
+							_roads = _pos nearRoads _tam;
+							if (count _roads < 1) then {_tam = _tam + 10};
+							if (count _roads > 0) exitWith {};
+						};
+						{_x allowDamage false} foreach(crew vehicle player);
+						private _road = _roads select 0;
+						_pos = position _road findEmptyPosition [1,120,typeOf (vehicle player)];
+						vehicle player setPos _pos;
 					};
-					{_x allowDamage false} foreach(crew vehicle player);
-					private _road = _roads select 0;
-					_pos = position _road findEmptyPosition [1,120,typeOf (vehicle player)];
-					vehicle player setPos _pos;
+				}else{
+					player setpos _pos;
 				};
-			}else{
-				player setpos _pos;
-			};
 
-			disableUserInput false;
-			cutText ["","BLACK IN",3];
+				disableUserInput false;
+				cutText ["","BLACK IN",3];
 
-			if((vehicle player) != player) then {
-				{_x allowDamage true} foreach(crew vehicle player);
-			};
-			player allowDamage true;
-			openMap false;
-		};
+				if((vehicle player) != player) then {
+					{_x allowDamage true} foreach(crew vehicle player);
+				};
+				player allowDamage true;
+				openMap false;
+			},
+			_pos,
+			2
+		] call CBA_fnc_waitAndExecute;
 	};
 }];
 
