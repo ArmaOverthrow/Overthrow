@@ -173,9 +173,7 @@ if(count _cost > 0) then {
     _recipe = _recipe + format["Output: %1 x %2<br/></t>",_numtoproduce,_cls call OT_fnc_anythingGetName];
 };
 
-private _textctrl = (findDisplay 8000) displayCtrl 1100;
-
-_textctrl ctrlSetStructuredText parseText format["
+((findDisplay 8000) displayCtrl 1100) ctrlSetStructuredText parseText format["
 	<t align='center' size='0.9'>%1</t><br/>
 	%3
 ",_txt,_desc,_recipe];
