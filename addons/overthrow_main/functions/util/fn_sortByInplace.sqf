@@ -1,5 +1,5 @@
 /*
-	BIS_fnc_sortBy just less shitty
+	BIS_fnc_sortBy just less shitty and in place (changing the array instead of a copy)
 */
 
 params [
@@ -7,8 +7,8 @@ params [
 	["_inputParams", []],
 	["_algorithmFnc", {}],
 	["_sortDirection", "ASCEND"],
-	["_filterFnc", {}],
-	["_out",[]]
+	["_filterFnc", {false}],
+	["_out", []]
 ];
 
 _out resize count _inputArray;
@@ -23,5 +23,12 @@ _out = _out apply {
 	}
 };
 _out = _out - [nil];
+
 _out sort (_sortDirection == "ASCEND");
-_out
+_inputArray resize 0;
+
+{
+	_inputArray pushBack (_x select 2);
+} forEach _out;
+
+_inputArray

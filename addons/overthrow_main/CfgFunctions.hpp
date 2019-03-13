@@ -531,6 +531,7 @@ class CfgFunctions
 			class unitStock {};
             class spawnTemplate {};
 			class sortBy {};
+			class sortByInplace {};
 		};
 
 		/*
