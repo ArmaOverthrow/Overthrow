@@ -139,7 +139,16 @@ if (_canTute) then {
 		_options pushBack [
 			"So, about those NATO soldiers...",{
 				private _civ = OT_interactingWith;
-				[player,_civ,["So, about those NATO soldiers...","Yes! I will gladly pay you $250 to get them off my back","Alright I'll see what I can do"],(OT_tutorialMissions select 0)] spawn OT_fnc_doConversation;
+				[
+					player,
+					_civ,
+					[
+						"So, about those NATO soldiers...",
+						"Yes! I will gladly pay you $250 to get them off my back",
+						"Alright I'll see what I can do"
+					],
+					(OT_tutorialMissions select 0)
+				] call OT_fnc_doConversation;
 			}
 		];
 	};
@@ -147,7 +156,16 @@ if (_canTute) then {
 		_options pushBack [
 			"So, about those gangs...",{
 				private _civ = OT_interactingWith;
-				[player,_civ,["So, about those gangs...","Sure, local businessmen usually pay quite well for them.","Alright I'll see what I can do"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+				[
+					player,
+					_civ,
+					[
+						"So, about those gangs...",
+						"Sure, local businessmen usually pay quite well for them.",
+						"Alright I'll see what I can do"
+					],
+					(OT_tutorialMissions select 1)
+				] call OT_fnc_doConversation;
 			}
 		];
 	};
@@ -155,7 +173,17 @@ if (_canTute) then {
 		_options pushBack [
 			"You sell Ganja right?",{
 				private _civ = OT_interactingWith;
-				[player,_civ,["You sell Ganja right?","I sure do, wanna blaze it?","Not right now, I need some cash first","Oh OK, sell it to the civilians then"],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+				[
+					player,
+					_civ,
+					[
+						"You sell Ganja right?",
+						"I sure do, wanna blaze it?",
+						"Not right now, I need some cash first",
+						"Oh OK, sell it to the civilians then"
+					],
+					(OT_tutorialMissions select 1)
+				] call OT_fnc_doConversation;
 			}
 		];
 	};
@@ -163,7 +191,17 @@ if (_canTute) then {
 		_options pushBack [
 			"So how can I make money legally?",{
 				private _civ = OT_interactingWith;
-				[player,_civ,["How can I make some legal money?","Legal money? Where's the fun in that. I guess you could try selling to stores or leasing houses.","Thanks."],(OT_tutorialMissions select 1)] spawn OT_fnc_doConversation;
+				[
+					player,
+					_civ,
+					[
+						"How can I make some legal money?",
+						"Legal money? Where's the fun in that.
+						I guess you could try selling to stores or leasing houses.",
+						"Thanks."
+					],
+					(OT_tutorialMissions select 1)
+				] call OT_fnc_doConversation;
 			}
 		];
 	};
@@ -204,7 +242,9 @@ if (_canBuyBoats) then {
 					player setVariable ["OT_ferryDestination",_destpos,false];
 					private _desttown = _destpos call OT_fnc_nearestTown;
 					private _pos = (getpos player) findEmptyPosition [10,100,OT_vehType_ferry];
-					if (count _pos isEqualTo 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
+					if (count _pos isEqualTo 0) exitWith {
+						"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor;
+					};
 					private _cost = floor((player distance _destpos) * 0.005);
 					player setVariable ["OT_ferryCost",_cost,false];
 					_money = player getVariable ["money",0];
@@ -248,7 +288,13 @@ if (_canBuyBoats) then {
 
 					systemChat format["Departing for %1, press Y to skip (-$%2)",_desttown,_cost];
 
-					waitUntil {!alive player || !alive _veh || !alive _driver || (vehicle player isEqualTo player) || (player distance _destpos < 80)};
+					waitUntil {
+						!alive player
+						|| !alive _veh
+						|| !alive _driver
+						|| (vehicle player isEqualTo player)
+						|| (player distance _destpos < 80)
+					};
 
 					if(vehicle player isEqualTo _veh && alive _driver) then {
 						_driver globalchat format["We've arrived in %1, enjoy your stay",_desttown];
@@ -339,7 +385,17 @@ if (_canSellDrugs) then {
 				_civ setVariable["OT_askedDrugs",true,true];
 
 
-				player globalchat ([format["Would you like to buy some %1?",_drugname],format["Wanna buy some %1?",_drugname],format["Hey, want some %1?",_drugname],format["You wanna buy some %1?",_drugname],format["Pssst! %1?",_drugname],format["Hey you looking for any %1?",_drugname]] call BIS_fnc_selectRandom);
+				player globalchat (
+					format [selectRandom [
+							"Would you like to buy some %1?",
+							"Wanna buy some %1?",
+							"Hey, want some %1?",
+							"You wanna buy some %1?",
+							"Pssst! %1?",
+							"Hey you looking for any %1?"
+						],
+						_drugname
+					]);
 
 				if(side _civ isEqualTo civilian) then {
 					_price = round(_price * 1.2);
@@ -365,9 +421,9 @@ if (_canSellDrugs) then {
 								if(random 100 > 80) then {
 									1 call OT_fnc_influence;
 								};
-							}, [OT_drugSelling]] spawn OT_fnc_doConversation;
+							}, [OT_drugSelling]] call OT_fnc_doConversation;
 						}else{
-							[_civ,player,["No, thank you"],{OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
+							[_civ,player,["No, thank you"],{OT_interactingWith setVariable ["OT_Talking",false,true];}] call OT_fnc_doConversation;
 						};
 					};
 				}else{
@@ -376,10 +432,21 @@ if (_canSellDrugs) then {
 						[player] remoteExec ["OT_fnc_NATOsearch",2,false];
 					}else{
 						if((random 100) > 5) then {
-							[_civ,player,[format["OK I'll give you $%1 for each",_price],"OK"],{[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call OT_fnc_money;for "_t" from 1 to OT_drugQty do {player removeItem OT_drugSelling};OT_interactingWith setVariable ["OT_Talking",false,true];}] spawn OT_fnc_doConversation;
+							[
+								_civ,
+								player,
+								[format["OK I'll give you $%1 for each",_price],"OK"],
+								{
+									[([OT_nation,OT_drugSelling] call OT_fnc_getDrugPrice) * OT_drugQty] call OT_fnc_money;
+									for "_t" from 1 to OT_drugQty do {
+										player removeItem OT_drugSelling
+									};
+									OT_interactingWith setVariable ["OT_Talking",false,true];
+								}
+							] call OT_fnc_doConversation;
 							[_town,-OT_drugQty] call OT_fnc_stability;
 						}else{
-							[_civ,player,["No, go away!"],{OT_interactingWith setVariable ["OT_Talking",false,true];player setCaptive false;}] spawn OT_fnc_doConversation;
+							[_civ,player,["No, go away!"],{OT_interactingWith setVariable ["OT_Talking",false,true];player setCaptive false;}] call OT_fnc_doConversation;
 							if(player call OT_fnc_unitSeenCRIM) then {
 								hint "You are dealing on enemy turf";
 								player setCaptive false;
