@@ -5,7 +5,7 @@ player setVariable ["OT_tutesDone",_done+["NATO"],true];
 
 private _targets = [];
 private _destination = [];
-private _thistown = (getpos player) call OT_fnc_nearestTown;
+private _thistown = (getposATL player) call OT_fnc_nearestTown;
 
 //Is there some already spawned within spawn distance?
 {
@@ -33,13 +33,27 @@ if(count _targets isEqualTo 0) exitWith {
         //give waypoint
         [player,_destination,_town] call OT_fnc_givePlayerWaypoint;
 
-        format["There doesnt seem to be any NATO nearby. Head to %1, you should be able to find some NATO there. It's marked on your map",_town] call OT_fnc_notifyMinor;
+        format[
+            "There doesnt seem to be any NATO nearby.
+            Head to %1, you should be able to find some NATO there.
+            It's marked on your map",
+            _town
+        ] call OT_fnc_notifyMinor;
 
-        waitUntil {player distance _destination < 200};
-        sleep 10; //If the player fast travelled, give time to spawn
+        [
+            {
+                player distance _this < 200
+            },
+            {
+                //If the player fast travelled, give time to spawn
+                [{
+                    //loop and hope we find a target
+                    [] call (OT_tutorialMissions select 0);
+                },0,10] call CBA_fnc_waitAndExecute;
+            },
+            _destination
+        ] call CBA_fnc_waitUntilAndExecute;
 
-        //loop and hope we find a target
-        [] spawn (OT_tutorialMissions select 0);
     }else{
         //I guess resistance controls the entire map, gg
     };
@@ -58,27 +72,32 @@ private _destpos = _dest select 0;
 private _wp = [player,_destpos,"NATO"] call OT_fnc_givePlayerWaypoint;
 
 private _total = count units _group;
-private _lastnum = 0;
-private _done = false;
-private _reached = false;
 
-while {sleep 0.5; !_done} do {
+private _loopCode = {
+    params ["_loopCode","_wp","_reached","_group","_total","_done"];
     if(!isNil "_wp") then {
         //update waypoint
-        OT_missionMarker = position leader _group;
+        OT_missionMarker = getPosATL leader _group;
         _wp setWaypointPosition [OT_missionMarker, 0];
     };
     if(!_reached) then {
-        if(player distance (leader _group) < 30) then {
-            _reached = true;
-        };
+        _reached = player distance (leader _group) < 30;
     }else{
-        _num = _total - ({alive _x} count units _group);
-        if(_num >= _total) then {
-            _done = true;
-        };
+        private _num = _total - ({alive _x} count units _group);
+        _done = _num >= _total;
         hintSilent format["Kills: %1/%2",_num,_total];
     };
+
+    if !(_done) then {
+        [
+            _loopCode,
+            [_loopCode,_wp,_reached,_group,_total,false],
+            0.5
+        ] call CBA_fnc_waitAndExecute;
+    } else {
+        [player,250] call OT_fnc_rewardMoney;
+        call OT_fnc_clearPlayerWaypoint;
+    };
 };
-[player,250] call OT_fnc_rewardMoney;
-call OT_fnc_clearPlayerWaypoint;
+
+[_loopCode,_wp,false,_group,_total,false] call _loopCode;
