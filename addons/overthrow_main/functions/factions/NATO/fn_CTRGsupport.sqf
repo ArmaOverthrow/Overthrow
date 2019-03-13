@@ -80,7 +80,7 @@ _wp = _tgroup addWaypoint [_ao,0];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
-wp setWaypointCompletionRadius 50;
+_wp setWaypointCompletionRadius 50;
 _wp setWaypointSpeed "FULL";
 
 _wp = _tgroup addWaypoint [_ao,0];
