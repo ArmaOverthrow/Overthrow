@@ -24,10 +24,10 @@ _civ removeAllEventHandlers "FiredNear";
 [_civ] joinSilent nil;
 [_civ] joinSilent (group player);
 _civ setCaptive true;
-[_civ] spawn OT_fnc_initRecruit;
+[_civ] call OT_fnc_initRecruit;
 
 [player,format["New Recruit: %1",name _civ],format["Recruited: %1 for $%2",name _civ,_price]] call BIS_fnc_createLogRecord;
 format["%1 has been recruited",name _civ] call OT_fnc_notifyMinor;
 
 _civ setBehaviour "SAFE";
-[[_civ,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP; // @todo replace with remote exec
+[[_civ,""],"switchMove",TRUE,FALSE] call BIS_fnc_MP; // @todo replace with remote exec
