@@ -1,47 +1,20 @@
-if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
-	[
-        format ["<t size='0.5' color='#000000'>Overthrow addon not detected, you must add @Overthrow to your -mod commandline</t>",_this],
-        0,
-        0.2,
-        30,
-        0,
-        0,
-        2
-    ] call OT_fnc_dynamicText;
-};
-
 if(!isServer) exitWith {};
 
-OT_varInitDone = false;
-publicVariable "OT_varInitDone";
-
-private _center = createCenter sideLogic;
-private _group = createGroup _center;
-
-server = _group createUnit ["LOGIC",[0,0,0] , [], 0, ""];
-cost = _group createUnit ["LOGIC",[1,0,0] , [], 0, ""];
-warehouse = _group createUnit ["LOGIC",[2,0,0] , [], 0, ""];
-spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
-templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
-owners = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
-buildingpositions = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
-OT_civilians = _group createUnit ["LOGIC",[6,0,0] , [], 0, ""];
-
-publicVariable "server";
-publicVariable "cost";
-publicVariable "warehouse";
-publicVariable "spawner";
-publicVariable "templates";
-publicVariable "owners";
-publicVariable "buildingpositions";
-publicVariable "OT_civilians";
-
-if(!isMultiplayer) then {
-    addMissionEventHandler ["Loaded", {
-        [] spawn OT_fnc_setupPlayer;
-    }];
+if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
+	diag_log "Overthrow addon not detected, you must add @Overthrow to your -mod commandline";
 };
 
+missionNamespace setVariable ["OT_varInitDone", false, true];
+
+server = [true] call CBA_fnc_createNamespace;
+players = [true] call CBA_fnc_createNamespace;
+cost = [true] call CBA_fnc_createNamespace;
+warehouse = [true] call CBA_fnc_createNamespace;
+spawner = [true] call CBA_fnc_createNamespace;
+templates = [true] call CBA_fnc_createNamespace;
+owners = [true] call CBA_fnc_createNamespace;
+buildingpositions = [true] call CBA_fnc_createNamespace;
+OT_civilians = [true] call CBA_fnc_createNamespace;
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 

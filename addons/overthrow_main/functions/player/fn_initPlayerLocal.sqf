@@ -1,5 +1,17 @@
 if (!hasInterface) exitWith {};
 
+if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
+	[
+        format ["<t size='0.5' color='#000000'>Overthrow addon not detected, you must add @Overthrow to your -mod commandline</t>",_this],
+        0,
+        0.2,
+        30,
+        0,
+        0,
+        2
+    ] spawn BIS_fnc_dynamicText;
+};
+
 waitUntil {!isNull player && player isEqualTo player};
 
 enableSaving [false,false];
@@ -16,7 +28,7 @@ if(isMultiplayer && (!isServer)) then {
 	//TFAR Support, thanks to Dedmen for the help
 	[] call OT_fnc_initTFAR;
 
-	// both done on server too, no need to exec them again
+	// both done on server too, no need to execute them again
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 }else{
