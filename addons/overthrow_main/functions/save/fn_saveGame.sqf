@@ -80,24 +80,13 @@ if !(_quiet) then {
 };
 //get all online player data
 {
-	_uid = getPlayerUID _x;
-	_me = _x;
-	_val = "";
-	_d = [];
-	_all = [];
-	{
-		if(_x != "ot_loaded" && _x != "morale" && _x != "player_uid" && _x != "sa_tow_actions_loaded" && _x != "ot_hiding" && _x != "randomValue" && _x != "saved3deninventory" && (_x select [0,11]) != "MissionData" && (_x select [0,4]) != "ace_" && (_x select [0,4]) != "cba_" && (_x select [0,4]) != "bis_") then {
-			_all pushback _x;
-			_val = _me getVariable _x;
-			if !(isNil "_val") then {
-				if(typename _val != "CODE") then {
-					_d pushback [_x,_val];
-				};
-			};
-		};
-	}foreach(allVariables _me);
-	_data pushback [_uid,_d];
+	[_x] call OT_fnc_savePlayerData;
 }foreach([] call CBA_fnc_players);
+private _players = [];
+{
+	_players pushback [_x, players getVariable _x];
+} forEach(allVariables players);
+_data pushBack ["players",_players];
 
 private _tocheck = (allMissionObjects "Static") + vehicles;
 private _tosave = count _tocheck;

@@ -6,5 +6,5 @@ if(count _this > 2) then {
 {
     _x params ["_k","_v"];
     if(_k isEqualTo _attr) exitWith {_val=_v};
-}foreach(server getVariable [_uid,[]]);
+}foreach(players getVariable [_uid,[]]);
 _val;

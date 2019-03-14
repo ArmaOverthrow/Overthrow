@@ -42,6 +42,7 @@ class CfgFunctions
 			class setOfflinePlayerAttribute {};
 			class getOfflinePlayerAttribute {};
 			class loadPlayerData {};
+			class savePlayerData {};
 		};
 
 		class Player

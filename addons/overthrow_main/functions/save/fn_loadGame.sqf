@@ -4,7 +4,7 @@ private ["_data"];
 "Loading persistent save" remoteExec['OT_fnc_notifyStart',0,false];
 
 _data = profileNameSpace getVariable [OT_saveName,""];
-if(typename _data != "ARRAY") exitWith {
+if!(_data isEqualType []) exitWith {
 	[] remoteExec ['newGame',2];
 	"No save found, starting new game" remoteExec ["hint",0,false];
 };
@@ -12,16 +12,20 @@ if(typename _data != "ARRAY") exitWith {
 private _cc = 0;
 
 {
-	_key = _x select 0;
-	_val = _x select 1;
-	if(typename _val isEqualTo "ARRAY") then {
-		_new = [];
-		{
-			_new pushback _x;
-		}foreach(_val);
-		_val = _new;
+	_x params ["_key","_val"];
+	if(_val isEqualType []) then {
+		_val = +_val;
 	};
 	_set = true;
+	if(_key isEqualTo "players") then {
+		{
+			_y = _x select 0;
+			if((_y select [0,4]) != "ace_" && (_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
+				players setVariable [_x select 0,_x select 1,true];
+			};
+		}foreach(_val);
+		_set = false;
+	};
 	if(_key isEqualTo "civilians") then {
 		{
 			_y = _x select 0;
@@ -228,11 +232,7 @@ private _cc = 0;
 		if((_key select [0,4]) != "ace_" && (_key select [0,4]) != "cba_" && (_key select [0,4]) != "bis_") then {
 			if(_val isEqualType []) then {
 				//make a copy
-				_orig = _val;
-				_val = [];
-				{
-					_val pushback _x;
-				}foreach(_orig);
+				_val = +_val;
 			};
 			server setvariable [_key,_val,true];
 		};
@@ -289,7 +289,7 @@ sleep 0.2;
 private _built = (allMissionObjects "Static");
 {
 	private _uid = _x;
-	private _vars = server getVariable [_uid,[]];
+	private _vars = players getVariable [_uid,[]];
 	private _leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
 	private _leasedata = [];
 	{
