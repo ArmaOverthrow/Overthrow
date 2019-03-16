@@ -9,7 +9,7 @@ if(damage _obj isEqualTo 1) then {
         _ty = typeof _obj;
 
         if(_ty isEqualTo OT_warehouseBuilding) then {
-            format ["Warehouse damaged %1",(getpos _bdg) call BIS_fnc_locationDescription] remoteExec ["OT_fnc_notifyMinor",0,false];
+            format ["Warehouse damaged %1",(getpos _obj) call BIS_fnc_locationDescription] remoteExec ["OT_fnc_notifyMinor",0,false];
         };
         if(_ty isEqualTo OT_policeStation) then {
             _town = (getpos _obj) call OT_fnc_nearestTown;

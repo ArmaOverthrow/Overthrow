@@ -64,7 +64,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         _driver setVariable ["hvt",true,true];
         _driver setVariable ["hvt_id",_x select 0,true];
         _driver setRank "COLONEL";
-        if(isNull _track) then {_track = _lead};
+        if(isNull _track) then {_track = _driver};
 
         _convoypos = [_convoypos,20,_dir] call BIS_fnc_relPos;
 
