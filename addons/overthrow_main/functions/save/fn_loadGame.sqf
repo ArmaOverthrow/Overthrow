@@ -1,11 +1,10 @@
-private ["_data"];
 
 //get all server data
 "Loading persistent save" remoteExec['OT_fnc_notifyStart',0,false];
 
-_data = profileNameSpace getVariable [OT_saveName,""];
+private _data = profileNameSpace getVariable [OT_saveName,""];
 if!(_data isEqualType []) exitWith {
-	[] remoteExec ['newGame',2];
+	[] remoteExec ['OT_fnc_newGame',2];
 	"No save found, starting new game" remoteExec ["hint",0,false];
 };
 
@@ -13,42 +12,50 @@ private _cc = 0;
 
 {
 	_x params ["_key","_val"];
-	if(_val isEqualType []) then {
-		_val = +_val;
+	
+	// copy, we might modify it
+	if (_val isEqualType []) then {_val = +_val;};
+	private _set = true;
+
+	/*
+	diag_log format ["Loading: %1",_key];
+	if (_val isEqualType []) then {
+		{ diag_log _x } forEach _val;
+	} else {
+		diag_log _val;
 	};
-	_set = true;
-	if(_key isEqualTo "players") then {
+	*/
+
+	if(_key == "players") then {
 		{
-			_y = _x select 0;
-			if((_y select [0,4]) != "ace_" && (_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
-				players setVariable [_x select 0,_x select 1,true];
+			_x params ["_subkey","_subval"];
+			if!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) then {
+				players setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);
 		_set = false;
 	};
-	if(_key isEqualTo "civilians") then {
+	if(_key == "civilians") then {
 		{
-			_y = _x select 0;
-			if((_y select [0,4]) != "ace_" && (_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
-				OT_civilians setVariable [_x select 0,_x select 1,true];
+			_x params ["_subkey","_subval"];
+			if!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) then {
+				OT_civilians setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);
 		_set = false;
 	};
-	if(_key isEqualTo "buildingpositions") then {
+	if(_key == "buildingpositions") then {
 		{
-			_y = _x select 0;
-			if((_y select [0,4]) != "ace_" && (_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
-				buildingpositions setVariable [_x select 0,_x select 1,true];
+			_x params ["_subkey","_subval"];
+			if!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) then {
+				buildingpositions setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);
 		_set = false;
 	};
-	if(_key isEqualTo "bases") then {
+	if(_key == "bases") then {
 		{
-			_pos = _x select 0;
-			_name = _x select 1;
-			_owner = _x select 2;
+			_x params ["_pos","_name","_owner"];
 
 			_veh = createVehicle [OT_flag_IND, _pos, [], 0, "CAN_COLLIDE"];
 			_veh enableDynamicSimulation true;
@@ -64,21 +71,19 @@ private _cc = 0;
 			_mrkid setMarkerAlpha 1;
 			_mrkid setMarkerText _name;
 		}foreach(_val);
+
+		// todo _set = false?
 	};
-	if((_key == "warehouse") && _val isEqualType []) then {
-		_set = false;
+	if(_key == "warehouse") then {
 		{
-			if(typename _x isEqualTo "ARRAY") then {
-				_y = _x select 0;
-				if(typeName _y != "CODE") then {
-					if((_y select [0,4]) != "cba_" && (_y select [0,4]) != "bis_") then {
-						warehouse setVariable [_x select 0,_x,true];
-					};
-				};
+			_x params ["_subkey","_subval"];
+			if!(toLower (_subkey select [0,4]) in ["cba_","bis_"]) then {
+				warehouse setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);
+		_set = false;
 	};
-	if(_key isEqualTo "vehicles" && _val isEqualType []) then {
+	if(_key == "vehicles") then {
 		_set = false;
 		_ccc = 0;
 		{
@@ -218,7 +223,7 @@ private _cc = 0;
 					_mrkid setMarkerType "ot_Camp";
 					_mrkid setMarkerColor "ColorWhite";
 					_mrkid setMarkerAlpha 1;
-					_mrkid setMarkerText format ["Camp %1",server getvariable [format["name%1",_owner],""]];
+					_mrkid setMarkerText format ["Camp %1",players getvariable [format["name%1",_owner],""]];
 				};
 			};
 			if(_ccc isEqualTo 10) then {
@@ -227,14 +232,32 @@ private _cc = 0;
 			};
 		}foreach(_val);
 	};
+	if(_key == "server") then {
+		{
+			_x params ["_subkey","_subval"];
+			if(!(toLower (_subkey select [0,4]) in ["cba_","bis_"])) then {
+				server setVariable [_subkey,_subval,true];
+			};
+		}foreach(_val);
+		_set = false;
+	};
+	if(_key == "recruits") then {
+		server setVariable [_key,_val,true];
+		_set = false;
+	};
+	if(_key == "squads") then {
+		server setVariable [_key,_val,true];
+		_set = false;
+	};
+	if(_key == "timedate") then {
+		server setVariable [_key,_val,true];
+		_set = false;
+	};
 
 	if(_set && !(isNil "_val")) then {
-		if((_key select [0,4]) != "ace_" && (_key select [0,4]) != "cba_" && (_key select [0,4]) != "bis_") then {
-			if(_val isEqualType []) then {
-				//make a copy
-				_val = +_val;
-			};
-			server setvariable [_key,_val,true];
+		if!(toLower (_key select [0,4]) in ["ace_","cba_","bis_"]) then {
+			// server setvariable [_key,_val,true];
+			diag_log format["Dangling key value pair found: %1 - %2", _key, _val];
 		};
 	};
 	_cc = _cc + 1;
@@ -325,7 +348,7 @@ private _built = (allMissionObjects "Static");
 		};
 	}foreach(_vars);
 	[_uid,"leasedata",_leasedata] call OT_fnc_setOfflinePlayerAttribute;
-}foreach(server getvariable ["OT_allPlayers",[]]);
+}foreach(players getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
 hint "Persistent Save Loaded";

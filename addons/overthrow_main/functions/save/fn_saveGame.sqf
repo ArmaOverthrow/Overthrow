@@ -33,11 +33,19 @@ private _data = [];
 
 // get all server data
 private _server = (allVariables server select {
-	_x = toLower _x;
-	!(_x in ["startuptype","recruits","squads"])
-	&& {(_x select [0,11]) != "resgarrison"}
-	&& {(_x select [0,9]) != "seencache"}
-	&& {!((_x select [0,4]) in ["ace_","cba_","bis_"])}
+	
+	private _val = server getVariable _x;
+	if (isNil "_val") then {
+		false
+	} else {
+
+		_x = toLower _x;
+		!(_x in ["startuptype","recruits","squads"])
+		&& {(_x select [0,11]) != "resgarrison"}
+		&& {(_x select [0,9]) != "seencache"}
+		&& {!((_x select [0,4]) in ["ace_","cba_","bis_"])}
+
+	};
 }) apply {
 	private _val = server getVariable _x;
 	
@@ -131,11 +139,11 @@ private _vehicles = (_tocheck) apply {
 			[_x,_veh ammo _x];
 		};
 		private _attachedClass = _veh getVariable ["OT_attachedClass",""];
-		private _attached = _veh getVariable ["OT_attached",objNull];
+		private _attached = _veh getVariable ["OT_attachedWeapon",objNull];
 		private _att = [];
 		
 		//get attached ammo (if applicable)
-		if(!(_attached isEqualTo "") && { alive _attached }) then {
+		if(!(_attachedClass isEqualTo "") && { alive _attached }) then {
 			_att = [_attachedClass,(_attached weaponsTurret [0]) apply { [_x,_attached ammo _x] }];
 		};
 		_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att];
@@ -192,7 +200,7 @@ private _squads = ((server getVariable ["squads",[]]) select {
 			_units pushback [typeof _x,position _x,getUnitLoadout _x];
 		};
 	}foreach(units _group);
-	[getplayeruid player,_cls,"",_units,groupId _group]
+	[_owner,_cls,"Not a group, pls recreate",_units,groupId _group]
 };
 _data pushback ["squads",_squads];
 

@@ -87,7 +87,7 @@ if(typename _b isEqualTo "ARRAY") then {
 	if(_building call OT_fnc_hasOwner) then {
 
 		_owner = _building call OT_fnc_getOwner;
-		_ownername = server getVariable format["name%1",_owner];
+		_ownername = players getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
 
 		if(typeof _building isEqualTo OT_warehouse) exitWith {
@@ -162,7 +162,7 @@ if(typename _b isEqualTo "ARRAY") then {
 		};
 		if(typeof _building isEqualTo OT_barracks) then {
 			_owner = _building call OT_fnc_getOwner;
-			_ownername = server getVariable format["name%1",_owner];
+			_ownername = players getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,true];
@@ -178,7 +178,7 @@ if(typename _b isEqualTo "ARRAY") then {
 		};
 		if(typeof _building isEqualTo OT_trainingCamp) then {
 			_owner = _building call OT_fnc_getOwner;
-			_ownername = server getVariable format["name%1",_owner];
+			_ownername = players getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,true];
@@ -195,7 +195,7 @@ if(typename _b isEqualTo "ARRAY") then {
 
 		if(typeof _building isEqualTo OT_refugeeCamp) then {
 			_owner = _building call OT_fnc_getOwner;
-			_ownername = server getVariable format["name%1",_owner];
+			_ownername = players getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
@@ -214,7 +214,7 @@ if(typename _b isEqualTo "ARRAY") then {
 				if((_x select 0) distance _building < 5) exitWith {_base = _x};
 			}foreach(server getvariable ["bases",[]]);
 
-			_ownername = server getVariable format["name%1",_base select 2];
+			_ownername = players getVariable format["name%1",_base select 2];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,true];
 			ctrlSetText [1608,"Garrison"];
@@ -267,7 +267,7 @@ if(typename _b isEqualTo "ARRAY") then {
 	if(typeof _building isEqualTo OT_policeStation) then {
 		_owner = _building call OT_fnc_getOwner;
 		if(!isNil "_owner") then {
-			_ownername = server getVariable format["name%1",_owner];
+			_ownername = players getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
 			ctrlSetText [1609,"Manage"];
@@ -284,7 +284,7 @@ if(typename _b isEqualTo "ARRAY") then {
 	if(typeof _building isEqualTo "Land_Cargo_House_V4_F") then {
 		_owner = _building call OT_fnc_getOwner;
 		if(!isNil "_owner") then {
-			_ownername = server getVariable format["name%1",_owner];
+			_ownername = players getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];

@@ -21,7 +21,7 @@ if(!isMultiplayer) then {
 lbClear 1500;
 {
     _uid = _x;
-    _name = server getVariable [format["name%1",_uid],"Player"];
+    _name = players getVariable [format["name%1",_uid],"Player"];
     _idx = lbAdd [1500,_name];
     _pic = "\A3\Ui_f\data\GUI\Cfg\Ranks\sergeant_gs.paa";
     if(_uid in (server getVariable ["generals",[]])) then {
@@ -35,7 +35,7 @@ lbClear 1500;
     lbSetColor [1500, _idx, _col]
     lbSetPicture [1500,_idx,_pic];
     lbSetData [1500,_idx,_uid];
-}foreach(server getVariable ["OT_allplayers",[]]);
+}foreach(players getVariable ["OT_allplayers",[]]);
 
 lbClear 1501;
 {

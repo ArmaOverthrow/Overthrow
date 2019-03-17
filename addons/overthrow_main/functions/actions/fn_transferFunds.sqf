@@ -18,7 +18,7 @@ OT_inputHandler = {
 			private _money = [_uid,"money"] call OT_fnc_getOfflinePlayerAttribute;
 			[_uid,"money",_money+_val] call OT_fnc_setOfflinePlayerAttribute;
 		};
-		format["Transferred $%1 resistance funds to %2",[_val, 1, 0, true] call CBA_fnc_formatNumber,server getvariable [format["name%1",_uid],"player"]] call OT_fnc_notifyMinor;
+		format["Transferred $%1 resistance funds to %2",[_val, 1, 0, true] call CBA_fnc_formatNumber,players getvariable [format["name%1",_uid],"player"]] call OT_fnc_notifyMinor;
 	};
 };
 
