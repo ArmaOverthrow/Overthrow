@@ -25,28 +25,24 @@ VCOM_MINEARRAY = [];
 {
 	waitUntil {time > 2};
 	sleep 2;
-	
+
 	//Begin Artillery function created by Rydygier - https://forums.bohemia.net/forums/topic/159152-fire-for-effect-the-god-of-war-smart-simple-ai-artillery/
 	if (VCM_FFEARTILLERY) then {
 		nul = [] spawn RYD_fnc_FFE;
 		VCM_ARTYENABLE = false;
 	};
-	
+
 	[] spawn VCM_fnc_AIDRIVEBEHAVIOR;
-	
+
 	//Below is loop to check for new AI spawning in to be added to the list
-	while {true} do 
-	{
-		if (Vcm_ActivateAI) then
-		{
+
+	["vcom_init","_counter%10 isEqualTo 0","
+		if (Vcm_ActivateAI) then {
 			{
-				if (local _x && {simulationEnabled (leader _x)} && {!(isplayer (leader _x))} && {(leader _x) isKindOf "Man"}) then 
-				{
+				if (local _x && {simulationEnabled (leader _x)} && {!(isplayer (leader _x))} && {(leader _x) isKindOf ""Man""}) then {
 					private _Grp = _x;
-					if !(_Grp in VcmAI_ActiveList) then //{!(VCM_SIDEENABLED findIf {_x isEqualTo (side _Grp)} isEqualTo -1)}
-					{
-						if !(((units _Grp) findIf {alive _x}) isEqualTo -1) then
-						{
+					if !(_Grp in VcmAI_ActiveList) then {
+						if !(((units _Grp) findIf {alive _x}) isEqualTo -1) then {
 							_x spawn VCM_fnc_SQUADBEH;
 							VcmAI_ActiveList pushback _x;
 						};
@@ -54,6 +50,6 @@ VCOM_MINEARRAY = [];
 				};
 			} foreach allGroups;
 		};
-		sleep 10;
-	};
+	"] call OT_fnc_addActionLoop;
+
 };

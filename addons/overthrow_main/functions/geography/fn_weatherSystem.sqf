@@ -1,4 +1,4 @@
-private _getWeather = {
+ot_weather_getWeather = {
 	private _forecast = _this;
 	private _wavetarget = 0;
 	private _fogtarget = 0;
@@ -54,13 +54,14 @@ private _getWeather = {
 	};
 	[_overtarget,_fogtarget,_wavetarget,_raintarget,_lightning,_temp]
 };
-private _forecast = "Clear";
+
+ot_weather_change_forecast = "Clear";
 
 if((server getVariable "StartupType") == "NEW" || (server getVariable ["weatherversion",0]) < 1) then {
 	server setVariable ["weatherversion",1,false];
 
 	_mode = ["Clear","Cloudy"] call BIS_fnc_selectRandom;
-	_weather = _mode call _getWeather;
+	_weather = _mode call ot_weather_getWeather;
 	_newOvercast = _weather select 0;
 
 	skiptime -24;
@@ -82,11 +83,11 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["weatherv
 
 	server setVariable ["temperature",(_weather select 5),true];
 	server setVariable ["forecast",_mode,true];
-	_forecast = _mode;
+	ot_weather_change_forecast = _mode;
 	_count = 0;
 }else{
-	_forecast = server getVariable ["forecast","Clear"];
-	_weather = _forecast call _getWeather;
+	ot_weather_change_forecast = server getVariable ["forecast","Clear"];
+	_weather = ot_weather_change_forecast call ot_weather_getWeather;
 	_newOvercast = _weather select 0;
 	skiptime -24;
 	86400 setOvercast _newOvercast;
@@ -114,7 +115,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["weatherv
 OT_SystemInitDone = true;
 publicVariable "OT_SystemInitDone";
 
-private _nextchange = 350 + (random 600);
+ot_weather_change_time = 350 + (random 600);
 
 //Fog killer
 [] spawn {
@@ -122,59 +123,51 @@ private _nextchange = 350 + (random 600);
 	0 setfog 0;
 };
 
-while {true} do {
-	server setVariable ["forecast",_forecast,true];
+["unique_ID","(time - ot_weather_change_time) <= 0","
+private _month = date select 1;
 
-	sleep _nextchange;
+private _stormchance = 1;
+private _rainchance = 2;
+private _cloudychance = 4;
 
-	private _month = date select 1;
-
-	//This is a south pacific climate (or thereabouts)
-	//Dry season:
-	private _stormchance = 1;
-	private _rainchance = 2;
-	private _cloudychance = 4;
-
-	if(_month < 5 || _month > 10) then {
-		//Wet season
-		_stormchance = 2;
-		_rainchance = 5;
-		_cloudychance = 20;
-	};
-	//Yeh thats about it..
-
-	private _mode = server getVariable ["forecast","Clear"];
-	_forecast = "Clear";
-	_count = 0;
-	[_mode, _stormchance, _cloudychance, _rainchance] call {
-		params ["_mode", "_stormchance", "_cloudychance", "_rainchance"];
-		if(_mode isEqualTo "Clear") exitWith {
-			if((random 100) < _cloudychance) exitWith {_forecast = "Cloudy"};
-		};
-		if(_mode isEqualTo "Storm") exitWith {
-			_forecast = "Rain";
-		};
-		if(_mode isEqualTo "Rain") exitWith {
-			if((random 100) < _stormchance) exitWith {_forecast = "Storm"};
-			if((random 100) < 50) exitWith {_forecast = "Cloudy"};
-		};
-		if(_mode isEqualTo "Cloudy") exitWith {
-			if((random 100) < _rainchance) exitWith {_forecast = "Rain"};
-			if((random 100) > _cloudychance) exitWith {_forecast = "Clear"};
-		};
-	};
-	_weather = _forecast call _getWeather;
-
-	_newOvercast = (_weather select 0);
-	120 setOvercast _newOvercast;
-	120 setFog 0;
-	120 setWaves (_weather select 2);
-	120 setRain (_weather select 3);
-	120 setLightnings (_weather select 4);
-	120 setWindForce (_newOvercast * 0.3);
-	120 setGusts _newOvercast;
-	120 setWindDir (85 + random 10);
-
-	server setVariable ["temperature",(_weather select 5),true];
-	_nextchange = 350 + (random 600);
+if(_month < 5 || _month > 10) then {
+	_stormchance = 2;
+	_rainchance = 5;
+	_cloudychance = 20;
 };
+
+private _mode = ot_weather_change_forecast;
+ot_weather_change_forecast = ""Clear"";
+_count = 0;
+[_mode, _stormchance, _cloudychance, _rainchance] call {
+	params [""_mode"", ""_stormchance"", ""_cloudychance"", ""_rainchance""];
+	if(_mode isEqualTo ""Clear"") exitWith {
+		if((random 100) < _cloudychance) exitWith {ot_weather_change_forecast = ""Cloudy""};
+	};
+	if(_mode isEqualTo ""Storm"") exitWith {
+		ot_weather_change_forecast = ""Rain"";
+	};
+	if(_mode isEqualTo ""Rain"") exitWith {
+		if((random 100) < _stormchance) exitWith {ot_weather_change_forecast = ""Storm""};
+		if((random 100) < 50) exitWith {ot_weather_change_forecast = ""Cloudy""};
+	};
+	if(_mode isEqualTo ""Cloudy"") exitWith {
+		if((random 100) < _rainchance) exitWith {ot_weather_change_forecast = ""Rain""};
+		if((random 100) > _cloudychance) exitWith {ot_weather_change_forecast = ""Clear""};
+	};
+};
+_weather = ot_weather_change_forecast call ot_weather_getWeather;
+
+_newOvercast = (_weather select 0);
+120 setOvercast _newOvercast;
+120 setFog 0;
+120 setWaves (_weather select 2);
+120 setRain (_weather select 3);
+120 setLightnings (_weather select 4);
+120 setWindForce (_newOvercast * 0.3);
+120 setGusts _newOvercast;
+120 setWindDir (85 + random 10);
+
+server setVariable [""temperature"",(_weather select 5),true];
+ot_weather_change_time = 350 + (random 600);
+"] call OT_fnc_addActionLoop;

@@ -1,4 +1,4 @@
-params [["_quiet", false]];
+params [["_user",objNull],["_quiet", false],["_autoSave",false]];
 
 if(OT_saving) exitWith {
 	if !(_quiet) then {
@@ -33,7 +33,7 @@ private _data = [];
 
 // get all server data
 private _server = (allVariables server select {
-	
+
 	private _val = server getVariable _x;
 	if (isNil "_val") then {
 		false
@@ -48,10 +48,10 @@ private _server = (allVariables server select {
 	};
 }) apply {
 	private _val = server getVariable _x;
-	
+
 	// copy array, we might modify them
 	if(_val isEqualType []) then {_val = +_val;};
-	
+
 	// dont abondon current attacks
 	if(_x isEqualTo "natoabandoned") then {
 		_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
@@ -116,7 +116,7 @@ private _vehicles = (_tocheck) apply {
 	if(!_quiet && {_count % 200 == 0}) then {
 		format["Step 5/11 - Saving vehicles (%1 to save)",_tosave - _saved] remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 	};
-	
+
 	private _s = _x call OT_fnc_unitStock;
 	private _type = typeOf _x;
 
@@ -141,7 +141,7 @@ private _vehicles = (_tocheck) apply {
 		private _attachedClass = _veh getVariable ["OT_attachedClass",""];
 		private _attached = _veh getVariable ["OT_attachedWeapon",objNull];
 		private _att = [];
-		
+
 		//get attached ammo (if applicable)
 		if(!(_attachedClass isEqualTo "") && { alive _attached }) then {
 			_att = [_attachedClass,(_attached weaponsTurret [0]) apply { [_x,_attached ammo _x] }];
@@ -171,7 +171,7 @@ private _recruits = ((server getVariable ["recruits",[]]) select {
 }) apply {
 	private _d = _x select [0,7];
 	if(count _x == 6) then { _d pushBack 0 };
-	
+
 	_x params ["","","_unitOrPos"];
 	if(_unitOrPos isEqualType objNull) then {
 		_d set [4,getUnitLoadout _unitOrPos];
@@ -209,9 +209,9 @@ if !(_quiet) then {
 };
 
 private _getGroupSoldiers = {
-	(units _this select { 
+	(units _this select {
 		private _veh = vehicle _x;
-		alive _x && { _veh isEqualTo _x || {(someAmmo _veh && toLower typeOf _veh in ["i_hmg_01_high_f","i_gmg_01_high_f"])} } 
+		alive _x && { _veh isEqualTo _x || {(someAmmo _veh && toLower typeOf _veh in ["i_hmg_01_high_f","i_gmg_01_high_f"])} }
 	}) apply {
 		if(vehicle _x isEqualTo _x) then {
 			[typeof _x,getUnitLoadout _x];
@@ -248,6 +248,8 @@ if !(_quiet) then {
 }foreach(OT_allObjectives);
 
 _data pushback ["timedate",date];
+_data pushback ["autosave",[OT_autoSave_time,OT_autoSave_last_time]];
+_data pushback ["upload",OT_save_upload];
 
 if !(_quiet) then {
 	"Step 11/11 - Exporting" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
@@ -263,6 +265,10 @@ if (isDedicated) then {
 
 if !(_quiet) then {
 	"Persistent Save Completed" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
+};
+
+if (!_autoSave && !(_user isEqualTo objNull) && OT_save_upload) then {
+	[_data] remoteExec ["OT_fnc_uploadData",_user,false];
 };
 
 missionNameSpace setVariable ["OT_saving",false,true];

@@ -1608,6 +1608,8 @@ class RscOverthrowProgress
 	w = 1;
 	h = 0.03;
 };
+class RscEdit;
+class RscControlsGroup;
 class RscOverthrowControlsGroup
 {
 	deletable = 0;

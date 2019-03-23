@@ -16,7 +16,7 @@ OT_ACEremoveActionConfirm = [
 	"Confirm",
 	"",
 	{params ["_target"]; deleteVehicle _target;},
-	{params ["_target"]; (call OT_fnc_playerIsGeneral) || (_target call OT_fnc_playerIsOwner)},
+	{true},
 	{},
 	[],
 	[0,0,0],
@@ -548,7 +548,7 @@ OT_allGoggles = [];
 
 	([_weaponType,_name,_caliber,_haslauncher,_short] call {
 		params ["_weaponType","_name","_caliber","_haslauncher","_short"];
-		
+
 		if (_weaponType == "SubmachineGun") exitWith {
 			OT_allSubMachineGuns pushBack _name;
 			[250, 0.5];
@@ -932,6 +932,10 @@ OT_cigsArray = ["EWK_Cigar1", "EWK_Cigar2", "EWK_Cig1", "EWK_Cig2", "EWK_Cig3", 
 
 // Weapon mags to delete or not copy on transfers.
 OT_noCopyMags = ["ACE_PreloadedMissileDummy"];
+
+OT_autoSave_time = 0;
+OT_autoSave_last_time = (10*60);
+OT_save_upload = false;
 
 if(isServer) then {
 	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];

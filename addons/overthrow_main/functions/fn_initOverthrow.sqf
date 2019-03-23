@@ -62,7 +62,7 @@ waitUntil {!isNil "OT_economyLoadDone"};
 
 //Subscribe to events
 if(isMultiplayer) then {
-    addMissionEventHandler ["HandleConnect",OT_fnc_playerConnectHandler];
+    addMissionEventHandler ["PlayerConnected",OT_fnc_playerConnectHandler];
     addMissionEventHandler ["HandleDisconnect",OT_fnc_playerDisconnectHandler];
 };
 addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
@@ -78,6 +78,7 @@ addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
     [_x,0] call ace_interact_menu_fnc_addMainAction;
 }foreach(OT_fuelPumps);
 
+["OT_autosave_loop"] call OT_fnc_addActionLoop;
 
 OT_serverInitDone = true;
 publicVariable "OT_serverInitDone";

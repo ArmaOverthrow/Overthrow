@@ -92,7 +92,7 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 		[
 			{
 				private _pos = _this;
-				
+
 				if((vehicle player) != player) then {
 					if ((driver vehicle player) isEqualTo player) then {
 						private _tam = 10;

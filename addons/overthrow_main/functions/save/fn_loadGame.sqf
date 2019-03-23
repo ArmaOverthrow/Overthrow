@@ -12,7 +12,7 @@ private _cc = 0;
 
 {
 	_x params ["_key","_val"];
-	
+
 	// copy, we might modify it
 	if (_val isEqualType []) then {_val = +_val;};
 	private _set = true;
@@ -251,6 +251,15 @@ private _cc = 0;
 	};
 	if(_key == "timedate") then {
 		server setVariable [_key,_val,true];
+		_set = false;
+	};
+	if(_key == "autosave") then {
+		OT_autoSave_time = (_val#0);
+		OT_autoSave_last_time = (_val#1);
+		_set = false;
+	};
+	if(_key == "upload") then {
+		OT_save_upload = _val;
 		_set = false;
 	};
 
