@@ -1609,6 +1609,7 @@ class RscOverthrowProgress
 	h = 0.03;
 };
 class RscEdit;
+class RscEditMulti;
 class RscControlsGroup;
 class RscOverthrowControlsGroup
 {

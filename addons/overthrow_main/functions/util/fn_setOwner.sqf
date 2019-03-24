@@ -1,4 +1,4 @@
-params ["_obj","_owner"];
+params ["_obj",["_owner",objNull]];
 if(typename _obj isEqualTo "SCALAR") exitWith {
     owners setVariable [str _obj,_owner,true];
 };

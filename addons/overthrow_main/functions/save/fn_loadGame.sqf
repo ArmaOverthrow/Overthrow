@@ -1,11 +1,17 @@
+params [
+	["_data",profileNameSpace getVariable [OT_saveName,""]]
+];
 
 //get all server data
 "Loading persistent save" remoteExec['OT_fnc_notifyStart',0,false];
 
-private _data = profileNameSpace getVariable [OT_saveName,""];
-if!(_data isEqualType []) exitWith {
-	[] remoteExec ['OT_fnc_newGame',2];
-	"No save found, starting new game" remoteExec ["hint",0,false];
+if (_data isEqualType "") then {
+	if (_data isEqualTo "") then {
+		[] remoteExec ['OT_fnc_newGame',2];
+		"No save found, starting new game" remoteExec ["hint",0,false];
+	}else{
+		_data = compile _data;
+	};
 };
 
 private _cc = 0;
