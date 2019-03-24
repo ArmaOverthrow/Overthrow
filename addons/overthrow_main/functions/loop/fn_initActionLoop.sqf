@@ -18,12 +18,13 @@ action_loop = [];
       _x params ["_id",["_condition",{false}],["_code",{}]];
         if (_id isEqualTo "OT_autosave_loop") then {
           if (!(OT_autoSave_time isEqualTo 0) && (OT_autoSave_last_time - time) <= 0) then {
-            ["<t align='center' font='PuristaBold' size='1.3'>MISSION WILL AUTOSAVE IN 60 SECONDS...</t>", 10, true, "click"] spawn OT_fnc_topMessage;
+            ["<t align='center' font='PuristaBold' size='1.25'>MISSION WILL AUTOSAVE IN 60 SECONDS...</t>", 10, true, "click"] remoteExec ["OT_fnc_topMessage",[0,-2] select isDedicated,false];
             [] spawn {
               OT_autoSave_last_time = (time + (OT_autoSave_time*60)) + 60;
-              sleep 60;
+              uiSleep 55;
+              "Autosaving Mission..." remoteExec ["systemChat",[0,-2] select isDedicated,false];
               if !(OT_autoSave_time isEqualTo 0) then {
-                [objNull,false,true] remoteExec ['OT_fnc_saveGame',2,false];
+                [objNull,true,true] remoteExec ['OT_fnc_saveGame',2,false];
               };
             };
           };

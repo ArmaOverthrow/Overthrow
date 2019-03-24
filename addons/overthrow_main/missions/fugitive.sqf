@@ -79,7 +79,7 @@ private _difficulty = 1.8;
             _count = _count + 1;
         };
 
-        _wp = _bgroup addWaypoint [_destination,0];
+        private _wp = _bgroup addWaypoint [_destination,0];
         _wp setWaypointType "GUARD";
     },
     {
@@ -125,7 +125,7 @@ private _difficulty = 1.8;
                 [_faction],
                 2
             ] call CBA_fnc_waitAndExecute;
-            
+
         };
         //Clean up
         spawner setVariable [format["fugitive%1",_jobid],nil,false];

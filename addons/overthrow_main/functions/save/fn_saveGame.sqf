@@ -20,6 +20,9 @@ if (isNil "OT_NATOInitDone") exitWith {
 
 missionNameSpace setVariable ["OT_saving",true,true];
 
+
+OT_autoSave_last_time = time + (OT_autoSave_time*60);
+
 if !(_quiet) then {
 	"Persistent Saving..." remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };

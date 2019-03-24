@@ -544,7 +544,7 @@ class CfgFunctions
       class spawnTemplate {};
 			class sortBy {};
 			class sortByInplace {};
-			class stringFindReplace {};
+			class findReplace {};
 		};
 
 		/*

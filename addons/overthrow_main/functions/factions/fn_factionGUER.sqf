@@ -217,8 +217,8 @@ if ((date select 4) != _lastmin) then {
 	};
 
 	if(""Factory"" in (server getVariable [""GEURowned"",[]])) then {
-		private _currentCls = server getVariable [""GEURproducing"",""];
-		if(_currentCls != "") then {
+		private _currentCls = server getVariable [""GEURproducing"",""""];
+		if(_currentCls != """") then {
 			_queue = server getVariable [""factoryQueue"",[]];
 			_changed = false;
 			if(count _queue > 0) then {
