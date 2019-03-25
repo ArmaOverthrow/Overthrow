@@ -82,7 +82,7 @@ class CfgMainMenuSpotlight
 	{
 		condition = "false";
 	};
-	
+
 };
 
 class CfgMissions
@@ -153,6 +153,7 @@ class CfgWorlds
 #include "ui\dialogs\defines.hpp"
 #include "ui\dialogs\stats.hpp"
 #include "ui\dialogs\shop.hpp"
+#include "ui\dialogs\sleep.hpp"
 #include "ui\dialogs\main.hpp"
 #include "ui\dialogs\place.hpp"
 #include "ui\dialogs\build.hpp"

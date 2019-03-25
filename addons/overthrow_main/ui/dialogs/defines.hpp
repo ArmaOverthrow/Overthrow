@@ -96,6 +96,13 @@
 #define CT_OBJECT 80
 
 
+class RscText;
+class RscSlider;
+class RscButton;
+class RscEdit;
+class RscEditMulti;
+class RscControlsGroup;
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// Base Classes
@@ -1608,9 +1615,6 @@ class RscOverthrowProgress
 	w = 1;
 	h = 0.03;
 };
-class RscEdit;
-class RscEditMulti;
-class RscControlsGroup;
 class RscOverthrowControlsGroup
 {
 	deletable = 0;

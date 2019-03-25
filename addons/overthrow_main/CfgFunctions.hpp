@@ -46,6 +46,12 @@ class CfgFunctions
 			class autoSaveToggle {};
 		};
 
+		class sleep
+		{
+			file = "\overthrow_main\functions\sleep";
+			class startSleeping {};
+		};
+
 		class Loop
 		{
 			file = "\overthrow_main\functions\loop";
@@ -130,6 +136,7 @@ class CfgFunctions
 			class notifyAndLog {};
 			class dynamicText {};
 			class topMessage {};
+			class dialogFadeIn {};
 		};
 
 		class Dialogs

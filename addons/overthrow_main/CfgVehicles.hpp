@@ -33,9 +33,13 @@ class CfgVehicles {
 					displayName = "Map Info";
 	                statement = "[] spawn OT_fnc_mapInfoDialog;";
 				};
-	            class resetui {
+	      class resetui {
 					displayName = "Reset UI";
-	                statement = "[] spawn OT_fnc_setupPlayer;";
+	        statement = "[] spawn OT_fnc_setupPlayer;";
+				};
+	      class sleepAction {
+					displayName = "Sleep";
+	        statement = "createDialog ""OT_sleep_dialog"";";
 				};
 			};
 		};
