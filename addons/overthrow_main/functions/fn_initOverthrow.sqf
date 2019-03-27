@@ -4,6 +4,13 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 	diag_log "Overthrow addon not detected, you must add @Overthrow to your -mod commandline";
 };
 
+if (isDedicated) then {
+	server_dedi = true;
+}else{
+	server_dedi = false;
+};
+publicVariable "server_dedi";
+
 missionNamespace setVariable ["OT_varInitDone", false, true];
 
 server = true call CBA_fnc_createNamespace;

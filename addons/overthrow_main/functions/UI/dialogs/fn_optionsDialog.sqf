@@ -11,7 +11,7 @@ if(!_amgen) then {
         ctrlEnable [1603,false];
         ctrlEnable [1604,false];
     };
-    if (!isDedicated) then {
+    if (!server_dedi) then {
       ctrlEnable [1608,false];
     };
 };
