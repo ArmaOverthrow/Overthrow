@@ -118,10 +118,7 @@ publicVariable "OT_SystemInitDone";
 ot_weather_change_time = 350 + (random 600);
 
 //Fog killer
-[] spawn {
-	sleep 100;
-	0 setfog 0;
-};
+[{0 setfog 0;}, [], 100] call CBA_fnc_waitAndExecute;
 
 ["unique_ID","(time - ot_weather_change_time) <= 0","
 private _month = date select 1;

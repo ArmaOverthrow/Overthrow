@@ -24,6 +24,8 @@ if(isNil {server getVariable "generals"}) then {
 	server setVariable ["generals",[getplayeruid player]]
 };
 
+OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
+
 if(isMultiplayer && (!isServer)) then {
 	//TFAR Support, thanks to Dedmen for the help
 	[] call OT_fnc_initTFAR;
@@ -57,10 +59,10 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 };
 waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 
-private _aplayers = players getVariable ["OT_allplayers",[]];
+private _aplayers = players_NS getVariable ["OT_allplayers",[]];
 if ((_aplayers find (getplayeruid player)) isEqualTo -1) then {
 	_aplayers pushback (getplayeruid player);
-	players setVariable ["OT_allplayers",_aplayers,true];
+	players_NS setVariable ["OT_allplayers",_aplayers,true];
 };
 if(!isMultiplayer) then {
 	private _generals = server getVariable ["generals",[]];
@@ -69,8 +71,8 @@ if(!isMultiplayer) then {
 		server setVariable ["generals",_generals,true];
 	};
 };
-players setVariable [format["name%1",getplayeruid player],name player,true];
-players setVariable [format["uid%1",name player],getplayeruid player,true];
+players_NS setVariable [format["name%1",getplayeruid player],name player,true];
+players_NS setVariable [format["uid%1",name player],getplayeruid player,true];
 spawner setVariable [format["%1",getplayeruid player],player,true];
 
 player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
@@ -314,7 +316,7 @@ player addEventHandler ["InventoryOpened", {
 
 player addEventHandler ["GetInMan",{
 	params ["_unit","_position","_veh"];
-	
+
 	call OT_fnc_notifyVehicle;
 
 	if(_position == "driver") then {
@@ -387,4 +389,3 @@ OT_keyHandlerID = [21, [false, false, false], OT_fnc_keyHandler] call CBA_fnc_ad
 [] call OT_fnc_setupPlayer;
 _introcam cameraEffect ["Terminate", "BACK" ];
 camDestroy _introcam;
-

@@ -24,8 +24,7 @@ if (_grp getVariable ["VCM_TOUGHSQUAD",false] || _grp getVariable ["Vcm_Disable"
 if (_grp getVariable ["VCM_RQSTHELP",false]) exitWith {};
 _grp setVariable ["VCM_RQSTHELP",true];
 
-_grp spawn {sleep 300;_this setVariable ["VCM_RQSTHELP",false];};
-
+[{(_this#0) setVariable ["VCM_RQSTHELP",false];}, [_grp], 300] call CBA_fnc_waitAndExecute;
 
 private _trgtPos = getpos _killer;
 
@@ -41,9 +40,9 @@ if (isNil "_checkStatus" || {(_unit getVariable ["Vcm_Disable",false])} || {!("I
 
 private _arrayOrg = _unit call VCM_fnc_FriendlyArray;
 _arrayOrg = _arrayOrg - VCM_ARTYLST;
-//Remove players 
+//Remove players
 {
-	if (isPlayer _x) then 
+	if (isPlayer _x) then
 	{
 		_arrayOrg deleteAt _foreachIndex;
 	};
@@ -56,77 +55,73 @@ _array2 = _array2 - VCM_ARTYLST;
 	if (_x distance _killer > 501) then {_array2 = _array2 - [_x];};
 } foreach _array2;
 
+[{
+	params ["_array2","_grp","_arrayOrg"];
 
-
-sleep VCM_WARNDELAY;
-
-private _EnemyCount = count _array2;
-private _RespondCount = 0;
-private _aliveCount = {alive _x} count (units _grp);
-if (_aliveCount > 0) then
-{
-	
+	private _EnemyCount = count _array2;
+	private _RespondCount = 0;
+	private _aliveCount = {alive _x} count (units _grp);
+	if (_aliveCount > 0) then
 	{
-		if (_RespondCount < _EnemyCount) then
-		{
-			
-			private _checkStatus2 = assignedItems _x;
-			
 
-			if (!(isNil "_checkStatus2") && {!(_x getVariable ["Vcm_Disable",false])} && {!(_x getVariable ["VCM_NOFLANK",false])} && {!(_x getVariable ["VCM_NORESCUE",false])} && {!(_x getVariable ["VCM_MOVE2SUP",false])} && {"ItemRadio" in _checkStatus2}) then 
+		{
+			if (_RespondCount < _EnemyCount) then
 			{
 
-				
-				private _group	= group _x;
-				if ((count (waypoints _group)) < 2) then 
+				private _checkStatus2 = assignedItems _x;
+
+
+				if (!(isNil "_checkStatus2") && {!(_x getVariable ["Vcm_Disable",false])} && {!(_x getVariable ["VCM_NOFLANK",false])} && {!(_x getVariable ["VCM_NORESCUE",false])} && {!(_x getVariable ["VCM_MOVE2SUP",false])} && {"ItemRadio" in _checkStatus2}) then
 				{
-					
-					private _WaypointCheck = _group call VCM_fnc_WyptChk;
-					if (count _WaypointCheck < 1) then 
+
+
+					private _group	= group _x;
+					if ((count (waypoints _group)) < 2) then
 					{
-						
-						if ((_x distance2D _unit) <= VCM_WARNDIST) then 
+
+						private _WaypointCheck = _group call VCM_fnc_WyptChk;
+						if (count _WaypointCheck < 1) then
 						{
-							
-							if VCM_DEBUG then {systemChat format ["VCOM: %1 moving to support %2", _x, _unit]};
-							_x setbehaviour "AWARE";
-							(group _x) setVariable ["VCM_MOVE2SUP",true];
-							if (!(vehicle _x isEqualTo _x)) then
-							{
-								_RespondCount = _RespondCount + count (crew (vehicle _x));
-								private _Driver = (driver (vehicle _x));
-								//systemchat format ["_RespondCountDRIVER %1 GROUP: %2",[_EnemyCount,_RespondCount],(group _x)];
-								_waypoint2 = (group _Driver) addwaypoint[_trgtPos,15,150];
-								_waypoint2 setwaypointtype "MOVE";
-								_waypoint2 setWaypointSpeed "NORMAL";
-								_waypoint2 setWaypointBehaviour "AWARE";												
-							}
-							else
-							{
-								_RespondCount = _RespondCount + (count (units (group _x)));
-								//systemchat format ["_RespondCount %1 GROUP: %2",[_EnemyCount,_RespondCount],(group _x)];
-								_waypoint2 = (group _x) addwaypoint[_trgtPos,15,150];
-								_waypoint2 setwaypointtype "MOVE";
-								_waypoint2 setWaypointSpeed "NORMAL";
-								_waypoint2 setWaypointBehaviour "AWARE";
-								private _Driver = Driver (vehicle _x);
-								_waypoint2 = (group _Driver) addwaypoint[_trgtPos,15,150];
-								_waypoint2 setwaypointtype "MOVE";
-								_waypoint2 setWaypointSpeed "NORMAL";
-								_waypoint2 setWaypointBehaviour "AWARE";											
-							};
 
-							(group _x) spawn 
+							if ((_x distance2D _unit) <= VCM_WARNDIST) then
 							{
-								sleep 300;
-								_this setVariable ["VCM_MOVE2SUP",false];
+
+								if VCM_DEBUG then {systemChat format ["VCOM: %1 moving to support %2", _x, _unit]};
+								_x setbehaviour "AWARE";
+								(group _x) setVariable ["VCM_MOVE2SUP",true];
+								if (!(vehicle _x isEqualTo _x)) then
+								{
+									_RespondCount = _RespondCount + count (crew (vehicle _x));
+									private _Driver = (driver (vehicle _x));
+									//systemchat format ["_RespondCountDRIVER %1 GROUP: %2",[_EnemyCount,_RespondCount],(group _x)];
+									_waypoint2 = (group _Driver) addwaypoint[_trgtPos,15,150];
+									_waypoint2 setwaypointtype "MOVE";
+									_waypoint2 setWaypointSpeed "NORMAL";
+									_waypoint2 setWaypointBehaviour "AWARE";
+								}
+								else
+								{
+									_RespondCount = _RespondCount + (count (units (group _x)));
+									//systemchat format ["_RespondCount %1 GROUP: %2",[_EnemyCount,_RespondCount],(group _x)];
+									_waypoint2 = (group _x) addwaypoint[_trgtPos,15,150];
+									_waypoint2 setwaypointtype "MOVE";
+									_waypoint2 setWaypointSpeed "NORMAL";
+									_waypoint2 setWaypointBehaviour "AWARE";
+									private _Driver = Driver (vehicle _x);
+									_waypoint2 = (group _Driver) addwaypoint[_trgtPos,15,150];
+									_waypoint2 setwaypointtype "MOVE";
+									_waypoint2 setWaypointSpeed "NORMAL";
+									_waypoint2 setWaypointBehaviour "AWARE";
+								};
+
+								[{(_this#0) setVariable ["VCM_MOVE2SUP",false];}, [(group _x)], 300] call CBA_fnc_waitAndExecute;
+
 							};
-						
 						};
-					};
 
+					};
 				};
-			};	
-		};
-	} foreach _arrayOrg;	
-};
+			};
+		} foreach _arrayOrg;
+	};
+}, [_array2,_grp,_arrayOrg], VCM_WARNDELAY] call CBA_fnc_waitAndExecute;

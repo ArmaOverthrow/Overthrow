@@ -1,18 +1,18 @@
 params ["_arty", "_amount"];
-private ["_arty","_amount","_vh","_handled","_magTypes","_mags","_tp","_cnt"];	
-	
+private ["_arty","_amount","_vh","_handled","_magTypes","_mags","_tp","_cnt"];
+
 _amount = ceil _amount;
 //if (_amount < 2) exitWith {};
 
-{		
+{
 	{
 		_vh = vehicle _x;
 		_handled = _vh getVariable ["RydFFEArtyAmmoHandled",false];
-		
+
 		if ! (_handled) then
 		{
 			_vh setVariable ["RydFFEArtyAmmoHandled",true];
-			
+
 			_vh addEventHandler ["Fired",
 				{
 					(_this select 0) setVariable ["RydFFE_ShotFired",true];
@@ -25,10 +25,10 @@ _amount = ceil _amount;
 					missionNameSpace setVariable ["RydFFE_FiredShells",_shells];
 					//}
 				}];
-			
+
 			_magTypes = getArtilleryAmmo [_vh];
 			_mags = magazines _vh;
-			
+
 			{
 				_tp = _x;
 				_cnt = {_x in [_tp]} count _mags;

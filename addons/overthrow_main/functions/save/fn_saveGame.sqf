@@ -93,8 +93,8 @@ if !(_quiet) then {
 	[_x] call OT_fnc_savePlayerData;
 }foreach([] call CBA_fnc_players);
 
-private _players = (allVariables players) apply {
-	[_x, players getVariable _x];
+private _players = (allVariables players_NS) apply {
+	[_x, players_NS getVariable _x];
 };
 _data pushBack ["players",_players];
 
@@ -252,7 +252,6 @@ if !(_quiet) then {
 
 _data pushback ["timedate",date];
 _data pushback ["autosave",[OT_autoSave_time,OT_autoSave_last_time]];
-_data pushback ["upload",OT_save_upload];
 
 if !(_quiet) then {
 	"Step 11/11 - Exporting" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
@@ -270,7 +269,7 @@ if !(_quiet) then {
 	"Persistent Save Completed" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-if (!_autoSave && !(_user isEqualTo objNull) && OT_save_upload) then {
+if (!_autoSave && !(_user isEqualTo objNull)) then {
 	[_data] remoteExec ["OT_fnc_uploadData",_user,false];
 };
 

@@ -5,7 +5,7 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=522;
+	toggles=514;
 	class ItemIDProvider
 	{
 		nextID=2162;
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=449;
+		nextID=454;
 	};
 	class Camera
 	{
-		pos[]={4204.936,171.06358,12098.596};
-		dir[]={-0.062754579,-0.41400495,0.90818679};
-		up[]={-0.028544042,0.91024369,0.41306183};
-		aside[]={0.99769878,6.6967914e-007,0.068946071};
+		pos[]={8562.3203,116.87131,25067.129};
+		dir[]={-0.5222044,-0.69013566,0.50115556};
+		up[]={-0.49794322,0.72365808,0.47787121};
+		aside[]={0.69245875,-4.262256e-007,0.72154266};
 	};
 };
 binarizationWanted=0;
@@ -33,6 +33,7 @@ addons[]=
 	"A3_Characters_F",
 	"A3_Weapons_F",
 	"A3_Characters_F_Heads",
+	"A3_Characters_F_Orange_Facewear",
 	"ace_goggles",
 	"ace_attach",
 	"ace_chemlights",
@@ -46,7 +47,6 @@ addons[]=
 	"ace_advanced_fatigue",
 	"ace_map",
 	"A3_Modules_F_Hc",
-	"ace_realisticnames",
 	"ace_rearm",
 	"ace_refuel",
 	"ace_repair",
@@ -63,7 +63,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=25;
+		items=26;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -87,152 +87,159 @@ class AddonsMetaData
 		};
 		class Item3
 		{
+			className="A3_Characters_F_Orange";
+			name="Arma 3 Orange - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item4
+		{
 			className="ace_goggles";
 			name="ACE3 - Goggles";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item4
+		class Item5
 		{
 			className="ace_attach";
 			name="ACE3 - Attach";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item5
+		class Item6
 		{
 			className="ace_chemlights";
 			name="ace_chemlights";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item6
+		class Item7
 		{
 			className="ace_medical";
 			name="ACE3 - Medical";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item7
+		class Item8
 		{
 			className="ace_cargo";
 			name="ACE3 - Cargo";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item8
+		class Item9
 		{
 			className="ace_captives";
 			name="ACE3 - Captives";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item9
+		class Item10
 		{
 			className="ace_switchunits";
 			name="ACE3 - Switch Units";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item10
+		class Item11
 		{
 			className="ace_weather";
 			name="ACE3 - Weather";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item11
+		class Item12
 		{
 			className="ace_vehiclelock";
 			name="ACE3 - Vehicle Lock";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item12
+		class Item13
 		{
 			className="ace_advanced_fatigue";
 			name="ACE3 - Advanced Fatigue";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item13
+		class Item14
 		{
 			className="ace_map";
 			name="ACE3 - Map";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item14
+		class Item15
 		{
 			className="A3_Modules_F";
 			name="Arma 3 Alpha - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item15
+		class Item16
 		{
 			className="ace_rearm";
 			name="ACE3 - Rearm";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item16
+		class Item17
 		{
 			className="ace_refuel";
 			name="ACE3 - Refuel";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item17
+		class Item18
 		{
 			className="ace_repair";
 			name="ACE3 - Repair";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item18
+		class Item19
 		{
 			className="ace_respawn";
 			name="ACE3 - Respawn";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item19
+		class Item20
 		{
 			className="ace_explosives";
 			name="ACE3 - Explosives";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item20
+		class Item21
 		{
 			className="ace_ui";
 			name="ACE3 - UI";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item21
+		class Item22
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item22
+		class Item23
 		{
 			className="A3_Structures_F_Exp_Industrial";
 			name="Arma 3 Apex - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item23
+		class Item24
 		{
 			className="A3_Structures_F_Ind";
 			name="Arma 3 - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item24
+		class Item25
 		{
 			className="A3_Boat_F_Gamma";
 			name="Arma 3 - Boats and Submersibles";
@@ -693,7 +700,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=87;
+		items=69;
 		class Item0
 		{
 			dataType="Layer";
@@ -730,8 +737,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8555.0791,108.01391,25079.576};
-						angles[]={0.12993105,2.4981596,6.2086568};
+						position[]={8557.4121,108.88878,25069.523};
+						angles[]={0.042640556,4.6725082,6.1901226};
 					};
 					side="Independent";
 					flags=6;
@@ -780,12 +787,13 @@ class Mission
 					};
 					id=1949;
 					type="I_G_officer_F";
+					atlOffset=-7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -804,7 +812,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -842,7 +850,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -899,7 +907,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -923,6 +931,7 @@ class Mission
 			{
 			};
 			id=1718;
+			atlOffset=-7.6293945e-006;
 		};
 		class Item4
 		{
@@ -1308,7 +1317,26 @@ class Mission
 						};
 					};
 				};
-				nAttributes=1;
+				class Attribute1
+				{
+					property="ACE_moduleCargoSettings_paradropTimeCoefficent";
+					expression="_this setVariable ['paradropTimeCoefficent',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"STRING"
+								};
+							};
+							value="2.5";
+						};
+					};
+				};
+				nAttributes=2;
 			};
 		};
 		class Item7
@@ -1380,7 +1408,26 @@ class Mission
 						};
 					};
 				};
-				nAttributes=3;
+				class Attribute3
+				{
+					property="ace_captives_moduleSettings_requireSurrenderAi";
+					expression="_this setVariable ['requireSurrenderAi',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=4;
 			};
 		};
 		class Item8
@@ -1526,8 +1573,8 @@ class Mission
 			{
 				class Attribute0
 				{
-					property="ace_weather_ModuleSettings_useACEWeather";
-					expression="_this setVariable ['useACEWeather',_value,true];";
+					property="ace_weather_ModuleSettings_enabled";
+					expression="_this setVariable ['enabled',_value,true];";
 					class Value
 					{
 						class data
@@ -1545,8 +1592,27 @@ class Mission
 				};
 				class Attribute1
 				{
-					property="ace_weather_ModuleSettings_serverUpdateInterval";
-					expression="_this setVariable ['serverUpdateInterval',_value,true];";
+					property="ace_weather_ModuleSettings_windSimulation";
+					expression="_this setVariable ['windSimulation',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=1;
+						};
+					};
+				};
+				class Attribute2
+				{
+					property="ace_weather_ModuleSettings_updateInterval";
+					expression="_this setVariable ['updateInterval',_value,true];";
 					class Value
 					{
 						class data
@@ -1562,83 +1628,7 @@ class Mission
 						};
 					};
 				};
-				class Attribute2
-				{
-					property="ace_weather_ModuleSettings_syncMisc";
-					expression="_this setVariable ['syncMisc',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute3
-				{
-					property="ace_weather_ModuleSettings_syncRain";
-					expression="_this setVariable ['syncRain',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute4
-				{
-					property="ace_weather_ModuleSettings_enableServerController";
-					expression="_this setVariable ['enableServerController',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute5
-				{
-					property="ace_weather_ModuleSettings_syncWind";
-					expression="_this setVariable ['syncWind',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				nAttributes=6;
+				nAttributes=3;
 			};
 		};
 		class Item10
@@ -1957,25 +1947,14 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8586.7168,295.74872,25075.643};
+				position[]={8557.8701,108.85867,25068.33};
+				angles[]={0.042640556,0,6.0986423};
 			};
 			id=1778;
 			type="HighCommand";
-			atlOffset=194.48251;
 		};
 		class Item14
 		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8587.1074,294.77368,25073.881};
-			};
-			id=1779;
-			type="HighCommand";
-			atlOffset=193.53021;
-		};
-		class Item15
-		{
 			dataType="Group";
 			side="Independent";
 			class Entities
@@ -1986,1065 +1965,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8555.3691,108.16259,25078.273};
-						angles[]={0.12993105,2.5596125,6.2086568};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1713;
-					type="I_G_Soldier_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1712;
-		};
-		class Item16
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8585.3418,296.22797,25069.154};
-			};
-			id=1780;
-			type="HighCommand";
-			atlOffset=193.5322;
-		};
-		class Item17
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8556.8643,107.34655,25083.691};
-						angles[]={0.12599552,0.18221237,6.2259154};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="Chemlight_blue";
-										count=1;
-										ammoLeft=1;
-									};
-								};
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_Chestrig_oli";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=5;
-									class Item0
-									{
-										name="HandGrenade";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="MiniGrenade";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="Chemlight_blue";
-										count=1;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							headgear="H_Shemag_olive";
-						};
-					};
-					id=1950;
-					type="I_G_Soldier_F";
-					atlOffset=-7.6293945e-006;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=49;
-			atlOffset=-7.6293945e-006;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="groupID";
-					expression="[_this, _value] call CBA_fnc_setCallsign";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
-							value="Alpha 1-1";
-						};
-					};
-				};
-				nAttributes=1;
-			};
-		};
-		class Item18
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8554.0879,108.38455,25077.307};
-						angles[]={0.12993105,2.4981596,6.2086568};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1782;
-					type="I_G_Soldier_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1781;
-		};
-		class Item19
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8582.8379,296.52966,25073.316};
-			};
-			id=1783;
-			type="HighCommand";
-			atlOffset=192.78221;
-		};
-		class Item20
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8551.5391,108.92436,25075.117};
-						angles[]={0.14823751,2.4981596,6.1901226};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1785;
-					type="I_G_Soldier_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1784;
-		};
-		class Item21
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8581.5098,297.41492,25071.027};
-			};
-			id=1786;
-			type="HighCommand";
-			atlOffset=192.84598;
-		};
-		class Item22
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8553.3613,108.00291,25080.588};
-						angles[]={0.14301735,2.4981596,6.2086563};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1788;
-					type="I_G_Soldier_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1787;
-		};
-		class Item23
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8582.7441,296.93945,25076.484};
-			};
-			id=1789;
-			type="HighCommand";
-			atlOffset=194.14722;
-		};
-		class Item24
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8551.5898,109.31496,25072.27};
-						angles[]={0.042640556,2.4981596,6.1901226};
+						position[]={8558.1504,108.56232,25072.881};
+						angles[]={0.12993059,4.7139297,6.0628233};
 					};
 					side="Independent";
 					flags=6;
@@ -3074,13 +1996,12 @@ class Mission
 					};
 					id=1791;
 					type="I_G_Soldier_F";
-					atlOffset=-1.5258789e-005;
 					class CustomAttributes
 					{
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -3099,7 +2020,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -3137,7 +2058,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -3194,7 +2115,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -3218,20 +2139,19 @@ class Mission
 			{
 			};
 			id=1790;
-			atlOffset=-1.5258789e-005;
 		};
-		class Item25
+		class Item15
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8581.5605,298.04614,25068.182};
+				position[]={8560.0303,108.20573,25072.217};
+				angles[]={0.079829417,0,6.0628228};
 			};
 			id=1792;
 			type="HighCommand";
-			atlOffset=193.91074;
 		};
-		class Item26
+		class Item16
 		{
 			dataType="Group";
 			side="Independent";
@@ -3243,8 +2163,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8550.0908,109.20473,25074.145};
-						angles[]={0.14823751,4.6673808,6.1901226};
+						position[]={8560.2373,107.7003,25079.496};
+						angles[]={0.0093350215,4.7809825,6.1808777};
 					};
 					side="Independent";
 					flags=6;
@@ -3274,12 +2194,13 @@ class Mission
 					};
 					id=1794;
 					type="I_G_Soldier_F";
+					atlOffset=0.20475006;
 					class CustomAttributes
 					{
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -3298,7 +2219,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -3336,7 +2257,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -3393,7 +2314,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -3417,19 +2338,20 @@ class Mission
 			{
 			};
 			id=1793;
+			atlOffset=0.20475006;
 		};
-		class Item27
+		class Item17
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8580.0605,298.30151,25070.057};
+				position[]={8562.1631,107.29986,25079.07};
+				angles[]={0.0093350215,0,6.1808777};
 			};
 			id=1795;
 			type="HighCommand";
-			atlOffset=194.11725;
 		};
-		class Item28
+		class Item18
 		{
 			dataType="Group";
 			side="Independent";
@@ -3441,606 +2363,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8547.5225,108.71149,25077.748};
-						angles[]={0.14823711,2.4981596,6.2685208};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1797;
-					type="I_G_Soldier_F";
-					atlOffset=-7.6293945e-006;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1796;
-			atlOffset=-7.6293945e-006;
-		};
-		class Item29
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8580.5313,297.66223,25073.115};
-			};
-			id=1798;
-			type="HighCommand";
-			atlOffset=194.18011;
-		};
-		class Item30
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8550.752,108.06827,25081.486};
-						angles[]={0.14301735,2.4981596,6.2086563};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1800;
-					type="I_G_Soldier_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1799;
-		};
-		class Item31
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8580.7227,297.79095,25077.398};
-			};
-			id=1801;
-			type="HighCommand";
-			atlOffset=194.32591;
-		};
-		class Item32
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8555.6846,107.58903,25082.311};
-						angles[]={0.12599552,2.4981596,6.2259154};
-					};
-					side="Independent";
-					flags=6;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1803;
-					type="I_G_Soldier_F";
-					atlOffset=-7.6293945e-006;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1802;
-			atlOffset=-7.6293945e-006;
-		};
-		class Item33
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8585.6543,294.6311,25078.223};
-			};
-			id=1804;
-			type="HighCommand";
-			atlOffset=193.12628;
-		};
-		class Item34
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8554.7803,108.45824,25076.348};
-						angles[]={0.12993105,2.4981596,6.2086568};
+						position[]={8558.8984,107.93564,25076.395};
+						angles[]={0.12993059,4.7349758,6.0628233};
 					};
 					side="Independent";
 					flags=6;
@@ -4070,13 +2394,12 @@ class Mission
 					};
 					id=1806;
 					type="I_G_Soldier_F";
-					atlOffset=-7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -4095,7 +2418,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -4133,7 +2456,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -4190,7 +2513,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -4214,64 +2537,41 @@ class Mission
 			{
 			};
 			id=1805;
-			atlOffset=-7.6293945e-006;
 		};
-		class Item35
+		class Item19
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8585.0313,296.03235,25075.508};
+				position[]={8560.1455,107.71159,25075.91};
+				angles[]={0.12993059,0,6.0628233};
 			};
 			id=1807;
 			type="HighCommand";
-			atlOffset=194.04965;
 		};
-		class Item36
+		class Item20
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8583.5527,296.82813,25070.166};
+				position[]={8562.752,107.12128,25080.863};
+				angles[]={0.12599552,0,6.1808777};
 			};
 			id=1810;
 			type="HighCommand";
-			atlOffset=193.22763;
 		};
-		class Item37
+		class Item21
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8578.6621,298.73297,25068.195};
+				position[]={8559.6748,108.39017,25070.906};
+				angles[]={0.079829417,0,6.0628228};
 			};
 			id=1813;
 			type="HighCommand";
-			atlOffset=193.80978;
 		};
-		class Item38
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8578.2832,298.38477,25071.488};
-			};
-			id=1816;
-			type="HighCommand";
-			atlOffset=194.12343;
-		};
-		class Item39
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8578.4121,298.33698,25073.975};
-			};
-			id=1819;
-			type="HighCommand";
-			atlOffset=194.25281;
-		};
-		class Item40
+		class Item22
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4302,10 +2602,29 @@ class Mission
 						};
 					};
 				};
-				nAttributes=1;
+				class Attribute1
+				{
+					property="ACE_moduleRearmSettings_supply";
+					expression="_this setVariable ['supply',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"SCALAR"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
 			};
 		};
-		class Item41
+		class Item23
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4336,10 +2655,29 @@ class Mission
 						};
 					};
 				};
-				nAttributes=1;
+				class Attribute1
+				{
+					property="ACE_moduleRefuelSettings_hoseLength";
+					expression="_this setVariable ['hoseLength',_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"SCALAR"
+								};
+							};
+							value=12;
+						};
+					};
+				};
+				nAttributes=2;
 			};
 		};
-		class Item42
+		class Item24
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4525,7 +2863,7 @@ class Mission
 				nAttributes=9;
 			};
 		};
-		class Item43
+		class Item25
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4536,7 +2874,7 @@ class Mission
 			type="ACE_ModuleFriendlyFire";
 			atlOffset=380.19272;
 		};
-		class Item44
+		class Item26
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4608,7 +2946,7 @@ class Mission
 				nAttributes=3;
 			};
 		};
-		class Item45
+		class Item27
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4621,7 +2959,7 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=222.06592;
 		};
-		class Item46
+		class Item28
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -4634,7 +2972,7 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=221.60638;
 		};
-		class Item47
+		class Item29
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -5314,7 +3652,7 @@ class Mission
 				nAttributes=35;
 			};
 		};
-		class Item48
+		class Item30
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -5576,7 +3914,7 @@ class Mission
 				nAttributes=13;
 			};
 		};
-		class Item49
+		class Item31
 		{
 			dataType="Group";
 			side="Independent";
@@ -5588,8 +3926,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8553.583,108.86242,25074.254};
-						angles[]={0.14823751,2.4981596,6.1901226};
+						position[]={8560.8916,107.25226,25081.398};
+						angles[]={0.12599552,4.8403006,6.1808777};
 					};
 					side="Independent";
 					flags=6;
@@ -5624,7 +3962,7 @@ class Mission
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -5643,7 +3981,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -5681,7 +4019,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -5738,7 +4076,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -5763,7 +4101,7 @@ class Mission
 			};
 			id=1808;
 		};
-		class Item50
+		class Item32
 		{
 			dataType="Group";
 			side="Independent";
@@ -5775,8 +4113,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8548.6924,109.48777,25072.283};
-						angles[]={0.10362818,2.4981596,6.2765174};
+						position[]={8558.0889,108.69255,25071.35};
+						angles[]={0.042640556,4.6827879,6.0986423};
 					};
 					side="Independent";
 					flags=6;
@@ -5806,13 +4144,12 @@ class Mission
 					};
 					id=1812;
 					type="I_G_Soldier_F";
-					atlOffset=7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -5831,7 +4168,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -5869,7 +4206,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -5926,7 +4263,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -5950,20 +4287,19 @@ class Mission
 			{
 			};
 			id=1811;
-			atlOffset=7.6293945e-006;
 		};
-		class Item51
+		class Item33
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8580.6777,298.6272,25063.863};
+				position[]={8560.6709,107.825,25074.141};
+				angles[]={0.12993059,0,6.0628233};
 			};
 			id=1938;
 			type="HighCommand";
-			atlOffset=193.41614;
 		};
-		class Item52
+		class Item34
 		{
 			dataType="Group";
 			side="Independent";
@@ -5975,208 +4311,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8550.707,110.78689,25067.951};
-						angles[]={0,2.4981596,0};
-					};
-					side="Independent";
-					flags=2;
-					class Attributes
-					{
-						rank="COLONEL";
-						init="this setCaptive true;";
-						isPlayable=1;
-						class Inventory
-						{
-							class uniform
-							{
-								typeName="U_IG_Guerilla1_1";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							map="ItemMap";
-						};
-					};
-					id=1940;
-					type="I_G_Soldier_F";
-					atlOffset=0.96673584;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="face";
-							expression="_this setface _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="";
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute4
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						class Attribute5
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male01ENGB";
-								};
-							};
-						};
-						class Attribute6
-						{
-							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=2;
-								};
-							};
-						};
-						nAttributes=7;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1939;
-			atlOffset=0.96673584;
-		};
-		class Item53
-		{
-			dataType="Logic";
-			class PositionInfo
-			{
-				position[]={8584.1855,297.29828,25064.895};
-			};
-			id=1941;
-			type="HighCommand";
-			atlOffset=193.26472;
-		};
-		class Item54
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8554.2148,109.21021,25068.982};
-						angles[]={0.042640556,2.4981596,6.1901226};
+						position[]={8559.0127,108.13658,25074.66};
+						angles[]={0.12993059,4.7286081,6.0628233};
 					};
 					side="Independent";
 					flags=6;
@@ -6204,14 +4340,14 @@ class Mission
 							map="ItemMap";
 						};
 					};
-					id=1943;
+					id=1940;
 					type="I_G_Soldier_F";
 					class CustomAttributes
 					{
 						class Attribute0
 						{
 							property="ace_isSurrendered";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleSurrender}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
 							class Value
 							{
 								class data
@@ -6230,7 +4366,7 @@ class Mission
 						class Attribute1
 						{
 							property="ace_isEngineer";
-							expression="if (_value != -1) then {_this setVariable ['ace_isEngineer',_value, true];}";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
 							class Value
 							{
 								class data
@@ -6268,7 +4404,7 @@ class Mission
 						class Attribute3
 						{
 							property="ace_isHandcuffed";
-							expression="if (_value) then {[objNull,[_this],true] call ace_captives_fnc_moduleHandcuffed}";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
 							class Value
 							{
 								class data
@@ -6325,7 +4461,206 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"",_value,true];};";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=2;
+								};
+							};
+						};
+						nAttributes=7;
+					};
+				};
+			};
+			class Attributes
+			{
+			};
+			id=1939;
+		};
+		class Item35
+		{
+			dataType="Logic";
+			class PositionInfo
+			{
+				position[]={8561.209,107.4108,25077.678};
+				angles[]={0.0093350215,0,6.1808777};
+			};
+			id=1941;
+			type="HighCommand";
+		};
+		class Item36
+		{
+			dataType="Group";
+			side="Independent";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={8559.7246,107.9782,25078.053};
+						angles[]={0,4.8648105,0};
+					};
+					side="Independent";
+					flags=2;
+					class Attributes
+					{
+						rank="COLONEL";
+						init="this setCaptive true;";
+						isPlayable=1;
+						class Inventory
+						{
+							class uniform
+							{
+								typeName="U_IG_Guerilla1_1";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							map="ItemMap";
+						};
+					};
+					id=1943;
+					type="I_G_Soldier_F";
+					atlOffset=0.41652679;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ace_isSurrendered";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleSurrender}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="ace_isEngineer";
+							expression="if !(_value == ([0,1] select (_this getUnitTrait 'engineer'))|| {_value == -1}) then {_this setVariable ['ace_isEngineer', _value, true]}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=2;
+								};
+							};
+						};
+						class Attribute2
+						{
+							property="face";
+							expression="_this setface _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="";
+								};
+							};
+						};
+						class Attribute3
+						{
+							property="ace_isHandcuffed";
+							expression="if (_value) then {[objNull, [_this], true] call ace_captives_fnc_moduleHandcuffed}";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						class Attribute4
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=1;
+								};
+							};
+						};
+						class Attribute5
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="Male01ENGB";
+								};
+							};
+						};
+						class Attribute6
+						{
+							property="ace_isMedic";
+							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
 							class Value
 							{
 								class data
@@ -6349,8 +4684,9 @@ class Mission
 			{
 			};
 			id=1942;
+			atlOffset=0.41652679;
 		};
-		class Item55
+		class Item37
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -6363,7 +4699,7 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=222.13217;
 		};
-		class Item56
+		class Item38
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -6376,16 +4712,16 @@ class Mission
 			type="HeadlessClient_F";
 			atlOffset=217.17084;
 		};
-		class Item57
+		class Item39
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8589.5605,295.06604,25076.43};
+				position[]={8554.4502,109.40114,25066.35};
+				angles[]={0.10362761,0,6.129734};
 			};
 			id=1951;
 			type="ModuleCurator_F";
-			atlOffset=194.59448;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -6403,7 +4739,7 @@ class Mission
 									"STRING"
 								};
 							};
-							value="zeus_guy";
+							value="bigboss";
 						};
 					};
 				};
@@ -6479,42 +4815,42 @@ class Mission
 									"SCALAR"
 								};
 							};
-							value=2;
+							value=3;
 						};
 					};
 				};
 				nAttributes=5;
 			};
 		};
-		class Item58
+		class Item40
 		{
 			dataType="Layer";
 			name="Check Point (Large)";
 			id=2001;
 			atlOffset=185.97;
 		};
-		class Item59
+		class Item41
 		{
 			dataType="Layer";
 			name="Camp Bear";
 			id=2044;
 			atlOffset=185.97;
 		};
-		class Item60
+		class Item42
 		{
 			dataType="Layer";
 			name="Hasty Roadblock";
 			id=2052;
 			atlOffset=185.97;
 		};
-		class Item61
+		class Item43
 		{
 			dataType="Layer";
 			name="Roadblock";
 			id=2064;
 			atlOffset=185.97;
 		};
-		class Item62
+		class Item44
 		{
 			dataType="Marker";
 			position[]={11501.896,0,15777.88};
@@ -6524,7 +4860,7 @@ class Mission
 			id=2131;
 			atlOffset=-40.353825;
 		};
-		class Item63
+		class Item45
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6542,7 +4878,7 @@ class Mission
 			type="Land_WarehouseShelter_01_F";
 			atlOffset=2.3841858e-007;
 		};
-		class Item64
+		class Item46
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6559,7 +4895,7 @@ class Mission
 			type="Land_Cargo40_blue_F";
 			atlOffset=1.6612335;
 		};
-		class Item65
+		class Item47
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6576,7 +4912,7 @@ class Mission
 			id=2139;
 			type="Land_Cargo40_grey_F";
 		};
-		class Item66
+		class Item48
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6593,7 +4929,7 @@ class Mission
 			type="Land_Cargo40_white_F";
 			atlOffset=0.43286192;
 		};
-		class Item67
+		class Item49
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6611,7 +4947,7 @@ class Mission
 			type="Land_Cargo20_brick_red_F";
 			atlOffset=8.392334e-005;
 		};
-		class Item68
+		class Item50
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6628,7 +4964,7 @@ class Mission
 			type="Land_Cargo40_light_green_F";
 			atlOffset=0.82408905;
 		};
-		class Item69
+		class Item51
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6645,7 +4981,7 @@ class Mission
 			id=2144;
 			type="Land_WarehouseShelter_01_F";
 		};
-		class Item70
+		class Item52
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6663,7 +4999,7 @@ class Mission
 			type="Land_Cargo40_cyan_F";
 			atlOffset=-2.9563904e-005;
 		};
-		class Item71
+		class Item53
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6680,7 +5016,7 @@ class Mission
 			id=2146;
 			type="Land_ContainerLine_02_F";
 		};
-		class Item72
+		class Item54
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6696,7 +5032,7 @@ class Mission
 			type="C_Boat_Civil_04_F";
 			atlOffset=0.25890112;
 		};
-		class Item73
+		class Item55
 		{
 			dataType="Marker";
 			position[]={20609.461,0,18812.686};
@@ -6706,7 +5042,7 @@ class Mission
 			id=2148;
 			atlOffset=-37.087898;
 		};
-		class Item74
+		class Item56
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6723,7 +5059,7 @@ class Mission
 			type="Land_TTowerBig_2_F";
 			atlOffset=0.22627258;
 		};
-		class Item75
+		class Item57
 		{
 			dataType="Object";
 			class PositionInfo
@@ -6740,7 +5076,7 @@ class Mission
 			type="Land_TTowerBig_2_F";
 			atlOffset=-0.0029220581;
 		};
-		class Item76
+		class Item58
 		{
 			dataType="Marker";
 			position[]={5532.3091,0,16102.296};
@@ -6750,7 +5086,7 @@ class Mission
 			id=2151;
 			atlOffset=-73.303612;
 		};
-		class Item77
+		class Item59
 		{
 			dataType="Marker";
 			position[]={7327.6807,6.3996582,11009.567};
@@ -6760,7 +5096,7 @@ class Mission
 			id=2152;
 			atlOffset=0.10454607;
 		};
-		class Item78
+		class Item60
 		{
 			dataType="Marker";
 			position[]={10774.324,6.4709473,10783.703};
@@ -6770,7 +5106,7 @@ class Mission
 			id=2153;
 			atlOffset=0.070014477;
 		};
-		class Item79
+		class Item61
 		{
 			dataType="Marker";
 			position[]={20331.689,57.25,9480.2891};
@@ -6780,7 +5116,7 @@ class Mission
 			id=2154;
 			atlOffset=-0.0084037781;
 		};
-		class Item80
+		class Item62
 		{
 			dataType="Marker";
 			position[]={17074.836,14.540482,17860.701};
@@ -6790,7 +5126,7 @@ class Mission
 			id=2155;
 			atlOffset=0.0012025833;
 		};
-		class Item81
+		class Item63
 		{
 			dataType="Marker";
 			position[]={24788.359,20.505074,20719.5};
@@ -6800,7 +5136,7 @@ class Mission
 			id=2156;
 			atlOffset=0.025074005;
 		};
-		class Item82
+		class Item64
 		{
 			dataType="Marker";
 			position[]={15422.26,0,15737.15};
@@ -6813,7 +5149,7 @@ class Mission
 			id=2157;
 			atlOffset=9.9257593;
 		};
-		class Item83
+		class Item65
 		{
 			dataType="Marker";
 			position[]={3206.4851,0,12814.564};
@@ -6823,7 +5159,7 @@ class Mission
 			id=2158;
 			atlOffset=8.7051849;
 		};
-		class Item84
+		class Item66
 		{
 			dataType="Marker";
 			position[]={12865.254,-0.0030532815,14160.846};
@@ -6833,7 +5169,7 @@ class Mission
 			id=2159;
 			atlOffset=8.3631849;
 		};
-		class Item85
+		class Item67
 		{
 			dataType="Marker";
 			position[]={16322.014,0.16981582,12460.514};
@@ -6843,7 +5179,7 @@ class Mission
 			id=2160;
 			atlOffset=11.857555;
 		};
-		class Item86
+		class Item68
 		{
 			dataType="Marker";
 			position[]={17765.898,0.10275222,18231.781};
@@ -6858,11 +5194,11 @@ class Mission
 	{
 		class LinkIDProvider
 		{
-			nextID=15;
+			nextID=8;
 		};
 		class Links
 		{
-			items=15;
+			items=8;
 			class Item0
 			{
 				linkID=0;
@@ -6876,8 +5212,8 @@ class Mission
 			class Item1
 			{
 				linkID=1;
-				item0=1713;
-				item1=1779;
+				item0=1791;
+				item1=1792;
 				class CustomData
 				{
 					type="Sync";
@@ -6886,8 +5222,8 @@ class Mission
 			class Item2
 			{
 				linkID=2;
-				item0=1782;
-				item1=1783;
+				item0=1794;
+				item1=1795;
 				class CustomData
 				{
 					type="Sync";
@@ -6896,8 +5232,8 @@ class Mission
 			class Item3
 			{
 				linkID=3;
-				item0=1785;
-				item1=1786;
+				item0=1806;
+				item1=1807;
 				class CustomData
 				{
 					type="Sync";
@@ -6906,8 +5242,8 @@ class Mission
 			class Item4
 			{
 				linkID=4;
-				item0=1788;
-				item1=1789;
+				item0=1809;
+				item1=1810;
 				class CustomData
 				{
 					type="Sync";
@@ -6916,8 +5252,8 @@ class Mission
 			class Item5
 			{
 				linkID=5;
-				item0=1791;
-				item1=1792;
+				item0=1812;
+				item1=1813;
 				class CustomData
 				{
 					type="Sync";
@@ -6926,8 +5262,8 @@ class Mission
 			class Item6
 			{
 				linkID=6;
-				item0=1794;
-				item1=1795;
+				item0=1940;
+				item1=1938;
 				class CustomData
 				{
 					type="Sync";
@@ -6936,76 +5272,6 @@ class Mission
 			class Item7
 			{
 				linkID=7;
-				item0=1797;
-				item1=1798;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item8
-			{
-				linkID=8;
-				item0=1800;
-				item1=1801;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item9
-			{
-				linkID=9;
-				item0=1803;
-				item1=1804;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item10
-			{
-				linkID=10;
-				item0=1806;
-				item1=1807;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item11
-			{
-				linkID=11;
-				item0=1809;
-				item1=1810;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item12
-			{
-				linkID=12;
-				item0=1812;
-				item1=1813;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item13
-			{
-				linkID=13;
-				item0=1940;
-				item1=1938;
-				class CustomData
-				{
-					type="Sync";
-				};
-			};
-			class Item14
-			{
-				linkID=14;
 				item0=1943;
 				item1=1941;
 				class CustomData

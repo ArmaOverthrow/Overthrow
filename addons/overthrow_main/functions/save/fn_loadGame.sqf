@@ -5,13 +5,9 @@ params [
 //get all server data
 "Loading persistent save" remoteExec['OT_fnc_notifyStart',0,false];
 
-if (_data isEqualType "") then {
-	if (_data isEqualTo "") then {
-		[] remoteExec ['OT_fnc_newGame',2];
-		"No save found, starting new game" remoteExec ["hint",0,false];
-	}else{
-		_data = compile _data;
-	};
+if (_data isEqualType "" && {_data isEqualTo ""}) then {
+	[] remoteExec ['OT_fnc_newGame',2];
+	"No save found, starting new game" remoteExec ["hint",0,false];
 };
 
 private _cc = 0;
@@ -23,20 +19,11 @@ private _cc = 0;
 	if (_val isEqualType []) then {_val = +_val;};
 	private _set = true;
 
-	/*
-	diag_log format ["Loading: %1",_key];
-	if (_val isEqualType []) then {
-		{ diag_log _x } forEach _val;
-	} else {
-		diag_log _val;
-	};
-	*/
-
 	if(_key == "players") then {
 		{
 			_x params ["_subkey","_subval"];
 			if!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) then {
-				players setVariable [_subkey,_subval,true];
+				players_NS setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);
 		_set = false;
@@ -229,7 +216,7 @@ private _cc = 0;
 					_mrkid setMarkerType "ot_Camp";
 					_mrkid setMarkerColor "ColorWhite";
 					_mrkid setMarkerAlpha 1;
-					_mrkid setMarkerText format ["Camp %1",players getvariable [format["name%1",_owner],""]];
+					_mrkid setMarkerText format ["Camp %1",players_NS getvariable [format["name%1",_owner],""]];
 				};
 			};
 			if(_ccc isEqualTo 10) then {
@@ -262,10 +249,6 @@ private _cc = 0;
 	if(_key == "autosave") then {
 		OT_autoSave_time = (_val#0);
 		OT_autoSave_last_time = (_val#1);
-		_set = false;
-	};
-	if(_key == "upload") then {
-		OT_save_upload = _val;
 		_set = false;
 	};
 
@@ -327,7 +310,7 @@ sleep 0.2;
 private _built = (allMissionObjects "Static");
 {
 	private _uid = _x;
-	private _vars = players getVariable [_uid,[]];
+	private _vars = players_NS getVariable [_uid,[]];
 	private _leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
 	private _leasedata = [];
 	{
@@ -363,7 +346,7 @@ private _built = (allMissionObjects "Static");
 		};
 	}foreach(_vars);
 	[_uid,"leasedata",_leasedata] call OT_fnc_setOfflinePlayerAttribute;
-}foreach(players getvariable ["OT_allPlayers",[]]);
+}foreach(players_NS getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
 hint "Persistent Save Loaded";

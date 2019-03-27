@@ -1,9 +1,9 @@
 #include "\overthrow_main\mission_component.hpp"
 
-overviewPicture = "\overthrow_main\campaign\missions\Overthrow.Malden\overthrow_tanoa.jpg";
+overviewPicture = "\overthrow_main\campaign\missions\overthrow_tanoa.jpg";
 briefingName = "Overthrow: Malden";
 OnLoadName = "Overthrow: Malden: DEV";
-loadScreen = "\overthrow_main\campaign\missions\Overthrow.Malden\pic.jpg";
+loadScreen = "\overthrow_main\campaign\missions\pic.jpg";
 
 overviewText = "@todo";
 
@@ -13,8 +13,8 @@ class CfgRemoteExec
 	class Functions
 	{
 		mode = 2;
-		jip = 1;		
-		
+		jip = 1;
+
 		class vcm_serverask { allowedTargets = 0;jip = 1; };
 		class VCM_PublicScript { allowedTargets = 0;jip = 1; };
 		class BIS_fnc_debugConsoleExec { allowedTargets = 0;jip = 1; };

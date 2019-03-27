@@ -44,6 +44,7 @@ class CfgFunctions
 			class loadPlayerData {};
 			class savePlayerData {};
 			class autoSaveToggle {};
+			class autoloadToggle {};
 		};
 
 		class sleep

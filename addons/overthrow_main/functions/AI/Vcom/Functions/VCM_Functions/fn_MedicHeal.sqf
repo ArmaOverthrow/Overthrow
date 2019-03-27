@@ -22,7 +22,7 @@ if (VCM_DEBUG) then {systemChat format ["VCOM: %1 attempting to heal %2", _medic
 
 _medic setVariable ["VCM_MBUSY", true, false];
 
-while {not (isNull _unit) && {alive _unit && damage _unit != 0} && {isNull objectParent _unit} && {not (isNull _medic)} && {alive _medic} && {_medic distance2D _unit > 2}} do 
+while {!(isNull _unit) && {alive _unit && damage _unit != 0} && {isNull objectParent _unit} && {!(isNull _medic)} && {alive _medic} && {_medic distance2D _unit > 2}} do
 {
 	_medic doMove getPos _unit;
 	sleep 2;
@@ -39,7 +39,7 @@ sleep 5;
 if (damage _unit != 0) then {breakTo "main"};
 
 // Medic puts those first aid kits in his backpack to use
-if (not ("FirstAidKit" in items _unit) && {"FirstAidKit" in backpackItems _medic} && {_medic distance2D _unit < 3}) then 
+if (not ("FirstAidKit" in items _unit) && {"FirstAidKit" in backpackItems _medic} && {_medic distance2D _unit < 3}) then
 {
 	// TODO: Add animation
 	_medic removeItemFromBackpack "FirstAidKit";

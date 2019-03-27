@@ -1,5 +1,5 @@
 params ["_uid","_attr","_value"];
-private _params = players getVariable [_uid,[]];
+private _params = players_NS getVariable [_uid,[]];
 private _done = false;
 {
     _x params ["_k","_v"];
@@ -11,4 +11,4 @@ private _done = false;
 if(!_done) then {
     _params pushback [_attr,_value];
 };
-players setVariable [_uid,_params,true];
+players_NS setVariable [_uid,_params,true];

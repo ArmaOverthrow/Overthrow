@@ -9,4 +9,4 @@ switch (OT_autoSave_time) do {
   case 60: {OT_autoSave_time = 0};
 };
 
-hint parseText format["<t font='PuristaBold' size='1.15'>AUTOSAVE TIME:<br/>%1 Minutes</t>",OT_autoSave_time];
+[parseText format["<t font='PuristaBold' size='1.15'>AUTOSAVE TIME:<br/>%1 Minutes</t>",OT_autoSave_time]] remoteExec ["hint",[0,-2] select isDedicated];

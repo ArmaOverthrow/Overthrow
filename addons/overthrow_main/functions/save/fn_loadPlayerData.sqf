@@ -1,5 +1,5 @@
 private _player = _this;
-private _data = players getvariable (getplayeruid _player);
+private _data = players_NS getvariable (getplayeruid _player);
 private _newplayer = isNil "_data";
 if !(_newplayer) then {
     {
@@ -11,7 +11,7 @@ if !(_newplayer) then {
 
 };
 
-private _loadout = players getvariable format["loadout%1",getplayeruid _player];
+private _loadout = players_NS getvariable format["loadout%1",getplayeruid _player];
 if !(isNil "_loadout") then {
     _player setunitloadout _loadout;
 };

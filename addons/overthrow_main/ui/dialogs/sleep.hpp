@@ -64,7 +64,7 @@ class OT_sleep_dialog {
     	y = 0.533 * safezoneH + safezoneY;
     	w = 0.134062 * safezoneW;
     	h = 0.033 * safezoneH;
-      onButtonClick = "[] remoteExec [""OT_fnc_startSleeping"",[0,-2] select isDedicated,false]; [] spawn {uisleep 8.1; OT_sleepTime remoteExec [""skipTime"",2]; }";
+      onButtonClick = "[] remoteExec [""OT_fnc_startSleeping"",[0,-2] select isDedicated,false]; [] spawn {uisleep 8; OT_sleepTime remoteExec [""skipTime"",2]; }";
       colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",1};
     };
     class SelectedTime: RscText

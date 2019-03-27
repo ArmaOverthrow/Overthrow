@@ -649,7 +649,7 @@ class OT_dialog_options
 		class RscButton_1607: RscOverthrowButton
 		{
 			idc = 1607;
-			action = "call OT_fnc_autoSaveToggle";
+			action = "[] remoteExec [""OT_fnc_autoSaveToggle"",2];";
 			text = "Autosave Toggle"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
 			y = 0.313 * safezoneH + safezoneY;
@@ -660,13 +660,13 @@ class OT_dialog_options
 		class RscButton_1608: RscOverthrowButton
 		{
 			idc = 1608;
-			action = "if(OT_save_upload)then{ OT_save_upload = false; hint parseText ""<t font='PuristaBold' size='1.15'>SAVE UPLOAD:<br/>DISABLED</t>"";}else{  OT_save_upload = true; hint parseText ""<t font='PuristaBold' size='1.15'>SAVE UPLOAD:<br/>ENABLED</t>""; };";
-			text = "Toggle Upload"; //--- ToDo: Localize;
+			action = "[] remoteExec [""OT_fnc_autoloadToggle"",2]";
+			text = "Toggle Autoloading"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;
 			y = 0.313 * safezoneH + safezoneY;
 			w = 0.118594 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "CUSTOM SAVE ONLY\nToggle uploading your save to a 3rd party database that can be used to backup your save files or to share with the Arma 3 Overthrow community.\nThis will transmit data from your game, make sure you have an internet connection and understand what data is transmited when uploaded."; //--- ToDo: Localize;
+			tooltip = "Autoload mission if on a dedicated server";
 		};
 
 		class RscButton_1601: RscOverthrowButton
@@ -721,7 +721,6 @@ class OT_dialog_options
 		{
 			idc = 1605;
 			action = "call OT_fnc_cleanDead;";
-
 			text = "Clean bodies/wrecks"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
 			y = 0.412 * safezoneH + safezoneY;
@@ -758,7 +757,7 @@ class OT_dialog_upload
 		class background1: RscOverthrowText
 		{
 			idc = -1;
-			text = "OVERTHROW MISSION UPLOAD"; //--- ToDo: Localize;
+			text = "OVERTHROW MISSION EXPORT"; //--- ToDo: Localize;
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
@@ -821,28 +820,15 @@ class OT_dialog_upload
 		};
 		class CancelButton: RscOverthrowStructuredText
 		{
-			idc = 9;
-			text = "<t align='center' font='PuristaBold' color='#FFFFFF'>CANCEL</t>"; //--- ToDo: Localize;
+			idc = -1;
+			text = "<t align='center' font='PuristaBold' color='#FFFFFF'>CLOSE MENU</t>"; //--- ToDo: Localize;
 			onMouseButtonClick = "playSound ""click""; closeDialog 0;";
 			x = 0.298906 * safezoneW + safezoneX;
 			y = 0.731 * safezoneH + safezoneY;
-			w = 0.128906 * safezoneW;
+			w = 0.402187 * safezoneW;
 			h = 0.033 * safezoneH;
-			onMouseEnter = "(_this select 0) ctrlSetStructuredText parseText ""<t align='center' font='PuristaBold' color='#00FF00'>CANCEL</t>""; (_this select 0) ctrlCommit 0.5; ";
-			onMouseExit = "(_this select 0) ctrlSetStructuredText parseText ""<t align='center' font='PuristaBold' color='#FFFFFF'>CANCEL</t>""; (_this select 0) ctrlCommit 0.5; ";
-			colorBackground[] = {-1,-1,-1,0.7};
-		};
-		class ApplyButton: RscOverthrowStructuredText
-		{
-			idc = 10;
-			text = "<t align='center' font='PuristaBold' color='#FFFFFF'>I CONSENT</t>"; //--- ToDo: Localize;
-			onMouseButtonClick = "playSound ""click""; hint 'This feature is still in development'";
-			x = 0.432968 * safezoneW + safezoneX;
-			y = 0.731 * safezoneH + safezoneY;
-			w = 0.268125 * safezoneW;
-			h = 0.033 * safezoneH;
-			onMouseEnter = "(_this select 0) ctrlSetStructuredText parseText ""<t align='center' font='PuristaBold' color='#00FF00'>I CONSENT</t>""; (_this select 0) ctrlCommit 0.5; ";
-			onMouseExit = "(_this select 0) ctrlSetStructuredText parseText ""<t align='center' font='PuristaBold' color='#FFFFFF'>I CONSENT</t>""; (_this select 0) ctrlCommit 0.5; ";
+			onMouseEnter = "(_this select 0) ctrlSetStructuredText parseText ""<t align='center' font='PuristaBold' color='#00FF00'>CLOSE MENU</t>""; (_this select 0) ctrlCommit 0.5; ";
+			onMouseExit = "(_this select 0) ctrlSetStructuredText parseText ""<t align='center' font='PuristaBold' color='#FFFFFF'>CLOSE MENU</t>""; (_this select 0) ctrlCommit 0.5; ";
 			colorBackground[] = {-1,-1,-1,0.7};
 		};
 	};

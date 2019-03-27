@@ -12,6 +12,7 @@ if !(isServer) exitWith {};
 [] call VCM_fnc_DefaultSettings; //Load default settings
 [] call VCM_fnc_AISettingsV4;
 [] call VCM_fnc_CBA_Settings; //Overwrite with CBA settings
+publicVariable "Vcm_ActivateAI";
 
 //Mod checks
 //ACE CHECK

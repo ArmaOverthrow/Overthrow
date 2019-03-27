@@ -10,5 +10,8 @@ if(!_amgen) then {
     if(!isMultiplayer) then {
         ctrlEnable [1603,false];
         ctrlEnable [1604,false];
-    }
+    };
+    if (!isDedicated) then {
+      ctrlEnable [1608,false];
+    };
 };

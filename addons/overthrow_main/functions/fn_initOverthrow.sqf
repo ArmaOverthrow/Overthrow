@@ -6,15 +6,24 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 
 missionNamespace setVariable ["OT_varInitDone", false, true];
 
-server = [true] call CBA_fnc_createNamespace;
-players = [true] call CBA_fnc_createNamespace;
-cost = [true] call CBA_fnc_createNamespace;
-warehouse = [true] call CBA_fnc_createNamespace;
-spawner = [true] call CBA_fnc_createNamespace;
-templates = [true] call CBA_fnc_createNamespace;
-owners = [true] call CBA_fnc_createNamespace;
-buildingpositions = [true] call CBA_fnc_createNamespace;
-OT_civilians = [true] call CBA_fnc_createNamespace;
+server = true call CBA_fnc_createNamespace;
+publicVariable "server";
+players_NS = true call CBA_fnc_createNamespace;
+publicVariable "players_NS";
+cost = true call CBA_fnc_createNamespace;
+publicVariable "cost";
+warehouse = true call CBA_fnc_createNamespace;
+publicVariable "warehouse";
+spawner = true call CBA_fnc_createNamespace;
+publicVariable "spawner";
+templates = true call CBA_fnc_createNamespace;
+publicVariable "templates";
+owners = true call CBA_fnc_createNamespace;
+publicVariable "owners";
+buildingpositions = true call CBA_fnc_createNamespace;
+publicVariable "buildingpositions";
+OT_civilians = true call CBA_fnc_createNamespace;
+publicVariable "OT_civilians";
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
@@ -84,4 +93,12 @@ OT_serverInitDone = true;
 publicVariable "OT_serverInitDone";
 if(isServer) then {
     diag_log "Overthrow: Server Pre-Init Done";
+};
+
+if (isDedicated && profileNamespace getVariable ["OT_autoload",false]) then {
+	[] spawn {
+		waitUntil{ time > 1 };
+		diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
+		[] spawn OT_fnc_loadGame;
+	};
 };
