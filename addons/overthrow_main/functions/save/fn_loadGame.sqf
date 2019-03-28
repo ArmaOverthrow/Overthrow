@@ -30,7 +30,7 @@ private _cc = 0;
 	};
 	if(_key == "civilians") then {
 		{
-			_x params ["_subkey","_subval"];
+			_x params ["_subkey",["_subval",""]];
 			if!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) then {
 				OT_civilians setVariable [_subkey,_subval,true];
 			};

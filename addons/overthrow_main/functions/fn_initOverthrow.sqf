@@ -103,9 +103,6 @@ if(isServer) then {
 };
 
 if (isDedicated && profileNamespace getVariable ["OT_autoload",false]) then {
-	[] spawn {
-		waitUntil{ time > 1 };
-		diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
-		[] spawn OT_fnc_loadGame;
-	};
+	diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
+	[] spawn OT_fnc_loadGame;
 };
