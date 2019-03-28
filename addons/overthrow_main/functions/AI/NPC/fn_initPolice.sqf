@@ -52,11 +52,10 @@ _unit addPrimaryWeaponItem "acc_flashlight";
 _unit addGoggles (selectRandom OT_allGlasses);
 _unit addItem "ACE_morphine";
 _unit addItem "ACE_epinephrine";
-
-
-if(OT_hasACE) then {
-	_unit addItem "ACE_fieldDressing";
-	_unit addItem "ACE_fieldDressing";
+_unit addItem "ACE_fieldDressing";
+_unit addItem "ACE_fieldDressing";
+if((random 100) > 95) exitWith {
+	_unit addPrimaryWeaponItem "optic_Aco_smg"
 };
 
 _base = [_wpn] call BIS_fnc_baseWeapon;
