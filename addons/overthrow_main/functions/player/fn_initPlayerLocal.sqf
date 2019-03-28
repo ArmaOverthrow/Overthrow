@@ -94,8 +94,14 @@ private _housepos = [];
 
 if(isMultiplayer || _startup == "LOAD") then {
 	player remoteExec ["OT_fnc_loadPlayerData",2,false];
-    waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
-	private _newplayer = player getVariable ["OT_newplayer",true];
+  waitUntil{sleep 0.5;player getVariable ["OT_loaded",false]};
+
+	if (player getVariable["home",false] isEqualType []) then {
+	  _newplayer = false;
+	}else{
+	  _newplayer = true;
+	};
+
 
 	if(isMultiplayer) then {
 		//ensure player is in own group, not one someone else left
@@ -239,6 +245,7 @@ if (_newplayer) then {
 
 	//Free quad
 	_pos = _housepos findEmptyPosition [5,100,"C_Quadbike_01_F"];
+
 	if (count _pos > 0) then {
 		_veh = "C_Quadbike_01_F" createVehicle _pos;
 		[_veh,getPlayerUID player] call OT_fnc_setOwner;

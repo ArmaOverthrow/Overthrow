@@ -105,7 +105,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
 
     _wp = _group addWaypoint [_topos,500];
     _wp setWaypointType "SCRIPTED";
-    _wp setWaypointStatements ["true","[group this] spawn OT_fnc_cleanup"];
+    _wp setWaypointStatements ["true","[group this] call OT_fnc_cleanup"];
 };
 
 

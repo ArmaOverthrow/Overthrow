@@ -103,7 +103,7 @@ private _difficulty = 1.5;
         private _civ = player getVariable [format["vip%1",_this select 1],objNull];
         player setVariable [format["vip%1",_faction],nil,false];
         _group = createGroup civilian;
-        [_group] spawn OT_fnc_cleanup;
+        [_group] call OT_fnc_cleanup;
         [_civ] joinSilent nil;
         [_civ] joinSilent _group;
     },

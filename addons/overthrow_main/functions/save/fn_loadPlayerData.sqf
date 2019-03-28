@@ -10,10 +10,10 @@ if !(_newplayer) then {
     }foreach(_data);
 
 };
+_player setVariable ["OT_newplayer",_newplayer,true];
 
 private _loadout = players_NS getvariable format["loadout%1",getplayeruid _player];
 if !(isNil "_loadout") then {
     _player setunitloadout _loadout;
 };
 _player setVariable ["OT_loaded",true,true];
-_player setVariable ["OT_newplayer",_newplayer,true];

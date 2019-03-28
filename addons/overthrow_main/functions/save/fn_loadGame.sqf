@@ -317,7 +317,7 @@ private _built = (allMissionObjects "Static");
 		_x params ["_name","_val"];
 		if(_name isEqualTo "owned") then {
 			{
-				if(typename _x isEqualTo "ARRAY") then {
+				if(false/*typename _x isEqualTo "ARRAY"*/) then {
 					//old save with positions
 					_buildings = (_x nearObjects ["Building",8]);
 					if(count _buildings > 0) then {

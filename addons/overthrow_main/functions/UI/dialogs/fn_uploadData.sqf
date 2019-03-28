@@ -16,7 +16,8 @@ if (_data isEqualTo "ERROR") exitWith {
 };
 
 _editData = str _data;
-[_editData,"<NULL-object>","objNull"] call OT_fnc_findReplace;
+_editData = [_editData,"<NULL-object>","objNull"] call OT_fnc_findReplace;
+_editData = [_editData,",any]",",nil]"] call OT_fnc_findReplace;
 
 _editBox ctrlSetText _editData;
 _editBox ctrlSetTooltip "Copy & Paste this data to load from a string.";

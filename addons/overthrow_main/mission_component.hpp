@@ -6,7 +6,7 @@
 #include "\overthrow_main\script_component.hpp"
 
 author=QUOTE(MOD_AUTHOR);
-OnLoadMission=QUOTE(VERSION - Please read wiki.armaoverthrow.com);
+OnLoadMission=QUOTE(VERSION - Vist Overthrow's Steam Workshop page for more infomation.);
 
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;
@@ -16,7 +16,7 @@ class Header
 {
 	gameType = Coop;
 	minPlayers = 1;
-	maxPlayers = 20;
+	maxPlayers = 12;
 };
 
 

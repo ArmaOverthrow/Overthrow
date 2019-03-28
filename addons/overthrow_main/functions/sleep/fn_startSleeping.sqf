@@ -1,6 +1,5 @@
 
 closeDialog 0;
-disableUserInput true;
 player allowDamage false;
 showCinemaBorder false;
 _camz = "camera" camCreate [getPosATL player#0,getPosATL player#1,((getPosATL player#2)+2.5)];
@@ -30,5 +29,4 @@ uiSleep 1;
 uiSleep 9;
 _camz cameraEffect ["terminate", "BACK"];
 deleteVehicle _camz;
-disableUserInput false;
 player allowDamage true;

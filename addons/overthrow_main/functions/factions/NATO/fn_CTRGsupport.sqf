@@ -103,7 +103,7 @@ _wp setWaypointCompletionRadius 100;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 
 _wp = _group addWaypoint [_attackpos,20];
 _wp setWaypointType "MOVE";

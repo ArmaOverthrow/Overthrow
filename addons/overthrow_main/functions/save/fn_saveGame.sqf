@@ -20,6 +20,9 @@ if (isNil "OT_NATOInitDone") exitWith {
 
 missionNameSpace setVariable ["OT_saving",true,true];
 
+{
+	_x setVariable ["OT_newplayer",false,true];
+} forEach (allPlayers);
 
 OT_autoSave_last_time = time + (OT_autoSave_time*60);
 

@@ -93,7 +93,7 @@ if(_isHQ) then {
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+	_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 
 	{
 		_x addCuratorEditableObjects [units _tgroup,true];

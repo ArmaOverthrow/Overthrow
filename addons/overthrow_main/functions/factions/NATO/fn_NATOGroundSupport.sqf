@@ -45,6 +45,6 @@ _wp setWaypointTimeout [600,600,600];
 
 _wp = _group addWaypoint [_frompos,500];
 _wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 
 

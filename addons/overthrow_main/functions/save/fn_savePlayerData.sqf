@@ -12,6 +12,5 @@ private _data = [];
 	&& { (_x select [0,11]) != "missiondata" }
 });
 
-players_NS setVariable [format["%1",_uid],_data];
-
+players_NS setVariable [_uid,_data,false];
 players_NS setVariable [format["loadout%1",_uid],getUnitLoadout _player];

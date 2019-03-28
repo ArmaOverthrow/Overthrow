@@ -138,7 +138,7 @@ if(_byair && _tgroup isEqualType grpNull) then {
 
 	_wp = _tgroup addWaypoint [_frompos,2000];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+	_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 }else{
 	if(typename _tgroup isEqualTo "GROUP") then {
 		_veh setdamage 0;
@@ -165,7 +165,7 @@ if(_byair && _tgroup isEqualType grpNull) then {
 		_wp = _tgroup addWaypoint [_frompos,0];
 		_wp setWaypointType "SCRIPTED";
 		_wp setWaypointCompletionRadius 25;
-		_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+		_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 
 		{
 			_x addCuratorEditableObjects [(units _tgroup)+[_veh],true];
@@ -227,7 +227,7 @@ if(typename _tgroup isEqualTo "GROUP") then {
 				_wp = _tgroup addWaypoint [_frompos,0];
 				_wp setWaypointType "SCRIPTED";
 				_wp setWaypointCompletionRadius 50;
-				_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+				_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 			};
 		};
 	};

@@ -199,7 +199,7 @@ if(_progress > 0) then {
 				if(typename _g != "STRING") then {_g = "HQ"};
 				if(_g isEqualTo "HQ") then {
 					if((vehicle _lead) != _lead) then {
-						[vehicle _lead] spawn OT_fnc_cleanup;
+						[vehicle _lead] call OT_fnc_cleanup;
 					}else{
 						if((getpos _lead) call OT_fnc_inSpawnDistance) then {
 							{
@@ -218,7 +218,7 @@ if(_progress > 0) then {
 	{
 		if(side _x isEqualTo west) then {
 			if(_x getVariable ["garrison",""] isEqualTo "HQ") then {
-				[_x] spawn OT_fnc_cleanup;
+				[_x] call OT_fnc_cleanup;
 			};
 		}
 	}foreach(vehicles);
