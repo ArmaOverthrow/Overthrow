@@ -48,6 +48,8 @@ if(_skill > 0.8) then {
 if(OT_hasACE) then {
 	_unit addItem "ACE_fieldDressing";
 	_unit addItem "ACE_fieldDressing";
+	_unit addItem "ACE_epinephrine";
+	_unit addItem "ACE_morphine";
 };
 
 private _weapons = OT_allSubMachineGuns;
@@ -60,14 +62,20 @@ _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
+_unit addMagazineGlobal _magazine;
 _unit addWeaponGlobal _weapon;
 
 if(_hour > 17 || _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
 };
 
+if((random 100) > 90) exitWith {
+	_unit addPrimaryWeaponItem "optic_Aco_smg"
+};
+
 _weapon = OT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+_unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
 _unit addWeaponGlobal _weapon;
