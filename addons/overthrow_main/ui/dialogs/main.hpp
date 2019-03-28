@@ -740,9 +740,17 @@ class OT_dialog_options
 			h = 0.077 * safezoneH;
 			tooltip = "Clears fog"; //--- ToDo: Localize;
 		};
-		////////////////////////////////////////////////////////
-		// GUI EDITOR OUTPUT END
-		////////////////////////////////////////////////////////
+		class RscText_1009: RscOverthrowButton
+		{
+			idc = 1609;
+			action = "if (zeusToggle) then { [bigboss,zeusCurator] remoteExec [""assignCurator"", 2]; zeusToggle = false; hint 'Zeus Active';} else {[zeusCurator] remoteExec [""unassignCurator"", 2]; zeusToggle = true; hint 'Zeus Disabled';}";
+			text = "Toggle Zeus"; //--- ToDo: Localize;
+			x = 0.386562 * safezoneW + safezoneX;
+			y = 0.709 * safezoneH + safezoneY;
+			w = 0.2475 * safezoneW;
+			h = 0.044 * safezoneH;
+			tooltip = "Toggle between zeus access as the host"; //--- ToDo: Localize;
+		};
 	};
 };
 

@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=364;
+		nextID=365;
 	};
 	class Camera
 	{
-		pos[]={6540.207,25,6048.522};
-		dir[]={0,-0.70710683,0.70710683};
-		up[]={0,0.70710677,0.70710677};
-		aside[]={0.99999994,0,-0};
+		pos[]={8263.8359,3.8411424,1127.954};
+		dir[]={-0.22472891,-0.43092722,0.87395799};
+		up[]={-0.10731784,0.90238446,0.41735318};
+		aside[]={0.96849447,5.3551048e-008,0.2490381};
 	};
 };
 binarizationWanted=0;
@@ -5268,12 +5268,12 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8263.335,2.0853329,1131.1039};
-				angles[]={5.9235382,0,0.14301692};
+				position[]={8263.335,2.0854449,1131.104};
+				angles[]={5.923543,0,0.14301229};
 			};
+			name="zeusCurator";
 			id=1951;
 			type="ModuleCurator_F";
-			atlOffset=-6.9141388e-005;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -5291,7 +5291,7 @@ class Mission
 									"STRING"
 								};
 							};
-							value="bigboss";
+							value="";
 						};
 					};
 				};

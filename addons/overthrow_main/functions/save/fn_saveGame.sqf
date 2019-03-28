@@ -132,7 +132,7 @@ private _vehicles = (_tocheck) apply {
 	};
 	private _params = [
 		_type,
-		getposatl _x,
+		[getposatl _x,simulationEnabled _x],
 		[vectorDir _x,vectorUp _x],
 		_s,
 		_x call OT_fnc_getOwner,

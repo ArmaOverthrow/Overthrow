@@ -86,7 +86,8 @@ private _cc = 0;
 				_type = OT_item_Map;
 			};
 			if !(_type isKindOf "Man") then {
-				_pos = _x select 1;
+				_pos = ((_x select 1)#0);
+				_simulation = ((_x select 1)#1);
 				_dir = _x select 2;
 				_stock = _x select 3;
 				_owner = _x select 4;
@@ -95,7 +96,11 @@ private _cc = 0;
 					_name = _x select 5;
 				};
 				_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
-				_veh enableDynamicSimulation true;
+				if !(_simulation) then {
+					_veh enableSimulationGlobal false;
+				}else{
+					_veh enableDynamicSimulation true;
+				};
 
 				if(count _x > 7) then {
 					(_x select 7) params ["_fuel","_dmg"];

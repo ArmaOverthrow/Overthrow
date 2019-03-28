@@ -935,6 +935,7 @@ OT_noCopyMags = ["ACE_PreloadedMissileDummy"];
 
 OT_autoSave_time = 0;
 OT_autoSave_last_time = (10*60);
+zeusToggle = true;
 
 if(isServer) then {
 	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
