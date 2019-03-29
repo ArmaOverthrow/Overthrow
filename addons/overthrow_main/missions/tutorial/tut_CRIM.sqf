@@ -42,9 +42,7 @@ if(count _targets isEqualTo 0) exitWith {
         [player,_destination,_town] call OT_fnc_givePlayerWaypoint;
 
         format[
-            "There doesnt seem to be any gangs nearby.
-            Head to %1, you should be able to find some there.
-            It's marked on your map",
+            "There doesnt seem to be any gangs nearby. Head to %1, you should be able to find some there. It's marked on your map",
             _town
         ] call OT_fnc_notifyMinor;
 
@@ -67,10 +65,7 @@ if(count _targets isEqualTo 0) exitWith {
     };
 };
 
-"There is a gang nearby,
-locals are sick and tired of them
-so there might be a few dollars in it
-if you made them go away." call OT_fnc_notifyMinor;
+"There is a gang nearby, locals are sick and tired of them so there might be a few dollars in it if you made them go away." call OT_fnc_notifyMinor;
 
 //pick the first group and reveal
 private _sorted = [_targets,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;

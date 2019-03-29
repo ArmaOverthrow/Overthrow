@@ -96,6 +96,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 											[{
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 0);
+												hint "You have completed the tutorial. Good luck on your future journey!";
 											},0,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -133,6 +134,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 											[{
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 1);
+												hint "You have completed the tutorial. Good luck on your future journey!";
 											},1,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -165,6 +167,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 											[{
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 2);
+												hint "You have completed the tutorial. Good luck on your future journey!";
 											},2,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -191,6 +194,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 											[{
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 3);
+												hint "You have completed the tutorial. Good luck on your future journey!";
 											},3,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
