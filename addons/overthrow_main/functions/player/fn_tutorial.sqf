@@ -32,3 +32,4 @@ private _txt = format [
 
 [_txt, 0.25, 0.2, 120, 1, 0, 2] call OT_fnc_dynamicText;
 
+player setVariable ["OT_tute_trigger",true]

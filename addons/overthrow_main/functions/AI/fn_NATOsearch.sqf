@@ -23,7 +23,6 @@ if((count _this) isEqualTo 3) then {
 	};
 };
 if(isNil "_cop" || isNil "_target") exitWith{};
-if(isNull "_cop" || isNull "_target") exitWith{};
 
 _cop setVariable ["OT_searching",true,true];
 
@@ -153,7 +152,7 @@ if(isplayer _target) then {
 	}foreach(_target call OT_fnc_getSearchStock);
 
 	if(_foundillegal || _foundweapons) then {
-		if(_foundweapons) then {			
+		if(_foundweapons) then {
 			if(isplayer _target) then {
 				[_cop,"What's this!?"] remoteExec ["globalchat",_target,false];
 				"NATO found weapons" remoteExecCall ["hint",_target,false];
