@@ -15,6 +15,7 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 waitUntil {!isNull player && player isEqualTo player};
 
 enableSaving [false,false];
+enableEnvironment [false,true];
 
 if(isServer) then {
 	missionNameSpace setVariable ["OT_HOST", player, true];
@@ -36,6 +37,10 @@ if(isMultiplayer && (!isServer)) then {
 }else{
 	OT_varInitDone = true;
 };
+
+private _highCommandModule = (createGroup sideLogic) createUnit ["HighCommand",[0,0,0],[],0,"NONE"];
+_highCommandModule synchronizeObjectsAdd [player];
+missionNameSpace setVariable [format["%1_hc_module",getPlayerUID player],_highCommandModule,true];
 
 private _start = OT_startCameraPos;
 private _introcam = "camera" camCreate _start;

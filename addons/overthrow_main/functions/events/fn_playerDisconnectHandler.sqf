@@ -1,15 +1,6 @@
-params ["_me","","_uid"];
+params ["_id", "_uid", "_name", "_jip", "_owner"];
 
-if(_me getVariable ["ACE_isUnconscious",false]) then {
-	removeAllWeapons _me;
-	removeAllItems _me;
-	removeAllAssignedItems _me;
-	removeBackpack _me;
-	removeVest _me;
-	removeGoggles _me;
-	removeHeadgear _me;
+private _highCommandModule = missionNameSpace getVariable [format["%1_hc_module",_uid],objNull];
 
-	_me addItem "ItemMap";
-};
-
-[_me] call OT_fnc_savePlayerData;
+deleteVehicle _highCommandModule;
+missionNameSpace setVariable [format["%1_hc_module",_uid],objNull,true];
