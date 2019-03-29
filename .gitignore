@@ -20,7 +20,6 @@ $RECYCLE.BIN/
 
 # ARMA Tools
 *.cache
-*.pbo
 *.swp
 *.swo
 *.biprivatekey
