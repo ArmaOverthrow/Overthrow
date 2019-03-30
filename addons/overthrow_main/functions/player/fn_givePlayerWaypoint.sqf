@@ -16,15 +16,26 @@ private _wp = (group player) addWaypoint [_destpos, 15];
 OT_missionMarker = _destpos;
 OT_missionMarkerText = _txt;
 
-[_target,_radius,_wp] spawn {
-    params ["_target","_radius","_wp"];
-    while {!isNil "_wp" && (player distance waypointPosition _wp) > _radius} do {};
-    if(!isNil "_wp") then {
-        while {(count (waypoints group _target)) > 0} do {
-            deleteWaypoint ((waypoints group _target) select 0);
+[{
+  params ["_target","_radius","_wp"];
+  !(!isNil "_wp" && (player distance waypointPosition _wp) > _radius)
+},
+{
+  params ["_target","_radius","_wp"];
+
+  if(!isNil "_wp") then {
+    giveWaypoint_handle = [{
+      params [["_target","_radius","_wp"]];
+      if ((count (waypoints group _target)) > 0) then {
+        deleteWaypoint ((waypoints group _target) select 0);
+        if !((count (waypoints group _target)) > 0) then {
+          OT_missionMarker = nil;
+          [giveWaypoint_handle] call CBA_fnc_removePerFrameHandler;
+          giveWaypoint_handle = nil;
         };
-        OT_missionMarker = nil;
-    };
-};
+      };
+      }, 1, [_target,_radius,_wp]] call CBA_fnc_addPerFrameHandler;
+  };
+}, [_target,_radius,_wp]] call CBA_fnc_waitUntilAndExecute;
 
 _wp;

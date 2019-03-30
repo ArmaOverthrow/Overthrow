@@ -15,7 +15,7 @@
         }else{
             _civ params [""_identity"",""_hasjob"",""_cash"",""_superior""];
             if(isNil ""_superior"") then {_superior = -1};
-            if (!_hasjob && _cash isEqualTo 0 && _superior isEqualTo -1) then {
+            if (!_hasjob && _cash < 15 && _superior isEqualTo -1) then {
                 [_civid,_town] call OT_fnc_formOrJoinGang;
             };
         };

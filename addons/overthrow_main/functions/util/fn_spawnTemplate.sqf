@@ -65,10 +65,6 @@ _objects = [];
 
 	if(_type != "Site_Minefield") then {
 		_o = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
-		if !(_type isEqualTo "B_CargoNet_01_ammo_F") then {
-			_o enableSimulationGlobal false;
-			_o setVariable ["simulation",false,true];
-		};
 		_o setPosATL _pos;
 		_dir = _dir + _bdir;
 		if(_dir > 359) then {
@@ -82,6 +78,10 @@ _objects = [];
 		clearBackpackCargoGlobal _o;
 		clearItemCargoGlobal _o;
 
+		if !(_type isEqualTo "B_CargoNet_01_ammo_F") then {
+			_o enableSimulationGlobal false;
+			_o setVariable ["simulation",false,true];
+		};
 		_objects pushBack _o;
 	};
 }foreach(_template);

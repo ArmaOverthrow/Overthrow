@@ -24,7 +24,7 @@ VCOM_MINEARRAY = [];
 
 [] spawn
 {
-	waitUntil {time > 2};
+	waitUntil {time > 0};
 	sleep 2;
 
 	//Begin Artillery function created by Rydygier - https://forums.bohemia.net/forums/topic/159152-fire-for-effect-the-god-of-war-smart-simple-ai-artillery/

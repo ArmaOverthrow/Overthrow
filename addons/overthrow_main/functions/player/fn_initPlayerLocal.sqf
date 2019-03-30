@@ -295,7 +295,24 @@ waitUntil {!isNil "OT_SystemInitDone"};
 titleText ["Loading Session", "BLACK FADED", 0];
 player setCaptive true;
 player setPos _housepos;
-titleText ["", "BLACK IN", 5];
+[_housepos,_newplayer] spawn {
+	params ["_housepos","_newplayer"];
+	waitUntil{ preloadCamera _housepos};
+	titleText ["", "BLACK IN", 5];
+	sleep 1;
+	if(_newplayer) then {
+		if!(player getVariable ["OT_tute",false]) then {
+			createDialog "OT_dialog_tute";
+			player setVariable ["OT_tute",true,true];
+			player setVariable ["OT_tute_trigger",false,true];
+		} else {
+			player setVariable ["OT_tute_trigger",true,true];
+		};
+	} else {
+		player setVariable ["OT_tute_trigger",false,true];
+	};
+
+};
 
 player addEventHandler ["WeaponAssembled",{
 	params ["_me","_wpn"];
@@ -371,18 +388,6 @@ player addEventHandler ["GetInMan",{
 		[_veh] call OT_fnc_revealToNATO;
 	};
 }];
-
-if(_newplayer) then {
-	if!(player getVariable ["OT_tute",false]) then {
-		createDialog "OT_dialog_tute";
-		player setVariable ["OT_tute",true,true];
-		player setVariable ["OT_tute_trigger",false,true];
-	} else {
-		player setVariable ["OT_tute_trigger",true,true];
-	};
-} else {
-	player setVariable ["OT_tute_trigger",false,true];
-};
 
 {
 	_pos = buildingpositions getVariable [_x,[]];
