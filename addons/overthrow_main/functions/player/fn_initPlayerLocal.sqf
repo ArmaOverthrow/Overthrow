@@ -381,7 +381,7 @@ if(_newplayer) then {
 		player setVariable ["OT_tute_trigger",true,true];
 	};
 } else {
-	player setVariable ["OT_tute_trigger",true,true];
+	player setVariable ["OT_tute_trigger",false,true];
 };
 
 {

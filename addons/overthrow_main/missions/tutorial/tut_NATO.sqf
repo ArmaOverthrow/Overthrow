@@ -34,9 +34,7 @@ if(count _targets isEqualTo 0) exitWith {
         [player,_destination,_town] call OT_fnc_givePlayerWaypoint;
 
         format[
-            "There doesnt seem to be any NATO nearby.
-            Head to %1, you should be able to find some NATO there.
-            It's marked on your map",
+            "There doesnt seem to be any NATO nearby. Head to %1, you should be able to find some NATO there. It's marked on your map",
             _town
         ] call OT_fnc_notifyMinor;
 

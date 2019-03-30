@@ -12,7 +12,7 @@ if(!dialog) then {
 			};
 		}else{
 			if (player getVariable ["OT_tute_trigger",false]) then {
-				player setVariable ["OT_tute_trigger",true,true];
+				player setVariable ["OT_tute_trigger",false,true];
 				[] spawn {
 					hint format["Take some time to explore the main menu, when you're finished open the map (%1 key)","ShowMap" call OT_fnc_getAssignedKey];
 

@@ -55,7 +55,7 @@ private _actualMission = {
 
     //give waypoint
     private _wp = [player,position _veh,"Wreck"] call OT_fnc_givePlayerWaypoint;
-    
+
     private _loopCode = {
         params["_loopCode","_veh"];
         if(player distance _veh < 10 && "ToolKit" in items player) then {

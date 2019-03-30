@@ -11,7 +11,7 @@ if (isMultiplayer && isDedicated) then {
 
 private _call = {
   if (zeusToggle) then {
-    [bigboss,zeusCurator] remoteExec ["assignCurator", 2];
+    [player,zeusCurator] remoteExec ["assignCurator", 2];
     zeusToggle = false;
     "Zeus Enabled" call OT_fnc_notifyMinor;
   } else {
