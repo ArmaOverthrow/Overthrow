@@ -45,10 +45,16 @@ if(isPlayer _unit) then {
 		params["_unit","_state"];
 
 		if (!local _unit || { !alive _unit } || { !_state } || { !isPlayer _unit }) exitWith {};
-		
+
 		// inform other players
 		if(isMultiplayer && count(call CBA_fnc_players) > 1) then {
-			format["%1 is unconscious",name player] remoteExec ["systemChat",-clientOwner,false];
+			[
+			  format[
+			    "%1 has fallen unconscious and is waiting for assistance at GRIDREF: %2",
+			    name player,
+			    mapGridPosition player
+			  ]
+			] remoteExec ["systemChat",[0,-2] select isDedicated];
 		};
 
 		//Look for a medic
