@@ -743,7 +743,7 @@ class OT_dialog_options
 		class RscText_1009: RscOverthrowButton
 		{
 			idc = 1609;
-			action = "if (zeusToggle) then { [bigboss,zeusCurator] remoteExec [""assignCurator"", 2]; zeusToggle = false; hint 'Zeus Active';} else {[zeusCurator] remoteExec [""unassignCurator"", 2]; zeusToggle = true; hint 'Zeus Disabled';}";
+			action = "call OT_fnc_toggleZeus;";
 			text = "Toggle Zeus"; //--- ToDo: Localize;
 			x = 0.386562 * safezoneW + safezoneX;
 			y = 0.709 * safezoneH + safezoneY;

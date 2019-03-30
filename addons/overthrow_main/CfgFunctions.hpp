@@ -53,6 +53,12 @@ class CfgFunctions
 			class startSleeping {};
 		};
 
+		class admin
+		{
+			file = "\overthrow_main\functions\admin";
+			class toggleZeus {};
+		};
+
 		class Loop
 		{
 			file = "\overthrow_main\functions\loop";
