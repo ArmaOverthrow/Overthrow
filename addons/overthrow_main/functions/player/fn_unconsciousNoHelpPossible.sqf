@@ -1,8 +1,5 @@
 params ["_unit"];
 
-"You are unconscious, there is no one nearby with Epinephrine to revive you" call OT_fnc_notifyMinor;
-[
-	{_this setDamage 1;}, //rip
-	_unit,
-	5
-] call CBA_fnc_waitAndExecute;
+"You are unconscious. You can either wait for assistance or respawn through the ESC menu." call OT_fnc_notifyMinor;
+
+[format["%1 has fallen unconscious and is waiting for assistance at GRIDREF: %2",name _unit, mapGridPosition _unit] remoteExec ["systemChat",[0,-2] select isDedicated];
