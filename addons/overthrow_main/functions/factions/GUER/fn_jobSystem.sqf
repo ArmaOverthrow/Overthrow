@@ -16,7 +16,7 @@ job_system_counter = job_system_counter + 1;
 if !(job_system_counter < 6) then {
   job_system_counter = 0;
   {
-    params [""_name"",""_target"",""_condition"",""_code"",""_repeat"",""_chance""];
+    params [""_name"",[""_target"",""""],""_condition"",""_code"",""_repeat"",""_chance""];
     private _jobdef = _this;
     private _completed = server getVariable ""OT_completedJobIds"";
     if(isNil ""_completed"") then {
