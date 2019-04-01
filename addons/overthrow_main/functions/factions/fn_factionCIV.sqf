@@ -13,7 +13,7 @@ if (_hr != civ_loop_lasthr && {_hr > 8} && {_hr < 18}) then {
         _town = _x;
         {
             _civ = OT_civilians getVariable [format[""%1"",_x],[]];
-            _civ params [""_identity"",""_hasjob"",""_cash""];
+            _civ params [""_identity"",[""_hasjob"",false],[""_cash"",0]];
 
             if(_stability > 50 && {!_hasjob}) then {
                 _hasjob = true;

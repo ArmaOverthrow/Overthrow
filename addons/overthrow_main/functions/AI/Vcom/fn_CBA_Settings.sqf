@@ -69,7 +69,7 @@
     "CHECKBOX", // setting type
     "AI steal empty/unlocked vehicles?", // Pretty name shown inside the ingame settings menu. Can be stringtable entry.
     "VCOM SETTINGS", // Pretty name of the category where the setting can be found. Can be stringtable entry.
-	true,// data for this setting:
+	   false,// data for this setting:
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
     {
         params ["_value"];
@@ -299,7 +299,7 @@
     "VCOM DRIVING", // Pretty name of the category where the setting can be found. Can be stringtable entry.
 	false,// data for this setting:
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
-    {  
+    {
         params ["_value"];
         VCM_DrivingActivated = _value;
     } // function that will be executed once on mission start and every time the setting is changed.
@@ -312,7 +312,7 @@
     "VCOM DRIVING", // Pretty name of the category where the setting can be found. Can be stringtable entry.
     [0.5,3,0.75,2], // data for this setting: [min, max, default, number of shown trailing decimals]
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
-    {  
+    {
         params ["_value"];
         VCM_DrivingDelay = _value;
     } // function that will be executed once on mission start and every time the setting is changed.
@@ -325,7 +325,7 @@
     "VCOM DRIVING", // Pretty name of the category where the setting can be found. Can be stringtable entry.
     [5,30,10,1], // data for this setting: [min, max, default, number of shown trailing decimals]
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
-    {  
+    {
         params ["_value"];
         VCM_DrivingDist = _value;
     } // function that will be executed once on mission start and every time the setting is changed.
@@ -338,7 +338,7 @@
     "VCOM DRIVING", // Pretty name of the category where the setting can be found. Can be stringtable entry.
     [1,10,4,0], // data for this setting: [min, max, default, number of shown trailing decimals]
     true, // "_isGlobal" flag. Set this to true to always have this setting synchronized between all clients in multiplayer
-    {  
+    {
         params ["_value"];
         VCM_DRIVERLIMIT = _value;
     } // function that will be executed once on mission start and every time the setting is changed.
