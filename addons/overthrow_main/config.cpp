@@ -7,7 +7,7 @@ class CfgPatches
 	{
 		author="ARMAzac";
 		name=COMPONENT_NAME;
-		url="https://steamcommunity.com/sharedfiles/filedetails/?id=774201744";
+		url="https://armaoverthrow.com/";
 		requiredAddons[]=
 		{
 			"cba_ui",
@@ -30,7 +30,7 @@ class CfgMainMenuSpotlight
 {
 	class Overthrow
 	{
-		text = "Overthrow Development Build"; // Text displayed on the square button, converted to upper-case
+		text = "Overthrow"; // Text displayed on the square button, converted to upper-case
 		textIsQuote = 0; // 1 to add quotation marks around the text
 		picture = "\overthrow_main\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
 		video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
