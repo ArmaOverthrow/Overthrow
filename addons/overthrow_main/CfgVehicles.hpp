@@ -74,11 +74,11 @@ class CfgVehicles {
     class CAManBase: Man {
         fsmDanger = "overthrow_main\fsm\danger.fsm";
         class ACE_Actions {
-            class ACE_Head {
-                class OT_HeadActions {
+            class ACE_MainActions {
+                class OT_InteractionActions {
                     condition = "(alive _target) && (!isplayer _target) && !(side _target isEqualTo west)";
-                    selection = "pilot";
-                    distance = 20;
+                    selection = "pelvis";
+                    distance = 4;
                     displayName = "Talk";
                     statement = "_target call OT_fnc_talkToCiv";
                 };
