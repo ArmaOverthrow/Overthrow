@@ -4,9 +4,6 @@ sleep random 0.2;
 spawner setvariable [format["townspawnid%1",_town],_spawnid,false];
 
 private _hometown = _town;
-
-private _count = 0;
-
 private _groups = [];
 
 private _pop = server getVariable format["population%1",_town];
@@ -34,7 +31,7 @@ if(_numCiv > 50) then {
 	_numCiv = 50;
 };
 
-_hour = date select 3;
+private _hour = date select 3;
 
 /*
 private _church = server getVariable [format["churchin%1",_town],[]];
@@ -49,33 +46,32 @@ if !(_church isEqualTo []) then {
 	sleep 0.2;
 };*/
 
-_count = 0;
+private _count = 0;
 
-_pergroup = 1;
+private _pergroup = 1;
 if(_numCiv > 8) then {_pergroup = 2};
 if(_numCiv > 16) then {_pergroup = 4};
 private _idents = OT_civilians getVariable [format["civs%1",_town],[]];
 private _numidents = count _idents;
 while {_count < _numCiv} do {
-	_groupcount = 0;
-	_group = createGroup civilian;
-	_group deleteGroupWhenEmpty true;
+	private _groupcount = 0;
+	private _group = createGroup [civilian,true];
 	_group setBehaviour "SAFE";
 	_groups pushback _group;
 
-	_home = _town call OT_fnc_getRandomRoadPosition;
-	while {(_groupcount < _pergroup) and (_count < _numCiv)} do {
-		_pos = [_home,random 360,10] call SHK_pos;
+	private _home = _town call OT_fnc_getRandomRoadPosition;
+	while {(_groupcount < _pergroup) && (_count < _numCiv)} do {
+		_pos = [_home,random 360,10] call SHK_pos_fnc_pos;
 		_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 		_civ setBehaviour "SAFE";
 		_civ setVariable ["hometown",_hometown,true];
 		[_civ] call OT_fnc_initCivilian;
 
-		_identity = [];
+		private _identity = [];
 		if(_count < _numidents) then {
-			_civid = _idents select _count;
-			_ident = (OT_civilians getVariable [format["%1",_civid],[]]);
-			if((_ident select 3) == -1) then {
+			private _civid = _idents select _count;
+			private _ident = (OT_civilians getVariable [format["%1",_civid],[]]);
+			if((_ident select 3) isEqualTo -1) then {
 				_identity = _ident select 0;
 				_civ setVariable ["OT_civid",_civid,true];
 				spawner setVariable [format["civspawn%1",_civid],_civ,false];
@@ -83,7 +79,7 @@ while {_count < _numCiv} do {
 				_identity = call OT_fnc_randomLocalIdentity;
 			};
 		};
-		if(isNil "_identity" or count _identity == 0) then {
+		if(isNil "_identity" || { _identity isEqualTo [] }) then {
 			_identity = call OT_fnc_randomLocalIdentity;
 		};
 		[_civ,_identity] call OT_fnc_applyIdentity;
@@ -97,33 +93,33 @@ sleep 0.2;
 //Do gangs
 private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 {
-	_gangid = _x;
-	_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
-	_members = _gang select 0;
+	private _gangid = _x;
+	private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+	_gang params ["_members"];
 
 	if !(isNil "_members") then {
-		_vest = "";
+		private _vest = "";
 		if(count _gang > 3) then {
 			_vest = _gang select 3;
 		}else{
 			_vest = selectRandom OT_allProtectiveVests;
 			_gang set[3,_vest];
 		};
-		_group = creategroup opfor;
+		private _group = creategroup [opfor,true];
 		_groups pushback _group;
-		_home = _town call OT_fnc_getRandomRoadPosition;
+		private _home = _town call OT_fnc_getRandomRoadPosition;
 		{
-			_civid = _x;
-			_ident = (OT_civilians getVariable [format["%1",_civid],[]]);
-			_identity = _ident select 0;
+			private _civid = _x;
+			private _ident = (OT_civilians getVariable [format["%1",_civid],[]]);
+			_ident params ["_identity"];
 
-			_pos = [_home,random 360,10] call SHK_pos;
-			_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
+			private _pos = [_home,random 360,10] call SHK_pos_fnc_pos;
+			private _civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
 			[_civ] joinSilent nil;
 			[_civ] joinSilent _group;
 			spawner setVariable [format["civspawn%1",_civid],_civ,false];
 
-			if(isNil "_identity" or count _identity == 0) then {
+			if(isNil "_identity" || { _identity isEqualTo [] }) then {
 				_identity = call OT_fnc_randomLocalIdentity;
 			};
 

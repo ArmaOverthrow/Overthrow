@@ -1,9 +1,9 @@
-_b = player call OT_fnc_nearestRealEstate;
-_building = objNull;
-if(typename _b == "ARRAY") then {
+private _b = player call OT_fnc_nearestRealEstate;
+private _building = objNull;
+if(typename _b isEqualTo "ARRAY") then {
 	_building = (_b select 0);
 };
-if(damage _building == 1) exitWith {
+if(damage _building isEqualTo 1) exitWith {
 	_price =  round((_b select 1) * 0.25);
 	_money = player getVariable ["money",0];
 	if(_money >= _price) then {
@@ -20,7 +20,7 @@ if(damage _building == 1) exitWith {
 	};
 };
 if(typeof _building == OT_policeStation) exitWith {[] call OT_fnc_policeDialog};
-if((typeof _building == OT_barracks) or (typeof _building == OT_trainingCamp)) exitWith {[] call OT_fnc_recruitDialog};
+if((typeof _building == OT_barracks) || (typeof _building == OT_trainingCamp)) exitWith {[] call OT_fnc_recruitDialog};
 if(typeof _building == OT_warehouse) exitWith {[] call OT_fnc_buyVehicleDialog};
 
 if(typename _b != "ARRAY") exitWith {
@@ -40,13 +40,13 @@ _handled = false;
 _type = "buy";
 _err = false;
 _building = objNull;
-if(typename _b == "ARRAY") then {
+if(typename _b isEqualTo "ARRAY") then {
 	_building = (_b select 0);
 	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
 		_owner = _building call OT_fnc_getOwner;
-		if(_owner == getplayeruid player) then {
+		if(_owner isEqualTo getplayeruid player) then {
 			_home = player getVariable "home";
 			if((_home distance _building) < 5) exitWith {"You cannot lease your home" call OT_fnc_notifyMinor;_err = true};
 			_handled = true;

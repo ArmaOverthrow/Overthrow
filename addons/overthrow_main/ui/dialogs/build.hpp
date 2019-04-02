@@ -113,7 +113,7 @@ class OT_dialog_buildbase
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
+	};
 };
 
 class OT_dialog_buildobjective
@@ -242,9 +242,7 @@ class OT_dialog_buildobjective
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-
-
-	}
+	};
 };
 
 class OT_dialog_buildtown
@@ -326,7 +324,7 @@ class OT_dialog_buildtown
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
+	};
 };
 
 class OT_dialog_police
@@ -347,7 +345,7 @@ class OT_dialog_police
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 	class controls
 	{
 				////////////////////////////////////////////////////////
@@ -495,5 +493,5 @@ class OT_dialog_police
 
 
 
-	}
-}
+	};
+};

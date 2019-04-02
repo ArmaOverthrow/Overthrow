@@ -1,65 +1,82 @@
 //VCOM AI, huge credits to Genesis, without VCOM this campaign would be so much less
 
-[] call OT_fnc_initVCOMAI;
-
-[] execVM "\ot\functions\geography\SHK_pos\shk_pos_init.sqf";
-
-OT_ACEremoveAction = ["OT_Remove","Remove","",{deleteVehicle _target;},{(call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner)},{},[], [0,0,0], 10] call ace_interact_menu_fnc_createAction;
+OT_ACEremoveAction = [
+	"OT_Remove",
+	"Remove",
+	"",
+	{},
+	{params ["_target"]; (call OT_fnc_playerIsGeneral) || (_target call OT_fnc_playerIsOwner)},
+	{},
+	[],
+	[0,0,0],
+	10
+] call ace_interact_menu_fnc_createAction;
+OT_ACEremoveActionConfirm = [
+	"OT_Remove_Confirm",
+	"Confirm",
+	"",
+	{params ["_target"]; deleteVehicle _target;},
+	{true},
+	{},
+	[],
+	[0,0,0],
+	10
+] call ace_interact_menu_fnc_createAction;
 
 //Find markers
 OT_ferryDestinations = [];
 OT_NATO_control = [];
 OT_regions = [];
 {
-	if((_x select [0,12]) == "destination_") then {OT_ferryDestinations pushback _x};
-	if((_x select [0,8]) == "control_") then {OT_NATO_control pushback _x};
-	if((_x select [0,7]) == "island_") then {OT_regions pushback _x};
-	if((_x select [0,7]) == "region_") then {OT_regions pushback _x};
+	if((_x select [0,12]) isEqualTo "destination_") then {OT_ferryDestinations pushback _x};
+	if((_x select [0,8]) isEqualTo "control_") then {OT_NATO_control pushback _x};
+	if((_x select [0,7]) isEqualTo "island_") then {OT_regions pushback _x};
+	if((_x select [0,7]) isEqualTo "region_") then {OT_regions pushback _x};
 }foreach(allMapMarkers);
 
 OT_missions = [];
 OT_localMissions = [];
-private _allMissions = "true" configClasses ( configFile >> "CfgOverthrowMissions" );
 {
 	_name = configName _x;
 	_script = getText (_x >> "script");
 	_code = compileFinal preprocessFileLineNumbers _script;
 	OT_missions pushback _code;
-}foreach(_allMissions);
+}foreach("true" configClasses ( configFile >> "CfgOverthrowMissions" ));
 
 OT_tutorialMissions = [];
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_NATO.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_CRIM.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_Drugs.sqf");
-OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\ot\missions\tutorial\tut_Economy.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_NATO.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_CRIM.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Drugs.sqf");
+OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Economy.sqf");
 
-call compileFinal preprocessFileLineNumbers "data\names.sqf";
-call compileFinal preprocessFileLineNumbers "data\towns.sqf";
-call compileFinal preprocessFileLineNumbers "data\airports.sqf";
-call compileFinal preprocessFileLineNumbers "data\objectives.sqf";
-call compileFinal preprocessFileLineNumbers "data\economy.sqf";
-call compileFinal preprocessFileLineNumbers "data\comms.sqf";
+// inside mission
+call compile preprocessFileLineNumbers "data\names.sqf";
+call compile preprocessFileLineNumbers "data\towns.sqf";
+call compile preprocessFileLineNumbers "data\airports.sqf";
+call compile preprocessFileLineNumbers "data\objectives.sqf";
+call compile preprocessFileLineNumbers "data\economy.sqf";
+call compile preprocessFileLineNumbers "data\comms.sqf";
 
 //Identity
 OT_faces_local = [];
 OT_faces_western = [];
 OT_faces_eastern = [];
 {
-    _types = getArray(_x >> "identityTypes");
+    private _types = getArray(_x >> "identityTypes");
 	if(OT_identity_local in _types) then {OT_faces_local pushback configName _x};
 	if(OT_identity_western in _types) then {OT_faces_western pushback configName _x};
 	if(OT_identity_eastern in _types) then {OT_faces_eastern pushback configName _x};
-}foreach("getNumber(_x >> 'disabled') == 0" configClasses (configfile >> "CfgFaces" >> "Man_A3"));
+}foreach("getNumber(_x >> 'disabled') isEqualTo 0" configClasses (configfile >> "CfgFaces" >> "Man_A3"));
 
 OT_voices_local = [];
 OT_voices_western = [];
 OT_voices_eastern = [];
 {
-    _types = getArray(_x >> "identityTypes");
+    private _types = getArray(_x >> "identityTypes");
 	if(OT_language_local in _types) then {OT_voices_local pushback configName _x};
 	if(OT_language_western in _types) then {OT_voices_western pushback configName _x};
 	if(OT_language_eastern in _types) then {OT_voices_eastern pushback configName _x};
-}foreach("getNumber(_x >> 'scope') == 2" configClasses (configfile >> "CfgVoice"));
+}foreach("getNumber(_x >> 'scope') isEqualTo 2" configClasses (configfile >> "CfgVoice"));
 
 //Find houses
 OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F"]; //buildings with potentially lots of people living in them
@@ -68,14 +85,15 @@ OT_lowPopHouses = [];
 OT_medPopHouses = [];
 OT_highPopHouses = [];
 {
-    _cost = getNumber(_x >> "cost");
-    call {
-        if(_cost > 70000) then {OT_hugePopHouses pushback configName _x};
-        if(_cost > 55000) then {OT_highPopHouses pushback configName _x};
-        if(_cost > 25000) then {OT_medPopHouses pushback configName _x};
-        OT_lowPopHouses pushback configName _x
+    private _cost = getNumber(_x >> "cost");
+    [_cost,configName _x] call {
+		params ["_cost","_name"];
+        if(_cost > 70000) then {OT_hugePopHouses pushback _name;};
+        if(_cost > 55000) then {OT_highPopHouses pushback _name;};
+        if(_cost > 25000) then {OT_medPopHouses pushback _name;};
+        OT_lowPopHouses pushback _name;
     };
-}foreach("(getNumber (_x >> 'scope') == 2) && (configName _x isKindOf 'House') && (configName _x find '_House' > -1)" configClasses (configfile >> "CfgVehicles"));
+}foreach("(getNumber (_x >> 'scope') isEqualTo 2) && (configName _x isKindOf 'House') && (configName _x find '_House' > -1)" configClasses (configfile >> "CfgVehicles"));
 
 OT_allBuyableBuildings = OT_lowPopHouses + OT_medPopHouses + OT_highPopHouses + OT_hugePopHouses + OT_mansions + [OT_item_Tent,OT_flag_IND];
 
@@ -92,20 +110,12 @@ OT_allTownPositions = [];
 	if(isServer) then {
 		server setVariable [_name,_pos,true];
 	};
-}foreach (OT_townData);
+}foreach(OT_townData);
 
-OT_allAirports = [];
-{
-		OT_allAirports pushBack (_x select 1);
-}foreach (OT_airportData);
-
-if(isServer) then {
-	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
-};
+OT_allAirports = OT_airportData apply { _x select 1 };
 
 //Global overthrow variables related to any map
 
-OT_menuHandler = {};
 OT_currentMissionFaction = "";
 OT_rankXP = [100,250,500,1000,4000,10000,100000];
 
@@ -157,6 +167,18 @@ OT_item_UAVterminal = "I_UavTerminal";
 
 OT_item_DefaultBlueprints = [];
 
+OT_itemCategoryDefinitions = [
+    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass"]],
+    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
+    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
+    ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],
+    ["Surplus",["Rangefinder","Binocular","Compass"]]
+];
+
+OT_items = [];
+OT_allItems = [];
+OT_craftableItems = [];
+
 call OT_fnc_detectItems;
 
 OT_notifyHistory = [];
@@ -188,27 +210,29 @@ OT_backpacks = [
 	["B_Carryall_oli",60,0,0,1],
 	["B_Parachute",50,0,0,1]
 ];
-
-cost setVariable ["OT_Wood",[5,0,0,0],true];
-cost setVariable ["OT_Steel",[25,0,0,0],true];
-cost setVariable ["OT_Plastic",[40,0,0,0],true];
-cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
-cost setVariable ["OT_Grapes",[5,0,0,0],true];
-cost setVariable ["OT_Sugar",[15,0,0,0],true];
-cost setVariable ["OT_Wine",[25,0,0,0],true];
-cost setVariable ["OT_Olives",[7,0,0,0],true];
-cost setVariable ["OT_Fertilizer",[20,0,0,0],true];
-
 if(OT_hasTFAR) then {
-	[OT_backpacks,[
+	OT_backpacks append [
 		["tf_anprc155",100,0,0,0.1],
 		["tf_anarc210",150,0,0,0.1],
 		["tf_anarc164",20,0,0,0.5],
 		["tf_anprc155_coyote",10,0,0,0.5]
-	]] call BIS_fnc_arrayPushStack;
+	];
 };
 
-//Detecting vehicles and weapons
+if (isServer) then {
+	cost setVariable ["OT_Wood",[5,0,0,0],true];
+	cost setVariable ["OT_Steel",[25,0,0,0],true];
+	cost setVariable ["OT_Plastic",[40,0,0,0],true];
+	cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
+	cost setVariable ["OT_Grapes",[5,0,0,0],true];
+	cost setVariable ["OT_Sugar",[15,0,0,0],true];
+	cost setVariable ["OT_Wine",[25,0,0,0],true];
+	cost setVariable ["OT_Olives",[7,0,0,0],true];
+	cost setVariable ["OT_Fertilizer",[20,0,0,0],true];
+};
+
+
+//Detecting vehicles && weapons
 
 OT_boats = [
 	["C_Scooter_Transport_01_F",150,1,0,1],
@@ -225,63 +249,51 @@ OT_allMagazines = [OT_ammo_50cal];
 OT_allBackpacks = [];
 OT_allStaticBackpacks = [];
 OT_vehWeights_civ = [];
-_mostExpensive = 0;
 OT_mostExpensiveVehicle = "";
 
-private _allHouses = "getNumber ( _x >> ""ot_isPlayerHouse"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_spawnHouses = [];
 {
-	_cls = configName _x;
-	OT_spawnHouses pushback _cls;
-	if((OT_allBuyableBuildings find _cls) == -1) then {
-		OT_allBuyableBuildings pushback _cls;
-	};
-	if((OT_allRealEstate find _cls) == -1) then {
-		OT_allRealEstate pushback _cls;
-	};
-}foreach(_allHouses);
+	private _cls = configName _x;
+	OT_spawnHouses pushBack _cls;
+	OT_allBuyableBuildings pushBackUnique _cls;
+	OT_allRealEstate pushBackUnique _cls;
+}foreach( "getNumber ( _x >> ""ot_isPlayerHouse"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" ) );
 
 OT_gunDealerHouses = OT_spawnHouses;
 
 private _allShops = "getNumber ( _x >> ""ot_isShop"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
-OT_shops = [];
-{
-	_cls = configName _x;
-	OT_shops pushback _cls;
-}foreach(_allShops);
+OT_shops = _allShops apply {configName _x};
 
 private _allCarShops = "getNumber ( _x >> ""ot_isCarDealer"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
-OT_carShops = [];
-{
-	_cls = configName _x;
-	OT_carShops pushback _cls;
-}foreach(_allCarShops);
+OT_carShops = _allCarShops apply {configName _x};
 
 private _allVehs = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
 	{ (getArray ( _x >> ""threat"" ) select 0) < 0.5}
 	&&
-    { (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") or (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Support"")}
+    { (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") || (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Support"")}
 	&&
     { (getText ( _x >> ""faction"" ) isEqualTo ""CIV_F"") or
      (getText ( _x >> ""faction"" ) isEqualTo ""IND_F"")})
 
 " configClasses ( configFile >> "cfgVehicles" );
 
+private _mostExpensive = 0;
 {
-	_cls = configName _x;
-	_cost = round(getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + (getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower") * 2));
-	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * 0.1);
+	private _cls = configName _x;
+	private _clsConfig = configFile >> "cfgVehicles" >> _cls;
+	private _cost = round(getNumber (_clsConfig >> "armor") + (getNumber (_clsConfig >> "enginePower") * 2));
+	_cost = _cost + round(getNumber (_clsConfig >> "maximumLoad") * 0.1);
 
 	if(_cls isKindOf "Truck_F") then {_cost = _cost * 2};
-	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") != "CIV_F") then {_cost = _cost * 1.5};
+	if(getText (_clsConfig >> "faction") != "CIV_F") then {_cost = _cost * 1.5};
 
 
-	OT_vehicles pushback [_cls,_cost,0,getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"),2];
+	OT_vehicles pushback [_cls,_cost,0,getNumber (_clsConfig >> "armor"),2];
 	OT_allVehicles pushback _cls;
-	if(getText (configFile >> "cfgVehicles" >> _cls >> "faction") == "CIV_F") then {
-		if(getText(configFile >> "cfgVehicles" >> _cls >> "textSingular") != "truck" and getText(configFile >> "cfgVehicles" >> _cls >> "driverAction") != "Kart_driver") then {
+	if(getText (_clsConfig >> "faction") == "CIV_F") then {
+		if(getText(_clsConfig >> "textSingular") != "truck" && getText(_clsConfig >> "driverAction") != "Kart_driver") then {
 			OT_vehTypes_civ pushback _cls;
 
 			if(_cost > _mostExpensive)then {
@@ -290,7 +302,7 @@ private _allVehs = "
 			};
 		};
 	};
-} foreach (_allVehs);
+}foreach(_allVehs);
 
 private _allHelis = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
@@ -304,14 +316,15 @@ private _allHelis = "
 " configClasses ( configFile >> "cfgVehicles" );
 
 {
-	_cls = configName _x;
-	_multiply = 3;
+	private _cls = configName _x;
+	private _clsConfig = configFile >> "cfgVehicles" >> _cls;
+	private _multiply = 3;
 	if(_cls isKindOf "Plane") then {_multiply = 6};
-	_cost = (getNumber (configFile >> "cfgVehicles" >> _cls >> "armor") + getNumber (configFile >> "cfgVehicles" >> _cls >> "enginePower")) * _multiply;
-	_cost = _cost + round(getNumber (configFile >> "cfgVehicles" >> _cls >> "maximumLoad") * _multiply);
-	_steel = round(getNumber (configFile >> "cfgVehicles" >> _cls >> "armor"));
-	_numturrets = count("true" configClasses(configFile >> "cfgVehicles" >> _cls >> "Turrets"));
-	_plastic = 2;
+	private _cost = (getNumber (_clsConfig >> "armor") + getNumber (_clsConfig >> "enginePower")) * _multiply;
+	_cost = _cost + round(getNumber (_clsConfig >> "maximumLoad") * _multiply);
+	private _steel = round(getNumber (_clsConfig >> "armor"));
+	private _numturrets = count("true" configClasses(_clsConfig >> "Turrets"));
+	private _plastic = 2;
 	if(_numturrets > 0) then {
 		_cost = _cost + (_numturrets * _cost * _multiply);
 		_steel = _steel * 3;
@@ -324,17 +337,17 @@ private _allHelis = "
 
 	OT_helis pushback [_cls,[_cost,0,_steel,_plastic],true];
 	OT_allVehicles pushback _cls;
-} foreach (_allHelis);
+}foreach(_allHelis);
 
+//Chinook (unarmed) special case for production logistics
+OT_helis pushback ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
+OT_allVehicles pushBackUnique "B_Heli_Transport_03_unarmed_F";
 if(isServer) then {
-	//Chinook (unarmed) special case for production logistics
 	cost setVariable ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
-	OT_helis pushback ["B_Heli_Transport_03_unarmed_F",[150000,0,110,5],true];
-	OT_allVehicles pushback "B_Heli_Transport_03_unarmed_F";
 };
 
 {
-	_cls = _x select 0;
+	private _cls = _x select 0;
 	if(isServer) then {
 		cost setVariable [_cls,[_x select 1,_x select 2,_x select 3,_x select 4],true];
 	};
@@ -354,7 +367,7 @@ private _allWeapons = "
 private _allAttachments = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
-    { _t = getNumber ( _x >> ""ItemInfo"" >> ""type"" ); _t isEqualTo 301 or _t isEqualTo 302 or _t isEqualTo 101})
+    { _t = getNumber ( _x >> ""ItemInfo"" >> ""type"" ); _t isEqualTo 301 || _t isEqualTo 302 || _t isEqualTo 101})
 " configClasses ( configFile >> "cfgWeapons" );
 
 private _allOptics = "
@@ -425,45 +438,46 @@ OT_allFacewear = [];
 OT_allGoggles = [];
 
 {
-	_name = configName _x;
-	_title = getText (_x >> "displayname");
-	_m = getNumber(_x >> "mass");
-	_ignore = getNumber(_x >> "ot_shopignore");
+	private _name = configName _x;
+	private _title = getText (_x >> "displayname");
+	private _m = getNumber(_x >> "mass");
+	private _ignore = getNumber(_x >> "ot_shopignore");
 	if(_ignore != 1) then {
 		if((_name find "Balaclava_TI_") > -1) then {
 			_m = _m * 2;
 		};
 
-		_protection = getNumber(_x >> "ACE_Protection");
+		private _protection = getNumber(_x >> "ACE_Protection");
 		if(_protection > 0) then {
 			_m = round(_m * 1.5);
 		};
 
-		call {
+		[_name,_title] call {
+			params ["_name","_title"];
 			if(_name == "None") exitWith {};
 			if(_name == "G_Goggles_VR") exitWith {};
-			if((_title find "Tactical") > -1 or (_title find "Diving") > -1 or (_title find "Goggles") > -1) exitWith {
+			if((_title find "Tactical") > -1 || (_title find "Diving") > -1 || (_title find "Goggles") > -1) exitWith {
 				OT_allGoggles pushback _name;
 			};
-			if((_title find "Balaclava") > -1 or (_title find "Bandana") > -1) exitWith {
+			if((_title find "Balaclava") > -1 || (_title find "Bandana") > -1) exitWith {
 				OT_allFacewear pushback _name;
 			};
 			OT_allGlasses pushback _name;
 		};
-		if(isServer and _name != "None") then {
+		if(isServer && _name != "None") then {
 			cost setVariable [_name,[_m*3,0,0,ceil(_m*0.5)],true];
 		};
 	};
 }foreach(_allGlasses);
 
 {
-	_name = configName _x;
-	_title = getText (configFile >> "cfgFactionClasses" >> _name >> "displayName");
-	_side = getNumber (configFile >> "cfgFactionClasses" >> _name >> "side");
-	_flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
-	_numblueprints = 0;
+	private _name = configName _x;
+	private _title = getText (configFile >> "cfgFactionClasses" >> _name >> "displayName");
+	private _side = getNumber (configFile >> "cfgFactionClasses" >> _name >> "side");
+	private _flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
+	private _numblueprints = 0;
 
-	//Get vehicles and weapons
+	//Get vehicles && weapons
 	private _vehicles = [];
 	private _weapons = [];
 	private _blacklist = ["Throw","Put","NLAW_F"];
@@ -473,25 +487,25 @@ OT_allGoggles = [];
 		and ( getText ( _x >> ""faction"" ) isEqualTo """ + _name + """ )
 	" configClasses ( configFile >> "cfgVehicles" );
 	{
-		_cls = configName _x;
+		private _cls = configName _x;
 		if(_cls isKindOf "CAManBase") then {
 			//Get weapons;
 			{
-				_x = [_x] call BIS_fnc_baseWeapon;
-				if !(_x in _blacklist) then {
+				private _base = [_x] call BIS_fnc_baseWeapon;
+				if !(_base in _blacklist) then {
 					if !(_x in _weapons) then {_weapons pushback _x};
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
 			//Get ammo
 			{
-				if !(_x in _blacklist or _x in OT_allExplosives) then {
+				if !(_x in _blacklist || _x in OT_allExplosives) then {
 					if !(_x in _weapons) then {_weapons pushback _x};
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
 		}else{
 			//It's a vehicle
-			if !(_cls isKindOf "Bag_Base" or _cls isKindOf "StaticWeapon") then {
-				if(_cls isKindOf "LandVehicle" or _cls isKindOf "Air" or _cls isKindOf "Ship") then {
+			if !(_cls isKindOf "Bag_Base" || _cls isKindOf "StaticWeapon") then {
+				if(_cls isKindOf "LandVehicle" || _cls isKindOf "Air" || _cls isKindOf "Ship") then {
 					_vehicles pushback _cls;
 					_numblueprints = _numblueprints + 1;
 				};
@@ -503,81 +517,100 @@ OT_allGoggles = [];
 		spawner setVariable [format["facweapons%1",_name],_weapons,true];
 		spawner setVariable [format["facvehicles%1",_name],_vehicles,true];
 	};
-	if(_side > -1 and _numblueprints > 0) then {
+	if(_side > -1 && _numblueprints > 0) then {
 		OT_allFactions pushback [_name,_title,_side,_flag];
 	};
 }foreach(_allFactions);
 
 {
-	_name = configName _x;
+	private _name = configName _x;
 	_name = [_name] call BIS_fnc_baseWeapon;
 
-	_short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
+	private _short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
 
-	_s = _short splitString ":";
-	_caliber = " 5.56";
-	_haslauncher = false;
+	private _s = _short splitString ":";
+	private _caliber = " 5.56";
+	private _haslauncher = false;
 	if(count _s > 1) then{
 		_s = (_s select 1) splitString "x";
 		_caliber = _s select 0;
 	};
 
-	_weapon = [_name] call BIS_fnc_itemType;
-	_weaponType = _weapon select 1;
+	private _weapon = [_name] call BIS_fnc_itemType;
+	private _weaponType = _weapon select 1;
 
-	_muzzles = getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
+	private _muzzles = getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
 	{
 		if((_x find "EGLM") > -1) then {
 			_haslauncher = true;
 		};
 	}foreach(_muzzles);
 
-	_cost = 500;
-	_steel = 2;
-	switch (_weaponType) do	{
-		case "SubmachineGun": {_steel = 0.5;_cost = 250;OT_allSubMachineGuns pushBack _name};
+	([_weaponType,_name,_caliber,_haslauncher,_short] call {
+		params ["_weaponType","_name","_caliber","_haslauncher","_short"];
 
-		case "AssaultRifle": {
-			call {
-				if(_caliber == " 5.56" or _caliber == "5.56" or _caliber == " 5.45" or _caliber == " 5.8") exitWith {_cost = 500};
-				if(_caliber == " 12 gauge") exitWith {_cost = 1200};
-				if(_caliber == " .408") exitWith {_cost = 4000};
-				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
-				if(_caliber == " 9") exitWith {_cost = 400}; //9x21mm
-				if(_caliber == " 6.5") exitWith {_cost = 1000};
-				if(_caliber == " 7.62") exitWith {_cost = 1500};
-				if(_caliber == " 9.3" or _caliber == "9.3") exitWith {_cost = 1700};
-				if(_caliber == " 12.7") exitWith {_cost = 3000};
+		if (_weaponType == "SubmachineGun") exitWith {
+			OT_allSubMachineGuns pushBack _name;
+			[250, 0.5];
+		};
+		if (_weaponType == "AssaultRifle") exitWith {
+			private _cost = [_caliber] call {
+				params ["_caliber"];
+				if(_caliber == " 5.56" || _caliber == "5.56" || _caliber == " 5.45" || _caliber == " 5.8") exitWith {500};
+				if(_caliber == " 12 gauge") exitWith {1200};
+				if(_caliber == " .408") exitWith {4000};
+				if(_caliber == " .338 Lapua Magnum" || _caliber == " .303") exitWith {700};
+				if(_caliber == " 9") exitWith {400}; //9x21mm
+				if(_caliber == " 6.5") exitWith {1000};
+				if(_caliber == " 7.62") exitWith {1500};
+				if(_caliber == " 9.3" || _caliber == "9.3") exitWith {1700};
+				if(_caliber == " 12.7") exitWith {3000};
 				//I dunno what caliber this is
-				_cost = 1500;
+				1500;
 			};
 			if(_haslauncher) then {_cost = round(_cost * 1.2)};
 			OT_allAssaultRifles pushBack _name;
 			if(_cost > 1400) then {
 				OT_allExpensiveRifles pushback _name;
-			};
-			if(_cost < 1400) then {
+			} else {
 				OT_allCheapRifles pushback _name;
 			};
+			[_cost]
 		};
-		case "MachineGun": {_cost = 1500;OT_allMachineGuns pushBack _name};
-		case "SniperRifle": {_cost = 4000;OT_allSniperRifles pushBack _name};
-		case "Handgun": {
-			_steel = 1;
-			_cost = 100;
-			call {
-				if(_caliber == " .408") exitWith {_cost = 2000};
-				if(_caliber == " .338 Lapua Magnum" or _caliber == " .303") exitWith {_cost = 700};
+		if (_weaponType ==  "MachineGun") exitWith {
+			OT_allMachineGuns pushBack _name;
+			[1500];
+		};
+		if (_weaponType ==  "SniperRifle") exitWith {
+			OT_allSniperRifles pushBack _name;
+			[4000];
+		};
+		if (_weaponType ==  "Handgun") exitWith {
+			private _cost = _caliber call {
+				if(_this == " .408") exitWith {2000};
+				if(_this == " .338 Lapua Magnum" || _this == " .303") exitWith {700};
+				100
 			};
 			if(_short != "Metal Detector") then {
 				OT_allHandGuns pushBack _name
-			}
+			};
+			[_cost, 1]
 		};
-		case "MissileLauncher": {_cost=15000;OT_allMissileLaunchers pushBack _name};
-		case "RocketLauncher": {_cost = 1500;if(_name == "launch_NLAW_F") then {_cost=1000};OT_allRocketLaunchers pushBack _name};
-		case "Vest": {
+		if (_weaponType ==  "MissileLauncher") exitWith {
+			OT_allMissileLaunchers pushBack _name;
+			[15000];
+		};
+		if (_weaponType ==  "RocketLauncher") exitWith {
+			OT_allRocketLaunchers pushBack _name;
+			private _cost = 1500;
+			if(_name == "launch_NLAW_F") then {
+				_cost=1000
+			};
+			[_cost]
+		};
+		if (_weaponType ==  "Vest") exitWith {
 			if !(_name in ["V_RebreatherB","V_RebreatherIA","V_RebreatherIR","V_Rangemaster_belt"]) then {
-				_cost = 40 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 20);
+				private _cost = 40 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Chest" >> "armor") * 20);
 				if !(_name in ["V_Press_F","V_TacVest_blk_POLICE"]) then {
 					OT_allVests pushBack _name;
 					if(_cost > 40) then {
@@ -586,13 +619,17 @@ OT_allGoggles = [];
 					if(_cost > 300) then {
 						OT_allExpensiveVests pushback _name;
 					};
-					if(_cost < 300 and _cost > 40) then {
+					if(_cost < 300 && _cost > 40) then {
 						OT_allCheapVests pushback _name;
 					};
 				};
+				[_cost]
+			} else {
+				[]
 			};
 		};
-	};
+		[]
+	}) params [["_cost", 500], ["_steel", 2]];
 	if(isServer) then {
 		cost setVariable [_name,[_cost,0,_steel,0],true];
 	};
@@ -600,24 +637,26 @@ OT_allGoggles = [];
 
 OT_allLegalClothing = [];
 {
-	_name = configName _x;
-	_short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
-	_supply = getText(configfile >> "CfgWeapons" >> _name >> "ItemInfo" >> "containerClass");
-	_carry = getNumber(configfile >> "CfgVehicles" >> _supply >> "maximumLoad");
-	_cost = round(_carry * 0.5);
+	private _name = configName _x;
+	private _short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
+	private _supply = getText(configfile >> "CfgWeapons" >> _name >> "ItemInfo" >> "containerClass");
+	private _carry = getNumber(configfile >> "CfgVehicles" >> _supply >> "maximumLoad");
+	private _cost = round(_carry * 0.5);
 
 	OT_allClothing pushback _name;
-	_c = _name splitString "_";
-	_side = _c select 1;
-	if((_name == "V_RebreatherIA" or _side == "C" or _side == "I") and (_c select (count _c - 1) != "VR")) then {
+	private _c = _name splitString "_";
+	private _side = _c select 1;
+	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
-	cost setVariable [_name,[_cost,0,0,1],true];
+	if (isServer) then {
+		cost setVariable [_name,[_cost,0,0,1],true];
+	};
 } foreach (_allUniforms);
 
 {
-	_name = configName _x;
-	_cost = 20 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Head" >> "armor") * 30);
+	private _name = configName _x;
+	private _cost = 20 + (getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "HitpointsProtectionInfo" >> "Head" >> "armor") * 30);
 	if(_cost > 20) then {
 		OT_allHelmets pushback _name;
 	}else{
@@ -629,17 +668,17 @@ OT_allLegalClothing = [];
 } foreach (_allHelmets);
 
 {
-	_name = configName _x;
-	_m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] and (_name != "NLAW_F") and !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
-		_cost = round(_m * 4);
-		_desc = getText(_x >> "descriptionShort");
+	private _name = configName _x;
+	private _m = getNumber(_x >> "mass");
+	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
+		private _cost = round(_m * 4);
+		private _desc = getText(_x >> "descriptionShort");
 		if((_desc find ".408") > -1) then {
 			_cost = _cost * 4;
 		};
-		_exp = false;
-		_steel = 0.1;
-		_plastic = 0;
+		private _exp = false;
+		private _steel = 0.1;
+		private _plastic = 0;
 		if(getNumber(_x >> "ace_explosives_Placeable") == 1) then {
 			_exp = true;
 		};
@@ -651,12 +690,12 @@ OT_allLegalClothing = [];
 				_exp = true;
 			};
 		};
-		if((_desc find "Flare") > -1 or (_desc find "flare") > -1) then {
+		if((_desc find "Flare") > -1 || (_desc find "flare") > -1) then {
 			_cost = round(_m * 0.6);
 			_exp = false;
 		};
 
-		if(_name == OT_ammo_50cal) then {_cost = 50};
+		if(_name isEqualTo OT_ammo_50cal) then {_cost = 50};
 
 		if(_exp) then {
 			_steel = 0;
@@ -673,8 +712,8 @@ OT_allLegalClothing = [];
 } foreach (_allAmmo);
 
 {
-	_name = configName _x;
-	_m = getNumber(_x >> "ItemInfo" >> "mass");
+	private _name = configName _x;
+	private _m = getNumber(_x >> "ItemInfo" >> "mass");
 	if(getNumber(_x >> "ace_explosives_Range") > 1000) then {
 		_m = _m * 10;
 	};
@@ -687,16 +726,18 @@ OT_allLegalClothing = [];
 
 if(isServer) then {
 	//Remainding vehicle costs
+	private _cfgVeh = configFile >> "cfgVehicles";
 	{
-		_name = configName _x;
-		if((_name isKindOf "AllVehicles") and !(_name in OT_allVehicles)) then {
-			_multiply = 80;
+		private _name = configName _x;
+		if((_name isKindOf "AllVehicles") && !(_name in OT_allVehicles)) then {
+			private _multiply = 80;
 			if(_name isKindOf "Air") then {_multiply = 700}; //Planes/Helis have less armor
 
-			_cost = getNumber (configFile >> "cfgVehicles" >> _name >> "armor") * _multiply;
-			_steel = round(getNumber (configFile >> "cfgVehicles" >> _name >> "armor") * 0.5);
-			_numturrets = count("!((configName _x) select [0,5] == ""Cargo"")" configClasses(configFile >> "cfgVehicles" >> _name >> "Turrets"));
-			_plastic = 2;
+			private _clsCfg = _cfgVeh >> _name;
+			private _cost = getNumber (_clsCfg >> "armor") * _multiply;
+			private _steel = round(getNumber (_clsCfg >> "armor") * 0.5);
+			private _numturrets = count("!((configName _x) select [0,5] == ""Cargo"")" configClasses(_clsCfg >> "Turrets"));
+			private _plastic = 2;
 			if(_numturrets > 0) then {
 				_cost = _cost + (_numturrets * _cost * 10);
 				_steel = _steel + 50;
@@ -712,14 +753,14 @@ if(isServer) then {
 
 OT_attachments = [];
 {
-	_name = configName _x;
-	_cost = 75;
-	_t = getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "type");
-	if(_t == 302) then {
+	private _name = configName _x;
+	private _cost = 75;
+	private _t = getNumber(configFile >> "CfgWeapons" >> _name >> "ItemInfo" >> "type");
+	if(_t isEqualTo 302) then {
 		//Bipods
 		_cost = 150;
 	};
-	if(_t == 101) then {
+	if(_t isEqualTo 101) then {
 		//Suppressors
 		_cost = 350;
 	};
@@ -731,13 +772,13 @@ OT_attachments = [];
 } foreach (_allAttachments);
 
 {
-	_name = configName _x;
-	_allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" );
-	_cost = 50;
+	private _name = configName _x;
+	private _allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" );
+	private _cost = 50;
 	{
-		_mode = configName _x;
-		_max = getNumber (configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" >> _mode >> "distanceZoomMax");
-		_mul = 0.1;
+		private _mode = configName _x;
+		private _max = getNumber (configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" >> _mode >> "distanceZoomMax");
+		private _mul = 0.1;
 		if(_mode == "NVS") then {_mul = 0.2};
 		if(_mode == "TWS") then {_mul = 0.5};
 		_cost = _cost + floor(_max * _mul);
@@ -764,20 +805,20 @@ if(isServer) then {
 //populate the cost gamelogic with the above data so it can be accessed quickly
 {
 	if(isServer) then {
-		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+		cost setVariable [_x select 0,_x select [1,4],true];
 	};
 	OT_allBackpacks pushBack (_x select 0);
 }foreach(OT_backpacks);
 {
 	if(isServer) then {
-		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+		cost setVariable [_x select 0,_x select [1,4],true];
 	};
 	OT_allStaticBackpacks pushBack (_x select 0);
 }foreach(OT_staticBackpacks);
 
 {
 	if(isServer) then {
-		cost setVariable [_x select 0,[_x select 1,_x select 2,_x select 3,_x select 4],true];
+		cost setVariable [_x select 0,_x select [1,4],true];
 	};
 	OT_allBoats pushBack (_x select 0);
 }foreach(OT_boats);
@@ -798,11 +839,11 @@ OT_Buildables = [
 		["Land_CampingTable_F",[-0.0490456,-1.74478,0],0,1,0,[],"","",true,false],
 		["Land_CampingChair_V2_F",[-1.44146,-1.7173,0],223.485,1,0,[],"","",true,false],
 		["Land_ClutterCutter_large_F",[0,0,0],0,1,0,[],"","",true,false]
-	],"OT_fnc_initTrainingCamp",true,"Allows training of recruits and hiring of mercenaries"],
+	],"OT_fnc_initTrainingCamp",true,"Allows training of recruits && hiring of mercenaries"],
 	["Bunkers",500,["Land_BagBunker_01_small_green_F","Land_HBarrier_01_big_tower_green_F","Land_HBarrier_01_tower_green_F"],"",false,"Small Defensive Structures. Press space to change type."],
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Informs helicopter pilots of where might be a nice place to land"],
-	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"OT_fnc_initObservationPost",false,"Includes unarmed personnel to keep an eye over the area and provide intel on enemy positions"],
+	["Observation Post",800,["Land_Cargo_Patrol_V4_F"],"OT_fnc_initObservationPost",false,"Includes unarmed personnel to keep an eye over the area && provide intel on enemy positions"],
 	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
 	["Guard Tower",5000,["Land_Cargo_Tower_V4_F"],"",false,"It's a huge tower, what else do you need?."],
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
@@ -813,16 +854,16 @@ OT_Buildables = [
 		["Land_WeldingTrolley_01_F",[-3.53163,1.73366,0],87.0816,1,0,[],"","",true,false],
 		["Land_ToolTrolley_02_F",[-3.47775,3.5155,0],331.186,1,0,[],"","",true,false]
 	],"OT_fnc_initWorkshop",true,"Attach weapons to vehicles"],
-	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, and if you're lucky a door that opens."],
-	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town and keep the peace. Comes with 2 units."],
+	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
+	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town && keep the peace. Comes with 2 units."],
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
 	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"]
 ];
 
 {
-	_istpl = _x select 4;
+	private _istpl = _x select 4;
 	if(_istpl) then {
-		_tpl = _x select 2;
+		private _tpl = _x select 2;
 		OT_allBuyableBuildings pushback ((_tpl select 0) select 0);
 	}else{
 		[OT_allBuyableBuildings,(_x select 2)] call BIS_fnc_arrayPushStack;
@@ -832,14 +873,14 @@ OT_Buildables = [
 //Items you can place
 OT_Placeables = [
 	["Sandbags",20,["Land_BagFence_01_long_green_F","Land_BagFence_01_short_green_F","Land_BagFence_01_round_green_F","Land_BagFence_01_corner_green_F","Land_BagFence_01_end_green_F"],[0,3,0.8],"Bags filled with lots of sand. Apparently this can stop bullets or something?"],
-	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2],"Large and terribly flimsy structures that may or may not obscure your forces from airborne units."],
+	["Camo Nets",40,["CamoNet_ghex_F","CamoNet_ghex_open_F","CamoNet_ghex_big_F"],[0,7,2],"Large && terribly flimsy structures that may or may not obscure your forces from airborne units."],
 	["Barriers",60,["Land_HBarrier_01_line_5_green_F","Land_HBarrier_01_line_3_green_F","Land_HBarrier_01_line_1_green_F"],[0,4,1.2],"Really big sandbags, basically."],
 	["Map",30,[OT_item_Map],[0,2,1.2],"Use these to save your game, change options or check town info."],
-	["Safe",50,[OT_item_Safe],[0,2,0.5],"Store and retrieve money"],
-	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels and lights"]
+	["Safe",50,[OT_item_Safe],[0,2,0.5],"Store && retrieve money"],
+	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels && lights"]
 ];
 
-//People you can recruit, and squads are composed of
+//People you can recruit, && squads are composed of
 OT_Recruitables = [
 	["I_soldier_F","AssaultRifle","",200,"",""], //0
 	["I_soldier_AR_F","MachineGun","",200,"",""], //1
@@ -865,11 +906,7 @@ OT_Squadables = [
 	["Fire Team",[7,0,1,2,3,8],"FIR"],
 	["Infantry Team",[7,0,1,2,3,8,9,10],"INF"]
 ];
-OT_allSquads = [];
-{
-	_name = _x select 0;
-	OT_allSquads pushback _name;
-}foreach(OT_Squadables);
+OT_allSquads = OT_Squadables apply { _x params ["_name"]; _name };
 
 OT_workshop = [
 	["Static MG","C_Offroad_01_F",600,"I_HMG_01_high_weapon_F","I_HMG_01_high_F",[[0.25,-2,1]],0],
@@ -885,10 +922,10 @@ OT_ferryDestinations = [];
 OT_NATO_control = [];
 OT_regions = [];
 {
-	if((_x select [0,12]) == "destination_") then {OT_ferryDestinations pushback _x};
-	if((_x select [0,8]) == "control_") then {OT_NATO_control pushback _x};
-	if((_x select [0,7]) == "island_") then {OT_regions pushback _x};
-	if((_x select [0,7]) == "region_") then {OT_regions pushback _x};
+	if((_x select [0,12]) isEqualTo "destination_") then {OT_ferryDestinations pushback _x};
+	if((_x select [0,8]) isEqualTo "control_") then {OT_NATO_control pushback _x};
+	if((_x select [0,7]) isEqualTo "island_") then {OT_regions pushback _x};
+	if((_x select [0,7]) isEqualTo "region_") then {OT_regions pushback _x};
 }foreach(allMapMarkers);
 
 OT_cigsArray = ["EWK_Cigar1", "EWK_Cigar2", "EWK_Cig1", "EWK_Cig2", "EWK_Cig3", "EWK_Cig4", "EWK_Glasses_Cig1", "EWK_Glasses_Cig2", "EWK_Glasses_Cig3", "EWK_Glasses_Cig4", "EWK_Glasses_Shemag_GRE_Cig6", "EWK_Glasses_Shemag_NB_Cig6", "EWK_Glasses_Shemag_tan_Cig6", "EWK_Cig5", "EWK_Glasses_Cig5", "EWK_Cig6", "EWK_Glasses_Cig6", "EWK_Shemag_GRE_Cig6", "EWK_Shemag_NB_Cig6", "EWK_Shemag_tan_Cig6", "murshun_cigs_cig0", "murshun_cigs_cig1", "murshun_cigs_cig2", "murshun_cigs_cig3", "murshun_cigs_cig4"];
@@ -896,8 +933,12 @@ OT_cigsArray = ["EWK_Cigar1", "EWK_Cigar2", "EWK_Cig1", "EWK_Cig2", "EWK_Cig3", 
 // Weapon mags to delete or not copy on transfers.
 OT_noCopyMags = ["ACE_PreloadedMissileDummy"];
 
+OT_autoSave_time = 0;
+OT_autoSave_last_time = (10*60);
+zeusToggle = true;
+
 if(isServer) then {
+	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
 	cost setVariable ["ToolKit",[80,0,0,0],true];
-	OT_varInitDone = true;
-	publicVariable "OT_varInitDone";
+	missionNamespace setVariable ["OT_varInitDone",true,true];
 };

@@ -5,32 +5,33 @@ private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 private _num = _this select 0;
 private _d = warehouse getVariable [_cls,[_cls,0]];
-_in = _d select 1;
+private _in = _d select 1;
 
-if(_num > _in or _num == -1) then {
+if(_num > _in || _num isEqualTo -1) then {
 	_num = _in;
 };
 
 _count = 0;
 private _veh = (vehicle player);
 private	_iswarehouse = false;
-if(_veh == player) then {
+if(_veh isEqualTo player) then {
 	_b = OT_warehouseTarget call OT_fnc_nearestRealEstate;
-	if(typename _b == "ARRAY") then {
+	if(typename _b isEqualTo "ARRAY") then {
 		_building = _b select 0;
-		if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+		if((typeof _building) == OT_warehouse && _building call OT_fnc_hasOwner) then {
 			_iswarehouse = true;
 			_veh = OT_warehouseTarget;
 		};
 	};
 };
-if(_veh == player) exitWith {
+if(_veh isEqualTo player) exitWith {
 	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 
 while {_count < _num} do {
-	if ((!(_veh isKindOf "Truck_F")) and (!(_veh isKindOf OT_item_Storage)) and (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
-	call {
+	if ((!(_veh isKindOf "Truck_F")) && (!(_veh isKindOf OT_item_Storage)) && (!(_veh canAdd _cls))) exitWith {hint "This vehicle is full, use a truck for more storage"; closeDialog 0; _num = _count};
+	[_cls, _veh] call {
+		params ["_cls", "_veh"];
 		if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 			_veh addWeaponCargoGlobal [_cls,1];
 		};
@@ -51,8 +52,6 @@ while {_count < _num} do {
 	};
 	_count = _count + 1;
 };
-
-
 
 private _newnum = _in - _num;
 if(_newnum > 0) then {

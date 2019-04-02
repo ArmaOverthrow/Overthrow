@@ -10,4 +10,4 @@ OT_inputHandler = {
 	};
 };
 
-["How much to put in this safe?",player getvariable ["money",100]] spawn OT_fnc_inputDialog;
+["How much to put in this safe?",player getvariable ["money",100]] call OT_fnc_inputDialog;

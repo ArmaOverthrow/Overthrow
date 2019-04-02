@@ -1,6 +1,6 @@
 _veh = vehicle player;
 
-if(_veh == player) exitWith {};
+if(_veh isEqualTo player) exitWith {};
 
 format["Taking legal inventory from vehicle"] call OT_fnc_notifyMinor;
 

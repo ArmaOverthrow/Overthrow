@@ -40,7 +40,7 @@ if(!_isBase) then {
 
 
 
-if ((!_isbase) and !(_closest in (server getVariable ["NATOabandoned",[]]))) exitWith {
+if ((!_isbase) && !(_closest in (server getVariable ["NATOabandoned",[]]))) exitWith {
 	if(_isobj) then {
 		format ["NATO does not allow construction this close to %1.",_closest] call OT_fnc_notifyMinor;
 	}else{
@@ -58,7 +58,7 @@ _start = [position player select 0, position player select 1, 2];
 buildcam = "camera" camCreate _start;
 
 buildFocus = createVehicle ["Sign_Sphere10cm_F", [_start,1000,getDir player] call BIS_fnc_relPos, [], 0, "NONE"];
-buildFocus setObjectTexture [0,"\ot\ui\clear.paa"];
+buildFocus setObjectTexture [0,"\overthrow_main\ui\clear.paa"];
 
 buildcam camSetTarget buildFocus;
 buildcam cameraEffect ["internal", "BACK"];
@@ -92,8 +92,7 @@ canBuildHere = false;
 modeCenter = _center;
 
 buildOnMouseMove = {
-	_relX = _this select 1;
-	_relY = _this select 2;
+	params ["_relX","_relY"];
 	modeValue = screenToWorld getMousePosition;
 	modeValue = [modeValue select 0,modeValue select 1,0];
 	if(!isNull modeTarget) then {
@@ -103,32 +102,32 @@ buildOnMouseMove = {
 		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
 
 		if(modeMode == 0) then {
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax) or ({!(_x isKindOf "Man") and (typeof _x != OT_flag_IND) and !(_x == modeTarget) and !(_x == modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
+			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax) || ({!(_x isKindOf "Man") && (typeof _x != OT_flag_IND) && !(_x isEqualTo modeTarget) && !(_x isEqualTo modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
-				}
+				};
 			}else{
 				if !(canBuildHere) then {
 					canBuildHere = true;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(0,1,0,0.5)'];
-				}
+				};
 			};
 		}else{
-			if(surfaceIsWater modeValue or (modeTarget distance modeCenter > modeMax)) then {
+			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax)) then {
 				if (canBuildHere) then {
 					canBuildHere = false;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(1,0,0,0.5)'];
-				}
+				};
 			}else{
 				if !(canBuildHere) then {
 					canBuildHere = true;
 					modeVisual setObjectTexture [0,'#(argb,8,8,3)color(0,1,0,0.5)'];
-				}
+				};
 			};
 		};
 	};
-	if(buildCamRotating and buildCamMoving) exitWith {
+	if(buildCamRotating && buildCamMoving) exitWith {
 		_pos = getpos buildcam;
 		buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)+_relY,(_pos select 2)];
 		buildcam camSetTarget buildFocus;
@@ -146,11 +145,9 @@ buildOnMouseMove = {
 };
 
 buildMoveCam = {
-	_relX = _this select 0;
-	_relY = _this select 1;
-	_relZ = _this select 2;
+	params ["_relX","_relY","_relZ"];
 
-	_pos = getpos buildcam;
+	private _pos = getpos buildcam;
 	buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)+_relZ];
 	_pos = getpos buildFocus;
 	buildFocus setPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)+_relZ];
@@ -159,8 +156,8 @@ buildMoveCam = {
 };
 
 buildOnKeyUp = {
-	_key = _this select 1;
-	if (_key == 42 or _key == 54) then {
+	params ["","_key"];
+	if (_key isEqualTo 42 or _key isEqualTo 54) then {
 		//Shift
 		OT_shiftHeld = false;
 	};
@@ -174,35 +171,36 @@ OT_shiftHeld = false;
 buildRotation = 0;
 
 buildOnKeyDown = {
-	_key = _this select 1;
-	_handled = false;
+	params ["", "_key"];
+	private _handled = false;
 	if(_this select 2) then {
 		buildCamRotating = true;
 	};
-	call {
-		if (_key == 42 or _key == 54) exitWith {
+	[_key] call {
+		params ["_key"];
+		if (_key isEqualTo 42 || _key isEqualTo 54) exitWith {
 			//Shift
 			OT_shiftHeld = true;
 		};
-		if (_key == 17) exitWith {
+		if (_key isEqualTo 17) exitWith {
 			//W
 			_handled = true;
 			_rel = [[0,0,0],2,(getDir buildCam)+90] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		if (_key == 31) exitWith {
+		if (_key isEqualTo 31) exitWith {
 			//S
 			_handled = true;
 			_rel = [[0,0,0],-2,(getDir buildCam)+90] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		if (_key == 30) exitWith {
+		if (_key isEqualTo 30) exitWith {
 			//A
 			_handled = true;
 			_rel = [[0,0,0],-2,(getDir buildCam)] call BIS_fnc_relPos;
 			_rel call buildMoveCam;
 		};
-		if (_key == 32) exitWith {
+		if (_key isEqualTo 32) exitWith {
 			//D
 			_handled = true;
 			_rel = [[0,0,0],2,(getDir buildCam)] call BIS_fnc_relPos;
@@ -212,7 +210,7 @@ buildOnKeyDown = {
 		if(isNull modeTarget) exitWith {};
 		_dir = buildRotation;
 
-		if(_key == 57 and modeMode == 1) exitWith {
+		if(_key isEqualTo 57 && modeMode isEqualTo 1) exitWith {
 			//Space
 			_handled = true;
 			deleteVehicle modeTarget;
@@ -229,7 +227,7 @@ buildOnKeyDown = {
 		if(_this select 2) then {
 			_amt = 1;
 		};
-		if (_key == 16) exitWith {
+		if (_key isEqualTo 16) exitWith {
 			//Q
 			_handled = true;
 			_newdir = _dir - _amt;
@@ -237,7 +235,7 @@ buildOnKeyDown = {
 			modeTarget setDir (_newdir);
 			buildRotation = _newDir;
 		};
-		if (_key == 18) exitWith {
+		if (_key isEqualTo 18) exitWith {
 			//E
 			_handled = true;
 			_newdir = _dir + _amt;
@@ -250,24 +248,23 @@ buildOnKeyDown = {
 };
 
 buildOnMouseDown = {
-	_btn = _this select 1;
-	if(_btn == 1) then {
+	params ["", "_btn"];
+	if(_btn isEqualTo 1) then {
 		buildCamMoving = true;
 	};
 };
 
 buildOnMouseUp = {
-	_btn = _this select 1;
-	_sx = _this select 2;
-	if(_btn == 1) then {
+	params ["", "_btn", "_sx"];
+	if(_btn isEqualTo 1) then {
 		buildCamMoving = false;
 	};
-	if(_btn == 2) then {
+	if(_btn isEqualTo 2) then {
 		buildCamRotating = false;
 	};
-	if(_btn == 0 and _sx > (safezoneX + (0.1 * safezoneW)) and _sx < (safezoneX + (0.9 * safezoneW))) then {
+	if(_btn isEqualTo 0 && _sx > (safezoneX + (0.1 * safezoneW)) && _sx < (safezoneX + (0.9 * safezoneW))) then {
 		//Click LMB
-		if(!isNull modeTarget and canBuildHere) then {
+		if(!isNull modeTarget && canBuildHere) then {
 			_money = player getVariable "money";
 			if(_money < modePrice) then {
 				"You cannot afford that" call OT_fnc_notifyMinor;
@@ -275,7 +272,7 @@ buildOnMouseUp = {
 				_created = objNULL;
 				playSound "3DEN_notificationDefault";
 				player setVariable ["money",_money-modePrice,true];
-				if(modeMode == 0) then {
+				if(modeMode isEqualTo 0) then {
 					_objects = [modeValue,getDir modeTarget,modeValues] call BIS_fnc_objectsMapper;
 					{
 						clearWeaponCargoGlobal _x;
@@ -348,7 +345,7 @@ build = {
 	modeSelected = _this;
 	_def = [];
 	{
-		if((_x select 0) == modeSelected) exitWith {_def = _x};
+		if((_x select 0) isEqualTo modeSelected) exitWith {_def = _x};
 	}foreach(OT_Buildables);
 	modeIndex = 0;
 	_name = _def select 0;
@@ -385,13 +382,25 @@ build = {
 	modeTarget setDir buildRotation;
 	modeTarget allowDamage false;
 
-	_txt = format ["<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom<br/>Shift = Build multiple</t>",_name,[modePrice, 1, 0, true] call CBA_fnc_formatNumber,_description];
-	[_txt, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[
+		format [
+			"<t size='1.1' color='#eeeeee'>%1</t><br/><t size='0.8' color='#bbbbbb'>$%2</t><br/><t size='0.4' color='#bbbbbb'>%3</t><br/><br/><t size='0.5' color='#bbbbbb'>Q,E = Rotate (Shift for smaller)<br/>Space = Change Type<br/>Left Click = Build It<br/>Right Click = Move Camera<br/>Mouse Wheel = Zoom<br/>Shift = Build multiple</t>",
+			_name,
+			[modePrice, 1, 0, true] call CBA_fnc_formatNumber,
+			_description
+		],
+		[safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)],
+		0.5,
+		10,
+		0,
+		0,
+		2
+	] call OT_fnc_dynamicText;
 };
 
 createDialog format["OT_dialog_build%1",_buildlocation];
 
-waitUntil {sleep 1;modeFinished or modeCancelled or !dialog};
+waitUntil {sleep 1;modeFinished || modeCancelled || !dialog};
 
 if(!isNull modeTarget) then {
 	deleteVehicle modeTarget;

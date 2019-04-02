@@ -1,7 +1,7 @@
 if!(hasInterface) exitWith {};
-_totalrep = (player getVariable ["influence",0])+_this;
+private _totalrep = (player getVariable ["influence",0])+_this;
 player setVariable ["influence",_totalrep,true];
-_plusmin = "";
+private _plusmin = "";
 if(_this > 0) then {
     _plusmin = "+";
 };

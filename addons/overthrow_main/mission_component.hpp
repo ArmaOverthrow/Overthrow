@@ -1,12 +1,12 @@
 /* Included at top of mission's description.ext for default Overthrow settings
- * #include "\ot\mission_component.hpp"
+ * #include "\overthrow_main\mission_component.hpp"
  *
  * Override values after if required
  */
-#include "script_component.hpp"
+#include "\overthrow_main\script_component.hpp"
 
 author=QUOTE(MOD_AUTHOR);
-OnLoadMission=QUOTE(VERSION - Please read http://wiki.armaoverthrow.com/);
+OnLoadMission=QUOTE(VERSION - Vist Overthrow's Steam Workshop page for more infomation.);
 
 onLoadMissionTime = 1;
 allowSubordinatesTakeWeapons= 1;
@@ -16,7 +16,7 @@ class Header
 {
 	gameType = Coop;
 	minPlayers = 1;
-	maxPlayers = 20;
+	maxPlayers = 12;
 };
 
 
@@ -26,7 +26,7 @@ enableDebugConsole = 1;
 respawn = "BASE";
 respawnDelay = 5;
 respawnVehicleDelay = 120;
-respawnDialog = 1;
+respawnDialog = 0;
 aiKills = 0;
 disabledAI=1;
 Saving = 1;

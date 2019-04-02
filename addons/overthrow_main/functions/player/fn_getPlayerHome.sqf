@@ -1,13 +1,13 @@
-_pos = server getVariable _this;
-_range = 200;
-_found = false;
-_house = objNull;
-while {!_found and _range < 1200} do {
-	_houses = nearestObjects [_pos, ["house"], _range,false];
-	_possible = [];
+private _pos = server getVariable _this;
+private _range = 200;
+private _found = false;
+private _house = objNull;
+while {!_found && _range < 1200} do {
+	private _houses = nearestObjects [_pos, ["house"], _range,false];
+	private _possible = [];
 	if(count _houses > 0) then {
 		{
-			if (!(_x call OT_fnc_hasOwner) and (typeof _x) in OT_spawnHouses) then {
+			if (!(_x call OT_fnc_hasOwner) && (typeof _x) in OT_spawnHouses) then {
 				_possible pushback _x
 			};
 		}foreach(_houses);
@@ -22,7 +22,7 @@ while {!_found and _range < 1200} do {
 
 if(!_found) exitWith {
     //Spawn town is full, make a new one
-    _town = (OT_spawnTowns - [_town]) call BIS_fnc_selectrandom;
+    _town = selectRandom (OT_spawnTowns - [_this]);
     server setVariable ["spawntown",_town,true];
     _town call OT_fnc_getPlayerHome;
 };

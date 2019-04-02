@@ -24,7 +24,7 @@ while {_count < _numNATO} do {
 
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;
 
-	while {(_groupcount < _pergroup) and (_count < _numNATO)} do {
+	while {(_groupcount < _pergroup) && (_count < _numNATO)} do {
 		_pos = [[[_start,20]]] call BIS_fnc_randomPos;
 
 		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];

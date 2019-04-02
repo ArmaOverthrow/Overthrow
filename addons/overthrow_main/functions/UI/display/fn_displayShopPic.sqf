@@ -1,83 +1,107 @@
+disableSerialization;
 params ["_ctrl","_index"];
 
-disableSerialization;
+private _cls = _ctrl lbData _index;
+private _price = _ctrl lbValue _index;
 
-_cls = _ctrl lbData _index;
-_price = _ctrl lbValue _index;
-
-_pic = "";
-_txt = "";
-_desc = "";
+private _pic = "";
+private _txt = "";
+private _desc = "";
 if(_price > -1) then {
     _price = "$" + ([_ctrl lbValue _index, 1, 0, true] call CBA_fnc_formatNumber);
     ctrlEnable [1600,true];
-    call {
+    private _res = [_cls] call {
+		params ["_cls"];
         if(_cls == "Set_HMG") exitWith {
-            _pic = getText(configFile >> "cfgVehicles" >> "C_Quadbike_01_F" >> "editorPreview");
-            _desc = "A Quad-bike containing the backpacks required to set up a Static HMG";
-            _txt = "Quad Bike w/ HMG Backpacks";
+			[
+				getText(configFile >> "cfgVehicles" >> "C_Quadbike_01_F" >> "editorPreview"),
+            	"A Quad-bike containing the backpacks required to set up a Static HMG",
+            	"Quad Bike w/ HMG Backpacks"
+			]
         };
     	if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
-    		_txt = _cls call OT_fnc_magazineGetName;
-    		_pic = _cls call OT_fnc_magazineGetPic;
-    		_desc = _cls call OT_fnc_magazineGetDescription;
+    		[
+				_cls call OT_fnc_magazineGetPic,
+    			_cls call OT_fnc_magazineGetName,
+    			_cls call OT_fnc_magazineGetDescription
+			]
     	};
     	if(isClass (configFile >> "CfgGlasses" >> _cls)) exitWith {
-    		_txt = gettext(configFile >> "CfgGlasses" >> _cls >> "displayName");
-    		_pic = gettext(configFile >> "CfgGlasses" >> _cls >> "picture");
+    		[
+				gettext(configFile >> "CfgGlasses" >> _cls >> "picture"),
+				nil,
+    			gettext(configFile >> "CfgGlasses" >> _cls >> "displayName")
+			]
     	};
     	if(_cls in (OT_allVehicles + OT_allBoats)) exitWith {
-    		_txt = _cls call OT_fnc_vehicleGetName;
-    		_pic = getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview");
-    		_desc = getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc");
-
-            if(_cls == "C_Quadbike_01_F") then {
-                _desc = "Gets you from A to B, not guaranteed to stay upright.";
-            };
+    		[
+				getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview"),
+				[
+					getText(configFile >> "cfgVehicles" >> _cls >> "Library" >> "libTextDesc"),
+					"Gets you from A to B, not guaranteed to stay upright."
+				] select (_cls == "C_Quadbike_01_F"),
+				_cls call OT_fnc_vehicleGetName
+			]
     	};
     	if(_cls isKindOf "Bag_Base") exitWith {
-    		_txt = _cls call OT_fnc_vehicleGetName;
-    		_pic = _cls call OT_fnc_vehicleGetPic;
-    		_desc = _cls call OT_fnc_vehicleGetDescription;
+    		[
+				_cls call OT_fnc_vehicleGetPic,
+				_cls call OT_fnc_vehicleGetDescription,
+				_cls call OT_fnc_vehicleGetName
+			]
     	};
-    	if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
-    		_txt = _cls call OT_fnc_weaponGetName;
-    		_pic = _cls call OT_fnc_weaponGetPic;
-    		_desc = format["%1<br/>%2",getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort"),_cls call OT_fnc_magazineGetDescription];
+    	if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) exitWith {
+    		[
+				_cls call OT_fnc_weaponGetPic,
+    			format["%1<br/>%2",getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort"),_cls call OT_fnc_magazineGetDescription],
+    			_cls call OT_fnc_weaponGetName
+			]
     	};
 
     	if(_cls isKindOf "Man") exitWith {
-    		_txt = _cls call OT_fnc_vehicleGetName;
-            _soldier = _cls call OT_fnc_getSoldier;
-    		_price = _soldier select 0;
-    		_desc = "Will recruit this soldier into your group fully equipped using the warehouse where possible.";
+            private _soldier = _cls call OT_fnc_getSoldier;
+    		private _price = _soldier select 0;
+    		[
+				nil,
+    			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
+				_cls call OT_fnc_vehicleGetName,
+				_price
+			]
     	};
     	if(_cls in OT_allSquads) exitWith {
-            _d = [];
+            private _d = [];
             {
-            	if((_x select 0) == _cls) exitWith {_d = _x};
+            	if((_x select 0) isEqualTo _cls) exitWith {_d = _x};
             }foreach(OT_squadables);
 
-            _comp = _d select 1;
-            _price = 0;
+            private _comp = _d select 1;
+            private _price = 0;
             {
-            	_s = OT_recruitables select _x;
-
-            	_soldier = (_s select 0) call OT_fnc_getSoldier;
+            	private _s = OT_recruitables select _x;
+            	private _soldier = (_s select 0) call OT_fnc_getSoldier;
             	_price = _price + (_soldier select 0);
             }foreach(_comp);
 
-    		_txt = _cls;
-    		_desc = "Will recruit this squad into your High-Command bar, accessible with ctrl-space.";
+			[
+				nil,
+    			"Will recruit this squad into your High-Command bar, accessible with ctrl-space.",
+				_cls,
+				_price
+			]
+    		
     	};
     };
+	_pic = _res param [0, ""];
+	_desc = _res param [1, ""];
+	_txt = _res param [2, ""];
+	_price = _res param [3, _price];
 }else{
     ctrlEnable [1600,false];
     _desc = _cls;
     _txt = "Not Available";
     _price = "";
 };
-if !(isNil "_pic") then {
+if(!isNil "_pic" && { !(_pic isEqualTo "") }) then {
 	ctrlSetText [1200,_pic];
 };
 

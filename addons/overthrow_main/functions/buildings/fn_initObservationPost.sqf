@@ -65,34 +65,38 @@ _civ linkItem "ItemCompass";
 _civ linkItem "ItemWatch";
 _civ linkItem "ItemRadio";
 
-while {true} do {
-	sleep 5;
-	if(count (units _group) == 0) exitWith {deleteGroup _group};
+loop_IOP_details = [_group];
 
+["init_observation_post","_counter%5 isEqualTo 0","
+loop_IOP_details params [""_group""];
+if(count (units _group) isEqualTo 0) then {
+	deleteGroup _group;
+	[""init_observation_post""] spawn OT_fnc_removeActionLoop;
+}else{
 	private _spotDistance = OT_spawnDistance;
-	_hour = date select 3;
-	if(_hour > 19 or _hour < 6) then {_spotDistance = _spotDistance * 0.7};
+	private _hour = date select 3;
+	if(_hour > 19 || _hour < 6) then {_spotDistance = _spotDistance * 0.7};
 	if(rain > 0) then {_spotDistance = _spotDistance * 0.8};
 	if(overcast > 0.5) then {_spotDistance = _spotDistance * 0.9};
-	_upos = "UP";
+	private _upos = ""UP"";
 	{
-		if(side _x == west or side _x == east) then {
-			_lead = leader _x;
+		if(side _x in [west,east]) then {
+			private _lead = leader _x;
 			if((_lead distance _lospos) < _spotDistance) then {
 				if((_lead distance _lospos) < 300) then {
-					_upos = "MIDDLE";
+					_upos = ""MIDDLE"";
 					_group reveal [_lead,4];
 				}else{
-					if(([_post, "VIEW"] checkVisibility [_lospos,getposasl _lead]) > 0) then {
+					if(([_post, ""VIEW""] checkVisibility [_lospos,getposasl _lead]) > 0) then {
 						_group reveal [_lead,4];
 					};
 				};
 			};
 		};
-		sleep 0.2;
 	}foreach(allgroups);
 
 	{
 		_x setUnitPos _upos;
 	}foreach(units _group);
 };
+"] call OT_fnc_addActionLoop;

@@ -18,7 +18,7 @@ private _attacking = server getVariable["NATOattacking",""];
 	_name = _x select 1;
 	_garrison = server getVariable[format["garrison%1",_name],0];
 	if(_name != _attacking) then {
-		if(([_pos,_townPos] call OT_fnc_regionIsConnected) and !(_name in _abandoned)) then {
+		if(([_pos,_townPos] call OT_fnc_regionIsConnected) && !(_name in _abandoned)) then {
 			_d = (_pos distance _townPos);
 			if(_d < _dist) then {
 				_dist = _d;
@@ -40,7 +40,7 @@ if(!isNil "_close") then {
 	_usecar = false;
 	_veh = objNull;
 
-	if(((_close distance _townPos) > 2000) and (random 100) > 50) then {
+	if(((_close distance _townPos) > 2000) && (random 100) > 50) then {
 		_spawnpos = _start findEmptyPosition [0,100,OT_NATO_Vehicle_Police];
 		_veh =  OT_NATO_Vehicle_Police createVehicle _spawnpos;
 		_veh setDir (random 360);

@@ -3,39 +3,34 @@ params ["_ctrl","_index"];
 disableSerialization;
 
 private _id = _ctrl lbData _index;
-_s = _id splitString "-";
+private _s = _id splitString "-";
 _s params ["_cls","_qty"];
-_qty = parseNumber _qty;
-_def = [];
+private _qty = parseNumber _qty;
+private _def = [];
 {
     _x params ["_c","_r","_q"];
-    if(_cls == _c and _q == _qty) exitWith {_def = _x};
+    if(_cls == _c && _q == _qty) exitWith {_def = _x};
 }foreach(OT_craftableItems);
 
 if(count _def > 0) then {
     _def params ["_cls","_recipe","_qty"];
 
-    _textctrl = (findDisplay 8000) displayCtrl 1100;
-    _itemName = "";
+    private _textctrl = (findDisplay 8000) displayCtrl 1100;
+    private _itemName = "";
 
-    _recipeText = "";
+    private _recipeText = "";
     {
         _x params ["_rcls","_rqty"];
-        _name = "";
-        call {
-            if(_rcls == "Uniform_Base") exitWith {
-                _name = "Clothing";
-            };
-            if(_rcls isKindOf ["Default", configFile >> "CfgMagazines"]) then {
-                _name = _rcls call OT_fnc_magazineGetName;
-            }else{
-                _name = _rcls call OT_fnc_weaponGetName;
-            };
+        _name = _rcls call {
+            params ["_rcls"];
+            if(_rcls isEqualTo "Uniform_Base") exitWith {"Clothing"};
+            if(_rcls isKindOf ["Default", configFile >> "CfgMagazines"]) exitWith {_rcls call OT_fnc_magazineGetName};
+            _rcls call OT_fnc_weaponGetName;
         };
         _recipeText = _recipeText + format["%1 x %2<br/>",_rqty,_name];
     }foreach(_recipe);
-    _desc = "";
-    _pic = "";
+    private _desc = "";
+    private _pic = "";
 
     if(_cls isKindOf ["Default", configFile >> "CfgMagazines"]) then {
         _desc = getText(configFile >> "CfgWeapons" >> _cls >> "descriptionShort");
@@ -54,7 +49,7 @@ if(count _def > 0) then {
         <t align='center' size='0.7'>%4</t><br/>
     ",_qty,_itemName,_desc,_recipeText];
 
-    if !(isNil "_pic") then {
+    if (!isNil "_pic" && {!(_pic isEqualTo "")}) then {
     	ctrlSetText [1200,_pic];
     };
 };

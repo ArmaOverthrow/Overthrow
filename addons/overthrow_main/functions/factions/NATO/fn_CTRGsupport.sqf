@@ -11,7 +11,7 @@ _pos = OT_NATO_HQPos;
 
 _dir = [_pos,_posTown] call BIS_fnc_dirTo;
 
-_attackpos = [_posTown,[0,150]] call SHK_pos;
+_attackpos = [_posTown,[0,150]] call SHK_pos_fnc_pos;
 
 //Determine direction to attack from (preferrably away from water)
 _attackdir = random 360;
@@ -30,7 +30,7 @@ if(surfaceIsWater ([_posTown,150,_attackDir] call BIS_fnc_relPos)) then {
 _attackdir = _attackdir - 45;
 
 
-_ao = [_posTown,[350,500],_attackdir + (random 90)] call SHK_pos;
+_ao = [_posTown,[350,500],_attackdir + (random 90)] call SHK_pos_fnc_pos;
 _group = createGroup blufor;
 
 
@@ -44,7 +44,7 @@ sleep 0.2;
 
 //Transport
 _tgroup = creategroup blufor;
-_pos = [_pos,60,80,false,[0,0],[100,OT_NATO_Vehicle_CTRGTransport]] call SHK_pos;
+_pos = [_pos,60,80,false,[0,0],[100,OT_NATO_Vehicle_CTRGTransport]] call SHK_pos_fnc_pos;
 sleep 0.2;
 _veh = createVehicle [OT_NATO_Vehicle_CTRGTransport, _pos, [], 0,""];
 _vehs pushback _veh;
@@ -68,7 +68,7 @@ createVehicleCrew _veh;
 
 sleep 1;
 
-_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
+_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos_fnc_pos;
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
@@ -80,7 +80,7 @@ _wp = _tgroup addWaypoint [_ao,0];
 _wp setWaypointType "MOVE";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 1, false];"];
-wp setWaypointCompletionRadius 50;
+_wp setWaypointCompletionRadius 50;
 _wp setWaypointSpeed "FULL";
 
 _wp = _tgroup addWaypoint [_ao,0];
@@ -93,7 +93,7 @@ _wp setWaypointType "SCRIPTED";
 _wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 _wp setWaypointTimeout [15,15,15];
 
-_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
+_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos_fnc_pos;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "LOITER";
@@ -103,7 +103,7 @@ _wp setWaypointCompletionRadius 100;
 
 _wp = _tgroup addWaypoint [_moveto,0];
 _wp setWaypointType "SCRIPTED";
-_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 
 _wp = _group addWaypoint [_attackpos,20];
 _wp setWaypointType "MOVE";

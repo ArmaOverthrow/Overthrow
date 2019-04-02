@@ -80,7 +80,7 @@ if(_tertiary != "") then {
 	_civ addMagazineGlobal _magazine;
 };
 
-if(_cls == "I_Medic_F") then {
+if(_cls isEqualTo "I_Medic_F") then {
 	clearBackpackCargoGlobal _civ;
 	if(OT_hasACE) then {
 		for "_i" from 1 to 10 do {_civ addItemToBackpack "ACE_fieldDressing";};
@@ -93,12 +93,12 @@ if(_cls == "I_Medic_F") then {
 	};
 };
 
-if((_cls find "_AA_") > -1 or (_cls find "_AAA_") > -1) then {
+if((_cls find "_AA_") > -1 || (_cls find "_AAA_") > -1) then {
 	clearBackpackCargoGlobal _civ;
 	for "_i" from 1 to 3 do {_civ addItemToBackpack "Titan_AA";};
 };
 
-if((_cls find "_AT_") > -1 or (_cls find "_AAT_") > -1) then {
+if((_cls find "_AT_") > -1 || (_cls find "_AAT_") > -1) then {
 	clearBackpackCargoGlobal _civ;
 	for "_i" from 1 to 3 do {_civ addItemToBackpack "Titan_AT";};
 };

@@ -2,7 +2,7 @@
  * Header: script_component.hpp
  *
  * Description:
- *     Included as standard header in each component and function script.
+ *     Included as standard header in each component && function script.
  *     Provides useful preprocessor definitions. Note that preprocessor
  *     commands are case-sensitive. Shamelessly plagiarized from CBA_A3
  *     as a best practice.
@@ -25,4 +25,4 @@
  *     @see https://github.com/CBATeam/CBA_A3/wiki/Error-handling
  */
 
-#include "\ot\functions\script_component.hpp"
+#include "\overthrow_main\functions\script_component.hpp"

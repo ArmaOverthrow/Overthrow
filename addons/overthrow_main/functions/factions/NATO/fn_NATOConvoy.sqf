@@ -14,11 +14,11 @@ _group setBehaviour "CARELESS";
 private _track = objNull;
 
 if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
-    _convoypos = [_frompos,random 360,120] call SHK_pos;
+    _convoypos = [_frompos,random 360,120] call SHK_pos_fnc_pos;
     private _road = [_convoypos] call BIS_fnc_nearestRoad;
     if (!isNull _road) then {
         _roadscon = roadsConnectedto _road;
-        if (count _roadscon == 2) then {
+        if (count _roadscon isEqualTo 2) then {
             _posVeh = (getpos _road) findEmptyPosition [0,15,_vehtypes select 0];
             if(count _posVeh > 0) then {
                 _convoypos = _posVeh;
@@ -46,7 +46,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     }foreach(_vehtypes);
 
     {
-        _pos = [_convoypos,0,120,false,[0,0],[250,OT_NATO_Vehicle_HVT]] call SHK_pos;
+        _pos = [_convoypos,0,120,false,[0,0],[250,OT_NATO_Vehicle_HVT]] call SHK_pos_fnc_pos;
         _veh = createVehicle [OT_NATO_Vehicle_HVT, _pos, [], 0,""];
     	_veh setVariable ["garrison","HQ",false];
 
@@ -64,7 +64,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         _driver setVariable ["hvt",true,true];
         _driver setVariable ["hvt_id",_x select 0,true];
         _driver setRank "COLONEL";
-        if(isNull _track) then {_track = _lead};
+        if(isNull _track) then {_track = _driver};
 
         _convoypos = [_convoypos,20,_dir] call BIS_fnc_relPos;
 
@@ -78,7 +78,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         private _count = 0;
         while {_count < _numsupport} do {
             _vehtype = selectRandom OT_NATO_Vehicles_GroundSupport;
-            _pos = [_convoypos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos;
+            _pos = [_convoypos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos_fnc_pos;
             _veh = createVehicle [_vehtype, _pos, [], 0,""];
         	_veh setVariable ["garrison","HQ",false];
         	_veh setDir (_dir);
@@ -105,12 +105,12 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
 
     _wp = _group addWaypoint [_topos,500];
     _wp setWaypointType "SCRIPTED";
-    _wp setWaypointStatements ["true","[group this] spawn OT_fnc_cleanup"];
+    _wp setWaypointStatements ["true","[group this] call OT_fnc_cleanup"];
 };
 
 
 if(isNull _track) exitWith {};
-waitUntil {(_track distance _topos) < 100 or !alive _track};
+waitUntil {(_track distance _topos) < 100 || !alive _track};
 
 if(alive _track) then {
     {

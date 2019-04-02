@@ -1,4 +1,4 @@
-if(typeof _this == OT_item_Map) then {
+if(typeof _this isEqualTo OT_item_Map) then {
 	_this addAction ["Town Info", OT_fnc_mapInfoDialog,nil,0,false,true,"",""];
 	_this addAction ["Reset UI", {
 		closedialog 0;
@@ -6,7 +6,7 @@ if(typeof _this == OT_item_Map) then {
 	},nil,0,false,true,"",""];
 
 };
-if(typeof _this == OT_item_Storage) then {
+if(typeof _this isEqualTo OT_item_Storage) then {
 	_this addAction ["Dump Everything", {[player,_this select 0] call OT_fnc_dumpStuff},nil,0,false,true,"",""];
 	_this addAction ["Save Loadout", OT_fnc_saveLoadout,nil,0,false,true,"",""];
 	_this addAction ["Restore Loadout", OT_fnc_loadoutDialog,nil,0,false,true,"",""];
@@ -41,26 +41,27 @@ if(typeof _this == OT_item_Storage) then {
 		},nil,0,false,true,"","(_target getVariable ['OT_locked',false])"];
 	};
 };
-if(typeof _this == OT_item_Safe) then {
+if(typeof _this isEqualTo OT_item_Safe) then {
 	_this addAction ["Put Money", OT_fnc_safePutMoney,nil,0,false,true,"",""];
 	_this addAction ["Take Money", OT_fnc_safeTakeMoney,nil,0,false,true,"",""];
-	_this addAction ["Set Password", OT_fnc_safeSetPassword,nil,0,false,true,"","(_target getVariable ['owner','']) == getplayeruid _this"];
+	_this addAction ["Set Password", OT_fnc_safeSetPassword,nil,0,false,true,"","(_target getVariable ['owner','']) isEqualTo getplayeruid _this"];
 };
 
-if(typeof _this == "Land_Cargo_House_V4_F") then {
+if(typeof _this isEqualTo "Land_Cargo_House_V4_F") then {
 	if(OT_hasACE) then {
 		[_this] call ace_repair_fnc_moduleAssignRepairFacility;
 	};
 };
 
-if(_this isKindOf "Building" or _this isKindOf "Man" or _this isKindOf "LandVehicle") exitWith{};
+if(_this isKindOf "Building" || _this isKindOf "Man" || _this isKindOf "LandVehicle") exitWith{};
 
 if(OT_hasACE) then {
 	_dir = 0;
-	if(typeof _this == "C_Rubberboat") then {
+	if(typeof _this isEqualTo "C_Rubberboat") then {
 		_dir = 90;
 	};
 	[_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
 
 	[_this, 0, ["ACE_MainActions"], OT_ACEremoveAction] call ace_interact_menu_fnc_addActionToObject;
+	[_this, 0, ["ACE_MainActions","OT_Remove"], OT_ACEremoveActionConfirm] call ace_interact_menu_fnc_addActionToObject;
 };

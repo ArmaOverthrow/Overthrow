@@ -1,5 +1,4 @@
-private _quiet = false;
-if(count _this > 0) then {_quiet = _this select 0};
+params [["_user",objNull],["_quiet", false],["_autoSave",false]];
 
 if(OT_saving) exitWith {
 	if !(_quiet) then {
@@ -13,288 +12,268 @@ if((count alldeadmen) > 300) exitWith {
 	};
 };
 
-OT_saving = true;
-publicVariable "OT_saving";
+if (isNil "OT_NATOInitDone") exitWith {
+	if !(_quiet) then {
+		"NATO Init process is not done, wait a bit and try again" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
+	};
+};
+
+missionNameSpace setVariable ["OT_saving",true,true];
+
+{
+	_x setVariable ["OT_newplayer",false,true];
+} forEach (allPlayers);
+
+OT_autoSave_last_time = time + (OT_autoSave_time*60);
 
 if !(_quiet) then {
 	"Persistent Saving..." remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-sleep 0.2;
-waitUntil {!isNil "OT_NATOInitDone"};
+
 if !(_quiet) then {
 	"Step 1/11 - Saving game state" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
+
+// Save game array
 private _data = [];
-//get all server data
-{
-	if !(_x == "StartupType" or _x == "recruits" or _x == "squads" or (_x select [0,11]) == "resgarrison" or (_x select [0,4]) == "ace_" or (_x select [0,4]) == "cba_" or (_x select [0,4]) == "bis_") then {
-		_val = server getVariable _x;
-		if !(isNil "_val") then {
-			if(typename _val == "ARRAY") then {
-				//Copy the array
-				_old = _val;
-				_val = [];
-				{
-					_val pushback _x;
-				}foreach(_old);
-				if(_x == "natoabandoned") then {
-					_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
-				};
-			};
-			_data pushback [_x,_val];
-		};
+
+// get all server data
+private _server = (allVariables server select {
+
+	private _val = server getVariable _x;
+	if (isNil "_val") then {
+		false
+	} else {
+
+		_x = toLower _x;
+		!(_x in ["startuptype","recruits","squads"])
+		&& {(_x select [0,11]) != "resgarrison"}
+		&& {(_x select [0,9]) != "seencache"}
+		&& {!((_x select [0,4]) in ["ace_","cba_","bis_"])}
+
 	};
-}foreach(allVariables server);
+}) apply {
+	private _val = server getVariable _x;
+
+	// copy array, we might modify them
+	if(_val isEqualType []) then {_val = +_val;};
+
+	// dont abondon current attacks
+	if(_x isEqualTo "natoabandoned") then {
+		_val deleteAt (_val find (server getvariable ["NATOattacking",""]))
+	};
+
+	[_x,_val]
+};
+_data pushBack ["server",_server];
+
 if !(_quiet) then {
 	"Step 2/11 - Saving buildings" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-_poses = [];
-{
-	if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
-		_poses pushback [_x,buildingpositions getVariable _x];
-	};
-}foreach(allVariables buildingpositions);
+
+private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_"]) };
+
+private _poses = (allVariables buildingpositions select _prefixFilter) apply {
+	[_x,buildingpositions getVariable _x]
+};
 _data pushback ["buildingpositions",_poses];
+
 if !(_quiet) then {
 	"Step 3/11 - Saving civilians" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-_civs = [];
-{
-	if((_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
-		_civs pushback [_x,OT_civilians getVariable _x];
-	};
-}foreach(allVariables OT_civilians);
+
+private _civs = (allVariables OT_civilians select _prefixFilter) apply {
+	[_x,OT_civilians getVariable _x]
+};
 _data pushback ["civilians",_civs];
 
 if !(_quiet) then {
 	"Step 4/11 - Saving player data" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
+
 //get all online player data
 {
-	_uid = getPlayerUID _x;
-	_me = _x;
-	_val = "";
-	_d = [];
-	_all = [];
-	{
-		if(_x != "ot_loaded" and _x != "morale" and _x != "player_uid" and _x != "sa_tow_actions_loaded" and _x != "hiding" and _x != "randomValue" and _x != "saved3deninventory" and (_x select [0,11]) != "MissionData" and (_x select [0,4]) != "ace_" and (_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
-			_all pushback _x;
-			_val = _me getVariable _x;
-			if !(isNil "_val") then {
-				if(typename _val != "CODE") then {
-					_d pushback [_x,_val];
-				};
-			};
-		};
-	}foreach(allVariables _me);
-	_data pushback [_uid,_d];
+	[_x] call OT_fnc_savePlayerData;
 }foreach([] call CBA_fnc_players);
 
-private _tocheck = (allMissionObjects "Static") + vehicles;
+private _players = (allVariables players_NS) apply {
+	[_x, players_NS getVariable _x];
+};
+_data pushBack ["players",_players];
+
+private _cfgVeh = configFile >> "CfgVehicles";
+private _tocheck = ((allMissionObjects "Static") + vehicles) select {
+	(alive _x)
+	&& {(typeof _x != OT_flag_IND)}
+	&& {!(typeOf _x isKindOf ["Man", _cfgVeh])}
+	&& {(_x call OT_fnc_hasOwner)}
+};
+
 private _tosave = count _tocheck;
 if !(_quiet) then {
 	format["Step 5/11 - Saving vehicles (%1 to save)",_tosave] remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-private _vehicles = [];
 
-_count = 0;
+private _count = 0;
 private _saved = 0;
-{
+private _vehicles = (_tocheck) apply {
 	_saved = _saved + 1;
-	if(!(_x isKindOf "Man") and (alive _x) and (_x call OT_fnc_hasOwner) and (typeof _x != OT_flag_IND)) then {
-		_owner = _x call OT_fnc_getOwner;
-		_s = _x call OT_fnc_unitStock;
-
-		if(typeof _x == OT_item_safe) then {
-			_s pushback ["money",_x getVariable ["money",0]];
-			_s pushback ["password",_x getVariable ["password",""]];
-		};
-		_params = [typeof _x,getposatl _x,[vectorDir _x,vectorUp _x],_s,_owner,_x getVariable ["name",""],_x getVariable ["OT_init",""]];
-		if(_x isKindOf "AllVehicles") then {
-			if !(_x getVariable ["OT_garrison",false]) then {
-				_ammo = [];
-				_veh = _x;
-				{
-					_ammo pushback [_x,_veh ammo _x];
-				}foreach(_x weaponsTurret [0]);
-				_attached = _x getVariable ["OT_attachedClass",""];
-				_att = [];
-				if(_attached != "") then {
-					_wpn = _veh getVariable ["OT_attachedClass",objNUll];
-					if(!isNull _wpn) then {
-						if(alive _wpn) then {
-							//get attached ammo (if applicable)
-							_am = [];
-							{
-								_am pushback [_x,_wpn ammo _x];
-							}foreach(_wpn weaponsTurret [0]);
-							_att = [_attached,_am];
-						};
-					};
-				};
-				_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att];
-			};
-		};
-		_vehicles pushback _params;
-	};
-	if(_count > 200) then {
-		if !(_quiet) then {
-			format["Step 5/11 - Saving vehicles (%1 to save)",_tosave - _saved] remoteExecCall ["OT_fnc_notifyAndLog",0,false];
-		};
-		_count = 0;
-		sleep 0.2;
-	};
 	_count = _count + 1;
-}foreach(_tocheck);
-_tocheck = [];
+	if(!_quiet && {_count % 200 == 0}) then {
+		format["Step 5/11 - Saving vehicles (%1 to save)",_tosave - _saved] remoteExecCall ["OT_fnc_notifyAndLog",0,false];
+	};
 
-sleep 0.2;
+	private _s = _x call OT_fnc_unitStock;
+	private _type = typeOf _x;
+
+	if(_type == OT_item_safe) then {
+		_s pushback ["money",_x getVariable ["money",0]];
+		_s pushback ["password",_x getVariable ["password",""]];
+	};
+	private _params = [
+		_type,
+		[getposatl _x,simulationEnabled _x],
+		[vectorDir _x,vectorUp _x],
+		_s,
+		_x call OT_fnc_getOwner,
+		_x getVariable ["name",""],
+		_x getVariable ["OT_init",""]
+	];
+	if(_type isKindOf ["AllVehicles", _cfgVeh] && {!(_x getVariable ["OT_garrison",false])}) then {
+		private _veh = _x;
+		private _ammo = (_x weaponsTurret [0]) apply {
+			[_x,_veh ammo _x];
+		};
+		private _attachedClass = _veh getVariable ["OT_attachedClass",""];
+		private _attached = _veh getVariable ["OT_attachedWeapon",objNull];
+		private _att = [];
+
+		//get attached ammo (if applicable)
+		if(!(_attachedClass isEqualTo "") && { alive _attached }) then {
+			_att = [_attachedClass,(_attached weaponsTurret [0]) apply { [_x,_attached ammo _x] }];
+		};
+		_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att];
+	};
+	_params
+};
 _data pushback ["vehicles",_vehicles];
 
 if !(_quiet) then {
 	"Step 6/11 - Saving warehouse" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-private _warehouse = [];
-{
-	_var = warehouse getVariable _x;
-	if (!isNil "_var") then {
-		if((_x select [0,4]) != "cba_" and (_x select [0,4]) != "bis_") then {
-			_warehouse pushback _var;
-		};
-	};
-}foreach(allvariables warehouse);
+
+private _warehouse = (allvariables warehouse select _prefixFilter) apply {
+	[ _x, warehouse getVariable _x]
+};
 _data pushback ["warehouse",_warehouse];
+
 if !(_quiet) then {
 	"Step 7/11 - Saving recruits" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-private _recruits = [];
-{
-	_do = true;
-	_unitorpos = _x select 2;
-	_d = [_x select 0,_x select 1,_x select 2,_x select 3,_x select 4,_x select 5];
-	if(count _x > 6) then {
-		_d set [6,_x select 6];
-	}else{
-		_d set [6,0];
-	};
-	if(typename _unitorpos == "OBJECT") then {
-		if(alive _unitorpos) then {
-			_d set [4,getUnitLoadout _unitorpos];
-			_d set [2,getpos _unitorpos];
-			_d set [6,_unitorpos getVariable ["OT_xp",0]];
-		}else{
-			_do = false;
-		};
-	};
-	if(_do) then {
-		_recruits pushback _d;
-	};
-}foreach(server getVariable ["recruits",[]]);
 
+private _recruits = ((server getVariable ["recruits",[]]) select {
+	!((_x select 2) isEqualType objNull)
+	|| { alive (_x select 2) }
+}) apply {
+	private _d = _x select [0,7];
+	if(count _x == 6) then { _d pushBack 0 };
+
+	_x params ["","","_unitOrPos"];
+	if(_unitOrPos isEqualType objNull) then {
+		_d set [4,getUnitLoadout _unitOrPos];
+		_d set [2,getPosATL _unitOrPos];
+		_d set [6,_unitOrPos getVariable ["OT_xp",0]];
+	};
+
+	_d
+};
 _data pushback ["recruits",_recruits];
 
 if !(_quiet) then {
 	"Step 8/11 - Saving squads" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-private _squads = [];
-{
-	_do = true;
-	_x params ["_owner","_cls","_group"];
-	if(typeName _group == "GROUP") then {
-		if(count units _group == 0) then {_do = false};
-		if(({alive _x} count units _group) == 0) then {_do = false};
-		if(_do) then {
-			_units = [];
-			{
-				if(alive _x) then {
-					_units pushback [typeof _x,position _x,getUnitLoadout _x];
-				};
-			}foreach(units _group);
-			_squads pushback [getplayeruid player,_cls,"",_units,groupId _group];
-		};
-	};
-}foreach(server getVariable ["squads",[]]);
 
+private _squads = ((server getVariable ["squads",[]]) select {
+	_x params ["_owner","_cls","_group"];
+	_group isEqualType grpNull
+	&& { count units _group > 0 }
+	&& { ({alive _x} count units _group) > 0 }
+}) apply {
+	_x params ["_owner","_cls","_group"];
+	_units = [];
+	{
+		if(alive _x) then {
+			_units pushback [typeof _x,position _x,getUnitLoadout _x];
+		};
+	}foreach(units _group);
+	[_owner,_cls,"Not a group, pls recreate",_units,groupId _group]
+};
 _data pushback ["squads",_squads];
+
 if !(_quiet) then {
 	"Step 9/11 - Saving bases" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
+
+private _getGroupSoldiers = {
+	(units _this select {
+		private _veh = vehicle _x;
+		alive _x && { _veh isEqualTo _x || {(someAmmo _veh && toLower typeOf _veh in ["i_hmg_01_high_f","i_gmg_01_high_f"])} }
+	}) apply {
+		if(vehicle _x isEqualTo _x) then {
+			[typeof _x,getUnitLoadout _x];
+		}else{
+			if(typeof vehicle _x == "I_HMG_01_high_F") then {["HMG",[]]} else {["GMG",[]]};
+		};
+	};
+};
+
 {
-	_pos = _x select 0;
-	_code = format["fob%1",_pos];
-	_group = spawner getvariable [format["resgarrison%1",_code],grpNull];
+	_x params ["_pos"];
+	private _code = format["fob%1",_pos];
+	private _group = spawner getvariable [format["resgarrison%1",_code],grpNull];
 	if !(isNull _group) then {
-		_soldiers = [];
-		{
-			if(alive _x) then {
-				if(vehicle _x == _x) then {
-					_soldiers pushback [typeof _x,getUnitLoadout _x];
-				}else{
-					_veh = vehicle _x;
-					if(someAmmo _veh and (typeof _veh == "I_HMG_01_high_F")) then {
-						_soldiers pushback ["HMG",[]];
-					};
-					if(someAmmo _veh and (typeof _veh == "I_GMG_01_high_F")) then {
-						_soldiers pushback ["GMG",[]];
-					};
-				};
-			};
-		}foreach(units _group);
+		private _soldiers = _group call _getGroupSoldiers;
 		if(count _soldiers > 0) then {
 			_data pushback [format["resgarrison%1",_code],_soldiers];
 		};
 	};
 }foreach(server getVariable ["bases",[]]);
+
 if !(_quiet) then {
 	"Step 10/11 - Saving garrisons" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
+
 {
-	_pos = server getvariable _x;
-	_code = _x;
-	_group = spawner getvariable [format["resgarrison%1",_code],grpNull];
+	private _group = spawner getvariable [format["resgarrison%1",_x],grpNull];
 	if !(isNull _group) then {
-		_soldiers = [];
-		{
-			if(alive _x) then {
-				if(vehicle _x == _x) then {
-					_soldiers pushback [typeof _x,getUnitLoadout _x];
-				}else{
-					_veh = vehicle _x;
-					if(someAmmo _veh and (typeof _veh == "I_HMG_01_high_F")) then {
-						_soldiers pushback ["HMG",[]];
-					};
-					if(someAmmo _veh and (typeof _veh == "I_GMG_01_high_F")) then {
-						_soldiers pushback ["GMG",[]];
-					};
-				};
-			};
-		}foreach(units _group);
+		private _soldiers = _group call _getGroupSoldiers;
 		if(count _soldiers > 0) then {
-			_data pushback [format["resgarrison%1",_code],_soldiers];
+			_data pushback [format["resgarrison%1",_x],_soldiers];
 		};
 	};
 }foreach(OT_allObjectives);
 
 _data pushback ["timedate",date];
+_data pushback ["autosave",[OT_autoSave_time,OT_autoSave_last_time]];
+
 if !(_quiet) then {
-	"Step 11/11 - Saving loadouts" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
+	"Step 11/11 - Exporting" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
-{
-	_data pushback [format["loadout%1",getplayeruid _x],getUnitLoadout _x];
-}foreach([] call CBA_fnc_players);
 
 profileNameSpace setVariable [OT_saveName,_data];
 if (isDedicated) then {
 	if !(_quiet) then {
-		"Saving to dedicated server.. not long now" remoteExecCall ["OT_fnc_notifyAndLog",0,false];;
+		"Saving to dedicated server.. not long now" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 	};
-	sleep 0.01;
-	saveProfileNamespace
+	saveProfileNamespace;
 };
 
 if !(_quiet) then {
 	"Persistent Save Completed" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-OT_saving = false;
-publicVariable "OT_saving";
+if (!_autoSave && !(_user isEqualTo objNull)) then {
+	[_data] remoteExec ["OT_fnc_uploadData",_user,false];
+};
+
+missionNameSpace setVariable ["OT_saving",false,true];

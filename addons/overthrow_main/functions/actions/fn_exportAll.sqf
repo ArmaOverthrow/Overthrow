@@ -1,11 +1,10 @@
-_target = vehicle player;
+private _target = vehicle player;
+if(_target isEqualTo player) exitWith {};
 
-if(_target == player) exitWith {};
-
-if(count (player nearObjects [OT_portBuilding,30]) == 0) exitWith {};
+if(count (player nearObjects [OT_portBuilding,30]) isEqualTo 0) exitWith {};
 
 private _town = player call OT_fnc_nearestTown;
-_doillegal = false;
+private _doillegal = false;
 if(_town in (server getVariable ["NATOabandoned",[]])) then {
 	_doillegal = true;
 }else{
@@ -15,14 +14,15 @@ if(_town in (server getVariable ["NATOabandoned",[]])) then {
 "Exporting inventory" call OT_fnc_notifyMinor;
 [5,false] call OT_fnc_progressBar;
 sleep 5;
-_total = 0;
+
+private _combinedItems = OT_allItems + OT_allBackpacks + OT_Resources + OT_allClothing;
+private _total = 0;
 {
-	_count = 0;
-	_cls = _x select 0;
-	_num = _x select 1;
-	if(_doillegal or _cls in (OT_allItems + OT_allBackpacks + OT_Resources + OT_allClothing)) then {
-		_baseprice = [OT_nation,_cls,0] call OT_fnc_getSellPrice;
-		_costprice = round(_baseprice * 0.6); //The cost of export
+	_x params ["_cls", "_num"];
+	private _count = 0;
+	if(_doillegal || _cls in _combinedItems) then {
+		private _baseprice = [OT_nation,_cls,0] call OT_fnc_getSellPrice;
+		private _costprice = round(_baseprice * 0.6); //The cost of export
 		if(_cls in OT_allDrugs) then {
 			_costprice = round(_baseprice * 0.5);
 		};
@@ -31,7 +31,8 @@ _total = 0;
 		};
 
 		_total = _total + (_costprice * _num);
-		call {
+		[_target, _cls, _num] call {
+			params ["_target", "_cls", "_num"];
 			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
 			};

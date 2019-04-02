@@ -11,7 +11,7 @@ private _region = server getVariable format["region_%1",_town];
 {
 	_pos = _x select 0;
 	_name = _x select 1;
-	if(_pos inArea _region and !(_name in _abandoned)) then {
+	if(_pos inArea _region && !(_name in _abandoned)) then {
 		_d = (_pos distance _posTown);
 		if(_d < _dist) then {
 			_dist = _d;
@@ -58,7 +58,7 @@ if(_isHQ) then {
 
 	sleep 2;
 
-	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos;
+	_moveto = [OT_NATO_HQPos,500,_dir] call SHK_pos_fnc_pos;
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "COMBAT";
@@ -83,7 +83,7 @@ if(_isHQ) then {
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 	_wp setWaypointTimeout [15,15,15];
 
-	_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos;
+	_moveto = [OT_NATO_HQPos,200,_dir] call SHK_pos_fnc_pos;
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "LOITER";
@@ -93,14 +93,14 @@ if(_isHQ) then {
 
 	_wp = _tgroup addWaypoint [_moveto,0];
 	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup"];
+	_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 
 	{
 		_x addCuratorEditableObjects [units _tgroup,true];
 	} forEach allCurators;
 
 }else{
-	_moveto = [_start,50,_dir] call SHK_pos;
+	_moveto = [_start,50,_dir] call SHK_pos_fnc_pos;
 	_wp = _group addWaypoint [_moveto,5];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointBehaviour "SAFE";

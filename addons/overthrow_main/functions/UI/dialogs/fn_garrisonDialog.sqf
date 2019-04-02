@@ -3,8 +3,8 @@ disableSerialization;
 
 _b = player call OT_fnc_nearestRealEstate;
 _name = "Base";
-if(typename _b == "ARRAY") then {
-	if(typeof (_b select 0) == OT_flag_IND) then {
+if(typename _b isEqualTo "ARRAY") then {
+	if(typeof (_b select 0) isEqualTo OT_flag_IND) then {
         _name = "";
         {
             if((_x select 0) distance (_b select 0) < 10) exitWith {_name = _x select 1};

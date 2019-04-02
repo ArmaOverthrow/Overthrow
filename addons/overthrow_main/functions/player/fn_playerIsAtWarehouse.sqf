@@ -1,8 +1,8 @@
 private _iswarehouse = false;
-_b = (position player) call OT_fnc_nearestRealEstate;
-if(typename _b == "ARRAY") then {
-    _building = _b select 0;
-    if((player distance _building) < 15 and (typeof _building) == OT_warehouse and (_building call OT_fnc_hasOwner) and (damage _building) < 1) then {
+private _b = (position player) call OT_fnc_nearestRealEstate;
+if(_b isEqualType []) then {
+    private _building = _b select 0;
+    if((player distance _building) < 15 && (typeof _building) == OT_warehouse && (_building call OT_fnc_hasOwner) && (damage _building) < 1) then {
         _iswarehouse = true;
     };
 };

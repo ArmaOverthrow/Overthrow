@@ -18,7 +18,7 @@ if((typeof _source) in OT_fuelPumps) then {
     private _close = -1;
     {
         private _dis = (_x distance _sink);
-        if(_close == -1 or _dis < _close) then {
+        if(_close isEqualTo -1 || _dis < _close) then {
             _player = _x;
             _close = _dis;
         }

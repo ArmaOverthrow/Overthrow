@@ -1,17 +1,15 @@
 createDialog 'OT_dialog_reverse';
-private ["_playerstock","_town","_standing","_s"];
 
-_playerstock = player call OT_fnc_unitStock;
-
+private _playerstock = player call OT_fnc_unitStock;
 private _cursel = lbCurSel 1500;
 lbClear 1500;
 private _numitems = 0;
 private _blueprints = server getVariable ["GEURblueprints",[]];
 {
-	_cls = _x select 0;
-	if !((_cls in _blueprints) or (_cls in OT_allExplosives)) then {
-		_name = "";
-		_pic = "";
+	_x params ["_cls"];
+	if !((_cls in _blueprints) || (_cls in OT_allExplosives)) then {
+		private _name = "";
+		private _pic = "";
 		if(_cls isKindOf ["Default",configFile >> "CfgWeapons"]) then {
 			_name = _cls call OT_fnc_weaponGetName;
 			_pic = _cls call OT_fnc_weaponGetPic;
@@ -24,7 +22,7 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 			_name = _cls call OT_fnc_vehicleGetName;
 			_pic = _cls call OT_fnc_vehicleGetPic;
 		};
-		_idx = lbAdd [1500,_name];
+		private _idx = lbAdd [1500,_name];
 		lbSetPicture [1500,_idx,_pic];
 		lbSetData [1500,_idx,_cls];
 		_numitems = _numitems + 1;
@@ -32,11 +30,11 @@ private _blueprints = server getVariable ["GEURblueprints",[]];
 }foreach(_playerstock);
 
 {
-	if (!(_x isKindOf "Animal") and !(_x isKindOf "CaManBase") and alive _x and (damage _x) == 0) then {
-		_cls = typeof _x;
-		_name = _cls call OT_fnc_vehicleGetName;
-		_pic = _cls call OT_fnc_vehicleGetPic;
-		_idx = lbAdd [1500,_name];
+	if (!(_x isKindOf "Animal") && !(_x isKindOf "CaManBase") && alive _x && (damage _x) isEqualTo 0) then {
+		private _cls = typeof _x;
+		private _name = _cls call OT_fnc_vehicleGetName;
+		private _pic = _cls call OT_fnc_vehicleGetPic;
+		private _idx = lbAdd [1500,_name];
 		lbSetPicture [1500,_idx,_pic];
 		lbSetData [1500,_idx,_cls];
 		_numitems = _numitems + 1;

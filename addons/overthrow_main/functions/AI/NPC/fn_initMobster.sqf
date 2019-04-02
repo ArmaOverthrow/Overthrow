@@ -12,7 +12,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenCRIM)) then {
+		if((vehicle _src) != _src || (_src call OT_fnc_unitSeenCRIM)) then {
 			_src setCaptive false;				
 		};		
 	};	
@@ -41,7 +41,7 @@ if(OT_hasTFAR) then {
 	_unit linkItem "ItemRadio";
 };
 _hour = date select 3;
-if(_hour < 8 or _hour > 15) then {
+if(_hour < 8 || _hour > 15) then {
 	_unit linkItem "O_NVGoggles_ghex_F";
 };
 if(OT_hasACE) then {
@@ -59,7 +59,8 @@ _weapon = (OT_CRIM_Weapons) call BIS_fnc_selectRandom;
 
 _unit addWeapon _weapon;
 
-call {
+[_unit] call {
+	params ["_unit"];
 	if((random 100) > 98) exitWith {
 		//This guy has a launcher
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
@@ -124,7 +125,7 @@ if((random 100) > 50) then {
 	_unit addItem "MiniGrenade";
 };
 
-if(OT_hasACE and ((random 100) > 90)) then {
+if(OT_hasACE && ((random 100) > 90)) then {
 	_unit addItem "ACE_M84";
 };
 

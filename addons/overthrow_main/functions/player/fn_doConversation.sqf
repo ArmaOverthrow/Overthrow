@@ -1,32 +1,21 @@
-private _personOne = _this select 0;
-private _personTwo = _this select 1;
-private _lines = _this select 2;
+params ["_personOne","_personTwo","_lines",["_onFinish",{}],["_params",[]]];
 
-private _onFinish = {};
-private _params = [];
-
-if((count _this) > 3) then {
-	_onFinish = _this select 3;
+_personOne setRandomLip false;
+_personTwo setRandomLip false;
+if (_lines isEqualTo []) exitWith {
+	_params call _onFinish;
 };
 
-if((count _this) > 4) then {
-	_params = _this select 4;
-};
+private _line = _lines deleteAt 0;
+_personOne setRandomLip true;
+_personOne globalChat _line;
+private _wait = (ceil ((count _line) * 0.1)+1) min 5;
 
-private _person = _personOne;
-{
-	_person setRandomLip true;
-	_person globalChat _x;
-	_wait = ceil ((count _x) * 0.1)+1;
-	if(_wait > 5) then {_wait = 5};
-	sleep _wait;
-	_person setRandomLip false;
-	if(_person isEqualTo _personOne) then {
-		_person = _personTwo;
-	}else{
-		_person = _personOne;
-	};
+_this set [0,_personTwo];
+_this set [1,_personOne];
 
-}forEach(_lines);
-
-_params call _onFinish;
+[
+	OT_fnc_doConversation,
+	_this,
+	_wait
+] call CBA_fnc_waitAndExecute;

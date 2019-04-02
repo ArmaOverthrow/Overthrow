@@ -6,12 +6,12 @@ private _types = _this select 1;
 private _found = false;
 private _range = 400;
 private _house = false;
-while {!_found and _range < 1200} do {
+while {!_found && _range < 1200} do {
 	_houses = nearestObjects [_search, ["house"], _range,false];
 	_possible = [];
 	if(count _houses > 0) then {
 		{
-			if (!(_x call OT_fnc_hasOwner) and (typeof _x) in _types) then {
+			if (!(_x call OT_fnc_hasOwner) && (typeof _x) in _types) then {
 				_possible pushback _x
 			};
 		}foreach(_houses);

@@ -1,24 +1,24 @@
-_veh = vehicle player;
+private _veh = vehicle player;
 
-if(_veh == player) exitWith {};
+if(_veh isEqualTo player) exitWith {};
 
 private _objects = [];
 
 private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
-if(typename _b == "ARRAY") then {
-	_building = _b select 0;
-	if((typeof _building) == OT_warehouse and _building call OT_fnc_hasOwner) then {
+if(typename _b isEqualTo "ARRAY") then {
+	private _building = _b select 0;
+	if((typeof _building) isEqualTo OT_warehouse && _building call OT_fnc_hasOwner) then {
 		_iswarehouse = true;
 		_objects pushback _building;
 	};
 };
 
 {
-	if(_x != _veh) then {_objects pushback _x};
+	if!(_x isEqualTo _veh) then {_objects pushback _x};
 }foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 
-if(count _objects == 0) exitWith {
+if(_objects isEqualTo []) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
 };
 _sorted = [_objects,[],{_x distance player},"ASCEND"] call BIS_fnc_SortBy;
@@ -40,7 +40,7 @@ _doTransfer = {
 		{
 			_count = 0;
 			_d = warehouse getVariable [_x,[_x,0]];
-			if(typename _d == "ARRAY") then {
+			if(typename _d isEqualTo "ARRAY") then {
 				_cls = _d select 0;
 				_num = _d select 1;
 				if(_num > 0) then {
@@ -79,7 +79,7 @@ _doTransfer = {
 	"Inventory Transfer done" call OT_fnc_notifyMinor;
 };
 
-if(count _objects == 1) then {
+if(count _objects isEqualTo 1) then {
 	(_objects select 0) call _doTransfer;
 }else{
 	private _options = [];
@@ -87,5 +87,5 @@ if(count _objects == 1) then {
 		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
 	}foreach(_objects);
 	"Transfer legal items from which container?" call OT_fnc_notifyBig;
-	_options spawn OT_fnc_playerDecision;
+	_options call OT_fnc_playerDecision;
 };

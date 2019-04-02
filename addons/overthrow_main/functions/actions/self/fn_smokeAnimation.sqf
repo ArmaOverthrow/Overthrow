@@ -6,7 +6,7 @@ if (_unit getVariable ["ACE_isUnconscious", false]) exitWith {};
 
 private _animation = animationState _unit;
 
-if (stance _unit == "STAND" && isClass (configFile >> "CfgPatches" >> "ewk_cigs")) then {
+if (stance _unit isEqualTo "STAND" && isClass (configFile >> "CfgPatches" >> "ewk_cigs")) then {
     [_unit, "EWK_CIGS_SMOKING_ERC_CTS"] remoteExec ["switchMove"];
 
     private _time = time;
