@@ -7,7 +7,7 @@ class CfgPatches
 	{
 		author="ARMAzac";
 		name=COMPONENT_NAME;
-		url="https://armaoverthrow.com/";
+		url="https://steamcommunity.com/sharedfiles/filedetails/?id=774201744";
 		requiredAddons[]=
 		{
 			"cba_ui",
