@@ -2,7 +2,7 @@
 
 overviewPicture = "\overthrow_main\campaign\missions\overthrow_tanoa.jpg";
 briefingName = "Overthrow: Malden";
-OnLoadName = "Overthrow: Malden: DEV";
+OnLoadName = "Overthrow: Malden";
 loadScreen = "\overthrow_main\campaign\missions\pic.jpg";
 
 overviewText = "@todo";
