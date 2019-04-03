@@ -77,7 +77,7 @@ publicVariable "OT_nextNATOTurn";
 				if !(_name in _abandoned) then {
 					if(_pos call OT_fnc_inSpawnDistance) then {
 						_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",500]);
-						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects 500);
+						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",500]);
 						if(_nummil < _numres) then {
 							_countered = true;
 							server setVariable ["NATOattacking",_name,true];
@@ -169,7 +169,7 @@ publicVariable "OT_nextNATOTurn";
 		{
 			_x params ["_pos","_garrison"];
 			_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
-			_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects 50);
+			_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",50]);
 			if(_nummil isEqualTo 0 && {_numres > 0}) then {
 				_clearedFOBs pushback _x;
 				"Cleared NATO FOB" remoteExec ["OT_fnc_notifyMinor",0,false];
@@ -226,7 +226,7 @@ publicVariable "OT_nextNATOTurn";
 				_population = server getVariable format ["population%1",_town];
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
-					_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects 200);
+					_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",200]);
 					if(_nummil < 3 && {_numres > 0}) then {
 						if(_population < 100) then {
 							if(_stability < 10 && {!(_town in _abandoned)}) then {

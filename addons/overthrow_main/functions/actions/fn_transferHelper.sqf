@@ -20,7 +20,7 @@ if(_target == player) then {
 };
 
 disableUserInput true;
-private _fromOrTo = ["from","to"] select _isToPlayer;
+private _fromOrTo = ["to","from"] select _isToPlayer;
 format["Transferring inventory %2 %1",_toname,_fromOrTo] call OT_fnc_notifyMinor;
 [5,false] call OT_fnc_progressBar;
 private _end = time + 5;
@@ -54,7 +54,7 @@ if(_isToPlayer && _iswarehouse) then {
 	clearItemCargoGlobal _target;
 }else{
 	{
-		params ["_cls", "_max"];
+		_x params [["_cls",""], ["_max",0]];
 		private _count = 0;
 		private _full = false;
 		while {_count < _max} do {

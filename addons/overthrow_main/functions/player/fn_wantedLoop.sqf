@@ -31,14 +31,14 @@ if !(captive _unit) then {
 	};
 }else{
 	//CURRENTLY NOT WANTED
-	
+
 	// reset vars for next wanted state
 	_timer = -1;
 	_hiding = 0;
-	
+
 	private _playerpos = getPosATL _unit;
 	private _vehicle = vehicle _unit;
-	
+
 	//flying
 	if((typeOf _vehicle isKindOf ["Air",configFile>>"CfgVehicles"]) && (_playerpos select 2) > 5) then {
 		private _base = _playerpos call OT_fnc_nearestObjective;
@@ -85,7 +85,7 @@ if !(captive _unit) then {
 				_unit setCaptive false;
 				[_unit] call OT_fnc_revealToNATO;
 			};
-			
+
 			// detected because fame
 			if(_unit call OT_fnc_detectedByReputation) exitWith {
 				_unit setCaptive false;
@@ -152,6 +152,15 @@ if !(captive _unit) then {
 							if(_this in OT_NATO_priority) exitWith {500};
 							200
 						};
+						/*
+						if (isNil format["%1_%2",_obname,_dist]) then {
+							private _markerstr = createMarker [format["%1_%2",_obname,_dist], _obpos];
+							_markerstr setMarkerShape "ELLIPSE";
+							_markerstr setMarkerSize [_dist, _dist];
+							_markerstr setMarkerColor [1,0,0,1];
+							_markerstr setMarkerAlpha 0.2;
+						};
+						*/
 						if(_obpos distance _unitpos < _dist) exitWith {
 							if(isPlayer _unit) then {
 								"You are in a restricted area" call OT_fnc_notifyMinor;

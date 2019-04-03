@@ -16,6 +16,7 @@ waitUntil {!isNull player && player isEqualTo player};
 
 enableSaving [false,false];
 enableEnvironment [false,true];
+setViewDistance 15;
 
 if(isServer) then {
 	missionNameSpace setVariable ["OT_HOST", player, true];
@@ -297,6 +298,7 @@ player setCaptive true;
 player setPos _housepos;
 [_housepos,_newplayer] spawn {
 	params ["_housepos","_newplayer"];
+	setViewDistance -1;
 	waitUntil{ preloadCamera _housepos};
 	titleText ["", "BLACK IN", 5];
 	sleep 1;
