@@ -77,7 +77,7 @@ if(_cls == OT_item_UAV) exitWith {
 	player reveal _veh;
 	format["You bought a Quadcopter",_cls call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
 	playSound "3DEN_notificationDefault";
-	hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green copter on the ground and 'Connect terminal to UAV'";
+	hint "To use a UAV, scroll your mouse wheel to 'Open UAV Terminal' then right click your green quadcopter on the ground and 'Connect terminal to UAV'";
 };
 if(_cls in OT_allVehicles) exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
