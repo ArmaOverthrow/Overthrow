@@ -129,7 +129,9 @@ OT_NATO_HQPos = [0,0,0];
 
 OT_fastTime = true; //When true, 1 day will last 6 hrs real time
 OT_spawnDistance = 1200;
-OT_spawnCivPercentage = 0.1;
+if (isNil "OT_spawnCivPercentage") then {
+	OT_spawnCivPercentage = 0.03;
+};
 OT_spawnVehiclePercentage = 0.04;
 OT_standardMarkup = 0.2; //Markup in shops is calculated from this
 OT_randomSpawnTown = false; //if true, every player will start in a different town, if false, all players start in the same town (Multiplayer only)
@@ -935,6 +937,7 @@ OT_noCopyMags = ["ACE_PreloadedMissileDummy"];
 
 OT_autoSave_time = 0;
 OT_autoSave_last_time = (10*60);
+OT_cleanup_civilian_loop = (5*60);
 zeusToggle = true;
 
 if(isServer) then {

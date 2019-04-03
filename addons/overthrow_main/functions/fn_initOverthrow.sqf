@@ -95,6 +95,19 @@ addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 }foreach(OT_fuelPumps);
 
 ["OT_autosave_loop"] call OT_fnc_addActionLoop;
+["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
+	OT_cleanup_civilian_loop = time + (5*60);
+	{
+		if (side group _x isEqualTo civilian && {!(isPlayer _x)} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {
+			private _group = group _x;
+			private _unit = _x;
+			deleteVehicle _unit;
+			if (count units _group < 1) then {
+				deleteGroup _group;
+			};
+		};
+	}forEach (allUnits);
+"] call OT_fnc_addActionLoop;
 
 OT_serverInitDone = true;
 publicVariable "OT_serverInitDone";
