@@ -11,7 +11,6 @@ if(_killer call OT_fnc_unitSeen) then {
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
-	hideBody _me;
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
 		if (_unit isEqualTo player) then {
