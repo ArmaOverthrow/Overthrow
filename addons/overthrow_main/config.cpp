@@ -96,32 +96,32 @@ class CfgMissions
 	};
 	class Missions
 	{
-		class OverthrowTanoaScenario
+		class OverthrowSpTanoa
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Tanoa";
+			directory="overthrow_main\campaign\missions\OverthrowSpTanoa.Tanoa";
 		};
-		class OverthrowAltisScenario
+		class OverthrowSpAltis
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Altis";
+			directory="overthrow_main\campaign\missions\OverthrowSpAltis.Altis";
 		};
-		class OverthrowMaldenScenario
+		class OverthrowSpMalden
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Malden";
+			directory="overthrow_main\campaign\missions\OverthrowSpMalden.Malden";
 		};
 	};
 	class MPMissions
 	{
-		class OverthrowTanoaMP
+		class OverthrowMpTanoa
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Tanoa";
+			directory="overthrow_main\campaign\missions\OverthrowMpTanoa.Tanoa";
 		};
-		class OverthrowAltisMP
+		class OverthrowMpAltis
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Altis";
+			directory="overthrow_main\campaign\missions\OverthrowMpAltis.Altis";
 		};
-		class OverthrowMaldenMP
+		class OverthrowMpMalden
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Malden";
+			directory="overthrow_main\campaign\missions\OverthrowMpMalden.Malden";
 		};
 	};
 };
