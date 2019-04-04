@@ -25,8 +25,7 @@ _this spawn {
 		disableUserInput false;
 		//Fail safe for user input disabled.
 	};
-	private _fromOrTo = ["to","from"] select _isToPlayer;
-	format["Transferring inventory %2 %1",_toname,_fromOrTo] call OT_fnc_notifyMinor;
+	format["Transferring inventory to %1...",_toname] call OT_fnc_notifyMinor;
 	[5,false] call OT_fnc_progressBar;
 	private _end = time + 5;
 

@@ -51,6 +51,11 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
 [] spawn OT_fnc_advancedTowingInit;
 
+if (isDedicated && profileNamespace getVariable ["OT_autoload",false]) then {
+	diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
+	[] spawn OT_fnc_loadGame;
+};
+
 waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
 [] spawn OT_fnc_initEconomyLoad;
 
@@ -91,7 +96,7 @@ addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 
 //Setup fuel pumps for interaction
 {
-    [_x,0] call ace_interact_menu_fnc_addMainAction;
+    //[_x,0] call ace_interact_menu_fnc_addMainAction;
 }foreach(OT_fuelPumps);
 
 ["OT_autosave_loop"] call OT_fnc_addActionLoop;
@@ -113,9 +118,4 @@ OT_serverInitDone = true;
 publicVariable "OT_serverInitDone";
 if(isServer) then {
     diag_log "Overthrow: Server Pre-Init Done";
-};
-
-if (isDedicated && profileNamespace getVariable ["OT_autoload",false]) then {
-	diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
-	[] spawn OT_fnc_loadGame;
 };
