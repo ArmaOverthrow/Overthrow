@@ -313,7 +313,11 @@ player setPos _housepos;
 	} else {
 		player setVariable ["OT_tute_trigger",false,true];
 	};
+};
 
+[] spawn {
+	waitUntil{!(isNull (findDisplay 46))};
+	(findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this#1) isEqualTo 1) then { [player] call OT_fnc_savePlayerData;	};"];
 };
 
 player addEventHandler ["WeaponAssembled",{
