@@ -52,7 +52,7 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 [] spawn OT_fnc_advancedTowingInit;
 
 [] spawn {
-	if (isDedicated && profileNamespace getVariable ["OT_autoload",false]) then {
+	if (false/*isDedicated && profileNamespace getVariable ["OT_autoload",false]*/) then {
 		diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
 		diag_log "== OVERTHROW == Waiting for a player to connect!";
 		waitUntil{sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0};
