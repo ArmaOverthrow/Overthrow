@@ -1,5 +1,7 @@
 OT_salvageVehicle = _this;
 private _doSalvage = {
+  [_this] spawn {
+    private _veh = _this;
     private _wreck = OT_salvageVehicle;
     private _steel = 3;
     private _plastic = 0;
@@ -19,8 +21,6 @@ private _doSalvage = {
     if((_cost select 3) > 0 && (random 100) > 90) then {
         _plastic = 1;
     };
-
-    private _veh = _this;
 
 
     closeDialog 0;
@@ -62,6 +62,7 @@ private _doSalvage = {
         format["Salvaged: %1 x Steel",_done] call OT_fnc_notifyMinor;
     };
     deleteVehicle _wreck;
+  };
 };
 
 private _objects = player nearEntities [["Car","ReammoBox_F","Air","Ship"],20];
