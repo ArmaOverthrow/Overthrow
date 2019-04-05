@@ -484,10 +484,7 @@ OT_allGoggles = [];
 	private _weapons = [];
 	private _blacklist = ["Throw","Put","NLAW_F"];
 
-	private _all = "
-	    ( getNumber ( _x >> ""scope"" ) isEqualTo 2 )
-		and ( getText ( _x >> ""faction"" ) isEqualTo """ + _name + """ )
-	" configClasses ( configFile >> "cfgVehicles" );
+	private _all = format["(getNumber( _x >> ""scope"" ) isEqualTo 2 ) && (getText( _x >> ""faction"" ) isEqualTo '%1')",_name] configClasses ( configFile >> "cfgVehicles" );
 	{
 		private _cls = configName _x;
 		if(_cls isKindOf "CAManBase") then {
