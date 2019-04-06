@@ -130,9 +130,18 @@ private _vehicles = (_tocheck) apply {
 		_s pushback ["money",_x getVariable ["money",0]];
 		_s pushback ["password",_x getVariable ["password",""]];
 	};
+	private _simCheck = if (dynamicSimulationEnabled _x) then {
+		true
+	}else{
+		if (simulationEnabled _x) then {
+			true
+		}else{
+			false
+		};
+	};
 	private _params = [
 		_type,
-		[getposatl _x,simulationEnabled _x],
+		[getposatl _x,_simCheck],
 		[vectorDir _x,vectorUp _x],
 		_s,
 		_x call OT_fnc_getOwner,
