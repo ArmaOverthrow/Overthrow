@@ -65,10 +65,10 @@ _civ linkItem "ItemCompass";
 _civ linkItem "ItemWatch";
 _civ linkItem "ItemRadio";
 
-loop_IOP_details = [_group];
+loop_IOP_details = [_group,_lospos];
 
 ["init_observation_post","_counter%5 isEqualTo 0","
-loop_IOP_details params [""_group""];
+loop_IOP_details params [""_group"",""_lospos""];
 if(count (units _group) isEqualTo 0) then {
 	deleteGroup _group;
 	[""init_observation_post""] spawn OT_fnc_removeActionLoop;
