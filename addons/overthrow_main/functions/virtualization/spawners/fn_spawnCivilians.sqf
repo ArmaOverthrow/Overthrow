@@ -97,7 +97,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 	private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
 	_gang params ["_members"];
 
-	if !(isNil "_members") then {
+	if (!isNil "_members" && {_members isEqualType []}) then {
 		private _vest = "";
 		if(count _gang > 3) then {
 			_vest = _gang select 3;
