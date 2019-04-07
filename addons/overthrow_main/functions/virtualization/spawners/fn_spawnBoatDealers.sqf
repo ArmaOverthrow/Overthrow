@@ -25,6 +25,7 @@ _groups = [_group];
 	_shopkeeper disableAI "MOVE";
 	_shopkeeper disableAI "AUTOCOMBAT";
 	_shopkeeper setVariable ["NOAI",true,false];
+	_shopkeeper setVariable ["shop",true,true];
 
 	_shopkeeper setDir (_dir-180);
 
