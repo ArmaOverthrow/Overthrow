@@ -79,6 +79,7 @@ private _grpUnits = groupSelectedUnits player;
 }foreach(allunits);
 
 if (!visibleGPS) then {
+	private _mortars = spawner getVariable ["NATOmortars",[]];
 	{
 		_mapCtrl drawIcon [
 			"\A3\ui_f\data\map\markers\nato\b_mortar.paa",
@@ -89,7 +90,7 @@ if (!visibleGPS) then {
 			0,
 			""
 		];
-	}foreach(spawner getVariable ["NATOmortars",[]]);
+	}foreach _mortars;
 	if((vehicle player) isKindOf ["Air",_cfgVeh]) then {
 		private _abandoned = server getVariable ["NATOabandoned",[]];
 		{
@@ -268,7 +269,7 @@ if(_scale <= 0.16) then {
 			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 		};
 	}foreach(_towns);
-	
+
 	if (!visibleGPS) then {
 		{
 			if ((typeof _x != "B_UAV_AI") && !(_x getVariable ["OT_looted",false])) then {
