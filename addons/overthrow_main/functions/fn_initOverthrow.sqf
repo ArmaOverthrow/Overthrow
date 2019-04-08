@@ -34,10 +34,10 @@ publicVariable "OT_civilians";
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
+[] call OT_fnc_initTFAR;
+
 call compile preprocessFileLineNumbers "initVar.sqf";
 call OT_fnc_initVar;
-
-[] call OT_fnc_initTFAR;
 
 if(isServer) then {
     diag_log "Overthrow: Server Pre-Init";
