@@ -121,7 +121,6 @@ OT_rankXP = [100,250,500,1000,4000,10000,100000];
 
 OT_adminMode = false;
 OT_deepDebug = false;
-OT_hasAce = true;
 OT_allIntel = [];
 OT_notifies = [];
 
