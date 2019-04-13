@@ -34,7 +34,8 @@ publicVariable "OT_civilians";
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
-call OT_fnc_initBaseVar;
+[] call OT_fnc_initTFAR;
+
 call compile preprocessFileLineNumbers "initVar.sqf";
 call OT_fnc_initVar;
 

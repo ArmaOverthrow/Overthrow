@@ -95,7 +95,10 @@ OT_NATO_Vehicles_AirGarrison = [
 	["B_Plane_CAS_01_F",1]
 ];
 
-if(OT_hasJetsDLC) then {
+//Check for jets dlc
+OT_hasJetsDLC = false;
+if("B_Plane_Fighter_01_F" isKindOf "Air") then {
+	OT_hasJetsDLC = true;
 	OT_NATO_Vehicles_AirGarrison pushback ["B_Plane_Fighter_01_F",1];
 	OT_NATO_Vehicles_AirGarrison pushback ["B_Plane_Fighter_01_Stealth_F",1];
 };
