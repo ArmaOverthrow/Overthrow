@@ -1,6 +1,6 @@
 private _pos = _this select 0;
 private _lospos = ATLtoASL ([_pos,[0,0,5.5]] call BIS_fnc_vectorAdd);
-private _post = (_pos nearObjects ["Land_Cargo_Patrol_V4_F",10]) select 0;
+private _post = (nearestObjects [_pos,["Land_Cargo_Patrol_V4_F"],5]) select 0;
 
 private _group = creategroup resistance;
 private _dir = ((getdir _post)+180);
