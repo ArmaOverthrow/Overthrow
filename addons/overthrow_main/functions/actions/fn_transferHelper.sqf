@@ -1,11 +1,6 @@
 _this spawn {
 	params ["_source", "_dest"];
 
-	private _isToPlayer = false;
-	if (_dest isEqualTo vehicle player || _dest isEqualTo player) then {
-		_isToPlayer = true;
-	};
-
 	private _veh = _dest;
 	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	private _iswarehouse = false;
@@ -42,7 +37,7 @@ _this spawn {
 		_target addMagazineCargoGlobal[_x, 1];
 	}foreach(_mags);
 
-	if(_isToPlayer && _iswarehouse) then {
+	if(_iswarehouse) then {
 		{
 			_cls = _x select 0;
 			_d = warehouse getVariable [(_x select 0),[_cls,0]];
