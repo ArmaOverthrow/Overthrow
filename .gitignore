@@ -25,6 +25,9 @@ $RECYCLE.BIN/
 *.biprivatekey
 *.log
 
+# Backup Files
+*.bak
+
 # Build Directory
 @Overthrow
 tools/includes.txt
