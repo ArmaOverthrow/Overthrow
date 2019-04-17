@@ -16,6 +16,7 @@ waitUntil {!isNull player && player isEqualTo player};
 
 enableSaving [false,false];
 enableEnvironment [false,true];
+setViewDistance 15;
 
 if(isServer) then {
 	missionNameSpace setVariable ["OT_HOST", player, true];
@@ -297,6 +298,7 @@ player setCaptive true;
 player setPos _housepos;
 [_housepos,_newplayer] spawn {
 	params ["_housepos","_newplayer"];
+	setViewDistance -1;
 	waitUntil{ preloadCamera _housepos};
 	titleText ["", "BLACK IN", 5];
 	sleep 1;
@@ -311,7 +313,11 @@ player setPos _housepos;
 	} else {
 		player setVariable ["OT_tute_trigger",false,true];
 	};
+};
 
+[] spawn {
+	waitUntil{!(isNull (findDisplay 46))};
+	(findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this#1) isEqualTo 1) then { [player] call OT_fnc_savePlayerData;	};"];
 };
 
 player addEventHandler ["WeaponAssembled",{

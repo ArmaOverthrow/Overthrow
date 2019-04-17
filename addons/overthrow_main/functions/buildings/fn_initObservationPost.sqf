@@ -1,6 +1,6 @@
 private _pos = _this select 0;
 private _lospos = ATLtoASL ([_pos,[0,0,5.5]] call BIS_fnc_vectorAdd);
-private _post = (_pos nearObjects ["Land_Cargo_Patrol_V4_F",10]) select 0;
+private _post = (nearestObjects [_pos,["Land_Cargo_Patrol_V4_F"],5]) select 0;
 
 private _group = creategroup resistance;
 private _dir = ((getdir _post)+180);
@@ -65,10 +65,10 @@ _civ linkItem "ItemCompass";
 _civ linkItem "ItemWatch";
 _civ linkItem "ItemRadio";
 
-loop_IOP_details = [_group];
+loop_IOP_details = [_group,_lospos];
 
 ["init_observation_post","_counter%5 isEqualTo 0","
-loop_IOP_details params [""_group""];
+loop_IOP_details params [""_group"",""_lospos""];
 if(count (units _group) isEqualTo 0) then {
 	deleteGroup _group;
 	[""init_observation_post""] spawn OT_fnc_removeActionLoop;

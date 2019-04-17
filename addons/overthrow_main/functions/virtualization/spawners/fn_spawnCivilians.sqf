@@ -71,7 +71,7 @@ while {_count < _numCiv} do {
 		if(_count < _numidents) then {
 			private _civid = _idents select _count;
 			private _ident = (OT_civilians getVariable [format["%1",_civid],[]]);
-			if((_ident select 3) isEqualTo -1) then {
+			if(count _ident > 2 && {(_ident select 3) isEqualTo -1}) then {
 				_identity = _ident select 0;
 				_civ setVariable ["OT_civid",_civid,true];
 				spawner setVariable [format["civspawn%1",_civid],_civ,false];
@@ -97,13 +97,15 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 	private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
 	_gang params ["_members"];
 
-	if !(isNil "_members") then {
+	if (!isNil "_members" && {_members isEqualType []}) then {
 		private _vest = "";
 		if(count _gang > 3) then {
 			_vest = _gang select 3;
 		}else{
 			_vest = selectRandom OT_allProtectiveVests;
-			_gang set[3,_vest];
+			if (_gang isEqualType []) then {
+				_gang set [3,_vest];
+			};
 		};
 		private _group = creategroup [opfor,true];
 		_groups pushback _group;

@@ -230,6 +230,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 					private _cost = player getVariable ["OT_ferryCost",0];
 					if((player getVariable ["money",0]) < _cost) exitWith {
 						"You cannot afford that!" call OT_fnc_notifyMinor;
+						disableUserInput false;
 					};
 					[-_cost] call OT_fnc_money;
 					cutText [format["Skipping ferry to %1",_town],"BLACK",2];

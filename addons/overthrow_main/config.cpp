@@ -7,7 +7,7 @@ class CfgPatches
 	{
 		author="ARMAzac";
 		name=COMPONENT_NAME;
-		url="https://armaoverthrow.com/";
+		url="https://steamcommunity.com/sharedfiles/filedetails/?id=774201744";
 		requiredAddons[]=
 		{
 			"cba_ui",
@@ -31,7 +31,7 @@ class CfgMainMenuSpotlight
 	class Overthrow
 	{
 		text = "Overthrow"; // Text displayed on the square button, converted to upper-case
-		textIsQuote = 0; // 1 to add quotation marks around the text
+		textIsQuote = 1; // 1 to add quotation marks around the text
 		picture = "\overthrow_main\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
 		video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
 		action = "ctrlactivate ((ctrlparent (_this select 0)) displayctrl 101);";
@@ -96,32 +96,32 @@ class CfgMissions
 	};
 	class Missions
 	{
-		class OverthrowTanoaScenario
+		class OverthrowSpTanoa
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Tanoa";
+			directory="overthrow_main\campaign\missions\OverthrowSpTanoa.Tanoa";
 		};
-		class OverthrowAltisScenario
+		class OverthrowSpAltis
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Altis";
+			directory="overthrow_main\campaign\missions\OverthrowSpAltis.Altis";
 		};
-		class OverthrowMaldenScenario
+		class OverthrowSpMalden
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Malden";
+			directory="overthrow_main\campaign\missions\OverthrowSpMalden.Malden";
 		};
 	};
 	class MPMissions
 	{
-		class OverthrowTanoaMP
+		class OverthrowMpTanoa
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Tanoa";
+			directory="overthrow_main\campaign\missions\OverthrowMpTanoa.Tanoa";
 		};
-		class OverthrowAltisMP
+		class OverthrowMpAltis
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Altis";
+			directory="overthrow_main\campaign\missions\OverthrowMpAltis.Altis";
 		};
-		class OverthrowMaldenMP
+		class OverthrowMpMalden
 		{
-			directory="overthrow_main\campaign\missions\Overthrow.Malden";
+			directory="overthrow_main\campaign\missions\OverthrowMpMalden.Malden";
 		};
 	};
 };

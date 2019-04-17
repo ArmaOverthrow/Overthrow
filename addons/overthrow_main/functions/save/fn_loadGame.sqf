@@ -96,11 +96,14 @@ private _cc = 0;
 					_name = _x select 5;
 				};
 				_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
+				_veh enableDynamicSimulation true;
+				/*
 				if !(_simulation) then {
 					_veh enableSimulationGlobal false;
 				}else{
 					_veh enableDynamicSimulation true;
 				};
+				*/
 
 				if(count _x > 7) then {
 					(_x select 7) params ["_fuel","_dmg"];

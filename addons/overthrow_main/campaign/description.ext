@@ -40,12 +40,12 @@ class Campaign
 		class Tanoa: MissionDefault
 		{
 			end1 = "Altis";
-			template = "Overthrow.Tanoa";
+			template = "OverthrowSpTanoa.Tanoa";
 		};
 
 		class Altis: MissionDefault
 		{
-			template = "Overthrow.Altis";
+			template = "OverthrowSpAltis.Altis";
 		};
 	};
 };

@@ -69,7 +69,7 @@ if(_hour > 17 || _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
 };
 
-if((random 100) > 90) exitWith {
+if((random 100) > 80) exitWith {
 	_unit addPrimaryWeaponItem "optic_Aco_smg"
 };
 

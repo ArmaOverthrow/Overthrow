@@ -38,5 +38,6 @@ _shopkeeper setVariable ["factionrep",true,true];
 _shopkeeper setVariable ["faction",_faction,true];
 _shopkeeper setVariable ["factionrepname",_name,true];
 [_shopkeeper,"self"] call OT_fnc_setOwner;
+_shopkeeper setVariable ["shopcheck",true,true];
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

@@ -11,7 +11,6 @@ if(_killer call OT_fnc_unitSeen) then {
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
-	hideBody _me;
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
 		if (_unit isEqualTo player) then {
@@ -22,19 +21,21 @@ if(isPlayer _me) exitWith {
 			player setCaptive true;
 			player forceAddUniform (player getVariable ["uniform",""]);
 			player setdamage 0;
-			sleep 0.5;
-			player setpos (player getVariable "home");
-			removeAllWeapons player;
-			removeAllItems player;
-			removeAllAssignedItems player;
-			removeBackpack player;
-			removeVest player;
-			removeGoggles player;
-			removeHeadgear player;
-			player setDamage 0;
-			player linkItem "ItemMap";
-			player switchMove "";
-			cutText ["", "BLACK IN", 5];
+			[] spawn {
+				sleep 0.5;
+				player setpos (player getVariable "home");
+				removeAllWeapons player;
+				removeAllItems player;
+				removeAllAssignedItems player;
+				removeBackpack player;
+				removeVest player;
+				removeGoggles player;
+				removeHeadgear player;
+				player setDamage 0;
+				player linkItem "ItemMap";
+				player switchMove "";
+				cutText ["", "BLACK IN", 5];
+			};
 		};
 	};
 };
