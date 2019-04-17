@@ -115,7 +115,7 @@ publicVariable "OT_nextNATOTurn";
 			}foreach(OT_objectiveData + OT_airportData);
 		};
 
-		//Town QRF (over 100 pop)
+		//Respond to town stability changes
 		if !(_countered) then {
 			_sorted = [OT_allTowns,[],{server getvariable format["population%1",_x]},"DESCEND"] call BIS_fnc_SortBy;
 			{
@@ -123,8 +123,10 @@ publicVariable "OT_nextNATOTurn";
 				_pos = server getVariable _town;
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
+				//Limit towns checked to those within range of players
 				if(_pos call OT_fnc_inSpawnDistance) then {
-					if(_population > 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
+					//Send QRF to Town with >100 population
+					if(_population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						_strength = _population;
@@ -135,11 +137,24 @@ publicVariable "OT_nextNATOTurn";
 						_countered = true;
 						_resources = _resources - _strength;
 					};
+					//Abandon Town with <100 population if it has dropped to 0 stability
+					if(_population < 100 && {(_stability isEqualTo 0)} && {!(_town in _abandoned)}) then {
+						_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
+						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",100]);
+						if(_nummil < 3 && {(_numres > 0)}) then {
+							_abandoned pushback _town;
+							server setVariable ["NATOabandoned",_abandoned,true];
+							server setVariable [format ["garrison%1",_town],0,true];
+							[_town, 0] call OT_fnc_stability;
+							format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
+							_countered = true;
+							diag_log format["Overthrow: NATO has abandoned %1",_town];
+						};
+					};
 				};
 				if(_countered) exitWith {};
 			}foreach (_sorted);
 		};
-
 
 		//Abandon towers
 		{
@@ -163,7 +178,6 @@ publicVariable "OT_nextNATOTurn";
 			if(_countered) exitWith {};
 		}foreach(OT_NATOcomms);
 
-
 		//Check on FOBs
 		_clearedFOBs = [];
 		{
@@ -184,13 +198,12 @@ publicVariable "OT_nextNATOTurn";
 			_fobs deleteAt (_fobs find _x);
 		}foreach(_clearedFOBs);
 
-
+		//NATO gets to play if it hasn't reacted to anything
 		if(_count >= _nextturn && {!_countered}) then {
 			OT_lastNATOTurn = time;
 			publicVariable "OT_lastNATOTurn";
 			_lastAttack = time - (server getVariable ["NATOlastattack",-1200]);
 			_resourceGain = server getVariable ["NATOresourceGain",0];
-			_abandonedSomething = false;
 			//NATO turn
 			_nextturn = OT_NATOwait + random OT_NATOwait;
 			OT_nextNATOTurn = time+(_nextturn * 10);
@@ -217,52 +230,32 @@ publicVariable "OT_nextNATOTurn";
 			//Recover resources
 			_resources = _resources + _gain + _resourceGain + ((count _abandoned) * _mul);
 
-			//Abandon towns (under 50 pop) && counter
+			//Counter Towns
 			_lastcounter = server getVariable ["NATOlastcounter",""];
 			{
 				_town = _x;
 				_pos = server getVariable _town;
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
-				if(_pos call OT_fnc_inSpawnDistance) then {
-					_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
-					_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",200]);
-					if(_nummil < 3 && {_numres > 0}) then {
-						if(_population < 100) then {
-							if(_stability < 10 && {!(_town in _abandoned)}) then {
-								//Abandon a town
-								_abandoned pushback _town;
-								server setVariable [format ["garrison%1",_town],0,true];
-								format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
-								[_town,15] call OT_fnc_stability;
-								_abandonedSomething = true;
+				if(_town != _lastcounter) then {
+					if(_pos call OT_fnc_inSpawnDistance) then {
+						_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
+						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",200]);
+						if(_nummil < 3 && {_numres > 0}) then {
+							if(_lastAttack > 1200 && {(_town in _abandoned)} && {(_resources > _population)} && {(random 100) > 99}) then {
+								//Counter a town
+								diag_log format ["=====OVERTHROW===== Countering %1",_town];
+								[_town,_population] spawn OT_fnc_NATOCounterTown;
+								server setVariable ["NATOlastcounter",_town,true];
+								server setVariable ["NATOattacking",_town,true];
+								server setVariable ["NATOattackstart",time,true];
+								_resources = _resources - _population;
+								_countered = true;
 							};
-						}else{
-							if(_town != _lastcounter) then {
-								if(_lastAttack > 1200 && {(_town in _abandoned)} && {(_resources > _population)} && {(random 100) > 99}) then {
-									//Counter a town
-									[_town,_population] spawn OT_fnc_NATOCounterTown;
-									server setVariable ["NATOlastcounter",_town,true];
-									server setVariable ["NATOattacking",_town,true];
-									server setVariable ["NATOattackstart",time,true];
-									_resources = _resources - _population;
-									_countered = true;
-								};
-							};
-						};
-					};
-				}else{
-					if(_population < 100) then {
-						if(_stability isEqualTo 0 && {!(_town in _abandoned)}) then {
-							//Abandon a town
-							_abandoned pushback _town;
-							server setVariable [format ["garrison%1",_town],0,true];
-							format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
-							_abandonedSomething = true;
 						};
 					};
 				};
-				if(_abandonedSomething || _countered) exitWith {};
+				if(_countered) exitWith {};
 			}foreach (OT_allTowns);
 
 			//Spawn missing drones & counter objectives
