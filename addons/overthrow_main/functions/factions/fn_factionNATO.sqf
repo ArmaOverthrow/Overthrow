@@ -4,7 +4,7 @@ private _abandoned = [];
 private _resources = 0;
 private _diff = server getVariable ["OT_difficulty",1];
 
-private _nextturn = 3;
+private _nextturn = 30; //wait 30 seconds from game start until spending resources
 private _count = 0;
 
 server setVariable ["NATOattacking","",true];
@@ -17,9 +17,7 @@ server setVariable ["QRFstart",nil,true];
 private _lastmin = date select 4;
 private _lastsched = -1;
 
-sleep 100 + (random 300);
-
-OT_nextNATOTurn = time+(_nextturn * 10);
+OT_nextNATOTurn = time+_nextturn;
 publicVariable "OT_nextNATOTurn";
 
 [{
@@ -199,14 +197,14 @@ publicVariable "OT_nextNATOTurn";
 		}foreach(_clearedFOBs);
 
 		//NATO gets to play if it hasn't reacted to anything
-		if(_count >= _nextturn && {!_countered}) then {
+		if(time >= OT_nextNATOTurn && {!_countered}) then {
 			OT_lastNATOTurn = time;
 			publicVariable "OT_lastNATOTurn";
 			_lastAttack = time - (server getVariable ["NATOlastattack",-1200]);
 			_resourceGain = server getVariable ["NATOresourceGain",0];
 			//NATO turn
 			_nextturn = OT_NATOwait + random OT_NATOwait;
-			OT_nextNATOTurn = time+(_nextturn * 10);
+			OT_nextNATOTurn = time+_nextturn;
 			publicVariable "OT_nextNATOTurn";
 
 			_count = 0;
