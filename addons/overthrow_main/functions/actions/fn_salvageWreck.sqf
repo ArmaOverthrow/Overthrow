@@ -1,7 +1,7 @@
 OT_salvageVehicle = _this;
 private _doSalvage = {
   [_this] spawn {
-    private _veh = _this;
+    private _veh = _this select 0;
     private _wreck = OT_salvageVehicle;
     private _steel = 3;
     private _plastic = 0;
@@ -28,25 +28,40 @@ private _doSalvage = {
 	format["Salvaging wreck into %1",_toname] call OT_fnc_notifyMinor;
     player playMove "AinvPknlMstpSnonWnonDnon_medic_1";
 	[14,false] call OT_fnc_progressBar;
-    if(damage _veh > 0.1) then {
-    	sleep 7;
-        player playMove "AinvPknlMstpSnonWnonDnon_medic_1";
-        sleep 7;
-    }else{
-        sleep 2;
-        _veh setDamage [0.8,false];
-        sleep 2;
-        _veh setDamage [0.6,false];
-        sleep 2;
-        _veh setDamage [0.4,false];
-        sleep 1;
-        player playMove "AinvPknlMstpSnonWnonDnon_medic_1";
-        sleep 1;
-        _veh setDamage [0.2,false];
-        sleep 2;
-        _veh setDamage [0.0,false];
-        sleep 4;
-    };
+	// Steadily damage a non-wrecked vehicle as the 
+    if(damage _wreck < 0.1) then {
+		_wreck setDamage [0.1,false];
+	};
+	sleep 2;
+	if(damage _wreck < 0.2) then {
+		_wreck setDamage [0.2,false];
+	};
+	sleep 2;
+	if(damage _wreck < 0.3) then {
+		_wreck setDamage [0.3,false];
+	};
+	sleep 2;
+	if(damage _wreck < 0.4) then {
+		_wreck setDamage [0.4,false];
+	};
+	sleep 1;
+	player playMove "AinvPknlMstpSnonWnonDnon_medic_1";
+	if(damage _wreck < 0.5) then {
+		_wreck setDamage [0.5,false];
+	};
+	sleep 1;
+	if(damage _wreck < 0.6) then {
+		_wreck setDamage [0.6,false];
+	};
+	sleep 2;
+	if(damage _wreck < 0.7) then {
+		_wreck setDamage [0.7,false];
+	};
+	sleep 2;
+	if(damage _wreck < 0.8) then {
+		_wreck setDamage [0.8,false];
+	};
+	sleep 2;
     _done = 0;
     for "_x" from 0 to (_steel - 1) do {
         if(!(_veh isKindOf "Truck_F" || _veh isKindOf "ReammoBox_F") && !(_veh canAdd "OT_Steel")) exitWith {
@@ -71,7 +86,7 @@ _filtered = [];
     if !(_x isEqualTo OT_salvageVehicle) then {_filtered pushback _x};
 }foreach(_objects);
 
-if(count _filtered isEqualTo 1) then {
+if((count _filtered) isEqualTo 1) then {
 	(_filtered select 0) call _doSalvage;
 }else{
     if(count _filtered > 1) then {
