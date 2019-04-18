@@ -111,7 +111,7 @@ private _getprice = {
                 {
                     private _c = configName _x;
                     [_c,_category] call _categorize;
-                    if(isServer) then {
+                    if(isServer && isNil {cost getVariable _c}) then {
                         cost setVariable [_c,[_x,_primaryCategory] call _getprice,true];
                     };
                 }foreach(format ["inheritsFrom _x isEqualTo (configFile >> ""CfgWeapons"" >> ""%1"")",_cls] configClasses ( configFile >> "CfgWeapons" ));
@@ -119,7 +119,7 @@ private _getprice = {
         }foreach(_types);
     }foreach(OT_itemCategoryDefinitions);
 
-    if(isServer) then {
+    if(isServer && isNil {cost getVariable _c}) then {
         cost setVariable [_cls,[_x,_primaryCategory] call _getprice,true];
     };
 

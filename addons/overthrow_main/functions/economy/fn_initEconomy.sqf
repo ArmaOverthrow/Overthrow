@@ -1,6 +1,6 @@
 if (!isServer) exitwith {};
 
-//automatically determining the population of each town/city on the map
+//automatically determinine the population of each town/city on the map
 //For each city and/or town
 OT_allShops = [];
 {

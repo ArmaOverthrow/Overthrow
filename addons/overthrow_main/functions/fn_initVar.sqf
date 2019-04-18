@@ -49,7 +49,7 @@ OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow
 OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Drugs.sqf");
 OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Economy.sqf");
 
-// inside mission
+// Load mission data
 call compile preprocessFileLineNumbers "data\names.sqf";
 call compile preprocessFileLineNumbers "data\towns.sqf";
 call compile preprocessFileLineNumbers "data\airports.sqf";
@@ -147,7 +147,7 @@ OT_ammo_50cal = "OT_ammo50cal";
 
 OT_item_wrecks = ["Land_Wreck_HMMWV_F","Land_Wreck_Skodovka_F","Land_Wreck_Truck_F","Land_Wreck_Car2_F","Land_Wreck_Car_F","Land_Wreck_Hunter_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad2_F","Land_Wreck_UAZ_F","Land_Wreck_Truck_dropside_F"]; //rekt
 
-OT_NATOwait = 30; //Half the Average time between NATO orders (x 10 seconds)
+OT_NATOwait = 300; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 OT_jobWait = 60;
 
@@ -268,6 +268,18 @@ OT_shops = _allShops apply {configName _x};
 private _allCarShops = "getNumber ( _x >> ""ot_isCarDealer"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_carShops = _allCarShops apply {configName _x};
 
+//Calculate prices
+//First, load the hardcoded prices from data/prices.sqf
+if(isServer) then {
+	OT_loadedPrices = [];
+	call compile preprocessFileLineNumbers "\overthrow_main\data\prices.sqf";
+	{
+		OT_loadedPrices pushback (_x select 0);
+		cost setVariable[_x select 0,_x select 1, true];
+	}forEach(OT_priceData);
+	OT_priceData = []; //free memory
+};
+
 private _allVehs = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
     &&
@@ -332,7 +344,7 @@ private _allHelis = "
 		_plastic = 6;
 	};
 
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _cls}) then {
 		cost setVariable [_cls,[_cost,0,_steel,_plastic],true];
 	};
 
@@ -349,7 +361,7 @@ if(isServer) then {
 
 {
 	private _cls = _x select 0;
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _cls}) then {
 		cost setVariable [_cls,[_x select 1,_x select 2,_x select 3,_x select 4],true];
 	};
 	if(_cls in OT_vehTypes_civ) then {
@@ -357,7 +369,6 @@ if(isServer) then {
 	};
 	OT_allVehicles pushBack _cls;
 }foreach(OT_vehicles);
-
 
 private _allWeapons = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
@@ -465,7 +476,7 @@ OT_allGoggles = [];
 			};
 			OT_allGlasses pushback _name;
 		};
-		if(isServer && _name != "None") then {
+		if(isServer && _name != "None" && isNil {cost getVariable _name}) then {
 			cost setVariable [_name,[_m*3,0,0,ceil(_m*0.5)],true];
 		};
 	};
@@ -628,7 +639,7 @@ OT_allGoggles = [];
 		};
 		[]
 	}) params [["_cost", 500], ["_steel", 2]];
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _name}) then {
 		cost setVariable [_name,[_cost,0,_steel,0],true];
 	};
 } foreach (_allWeapons);
@@ -647,7 +658,7 @@ OT_allLegalClothing = [];
 	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
 		OT_allLegalClothing pushback _name;
 	};
-	if (isServer) then {
+	if (isServer && isNil {cost getVariable _name}) then {
 		cost setVariable [_name,[_cost,0,0,1],true];
 	};
 } foreach (_allUniforms);
@@ -660,7 +671,7 @@ OT_allLegalClothing = [];
 	}else{
 		OT_allHats pushback _name;
 	};
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _name}) then {
 		cost setVariable [_name,[_cost,0,1,0],true];
 	};
 } foreach (_allHelmets);
@@ -703,7 +714,7 @@ OT_allLegalClothing = [];
 		}else{
 			OT_allMagazines pushback _name;
 		};
-		if(isServer) then {
+		if(isServer && isNil {cost getVariable _name}) then {
 			cost setVariable [_name,[_cost,0,_steel,_plastic],true];
 		};
 	};
@@ -717,13 +728,13 @@ OT_allLegalClothing = [];
 	};
 	OT_allDetonators pushback _name;
 	OT_detonators pushback [_name,_m,0,0.1,0];
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _name}) then {
 		cost setVariable [_name,[_m,0,0.1,0],true];
 	};
 } foreach (_allDetonators);
 
 if(isServer) then {
-	//Remainding vehicle costs
+	//Remaining vehicle costs
 	private _cfgVeh = configFile >> "cfgVehicles";
 	{
 		private _name = configName _x;
@@ -743,8 +754,9 @@ if(isServer) then {
 
 				if(_name isKindOf "Air") then {_cost = _cost * 2};
 			};
-
-			cost setVariable [_name,[_cost,0,_steel,_plastic],true];
+			if(isNil {cost getVariable _name}) then {
+				cost setVariable [_name,[_cost,0,_steel,_plastic],true];
+			};
 		};
 	} foreach (_allVehicles);
 };
@@ -762,7 +774,7 @@ OT_attachments = [];
 		//Suppressors
 		_cost = 350;
 	};
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _name}) then {
 		cost setVariable [_name,[_cost,0,0,0.25],true];
 	};
 	OT_allAttachments pushback _name;
@@ -783,7 +795,7 @@ OT_attachments = [];
 	}foreach(_allModes);
 
 	OT_allOptics pushback _name;
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable _name}) then {
 		cost setVariable [_name,[_cost,0,0,0.5],true];
 	};
 } foreach (_allOptics);
@@ -795,27 +807,23 @@ if(isServer) then {
 	cost setVariable ["WAGE",[5,0,0,0],true];
 	cost setVariable [OT_item_UAV,[200,0,0,1],true];
 	cost setVariable ["FUEL",[5,0,0,0],true];
-
-	//Drug prices
-	cost setVariable ["OT_Ganja",[100,0,0,0],true];
-	cost setVariable ["OT_Blow",[250,0,0,0],true];
 };
 //populate the cost gamelogic with the above data so it can be accessed quickly
 {
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable (_x select 0)}) then {
 		cost setVariable [_x select 0,_x select [1,4],true];
 	};
 	OT_allBackpacks pushBack (_x select 0);
 }foreach(OT_backpacks);
 {
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable (_x select 0)}) then {
 		cost setVariable [_x select 0,_x select [1,4],true];
 	};
 	OT_allStaticBackpacks pushBack (_x select 0);
 }foreach(OT_staticBackpacks);
 
 {
-	if(isServer) then {
+	if(isServer && isNil {cost getVariable (_x select 0)}) then {
 		cost setVariable [_x select 0,_x select [1,4],true];
 	};
 	OT_allBoats pushBack (_x select 0);
@@ -937,7 +945,5 @@ OT_cleanup_civilian_loop = (5*60);
 zeusToggle = true;
 
 if(isServer) then {
-	cost setVariable ["V_RebreatherIA",[75,0,0,1],true];
-	cost setVariable ["ToolKit",[80,0,0,0],true];
 	missionNamespace setVariable ["OT_varInitDone",true,true];
 };
