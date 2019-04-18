@@ -23,6 +23,8 @@ OT_ACEremoveActionConfirm = [
 	10
 ] call ace_interact_menu_fnc_createAction;
 
+OT_hasACE = true;
+
 //Find markers
 OT_ferryDestinations = [];
 OT_NATO_control = [];
