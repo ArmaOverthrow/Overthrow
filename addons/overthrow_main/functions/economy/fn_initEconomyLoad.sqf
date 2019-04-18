@@ -1,3 +1,4 @@
+waitUntil {sleep 1;missionNamespace getVariable ["OT_varInitDone",false]};
 {_x setMarkerAlpha 0} foreach OT_regions;
 
 //Find NATO HQ

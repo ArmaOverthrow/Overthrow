@@ -552,13 +552,14 @@ class CfgFunctions
 		{
 			file = "\overthrow_main\functions\util";
 			class getOwner {};
-      class hasOwner {};
+      		class hasOwner {};
 			class setOwner {};
 			class unitStock {};
-      class spawnTemplate {};
+      		class spawnTemplate {};
 			class sortBy {};
 			class sortByInplace {};
 			class findReplace {};
+			class exportPrices {};
 		};
 
 		/*
