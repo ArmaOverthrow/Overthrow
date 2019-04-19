@@ -210,6 +210,7 @@ class CfgFunctions
 			class fastTravel {};
 			class talkToCiv {};
 			class recruitCiv {};
+			class recruitSpawnCiv {};
 			class leaseBuilding {};
 			class place {};
 			class onNameDone {};

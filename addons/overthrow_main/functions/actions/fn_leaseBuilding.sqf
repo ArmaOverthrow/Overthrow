@@ -21,6 +21,7 @@ if(damage _building isEqualTo 1) exitWith {
 };
 if(typeof _building == OT_policeStation) exitWith {[] call OT_fnc_policeDialog};
 if((typeof _building == OT_barracks) || (typeof _building == OT_trainingCamp)) exitWith {[] call OT_fnc_recruitDialog};
+if(typeof _building == OT_refugeeCamp) exitWith {[] call OT_fnc_recruitSpawnCiv};
 if(typeof _building == OT_warehouse) exitWith {[] call OT_fnc_buyVehicleDialog};
 
 if(typename _b != "ARRAY") exitWith {
