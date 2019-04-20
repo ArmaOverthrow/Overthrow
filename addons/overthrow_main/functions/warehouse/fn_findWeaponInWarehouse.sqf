@@ -10,6 +10,7 @@ private _possible = [];
 				private _weapon = [_cls] call BIS_fnc_itemType;
 				private _weaponType = _weapon select 1;
 				if(_weaponType == "AssaultRifle" && (_cls find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
+				if(_weaponType == "AssaultRifle" && (_x find "srifle_") == 0) then {_weaponType = "SniperRifle"};
 				if(_weaponType == _type) then {_possible pushback _cls};
 			};
 		}else{

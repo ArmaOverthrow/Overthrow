@@ -61,6 +61,8 @@ if(_price > -1) then {
     	if(_cls isKindOf "Man") exitWith {
             private _soldier = _cls call OT_fnc_getSoldier;
     		private _price = _soldier select 0;
+
+            _price = format["$%1",_price];
     		[
 				nil,
     			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
@@ -75,12 +77,14 @@ if(_price > -1) then {
             }foreach(OT_squadables);
 
             private _comp = _d select 1;
-            private _price = 0;
+            private _p = 0;
             {
             	private _s = OT_recruitables select _x;
             	private _soldier = (_s select 0) call OT_fnc_getSoldier;
-            	_price = _price + (_soldier select 0);
+            	_p = _p + (_soldier select 0);
             }foreach(_comp);
+
+            _price = format["$%1",_p];
 
 			[
 				nil,
@@ -88,7 +92,6 @@ if(_price > -1) then {
 				_cls,
 				_price
 			]
-    		
     	};
     };
 	_pic = _res param [0, ""];

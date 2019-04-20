@@ -19,16 +19,6 @@ if(binocular _unit != "") then {
 
 if(_full) exitWith {false};
 
-if(hmd _unit != "") then {
-	if (!(_t canAdd hmd _unit) && !_isTruck) exitWith {
-		_full = true;
-	};
-	_t addWeaponCargoGlobal [hmd _unit,1];
-	_unit removeWeapon hmd _unit;
-};
-
-if(_full) exitWith {false};
-
 {
 	_count = 0;
 	_cls = _x select 0;

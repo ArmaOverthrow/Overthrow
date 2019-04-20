@@ -70,8 +70,10 @@ private _cc = 0;
 	if(_key == "warehouse") then {
 		{
 			_x params ["_subkey","_subval"];
-			if!(toLower (_subkey select [0,4]) in ["cba_","bis_"]) then {
-				warehouse setVariable [_subkey,_subval,true];
+			if !(isNil {_subval}) then {
+				if!(toLower (_subkey select [0,4]) in ["cba_","bis_"] ) then {
+					warehouse setVariable [_subkey,_subval,true];
+				};
 			};
 		}foreach(_val);
 		_set = false;

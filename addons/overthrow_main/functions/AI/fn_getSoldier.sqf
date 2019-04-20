@@ -26,6 +26,7 @@ if(_wpn isEqualTo "") then {
 		private _weapon = [_x] call BIS_fnc_itemType;
 		private _weaponType = _weapon select 1;
 		if(_weaponType == "AssaultRifle" && (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
+		if(_weaponType == "AssaultRifle" && (_x find "srifle_") == 0) then {_weaponType = "SniperRifle"};
 		if(_weaponType == _primary) then {_possible pushback _x};
 	}foreach(OT_allWeapons);
 	private _sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
@@ -62,15 +63,26 @@ if(_scope isEqualTo "") then {
 	_warehouseScope = true;
 };
 
-if(_tertiary != "") then {
-	private _d = warehouse getvariable [_tertiary,[_tertiary,0]];
-	private _num = _d select 1;
-	if(_num isEqualTo 0) then {
+if(count _tertiary > 0) then {
+	private _got = false;
+	{
+		private _d = warehouse getvariable [_x,[_x,0]];
+		private _num = _d select 1;
+		if(_num > 0) then {
+			_tertiary = _x;
+			_got = true;
+		};
+	}foreach(_tertiary);
+
+	if(_got) then {
+		_warehouseTertiary = true;
+	}else{
+		_tertiary = _tertiary select 0;
 		private _price = ((cost getVariable [_tertiary,[1000]]) select 0);
 		_cost = _cost + _price;
-	}else{
-		_warehouseTertiary = true;
 	};
+}else{
+	_tertiary = "";
 };
 
 [_cost,_cls,_wpn,_warehouseWpn,_pwpn,_warehousePistol,_tertiary,_warehouseTertiary,_scope,_warehouseScope,_uniform,_bino]

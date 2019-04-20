@@ -61,30 +61,32 @@ private _target = _sorted select 0;
         {
             _weapon = _x;
             _s = (weaponsItems _weapon) select 0;
-			_cls = (_s select 0);
-			_i = _s select 1;
-			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
-			_i = _s select 2;
-			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
-			_i = _s select 3;
-			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
+            if(!isNil {_s}){
+    			_cls = (_s select 0);
+    			_i = _s select 1;
+    			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
+    			_i = _s select 2;
+    			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
+    			_i = _s select 3;
+    			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
 
-            if (!(_t canAdd (_cls call BIS_fnc_baseWeapon)) && !_istruck) exitWith {
-				_unit globalchat "This vehicle is full, cancelling loot order";
-				_active = false;
-			};
-            _t addWeaponCargoGlobal [_cls call BIS_fnc_baseWeapon,1];
-			deleteVehicle _weapon;
+                if (!(_t canAdd (_cls call BIS_fnc_baseWeapon)) && !_istruck) exitWith {
+    				_unit globalchat "This vehicle is full, cancelling loot order";
+    				_active = false;
+    			};
+                _t addWeaponCargoGlobal [_cls call BIS_fnc_baseWeapon,1];
+    			deleteVehicle _weapon;
+            };
         }foreach(_weapons);
 
 		while {_active} do {
 			_deadguys = [];
 			{
-				if !((_x distance _unit > 100) || (alive _x) || (_x getVariable ["OT_looted",false])) then {
+				if !((_x distance _t > 100) || (alive _x) || (_x getVariable ["OT_looted",false])) then {
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");
-			if(count _deadguys isEqualTo 0) exitWith {_unit globalchat "No bodies within 100m"};
+			if(count _deadguys isEqualTo 0) exitWith {_unit globalchat "All done!"};
             _unit globalchat format["%1 bodies to loot",count _deadguys];
 			_sorted = [_deadguys,[],{_x distance _t},"ASCEND"] call BIS_fnc_SortBy;
 

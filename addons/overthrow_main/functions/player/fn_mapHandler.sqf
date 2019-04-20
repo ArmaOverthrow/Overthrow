@@ -90,7 +90,7 @@ if (!visibleGPS) then {
 			0,
 			""
 		];
-	}foreach _mortars;
+	}foreach(_mortars);
 	if((vehicle player) isKindOf ["Air",_cfgVeh]) then {
 		private _abandoned = server getVariable ["NATOabandoned",[]];
 		{
