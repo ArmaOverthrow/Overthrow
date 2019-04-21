@@ -59,7 +59,7 @@ _handler = {
 	};
 	_t = 1;
 	{
-		if (!(isPlayer _x) && {(side _x == resistance)}) then {
+		if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x}) then {
 			_veh = vehicle _x;
 			if(_veh isEqualTo _x) then {
 				_color = [0,0.5,0,1];
