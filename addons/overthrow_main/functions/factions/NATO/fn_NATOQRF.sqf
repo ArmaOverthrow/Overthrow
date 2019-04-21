@@ -152,6 +152,7 @@ server setVariable ["QRFprogress",0,true];
 waitUntil {(time - _start) > 300};
 
 private _timeout = time + 800;
+private _maxTime = time + 1800;
 
 private _over = false;
 private _progress = 0;
@@ -167,7 +168,11 @@ while {sleep 5; !_over} do {
 				_alive = _alive + 1;
 			};
 			if((side _x isEqualTo resistance || captive _x) && (alive _x) && !(_x getvariable ["ace_isunconscious",false])) then {
-				_enemy = _enemy + 1;
+				if(isPlayer _x) then {
+					_enemy = _enemy + 2;
+				} else {
+					_enemy = _enemy + 1;
+				};
 			};
 		};
 	}foreach(allunits);
@@ -179,7 +184,7 @@ while {sleep 5; !_over} do {
 	_progressPercent = 0;
 	if(_progress != 0) then {_progressPercent = _progress/_totalStrength};
 	server setVariable ["QRFprogress",_progressPercent,true];
-	if((abs _progress) >= _totalStrength) then {
+	if((abs _progress) >= _totalStrength || time > _maxTime) then {
 		//Someone has won
 		_over = true;
 	};
