@@ -149,7 +149,7 @@ server setVariable ["QRFpos",_pos,true];
 server setVariable ["QRFstart",_start,true];
 server setVariable ["QRFprogress",0,true];
 
-waitUntil {(time - _start) > 300};
+waitUntil {(time - _start) > 600};
 
 private _timeout = time + 800;
 private _maxTime = time + 1800;
@@ -176,6 +176,7 @@ while {sleep 5; !_over} do {
 			};
 		};
 	}foreach(allunits);
+	if(_alive == 0) then {_enemy = _enemy * 2}; //If no NATO present, cap it faster
 	if(time > _timeout && _alive isEqualTo 0 && _enemy isEqualTo 0) then {_enemy = 1};
 	_progresschange = (_alive - _enemy);
 	if(_progresschange < -20) then {_progresschange = -20};

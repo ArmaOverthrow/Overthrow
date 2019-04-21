@@ -46,8 +46,8 @@ if(_player call OT_fnc_unitSeenNATO) then {
 };
 private _qrf = "";
 private _qrfstart = server getVariable "QRFstart";
-if(!isNil "_qrfstart" && (time - _qrfstart) < 300) then {
-	private _secs = 300 - round(time - _qrfstart);
+if(!isNil "_qrfstart" && (time - _qrfstart) < 600) then {
+	private _secs = 600 - round(time - _qrfstart);
 	private _mins = 0;
 	if(_secs > 59) then {
 		_mins = floor(_secs / 60);

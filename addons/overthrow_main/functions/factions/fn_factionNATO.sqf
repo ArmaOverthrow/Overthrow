@@ -410,7 +410,7 @@ publicVariable "OT_nextNATOTurn";
 					_current = server getVariable format ["garrison%1",_town];;
 					_stability = server getVariable format ["stability%1",_town];
 					_population = server getVariable format ["population%1",_town];
-					if(_stability > 10 && {!(_town in _abandoned)}) then {
+					if!(_town in _abandoned) then {
 						_max = round(_population / 40);
 						if(_max < 4) then {_max = 4};
 						_garrison = 2+round((1-(_stability / 100)) * _max);

@@ -22,7 +22,7 @@ private _cc = 0;
 	if(_key == "players") then {
 		{
 			_x params ["_subkey","_subval"];
-			if(!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) && {(_x select [0,9]) != "seencache"}) then {
+			if(!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) && {(_subkey select [0,9]) != "seencache"}) then {
 				players_NS setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);

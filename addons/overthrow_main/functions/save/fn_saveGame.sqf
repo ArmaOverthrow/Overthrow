@@ -65,7 +65,6 @@ private _server = (allVariables server select {
 
 	[_x,_val]
 };
-_data pushBack ["server",_server];
 
 if !(_quiet) then {
 	"Step 2/11 - Saving buildings" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
@@ -107,6 +106,7 @@ private _tocheck = ((allMissionObjects "Static") + vehicles) select {
 	&& {(typeof _x != OT_flag_IND)}
 	&& {!(typeOf _x isKindOf ["Man", _cfgVeh])}
 	&& {(_x call OT_fnc_hasOwner)}
+	&& {(_x getVariable["OT_garrison",false]) isEqualTo false}
 };
 
 private _tosave = count _tocheck;
@@ -243,7 +243,7 @@ private _getGroupSoldiers = {
 	if !(isNull _group) then {
 		private _soldiers = _group call _getGroupSoldiers;
 		if(count _soldiers > 0) then {
-			_data pushback [format["resgarrison%1",_code],_soldiers];
+			_server pushback [format["resgarrison%1",_code],_soldiers];
 		};
 	};
 }foreach(server getVariable ["bases",[]]);
@@ -253,15 +253,18 @@ if !(_quiet) then {
 };
 
 {
-	private _group = spawner getvariable [format["resgarrison%1",_x],grpNull];
+	_pos = _x select 0;
+	_code = _x select 1;
+	private _group = spawner getvariable [format["resgarrison%1",_code],grpNull];
 	if !(isNull _group) then {
 		private _soldiers = _group call _getGroupSoldiers;
 		if(count _soldiers > 0) then {
-			_data pushback [format["resgarrison%1",_x],_soldiers];
+			_server pushback [format["resgarrison%1",_code],_soldiers];
 		};
 	};
-}foreach(OT_allObjectives);
+}foreach(OT_objectiveData + OT_airportData);
 
+_data pushBack ["server",_server];
 _data pushback ["timedate",date];
 _data pushback ["autosave",[OT_autoSave_time,OT_autoSave_last_time]];
 
