@@ -23,6 +23,7 @@ _newrecruits = [];
 		if(typename _civ isEqualTo "OBJECT") then {
 			if(_civ call OT_fnc_playerIsOwner) then {
 				[_civ] joinSilent (group player);
+				commandStop _civ;
 			};
 		};
 	};

@@ -61,7 +61,7 @@ private _target = _sorted select 0;
         {
             _weapon = _x;
             _s = (weaponsItems _weapon) select 0;
-            if(!isNil {_s}){
+            if(!isNil {_s}) then {
     			_cls = (_s select 0);
     			_i = _s select 1;
     			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
