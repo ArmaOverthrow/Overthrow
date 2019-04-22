@@ -55,7 +55,7 @@ if(_strength > 1500 && (count _air) > 0) then {
 };
 
 //Send ground support
-if({count _ground > 0} && {_strength > 250}) then {
+if((count _ground > 0) && (_strength > 250)) then {
 	_obpos = (_ground select 0) select 0;
 	_name = (_ground select 0) select 1;
 	_send = 100;
@@ -73,7 +73,7 @@ if({count _ground > 0} && {_strength > 250}) then {
 };
 
 //Send tanks
-if({count _ground > 0} && {_strength > 1500}) then {
+if((count _ground > 0) && (_strength > 1500)) then {
 	_obpos = (_ground select 0) select 0;
 	_name = (_ground select 0) select 1;
 	_send = 100;
