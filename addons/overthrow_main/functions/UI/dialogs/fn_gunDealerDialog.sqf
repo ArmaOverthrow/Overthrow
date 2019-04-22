@@ -4,7 +4,7 @@ private _stock = server getVariable format["gunstock%1",_town];
 if(isNil "_stock") then {
 	private _numguns = round(random 7)+3;
 	private _count = 0;
-	_stock = [[OT_item_BasicGun,25],[OT_item_BasicAmmo,1]];
+	_stock = [[OT_item_BasicGun,150],[OT_item_BasicAmmo,1]];
 	_stock pushback [OT_ammo_50cal,100];
 
 	private _p = (cost getVariable "I_HMG_01_high_weapon_F") select 0;
@@ -28,7 +28,7 @@ if(isNil "_stock") then {
 
 			_tostock pushBack _type;
 			_count = _count + 1;
-			
+
 			private _cost = cost getVariable _type;
 			private _price = round((_cost select 0) * ((random 2) + 1));
 			_stock pushBack [_type,_price];
