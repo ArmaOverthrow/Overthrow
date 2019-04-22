@@ -128,7 +128,7 @@ publicVariable "OT_nextNATOTurn";
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						_strength = _population;
-						if(_population < _resources) then {_strength = _resources};
+						if(_strength > _resources) then {_strength = _resources};
 						[_town,_strength] spawn OT_fnc_NATOResponseTown;
 						server setVariable ["NATOattacking",_town,true];
 						server setVariable ["NATOattackstart",time,true];

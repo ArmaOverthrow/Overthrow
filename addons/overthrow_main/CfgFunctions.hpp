@@ -500,6 +500,7 @@ class CfgFunctions
 			class CTRGSupport {};
 			class NATOAirSupport {};
 			class NATOGroundSupport {};
+			class NATOTankSupport {};
 			class NATOSeaSupport {};
 
 			class NATOResponseObjective {};
