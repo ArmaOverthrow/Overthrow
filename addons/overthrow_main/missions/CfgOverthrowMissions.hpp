@@ -44,4 +44,13 @@ class CfgOverthrowMissions
         script = "\overthrow_main\missions\captureTown.sqf";
         chance = 100;
     };
+
+    class ReconBase
+    {
+        target = "Base";
+        repeatable = 1;
+        condition = "params['_inSpawnDistance', '_name'];!(_name in (server getVariable ['NATOabandoned',[]])) && _inSpawnDistance && (server getVariable [format[""garrison%1"",_name],0]) > 0";
+        script = "\overthrow_main\missions\reconBase.sqf";
+        chance = 100;
+    };
 };
