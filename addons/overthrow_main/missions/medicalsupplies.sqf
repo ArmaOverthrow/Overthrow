@@ -29,7 +29,7 @@ if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
 };
 
 //Build a mission description and title
-private _description = format["%1 is in need of medical supplies. Deliver %2 x %3 to the marked location using any vehicle, just pull up with the items in the inventory. %4",_destinationName,_numitems,_itemName,_effect];
+private _description = format["%1 is in need of medical supplies. Deliver %2 x %3 to the marked location using any vehicle, just pull up with the items in the inventory. <br/><br/>%4",_destinationName,_numitems,_itemName,_effect];
 private _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName];
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts

@@ -23,7 +23,7 @@ private _params = [_destination,_destinationName,_jobid];
 private _markerPos = _destination; //randomize the marker position a bit
 
 //Build a mission description and title
-private _description = format["A defector from the resistance is hiding in %1 under NATO protection and giving them sensitive information. He needs to be silenced. Reward: $500",_destinationName];
+private _description = format["A defector from the resistance is hiding in %1 under NATO protection and giving them sensitive information. He needs to be silenced. <br/><br/>Reward: $500",_destinationName];
 private _title = format["NATO informant in %1",_destinationName];
 
 //This next number multiplies the reward

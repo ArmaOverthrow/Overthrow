@@ -10,7 +10,7 @@ private _factionName = server getvariable format["factionname%1",_faction];
 private _effect = format["The town will get a small boost in stability as %1 helps quell the populace.<br/><t size='0.9'>Reward: $5,000 resistance funds, +10 (%1)</t>",_factionName];
 
 //Build a mission description and title
-private _description = format["%1 would prefer if %2 was controlled by the resistance. Drop stability in that town by killing Gendarmerie or doing other jobs until it reaches 0%. <br/>%3",_factionName,_destinationName,_effect];
+private _description = format["%1 would prefer if %2 was controlled by the resistance. Drop stability in that town by killing Gendarmerie or doing other jobs until it reaches 0%. <br/><br/>%3",_factionName,_destinationName,_effect];
 private _title = format["Capture %1 for %2",_destinationName,_factionName];
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
