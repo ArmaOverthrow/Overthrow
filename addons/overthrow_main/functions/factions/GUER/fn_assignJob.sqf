@@ -20,26 +20,33 @@ _j spawn {
 
 		private _done = false;
 		[{
-			(_this select 0) params ["_done","_id","_job","_repeat","_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];			
+			(_this select 0) params ["_done","_id","_job","_repeat","_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];
+			private _handle = _this select 1;
 			if (!_done) then {
-				if(_jobparams call _success) exitWith {
-					_jobparams pushback true;
+				if(call {
+					if(_jobparams call _success) exitWith {
+						_jobparams pushback true;
+						true
+					};
+					if(_jobparams call _fail) exitWith {
+						_jobparams pushback false;
+						true
+					};
+					false
+				}) then {
 					_jobparams call _end;
-				};
-				if(_jobparams call _fail) exitWith {
-					_jobparams pushback false;
-					_jobparams call _end;
-				};
-				_active = spawner getVariable ["OT_activeJobs",[]];
-				_active deleteAt (_active find _this);
-				spawner setVariable ["OT_activeJobs",_active,true];
+					_active = spawner getVariable ["OT_activeJobs",[]];
+					_active deleteAt (_active find _this);
+					spawner setVariable ["OT_activeJobs",_active,true];
 
-				_active = server getVariable ["OT_activeJobIds",[]];
-				_active deleteAt (_active find _id);
+					_active = server getVariable ["OT_activeJobIds",[]];
+					_active deleteAt (_active find _id);
 
-				if(_repeat < 1) then {
-					_completed = server getVariable ["OT_completedJobIds",[]];
-					_completed pushback _id;
+					if(_repeat < 1) then {
+						_completed = server getVariable ["OT_completedJobIds",[]];
+						_completed pushback _id;
+					};
+					[_handle] call CBA_fnc_removePerFrameHandler;
 				};
 			};
 		}, 1, [_done,_id,_job,_repeat,_info,_markerPos,_setup,_fail,_success,_end,_jobparams]] call CBA_fnc_addPerFrameHandler;
