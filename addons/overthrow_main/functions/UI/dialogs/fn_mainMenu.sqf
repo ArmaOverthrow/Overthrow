@@ -198,7 +198,8 @@ if(typename _b isEqualTo "ARRAY") then {
 			_ownername = players_NS getVariable format["name%1",_owner];
 			ctrlSetText [1608,"Sell"];
 			ctrlEnable [1608,false];
-			ctrlEnable [1609,false];
+			ctrlEnable [1609,true];
+			ctrlSetText [1609,"Recruit"];
 			ctrlEnable [1610,false];
 
 			_buildingTxt = format["

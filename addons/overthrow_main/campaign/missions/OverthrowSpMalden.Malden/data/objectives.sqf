@@ -7,5 +7,5 @@ OT_objectiveData = [
     [[5111.3,7349.41,0],"Arudy Base",250]
 ];
 OT_NATO_HQ = "Moray Airfield";
-OT_NATO_priority = ["Moray Airfield","Gravia Airport","Comms Alpha"];
+OT_NATO_priority = ["Moray Airfield","Malden Int'l Airport","Comms Alpha","Le Port","La Trinite","Larche"];
 OT_NATO_Navy_HQ = "Malden Naval Base";

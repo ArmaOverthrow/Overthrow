@@ -210,6 +210,7 @@ class CfgFunctions
 			class fastTravel {};
 			class talkToCiv {};
 			class recruitCiv {};
+			class recruitSpawnCiv {};
 			class leaseBuilding {};
 			class place {};
 			class onNameDone {};
@@ -499,6 +500,7 @@ class CfgFunctions
 			class CTRGSupport {};
 			class NATOAirSupport {};
 			class NATOGroundSupport {};
+			class NATOTankSupport {};
 			class NATOSeaSupport {};
 
 			class NATOResponseObjective {};

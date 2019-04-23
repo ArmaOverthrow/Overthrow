@@ -37,7 +37,7 @@ _abandoned = server getvariable ["NATOabandoned",[]];
 }foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
 diag_log format["Overthrow: NATO QRF spend is %1",_strength];
 
-if(_strength > 250 && (count _air) > 0) then {
+if(_strength > 500 && (count _air) > 0) then {
 	//Send CAS
 	_obpos = (_air select 0) select 0;
 	_name = (_air select 0) select 1;
@@ -45,8 +45,17 @@ if(_strength > 250 && (count _air) > 0) then {
 	diag_log format["Overthrow: NATO Sent CAS from %1",_name];
 };
 
+if(_strength > 1500 && (count _air) > 0) then {
+	//Send more CAS
+	private _from = (round random count _air);
+	_obpos = (_air select _from) select 0;
+	_name = (_air select _from) select 1;
+	[[_obpos,[0,100],random 360] call SHK_pos_fnc_pos,_pos,10] spawn OT_fnc_NATOAirSupport;
+	diag_log format["Overthrow: NATO Sent extra CAS from %1",_name];
+};
+
 //Send ground support
-if(count _ground > 0) then {
+if((count _ground > 0) && (_strength > 250)) then {
 	_obpos = (_ground select 0) select 0;
 	_name = (_ground select 0) select 1;
 	_send = 100;
@@ -56,8 +65,26 @@ if(count _ground > 0) then {
 	if(_strength > 1000) then {
 		_send = 500;
 	};
+	if(_strength > 1500) then {
+		_send = 700;
+	};
 	[_obpos,_pos,_send,0] spawn OT_fnc_NATOGroundSupport;
 	diag_log format["Overthrow: NATO Sent ground support from %1",_name];
+};
+
+//Send tanks
+if((count _ground > 0) && (_strength > 1500)) then {
+	_obpos = (_ground select 0) select 0;
+	_name = (_ground select 0) select 1;
+	_send = 100;
+	if(_strength > 2000) then {
+		_send = 300;
+	};
+	if(_strength == 2500) then {
+		_send = 500;
+	};
+	[_obpos,_pos,_send,0] spawn OT_fnc_NATOTankSupport;
+	diag_log format["Overthrow: NATO Sent tanks from %1",_name];
 };
 
 {
@@ -149,9 +176,10 @@ server setVariable ["QRFpos",_pos,true];
 server setVariable ["QRFstart",_start,true];
 server setVariable ["QRFprogress",0,true];
 
-waitUntil {(time - _start) > 300};
+waitUntil {(time - _start) > 600};
 
 private _timeout = time + 800;
+private _maxTime = time + 1800;
 
 private _over = false;
 private _progress = 0;
@@ -167,10 +195,15 @@ while {sleep 5; !_over} do {
 				_alive = _alive + 1;
 			};
 			if((side _x isEqualTo resistance || captive _x) && (alive _x) && !(_x getvariable ["ace_isunconscious",false])) then {
-				_enemy = _enemy + 1;
+				if(isPlayer _x) then {
+					_enemy = _enemy + 2;
+				} else {
+					_enemy = _enemy + 1;
+				};
 			};
 		};
 	}foreach(allunits);
+	if(_alive == 0) then {_enemy = _enemy * 2}; //If no NATO present, cap it faster
 	if(time > _timeout && _alive isEqualTo 0 && _enemy isEqualTo 0) then {_enemy = 1};
 	_progresschange = (_alive - _enemy);
 	if(_progresschange < -20) then {_progresschange = -20};
@@ -179,7 +212,7 @@ while {sleep 5; !_over} do {
 	_progressPercent = 0;
 	if(_progress != 0) then {_progressPercent = _progress/_totalStrength};
 	server setVariable ["QRFprogress",_progressPercent,true];
-	if((abs _progress) >= _totalStrength) then {
+	if((abs _progress) >= _totalStrength || time > _maxTime) then {
 		//Someone has won
 		_over = true;
 	};

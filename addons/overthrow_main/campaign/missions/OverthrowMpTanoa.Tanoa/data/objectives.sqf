@@ -9,5 +9,5 @@ OT_objectiveData = [
     [[5216.9,3656.3,0],"Chemical Plant",600]
 ];
 OT_NATO_HQ = "Tuvanaka Airbase";
-OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","96FM Georgetown","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka"];
+OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","96FM Georgetown","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka","Georgetown","Katkoula","Harcourt"];
 OT_NATO_Navy_HQ = "Belfort Naval Base";

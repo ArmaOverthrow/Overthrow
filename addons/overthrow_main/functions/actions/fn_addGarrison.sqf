@@ -31,16 +31,23 @@ if(_create isEqualType 1) then {
 
     private _money = player getVariable ["money",0];
     private _cost = _soldier select 0;
-    if(_money < _cost) exitWith {
+    if(_money < _cost && _charge) exitWith {
         format ["You need $%1",_cost] call OT_fnc_notifyMinor;
     };
-
-    [-_cost] call OT_fnc_money;
+    if(_charge) then {
+        [-_cost] call OT_fnc_money;
+    };
 
     private _civ = [_soldier,_pos,_group] call OT_fnc_createSoldier;
 
     if(_doinit) then {
         _group call OT_fnc_initMilitaryPatrol;
+    };
+    if(_charge) then {
+        _loadout = getUnitLoadout _civ;
+        _garrison = server getVariable [format["resgarrison%1",_code],[]];
+        _garrison pushback [_create,_loadout];
+        server setVariable [format["resgarrison%1",_code],_garrison,true];
     };
 }else{
     if(_create == "HMG" || _create == "GMG") then {
@@ -51,7 +58,7 @@ if(_create isEqualType 1) then {
     	{
     		private _res = (_x call {
                 params ["_building"];
-                private _type = _building;
+                private _type = typeof _building;
     			if((damage _building) > 0.95) exitWith { []; };
     			if(
                     (_type == "Land_Cargo_HQ_V1_F")
@@ -115,29 +122,36 @@ if(_create isEqualType 1) then {
             _class_obj = "I_GMG_01_high_F";
             _class_price = "I_GMG_01_high_weapon_F";
         };
-        
+
         if !(_done) then {
+            systemChat str _pos;
             _p = _pos findEmptyPosition [30,80,_class_obj];
         };
 
         private _cost = [OT_nation,_class_price,0] call OT_fnc_getPrice;
         _cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
         _cost = _cost + 300;
+        private _doit = true;
 
         if(_charge) then {
             private _money = player getVariable ["money",0];
-            if(_money < _cost) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
+            if(_money < _cost) exitWith {_doit = false;format ["You need $%1",_cost] call OT_fnc_notifyMinor};
             [-_cost] call OT_fnc_money;
+            _garrison = server getVariable [format["resgarrison%1",_code],[]];
+            _garrison pushback [_create,[]];
+            server setVariable [format["resgarrison%1",_code],_garrison,true];
         };
 
-        private _gun = _class_obj createVehicle _p;
-        _gun setVariable ["OT_garrison",true,true];
-        [_gun,getplayeruid player] call OT_fnc_setOwner;
-        _gun setDir _dir;
-        _gun setPosATL _p;
-        createVehicleCrew _gun;
-        {
-            [_x] joinSilent _group;
-        }foreach(crew _gun);
+        if(_doit) then {
+            private _gun = _class_obj createVehicle _p;
+            _gun setVariable ["OT_garrison",true,true];
+            [_gun,getplayeruid player] call OT_fnc_setOwner;
+            _gun setDir _dir;
+            _gun setPosATL _p;
+            createVehicleCrew _gun;
+            {
+                [_x] joinSilent _group;
+            }foreach(crew _gun);
+        };
     };
 };

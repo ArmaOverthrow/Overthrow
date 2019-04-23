@@ -127,8 +127,9 @@ publicVariable "OT_nextNATOTurn";
 					if(_population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
-						_strength = _population;
-						if(_population < _resources) then {_strength = _resources};
+						_strength = _population * 3;
+						if(_strength > _resources) then {_strength = _resources};
+						if(_town in OT_NATO_priority) then {_strength = _resources};
 						[_town,_strength] spawn OT_fnc_NATOResponseTown;
 						server setVariable ["NATOattacking",_town,true];
 						server setVariable ["NATOattackstart",time,true];
@@ -410,7 +411,7 @@ publicVariable "OT_nextNATOTurn";
 					_current = server getVariable format ["garrison%1",_town];;
 					_stability = server getVariable format ["stability%1",_town];
 					_population = server getVariable format ["population%1",_town];
-					if(_stability > 10 && {!(_town in _abandoned)}) then {
+					if!(_town in _abandoned) then {
 						_max = round(_population / 40);
 						if(_max < 4) then {_max = 4};
 						_garrison = 2+round((1-(_stability / 100)) * _max);

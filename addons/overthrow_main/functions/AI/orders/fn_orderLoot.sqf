@@ -19,8 +19,6 @@ if(vehicle _tt != _tt) then {
 if(count _sorted isEqualTo 0) exitWith {};
 private _target = _sorted select 0;
 
-format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleGetName] call OT_fnc_notifyMinor;
-
 {
 	[_x,_target] spawn {
 		private _active = true;
@@ -28,6 +26,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 		private _car = objNull;
 
 		private _unit = _this select 0;
+
 		_unit setVariable ["NOAI",true,true];
 		_unit setBehaviour "SAFE";
 		[[_unit,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP;
@@ -40,9 +39,16 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 
 		_t = _this select 1;
 
+        _unit globalchat format["Looting bodies within 100m into the %1",(typeof _t) call OT_fnc_vehicleGetName];
+
+        private _istruck = true;
+        if(count _this isEqualTo 2) then {
+        	_istruck = (_t isKindOf "Truck_F") || (_t isKindOf "ReammoBox_F");
+        };
+
 		_unit doMove getpos _t;
 
-		_timeout = time + 120;
+		_timeout = time + 30;
 		waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _t < 10) || (_timeOut < time) || (unitReady _unit)};
 		if(!alive _unit || (isNull _t) || (_timeOut < time)) exitWith {};
 
@@ -50,18 +56,41 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			_unit globalchat "This vehicle is full, cancelling loot order";
 			_active = false;
 		};
+        private _weapons = _t nearentities ["WeaponHolderSimulated",100];
+        _unit globalchat format["Looting %1 weapons",count _weapons];
+        {
+            _weapon = _x;
+            _s = (weaponsItems _weapon) select 0;
+            if(!isNil {_s}) then {
+    			_cls = (_s select 0);
+    			_i = _s select 1;
+    			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
+    			_i = _s select 2;
+    			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
+    			_i = _s select 3;
+    			if(_i != "") then {_t addItemCargoGlobal [_i,1]};
 
-		while {true && _active} do {
+                if (!(_t canAdd (_cls call BIS_fnc_baseWeapon)) && !_istruck) exitWith {
+    				_unit globalchat "This vehicle is full, cancelling loot order";
+    				_active = false;
+    			};
+                _t addWeaponCargoGlobal [_cls call BIS_fnc_baseWeapon,1];
+    			deleteVehicle _weapon;
+            };
+        }foreach(_weapons);
+
+		while {_active} do {
 			_deadguys = [];
 			{
-				if !((_x distance _unit > 100) || (alive _x) || (_x getVariable ["OT_looted",false])) then {
+				if !((_x distance _t > 100) || (alive _x) || (_x getVariable ["OT_looted",false])) then {
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");
-			if(count _deadguys isEqualTo 0) exitWith {};
+			if(count _deadguys isEqualTo 0) exitWith {_unit globalchat "All done!"};
+            _unit globalchat format["%1 bodies to loot",count _deadguys];
 			_sorted = [_deadguys,[],{_x distance _t},"ASCEND"] call BIS_fnc_SortBy;
 
-			_timeout = time + 120;
+			_timeout = time + 30;
 			_deadguy = _sorted select 0;
 			_deadguy setVariable ["OT_looted",true,true];
 			_deadguy setvariable ["OT_lootedAt",time,true];
@@ -75,35 +104,7 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 			[_deadguy,_unit] call OT_fnc_takeStuff;
 			sleep 2;
             deleteVehicle _deadguy;
-			if(primaryWeapon _unit isEqualTo "") then {
-				_weapon = objNull;
-				{
-					if !(_x getVariable ["OT_looted",false]) exitWith {
-						_weapon = _x;
-						_weapon setVariable ["OT_looted",true,true];
-						_weapon setvariable ["OT_lootedAt",time,true];
-					};
-				}foreach(_unit nearentities ["WeaponHolderSimulated",10]);
-				if !(isNull _weapon) then {
-					_unit doMove getpos _weapon;
-					waitUntil {sleep 1; (!alive _unit) || (_unit distance _weapon < 12) || (_timeOut < time)};
-					if(alive _unit && (_timeOut > time)) then {
-						_s = (weaponsItems _weapon) select 0;
-
-						_unit addWeapon ([(_s select 0)] call BIS_fnc_baseWeapon);
-						_i = _s select 1;
-						if(_i != "") then {_unit addItem _i};
-						_i = _s select 2;
-						if(_i != "") then {_unit addItem _i};
-						_i = _s select 3;
-						if(_i != "") then {_unit addItem _i};
-						deleteVehicle _weapon;
-						sleep 1;
-					};
-				};
-			};
-			if(!alive _unit) exitWith {};
-			_timeout = time + 120;
+			_timeout = time + 30;
 			_unit doMove getpos _t;
 			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _t < 12) || (_timeOut < time)};
 			if((!alive _unit) || (_timeOut < time)) exitWith {};
@@ -115,49 +116,11 @@ format["Looting nearby bodies into the %1",(typeof _target) call OT_fnc_vehicleG
 
 			sleep 1;
 		};
-		while {true && _active} do {
-			_got = false;
-			_weapon = objNull;
-			{
-				if !(_x getVariable ["OT_looted",false]) exitWith {
-					_weapon = _x;
-					_got = true;
-					_weapon setVariable ["OT_looted",true,true];
-					_weapon setvariable ["OT_lootedAt",time,true];
-				};
-			}foreach(_unit nearentities ["WeaponHolderSimulated",100]);
 
-			if(!_got) exitWith {_unit globalchat "All done, sir!"};
-
-			_timeout = time + 120;
-			_unit doMove getpos _weapon;
-			waitUntil {sleep 1; (!alive _unit) || (_unit distance _weapon < 10) || (_timeOut < time) || (unitReady _unit)};
-			if(alive _unit && (_timeOut > time)) then {
-				_s = (weaponsItems _weapon) select 0;
-				_cls = (_s select 0);
-				_unit addWeapon ([(_s select 0)] call BIS_fnc_baseWeapon);
-				_i = _s select 1;
-				if(_i != "") then {_unit addItem _i};
-				_i = _s select 2;
-				if(_i != "") then {_unit addItem _i};
-				_i = _s select 3;
-				if(_i != "") then {_unit addItem _i};
-				deleteVehicle _weapon;
-				sleep 1;
-			};
-			if(!alive _unit) exitWith {};
-			_timeout = time + 120;
-			_unit doMove getpos _t;
-			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _t < 10) || (_timeOut < time) || (unitReady _unit)};
-			if((!alive _unit) || (_timeOut < time)) exitWith {};
-
-			[_unit,_t] call OT_fnc_dumpStuff;
-		};
 		_unit setVariable ["NOAI",true,true];
 		if(_wasincar) then {
 			_unit assignAsCargo _car;
 			[_unit] orderGetIn true;
 		};
 	};
-	sleep 0.2;
 }foreach(_myunits);

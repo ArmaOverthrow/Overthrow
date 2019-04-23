@@ -16,7 +16,7 @@ private _d = [];
 	};
 }foreach(OT_squadables);
 
-_d params ["_comp","_shortname"];
+_d params ["_name","_comp","_shortname"];
 private _soldiers = [];
 private _cost = 0;
 {

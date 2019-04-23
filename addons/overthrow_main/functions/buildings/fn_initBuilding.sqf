@@ -5,9 +5,6 @@ if((_fnc select [0,6]) != "OT_fnc") then {
     //Legacy building Init
 
     private _code = {};
-    if((_fnc find "observationPost") > -1) then {
-        _code = OT_fnc_initObservationPost;
-    };
     if((_fnc find "policeStation") > -1) then {
         _code = OT_fnc_initPoliceStation;
     };
@@ -21,6 +18,6 @@ if((_fnc select [0,6]) != "OT_fnc") then {
         _code = OT_fnc_initWorkshop;
     };
     [_pos,_veh] spawn _code;
-}else{    
+}else{
     [_pos,_veh] spawn (missionNamespace getVariable _fnc);
 };

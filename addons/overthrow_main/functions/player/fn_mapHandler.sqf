@@ -26,7 +26,7 @@ if(isMultiplayer) then {
 
 private _grpUnits = groupSelectedUnits player;
 {
-	if (!(isPlayer _x) && { side _x isEqualTo resistance }) then {
+	if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x}) then {
 		private _veh = vehicle _x;
 		if(_veh isEqualTo _x) then {
 			private _color = [[0,0.2,0,1],[0,0.5,0,1]] select captive _x;
@@ -90,7 +90,7 @@ if (!visibleGPS) then {
 			0,
 			""
 		];
-	}foreach _mortars;
+	}foreach(_mortars);
 	if((vehicle player) isKindOf ["Air",_cfgVeh]) then {
 		private _abandoned = server getVariable ["NATOabandoned",[]];
 		{

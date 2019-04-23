@@ -13,5 +13,5 @@ OT_objectiveData = [
     [[9967.93,19355.9,0],"Galati Base",250]
 ];
 OT_NATO_HQ = "Selakano Airfield";
-OT_NATO_priority = ["Selakano Airfield","Gravia Airport","Comms Alpha"];
+OT_NATO_priority = ["Selakano Airfield","Gravia Airport","Comms Alpha","Pyrgos","Kavala","Neochori"];
 OT_NATO_Navy_HQ = "Pyrgos Naval Base";
