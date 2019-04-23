@@ -2,6 +2,8 @@ params ["_id","_jobdef","_params"];
 
 _jobdef params ["_name","_target","_condition","_code","_repeat"];
 
+systemChat format["Assigning job: %1",_name];
+
 _active = spawner getVariable ["OT_activeJobs",[]];
 _job = [_id,_params] call _code;
 _j = [_id,_job,_repeat];
@@ -18,7 +20,7 @@ _j spawn {
 
 		private _done = false;
 		[{
-			params ["_done","_id","_job","_repeat","_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];
+			(_this select 0) params ["_done","_id","_job","_repeat","_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];			
 			if (!_done) then {
 				if(_jobparams call _success) exitWith {
 					_jobparams pushback true;

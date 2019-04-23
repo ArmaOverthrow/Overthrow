@@ -386,25 +386,25 @@ if ((date select 4) != _lastmin) then {
 				_x set [3,""CORPORAL""];
 				_unit setRank ""CORPORAL"";
 				format[""%1 has been promoted to Corporal"",_name select 0] remoteExec [""OT_fnc_notifyMinor"",_player,false];
-				_unit setSkill 0.2 + (random 0.3);
+				_unit setSkill 0.3 + (random 0.3);
 			};
 			if(_rank == ""CORPORAL"" && _xp > (OT_rankXP select 1)) then {
 				_x set [3,""SERGEANT""];
 				_unit setRank ""SERGEANT"";
 				format[""%1 has been promoted to Sergeant"",_name select 0] remoteExec [""OT_fnc_notifyMinor"",_player,false];
-				_unit setSkill 0.3 + (random 0.3);
+				_unit setSkill 0.4 + (random 0.3);
 			};
 			if(_rank == ""SERGEANT"" && _xp > (OT_rankXP select 2)) then {
 				_x set [3,""LIEUTENANT""];
 				_unit setRank ""LIEUTENANT"";
 				format[""%1 has been promoted to Lieutenant"",_name select 0] remoteExec [""OT_fnc_notifyMinor"",_player,false];
-				_unit setSkill 0.5 + (random 0.3);
+				_unit setSkill 0.6 + (random 0.3);
 			};
 			if(_rank == ""LIEUTENANT"" && _xp > (OT_rankXP select 3)) then {
 				_x set [3,""CAPTAIN""];
 				_unit setRank ""CAPTAIN"";
 				format[""%1 has been promoted to Captain"",_name select 0] remoteExec [""OT_fnc_notifyMinor"",_player,false];
-				_unit setSkill 0.6 + (random 0.3);
+				_unit setSkill 0.7 + (random 0.3);
 			};
 			if(_rank == ""CAPTAIN"" && _xp > (OT_rankXP select 4)) then {
 				_x set [3,""MAJOR""];

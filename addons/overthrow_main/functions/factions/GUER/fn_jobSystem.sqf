@@ -16,8 +16,8 @@ job_system_counter = job_system_counter + 1;
 if !(job_system_counter < 6) then {
   job_system_counter = 0;
   {
-    params [""_name"",[""_target"",""""],""_condition"",""_code"",""_repeat"",""_chance""];
-    private _jobdef = _this;
+    _x params [""_name"",[""_target"",""""],""_condition"",""_code"",""_repeat"",""_chance""];
+    private _jobdef = _x;
     private _completed = server getVariable ""OT_completedJobIds"";
     if(isNil ""_completed"") then {
       server setVariable [""OT_completedJobIds"",[],false];
@@ -25,6 +25,7 @@ if !(job_system_counter < 6) then {
     };
 
     private _activeJobs = spawner getVariable [""OT_activeJobIds"",[]];
+    if((count _activeJobs) > 30) exitWith {};
     switch (toLower _target) do {
       case ""global"": {
         private _id = _name;
@@ -33,7 +34,7 @@ if !(job_system_counter < 6) then {
           if(([_numAbandoned] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
             _activeJobs pushback _id;
             spawner setVariable [""OT_activeJobIds"",_activeJobs,false];
-            [_id,_jobdef,[_x]] call OT_fnc_assignJob;
+            [_id,_jobdef,[]] call OT_fnc_assignJob;
           };
         };
       };

@@ -22,6 +22,7 @@ removeGoggles _civ;
 removeBackpack _civ;
 removeHeadgear _civ;
 removeVest _civ;
+_civ setSkill 0.2 + (random 0.3);
 
 [_civ,getPlayerUID player] call OT_fnc_setOwner;
 [_civ] call OT_fnc_initRecruit;
