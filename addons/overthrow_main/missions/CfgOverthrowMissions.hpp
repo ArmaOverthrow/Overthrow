@@ -24,7 +24,7 @@ class CfgOverthrowMissions
         repeatable = 1;
         condition = "params['_inSpawnDistance','_standing'];_standing < 50";
         script = "\overthrow_main\missions\factionweapons.sqf";
-        chance = 10;
+        chance = 5;
     };
 
     class Fugitive
@@ -33,6 +33,14 @@ class CfgOverthrowMissions
         repeatable = 1;
         condition = "params['_inSpawnDistance','_standing'];_inSpawnDistance";
         script = "\overthrow_main\missions\fugitive.sqf";
-        chance = 5;
+        chance = 2;
+    };
+
+    class CaptureTown
+    {
+        target = "Faction";
+        repeatable = 1;
+        script = "\overthrow_main\missions\captureTown.sqf";
+        chance = 100;
     };
 };
