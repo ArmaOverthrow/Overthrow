@@ -26,7 +26,9 @@ private _title = format["Capture %1 for %2",_destinationName,_factionName];
     },
     {
         //Success Check
+        params ["_destinationName"];
 
+        _destinationName in (server getVariable ["NATOabandoned",[]])
     },
     {
         params ["_destinationName","_faction","_wassuccess"];
