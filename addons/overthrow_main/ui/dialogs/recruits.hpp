@@ -14,7 +14,7 @@ class OT_dialog_recruits
 			colorBackground[] = {0.1,0.1,0.1,1};
 			colorActive[] = {0.1,0.1,0.1,1};
 		};
-	}
+	};
 
 	class controls
 	{
@@ -57,5 +57,5 @@ class OT_dialog_recruits
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
 
-	}
-}
+	};
+};

@@ -8,7 +8,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenCRIM)) then {
+		if((vehicle _src) != _src || (_src call OT_fnc_unitSeenCRIM)) then {
 			_src setCaptive false;
 		};
 	};
@@ -39,7 +39,7 @@ if(OT_hasTFAR) then {
 	_unit linkItem "ItemRadio";
 };
 _hour = date select 3;
-if(_hour < 8 or _hour > 15) then {
+if(_hour < 8 || _hour > 15) then {
 	_unit linkItem "NVGoggles_OPFOR";
 };
 _unit linkItem "ItemWatch";

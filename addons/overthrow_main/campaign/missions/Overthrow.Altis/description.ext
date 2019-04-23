@@ -1,8 +1,0 @@
-#include "\ot\mission_component.hpp"
-
-overviewPicture = "\ot\campaign\missions\Overthrow.Tanoa\overthrow_tanoa.jpg";
-briefingName = "Overthrow: Altis";
-OnLoadName = "Overthrow: Altis";
-loadScreen = "\ot\campaign\missions\Overthrow.Tanoa\pic.jpg";
-
-overviewText = "@todo";

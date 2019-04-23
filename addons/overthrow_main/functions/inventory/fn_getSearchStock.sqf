@@ -21,7 +21,7 @@ if !(isNil "_myitems") then {
 		}else {
 			_cls = _x;
 			{
-				if((_x select 0) == _cls) then {
+				if((_x select 0) isEqualTo _cls) then {
 					_x set [1,(_x select 1)+1];				
 				};
 			}foreach(_items);

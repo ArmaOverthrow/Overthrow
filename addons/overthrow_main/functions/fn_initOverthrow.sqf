@@ -1,40 +1,36 @@
-if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
-	_txt = format ["<t size='0.5' color='#000000'>Overthrow addon not detected, you must add @Overthrow to your -mod commandline</t>",_this];
-    [_txt, 0, 0.2, 30, 0, 0, 2] spawn bis_fnc_dynamicText;
-};
-
 if(!isServer) exitWith {};
 
-OT_varInitDone = false;
-publicVariable "OT_varInitDone";
-
-private _center = createCenter sideLogic;
-private _group = createGroup _center;
-
-server = _group createUnit ["LOGIC",[0,0,0] , [], 0, ""];
-cost = _group createUnit ["LOGIC",[1,0,0] , [], 0, ""];
-warehouse = _group createUnit ["LOGIC",[2,0,0] , [], 0, ""];
-spawner = _group createUnit ["LOGIC",[3,0,0] , [], 0, ""];
-templates = _group createUnit ["LOGIC",[4,0,0] , [], 0, ""];
-owners = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
-buildingpositions = _group createUnit ["LOGIC",[5,0,0] , [], 0, ""];
-OT_civilians = _group createUnit ["LOGIC",[6,0,0] , [], 0, ""];
-
-publicVariable "server";
-publicVariable "cost";
-publicVariable "warehouse";
-publicVariable "spawner";
-publicVariable "templates";
-publicVariable "owners";
-publicVariable "buildingpositions";
-publicVariable "OT_civilians";
-
-if(!isMultiplayer) then {
-    addMissionEventHandler ["Loaded", {
-        [] spawn OT_fnc_setupPlayer;
-    }];
+if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
+	diag_log "Overthrow addon not detected, you must add @Overthrow to your -mod commandline";
 };
 
+if (isDedicated) then {
+	server_dedi = true;
+}else{
+	server_dedi = false;
+};
+publicVariable "server_dedi";
+
+missionNamespace setVariable ["OT_varInitDone", false, true];
+
+server = true call CBA_fnc_createNamespace;
+publicVariable "server";
+players_NS = true call CBA_fnc_createNamespace;
+publicVariable "players_NS";
+cost = true call CBA_fnc_createNamespace;
+publicVariable "cost";
+warehouse = true call CBA_fnc_createNamespace;
+publicVariable "warehouse";
+spawner = true call CBA_fnc_createNamespace;
+publicVariable "spawner";
+templates = true call CBA_fnc_createNamespace;
+publicVariable "templates";
+owners = true call CBA_fnc_createNamespace;
+publicVariable "owners";
+buildingpositions = true call CBA_fnc_createNamespace;
+publicVariable "buildingpositions";
+OT_civilians = true call CBA_fnc_createNamespace;
+publicVariable "OT_civilians";
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
@@ -55,52 +51,75 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 //Advanced towing script, credits to Duda http://www.armaholic.com/page.php?id=30575
 [] spawn OT_fnc_advancedTowingInit;
 
-waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-[] spawn OT_fnc_initEconomyLoad;
+[] spawn {
+	if (false/*isDedicated && profileNamespace getVariable ["OT_autoload",false]*/) then {
+		diag_log "== OVERTHROW == Mission autoloaded as per settings. Toggle in the options menu in-game to disable.";
+		diag_log "== OVERTHROW == Waiting for a player to connect!";
+		waitUntil{sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0};
+		[] spawn OT_fnc_loadGame;
+	};
 
-if(OT_fastTime) then {
-    setTimeMultiplier 4;
-};
+	waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
+	[] spawn OT_fnc_initEconomyLoad;
 
-//Init factions
-[] call OT_fnc_initNATO;
-[] spawn OT_fnc_factionNATO;
-[] spawn OT_fnc_factionGUER;
-[] spawn OT_fnc_factionCIV;
-[] spawn OT_fnc_factionCRIM;
-waitUntil {!isNil "OT_NATOInitDone"};
+	if(OT_fastTime) then {
+	    setTimeMultiplier 4;
+	};
 
-//Game systems
-[] spawn OT_fnc_propagandaSystem;
-[] spawn OT_fnc_weatherSystem;
-[] spawn OT_fnc_incomeSystem;
-[] spawn OT_fnc_jobSystem;
+	//Init factions
+	[] call OT_fnc_initNATO;
+	[] spawn OT_fnc_factionNATO;
+	[] spawn OT_fnc_factionGUER;
+	[] spawn OT_fnc_factionCIV;
+	[] spawn OT_fnc_factionCRIM;
+	waitUntil {!isNil "OT_NATOInitDone"};
 
-//Init virtualization
-waitUntil {!isNil "OT_economyLoadDone"};
-[] spawn OT_fnc_runVirtualization;
+	//Game systems
+	[] spawn OT_fnc_propagandaSystem;
+	[] spawn OT_fnc_weatherSystem;
+	[] spawn OT_fnc_incomeSystem;
+	[] spawn OT_fnc_jobSystem;
 
-//Subscribe to events
-if(isMultiplayer) then {
-    addMissionEventHandler ["HandleConnect",OT_fnc_playerConnectHandler];
-    addMissionEventHandler ["HandleDisconnect",OT_fnc_playerDisconnectHandler];
-};
-addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
+	//Init virtualization
+	waitUntil {!isNil "OT_economyLoadDone"};
+	[] spawn OT_fnc_runVirtualization;
 
-//ACE3 events
-["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
-["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
-["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
-["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
+	//Subscribe to events
+	if(isMultiplayer) then {
+	    addMissionEventHandler ["PlayerConnected",OT_fnc_playerConnectHandler];
+	    addMissionEventHandler ["HandleDisconnect",OT_fnc_playerDisconnectHandler];
+	};
+	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 
-//Setup fuel pumps for interaction
-{
-    [_x,0] call ace_interact_menu_fnc_addMainAction;
-}foreach(OT_fuelPumps);
+	//ACE3 events
+	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
+	["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
 
+	//Setup fuel pumps for interaction
+	{
+	    //[_x,0] call ace_interact_menu_fnc_addMainAction;
+	}foreach(OT_fuelPumps);
 
-OT_serverInitDone = true;
-publicVariable "OT_serverInitDone";
-if(isServer) then {
-    diag_log "Overthrow: Server Pre-Init Done";
+	["OT_autosave_loop"] call OT_fnc_addActionLoop;
+	["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
+		OT_cleanup_civilian_loop = time + (5*60);
+		{
+			if (side group _x isEqualTo civilian && {!(isPlayer _x)} && {!(_x getVariable [""shopcheck"",false])} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {
+				private _group = group _x;
+				private _unit = _x;
+				deleteVehicle _unit;
+				if (count units _group < 1) then {
+					deleteGroup _group;
+				};
+			};
+		}forEach (allUnits);
+	"] call OT_fnc_addActionLoop;
+
+	OT_serverInitDone = true;
+	publicVariable "OT_serverInitDone";
+	if(isServer) then {
+	    diag_log "Overthrow: Server Pre-Init Done";
+	};
 };

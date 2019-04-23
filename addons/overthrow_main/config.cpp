@@ -1,29 +1,23 @@
 #include "script_mod.hpp"
 #include "headers\config_macros.hpp"
 
-#include "ui\dialogs\defines.hpp"
-#include "ui\dialogs\stats.hpp"
-#include "ui\dialogs\shop.hpp"
-#include "ui\dialogs\main.hpp"
-#include "ui\dialogs\place.hpp"
-#include "ui\dialogs\build.hpp"
-#include "ui\dialogs\recruits.hpp"
-#include "UI\dialogs\resistance.hpp"
-#include "UI\dialogs\factory.hpp"
-
 class CfgPatches
 {
 	class OT_Overthrow_Main
 	{
 		author="ARMAzac";
 		name=COMPONENT_NAME;
-		url="https://armaoverthrow.com/";
+		url="https://steamcommunity.com/sharedfiles/filedetails/?id=774201744";
 		requiredAddons[]=
 		{
 			"cba_ui",
             "cba_xeh",
             "cba_jr",
-			"ace_main"
+			"ace_main",
+			"ace_medical",
+			"a3_ui_f",
+			"a3_characters_f",
+			"A3_Map_Tanoabuka"
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;
@@ -32,53 +26,63 @@ class CfgPatches
 	};
 };
 
-class RscStandardDisplay;
-class RscControlsGroup;
-class RscPicture;
-class RscPictureKeepAspect;
-class RscDisplayStart: RscStandardDisplay
+class CfgMainMenuSpotlight
 {
-	class controls
+	class Overthrow
 	{
-		class LoadingStart: RscControlsGroup
-		{
-			class controls {
-				class Logo: RscPictureKeepAspect
-				{
-					text = "\ot\ui\logo_overthrow.paa";
-					onLoad = "";
-				};
-			};
-		};
+		text = "Overthrow"; // Text displayed on the square button, converted to upper-case
+		textIsQuote = 1; // 1 to add quotation marks around the text
+		picture = "\overthrow_main\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
+		video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
+		action = "ctrlactivate ((ctrlparent (_this select 0)) displayctrl 101);";
+		actionText = $STR_A3_RscDisplayMain_Spotlight_Play; // Text displayed in top left corner of on-hover white frame
+		condition = "true"; // Condition for showing the spotlight
 	};
-};
-class RscDisplayMain: RscStandardDisplay
-{
-	class Spotlight
+	class ApexProtocol
 	{
-		class Overthrow
-		{
-			text = "Overthrow"; // Text displayed on the square button, converted to upper-case
-			textIsQuote = 1; // 1 to add quotation marks around the text
-			picture = "\ot\campaign\overthrow_spotlight.jpg"; // Square picture, ideally 512x512
-			video = "\a3\Ui_f\Video\spotlight_1_Apex.ogv"; // Video played on mouse hover
-			action = "ctrlactivate ((ctrlparent (_this select 0)) displayctrl 101);";
-			actionText = $STR_A3_RscDisplayMain_Spotlight_Play; // Text displayed in top left corner of on-hover white frame
-			condition = "true"; // Condition for showing the spotlight
-		};
-		class Bootcamp
-		{
-			condition = "false";
-		};
-		class ApexProtocol
-		{
-			condition = "false";
-		};
-		class EastWind
-		{
-			condition = "false";
-		};
+		condition = "false";
 	};
+	class Bootcamp
+	{
+		condition = "false";
+	};
+	class Orange_Campaign
+	{
+		condition = "false";
+	};
+	class Orange_CampaignGerman
+	{
+		condition = "false";
+	};
+	class Orange_Showcase_IDAP
+	{
+		condition = "false";
+	};
+	class Orange_Showcase_LoW
+	{
+		condition = "false";
+	};
+	class Showcase_TankDestroyers
+	{
+		condition = "false";
+	};
+	class Tacops_Campaign_01
+	{
+		condition = "false";
+	};
+	class Tacops_Campaign_02
+	{
+		condition = "false";
+	};
+	class Tacops_Campaign_03
+	{
+		condition = "false";
+	};
+	class Tanks_Campaign_01
+	{
+		condition = "false";
+	};
+
 };
 
 class CfgMissions
@@ -87,46 +91,48 @@ class CfgMissions
 	{
 		class Overthrow
 		{
-			directory = "ot\campaign";
+			directory = "overthrow_main\campaign";
 		};
 	};
 	class Missions
 	{
-		class OverthrowTanoaScenario
+		class OverthrowSpTanoa
 		{
-			directory="ot\campaign\missions\Overthrow.Tanoa";
+			directory="overthrow_main\campaign\missions\OverthrowSpTanoa.Tanoa";
 		};
-		class OverthrowAltisScenario
+		class OverthrowSpAltis
 		{
-			directory="ot\campaign\missions\Overthrow.Altis";
+			directory="overthrow_main\campaign\missions\OverthrowSpAltis.Altis";
 		};
-		class OverthrowMaldenScenario
+		class OverthrowSpMalden
 		{
-			directory="ot\campaign\missions\Overthrow.Malden";
+			directory="overthrow_main\campaign\missions\OverthrowSpMalden.Malden";
 		};
 	};
 	class MPMissions
 	{
-		class OverthrowTanoaMP
+		class OverthrowMpTanoa
 		{
-			directory="ot\campaign\missions\Overthrow.Tanoa";
+			directory="overthrow_main\campaign\missions\OverthrowMpTanoa.Tanoa";
 		};
-		class OverthrowAltisMP
+		class OverthrowMpAltis
 		{
-			directory="ot\campaign\missions\Overthrow.Altis";
+			directory="overthrow_main\campaign\missions\OverthrowMpAltis.Altis";
 		};
-		class OverthrowMaldenMP
+		class OverthrowMpMalden
 		{
-			directory="ot\campaign\missions\Overthrow.Malden";
+			directory="overthrow_main\campaign\missions\OverthrowMpMalden.Malden";
 		};
 	};
 };
 
 class CfgWorlds
 {
-	class Tanoa
+	class CAWorld;
+	class Tanoa : CAWorld
 	{
-		class Names {
+		class Names
+		{
 			class RailwayDepot01 {
 				name = "factory";
 			};
@@ -143,3 +149,15 @@ class CfgWorlds
 #include "CfgFunctions.hpp"
 #include "CfgMagazines.hpp"
 #include "missions\CfgOverthrowMissions.hpp"
+
+#include "ui\dialogs\defines.hpp"
+#include "ui\dialogs\stats.hpp"
+#include "ui\dialogs\shop.hpp"
+#include "ui\dialogs\sleep.hpp"
+#include "ui\dialogs\main.hpp"
+#include "ui\dialogs\place.hpp"
+#include "ui\dialogs\build.hpp"
+#include "ui\dialogs\recruits.hpp"
+#include "ui\dialogs\resistance.hpp"
+#include "ui\dialogs\factory.hpp"
+#include "ui\overrides.hpp"

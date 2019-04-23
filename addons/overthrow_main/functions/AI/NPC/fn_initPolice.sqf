@@ -23,7 +23,7 @@ _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
 	_src = _this select 3;
 	if(captive _src) then {
-		if((vehicle _src) != _src or (_src call OT_fnc_unitSeenNATO)) then {
+		if((vehicle _src) != _src || (_src call OT_fnc_unitSeenNATO)) then {
 			_src setCaptive false;
 		};
 	};
@@ -33,11 +33,11 @@ removeAllWeapons _unit;
 
 private _cost = 0;
 private _wpn = ["SubmachineGun"] call OT_fnc_findWeaponInWarehouse;
-if(_wpn == "") then {
+if(_wpn isEqualTo "") then {
 	_possible = [];
 	{
 		_weapon = [_x] call BIS_fnc_itemType;
-		if((_weapon select 1) == "SubmachineGun") then {_possible pushback _x};
+		if((_weapon select 1) isEqualTo "SubmachineGun") then {_possible pushback _x};
 	}foreach(OT_allWeapons);
 	_sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
 	_wpn = _sorted select 0;
@@ -52,11 +52,10 @@ _unit addPrimaryWeaponItem "acc_flashlight";
 _unit addGoggles (selectRandom OT_allGlasses);
 _unit addItem "ACE_morphine";
 _unit addItem "ACE_epinephrine";
-
-
-if(OT_hasACE) then {
-	_unit addItem "ACE_fieldDressing";
-	_unit addItem "ACE_fieldDressing";
+_unit addItem "ACE_fieldDressing";
+_unit addItem "ACE_fieldDressing";
+if((random 100) > 95) exitWith {
+	_unit addPrimaryWeaponItem "optic_Aco_smg"
 };
 
 _base = [_wpn] call BIS_fnc_baseWeapon;

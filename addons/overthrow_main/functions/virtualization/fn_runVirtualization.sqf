@@ -57,7 +57,6 @@ OT_townSpawners = [
 			params ["_spawntown","_spawnid"];
 			{
 				_hdl = [_spawntown,_spawnid] spawn _x;
-				sleep 0.2;
 			}foreach(OT_townSpawners);
 	},[_town]] call OT_fnc_registerSpawner;
 }foreach(OT_allTowns);
@@ -65,48 +64,39 @@ OT_townSpawners = [
 diag_log format["Overthrow: %1 towns virtualized",count OT_allTowns];
 
 //Start Virtualization Loop
-while{true} do {
-    sleep 0.5;
-    {
-        private _id = _x select 0;
-        private _start = _x select 1;
-        private _end = _x select 2;
-        private _time = _x select 5;
+["OT_virtualization_loop","true","
+	{
+		_x params [""_id"",""_start"",""_end"",""_nil"",""_nil"",""_time""];
 		private _spawnidx = OT_allSpawned find _id;
-        private _val = (_spawnidx > -1);
-
-        if((_start select 0) == (_end select 0)) then {
-            if(_val) then {
-                if !(_start call OT_fnc_inSpawnDistance) then {
-                    if((time - _time) > 30) then { //Ensures it stays spawned for minimum 30 seconds
-                        OT_allSpawned deleteAt _spawnidx;
-    					_x spawn OT_fnc_despawn;
-    					sleep 0.2;
-                    };
-                };
-            }else{
-                if (_start call OT_fnc_inSpawnDistance) then {
-                    OT_allSpawned pushback _id;
+		private _val = (_spawnidx > -1);
+		if((_start select 0) isEqualTo (_end select 0)) then {
+			if(_val) then {
+				if !(_start call OT_fnc_inSpawnDistance) then {
+					if((time - _time) > 30) then {
+						OT_allSpawned deleteAt _spawnidx;
+						_x spawn OT_fnc_despawn;
+					};
+				};
+			}else{
+				if (_start call OT_fnc_inSpawnDistance) then {
+						OT_allSpawned pushback _id;
+						_x spawn OT_fnc_spawn;
+					};
+			};
+		}else{
+			if(_val) then {
+				if !((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
+					if((time - _time) > 30) then {
+						OT_allSpawned deleteAt _spawnidx;
+						_x spawn OT_fnc_despawn;
+					};
+				};
+			}else{
+				if ((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
+					OT_allSpawned pushback _id;
 					_x spawn OT_fnc_spawn;
-					sleep 0.2;
-                };
-            };
-        }else{
-            if(_val) then {
-                if !((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
-                    if((time - _time) > 30) then {
-                        OT_allSpawned deleteAt _spawnidx;
-    					_x spawn OT_fnc_despawn;
-    					sleep 0.2;
-                    };
-                };
-            }else{
-                if ((_start call OT_fnc_inSpawnDistance) || (_end call OT_fnc_inSpawnDistance)) then {
-                    OT_allSpawned pushback _id;
-					_x spawn OT_fnc_spawn;
-					sleep 0.2;
-                };
-            };
-        };
-    }foreach(OT_allspawners);
-}
+				};
+			};
+		};
+	}foreach(OT_allspawners);
+"] call OT_fnc_addActionLoop;

@@ -19,10 +19,11 @@ _newrecruits = [];
 	_owner = _x select 0;
 	_name = _x select 1;
 	_civ = _x select 2;
-	if(_owner == (getplayeruid player)) then {
-		if(typename _civ == "OBJECT") then {
+	if(_owner isEqualTo (getplayeruid player)) then {
+		if(typename _civ isEqualTo "OBJECT") then {
 			if(_civ call OT_fnc_playerIsOwner) then {
 				[_civ] joinSilent (group player);
+				commandStop _civ;
 			};
 		};
 	};

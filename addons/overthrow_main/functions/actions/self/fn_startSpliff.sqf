@@ -27,7 +27,7 @@ if !(_goggles in OT_cigsArray) exitWith {};
 
 private _gogglesCurrent = _goggles;
 
-private _states = _ot_cigsStatesArray select {_x select 0 == _goggles};
+private _states = _ot_cigsStatesArray select {_x select 0 isEqualTo _goggles};
 
 {
     _x params ["_cigState", "_cigStateTime", ["_cigStateNext", ""]];
@@ -47,15 +47,15 @@ sleep (1 + random 1);
 [_unit] remoteExec ["ot_fnc_smokePuffs"];
 
 
-while ({alive _unit && _gogglesCurrent in OT_cigsArray && (_unit getVariable ["ot_isSmoking", false]) && _cigTime <= 330}) do {
+while {alive _unit && _gogglesCurrent in OT_cigsArray && (_unit getVariable ["ot_isSmoking", false]) && _cigTime <= 330} do {
     _gogglesCurrent = goggles _unit;
     private _gogglesNew = "";
 
-    _states = _ot_cigsStatesArray select {_x select 0 == _gogglesCurrent};
+    _states = _ot_cigsStatesArray select {_x select 0 isEqualTo _gogglesCurrent};
 
     {
         _x params ["_cigState", "_cigStateTime", ["_cigStateNext", ""]];
-        private _statesNew = _ot_cigsStatesArray select {_x select 0 == _cigStateNext};
+        private _statesNew = _ot_cigsStatesArray select {_x select 0 isEqualTo _cigStateNext};
 
         {
             _x params ["_cigState", "_cigStateTime", ["_cigStateNext", ""]];

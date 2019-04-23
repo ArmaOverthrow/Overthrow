@@ -3,11 +3,11 @@ The MIT License (MIT)
 
 Copyright (c) 2016 Seth Duda
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software && associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, && to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice && this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE && NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #define SA_Find_Surface_ASL_Under_Position(_object,_positionAGL,_returnSurfaceASL,_canFloat) \
@@ -24,7 +24,7 @@ _returnSurfaceASL = AGLToASL _positionAGL; \
 	} else { \
 		if!((_x select 2) isKindOf "RopeSegment") then { \
 			_objectFileName = str (_x select 2); \
-			if((_objectFileName find " t_") == -1 && (_objectFileName find " b_") == -1) then { \
+			if((_objectFileName find " t_") isEqualTo -1 && (_objectFileName find " b_") isEqualTo -1) then { \
 				_returnSurfaceASL = _x select 0; \
 				breakOut "surfaceLoop"; \
 			}; \
@@ -43,7 +43,7 @@ SA_Find_Surface_ASL_Under_Model(_object,_modelOffset,_returnSurfaceAGL,_canFloat
 _returnSurfaceAGL = ASLtoAGL _returnSurfaceAGL;
 
 #define SA_Get_Cargo(_vehicle,_cargo) \
-if( count (ropeAttachedObjects _vehicle) == 0 ) then { \
+if( count (ropeAttachedObjects _vehicle) isEqualTo 0 ) then { \
 	_cargo = objNull; \
 } else { \
 	_cargo = ((ropeAttachedObjects _vehicle) select 0) getVariable ["SA_Cargo",objNull]; \
@@ -73,7 +73,7 @@ SA_Simulate_Towing_Speed = {
 
 	while {_runSimulation} do {
 
-		// Calculate total mass and count of cargo being towed (only takes into account
+		// Calculate total mass && count of cargo being towed (only takes into account
 		// cargo that's actively being towed (e.g. there's no slack in the rope)
 
 		_currentVehicle = _vehicle;
@@ -129,7 +129,7 @@ SA_Simulate_Towing = {
 	private ["_cargoCenterASL","_surfaceHeight","_surfaceHeight2","_maxSurfaceHeight"];
 
 	_maxVehicleSpeed = getNumber (configFile >> "CfgVehicles" >> typeOf _vehicle >> "maxSpeed");
-	_cargoCanFloat = if( getNumber (configFile >> "CfgVehicles" >> typeOf _cargo >> "canFloat") == 1 ) then { true } else { false };
+	_cargoCanFloat = if( getNumber (configFile >> "CfgVehicles" >> typeOf _cargo >> "canFloat") isEqualTo 1 ) then { true } else { false };
 
 	private ["_cargoCenterOfMassAGL","_cargoModelCenterGroundPosition"];
 	SA_Find_Surface_AGL_Under_Model(_cargo,getCenterOfMass _cargo,_cargoCenterOfMassAGL,_cargoCanFloat);
@@ -164,7 +164,7 @@ SA_Simulate_Towing = {
 
 	_vehicleMass = 1 max (getMass _vehicle);
 	_cargoMass = getMass _cargo;
-	if(_cargoMass == 0) then {
+	if(_cargoMass isEqualTo 0) then {
 		_cargoMass = _vehicleMass;
 	};
 
@@ -280,7 +280,7 @@ SA_Get_Corner_Points = {
 	private ["_centerOfMass","_bbr","_p1","_p2","_rearCorner","_rearCorner2","_frontCorner","_frontCorner2"];
 	private ["_maxWidth","_widthOffset","_maxLength","_lengthOffset","_widthFactor","_lengthFactor"];
 
-	// Correct width and length factor for air
+	// Correct width && length factor for air
 	_widthFactor = 0.75;
 	_lengthFactor = 0.75;
 	if(_vehicle isKindOf "Air") then {
@@ -343,7 +343,7 @@ SA_Attach_Tow_Ropes = {
 		if(local _vehicle) then {
 			private ["_towRopes","_vehicleHitch","_cargoHitch","_objDistance","_ropeLength"];
 			_towRopes = _vehicle getVariable ["SA_Tow_Ropes",[]];
-			if(count _towRopes == 1) then {
+			if(count _towRopes isEqualTo 1) then {
 
 				/*
 				private ["_cargoHitchPoints","_distanceToFrontHitch","_distanceToRearHitch","_isRearCargoHitch"];
@@ -389,7 +389,7 @@ SA_Take_Tow_Ropes = {
 		diag_log format ["Take Tow Ropes Called %1", _this];
 		private ["_existingTowRopes","_hitchPoint","_rope"];
 		_existingTowRopes = _vehicle getVariable ["SA_Tow_Ropes",[]];
-		if(count _existingTowRopes == 0) then {
+		if(count _existingTowRopes isEqualTo 0) then {
 			_hitchPoint = [_vehicle] call SA_Get_Hitch_Points select 1;
 			_rope = ropeCreate [_vehicle, _hitchPoint, 10];
 			_vehicle setVariable ["SA_Tow_Ropes",[_rope],true];
@@ -503,7 +503,7 @@ SA_Attach_Tow_Ropes_Action_Check = {
 SA_Can_Attach_Tow_Ropes = {
 	params ["_vehicle","_cargo"];
 	if(!isNull _vehicle && !isNull _cargo) then {
-		[_vehicle,_cargo] call SA_Is_Supported_Cargo && vehicle player == player && player distance _cargo < 10 && _vehicle != _cargo;
+		[_vehicle,_cargo] call SA_Is_Supported_Cargo && vehicle player isEqualTo player && player distance _cargo < 10 && _vehicle != _cargo;
 	} else {
 		false;
 	};
@@ -549,7 +549,7 @@ SA_Can_Take_Tow_Ropes = {
 		private ["_existingVehicle","_existingTowRopes"];
 		_existingTowRopes = _vehicle getVariable ["SA_Tow_Ropes",[]];
 		_existingVehicle = player getVariable ["SA_Tow_Ropes_Vehicle", objNull];
-		vehicle player == player && player distance _vehicle < 10 && (count _existingTowRopes) == 0 && isNull _existingVehicle;
+		vehicle player isEqualTo player && player distance _vehicle < 10 && (count _existingTowRopes) isEqualTo 0 && isNull _existingVehicle;
 	} else {
 		false;
 	};
@@ -594,7 +594,7 @@ SA_Can_Put_Away_Tow_Ropes = {
 	private ["_existingTowRopes"];
 	if([_vehicle] call SA_Is_Supported_Vehicle) then {
 		_existingTowRopes = _vehicle getVariable ["SA_Tow_Ropes",[]];
-		vehicle player == player && player distance _vehicle < 10 && (count _existingTowRopes) > 0;
+		vehicle player isEqualTo player && player distance _vehicle < 10 && (count _existingTowRopes) > 0;
 	} else {
 		false;
 	};
@@ -614,7 +614,7 @@ SA_Drop_Tow_Ropes_Action_Check = {
 };
 
 SA_Can_Drop_Tow_Ropes = {
-	!isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && vehicle player == player;
+	!isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && vehicle player isEqualTo player;
 };
 
 
@@ -655,7 +655,7 @@ SA_Pickup_Tow_Ropes_Action_Check = {
 };
 
 SA_Can_Pickup_Tow_Ropes = {
-	isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && count (missionNamespace getVariable ["SA_Nearby_Tow_Vehicles",[]]) > 0 && vehicle player == player;
+	isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && count (missionNamespace getVariable ["SA_Nearby_Tow_Vehicles",[]]) > 0 && vehicle player isEqualTo player;
 };
 
 SA_TOW_SUPPORTED_VEHICLES = [
@@ -695,7 +695,7 @@ SA_Is_Supported_Cargo = {
 		{
 			if(_vehicle isKindOf (_x select 0)) then {
 				if(_cargo isKindOf (_x select 2)) then {
-					if( (toUpper (_x select 1)) == "CAN_TOW" ) then {
+					if( (toUpper (_x select 1)) isEqualTo "CAN_TOW" ) then {
 						_canTow = true;
 					} else {
 						_canTow = false;
@@ -771,7 +771,7 @@ SA_Find_Nearby_Tow_Vehicles = {
 		_vehicle = _x;
 		{
 			_ends = ropeEndPosition _x;
-			if(count _ends == 2) then {
+			if(count _ends isEqualTo 2) then {
 				_end1 = _ends select 0;
 				_end2 = _ends select 1;
 				if(((position player) distance _end1) < 5 || ((position player) distance _end2) < 5 ) then {
@@ -784,18 +784,15 @@ SA_Find_Nearby_Tow_Vehicles = {
 };
 
 if(!isDedicated) then {
-	[] spawn {
-		while {true} do {
-			if(!isNull player && isPlayer player) then {
-				if!( player getVariable ["SA_Tow_Actions_Loaded",false] ) then {
-					[] call SA_Add_Player_Tow_Actions;
-					player setVariable ["SA_Tow_Actions_Loaded",true];
-				};
+	["advanced_towing_init","_counter%2 isEqualTo 0", "
+		if(!isNull player && isPlayer player) then {
+			if!( player getVariable [""SA_Tow_Actions_Loaded"",false] ) then {
+				[] call SA_Add_Player_Tow_Actions;
+				player setVariable [""SA_Tow_Actions_Loaded"",true];
 			};
-			missionNamespace setVariable ["SA_Nearby_Tow_Vehicles", (call SA_Find_Nearby_Tow_Vehicles)];
-			sleep 2;
 		};
-	};
+		missionNamespace setVariable [""SA_Nearby_Tow_Vehicles"", (call SA_Find_Nearby_Tow_Vehicles)];
+	"] call OT_fnc_addActionLoop;
 };
 
 SA_RemoteExec = {

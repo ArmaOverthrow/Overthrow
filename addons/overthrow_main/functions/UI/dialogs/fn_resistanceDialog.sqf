@@ -21,7 +21,7 @@ if(!isMultiplayer) then {
 lbClear 1500;
 {
     _uid = _x;
-    _name = server getVariable [format["name%1",_uid],"Player"];
+    _name = players_NS getVariable [format["name%1",_uid],"Player"];
     _idx = lbAdd [1500,_name];
     _pic = "\A3\Ui_f\data\GUI\Cfg\Ranks\sergeant_gs.paa";
     if(_uid in (server getVariable ["generals",[]])) then {
@@ -29,13 +29,13 @@ lbClear 1500;
     };
     _col = [0.8,0.8,0.8,1];
     {
-        if(getplayeruid _x == _uid) exitWith {_col = [1,1,1,1]};
+        if(getplayeruid _x isEqualTo _uid) exitWith {_col = [1,1,1,1]};
     }foreach(allplayers);
 
     lbSetColor [1500, _idx, _col]
     lbSetPicture [1500,_idx,_pic];
     lbSetData [1500,_idx,_uid];
-}foreach(server getVariable ["OT_allplayers",[]]);
+}foreach(players_NS getVariable ["OT_allplayers",[]]);
 
 lbClear 1501;
 {
@@ -87,7 +87,7 @@ private _income = 0;
         _wages = _wages + (_num * _perhr);
         if(_num > 20) then {_num = 20};
         _data = _x call OT_fnc_getBusinessData;
-        if(count _data == 2) then {
+        if(count _data isEqualTo 2) then {
             _income = _income + ((_num * 200) * 6);
         };
     };

@@ -4,25 +4,21 @@ class CfgFunctions
 	{
 		class Base
 		{
-			file = "\ot\functions";
+			file = "\overthrow_main\functions";
 			class initVar {};
 			class initOverthrow {};
-			class assignMission {};
-			class canPlace {};
+		};
+
+        class Cleanup
+		{
+			file = "\overthrow_main\functions\cleanup";
 			class cleanup {};
-			class hasOwner {};
-			class spawnTemplate {};
-			class spawnTemplateAttached {};
-			class unitStock {};
-			class setOwner {};
-			class getOwner {};
-			class vehicleCanMove {};
 			class cleanDead {};
 		};
 
 		class Factions
 		{
-			file = "\ot\functions\factions";
+			file = "\overthrow_main\functions\factions";
 			class factionNATO {};
 			class factionGUER {};
 			class factionCIV {};
@@ -30,8 +26,9 @@ class CfgFunctions
 			class unitSeen {};
 			class unitSeenNATO {};
 			class unitSeenCRIM {};
-			class unitSeenAny {};
+			class unitSeenCIV {};
 			class unitSeenPlayer {};
+			class unitSeenAny {};
 			class revealToNATO {};
 			class revealToCRIM {};
 		};
@@ -39,23 +36,52 @@ class CfgFunctions
 		/* Persistent Save */
 		class Save
 		{
-			file = "\ot\functions\save";
+			file = "\overthrow_main\functions\save";
 			class saveGame {};
 			class loadGame {};
 			class setOfflinePlayerAttribute {};
 			class getOfflinePlayerAttribute {};
 			class loadPlayerData {};
+			class savePlayerData {};
+			class autoSaveToggle {};
+			class autoloadToggle {};
+		};
+
+		class sleep
+		{
+			file = "\overthrow_main\functions\sleep";
+			class startSleeping {};
+		};
+
+		class admin
+		{
+			file = "\overthrow_main\functions\admin";
+			class toggleZeus {};
+		};
+
+		class Loop
+		{
+			file = "\overthrow_main\functions\loop";
+			class initActionLoop {};
+			class addActionLoop {};
+			class removeActionLoop {};
 		};
 
 		class Player
 		{
-			file = "\ot\functions\player";
+			file = "\overthrow_main\functions\player";
 			class initPlayerLocal {};
 			class mapSystem {};
+			class mapHandler {};
+			class notificationLoop {};
+			class townCheckLoop {};
 			class perkSystem {};
 			class setupPlayer {};
 			class statsSystem {};
+			class statsSystemLoop {};
 			class wantedSystem {};
+			class wantedLoop {};
+			class unconsciousNoHelpPossible {};
 			class playerIsOwner {};
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
@@ -70,11 +96,16 @@ class CfgFunctions
 			class doConversation {};
 			class givePlayerWaypoint {};
 			class clearPlayerWaypoint {};
+			class hasWeaponEquipped {};
+			class carriesStaticWeapon {};
+			class illegalInCar {};
+			class detectedByReputation {};
+			class detectedByReputationNATO {};
 		};
 
 		class Interaction
 		{
-			file = "\ot\functions\interaction";
+			file = "\overthrow_main\functions\interaction";
 			class mountAttached {};
 			class initAttached {};
 			class updateAttached {};
@@ -84,9 +115,7 @@ class CfgFunctions
 
 		class Events
 		{
-			file = "\ot\functions\events";
-			class preInit {preInit = 1;};
-			class postInit {postInit = 1;};
+			file = "\overthrow_main\functions\events";
 			class deathHandler {};
 			class buildingDamagedHandler {};
 			class cargoLoadedHandler {};
@@ -100,22 +129,26 @@ class CfgFunctions
 
 		class UI
 		{
-			file = "\ot\functions\UI";
+			file = "\overthrow_main\functions\UI";
 			class notifyMinor {};
 			class notifyBig {};
 			class notifyGood {};
 			class notifyVehicle {};
 			class playerDecision {};
+			class choiceMade {};
 			class notifyStart {};
 			class progressBar {};
 			class getAssignedKey {};
 			class formatTime {};
 			class notifyAndLog {};
+			class dynamicText {};
+			class topMessage {};
+			class dialogFadeIn {};
 		};
 
 		class Dialogs
 		{
-			file = "\ot\functions\UI\dialogs";
+			file = "\overthrow_main\functions\UI\dialogs";
 
 			class mainMenu {};
 			class buyDialog {};
@@ -144,11 +177,12 @@ class CfgFunctions
 			class sellHardwareDialog {};
 			class jobsDialog {};
 			class craftDialog {};
+			class uploadData {};
 		};
 
 		class Display
 		{
-			file = "\ot\functions\UI\display";
+			file = "\overthrow_main\functions\UI\display";
 			class displayShopPic {};
 			class displayWarehousePic {};
 			class showMemberInfo {};
@@ -164,7 +198,7 @@ class CfgFunctions
 		*/
 		class Actions
 		{
-			file = "\ot\functions\actions";
+			file = "\overthrow_main\functions\actions";
 
 			class newGame {};
 
@@ -176,8 +210,11 @@ class CfgFunctions
 			class fastTravel {};
 			class talkToCiv {};
 			class recruitCiv {};
+			class recruitSpawnCiv {};
 			class leaseBuilding {};
 			class place {};
+			class onNameDone {};
+			class onNameKeyDown {};
 			class setHome {};
 			class build {};
 
@@ -188,6 +225,7 @@ class CfgFunctions
 			/* Vehicle */
 			class transferTo {};
 			class transferFrom {};
+			class transferHelper {};
 			class transferLegit {};
 			class takeLegit {};
 			class warehouseTake {};
@@ -206,6 +244,7 @@ class CfgFunctions
 
 			/* Gun Dealer */
 			class getMission {};
+			class assignMission {};
 
 			/* Factory */
 			class factoryQueueAdd {};
@@ -244,10 +283,14 @@ class CfgFunctions
 			class lockVehicle {};
 			class reverseEngineer {};
 			class playSound {};
+            class canPlace {};
+			class vehicleCanMove {};
+
 		};
+
 		class SelfActions
     	{
-        	file = "\ot\functions\actions\self";
+        	file = "\overthrow_main\functions\actions\self";
 			/* Spliffs */
 			class startSpliff {};
 			class stopSpliff {};
@@ -260,7 +303,7 @@ class CfgFunctions
 		*/
 		class Geography
 		{
-			file = "\ot\functions\geography";
+			file = "\overthrow_main\functions\geography";
 			class getRandomBuilding {};
 			class nearestBase {};
 			class nearestCheckpoint {};
@@ -284,10 +327,9 @@ class CfgFunctions
 		*/
 		class Virtualization
 		{
-			file = "\ot\functions\virtualization";
+			file = "\overthrow_main\functions\virtualization";
 			class initVirtualization {};
 			class runVirtualization {};
-
 			class spawn {};
 			class despawn {};
 			class inSpawnDistance {};
@@ -299,7 +341,7 @@ class CfgFunctions
 
 		class Spawners
 		{
-			file = "\ot\functions\virtualization\spawners";
+			file = "\overthrow_main\functions\virtualization\spawners";
 
 			class spawnAmbientVehicles {};
 			class spawnBoatDealers {};
@@ -320,7 +362,7 @@ class CfgFunctions
 		*/
 		class Economy
 		{
-			file = "\ot\functions\economy";
+			file = "\overthrow_main\functions\economy";
 			class initEconomy {};
 			class initEconomyLoad {};
 			class setupTownEconomy {};
@@ -344,7 +386,7 @@ class CfgFunctions
 		*/
 		class Inventory
 		{
-			file = "\ot\functions\inventory";
+			file = "\overthrow_main\functions\inventory";
 			class takeFromCargoContainers {};
 			class hasFromCargoContainers {};
 			class anythingGetName {};
@@ -366,7 +408,7 @@ class CfgFunctions
 		*/
 		class Warehouse
 		{
-			file = "\ot\functions\warehouse";
+			file = "\overthrow_main\functions\warehouse";
 			class removeFromWarehouse {};
 			class findHelmetInWarehouse {};
 			class findScopeInWarehouse {};
@@ -379,14 +421,14 @@ class CfgFunctions
 		*/
 		class AI
 		{
-			file = "\ot\functions\AI";
+			file = "\overthrow_main\functions\AI";
 			class createSoldier {};
 			class getSoldier {};
 			class parachuteAll {};
 			class NATOsearch {};
 			class createSquad {};
 			class experience {};
-			class initVCOMAI {};
+			class dangerCaused {};
 		};
 
 		/*
@@ -394,7 +436,7 @@ class CfgFunctions
 		*/
 		class Orders
 		{
-			file = "\ot\functions\AI\orders";
+			file = "\overthrow_main\functions\AI\orders";
 			class orderLoot {};
 			class orderOpenInventory {};
 			class orderRevivePlayer {};
@@ -409,7 +451,7 @@ class CfgFunctions
 		*/
 		class NPC
 		{
-			file = "\ot\functions\AI\NPC";
+			file = "\overthrow_main\functions\AI\NPC";
 			class randomLocalIdentity {};
 			class applyIdentity {};
 			class initCarDealer {};
@@ -439,7 +481,7 @@ class CfgFunctions
 		*/
 		class Math
 		{
-			file = "\ot\functions\math";
+			file = "\overthrow_main\functions\math";
 			class rotationMatrix {};
 			class matrixMultiply {};
 			class matrixRotate {};
@@ -450,7 +492,7 @@ class CfgFunctions
 		*/
 		class NATO
 		{
-			file = "\ot\functions\factions\NATO";
+			file = "\overthrow_main\functions\factions\NATO";
 			class initNATO {};
 
 			class NATOQRF {};
@@ -458,6 +500,7 @@ class CfgFunctions
 			class CTRGSupport {};
 			class NATOAirSupport {};
 			class NATOGroundSupport {};
+			class NATOTankSupport {};
 			class NATOSeaSupport {};
 
 			class NATOResponseObjective {};
@@ -478,26 +521,27 @@ class CfgFunctions
 
 		class NATOAI
 		{
-			file = "\ot\functions\factions\NATO\AI";
+			file = "\overthrow_main\functions\factions\NATO\AI";
 			class NATODrone {};
 			class NATOMortar {};
 		};
 
 		class CRIM
 		{
-			file = "\ot\functions\factions\CRIM";
+			file = "\overthrow_main\functions\factions\CRIM";
 			class formOrJoinGang {};
 		};
 
 		class GUER
 		{
-			file = "\ot\functions\factions\GUER";
+			file = "\overthrow_main\functions\factions\GUER";
 			class jobSystem {};
+			class assignJob {};
 		};
 
 		class Buildings
 		{
-			file = "\ot\functions\buildings";
+			file = "\overthrow_main\functions\buildings";
 			class initBuilding {};
 			class initObservationPost {};
 			class initPoliceStation {};
@@ -506,15 +550,258 @@ class CfgFunctions
 			class initWarehouse {};
 		};
 
+        class Util
+		{
+			file = "\overthrow_main\functions\util";
+			class getOwner {};
+      		class hasOwner {};
+			class setOwner {};
+			class unitStock {};
+      		class spawnTemplate {};
+			class sortBy {};
+			class sortByInplace {};
+			class findReplace {};
+			class exportPrices {};
+		};
+
 		/*
 		* Mod integration
 		*/
 		class Integration
 		{
-			file = "\ot\functions\integration";
+			file = "\overthrow_main\functions\integration";
 			class initTFAR {};
 			class advancedTowingInit {};
 			class detectItems {};
 		};
 	};
+
+	class SHK_pos {
+		class Functions {
+			file="\overthrow_main\functions\geography\SHK_pos";
+
+			class findClosestPosition {};
+			class getMarkerCorners {};
+			class getMarkerShape {};
+			class getPos {};
+			class getPosFromCircle {};
+			class getPosFromEllipse {};
+			class getPosFromRectangle {};
+			class getPosFromSquare {};
+			class isBlacklisted {};
+			class isInCircle {};
+			class isInEllipse {};
+			class isInRectangle {};
+			class isSamePosition {};
+			class rotatePosition {};
+
+			class getPosWrapper {};
+			class getPosMarkerWrapper {};
+			class pos {};
+		};
+	};
+
+	class VCM {
+
+		class VCOM_init
+		{
+			file = "\overthrow_main\functions\AI\Vcom";
+
+			class VcomInit
+			{
+				postInit = 1;
+			};
+			class VcomInitClient
+			{
+				postInit = 1;
+			};
+			class CBA_Settings {};
+			class AISettingsV4 {};
+			class DefaultSettings {};
+		};
+
+		class VCOM_FSM
+		{
+			file = "\overthrow_main\functions\AI\Vcom\FSMS";
+
+			// group spawn VCM_fnc_SQUADBEH
+			class SQUADBEH
+			{
+				ext = ".fsm";
+			};
+
+			// [] spawn VCM_fnc_AIDRIVEBEHAVIOR
+			class AIDRIVEBEHAVIOR
+			{
+				ext = ".fsm";
+			};
+
+			// [] spawn VCM_fnc_HANDLECURATORS
+			class HANDLECURATORS
+			{
+				ext = ".fsm";
+			};
+		};
+
+		class VCOM_Functions
+		{
+			file = "\overthrow_main\functions\AI\Vcom\Functions\VCM_Functions";
+
+			class AIDIFSET {};
+			class AISIDESPEC {};
+
+			// [unitToRearm, rearmLocation] spawn VCM_fnc_ActRearm
+			class ActRearm {};
+
+			// [unit, source, damage, instigator] call VCM_fnc_AIHIT;
+			class AIHIT {};
+
+			// [group] call VCM_fnc_ArmStatics;
+			class ArmStatics {};
+
+			// [callGroup, enemyGroup] call VCM_fnc_ArtyCall;
+			class ArtyCall {};
+
+			// group call VCM_fnc_ArtyManage;
+			class ArtyManage {};
+
+			// [entity, unit] call VCM_fnc_BoxNrst;
+			class BoxNrst {};
+
+			// unit call VCM_fnc_CheckArty;
+			class CheckArty {};
+
+			// [string] call VCM_fnc_Classname;
+			class Classname {};
+
+			// [group, enemy] call VCM_fnc_ClearBuilding;
+			class ClearBuilding {};
+
+			// unit call VCM_fnc_ClstEmy;
+			class ClstEmy {};
+
+			// [list, object, order, script] call VCM_fnc_ClstObj;
+			class ClstObj {};
+
+			// [unit, killer] call VCM_fnc_ClstWarn;
+			class ClstWarn {};
+
+			// [group, searchDistance] call VCM_fnc_EmptyStatic;
+			class EmptyStatic {};
+
+			// unit call VCM_fnc_EnemyArray;
+			class EnemyArray {};
+
+			// [groupLeader, moveDistance] call VCM_fnc_FindCover;
+			class FindCover {};
+
+			// [groupLeader] spawn VCM_fnc_FlankMove;
+			class FlankMove {};
+
+			// [groupLeader, moveDistance] call VCM_fnc_ForceMove;
+			class ForceMove {};
+
+			// unit call VCM_fnc_FriendlyArray;
+			class FriendlyArray {};
+
+			// unit call VCM_fnc_FrmChnge;
+			class FrmChnge {};
+
+			// group spawn VCM_fnc_Garrison;
+			class Garrison {};
+
+			// group call VCM_fnc_GarrisonLight;
+			class GarrisonLight {};
+
+			// unit call VCM_fnc_HasMine;
+			class HasMine {};
+
+			// unit call VCM_fnc_HealSelf;
+			class HealSelf {};
+
+			// [unit, weapon, muzzle, mode, ammo, magazine, bullet, gunner] call VCM_fnc_HearingAids;
+			class HearingAids {};
+
+			// [object, searchRadius, precision, sortingOrder] call VCM_fnc_Heights;
+			class Heights {};
+
+			// [] call VCM_fnc_IRCHECK;
+			class IRCHECK {};
+
+			// group call VCM_fnc_KitChk;
+			class KitChk {};
+
+			// [array, unitToReveal, revealAmount, _revealLimit] call VCM_fnc_KnowAbout;
+			class KnowAbout {};
+
+			// group call VCM_fnc_MedicalHandler
+			class MedicalHandler {};
+
+			//[medic, injuredUnit] spawn VCM_fnc_MedicHeal;
+			class MedicHeal {};
+
+			// [] spawn VCM_fnc_MineMonitor;
+			class MineMonitor {};
+
+			// [unit, mineArray] spawn VCM_fnc_MinePlant;
+			class MinePlant {};
+
+			// [gunner, backpackClassname, staticWeapon] call VCM_fnc_PackStatic;
+			class PackStatic {};
+
+			// group call VCM_fnc_RearmSelf;
+			class RearmSelf {};
+
+			// group call VCM_fnc_RMedics;
+			class RMedics {};
+
+			// group call VCM_fnc_RStatics;
+			class RStatics {};
+
+			// [unit, satchelArray] spawn VCM_fnc_SatchelPlant;
+			class SatchelPlant {};
+
+			// group call VCM_fnc_WyptChk;
+			class WyptChk {};
+
+			// unit call VCM_fnc_IsDriver;
+			class IsDriver {};
+
+			//unit call VCM_fnc_VehicleDetection;
+			class VehicleDetection {};
+
+			//[unit,4] call VCM_fnc_MovePrediction;
+			class MovePrediction {};
+
+			//[] call VCM_fnc_UpdateDrivers;
+			class UpdateDrivers {};
+		};
+	};
+
+
+	class RYD {
+		// Fire For Effect: The God of War
+		class FFE_Functions
+		{
+			file = "\overthrow_main\functions\AI\Vcom\Functions\FFE_Functions";
+			class AngTowards {};
+			class ArtyMission {};
+			class ArtyPrep {};
+			class AutoConfig {};
+			class FFE {};
+			class CFF {};
+			class CFF_FFE {};
+			class CFF_Fire {};
+			class CFF_TGT {};
+			class PosTowards2D {};
+			class ShellsInRadius {};
+		};
+
+		class FFE_Shellview
+		{
+			file = "\overthrow_main\functions\AI\Vcom\Functions\FFE_Shellview";
+			class Shellview {};
+		};
+	};
+
 };

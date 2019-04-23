@@ -18,7 +18,7 @@ private _numVeh = 4;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
-if(_town == (server getVariable "spawntown")) then {
+if(_town isEqualTo (server getVariable "spawntown")) then {
 	_numVeh = 12;
 };
 if(_numVeh > 12) then {_numVeh = 12};
@@ -38,7 +38,7 @@ while {(_count < _numVeh)} do {
 		if !(_vehtype in OT_vehTypes_civignore) then {
 			_dirveh = 0;
 			_roadscon = roadsConnectedto _road;
-			if (count _roadscon == 2) then {
+			if (count _roadscon isEqualTo 2) then {
 				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 				if(isNil "_dirveh") then {_dirveh = random 359};
 				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,15,_vehtype];
@@ -51,7 +51,7 @@ while {(_count < _numVeh)} do {
 
 					_veh setDir _dirveh;
 
-					if((random 100) > 90 and (count allunits < 300)) then {
+					if((random 100) > 90 && (count allunits < 300)) then {
 						_group = createGroup CIVILIAN;
 						_groups pushback _group;
 						_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
@@ -74,9 +74,9 @@ while {(_count < _numVeh)} do {
 						_wp setWaypointSpeed "LIMITED";
 						_wp setWaypointBehaviour "SAFE";
 						_wp setWaypointCompletionRadius 60;
-						_wp setWaypointStatements ["true","[vehicle this] spawn OT_fnc_cleanup;unassignVehicle this;[group this] spawn OT_fnc_cleanup;"];
+						_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup;unassignVehicle this;[group this] call OT_fnc_cleanup;"];
 					}else{
-						if(_stability < 50 and (random 100) > 75) then {
+						if(_stability < 50 && (random 100) > 75) then {
 							_veh setDamage [1,false]; //salvage wreck
 						};
 					};

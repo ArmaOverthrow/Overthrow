@@ -1,10 +1,6 @@
-params ["_uid","_attr"];
-private _val = "";
-if(count _this > 2) then {
-    _val = _this select 2;
-};
+params ["_uid","_attr",["_val",""]];
 {
     _x params ["_k","_v"];
-    if(_k == _attr) exitWith {_val=_v};
-}foreach(server getVariable [_uid,[]]);
+    if(_k isEqualTo _attr) exitWith {_val=_v};
+}foreach(players_NS getVariable [_uid,[]]);
 _val;

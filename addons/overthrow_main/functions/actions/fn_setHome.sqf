@@ -1,12 +1,12 @@
 if !(captive player) exitWith {"You cannot set home while wanted" call OT_fnc_notifyMinor};
 
-_buildings =  (getpos player) nearObjects 15;
-_handled = false;
-_building = objNULL;
+private _buildings =  (getpos player) nearObjects 15;
+private _handled = false;
+private _building = objNull;
 {
-	_owner = _x call OT_fnc_getOwner;
+	private _owner = _x call OT_fnc_getOwner;
 	if(!isNil "_owner") then {
-		if ((typeof _x) in OT_allBuyableBuildings and _owner == getplayerUID player) exitWith {
+		if ((typeof _x) in OT_allBuyableBuildings && _owner isEqualTo getplayerUID player) exitWith {
 			_handled = true;
 			player setVariable ["home",getpos _x,true];
 			"This is now your home" call OT_fnc_notifyMinor;

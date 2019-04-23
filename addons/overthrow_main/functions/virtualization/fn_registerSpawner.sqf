@@ -8,7 +8,7 @@ if(count _this > 2) then {
 };
 _start = [];
 _end = [];
-if((count _pos) == 2) then {
+if((count _pos) isEqualTo 2) then {
     _start = _pos select 0;
     _end = _pos select 1;
 }else{

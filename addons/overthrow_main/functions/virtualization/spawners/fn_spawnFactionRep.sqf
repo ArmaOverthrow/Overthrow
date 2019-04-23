@@ -5,7 +5,7 @@ sleep random 0.2;
 
 private _pos = server getVariable [format["factionrep%1",_faction],[]];
 
-if(count _pos == 0) exitWith {[]};
+if(count _pos isEqualTo 0) exitWith {[]};
 
 
 private _groups = [];
@@ -16,7 +16,7 @@ _groups pushback _group;
 
 _shopkeeper = _group createUnit [OT_civType_shopkeeper, _pos, [],0, "NONE"];
 
-//Set face/voice and uniform
+//Set face/voice && uniform
 [_shopkeeper, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _shopkeeper];
 [_shopkeeper, "NoVoice"] remoteExecCall ["setSpeaker", 0, _shopkeeper];
 _shopkeeper forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
@@ -38,5 +38,6 @@ _shopkeeper setVariable ["factionrep",true,true];
 _shopkeeper setVariable ["faction",_faction,true];
 _shopkeeper setVariable ["factionrepname",_name,true];
 [_shopkeeper,"self"] call OT_fnc_setOwner;
+_shopkeeper setVariable ["shopcheck",true,true];
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

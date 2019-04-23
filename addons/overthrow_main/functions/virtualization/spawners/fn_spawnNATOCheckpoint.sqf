@@ -64,7 +64,7 @@ while {_count < _numNATO} do {
 	sleep 0.2;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
-	if(_count == 2) then {
+	if(_count isEqualTo 2) then {
 		_start = [_start,20,_dir+90] call BIS_fnc_relPos;
 	};
 };

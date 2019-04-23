@@ -20,8 +20,14 @@ $RECYCLE.BIN/
 
 # ARMA Tools
 *.cache
-*.pbo
 *.swp
 *.swo
 *.biprivatekey
 *.log
+
+# Backup Files
+*.bak
+
+# Build Directory
+@Overthrow
+tools/includes.txt

@@ -1,11 +1,10 @@
 
-private _cls = _this select 0;
-private _num = _this select 1;
+params ["_cls","_num"];
 private _d = warehouse getVariable [_cls,[_cls,0]];
-if(typename _d == "ARRAY") then {
-	_in = _d select 1;
+if(typename _d isEqualTo "ARRAY") then {
+	_d params ["","_in"];
 
-	if(_num > _in or _num == -1) then {
+	if(_num > _in || _num isEqualTo -1) then {
 		_num = _in;
 	};
 

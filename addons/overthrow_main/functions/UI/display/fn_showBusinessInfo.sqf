@@ -2,7 +2,7 @@
 disableSerialization;
 private _name = "";
 private _data = [];
-if(count _this == 0) then {
+if(count _this isEqualTo 0) then {
     private _idx = lbCurSel 1501;
     _name = lbData [1501,_idx];
 
@@ -19,7 +19,7 @@ if(_num > 20) then {
     _num = 20;
 };
 private _perhr = [OT_nation,"WAGE",0] call OT_fnc_getPrice;
-if(_name == "Factory") then {_perhr = _perhr * 2};
+if(_name isEqualTo "Factory") then {_perhr = _perhr * 2};
 
 private _wages = _anum * _perhr;
 
@@ -34,7 +34,7 @@ _text = _text + format["<t size='0.65'>Wages: $%1 /hr</t><br/>",_wages];
 
 _amgen = (getPlayerUID player) in (server getVariable ["generals",[]]);
 private _nexthr = ((date select 3) + 1);
-if(_nexthr < 10) then {_nexthr = "0"+_nexthr};
+if(_nexthr < 10) then {_nexthr = format ["0%1",_nexthr]};
 
 if(_amgen) then {
     ctrlEnable [1602,true];

@@ -4,4 +4,4 @@ OT_inputHandler = {
 	OT_context setVariable ["password",_val,true];
 };
 
-["Set password (blank to remove)",""] spawn OT_fnc_inputDialog;
+["Set password (blank to remove)",""] call OT_fnc_inputDialog;

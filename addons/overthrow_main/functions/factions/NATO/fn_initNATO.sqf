@@ -3,7 +3,7 @@ OT_NATO_GroundForces = [];
 OT_NATO_Group_Recon = "";
 OT_NATO_Group_Engineers = "";
 {
-	_name = configName _x;
+	private _name = configName _x;
 	OT_NATO_GroundForces pushback _name;
 	if((_name find "Recon") > -1) then {
 		OT_NATO_Group_Recon = _name;
@@ -12,7 +12,7 @@ OT_NATO_Group_Engineers = "";
 }foreach("true" configClasses (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry"));
 
 {
-	_name = configName _x;
+	private _name = configName _x;
 	if((_name find "ENG") > -1) then {
 		OT_NATO_Group_Engineers = _name;
 	};
@@ -31,37 +31,40 @@ OT_NATO_Unit_HVT = "B_T_Officer_F";
 
 
 {
-	_name = configName _x;
+	private _name = configName _x;
 	if(_name isKindOf "SoldierWB") then {
-		call {
+		[_name] call {
+			params ["_name"];
 			if((_name find "_TL_") > -1) exitWith {
 				OT_NATO_Unit_TeamLeader = _name;
 			};
 			if((_name find "_SL_") > -1) exitWith {
 				OT_NATO_Unit_SquadLeader = _name;
 			};
-			if((_name find "_Officer_") > -1 or (_name find "_officer_") > -1) exitWith {
+			if((_name find "_Officer_") > -1 || (_name find "_officer_") > -1) exitWith {
 				OT_NATO_Unit_HVT = _name
 			};
 			if((_name find "_CTRG_") > -1) exitWith {
 				OT_NATO_Units_CTRGSupport pushback _name
 			};
-			if((_name find "_Recon_") > -1 or
-				(_name find "_recon_") > -1 or
-				(_name find "_story_") > -1 or
-				(_name find "_Story_") > -1 or
-				(_name find "_lite_") > -1 or
-				(_name find "_HeavyGunner_") > -1) exitWith {};
+			if(
+				(_name find "_Recon_") > -1
+				|| (_name find "_recon_") > -1
+				|| (_name find "_story_") > -1
+				|| (_name find "_Story_") > -1
+				|| (_name find "_lite_") > -1
+				|| (_name find "_HeavyGunner_") > -1
+			) exitWith {};
 
-			_role = getText (_x >> "role");
+			private _role = getText (_x >> "role");
 			if(_role in ["MachineGunner","Rifleman","CombatLifeSaver"]) then {OT_NATO_Units_LevelOne pushback _name};
 			if(_role in ["MissileSpecialist","Assistant","Grenadier","Marksman"]) then {OT_NATO_Units_LevelTwo pushback _name};
-			if(_role == "Marksman" and (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
-			if(_role == "Marksman" and (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
-			if(_role == "MissileSpecialist" and (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
+			if(_role == "Marksman" && (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
+			if(_role == "Marksman" && (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
+			if(_role == "MissileSpecialist" && (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
 		};
 	};
-}foreach(format["(getNumber(_x >> 'scope') == 2) && (getText(_x >> 'faction') == '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
+}foreach(format["(getNumber(_x >> 'scope') isEqualTo 2) && (getText(_x >> 'faction') isEqualTo '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
 
 OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + OT_NATO_Units_LevelTwo;
 
@@ -76,16 +79,16 @@ OT_allComms = [];
 
 private _diff = server getVariable ["OT_difficulty",1];
 
-if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
+if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
 	diag_log "Overthrow: Generating NATO";
 	server setVariable ["NATOversion",OT_NATOversion,false];
-	_abandoned = server getVariable ["NATOabandoned",[]];
+	private _abandoned = server getVariable ["NATOabandoned",[]];
 
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
 	sleep 0.2;
 	{
-		_stability = server getVariable format ["stability%1",_x];
-		if(_stability < 11 and !(_x in _abandoned)) then {
+		private _stability = server getVariable format ["stability%1",_x];
+		if(_stability < 11 && !(_x in _abandoned)) then {
 			_abandoned pushback _x;
 		};
 	}foreach (OT_allTowns);
@@ -99,7 +102,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	server setVariable ["NATOcomms",OT_NATOcomms,false];
 	server setVariable ["NATOhvts",OT_NATOhvts,false];
 
-	_numHVTs = 6;
+	private _numHVTs = 6;
 	if(_diff == 0) then {_numHVTs = 4};
 	if(_diff == 2) then {_numHVTs = 8};
 
@@ -110,8 +113,8 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			OT_NATOobjectives pushBack _x;
 			server setVariable [format ["vehgarrison%1",_name],[],true];
 
-            _base = 8;
-            _statics = OT_NATO_StaticGarrison_LevelOne;
+            private _base = 8;
+            private _statics = OT_NATO_StaticGarrison_LevelOne;
             if(_worth > 500) then {
                 _base = 16;
                 _statics = OT_NATO_StaticGarrison_LevelTwo;
@@ -120,10 +123,10 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
                 _base = 24;
                 _statics = OT_NATO_StaticGarrison_LevelThree;
             };
-			_garrison = floor(_base + random(8));
-			server setVariable [format ["vehgarrison%1",_name],_statics,true];
+			private _garrison = floor(_base + random(8));
+			server setVariable [format ["vehgarrison%1",_name],+_statics,true];
 
-			if(_name == OT_NATO_HQ) then {
+			if(_name isEqualTo OT_NATO_HQ) then {
 				_garrison = 48;
 				server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_T_APC_Tracked_01_AA_F","B_GMG_01_high_F","B_GMG_01_high_F","B_GMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];
 				server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
@@ -132,7 +135,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 			};
 			server setVariable [format ["garrison%1",_name],_garrison,true];
 
-			if(_name == OT_NATO_HQ) then {
+			if(_name isEqualTo OT_NATO_HQ) then {
 				OT_NATO_HQPos = _pos;
 			};
 		}else{
@@ -140,13 +143,13 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 		};
 	}foreach (OT_objectiveData + OT_airportData);
 
-	_count = 0;
-	_done = [];
+	private _count = 0;
+	private _done = [];
 	while {_count < _numHVTs} do {
-		_ob = selectRandom (OT_NATOobjectives - ([[OT_NATO_HQ,OT_NATO_HQPos]] + _done));
-		_name = _ob select 1;
+		private _ob = selectRandom (OT_NATOobjectives - ([[OT_NATO_HQ,OT_NATO_HQPos]] + _done));
+		private _name = _ob select 1;
 		_done pushback _ob;
-		_id = format["%1%2",_name,round(random 99999)];
+		private _id = format["%1%2",_name,round(random 99999)];
 		OT_NATOhvts pushback [_id,_name,""];
 		_count = _count + 1;
 	};
@@ -157,7 +160,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	{
 		_x params ["_pos","_name"];
 		OT_NATOcomms pushBack [_pos,_name];
-		_garrison = floor(4 + random(4));
+		private _garrison = floor(4 + random(4));
 		server setVariable [format ["garrison%1",_name],_garrison,true];
 	}foreach (OT_commsData);
 
@@ -167,7 +170,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 	diag_log "Overthrow: Distributing NATO vehicles";
 
     //Weighted airport list to distribute air vehicles
-    _prilist = [];
+    private _prilist = [];
     {
         _x params ["_pos","_name","_worth"];
         _prilist pushback _name;
@@ -183,12 +186,11 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
     }foreach(OT_airportData);
 
 	{
-		_type = _x select 0;
-		_num = _x select 1;
-		_count = 0;
+		_x params ["_type","_num"];
+		private _count = 0;
 		while {_count < _num} do {
-			_name = _prilist call BIS_fnc_selectRandom;
-			_garrison = server getVariable [format["airgarrison%1",_name],[]];
+			private _name = _prilist call BIS_fnc_selectRandom;
+			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
 			_garrison pushback _type;
 			_count = _count + 1;
 			server setVariable [format ["airgarrison%1",_name],_garrison,true];
@@ -198,7 +200,7 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 
 	diag_log "Overthrow: Setting up NATO checkpoints";
 	{
-		_garrison = floor(8 + random(6));
+		private _garrison = floor(8 + random(6));
 		if(_x in OT_NATO_priority) then {
 			_garrison = floor(12 + random(6));
 		};
@@ -210,13 +212,13 @@ if((server getVariable "StartupType") == "NEW" or (server getVariable ["NATOvers
 
 	diag_log "Overthrow: Garrisoning towns";
 	{
-		_town = _x;
-		_garrison = 0;
-		_stability = server getVariable format ["stability%1",_town];
-		_population = server getVariable format ["population%1",_town];
+		private _town = _x;
+		private _garrison = 0;
+		private _stability = server getVariable format ["stability%1",_town];
+		private _population = server getVariable format ["population%1",_town];
 		if(_stability > 10) then {
-			_max = round(_population / 30);
-			if(_max < 4) then {_max = 4};
+			private _max = round(_population / 30);
+			_max = _max max 4;
 			_garrison = 2+round((1-(_stability / 100)) * _max);
 			if(_town in OT_NATO_priority) then {
 				_garrison = round(_garrison * 2);
@@ -230,11 +232,9 @@ diag_log "Overthrow: NATO Init Done";
 
 publicVariable "OT_allComms";
 
-
 {
-	_pos = _x select 0;
-	_name = _x select 1;
-	_mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
+	_x params ["_pos","_name"];
+	private _mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
 	_mrk setMarkerShape "ICON";
 	if(_name in (server getVariable "NATOabandoned")) then {
 		_mrk setMarkerType OT_flagMarker;
@@ -251,9 +251,8 @@ sleep 0.2;
 publicVariable "OT_allObjectives";
 
 {
-	_pos = _x select 0;
-	_name = _x select 1;
-	_mrk = createMarker [_name,_pos];
+	_x params ["_pos","_name"];
+	private _mrk = createMarker [_name,_pos];
 	_mrk setMarkerShape "ICON";
 	_mrk setMarkerType "loc_Transmitter";
 	if(_name in (server getVariable "NATOabandoned")) then {
@@ -269,12 +268,12 @@ sleep 0.2;
 {
 	_x params ["_pos","_garrison","_upgrades"];
 	OT_flag_NATO createVehicle _pos;
-	_count = 0;
-	_group = creategroup blufor;
+	private _count = 0;
+	private _group = creategroup blufor;
 	while {_count < _garrison} do {
-		_start = [[[_pos,50]]] call BIS_fnc_randomPos;
+		private _start = [[[_pos,50]]] call BIS_fnc_randomPos;
 
-		_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
+		private _civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
 		_civ setRank "LIEUTENANT";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];

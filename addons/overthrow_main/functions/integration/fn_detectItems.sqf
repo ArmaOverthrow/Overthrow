@@ -1,24 +1,9 @@
-OT_itemCategoryDefinitions = [
-    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass"]],
-    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
-    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
-    ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],
-    ["Surplus",["Rangefinder","Binocular","Compass"]]
-];
-
-OT_items = [];
-OT_allItems = [];
-OT_craftableItems = [];
-
 private _categorize = {
     params ["_c","_cat"];
-    _done = false;
+    private _done = false;
     {
-        if((_x select 0) == _cat) exitWith {
-            _items = _x select 1;
-            if !(_c in _items) then {
-                _items pushback _c;
-            };
+        if((_x select 0) isEqualTo _cat) exitWith {
+            (_x select 1) pushBackUnique _c;
             _done = true;
         };
     }foreach(OT_items);
@@ -29,32 +14,33 @@ private _categorize = {
 
 private _getprice = {
     params ["_x","_primaryCategory"];
-    _mass = getNumber ( _x >> "ItemInfo" >> "mass" );
-    _craftable = getNumber ( _x >> "ot_craftable" );
+    private _mass = getNumber ( _x >> "ItemInfo" >> "mass" );
+    private _craftable = getNumber ( _x >> "ot_craftable" );
 
     if(_craftable > 0) then {
-        _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
-        _qty = getNumber ( _x >> "ot_craftQuantity" );
-        OT_craftableItems pushback [_cls,_recipe,_qty];
+        private _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
+        private _qty = getNumber ( _x >> "ot_craftQuantity" );
+        OT_craftableItems pushback [configName _x,_recipe,_qty];
     };
 
-    _name = getText (_x >> "displayName");
-    _price = round(_mass * 1.5);
-    _steel = 0;
-    _wood = 0;
-    _plastic = 0;
-    _steel = ceil(_mass * 0.2);
-    if(_mass == 1) then {
+    private _name = getText (_x >> "displayName");
+    private _price = round(_mass * 1.5);
+    private _steel = 0;
+    private _wood = 0;
+    private _plastic = 0;
+    private _steel = ceil(_mass * 0.2);
+    if(_mass isEqualTo 1) then {
         _steel = 0.1;
     };
-    if(_primaryCategory == "Pharmacy") then {
-        _price = _mass * 4;
+    if(_primaryCategory isEqualTo "Pharmacy") then {
         _steel = 0;
         _plastic = ceil(_mass * 0.2);
-        if(_mass == 1) then {
+        if(_mass isEqualTo 1) then {
             _plastic = 0.1;
         };
-        call {
+        private _res = [_name,_mass] call {
+            params ["_name", "_mass"];
+            _price = _mass * 4;
             if(_name find "Blood" > -1) exitWith {
                 _price = round(_price * 1.3);
             };
@@ -81,66 +67,59 @@ private _getprice = {
             };
         };
     };
-    if(_primaryCategory == "Electronics") then {
-        _price = _mass * 4;
+    if(_primaryCategory isEqualTo "Electronics") then {
         _steel = 0;
         _plastic = ceil(_mass * 0.2);
-        call {
-            if(_name find "Altimeter" > -1) exitWith {
-                _price = round(_price * 3);
-            };
-            if(_name find "MicroDAGR" > -1) exitWith {
-                _price = round(_price * 7);
-            };
-            if(_name find "GPS" > -1) exitWith {
-                _price = round(_price * 1.5);
-            };
-            if(_name find "DAGR" > -1) exitWith {
-                _price = round(_price * 2);
-            };
-            if(_name find "monitor" > -1) exitWith {
-                _price = round(_price * 3);
-            };
+        _price = _mass * 4;
+        private _factor = [_name] call {
+            params ["_name"];
+            if(_name find "Altimeter" > -1) exitWith {3};
+            if(_name find "MicroDAGR" > -1) exitWith {7};
+            if(_name find "GPS" > -1) exitWith {1.5};
+            if(_name find "DAGR" > -1) exitWith {2};
+            if(_name find "monitor" > -1) exitWith {3};
+            1
         };
+        _price = round (_price * _factor);
     };
-    if(_primaryCategory == "Hardware") then {
+    if(_primaryCategory isEqualTo "Hardware") then {
         _price = _mass;
     };
-    _cls = configName _x;
-    if(_cls == "ToolKit") then {
+    private _cls = configName _x;
+    if(_cls isEqualTo "ToolKit") then {
         _price = 80;
     };
     [_price,_wood,_steel,_plastic];
 };
 
 {
-    _cls = configName _x;
-    _name = getText (_x >> "displayName");
-    _desc = getText (_x >> "descriptionShort");
+    private _cls = configName _x;
+    private _name = getText (_x >> "displayName");
+    private _desc = getText (_x >> "descriptionShort");
 
-    _categorized = false;
-    _primaryCategory = "";
+    private _categorized = false;
+    private _primaryCategory = "";
     {
         _x params ["_category","_types"];
         {
-            if((_name find _x > -1) or (_desc find _x > -1)) exitWith {
+            if((_name find _x > -1) || (_desc find _x > -1)) exitWith {
                 [_cls,_category] call _categorize;
                 _categorized = true;
                 if(_category != "General") then {
                     _primaryCategory = _category;
                 };
                 {
-                    _c = configName _x;
+                    private _c = configName _x;
                     [_c,_category] call _categorize;
-                    if(isServer) then {
+                    if(isServer && isNil {cost getVariable _c}) then {
                         cost setVariable [_c,[_x,_primaryCategory] call _getprice,true];
                     };
-                }foreach("inheritsFrom _x isEqualTo (configFile >> ""CfgWeapons"" >> """ + _cls + """)" configClasses ( configFile >> "CfgWeapons" ));
+                }foreach(format ["inheritsFrom _x isEqualTo (configFile >> ""CfgWeapons"" >> ""%1"")",_cls] configClasses ( configFile >> "CfgWeapons" ));
             };
         }foreach(_types);
     }foreach(OT_itemCategoryDefinitions);
 
-    if(isServer) then {
+    if(isServer && isNil {cost getVariable _c}) then {
         cost setVariable [_cls,[_x,_primaryCategory] call _getprice,true];
     };
 
@@ -151,8 +130,8 @@ private _getprice = {
 
 //add craftable magazines
 {
-    _cls = configName _x;
-    _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
-    _qty = getNumber ( _x >> "ot_craftQuantity" );
+    private _cls = configName _x;
+    private _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
+    private _qty = getNumber ( _x >> "ot_craftQuantity" );
     OT_craftableItems pushback [_cls,_recipe,_qty];
 }foreach("getNumber (_x >> ""ot_craftable"") isEqualTo 1" configClasses ( configFile >> "CfgMagazines" ));

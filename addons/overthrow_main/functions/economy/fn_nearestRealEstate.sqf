@@ -20,6 +20,6 @@ _ret = false;
 if(_gotbuilding) then {
 	_ret = _building call OT_fnc_getRealEstateData;
 	_ret = [_building,_ret select 0,_ret select 1,_ret select 2,_ret select 3];
-	if((_ret select 1) == -1) then {_ret = false};
+	if((_ret select 1) isEqualTo -1) then {_ret = false};
 };
 _ret

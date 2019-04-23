@@ -1,7 +1,7 @@
 private ["_eh","_handler"];
 
 if(isMultiplayer) then {
-	onEachFrame {
+	addMissionEventHandler ["Draw3D", {
 		{
 			if !(_x isEqualTo player) then {
 				private _dis = round(_x distance player);
@@ -13,10 +13,10 @@ if(isMultiplayer) then {
 				drawIcon3D ["a3\ui_f\data\map\groupicons\selector_selectable_ca.paa", [1,1,1,0.3], getPosATLVisual _x, 1, 1, 0, format["%1 (%2%3)",name _x,_dis,_t], 0, 0.02, "TahomaB", "center", true];
 			};
 		}foreach([] call CBA_fnc_players);
-	};
+	}];
 };
 
-onEachFrame {
+addMissionEventHandler ["Draw3D", {
 	if(!isNil "OT_missionMarker") then {
 		private _dis = round(OT_missionMarker distance player);
 		private _t = "m";
@@ -26,16 +26,17 @@ onEachFrame {
 		};
 		drawIcon3D ["a3\ui_f\data\map\markers\military\dot_ca.paa", [1,1,1,1], OT_missionMarker, 1, 1, 0, format["%1 (%2%3)",OT_missionMarkerText,_dis,_t], 0, 0.02, "TahomaB", "center", true];
 	};
-};
+}];
 
 _handler = {
 	private ["_vehs","_dest","_destpos","_passengers"];
-	if !(visibleMap or visibleGPS) exitWith {};
+	if !(visibleMap || visibleGPS) exitWith {};
 	_vehs = [];
+	private _players = [] call CBA_fnc_players;
 	if(isMultiplayer) then {
 		{
 			_veh = vehicle _x;
-			if(_veh == _x) then {
+			if(_veh isEqualTo _x) then {
 				_color = [0,0.5,0,1];
 				if!(captive _x) then {
 					_color = [0,0.2,0,1];
@@ -54,23 +55,23 @@ _handler = {
 					_vehs pushback _veh;
 				};
 			};
-		}foreach([] call CBA_fnc_players);
+		}foreach(_players);
 	};
 	_t = 1;
 	{
-		if (!(isPlayer _x) and (side _x == resistance)) then {
+		if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x}) then {
 			_veh = vehicle _x;
-			if(_veh == _x) then {
+			if(_veh isEqualTo _x) then {
 				_color = [0,0.5,0,1];
 				if !(captive _x) then {
 					_color = [0,0.2,0,1];
 				};
 
 				_txt = "";
-				if(leader _x == player) then {
+				if(leader _x isEqualTo player) then {
 					_dest = expectedDestination _x;
 					_destpos = _dest select 0;
-					if ((_dest select 1)== "LEADER PLANNED") then {
+					if ((_dest select 1) == "LEADER PLANNED") then {
 						(_this select 0) drawLine [
 							getPos _x,
 							_destpos,
@@ -134,7 +135,7 @@ _handler = {
 		_passengers = "";
 		_color = [0,0.5,0,1];
 		{
-			if(isPlayer _x and _x != player) then {
+			if(isPlayer _x && {_x != player}) then {
 				_passengers = format["%1 %2",_passengers,name _x];
 			};
 			if !(captive _x) then {_color = [0,0.2,0,1];};
@@ -152,69 +153,63 @@ _handler = {
 	}foreach(_vehs);
 
 	{
-		if(side _x == west) then {
-			_u = leader _x;
-			_alive = false;
-			if(!alive _u) then {
-				{
-					if(alive _x) exitWith {_u = _x;_alive=true};
-				}foreach(units _x);
-			}else{
-				_alive = true;
-			};
-			if(_alive) then {
-				_ka = resistance knowsabout _u;
-				if(_ka > 1.4) then {
-					_opacity = (_ka-1.4) / 1;
-					if(_opacity > 1) then {_opacity = 1};
-					_pos = visiblePosition  _u;
-					(_this select 0) drawIcon [
-						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
-						[0,0.3,0.59,_opacity],
-						_pos,
-						30,
-						30,
-						0
-					];
+		switch (side _x) do {
+			case west: {
+				_u = leader _x;
+				_alive = false;
+				if(!alive _u) then {
+					{
+						if(alive _x) exitWith {_u = _x;_alive=true};
+					}foreach(units _x);
+				}else{
+					_alive = true;
 				};
-			}
-		};
-
-		if(side _x == east) then {
-			_u = leader _x;
-			_alive = false;
-			if(!alive _u) then {
-				{
-					if(alive _x) exitWith {_u = _x;_alive=true};
-				}foreach(units _x);
-			}else{
-				_alive = true;
-			};
-			if(_alive) then {
-				_ka = resistance knowsabout _u;
-				if(_ka > 1.4) then {
-					_opacity = (_ka-1.4) / 1;
-					if(_opacity > 1) then {_opacity = 1};
-					_pos = visiblePosition  _u;
-					(_this select 0) drawIcon [
-						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
-						[0.5,0,0,_opacity],
-						_pos,
-						30,
-						30,
-						0
-					];
+				if(_alive) then {
+					_ka = resistance knowsabout _u;
+					if(_ka > 1.4) then {
+						_opacity = (_ka-1.4) / 1;
+						if(_opacity > 1) then {_opacity = 1};
+						_pos = visiblePosition  _u;
+						(_this select 0) drawIcon [
+							"\A3\ui_f\data\map\markers\nato\b_inf.paa",
+							[0,0.3,0.59,_opacity],
+							_pos,
+							30,
+							30,
+							0
+						];
+					};
 				};
-			}
+			};
+			case east: {
+				_u = leader _x;
+				_alive = false;
+				if(!alive _u) then {
+					{
+						if(alive _x) exitWith {_u = _x;_alive=true};
+					}foreach(units _x);
+				}else{
+					_alive = true;
+				};
+				if(_alive) then {
+					_ka = resistance knowsabout _u;
+					if(_ka > 1.4) then {
+						_opacity = (_ka-1.4) / 1;
+						if(_opacity > 1) then {_opacity = 1};
+						_pos = visiblePosition  _u;
+						(_this select 0) drawIcon [
+							"\A3\ui_f\data\map\markers\nato\b_inf.paa",
+							[0.5,0,0,_opacity],
+							_pos,
+							30,
+							30,
+							0
+						];
+					};
+				};
+			};
 		};
-
 	}foreach(allGroups);
-
-	{
-		if(side _x == resistance) then {
-
-		};
-	}foreach(vehicles);
 
 	_scale = ctrlMapScale (_this select 0);
 	if(_scale <= 0.16) then {
@@ -263,7 +258,7 @@ _handler = {
 				];
 			};
 			{
-				_icon = format["ot\ui\markers\shop-%1.paa",_x select 1];
+				_icon = format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1];
 				(_this select 0) drawIcon [
 					_icon,
 					[1,1,1,1],
@@ -275,7 +270,7 @@ _handler = {
 			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
 			{
 				(_this select 0) drawIcon [
-					"ot\ui\markers\shop-Hardware.paa",
+					"\overthrow_main\ui\markers\shop-Hardware.paa",
 					[1,1,1,1],
 					_x select 0,
 					0.3/ctrlMapScale (_this select 0),
@@ -285,9 +280,9 @@ _handler = {
 			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 		}foreach(OT_allTowns);
 		{
-			if ((typeof _x != "B_UAV_AI") and !(_x getVariable ["looted",false])) then {
+			if ((typeof _x != "B_UAV_AI") && {!(_x getVariable ["looted",false])}) then {
 				(_this select 0) drawIcon [
-					"ot\ui\markers\death.paa",
+					"\overthrow_main\ui\markers\death.paa",
 					[1,1,1,0.5],
 					getpos _x,
 					0.2/ctrlMapScale (_this select 0),
@@ -297,7 +292,7 @@ _handler = {
 			};
 		}foreach(alldeadmen);
 		{
-			if(((typeof _x == OT_item_CargoContainer) or (_x isKindOf "Ship") or (_x isKindOf "Air") or (_x isKindOf "Car")) and (count crew _x == 0) and (_x call OT_fnc_hasOwner)) then {
+			if(((typeof _x == OT_item_CargoContainer) || (_x isKindOf "Ship") || (_x isKindOf "Air") || (_x isKindOf "Car")) && {(count crew _x == 0)} && {(_x call OT_fnc_hasOwner)}) then {
 				(_this select 0) drawIcon [
 					getText(configFile >> "CfgVehicles" >> (typeof _x) >> "icon"),
 					[1,1,1,1],
@@ -307,10 +302,10 @@ _handler = {
 					getdir _x
 				];
 			};
-			if((_x isKindOf "StaticWeapon") and (isNull attachedTo _x) and (alive _x)) then {
-				if(side _x == civilian or side _x == resistance or captive _x) then {
+			if((_x isKindOf "StaticWeapon") && {(isNull attachedTo _x)} && {(alive _x)}) then {
+				if(side _x isEqualTo civilian || side _x isEqualTo resistance || captive _x) then {
 					_col = [0.5,0.5,0.5,1];
-					if(!(isNull gunner _x) and (alive gunner _x)) then {_col = [0,0.5,0,1]};
+					if(!(isNull gunner _x) && {(alive gunner _x)}) then {_col = [0,0.5,0,1]};
 					_i = "\A3\ui_f\data\map\markers\nato\o_art.paa";
 					if(_x isKindOf "StaticMortar") then {_i = "\A3\ui_f\data\map\markers\nato\o_mortar.paa"};
 					if !(someAmmo _x) then {_col set [3,0.4]};
@@ -379,25 +374,20 @@ if(!isNil "OT_OnDraw") then {
 
 OT_OnDraw = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", _handler];
 
-//GPS
-[_handler] spawn {
+[{
 	private ['_gps',"_handler"];
 	_handler = _this select 0;
 	disableSerialization;
 	private _gps = controlNull;
-	for '_x' from 0 to 1 step 0 do {
-		{
-			if !(isNil {_x displayCtrl 101}) exitWith {
-				_gps = _x displayCtrl 101;
-			};
-		} foreach(uiNamespace getVariable "IGUI_Displays");
-		uiSleep 1;
-		if (!isNull _gps) exitWith {
-			if(!isNil "OT_GPSOnDraw") then {
-				_gps ctrlRemoveEventHandler ['Draw',OT_GPSOnDraw];
-			};
-			OT_GPSOnDraw = _gps ctrlAddEventHandler ['Draw',_handler];
+	{
+		if !(isNil {_x displayCtrl 101}) exitWith {
+			_gps = _x displayCtrl 101;
 		};
-		uiSleep 0.25;
+	} foreach(uiNamespace getVariable "IGUI_Displays");
+	if (!isNull _gps) exitWith {
+		if(!isNil "OT_GPSOnDraw") then {
+			_gps ctrlRemoveEventHandler ['Draw',OT_GPSOnDraw];
+		};
+		OT_GPSOnDraw = _gps ctrlAddEventHandler ['Draw',_handler];
 	};
-};
+}, 0.5, _handler] call CBA_fnc_addPerFrameHandler;

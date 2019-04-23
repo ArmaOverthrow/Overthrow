@@ -1,14 +1,14 @@
-_b = player call OT_fnc_nearestRealEstate;
+private _b = player call OT_fnc_nearestRealEstate;
 private _handled = false;
 private _type = "buy";
 private _isfactory = false;
-if(typename _b == "ARRAY") then {
-	_building = (_b select 0);
+if(typename _b isEqualTo "ARRAY") then {
+	private _building = (_b select 0);
 	if !(_building call OT_fnc_hasOwner) then {
 		_handled = true;
 	}else{
-		_owner = _building call OT_fnc_getOwner;
-		if(_owner == getplayeruid player) then {
+		private _owner = _building call OT_fnc_getOwner;
+		if(_owner isEqualTo getplayeruid player) then {
 			_home = player getVariable "home";
 			if(_home distance _building < 5) exitWith {"You cannot sell your home" call OT_fnc_notifyMinor;_err = true};
 			_type = "sell";
@@ -17,23 +17,19 @@ if(typename _b == "ARRAY") then {
 	};
 };
 if(_handled) then {
-	_building = _b select 0;
-	_price = _b select 1;
-	_sell = _b select 2;
-	_lease = _b select 3;
-	_totaloccupants = _b select 4;
-	_town = (getpos _building) call OT_fnc_nearestTown;
+	_b params ["_building","_price","_sell","_lease","_totaloccupants"];
+	private _town = (getpos _building) call OT_fnc_nearestTown;
 
-	_money = player getVariable "money";
+	private _money = player getVariable ["money",0];
 
-	if(_type == "buy" and _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
+	if(_type == "buy" && _money < _price) exitWith {"You cannot afford that" call OT_fnc_notifyMinor};
 
 
-	_mrkid = format["bdg-%1",_building];
-	_owned = player getVariable "owned";
+	private _mrkid = format["bdg-%1",_building];
+	private _owned = player getVariable "owned";
 
-	if(_type == "buy") then {
-		_id = [_building] call OT_fnc_getBuildID;
+	if(_type isEqualTo "buy") then {
+		private _id = [_building] call OT_fnc_getBuildID;
 		[_id,getPlayerUID player] call OT_fnc_setOwner;
 		[-_price] call OT_fnc_money;
 
@@ -46,9 +42,9 @@ if(_handled) then {
 		_building addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
-			_id = [_building] call OT_fnc_getBuildID;
+			private _id = [_building] call OT_fnc_getBuildID;
 			[_id,nil] call OT_fnc_setOwner;
-			_leased = player getVariable ["leased",[]];
+			private _leased = player getVariable ["leased",[]];
 			_leased deleteAt (_leased find _id);
 			player setVariable ["leased",_leased,true];
 			deleteMarker _mrkid;

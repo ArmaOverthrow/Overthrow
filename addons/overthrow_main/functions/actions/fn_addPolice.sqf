@@ -18,7 +18,7 @@ server setVariable [format["police%1",_town],_garrison,true];
 [-(_amt*_price)] call OT_fnc_money;
 
 _effect = floor(_garrison / 2);
-if(_effect == 0) then {_effect = "None"} else {_effect = format["+%1 Stability/hr",_effect]};
+if(_effect isEqualTo 0) then {_effect = "None"} else {_effect = format["+%1 Stability/hr",_effect]};
 
 ((findDisplay 9000) displayCtrl 1101) ctrlSetStructuredText parseText format["<t size=""1.5"" align=""center"">Police: %1</t>",_garrison];
 ((findDisplay 9000) displayCtrl 1104) ctrlSetStructuredText parseText format["<t size=""1.2"" align=""center"">Effects</t><br/><br/><t size=""0.8"" align=""center"">%1</t>",_effect];
@@ -48,5 +48,5 @@ while {_count < _amt} do {
 _group call OT_fnc_initPolicePatrol;
 
 _despawn = spawner getVariable [format["despawn%1",_town],[]];
-[_despawn,_spawned] call BIS_fnc_arrayPushStack;
+_despawn append _spawned;
 spawner setVariable [format["despawn%1",_town],_despawn,false];

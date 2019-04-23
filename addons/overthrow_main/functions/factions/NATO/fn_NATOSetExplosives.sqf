@@ -17,7 +17,7 @@ if(_gotexp) then {
     _expert setVariable ["NOAI",true,true];
     _group setCombatMode "COMBAT";
     _expert commandMove _p;
-    waitUntil {sleep 1;(!alive _expert) or (_expert distance _targetPos) < 10};
+    waitUntil {sleep 1;(!alive _expert) || (_expert distance _targetPos) < 10};
     if(alive _expert) then {
         _expert removeMagazineGlobal "DemoCharge_Remote_Mag";
         _p set [2,1];
@@ -25,7 +25,7 @@ if(_gotexp) then {
         _charge setPosATL _p;
 
         //run away!
-        _runto = [_p,[1000,2000],random 360] call SHK_pos;
+        _runto = [_p,[1000,2000],random 360] call SHK_pos_fnc_pos;
         _wp = _group addWaypoint [_runto,0];
         _wp setWaypointType "MOVE";
         _wp setWaypointBehaviour "COMBAT";

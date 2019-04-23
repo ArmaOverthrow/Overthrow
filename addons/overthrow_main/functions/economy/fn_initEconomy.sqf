@@ -1,6 +1,6 @@
 if (!isServer) exitwith {};
 
-//automatically determining the population of each town/city on the map
+//automatically determinine the population of each town/city on the map
 //For each city and/or town
 OT_allShops = [];
 {
@@ -54,7 +54,7 @@ OT_allShops = [];
     if(_pop > 1200) then {_pop = 1050 + round(random 150)};
     if(_pop < 20) then {_pop = 15 + round(random 10)};
     private _stability = round(_base + random(20));
-    if((_pop < 500) and !(_name in OT_NATO_priority) and !(_name in OT_Capitals) and (_name in OT_spawnTowns)) then {
+    if((_pop < 500) && !(_name in OT_NATO_priority) && !(_name in OT_Capitals) && (_name in OT_spawnTowns)) then {
         _stability = floor(20 + random(20));
     };
     server setVariable [format["stability%1",_name],_stability,true];

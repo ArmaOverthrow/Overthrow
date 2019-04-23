@@ -2,16 +2,21 @@
 	class ACE_Actions { \
 		class ACE_MainActions { \
 			class OT_Remove { \
-				condition = "!([player] call ace_repair_fnc_isInRepairFacility) and (_target call OT_fnc_hasOwner) and ((call OT_fnc_playerIsGeneral) or (_target call OT_fnc_playerIsOwner))"; \
+				condition = "!([player] call ace_repair_fnc_isInRepairFacility) && (_target call OT_fnc_hasOwner) && ((call OT_fnc_playerIsGeneral) || (_target call OT_fnc_playerIsOwner))"; \
 				displayName = "Remove"; \
-				statement = "deleteVehicle _target"; \
-			} \
+				statement = ""; \
+					class OT_Remove_Confirm { \
+						condition = "true"; \
+						displayName = "Confirm"; \
+						statement = "deleteVehicle _target"; \
+					}; \
+			}; \
 			class OT_Salvage { \
-				condition = "((damage _target) > 0.99 and ""ToolKit"" in (items player)) or [player] call ace_repair_fnc_isInRepairFacility"; \
+				condition = "((damage _target) > 0.99 && ""ToolKit"" in (items player)) || [player] call ace_repair_fnc_isInRepairFacility"; \
 				displayName = "Salvage"; \
 				statement = "_target spawn OT_fnc_salvageWreck"; \
-			} \
-		} \
+			}; \
+		}; \
 	};
 
 
@@ -28,16 +33,20 @@ class CfgVehicles {
 					displayName = "Map Info";
 	                statement = "[] spawn OT_fnc_mapInfoDialog;";
 				};
-	            class resetui {
+	      class resetui {
 					displayName = "Reset UI";
-	                statement = "[] spawn OT_fnc_setupPlayer;";
+	        statement = "[] spawn OT_fnc_setupPlayer;";
+				};
+	      class sleepAction {
+					displayName = "Sleep";
+	        statement = "createDialog ""OT_sleep_dialog"";";
 				};
 			};
-		}
+		};
 	};
 	class Mapboard_tanoa_F: Land_MapBoard_F {
 		displayName = "Map (Tanoa)";
-		hiddenSelectionsTextures[] = {"\ot\ui\maptanoa.paa"};
+		hiddenSelectionsTextures[] = {"\overthrow_main\ui\maptanoa.paa"};
 	};
     class OT_GanjaItem: Item_Base_F {
         scope = 2;
@@ -46,7 +55,7 @@ class CfgVehicles {
         author = "ARMAzac";
         vehicleClass = "Items";
         class TransportItems {
-            MACRO_ADDITEM(OT_GanjaItem,1);
+            MACRO_ADDITEM(OT_GanjaItem,1)
         };
     };
 	class OT_BlowItem: Item_Base_F {
@@ -56,44 +65,47 @@ class CfgVehicles {
         author = "ARMAzac";
         vehicleClass = "Items";
         class TransportItems {
-            MACRO_ADDITEM(OT_BlowItem,1);
+            MACRO_ADDITEM(OT_BlowItem,1)
         };
     };
 
 	//ACE Interactions
     class Man;
     class CAManBase: Man {
+        fsmDanger = "overthrow_main\fsm\danger.fsm";
         class ACE_Actions {
-			class OT_HeadActions {
-				condition = "(alive _target) and (!isplayer _target) and !(side _target == west)";
-				selection = "pilot";
-				distance = 20;
-				displayName = "Talk";
-				statement = "_target call OT_fnc_talkToCiv";
-			}
-		}
+            class ACE_MainActions {
+                class OT_InteractionActions {
+                    condition = "(alive _target) && (!isplayer _target) && !(side _target isEqualTo west)";
+                    selection = "pelvis";
+                    distance = 4;
+                    displayName = "Talk";
+                    statement = "_target call OT_fnc_talkToCiv";
+                };
+            };
+		};
         class ACE_SelfActions {
             class ACE_Equipment {
                 class OT_StartSpliff
                 {
                     displayName = "Smoke a spliff";
-                    condition = "('OT_Ganja' in (items player)) and (!(_player getVariable ['ot_isSmoking', false]))";
+                    condition = "('OT_Ganja' in (items player)) && (!(_player getVariable ['ot_isSmoking', false]))";
                     statement = "[_player] spawn ot_fnc_startSpliff";
                     showDisabled = 0;
                     exceptions[] = {"isNotInside", "isNotSitting"};
-                    icon = "ot\ui\icons\light_cig.paa";
+                    icon = "\overthrow_main\ui\icons\light_cig.paa";
                 };
                 class OT_StopSpliff
                 {
                     displayName = "Ditch your spliff!";
-                    condition = "(goggles _player) in OT_cigsArray and ((_player getVariable ['ot_isSmoking', false]))";
+                    condition = "(goggles _player) in OT_cigsArray && ((_player getVariable ['ot_isSmoking', false]))";
                     statement = "[_player] spawn ot_fnc_stopSpliff";
                     showDisabled = 0;
                     exceptions[] = {"isNotInside", "isNotSitting"};
-                    icon = "ot\ui\icons\light_cig.paa";
+                    icon = "\overthrow_main\ui\icons\light_cig.paa";
                 };
-            }
-        }
+            };
+        };
 	};
 
 	class Furniture_base_F;
@@ -106,9 +118,9 @@ class CfgVehicles {
 					condition = "true";
 					displayName = "Craft";
 					statement = "call OT_fnc_craftDialog";
-				}
+				};
 			};
-		}
+		};
 	};
 
 	class LandVehicle;
@@ -172,7 +184,7 @@ class CfgVehicles {
 	class i_House_Small_02_b_base_F : House_Small_f {
 		ot_isPlayerHouse = 1;
         ot_template = '[["Land_Workbench_01_F", [-1.36485,0.870917,0],90,1,0,[0,-0],"","",true,false],["Land_MetalCase_01_small_F",[1.28859,-1.0394,0.23],92.8353,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[2.5086,-1.0345,0.23],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[2.71048,-0.444679,0.23],7.55273,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.61679,-2.76766,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.48146,2.91809,0.23],41.3345,1,0,[0,0],"","",true,false]]';
-	}
+	};
 
 	//Houses (CUP)
 	class Land_House_C_5_EP1: House_Small_F {

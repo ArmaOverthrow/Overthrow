@@ -6,46 +6,46 @@ class Campaign
 
 	briefingName = "Overthrow";
 	author = "ARMAzac";
-	overviewPicture = "\ot\campaign\overthrow_campaign.jpg";
+	overviewPicture = "\overthrow_main\campaign\overthrow_campaign.jpg";
 	overviewText = "";
 
 	class MissionDefault
 	{
 		lives = -1;
 
-		lost = ;
-		end1 = ;
-		end2 = ;
-		end3 = ;
-		end4 = ;
-		end5 = ;
-		end6 = ;
+		lost = "";
+		end1 = "";
+		end2 = "";
+		end3 = "";
+		end4 = "";
+		end5 = "";
+		end6 = "";
 	};
 
 	class Missions
 	{
 		name = "Overthrow";
-		cutScene = ;
-		firstMission = Tanoa;
-		end1 = ;
-		end2 = ;
-		end3 = ;
-		end4 = ;
-		end5 = ;
-		end6 = ;
-		lost = ;
+		cutScene = "";
+		firstMission = "Tanoa";
+		end1 = "";
+		end2 = "";
+		end3 = "";
+		end4 = "";
+		end5 = "";
+		end6 = "";
+		lost = "";
 
 		#define _CAMPAIGN 1
 
 		class Tanoa: MissionDefault
 		{
-			end1 = Altis;
-			template = Overthrow.Tanoa;
+			end1 = "Altis";
+			template = "OverthrowSpTanoa.Tanoa";
 		};
 
 		class Altis: MissionDefault
 		{
-			template = Overthrow.Altis;
+			template = "OverthrowSpAltis.Altis";
 		};
 	};
 };
