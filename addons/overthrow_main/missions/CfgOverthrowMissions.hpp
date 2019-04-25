@@ -51,15 +51,6 @@ class CfgOverthrowMissions
         repeatable = 0;
         condition = "params['_inSpawnDistance', '_name'];!(_name in (server getVariable ['NATOabandoned',[]])) && _stability < 50 && (server getVariable [format[""garrison%1"",_name],0]) > 0";
         script = "\overthrow_main\missions\reconBase.sqf";
-        chance = 10;
-    };
-
-    class ReconTown
-    {
-        target = "Town";
-        repeatable = 0;
-        condition = "params['_inSpawnDistance','_stability','_name'];!(_name in (server getVariable ['NATOabandoned',[]])) && _stability < 50 && (server getVariable [format[""garrison%1"",_name],0]) > 0";
-        script = "\overthrow_main\missions\reconTown.sqf";
-        chance = 10;
+        chance = 100;
     };
 };

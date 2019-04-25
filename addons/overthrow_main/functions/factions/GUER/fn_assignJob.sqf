@@ -34,8 +34,15 @@ _j spawn {
 				}) then {
 					_jobparams call _end;
 					_active = spawner getVariable ["OT_activeJobs",[]];
-					_active deleteAt (_active find _this);
-					spawner setVariable ["OT_activeJobs",_active,true];
+					private _idx = -1;
+					{
+					    _x params ["_cid"];
+						if(_cid == _id) exitWith {_idx = _forEachIndex};
+					} forEach _active;
+					if(_idx > -1) then {
+						_active deleteAt _idx;
+						spawner setVariable ["OT_activeJobs",_active,true];
+					};
 
 					_active = server getVariable ["OT_activeJobIds",[]];
 					_active deleteAt (_active find _id);
