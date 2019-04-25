@@ -60,10 +60,12 @@ private _title = format["Recon of %1",_town];
             _players = _players apply {[_x distance _loc, _x]};
             _players sort true;
 
-            [
-                1500,
-                format["Recon of %1 completed",_base]
-            ] remoteExec ["OT_fnc_money",_players select 0,false];
+            if((count _players) > 0) then {
+                [
+                    1500,
+                    format["Recon of %1 completed",_base]
+                ] remoteExec ["OT_fnc_money",_players select 0,false];
+            };
         };
     },
     _params
