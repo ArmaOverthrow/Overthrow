@@ -1,5 +1,5 @@
 job_system_counter = job_system_counter + 1;
-if !(job_system_counter < 6) then {
+if !(job_system_counter < 12) then {
   job_system_counter = 0;
   {
     _x params ["_name",["_target",""],"_condition","_code","_repeat","_chance"];

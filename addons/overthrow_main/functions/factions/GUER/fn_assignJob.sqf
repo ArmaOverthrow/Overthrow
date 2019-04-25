@@ -2,8 +2,6 @@ params ["_id","_jobdef","_params"];
 
 _jobdef params ["_name","_target","_condition","_code","_repeat"];
 
-systemChat format["Assigning job: %1",_name];
-
 _active = spawner getVariable ["OT_activeJobs",[]];
 _job = [_id,_params] call _code;
 _j = [_id,_job,_repeat];
