@@ -57,6 +57,26 @@ if !(job_system_counter < 12) then {
           }foreach(OT_objectiveData + OT_airportData);
         };
       };
+      case "hvt": {
+        if((random 100) < _chance) then {
+          {
+            _x params ["_loc","_base"];
+            {
+            	_x params ["_hvtid","_at","_status"];
+            	if(_at == _base && _status == "") then {
+                    private _id = format["%1-%2",_name,_hvtid];
+                    private _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
+                    if(([_inSpawnDistance,_base] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) exitWith {
+                      private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
+                      _activeJobs pushback _id;
+                      spawner setVariable ["OT_activeJobIds",_activeJobs,false];
+                      [_id,_jobdef,[_base,_hvtid]] call OT_fnc_assignJob;
+                    };
+            	};
+            }foreach(OT_NATOhvts);
+          }foreach(OT_objectiveData + OT_airportData);
+        };
+      };
       case "faction": {
         if((random 100) < _chance) then {
           private _done = false;

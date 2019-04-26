@@ -49,8 +49,17 @@ class CfgOverthrowMissions
     {
         target = "Base";
         repeatable = 0;
-        condition = "params['_inSpawnDistance', '_name'];!(_name in (server getVariable ['NATOabandoned',[]])) && _stability < 50 && (server getVariable [format[""garrison%1"",_name],0]) > 0";
+        condition = "params['_inSpawnDistance', '_name'];!(_name in (server getVariable ['NATOabandoned',[]])) && (server getVariable [format[""garrison%1"",_name],0]) > 0";
         script = "\overthrow_main\missions\reconBase.sqf";
-        chance = 100;
+        chance = 10;
+    };
+
+    class HVT
+    {
+        target = "HVT";
+        repeatable = 0;
+        condition = "params['_inSpawnDistance', '_name'];!(_name in (server getVariable ['NATOabandoned',[]]))";
+        script = "\overthrow_main\missions\hvt.sqf";
+        chance = 5;
     };
 };
