@@ -57,9 +57,18 @@ class CfgOverthrowMissions
     class HVT
     {
         target = "HVT";
-        repeatable = 0;
+        repeatable = 1;
         condition = "params['_inSpawnDistance', '_name'];!(_name in (server getVariable ['NATOabandoned',[]]))";
         script = "\overthrow_main\missions\hvt.sqf";
         chance = 5;
+    };
+
+    class NATOmission
+    {
+        target = "NATOmission";
+        repeatable = 0;
+        condition = "true";
+        script = "\overthrow_main\missions\natomissions.sqf";
+        chance = 100;
     };
 };
