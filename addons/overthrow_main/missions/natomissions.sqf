@@ -29,7 +29,7 @@ private _markerPos = _p2 select 0;
     {
         //Just remove this job when its an hour past the scheduled time
         params ["_missiondef"];
-        _missiondef params ["_id","_ty","_p1","_p2","hour"];
+        _missiondef params ["_id","_ty","_p1","_p2","_hour"];
         (date select 3) > (_hour + 1)
     },
     {

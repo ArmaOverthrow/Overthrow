@@ -29,12 +29,14 @@ if !(job_system_counter < 12) then {
           private _schedule = server getVariable ["NATOschedule",[]];
           private _numAbandoned = count(server getVariable ["NATOabandoned",[]]);
           {
-              _x params ["_missionid","_mission"];
-              private _id = format["%1-%2",_name,_missionid];
-              if(([_mission,_numAbandoned] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
-                _activeJobs pushback _id;
-                spawner setVariable ["OT_activeJobIds",_activeJobs,false];
-                [_id,_jobdef,[_x]] call OT_fnc_assignJob;
+              _x params ["_missionid","_mission","_p1","_p2"];
+              if !(isNil "_p2") then {
+                  private _id = format["%1-%2",_name,_missionid];
+                  if(([_mission,_numAbandoned] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
+                    _activeJobs pushback _id;
+                    spawner setVariable ["OT_activeJobIds",_activeJobs,false];
+                    [_id,_jobdef,[_x]] call OT_fnc_assignJob;
+                  };
               };
           }forEach(_schedule);
         };
