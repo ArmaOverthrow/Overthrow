@@ -1,5 +1,6 @@
 params ["_i","_s","_e","_c","_p"];
-
+private _groups = spawner getVariable [_i,[]];
+spawner setVariable [_i,[],false];
 {
     if(typename _x isEqualTo "GROUP") then {
         {
@@ -15,5 +16,4 @@ params ["_i","_s","_e","_c","_p"];
         };
     };
     sleep 0.2;
-}foreach(spawner getVariable [_i,[]]);
-spawner setVariable [_i,[],false];
+}foreach(_groups);
