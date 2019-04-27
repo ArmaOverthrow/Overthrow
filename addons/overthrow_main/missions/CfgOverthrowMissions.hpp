@@ -9,6 +9,15 @@ class CfgOverthrowMissions
         chance = 20;
     };
 
+    class Tagging
+    {
+        target = "Town";
+        repeatable = 0;
+        condition = "params['_inSpawnDistance','_stability','_town'];_inSpawnDistance && _stability < 50 && !(_town in (server getVariable ['NATOabandoned',[]]))";
+        script = "\overthrow_main\missions\tagging.sqf";
+        chance = 25;
+    };
+
     class Informant
     {
         target = "Global";
