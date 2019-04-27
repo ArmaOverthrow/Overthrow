@@ -125,6 +125,7 @@ class CfgFunctions
 			class refuelHandler {};
 			class respawnHandler {};
 			class keyHandler {};
+			class taggedHandler {};
 		};
 
 		class UI

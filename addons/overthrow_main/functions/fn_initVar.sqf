@@ -171,7 +171,7 @@ OT_item_UAVterminal = "I_UavTerminal";
 OT_item_DefaultBlueprints = [];
 
 OT_itemCategoryDefinitions = [
-    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass"]],
+    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass","paint"]],
     ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
     ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
     ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],

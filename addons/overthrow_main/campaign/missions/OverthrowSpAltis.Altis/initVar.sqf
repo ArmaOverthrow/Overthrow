@@ -2,7 +2,7 @@
 OT_nation = "Altis";
 OT_saveName = "Overthrow.altis.001";
 
-OT_tutorial_backstoryText = "Welcome to Altis, the jewel of the Mediterranean. The year is 2040, it has been five years since NATO pushed the AAF forces out of the nation and no efforts have been made to re-establish local leadership and restore the once great economy of Altis. A protest in the capital city Pyrgos turned sour last night when the leader of the 'Free Altis' movement was gunned down by an unknown assailant.";
+OT_tutorial_backstoryText = "Altis, the main island of the Republic of Altis and Stratis, is located in the Mediterranean Sea to the east of Malta. As of 2040, Altis is currently under occupation by NATO forces following a brutal civil war a half decade prior, and the nation is still recovering. NATO originally occupied the country under the promise of a complete withdrawal of forces and return to local democratic rule; despite this, NATO soldiers still occupy the island's military installations. The economy continues to stagnate and citizens are becoming increasingly angry at the lack of local autonomy.";
 OT_startDate = [2040,7,14,8,00];
 
 OT_startCameraPos = [11646.6,6406.52,2];

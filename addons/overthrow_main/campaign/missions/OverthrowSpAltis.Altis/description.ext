@@ -5,7 +5,7 @@ briefingName = "Overthrow: Altis";
 OnLoadName = "Overthrow: Altis";
 loadScreen = "\overthrow_main\campaign\missions\pic.jpg";
 
-overviewText = "Welcome to Altis, the main island of the Republic of Altis and Stratis located in the Mediterranean Sea to the east of Malta. The year is 2040 and Altis is currently under occupation by NATO forces following a brutal civil war in the year 2035. Many houses still lie in ruins. The western powers promised a complete withdrawal of forces and return to local diplomatic rule however five years have passed and NATO soldiers still occupy all of the island's military installations. The economy continues to suffer and the public grow restless. Last night a large protest was staged in the capital city of Pyrgos and the keynote speaker was suddenly murdered by gunshot, triggering a strict curfew and extreme security levels by NATO's Gendarmerie. Random gunshots can now be heard emanating from various smaller towns and many fear of a return to the all-out conflict of the Civil War.";
+overviewText = "Altis, the main island of the Republic of Altis and Stratis, is located in the Mediterranean Sea to the east of Malta. As of 2040, Altis is currently under occupation by NATO forces following a brutal civil war a half decade prior, and the nation is still recovering. NATO originally occupied the country under the promise of a complete withdrawal of forces and return to local democratic rule; despite this, NATO soldiers still occupy the island's military installations. The economy continues to stagnate and citizens are becoming increasingly angry at the lack of local autonomy.";
 
 class CfgRemoteExec
 {
