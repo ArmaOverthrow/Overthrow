@@ -13,7 +13,7 @@ class CfgOverthrowMissions
     {
         target = "Town";
         repeatable = 0;
-        condition = "params['_inSpawnDistance','_stability','_town'];_inSpawnDistance && _stability < 50 && !(_town in (server getVariable ['NATOabandoned',[]]))";
+        condition = "params['_inSpawnDistance','_stability','_town'];_inSpawnDistance && _stability < 50 && !(_town in (server getVariable ['NATOabandoned',[]])) && ((server getVariable [format['tagsin%1',_town],0]) < 6)";
         script = "\overthrow_main\missions\tagging.sqf";
         chance = 25;
     };

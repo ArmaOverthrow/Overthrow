@@ -47,6 +47,8 @@ _j spawn {
 					_active = server getVariable ["OT_activeJobIds",[]];
 					_active deleteAt (_active find _id);
 
+					format["Job completed: %1",(_job select 0) select 0] remoteExec ["OT_fnc_notifyGood",0,false];
+
 					if(_repeat < 1) then {
 						_completed = server getVariable ["OT_completedJobIds",[]];
 						_completed pushback _id;
