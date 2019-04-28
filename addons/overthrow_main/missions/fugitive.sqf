@@ -27,7 +27,7 @@ private _params = [_faction,_destination,_destinationName,_jobid];
 private _markerPos = _destination; //randomize the marker position a bit
 
 //Build a mission description and title
-private _description = format["A traitor of %1 has fled here and is hiding in %2 under NATO protection. %1 will pay handsomely and be very grateful if you could just.. make them disappear. <br/><br/>Reward: +20 (%1), $5000 resistance funds",_factionName,_destinationName];
+private _description = format["A traitor of %1 has fled here and is hiding in %2 under NATO protection. %1 will pay handsomely and be very grateful if you could just.. make them disappear. <br/><br/>Reward: +20 (%1), $2500",_factionName,_destinationName];
 private _title = format["%1 Traitor in %2",_factionName,_destinationName];
 
 //This next number multiplies the reward
@@ -58,7 +58,7 @@ private _difficulty = 1.8;
         _civ setVariable ["NOAI",true,false];
 
         //reward to killer
-        _civ setVariable ["OT_bounty",1000,true];
+        _civ setVariable ["OT_bounty",2500,true];
 
         //Save him for access later
         spawner setVariable [format["fugitive%1",_jobid],_civ,false];
@@ -120,9 +120,8 @@ private _difficulty = 1.8;
                 {
                     params ["_faction"];
                     private _factionName = server getvariable format["factionname%1",_faction];
-                    format ["Incoming message from %1: Traitor neutralized. Sending our regards and donating $5000 to the resistance. (+20 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+                    format ["Incoming message from %1: Traitor neutralized. Sending our regards and $2500 to the killer. (+20 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
                     server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + 20,true];
-                    [5000] call OT_fnc_resistanceFunds;
                 },
                 [_faction],
                 2

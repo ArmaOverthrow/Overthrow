@@ -257,7 +257,7 @@ if ((date select 4) != _lastmin) then {
 							_b = 60;
 					};
 					_timetoproduce = _b + (round (_wood+1)) + (round(_steel * 0.2)) + (round (_plastic * 5));
-				if(_timetoproduce > 360) then {_timetoproduce = 360};
+				if(_timetoproduce > 120) then {_timetoproduce = 120};
 				if(_timetoproduce < 5) then {_timetoproduce = 5};
 				_timespent = server getVariable [""GEURproducetime"",0];
 

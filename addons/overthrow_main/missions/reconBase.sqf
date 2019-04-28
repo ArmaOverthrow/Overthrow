@@ -3,7 +3,7 @@ _jobparams params ["_base","_markerPos"];
 
 private _count = 0;
 _params = [_base,_count];
-private _effect = "<t size='0.9'>Reward: $1,500 to player closest to base</t>";
+private _effect = "<t size='0.9'>Reward: $500 to player closest to base</t>";
 
 //Build a mission description and title
 private _description = format["Get information on the NATO forces and vehicles garrisoned at %1. A pair of Binoculars or Rangefinder may come in handy. Be careful not to get too close as NATO bases are restricted areas.<br/><br/>%2",_base,_effect];
@@ -82,7 +82,7 @@ private _title = format["Recon of %1",_base];
             _players sort true;
 
             if((count _players) > 0) then {
-                [1500] remoteExec ["OT_fnc_money",(_players select 0) select 1,false];
+                [500] remoteExec ["OT_fnc_money",(_players select 0) select 1,false];
             };
 
             //Broadcast full recon report
