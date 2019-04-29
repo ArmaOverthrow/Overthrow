@@ -120,7 +120,7 @@ ot_weather_change_time = 350 + (random 600);
 //Fog killer
 [{0 setfog 0;}, [], 100] call CBA_fnc_waitAndExecute;
 
-["unique_ID","(time - ot_weather_change_time) <= 0","
+["unique_ID","(ot_weather_change_time - time) <= 0","
 private _month = date select 1;
 
 private _stormchance = 1;
@@ -166,5 +166,5 @@ _newOvercast = (_weather select 0);
 120 setWindDir (85 + random 10);
 
 server setVariable [""temperature"",(_weather select 5),true];
-ot_weather_change_time = 350 + (random 600);
+ot_weather_change_time = time + (350 + (random 600));
 "] call OT_fnc_addActionLoop;

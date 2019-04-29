@@ -224,9 +224,6 @@ buildOnKeyDown = {
 			modeTarget setDir _dir;
 		};
 		_amt = 5;
-		if(_this select 2) then {
-			_amt = 1;
-		};
 		if (_key isEqualTo 16) exitWith {
 			//Q
 			_handled = true;

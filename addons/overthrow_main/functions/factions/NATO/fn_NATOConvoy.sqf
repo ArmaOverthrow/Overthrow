@@ -10,7 +10,7 @@ private _topos = server getvariable _to;
 private _dir = [_frompos,_topos] call BIS_fnc_dirTo;
 
 private _group = creategroup blufor;
-_group setBehaviour "CARELESS";
+_group setFormation "COLUMN";
 private _track = objNull;
 
 if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
@@ -36,12 +36,16 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     	createVehicleCrew _veh;
         _driver = driver _veh;
         _driver disableAI "AUTOCOMBAT";
+        _veh setConvoySeparation 20;
     	{
     		[_x] joinSilent _group;
     		_x setVariable ["garrison","HQ",false];
     	}foreach(crew _veh);
         _driver assignAsCommander _veh;
         _convoypos = [_convoypos,20,_dir+180] call BIS_fnc_relPos;
+        {
+            _x addCuratorEditableObjects [[_veh]];
+        }foreach(allCurators);
     	sleep 0.2;
     }foreach(_vehtypes);
 
@@ -56,6 +60,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
 
         _driver = driver _veh;
         _driver disableAI "AUTOCOMBAT";
+        _veh setConvoySeparation 20;
     	{
     		[_x] joinSilent _group;
     		_x setVariable ["garrison","HQ",false];
@@ -86,6 +91,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         	createVehicleCrew _veh;
             _driver = driver _veh;
             _driver disableAI "AUTOCOMBAT";
+            _veh setConvoySeparation 20;
         	{
         		[_x] joinSilent _group;
         		_x setVariable ["garrison","HQ",false];
@@ -99,8 +105,10 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     sleep 5;
     _wp = _group addWaypoint [asltoatl _topos,50];
     _wp setWaypointType "MOVE";
-    _wp setWaypointBehaviour "CARELESS";
+    _wp setWaypointFormation "COLUMN";
+    _wp setWaypointBehaviour "SAFE";
     _wp setWaypointSpeed "LIMITED";
+    _wp setWaypointCompletionRadius 50;
     _wp setWaypointTimeout [60,60,60];
 
     _wp = _group addWaypoint [_topos,500];
