@@ -57,5 +57,5 @@ for "_i" from 1 to _CFFMissions do
 		}
 	};
 
-	sleep (5 + (random 5))
+	sleep (0.5 + (random 0.5))
 }

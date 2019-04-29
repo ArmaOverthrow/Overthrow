@@ -91,12 +91,25 @@ if (!visibleGPS) then {
 			""
 		];
 	}foreach(_mortars);
-	if((vehicle player) isKindOf ["Air",_cfgVeh]) then {
-		private _abandoned = server getVariable ["NATOabandoned",[]];
-		{
-			if !(_x in _abandoned) then {
+	if !(isNil {vehicle player}) then {
+		if(!((vehicle player) isEqualTo player) && ((vehicle player) isKindOf ["Air",_cfgVeh])) then {
+			private _abandoned = server getVariable ["NATOabandoned",[]];
+			{
+				if !(_x in _abandoned) then {
+					_mapCtrl drawEllipse [
+						server getvariable _x,
+						2000,
+						2000,
+						0,
+						[1, 0, 0, 1],
+						"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
+					];
+				};
+			}foreach(OT_allAirports);
+			private _attack = server getVariable ["NATOattacking",""];
+			if(_attack != "") then {
 				_mapCtrl drawEllipse [
-					server getvariable _x,
+					server getvariable [_attack, [0,0]],
 					2000,
 					2000,
 					0,
@@ -104,17 +117,6 @@ if (!visibleGPS) then {
 					"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
 				];
 			};
-		}foreach(OT_allAirports);
-		private _attack = server getVariable ["NATOattacking",""];
-		if(_attack != "") then {
-			_mapCtrl drawEllipse [
-				server getvariable [_attack, [0,0]],
-				2000,
-				2000,
-				0,
-				[1, 0, 0, 1],
-				"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
-			];
 		};
 	};
 };

@@ -23,7 +23,7 @@ _unit globalchat format["Opening %1",(typeof _target) call OT_fnc_vehicleGetName
 if(((vehicle _unit) != _unit) && (vehicle _unit) != _target) then {
 	doGetOut _unit;
 };
-if(vehicle _unit != _target) then {
+if(vehicle _unit != _target && (_unit distance _target) > 10) then {
 	_unit doMove position _target;
 	waitUntil {sleep 1;!alive _unit || (_unit distance _target < 10)};
 };

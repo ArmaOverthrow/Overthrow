@@ -8,6 +8,9 @@ if(isNil "_numNATO") then {
 	server setVariable [format["garrison%1",_name],_numNATO,true];
 };
 
+//record the spawn ID for job tasks
+spawner setVariable [format["spawnid%1",_name],_spawnid];
+
 private _count = 0;
 private _groups = [];
 
@@ -276,6 +279,7 @@ private _road = objNull;
 		_civ setVariable ["NOAI",true,true];
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
+		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 		sleep 0.2;
 
 		//His empty APC

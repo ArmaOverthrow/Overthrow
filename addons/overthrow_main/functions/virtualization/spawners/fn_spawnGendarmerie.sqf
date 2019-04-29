@@ -15,13 +15,16 @@ if(_town in OT_capitals) then {
 	_range = 900;
 };
 
+//record the spawn ID for job tasks
+spawner setVariable [format["spawnid%1",_town],_spawnid];
+
 while {_count < _numNATO} do {
-	
+
 	private _home = _town call OT_fnc_getRandomRoadPosition;
 	private _pos = _home findEmptyPosition [0,50];
-	
+
 	if !(_pos isEqualTo []) then {
-	
+
 		private _groupcount = 0;
 		private _group = createGroup west;
 		_group deleteGroupWhenEmpty true;

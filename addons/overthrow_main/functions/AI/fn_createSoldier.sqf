@@ -25,7 +25,7 @@ private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_civ,_fullname] remoteExec ["setCivName",0,false];
 _civ setRank "LIEUTENANT";
-_civ setSkill 0.5 + (random 0.4);
+_civ setSkill 0.5 + (random 0.5); //Soldiers in squads do not level up, so give them a chance to have higher skill
 
 [_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 

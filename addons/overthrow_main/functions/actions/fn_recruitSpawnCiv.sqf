@@ -1,6 +1,6 @@
 if !(captive player) exitWith {"You cannot recruit while wanted" call OT_fnc_notifyMinor};
 
-if(({side _x isEqualTo west || side _x isEqualTo east} count (_pos nearEntities 50)) > 0) exitWith {
+if(({side _x isEqualTo west || side _x isEqualTo east} count ((getpos player) nearEntities 50)) > 0) exitWith {
 	"You cannot recruit with enemies nearby" call OT_fnc_notifyMinor;
 };
 
@@ -22,6 +22,7 @@ removeGoggles _civ;
 removeBackpack _civ;
 removeHeadgear _civ;
 removeVest _civ;
+_civ setSkill 0.2 + (random 0.3);
 
 [_civ,getPlayerUID player] call OT_fnc_setOwner;
 [_civ] call OT_fnc_initRecruit;
