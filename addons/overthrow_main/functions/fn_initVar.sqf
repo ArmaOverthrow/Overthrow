@@ -504,7 +504,7 @@ OT_allGoggles = [];
 			{
 				private _base = [_x] call BIS_fnc_baseWeapon;
 				if !(_base in _blacklist) then {
-					if !(_x in _weapons) then {_weapons pushback _x};
+					if !(_x in _weapons) then {_weapons pushback _base};
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
 			//Get ammo
@@ -523,6 +523,7 @@ OT_allGoggles = [];
 			};
 		};
 	}foreach(_all);
+	_weapons = (_weapons arrayIntersect _weapons); //remove duplicates
 
 	if(isServer) then {
 		spawner setVariable [format["facweapons%1",_name],_weapons,true];
