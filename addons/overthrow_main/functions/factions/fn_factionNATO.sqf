@@ -21,7 +21,8 @@ OT_nextNATOTurn = time+_nextturn;
 publicVariable "OT_nextNATOTurn";
 
 [{
-	params ["_abandoned","_resources","_diff","_nextturn","_count","_lastmin","_lastsched"];
+	params ["_handle","_vars"];
+	_vars params ["_abandoned","_resources","_diff","_nextturn","_count","_lastmin","_lastsched"];
 
 	private _numplayers = count([] call CBA_fnc_players);
 	if(_numplayers > 0) then {
@@ -33,36 +34,27 @@ publicVariable "OT_nextNATOTurn";
 		_schedule = server getVariable ["NATOschedule",[]];
 
 		//scheduler
+		if(count _schedule > 0) then {
+			private _item = [];
+			private _idx = -1;
+			{
+				_x params ["_id","_ty","_p1","_p2","_hour"];
+				if(!isNil "_hour" && _hour == (date select 3)) exitWith {_idx = _forEachIndex; _item = _x};
+			}forEach(_schedule);
+			if(_idx > -1) then {
+				_item params ["_id","_mission","_p1","_p2"];
+				_schedule deleteAt _idx;
+				server setVariable ["NATOschedule",_schedule];
 
-		if !(_lastmin isEqualTo (date select 4)) then {
-			_lastmin = date select 4;
-			if(count _schedule > 0) then {
-				_item = [];
-				if((_lastsched isEqualTo -1 || _lastsched isEqualTo 0) && {_lastmin >= 30}) then {
-					_lastsched = 30;
-					_item = _schedule select 0;
-				}else{
-					if((_lastsched isEqualTo -1 || _lastsched isEqualTo 30) && {_lastmin < 30}) then {
-						_lastsched = 0;
-						_item = _schedule select 0;
+				if(_mission isEqualTo "CONVOY") then {
+					_vehtypes = [];
+					_numveh = round(random 2) + 2;
+					_count = 0;
+					while {_count < _numveh} do {
+						_count = _count + 1;
+						_vehtypes pushback (selectRandom OT_NATO_Vehicles_Convoy);
 					};
-				};
-				if(count _item > 0) then {
-					_schedule deleteAt 0;
-					_item params ["_mission","_p1","_p2"];
-					if(_mission isEqualTo "DESTROY") then {
-						[_p2] spawn OT_fnc_NATOMissionReconDestroy;
-					};
-					if(_mission isEqualTo "CONVOY") then {
-						_vehtypes = [];
-						_numveh = round(random 2) + 2;
-						_count = 0;
-						while {_count < _numveh} do {
-							_count = _count + 1;
-							_vehtypes pushback (selectRandom OT_NATO_Vehicles_Convoy);
-						};
-						[_vehtypes,[],_p1 select 1,_p2 select 1] spawn OT_fnc_NATOConvoy;
-					};
+					[_vehtypes,[],_p1 select 1,_p2 select 1] spawn OT_fnc_NATOConvoy;
 				};
 			};
 		};
@@ -432,58 +424,25 @@ publicVariable "OT_nextNATOTurn";
 
 			//Schedule some missions
 			if(_spend > 0) then {
-				_targets = [_knownTargets,[],{_x select 2},"DESCEND"] call BIS_fnc_sortBy;
-				{
-					_x params ["_ty","_pos","_pri","_obj","_done"];
-					if !(_done) then {
-						if((toUpper _ty) isEqualTo "WH" || (toUpper _ty) isEqualTo "PS" || (toUpper _ty) isEqualTo "WS") then {
-							if(_spend > 250 && {(random 100) > _chance}) then {
-								_schedule pushback ["DESTROY",_ty,_pos];
-								_spend = _spend - 250;
-								_resources = _resources -250;
-								_x set [4,true];
-							};
-						};
-					};
-				}foreach(_targets);
 				if(_spend > 500 && {(random 100) > _chance}) then {
-					_low = 50;
-					_lowest = "";
+					_start = selectRandom (OT_objectiveData + OT_airportData);
+					_startName = _start select 1;
+					_startPos = _start select 0;
+					if(_startName in _abandoned) exitWith {};
+					_end = [];
 					{
-						_stability = server getVariable [format["stability%1",_x],100];
-						if(!(_x in _abandoned) && {_stability < _low}) exitWith {
-							_lowest = _x;
+						_x params ["_p","_n"];
+						if((_n != _startName) && {!(_n in _abandoned)} && {([_p,_startPos] call OT_fnc_regionIsConnected)}) exitWith {
+							_end = _x;
 						};
-					}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
-
-					if(_lowest isEqualTo "") then {
-						//Could not find NATO controlled town under 50% stability, looking for resistance-controlled town above 50%
-						{
-							_stability = server getVariable [format["stability%1",_x],100];
-							if((_x in _abandoned) && {_stability > _low}) exitWith {
-								_lowest = _x;
-							};
-						}foreach([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
-					};
-
-					if(_lowest != "") then {
-						_townPos = server getVariable _lowest;
-						_start = ([OT_NATOobjectives,[],{(_x select 0) distance _townPos},"ASCEND"] call BIS_fnc_SortBy) select 0;
-						_startName = _start select 1;
-						_startPos = _start select 0;
-						_end = [];
-						{
-							_x params ["_p","_n"];
-							if((_n != _startName) && {!(_n in _abandoned)} && {([_p,_startPos] call OT_fnc_regionIsConnected)}) exitWith {
-								_end = _x;
-							};
-						}foreach([OT_NATOobjectives,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
-						if(count _end > 0) then {
-							//Schedule a convoy
-							_spend = _spend - 500;
-							_resources = _resources - 500;
-							_schedule pushback ["CONVOY",_start,_end];
-						};
+					}foreach([OT_NATOobjectives,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+					if(count _end > 0) then {
+						//Schedule a convoy
+						private _id = format["CONVOY%1",round(random 99999)];
+						_hour = (date select 3) + 2;
+						_spend = _spend - 500;
+						_resources = _resources - 500;
+						_schedule pushback [_id,"CONVOY",_start,_end,_hour];
 					};
 				};
 			};

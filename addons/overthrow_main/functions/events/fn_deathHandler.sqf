@@ -51,6 +51,7 @@ _crimleader = _me getvariable "crimleader";
 _mobster = _me getvariable "mobster";
 _mobboss = _me getvariable "mobboss";
 _hvt = _me getvariable "hvt_id";
+_reveal = false;
 
 _standingChange = 0;
 
@@ -204,9 +205,7 @@ call {
 			}else{
 				[_killer,25] call OT_fnc_experience;
 			};
-			if(isPlayer _killer) then {
-				_standingChange = -1;
-			};
+			_reveal = true;
 			_townpop = server getVariable [format["population%1",_town],0];
 			_stab = -1;
 			if(_townpop < 350 && (random 100) > 50) then {
@@ -240,7 +239,7 @@ call {
 		};
 	};
 };
-if(_standingChange != 0) then {
+if(_standingChange != 0 || _reveal) then {
 
 	{
 		if(captive _x) then {

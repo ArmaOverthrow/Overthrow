@@ -146,11 +146,11 @@ if(isMultiplayer || _startup == "LOAD") then {
 				_civ setVariable ["OT_xp",_xp,true];
 				_civ setVariable ["NOAI",true,true];
 				_civ setRank _rank;
-				if(_rank isEqualTo "PRIVATE") then {_civ setSkill 0.1 + (random 0.3)};
-				if(_rank isEqualTo "CORPORAL") then {_civ setSkill 0.2 + (random 0.3)};
-				if(_rank isEqualTo "SERGEANT") then {_civ setSkill 0.3 + (random 0.3)};
-				if(_rank isEqualTo "LIEUTENANT") then {_civ setSkill 0.5 + (random 0.3)};
-				if(_rank isEqualTo "CAPTAIN") then {_civ setSkill 0.6 + (random 0.3)};
+				if(_rank isEqualTo "PRIVATE") then {_civ setSkill 0.2 + (random 0.3)};
+				if(_rank isEqualTo "CORPORAL") then {_civ setSkill 0.3 + (random 0.3)};
+				if(_rank isEqualTo "SERGEANT") then {_civ setSkill 0.4 + (random 0.3)};
+				if(_rank isEqualTo "LIEUTENANT") then {_civ setSkill 0.6 + (random 0.3)};
+				if(_rank isEqualTo "CAPTAIN") then {_civ setSkill 0.7 + (random 0.3)};
 				if(_rank isEqualTo "MAJOR") then {_civ setSkill 0.8 + (random 0.2)};
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];

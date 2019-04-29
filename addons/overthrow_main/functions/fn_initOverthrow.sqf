@@ -96,6 +96,7 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
 	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 	["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
+	["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
 
 	//Setup fuel pumps for interaction
 	{

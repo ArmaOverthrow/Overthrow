@@ -81,7 +81,7 @@ if (isNil ("RydFFE_SVRange")) then {RydFFE_SVRange = 3000};
 
 if (RydFFE_ShellView) then {[] spawn RYD_fnc_Shellview};
 
-["RydFFE_Loop","RydFFE_Active","
+["RydFFE_Loop","RydFFE_Active && (_counter%10 isEqualTo 0)","
 _civF = [""civ_f"",""civ"",""civ_ru"",""bis_tk_civ"",""bis_civ_special""];
 _sides = [west,east,resistance];
 
@@ -215,8 +215,6 @@ _friends = [];
 	}
 }
 foreach _sides;
-
-sleep RydFFE_Interval;
 
 _shells = missionNameSpace getVariable [""RydFFE_FiredShells"",[]];
 
