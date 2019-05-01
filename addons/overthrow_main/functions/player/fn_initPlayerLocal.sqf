@@ -58,7 +58,13 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 
 	if (isServer || count ([] call CBA_fnc_players) == 1) then {
 		sleep 1;
-		createDialog "OT_dialog_start";
+		if ((["ot_start_autoload", 0] call BIS_fnc_getParamValue) == 1) then {
+			server setVariable ["OT_difficulty",["ot_start_difficulty", 1] call BIS_fnc_getParamValue,true];
+			server setVariable ["OT_fastTravelType",["ot_start_fasttravel", 1] call BIS_fnc_getParamValue,true];
+			[] remoteExec ['OT_fnc_loadGame',2,false];
+		} else {
+			createDialog "OT_dialog_start";
+		};
 	};
 }else{
 	"Loading" call OT_fnc_notifyStart;
