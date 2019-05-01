@@ -66,9 +66,10 @@ publicVariable "OT_nextNATOTurn";
 				_x params ["_pos","_name","_cost"];
 				if !(_name in _abandoned) then {
 					if(_pos call OT_fnc_inSpawnDistance) then {
+						_numgarrison = server getVariable [format["garrison%1"],0];
 						_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",500]);
 						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",500]);
-						if(_nummil < _numres) then {
+						if(_numgarrison == 0 && _nummil < _numres) then {
 							_countered = true;
 							server setVariable ["NATOattacking",_name,true];
 							server setVariable ["NATOattackstart",time,true];

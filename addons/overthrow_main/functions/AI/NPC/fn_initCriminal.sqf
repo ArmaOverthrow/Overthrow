@@ -8,6 +8,7 @@ _unit setVariable ["civ",nil,false];
 _unit setVariable ["NOAI",false,false];
 _unit setVariable ["VCOM_NOPATHING_Unit",true,false];
 _unit setRank "SERGEANT";
+_unit setSkill 0.4 + (random 0.4);
 
 _unit removeAllEventHandlers "FiredNear";
 
@@ -36,9 +37,6 @@ if(OT_hasTFAR) then {
 	_unit linkItem "ItemRadio";
 };
 _hour = date select 3;
-if(_hour < 8 || _hour > 15) then {
-	_unit linkItem "NVGoggles_OPFOR";
-};
 _unit linkItem "ItemWatch";
 
 _weapon = "";

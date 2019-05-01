@@ -460,6 +460,7 @@ class CfgFunctions
 			class initCivilian {};
 			class initCivilianGroup {};
 			class initCriminal {};
+			class initCriminalGroup {};
 			class initCrimLeader {};
 			class initGendarm {};
 			class initGendarmPatrol {};
@@ -531,6 +532,7 @@ class CfgFunctions
 		class CRIM
 		{
 			file = "\overthrow_main\functions\factions\CRIM";
+			class CRIMLoop {};
 			class formOrJoinGang {};
 		};
 

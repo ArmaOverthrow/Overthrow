@@ -2,8 +2,8 @@ private _pos = _this select 0;
 private _post = (_pos nearObjects ["Land_Cargo_House_V3_F",10]) select 0;
 private _town = _pos call OT_fnc_nearestTown;
 
-_garrison = server getVariable format['police%1',_town];
-if(isNil "_garrison") then {
+_garrison = server getVariable [format['police%1',_town],-1];
+if(_garrison == -1) then {
 	//First time
 	server setVariable [format['policepos%1',_town],_pos,true];
 

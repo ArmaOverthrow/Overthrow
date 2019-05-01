@@ -121,14 +121,11 @@ call {
 		_civid = _me getVariable ["OT_civid",-1];
 		_gangid = _me getVariable ["OT_gangid",-1];
 		_hometown = _me getVariable ["hometown",""];
-		_reward = 25;
-		_stability = 1;
+		_reward = 50;
+		_stability = 2;
 		_standingChange = 1;
 		if(_civid > -1) then {
 			OT_civilians setVariable [format["%1",_civid],nil,true];
-			_towncivs = OT_civilians getVariable [format["civs%1",_hometown],[]];
-			_towncivs deleteAt (_towncivs find _civid);
-			OT_civilians setVariable [format["civs%1",_hometown],_towncivs,true];
 
 			if(_gangid > -1) then {
 				_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
@@ -137,6 +134,9 @@ call {
 					_members deleteAt (_members find _civid);
 					if(count _members isEqualTo 0) then {
 						OT_civilians setVariable [format["gang%1",_gangid],nil,true];
+						_gangs = OT_civilians getVariable [format["gangs%1",_hometown],[]];
+						_gangs deleteAt (_gangs find _gangid);
+						OT_civilians setVariable [format["gangs%1",_hometown],_gangs,true];
 						_reward = 200 + ((round random 6) * 50);
 						_stability = 10;
 						_standingChange = 10;

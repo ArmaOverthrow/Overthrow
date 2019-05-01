@@ -1,59 +1,109 @@
-params ["_civid","_town"];
-
-private _civ = OT_civilians getVariable [format["%1",_civid],[]];
-
-_civ params ["_identity","_hasjob","_cash","_superior"];
+params ["_town"];
 
 _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 _townpos = server getVariable _town;
 
 if(count _gangs > 0) then {
-    //join a gang (maybe)
-    if (selectRandom [1,2,3] isEqualTo 1) then {
-      _gangid = _gangs select 0;
-      _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
-      if(count _gang > 0) then {
-          (_gang select 0) pushback _civid;
-          _vest = _gang select 3;
-          _civ set [3,(_gang select 0) select 0];
-          if(_townpos call OT_fnc_inSpawnDistance) then {
-              _unit = OT_civilians getVariable [format["spawn%1",_civid],objNull];
-              if(!isNull _unit && alive _unit) then {
-                  _group = OT_civilians getVariable [format["gangspawn%1",_gangid],grpNull];
-                  _unit setVariable ["OT_gangid",_gangid,true];
-                  if(!isNull _group) then {
-                      [_unit] joinSilent nil;
-                      [_unit] joinSilent _group;
-                      [_unit,_town,_vest] call OT_fnc_initCriminal;
-                  };
+    //make a gang larger (maybe)
+    _gangid = _gangs select 0;
+    _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+    if(_gang isEqualTo "") exitWith {
+        //cleanup old gangs
+        _gangs deleteAt (_gangs find _gangid);
+        OT_civilians setVariable [format["gangs%1",_town],_gangs,true];
+    };
+    if((count (_gang select 0)) < 15) then {
+        if (selectRandom [1,2,3] isEqualTo 1) then {
+          if(count _gang > 4) then {
+              _civid = (OT_civilians getVariable ["autocivid",-1]) + 1;
+              OT_civilians setVariable ["autocivid",_civid];
+              (_gang select 0) pushback _civid;
+              _vest = _gang select 3;
+              _identity = call OT_fnc_randomLocalIdentity;
+              _civ = [_identity,_gangid];
+              OT_civilians setVariable [format["%1",_civid],_civ];
+
+              if(_townpos call OT_fnc_inSpawnDistance) then {
+                    _pos = (_gang select 4);
+                    _group = spawner getVariable [format["gangspawn%1",_gangid],grpNull];
+                    //Spawn new gang member at camp
+
+                    private _pos = [_pos,random 360,10] call SHK_pos_fnc_pos;
+                    private _civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
+                    [_civ] joinSilent nil;
+                    [_civ] joinSilent _group;
+
+                    [_civ,_town,_vest] call OT_fnc_initCriminal;
+                    [_civ,_identity] call OT_fnc_applyIdentity;
+                    [_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+
+                    _civ setVariable ["OT_gangid",_gangid,true];
+                    _civ setVariable ["OT_civid",_civid,true];
+                    _civ setBehaviour "SAFE";
+                    _civ setVariable ["hometown",_town,true];
+
+                    {
+                    	_x addCuratorEditableObjects [[_civ]];
+                    }foreach(allCurators);
               };
+          }else{
+              //remove old gang
+              _gangs deleteAt (_gangs find _gangid);
+              OT_civilians setVariable [format["gangs%1",_town],_gangs,true];
           };
-      }else{
-          _gangs deleteAt (_gangs find _gangid);
-          OT_civilians setVariable [format["gangs%1",_x],_gangs,true];
-      };
+        };
     };
 }else{
-    //form a gang (definitely)
-    _id = (OT_civilians getVariable ["autogangid",-1]) + 1;
-    _vest = selectRandom OT_allProtectiveVests;
-    OT_civilians setVariable [format["gang%1",_id],[[_civid],0,_town,_vest],true];
-    _gangs pushback _id;
-    OT_civilians setVariable ["autogangid",_id,false];
-    _civ set [3,_civid];
+    //form a gang (if we can find a position)
 
-    if(_townpos call OT_fnc_inSpawnDistance) then {
-        _unit = OT_civilians getVariable [format["spawn%1",_civid],objNull];
-        if(!isNull _unit && alive _unit && !(_unit call OT_fnc_unitSeenPlayer)) then {
-            _group = creategroup opfor;
-            _spawnid = spawner getVariable [format["townspawnid%1",_town],"spawn0"];
-            spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + [_group],false];
-            _group setVariable ["OT_gangid",_id,true];
-            OT_civilians setVariable [format["gangspawn%1",_id],_group,false];
+    //get a camp position
+    private _townpos = server getVariable _town;
+    private _possible = spawner getVariable [format["gangpositions%1",_town],[]];
+    if((count _possible) > 0) then {
+        _pos = selectRandom _possible;
+        _civid = (OT_civilians getVariable ["autocivid",-1]) + 1;
+        OT_civilians setVariable ["autocivid",_civid];
 
-            [_unit] joinSilent nil;
-            [_unit] joinSilent _group;
-            [_unit,_town,_vest] call OT_fnc_initCriminal;
+        _gangid = (OT_civilians getVariable ["autogangid",-1]) + 1;
+        _vest = selectRandom OT_allProtectiveVests;
+        OT_civilians setVariable [format["gang%1",_gangid],[[_civid],_civid,_town,_vest,_pos],true];
+        _gangs pushback _gangid;
+        OT_civilians setVariable ["autogangid",_gangid,false];
+
+        _identity = call OT_fnc_randomLocalIdentity;
+        _civ = [_identity,_gangid];
+        OT_civilians setVariable [format["%1",_civid],_civ];
+
+        if(_townpos call OT_fnc_inSpawnDistance) then {
+            //spawn new member at camp
+            private _group = creategroup [opfor,true];
+
+            spawner setVariable [format["gangspawn%1",_gangid],_group];
+
+            private _civpos = [_pos,random 360,10] call SHK_pos_fnc_pos;
+            private _civ = _group createUnit [OT_civType_local, _civpos, [],0, "NONE"];
+            [_civ] joinSilent nil;
+            [_civ] joinSilent _group;
+
+            [_civ,_town,_vest] call OT_fnc_initCriminal;
+            [_civ,_identity] call OT_fnc_applyIdentity;
+            [_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+
+            _civ setVariable ["OT_gangid",_gangid,true];
+            _civ setVariable ["OT_civid",_civid,true];
+            _civ setBehaviour "SAFE";
+            _civ setVariable ["hometown",_town,true];
+
+            _group spawn OT_fnc_initCivilianGroup;
+
+            {
+                _x addCuratorEditableObjects [[_civ]];
+            }foreach(allCurators);
+
+            _spawnid = spawner getvariable [format["townspawnid%1",_town],-1];
+            _groups = spawner getvariable [_spawnid,[]];
+            _groups pushback _group;
+            spawner setvariable [_spawnid,_groups,false];
         };
     };
 };
