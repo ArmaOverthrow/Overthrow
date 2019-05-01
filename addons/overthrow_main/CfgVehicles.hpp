@@ -23,6 +23,17 @@
 class CfgVehicles {
 	class Item_Base_F;
 	class ThingX;
+
+	//Overthrow Vehicles
+	class I_Truck_02_box_F;
+	class OT_I_Truck_recovery : I_Truck_02_box_F {
+		displayName = "KamAZ Recovery";
+		class Library {
+			libTextDesc = "The Field Assistance and Recovery Truck (FART) is a specialized heavy truck used for field repairs and gear recovery after a battle. It can recover all items and bodies within a 150m radius into it's cargohold."
+		};
+	};
+
+	//ACE actions
 	class Land_MapBoard_F : ThingX {
 		class ACE_Actions {
 			class ACE_MainActions {
