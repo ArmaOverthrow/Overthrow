@@ -38,7 +38,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 
 				if((isPlayer _unit) && (captive _unit)) then {
 					if(_iscar) then {
-						_leader globalchat "Please approach the checkpoint slowly, do NOT exit your vehicle";
+						[_leader, {_this globalchat "Please approach the checkpoint slowly, do NOT exit your vehicle"}] remoteExec ["call", _unit, false];
 						_inrange pushback _unit;
 					}else{
 						[_unit] spawn OT_fnc_NATOsearch;
@@ -78,7 +78,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 				if !(_x in _searching || _x in _searched) then {
 					if(isPlayer _x) then {
 						_searching pushback _x;
-						_leader globalchat "Please wait... personal items will be stored in your vehicle";
+						[_leader, {_this globalchat "Please wait... personal items will be stored in your vehicle"}] remoteExec ["call", _x, false];
 						if(vehicle _x != _x) then {
 							_v = vehicle _x;
 							_v setVelocity [0,0,0];
@@ -124,25 +124,30 @@ while {!(isNil "_group") && count (units _group) > 0} do {
 						if(_foundillegal || _foundweapons) then {
 							if(_foundweapons) then {
 								_msg = "What's this??!?";
-								_unit setCaptive false;
 								{
-									if(side _x isEqualTo west) then {
-										_x reveal [_unit,1.5];
-										sleep 0.2;
-									};
-								}foreach(_unit nearentities ["Man",500]);
+									_x setCaptive false;
+									[_x] call OT_fnc_revealToNATO;
+								}foreach(units _v);
 							}else{
 								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
+						}else {
+							if((vehicle _x) getVariable ["stolen",false]) then {
+								_msg = "This vehicle has been reported stolen!";
+								{
+									_x setCaptive false;
+									[_x] call OT_fnc_revealToNATO;
+								}foreach(units _v);
+							};
 						};
-						_msg remoteExec ["OT_fnc_notifyMinor",_x,false];
+						[[_leader,_msg], {(_this select 0) globalchat (_this select 1)}] remoteExec ["call", _x, false];
 						_searched pushback _x;
 						_searching deleteAt(_searching find _x);
 					};
 				};
 			}else{
 				if (_x in _searching && isPlayer _x) then {
-					"Return to the checkpoint immediately and wait while you are searched" remoteExec ["OT_fnc_notifyMinor",_x,false];
+					[_leader, {_this globalchat "Return to the checkpoint immediately and wait while you are searched"}] remoteExec ["call", _x, false];
 					_searching deleteAt(_searching find _x);
 				}
 			};

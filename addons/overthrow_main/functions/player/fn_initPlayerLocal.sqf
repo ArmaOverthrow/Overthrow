@@ -366,6 +366,10 @@ player addEventHandler ["GetInMan",{
 			_veh setVariable ["stolen",true,true];
 			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
 				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
+				if(player call OT_fnc_unitSeenNATO) then {
+					player setCaptive false;
+					[player] call OT_fnc_revealToNATO;
+				};
 			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {
