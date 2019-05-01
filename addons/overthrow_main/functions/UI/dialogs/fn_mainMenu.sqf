@@ -27,9 +27,9 @@ if(rain > 0.9) then {
 };
 
 private _ctrl = (findDisplay 8001) displayCtrl 1100;
-private _standing = [_town] call OT_fnc_standing;
+private _standing = [_town] call OT_fnc_support;
 
-private _rep = player getVariable ["rep",0];
+private _rep = server getVariable ["rep",0];
 private _extra = "";
 
 if(isMultiplayer && { ((getplayeruid player) in (server getVariable ["generals",[]])) }) then {
@@ -43,7 +43,7 @@ if(isMultiplayer && { ((getplayeruid player) in (server getVariable ["generals",
 
 _ctrl ctrlSetStructuredText parseText format[
 	"
-		<t align='left' size='0.65'>Standing: %1 (%2%3) %4 (%5%6)</t><br/>
+		<t align='left' size='0.65'>Resistance Support: %1 (%2%3) %4 (%5%6)</t><br/>
 		<t align='left' size='0.65'>Influence: %7</t><br/>
 		<t align='left' size='0.65'>Weather: %8 (Forecast: %9)</t><br/>
 		<t align='left' size='0.65'>Fuel Price: $%10/L</t><br/>

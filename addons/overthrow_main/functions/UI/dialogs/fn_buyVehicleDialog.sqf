@@ -1,5 +1,5 @@
 private _town = player call OT_fnc_nearestTown;
-private _standing = player getVariable format['rep%1',_town];
+private _standing = [_town] call OT_fnc_support;
 private _items = OT_vehicles;
 
 private _ob = (getpos player) call OT_fnc_nearestObjective;

@@ -15,7 +15,7 @@ OT_currentMissionFactionName = _factionName;
 if(isNil "OT_currentMissionData") then {
     private _missionCode = selectRandom OT_missions;
     _data = call _missionCode;
-    
+
     OT_currentMissionData = _data;
     /*
     [

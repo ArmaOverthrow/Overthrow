@@ -12,7 +12,7 @@ if (!isNil "_town" && {OT_Map_EachFrameLastTown != _town}) then {
 	private _pop = server getVariable format["population%1",_town];
 	if(!isNil "_pop") then {
 		private _stability = server getVariable format["stability%1",_town];
-		private _rep = [_town] call OT_fnc_standing;
+		private _rep = [_town] call OT_fnc_support;
 		private _abandon = "NATO Controlled";
 		if(_town in (server getVariable ["NATOabandoned",[]])) then {
 			private _garrison = server getVariable [format['police%1',_town],0];
@@ -28,7 +28,7 @@ if (!isNil "_town" && {OT_Map_EachFrameLastTown != _town}) then {
 			<t size='0.5' color='#bbbbbb'>Status: %7</t><br/>
 			<t size='0.5' color='#bbbbbb'>Population: %2</t><br/>
 			<t size='0.5' color='#bbbbbb'>Stability: %3%4</t><br/>
-			<t size='0.5' color='#bbbbbb'>Your Standing: %5%6</t>",
+			<t size='0.5' color='#bbbbbb'>Resistance Support: %5%6</t>",
 			_town,
 			[_pop, 1, 0, true] call CBA_fnc_formatNumber,
 			_stability,

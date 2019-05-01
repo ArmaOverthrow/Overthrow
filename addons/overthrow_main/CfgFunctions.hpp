@@ -368,7 +368,7 @@ class CfgFunctions
 			class initEconomy {};
 			class initEconomyLoad {};
 			class setupTownEconomy {};
-			class standing {};
+			class support {};
 			class getPrice {};
 			class getSellPrice {};
 			class getDrugPrice {};

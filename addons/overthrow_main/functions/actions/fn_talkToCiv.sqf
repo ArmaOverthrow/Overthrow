@@ -3,7 +3,7 @@ private _civ = _this;
 OT_interactingWith = _civ;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
-private _standing = [_town] call OT_fnc_standing;
+private _standing = [_town] call OT_fnc_support;
 private _civprice = [_town,"CIV",_standing] call OT_fnc_getPrice;
 private _influence = player getvariable "influence";
 private _money = player getVariable ["money",0];
@@ -102,7 +102,7 @@ if (_canBuy) then {
 		"Buy",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = [_town] call OT_fnc_standing;
+			private _standing = [_town] call OT_fnc_support;
 
 			_cat = _civ getVariable "OT_shopCategory";
 			player setVariable ["OT_shopTarget","Self",false];
@@ -214,7 +214,7 @@ if (_canBuyBoats) then {
 				private _civ = OT_interactingWith;
 				_cls = _x select 0;
 				private _town = (getpos player) call OT_fnc_nearestTown;
-				private _standing = [_town] call OT_fnc_standing;
+				private _standing = [_town] call OT_fnc_support;
 
 				_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
@@ -349,7 +349,7 @@ if (_canSell) then {
 		"Sell",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = [_town] call OT_fnc_standing;
+			private _standing = [_town] call OT_fnc_support;
 
 			_cat = _civ getVariable "OT_shopCategory";
 			_categorystock = [player,_cat] call OT_fnc_unitStock;

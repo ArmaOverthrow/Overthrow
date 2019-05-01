@@ -23,9 +23,9 @@ private _numitems = floor(2 + random(400 / _cost));
 private _params = [_destination,_destinationName,_itemcls,_numitems];
 private _markerPos = _destination;
 
-private _effect = "Stability in the town will decrease and the driver of the vehicle will be admired by the local community for their heroic efforts (+25 standing).";
+private _effect = "Stability in the town will decrease and the local community will support the resistance more (+25 support).";
 if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
-    _effect = "Stability in the town will increase and the driver of the vehicle will be admired by the local community for their heroic efforts (+25 standing).";
+    _effect = "Stability in the town will increase and the local community will support the resistance more (+25 support).";
 };
 
 //Build a mission description and title
@@ -89,12 +89,13 @@ private _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName]
                 if(_found) exitWith {};
             }foreach(_destination nearObjects ["AllVehicles", 15]);
 
-            //apply stability and standing
+            //apply stability and support
             [
                 _destinationName,
                 25,
-                format["Delivered %1 x %2 medical supplies",_numitems,_itemcls call OT_fnc_weaponGetName]
-            ] remoteExec ["OT_fnc_standing",_driver,false];
+                format["Delivered %1 x %2 medical supplies",_numitems,_itemcls call OT_fnc_weaponGetName],
+                _driver
+            ] call OT_fnc_support;
 
             if(_destinationName in (server getVariable ["NATOabandoned",[]])) then {
                 [_destinationName,10] call OT_fnc_stability;

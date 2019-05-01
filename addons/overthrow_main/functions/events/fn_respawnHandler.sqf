@@ -48,7 +48,7 @@ player addWeapon "ItemMap";
 _housepos = _old getVariable "home";
 _town = _housepos call OT_fnc_nearestTown;
 player setPos _housepos;
-_clothes = player getVariable ["uniform",(OT_clothes_guerilla call BIS_fnc_selectRandom)];
+_clothes = uniform _old;
 player forceAddUniform _clothes;
 [] spawn OT_fnc_setupPlayer;
 

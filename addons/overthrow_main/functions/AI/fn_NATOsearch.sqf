@@ -170,7 +170,6 @@ if(isplayer _target) then {
 					[_cop,"We found some illegal items && confiscated them, be on your way"] remoteExec ["globalchat",_target,false];
 					"NATO confiscated illegal items" remoteExecCall ["hint",_target,false];
 					private _town = (getpos _target) call OT_fnc_nearestTown;
-					[_town,-10] remoteExecCall ["OT_fnc_standing",_target,false];
 				}else{
 					[_cop,"Thank you for your co-operation"] remoteExec ["globalchat",_target,false];
 				};

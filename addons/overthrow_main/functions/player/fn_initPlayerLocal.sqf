@@ -237,11 +237,6 @@ if (_newplayer) then {
         } foreach switchableUnits;
     };
 
-    player setVariable ["rep",0,true];
-    {
-        player setVariable [format["rep%1",_x],0,true];
-    }foreach(OT_allTowns);
-
     _town = server getVariable "spawntown";
     if(OT_randomSpawnTown) then {
         _town = OT_spawnTowns call BIS_fnc_selectRandom;
@@ -365,7 +360,7 @@ player addEventHandler ["GetInMan",{
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
 			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
-				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
+				[(getpos player) call OT_fnc_nearestTown,-5,"Stolen vehicle",player] call OT_fnc_support;
 				if(player call OT_fnc_unitSeenNATO) then {
 					player setCaptive false;
 					[player] call OT_fnc_revealToNATO;
