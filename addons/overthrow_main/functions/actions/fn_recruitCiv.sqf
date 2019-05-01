@@ -24,6 +24,7 @@ _civ removeAllEventHandlers "FiredNear";
 _civ setCaptive true;
 _civ setSkill 0.2 + (random 0.3);
 [_civ] call OT_fnc_initRecruit;
+_civ setVariable ["OT_spawntrack",true,true];
 
 [player,format["New Recruit: %1",name _civ],format["Recruited: %1 for $%2",name _civ,_price]] call BIS_fnc_createLogRecord;
 format["%1 has been recruited",name _civ] call OT_fnc_notifyMinor;

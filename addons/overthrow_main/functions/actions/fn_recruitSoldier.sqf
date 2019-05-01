@@ -22,3 +22,4 @@ private _civ = [_soldier,_pos,_group] call OT_fnc_createSoldier;
 [_civ] call OT_fnc_initRecruit;
 _civ setRank "SERGEANT";
 _civ setSkill 0.4 + (random 0.3);
+_civ setVariable ["OT_spawntrack",true,true];

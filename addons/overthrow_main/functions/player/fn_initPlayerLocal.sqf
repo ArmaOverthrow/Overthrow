@@ -163,6 +163,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 				_civ setUnitLoadout _loadout;
 				_civ spawn OT_fnc_wantedSystem;
 				_civ setName _name;
+				_civ setVariable ["OT_spawntrack",true,true];
 
 				[_civ] joinSilent nil;
 				[_civ] joinSilent (group player);
@@ -204,6 +205,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 					_civ setUnitLoadout _loadout;
 					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+					_civ setVariable ["OT_spawntrack",true,true];
 				}foreach(_units);
 			};
 			player hcSetGroup [_group,groupId _group,"teamgreen"];
