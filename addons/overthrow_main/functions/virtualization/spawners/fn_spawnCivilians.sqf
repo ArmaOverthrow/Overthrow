@@ -108,7 +108,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			while {_count < _numtents} do {
 				//this code is in tents
 				_d = random 360;
-				_p = [_home,_d,[2,9]] call SHK_pos_fnc_pos;
+				_p = [_home,[2,9],_d] call SHK_pos_fnc_pos;
 				_p = _p findEmptyPosition [1,40,"Land_TentDome_F"];
 				_veh = createVehicle ["Land_TentDome_F",_p,[],0,"CAN_COLLIDE"];
 				_veh setDir _d;
@@ -118,7 +118,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 
 			//And the gang leader in his own group
 			private _leaderGroup = creategroup [opfor,true];
-			private _pos = [_home,random 360,10] call SHK_pos_fnc_pos;
+			private _pos = [_home,10] call SHK_pos_fnc_pos;
 			_civ = _leaderGroup createUnit [OT_CRIM_Unit, _pos, [],0, "NONE"];
 			_civ setRank "COLONEL";
 			_civ setBehaviour "SAFE";

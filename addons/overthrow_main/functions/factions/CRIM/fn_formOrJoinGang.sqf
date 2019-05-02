@@ -61,6 +61,7 @@ if(count _gangs > 0) then {
     private _possible = spawner getVariable [format["gangpositions%1",_town],[]];
     if((count _possible) > 0) then {
         _home = selectRandom _possible;
+        _home set [2,0];
         _civid = (OT_civilians getVariable ["autocivid",-1]) + 1;
         OT_civilians setVariable ["autocivid",_civid];
 
@@ -94,7 +95,7 @@ if(count _gangs > 0) then {
 			while {_count < _numtents} do {
 				//this code is in tents
 				_d = random 360;
-				_p = [_home,_d,[2,9]] call SHK_pos_fnc_pos;
+				_p = [_home,[2,9],_d] call SHK_pos_fnc_pos;
 				_p = _p findEmptyPosition [1,40,"Land_TentDome_F"];
 				_veh = createVehicle ["Land_TentDome_F",_p,[],0,"CAN_COLLIDE"];
 				_veh setDir _d;
@@ -104,7 +105,7 @@ if(count _gangs > 0) then {
 
 			//And the gang leader in his own group
 			private _leaderGroup = creategroup [opfor,true];
-			private _pos = [_home,random 360,10] call SHK_pos_fnc_pos;
+			private _pos = [_home,10,random 360] call SHK_pos_fnc_pos;
 			_civ = _leaderGroup createUnit [OT_CRIM_Unit, _pos, [],0, "NONE"];
 			_civ setRank "COLONEL";
             _civ setVariable ["NOAI",true,false];
