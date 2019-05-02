@@ -143,7 +143,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 				_ident params ["_identity"];
 
 				private _pos = [_pos,10] call SHK_pos_fnc_pos;
-				private _civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
+				private _civ = _group createUnit [OT_CRIM_Unit, _pos, [],0, "NONE"];
 				[_civ] joinSilent nil;
 				[_civ] joinSilent _group;
 

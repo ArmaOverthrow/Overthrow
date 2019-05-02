@@ -7,9 +7,12 @@ if(_garrison == -1) then {
 	//First time
 	server setVariable [format['policepos%1',_town],_pos,true];
 
+	private _spawnid = spawner getvariable [format["townspawnid%1",_town],-1];
+	private _groups = spawner getvariable [_spawnid,[]];
+
 	_builder = name player;
 	{
-		[_x,format["New Police Station: %1",_town],format["%1 built a new police station %2",_builder,_pos call BIS_fnc_locationDescription]] call BIS_fnc_createLogRecord;
+		[_x,format["New Police Station: %1",_town],format["%1 built a new police station %2",_builder,_town]] call BIS_fnc_createLogRecord;
 	}foreach([] call CBA_fnc_players);
 
 	server setVariable [format['police%1',_town],2,true];
@@ -18,7 +21,7 @@ if(_garrison == -1) then {
 	_range = 15;
 	_spawned = [];
 	_group = createGroup resistance;
-	_spawned pushBack _group;
+	_groups pushBack _group;
 	while {_count < 2} do {
 		_start = [[[_pos,_range]]] call BIS_fnc_randomPos;
 
@@ -34,10 +37,7 @@ if(_garrison == -1) then {
 		_count = _count + 1;
 	};
 	_group call OT_fnc_initPolicePatrol;
-
-	_despawn = spawner getVariable [format["despawn%1",_town],[]];
-	[_despawn,_spawned] call BIS_fnc_arrayPushStack;
-	spawner setVariable [format["despawn%1",_town],_despawn,false];
+	spawner setvariable [_spawnid,_groups,false];
 };
 
 _mrkid = format["%1-police",_town];

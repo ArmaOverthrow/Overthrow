@@ -534,6 +534,8 @@ class CfgFunctions
 			file = "\overthrow_main\functions\factions\CRIM";
 			class CRIMLoop {};
 			class formOrJoinGang {};
+			class formGang {};
+			class addToGang {};
 		};
 
 		class GUER

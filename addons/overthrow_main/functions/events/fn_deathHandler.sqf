@@ -113,7 +113,6 @@ call {
 		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,10] call OT_fnc_experience;
-		[_hometown,5] call OT_fnc_support;
 	};
 	if(!isNil "_crimleader") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["OPFkills",0])+1,true];
@@ -142,7 +141,6 @@ call {
 		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,50] call OT_fnc_experience;
-		[_hometown,25] call OT_fnc_support;
 	};
 	if(!isNil "_polgarrison") exitWith {
 		_pop = server getVariable format["police%1",_polgarrison];
@@ -201,23 +199,6 @@ call {
 		};
 	};
 };
-if(_standingChange != 0 || _reveal) then {
-
-	{
-		if(captive _x) then {
-			_x setCaptive false;
-		};
-		[_x] call OT_fnc_revealToNATO;
-		if(_x isKindOf "AllVehicles") then {
-			{
-				if(captive _x) then {
-					_x setCaptive false;
-					[_x] call OT_fnc_revealToNATO;
-				};
-			}foreach(units _x);
-		};
-	}foreach (_me nearObjects 15);
-};
 if((_killer call OT_fnc_unitSeen) || (_standingChange < -9)) then {
 	_killer setCaptive false;
 	if(vehicle _killer != _killer) then {
@@ -230,6 +211,10 @@ if(isPlayer _killer) then {
 	if (_standingChange isEqualTo -50) then {
 		[_town,_standingChange,"You killed a civilian",_killer] call OT_fnc_support;
 	}else{
+		[_town,_standingChange] call OT_fnc_support;
+	};
+}else{
+	if(side _killer isEqualTo resistance) then {
 		[_town,_standingChange] call OT_fnc_support;
 	};
 };

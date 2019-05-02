@@ -1,4 +1,4 @@
-private _owner = server getVariable ("name"+((vehicle player) call OT_fnc_getOwner));
+private _owner = players_NS getVariable ("name"+((vehicle player) call OT_fnc_getOwner));
 if(isNil "_owner") then {_owner = "Someone"};
 [format[
 	"<t align='left' size='1.2' color='#ffffff'>%1</t><br/><t size='0.5' color='#bbbbbb' align='left'>Owner: %2</t>",

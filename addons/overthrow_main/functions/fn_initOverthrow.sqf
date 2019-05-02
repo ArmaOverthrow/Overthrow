@@ -60,7 +60,6 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	};
 
 	waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-	[] spawn OT_fnc_initEconomyLoad;
 
 	if(OT_fastTime) then {
 	    setTimeMultiplier 4;
@@ -73,6 +72,8 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	[] spawn OT_fnc_factionCIV;
 	[] spawn OT_fnc_factionCRIM;
 	waitUntil {!isNil "OT_NATOInitDone"};
+
+	[] spawn OT_fnc_initEconomyLoad;
 
 	//Game systems
 	[] spawn OT_fnc_propagandaSystem;

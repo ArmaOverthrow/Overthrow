@@ -44,6 +44,17 @@ diag_log format["Overthrow: Economy version is %1",_version];
         if((count _allpos) > 10) exitWith{};
     }foreach(_possible);
     spawner setVariable [format["gangpositions%1",_town],_allpos,false];
+
+    if((server getVariable "StartupType") == "NEW") then {
+        //Form gangs on a new game start
+        private _stability = server getVariable [format["stability%1",_town],50];
+        if(_stability < 50) then {
+            _gangid = [_town,false] call OT_fnc_formGang;
+            if(_gangid > -1) then {
+                [_gangid,1+floor(random 2),false] call OT_fnc_addToGang;
+            };
+        };
+    };
 }foreach(OT_allTowns);
 
 if(_version < OT_economyVersion) then {
