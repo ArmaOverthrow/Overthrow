@@ -28,7 +28,7 @@ if(count _gangs > 0) then {
                     _group = spawner getVariable [format["gangspawn%1",_gangid],grpNull];
                     //Spawn new gang member at camp
 
-                    private _pos = [_pos,random 360,10] call SHK_pos_fnc_pos;
+                    private _pos = [_pos,10] call SHK_pos_fnc_pos;
                     private _civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
                     [_civ] joinSilent nil;
                     [_civ] joinSilent _group;
@@ -105,7 +105,7 @@ if(count _gangs > 0) then {
 
 			//And the gang leader in his own group
 			private _leaderGroup = creategroup [opfor,true];
-			private _pos = [_home,10,random 360] call SHK_pos_fnc_pos;
+			private _pos = [_home,10] call SHK_pos_fnc_pos;
 			_civ = _leaderGroup createUnit [OT_CRIM_Unit, _pos, [],0, "NONE"];
 			_civ setRank "COLONEL";
             _civ setVariable ["NOAI",true,false];
@@ -124,7 +124,7 @@ if(count _gangs > 0) then {
 				_x addCuratorEditableObjects [[_civ]];
 			}foreach(allCurators);
 
-            private _civpos = [_home,random 360,10] call SHK_pos_fnc_pos;
+            private _civpos = [_home,10] call SHK_pos_fnc_pos;
             private _civ = _group createUnit [OT_civType_local, _civpos, [],0, "NONE"];
             [_civ] joinSilent nil;
             [_civ] joinSilent _group;

@@ -133,6 +133,8 @@ call {
 				OT_civilians setVariable [format["gangs%1",_hometown],_gangs,true];
 				format["The gang leader in %1 has been eliminated",_hometown] remoteExec ["OT_fnc_notifyMinor",0,false];
 				spawner setVariable [format["nogang%1",_hometown],time+3600,false]; //No gangs in this town for 1 hr real-time
+				_mrkid = format["gang%1",_hometown];
+				deleteMarker _mrkid;
 			};
 		};
 
@@ -144,8 +146,9 @@ call {
 		_pop = server getVariable format["police%1",_polgarrison];
 		if(_pop > 0) then {
 			server setVariable [format["police%1",_polgarrison],_pop - 1,true];
+			format["A police officer has been killed in %1",_polgarrison] remoteExec ["OT_fnc_notifyMinor",0,false];
 		};
-		[_town,-1] call OT_fnc_stability;
+		[_town,-2] call OT_fnc_stability;
 	};
 	if(!isNil "_garrison" || !isNil "_vehgarrison" || !isNil "_airgarrison") then {
 		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
