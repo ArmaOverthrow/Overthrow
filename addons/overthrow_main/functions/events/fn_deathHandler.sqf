@@ -65,7 +65,7 @@ if(_bounty > 0) then {
 call {
 	if(!isNil "_civ") exitWith {
 		_killer setVariable ["CIVkills",(_killer getVariable ["CIVkills",0])+1,true];
-		_standingChange = -10;
+		_standingChange = -50;
 		[_town,-1] call OT_fnc_stability;
 	};
 	if(!isNil "_hvt") exitWith {
@@ -113,6 +113,7 @@ call {
 		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,10] call OT_fnc_experience;
+		[_hometown,5] call OT_fnc_support;
 	};
 	if(!isNil "_crimleader") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["OPFkills",0])+1,true];
@@ -141,6 +142,7 @@ call {
 		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,50] call OT_fnc_experience;
+		[_hometown,25] call OT_fnc_support;
 	};
 	if(!isNil "_polgarrison") exitWith {
 		_pop = server getVariable format["police%1",_polgarrison];
@@ -225,7 +227,7 @@ if((_killer call OT_fnc_unitSeen) || (_standingChange < -9)) then {
 	};
 };
 if(isPlayer _killer) then {
-	if (_standingChange isEqualTo -10) then {
+	if (_standingChange isEqualTo -50) then {
 		[_town,_standingChange,"You killed a civilian",_killer] call OT_fnc_support;
 	}else{
 		[_town,_standingChange] call OT_fnc_support;

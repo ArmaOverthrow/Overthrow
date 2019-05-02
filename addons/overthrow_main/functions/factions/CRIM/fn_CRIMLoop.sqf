@@ -38,6 +38,7 @@ if !(crim_counter < 12) then {
                             _garrison = (server getVariable [format["police%1",_x],0]) - 1;
                             server setVariable [format["police%1",_town],_garrison,true];
                             [_town,-2] call OT_fnc_stability;
+                            [_town,-2] call OT_fnc_support;
                         };
                     };
                     if(_numingang < _garrison) then {
@@ -49,6 +50,7 @@ if !(crim_counter < 12) then {
                             _gang set [0,_members];
                             OT_civilians setVariable [format["gang%1",_gangid],_gang,true];
                             [_town,2] call OT_fnc_stability;
+                            [_town,5] call OT_fnc_support;
                         };
                         if((random 60) < (_garrison - _numingang)) exitWith {
                             //Police have killed the leader
@@ -62,13 +64,15 @@ if !(crim_counter < 12) then {
                             _mrkid = format["gang%1",_town];
                             deleteMarker _mrkid;
                             [_town,10] call OT_fnc_stability;
+                            [_town,25] call OT_fnc_support;
                         };
                     };
 
-                    //Chance to drop stability if no police
+                    //Chance to drop stability and support if no police
 
                     if(_garrison == 0 && (random 100) < _numingang) then {
                         [_town,-1] call OT_fnc_stability;
+                        [_town,-1] call OT_fnc_support;
                     };
                 };
 

@@ -10,6 +10,8 @@ if(_money < (_amt * _price)) exitWith {"You cannot afford that" call OT_fnc_noti
 
 if !(_town in (server getvariable ["NATOabandoned",[]])) exitWith {"This police station is under NATO control" call OT_fnc_notifyMinor};
 
+[_town,5 * _amt] call OT_fnc_support;
+
 private _garrison = server getVariable [format['police%1',_town],0];
 _garrison = _garrison + _amt;
 server setVariable [format["police%1",_town],_garrison,true];
