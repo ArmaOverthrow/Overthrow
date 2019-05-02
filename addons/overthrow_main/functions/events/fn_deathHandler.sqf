@@ -64,10 +64,12 @@ if(_bounty > 0) then {
 
 call {
 	if(!isNil "_civ") exitWith {
+		_killer setVariable ["CIVkills",(_killer getVariable ["CIVkills",0])+1,true];
 		_standingChange = -10;
 		[_town,-1] call OT_fnc_stability;
 	};
 	if(!isNil "_hvt") exitWith {
+		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
 		_idx = 0;
 		{
 			if((_x select 0) isEqualTo _hvt) exitWith {};
@@ -78,46 +80,16 @@ call {
 		server setvariable ["NATOresources",0,true];
 		[_killer,250] call OT_fnc_experience;
 	};
-	if(!isNil "_mobboss") exitWith {
-		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
-		_mobsterid = _garrison;
-		server setVariable [format["mobleader%1",_mobsterid],false,true];
-		_active = server getVariable ["activemobsters",[]];
-		_t = 0;
-		{
-			if((_x select 1) isEqualTo _mobsterid) exitWith {};
-			_t = _t + 1;
-		}foreach(_active);
-		_active deleteAt _t;
-		server setVariable ["activemobsters",_active,false];
-
-		_standingChange = 50;
-		[_killer,1500] call OT_fnc_rewardMoney;
-		[_killer,100] call OT_fnc_experience;
-
-		format["The crime leader %1 is dead, camp is cleared",(getpos _me) call BIS_fnc_locationDescription] remoteExec ["OT_fnc_notifyMinor",0,false];;
-		deleteMarker format ["mobster%1",_mobsterid];
-	};
 	if(!isNil "_employee") exitWith {
+		_killer setVariable ["CIVkills",(_killer getVariable ["CIVkills",0])+1,true];
 		_pop = server getVariable format["employ%1",_employee];
 		if(_pop > 0) then {
 			server setVariable [format["employ%1",_mobsterid],_pop - 1,true];
 		};
 		format["An employee of %1 has died",_employee] remoteExec ["OT_fnc_notifyMinor",0,false];
 	};
-	if(!isNil "_mobster") exitWith {
-		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
-		_mobsterid = _me getVariable "garrison";
-		_pop = server getVariable format["crimgarrison%1",_mobsterid];
-		if(_pop > 0) then {
-			server setVariable [format["crimgarrison%1",_mobsterid],_pop - 1,true];
-		};
-		_standingChange = 10;
-		[_killer,150] call OT_fnc_rewardMoney;
-		[_killer,25] call OT_fnc_experience;
-	};
 	if(!isNil "_criminal") exitWith {
-		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
+		_killer setVariable ["OPFkills",(_killer getVariable ["OPFkills",0])+1,true];
 		_civid = _me getVariable ["OT_civid",-1];
 		_gangid = _me getVariable ["OT_gangid",-1];
 		_hometown = _me getVariable ["hometown",""];
@@ -132,55 +104,40 @@ call {
 				if(count _gang > 0) then {
 					_members = _gang select 0;
 					_members deleteAt (_members find _civid);
-					if(count _members isEqualTo 0) then {
-						OT_civilians setVariable [format["gang%1",_gangid],nil,true];
-						_gangs = OT_civilians getVariable [format["gangs%1",_hometown],[]];
-						_gangs deleteAt (_gangs find _gangid);
-						OT_civilians setVariable [format["gangs%1",_hometown],_gangs,true];
-						_reward = 200 + ((round random 6) * 50);
-						_stability = 10;
-						_standingChange = 10;
-					}else{
-						_gang set [0,_members];
-						OT_civilians setVariable [format["gang%1",_gangid],_gang,true];
-					};
+					_gang set [0,_members];
+					OT_civilians setVariable [format["gang%1",_gangid],_gang,true];
 				};
 			};
 		};
 
-		[_town,_stability] call OT_fnc_stability;
+		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,10] call OT_fnc_experience;
 	};
 	if(!isNil "_crimleader") exitWith {
-		_killer setVariable ["OPFkills",(_killer getVariable ["BLUkills",0])+1,true];
-		[_town,10] call OT_fnc_stability;
-		format["%1 (+10 Stability)",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
-
+		_killer setVariable ["OPFkills",(_killer getVariable ["OPFkills",0])+1,true];
+		_gangid = _me getVariable ["OT_gangid",-1];
+		_civid = _me getVariable ["OT_civid",-1];
+		_gangid = _me getVariable ["OT_gangid",-1];
+		_hometown = _me getVariable ["hometown",""];
+		_reward = 500 + ((round random 6) * 50);
+		_stability = 10;
 		_standingChange = 10;
-		_bounty =  server getVariable [format["CRIMbounty%1",_town],0];
-		if(_bounty > 0) then {
-			[_killer,_bounty] call OT_fnc_rewardMoney;
-			if(isPlayer _killer) then {
-				if(isMultiplayer) then {
-					format["%1 has claimed the bounty in %2",name _killer,_town] remoteExec ["OT_fnc_notifyMinor",0,false];
-				}else{
-					format["You claimed the bounty in %1",_town] call OT_fnc_notifyMinor;
-				};
-			}else{
-				if(side _killer isEqualTo west) then {
-					format["NATO has removed the bounty in %1",_town] remoteExec ["OT_fnc_notifyMinor",0,false];;
-				}else{
-					format["The gang leader in %1 is dead",_town] remoteExec ["OT_fnc_notifyMinor",0,false];;
-				};
+
+		if(_gangid > -1) then {
+			_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+			if(count _gang > 0) then {
+				OT_civilians setVariable [format["gang%1",_gangid],nil,true];
+				_gangs = OT_civilians getVariable [format["gangs%1",_hometown],[]];
+				_gangs deleteAt (_gangs find _gangid);
+				OT_civilians setVariable [format["gangs%1",_hometown],_gangs,true];
+				format["The gang leader in %1 has been eliminated",_hometown] remoteExec ["OT_fnc_notifyMinor",0,false];
+				spawner setVariable [format["nogang%1",_hometown],time+3600,false]; //No gangs in this town for 1 hr real-time
 			};
-			server setVariable [format["CRIMbounty%1",_town],0,true];
 		};
 
-		_leader = server getVariable [format["crimleader%1",_town],false];
-		if (typename _leader isEqualTo "ARRAY") then {
-			server setVariable [format["crimleader%1",_town],false,true];
-		};
+		[_hometown,_stability] call OT_fnc_stability;
+		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,50] call OT_fnc_experience;
 	};
 	if(!isNil "_polgarrison") exitWith {

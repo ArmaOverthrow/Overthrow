@@ -96,7 +96,47 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 		_groups pushback _group;
 		spawner setVariable [format["gangspawn%1",_gangid],_group];
 		if(count _gang > 4) then { //Filter out old gangs
-			private _home = _gang select 4;
+			private _home = _gang select 4; //camp position
+
+			//Spawn the camp
+			_veh = createVehicle ["Campfire_burning_F",_home,[],0,"CAN_COLLIDE"];
+			_groups pushback _veh;
+
+			_numtents = 2 + round(random 3);
+			_count = 0;
+
+			while {_count < _numtents} do {
+				//this code is in tents
+				_d = random 360;
+				_p = [_home,_d,[2,9]] call SHK_pos_fnc_pos;
+				_p = _p findEmptyPosition [1,40,"Land_TentDome_F"];
+				_veh = createVehicle ["Land_TentDome_F",_p,[],0,"CAN_COLLIDE"];
+				_veh setDir _d;
+				_groups pushback _veh;
+				_count = _count + 1;
+			};
+
+			//And the gang leader in his own group
+			private _leaderGroup = creategroup [opfor,true];
+			private _pos = [_home,random 360,10] call SHK_pos_fnc_pos;
+			_civ = _leaderGroup createUnit [OT_CRIM_Unit, _pos, [],0, "NONE"];
+			_civ setRank "COLONEL";
+			_civ setBehaviour "SAFE";
+			_civ setVariable ["NOAI",true,false];
+			[_civ] joinSilent nil;
+			[_civ] joinSilent _leaderGroup;
+			_civ setVariable ["OT_gangid",_gangid,true];
+			[_civ,_town] call OT_fnc_initCrimLeader;
+
+			_wp = _leaderGroup addWaypoint [_home,0];
+			_wp setWaypointType "GUARD";
+
+			_groups pushback _leaderGroup;
+
+			{
+				_x addCuratorEditableObjects [[_civ]];
+			}foreach(allCurators);
+
 			{
 				private _civid = _x;
 				private _ident = (OT_civilians getVariable [format["%1",_civid],[]]);

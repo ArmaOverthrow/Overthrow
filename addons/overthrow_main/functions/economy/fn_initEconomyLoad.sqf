@@ -24,7 +24,7 @@ diag_log format["Overthrow: Economy version is %1",_version];
     private _posTown = server getVariable _x;
     private _allpos = [];
 
-    _possible = selectBestPlaces [_posTown, 800,"(1 + forest + trees) * (1 - houses) * (1 - sea)",10,600];
+    _possible = selectBestPlaces [_posTown, 600,"(1 + forest + trees) * (1 - houses) * (1 - sea)",10,600];
     {
         _pos = _x select 0;
         _pos set [2,0];
