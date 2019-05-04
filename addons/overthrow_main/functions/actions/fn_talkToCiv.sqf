@@ -34,6 +34,7 @@ if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecrui
 if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
+if (_civ getvariable ["crimleader",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=false};
 
 if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false};
 
@@ -93,7 +94,7 @@ if (_canMission) then {
 			};
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		[OT_nation,_standing,_s,10] call OT_fnc_buyDialog;
+		[OT_nation,_standing,_s,5] call OT_fnc_buyDialog;
 	}];
 };
 

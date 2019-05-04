@@ -32,7 +32,7 @@ if(_price > -1) then {
     			gettext(configFile >> "CfgGlasses" >> _cls >> "displayName")
 			]
     	};
-    	if(_cls in (OT_allVehicles + OT_allBoats)) exitWith {
+    	if(isClass (configFile >> "CfgVehicles" >> _cls)) exitWith {
     		[
 				getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview"),
 				[
@@ -42,7 +42,7 @@ if(_price > -1) then {
 				_cls call OT_fnc_vehicleGetName
 			]
     	};
-    	if(_cls isKindOf "Bag_Base" || isClass (configFile >> "CfgVehicles" >> _cls)) exitWith {
+    	if(_cls isKindOf "Bag_Base") exitWith {
     		[
 				_cls call OT_fnc_vehicleGetPic,
 				_cls call OT_fnc_vehicleGetDescription,

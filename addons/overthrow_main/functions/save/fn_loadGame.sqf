@@ -303,6 +303,13 @@ sleep 0.2;
 			};
 		}foreach(_garrison);
 	};
+	private _mrkid = format["%1-base",_pos];
+    createMarker [_mrkid,_pos];
+    _mrkid setMarkerShape "ICON";
+    _mrkid setMarkerType "mil_Flag";
+    _mrkid setMarkerColor "ColorWhite";
+    _mrkid setMarkerAlpha 1;
+    _mrkid setMarkerText (_x select 1);
 }foreach(server getvariable ["bases",[]]);
 
 {
