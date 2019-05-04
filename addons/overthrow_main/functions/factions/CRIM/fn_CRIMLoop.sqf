@@ -15,7 +15,8 @@ if !(crim_counter < 12) then {
             if(_stability < 50) then {
                 _chance = (50 - _stability);
                 if(_garrison < 4) then {_chance = _chance + 25};
-                if((random 200) < _chance) then {
+                if !(_town in (server getVariable ["NATOabandoned",[]])) then {_chance = 10}; //Much lower chance of gang activity under NATO rule
+                if((random 250) < _chance) then {
                     [_town] call OT_fnc_formOrJoinGang;
                 };
             };

@@ -48,7 +48,7 @@ diag_log format["Overthrow: Economy version is %1",_version];
     if((server getVariable "StartupType") == "NEW") then {
         //Form gangs on a new game start
         private _stability = server getVariable [format["stability%1",_town],50];
-        if(_stability < 50) then {
+        if(_stability < 50 && (selectRandom [1,2,3,4]) isEqualTo 1) then { //Approx 1/4 of all towns < 50% will have a gang at start
             _gangid = [_town,false] call OT_fnc_formGang;
             if(_gangid > -1) then {
                 [_gangid,1+floor(random 2),false] call OT_fnc_addToGang;

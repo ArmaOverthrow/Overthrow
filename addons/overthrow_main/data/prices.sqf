@@ -401,6 +401,9 @@ OT_priceData = [
 ['I_Plane_Fighter_04_F',[500000,0,60,2]],
 ['B_Heli_Transport_03_unarmed_F',[85000,0,110,5]],
 ['OT_I_Truck_recovery',[7500,0,100,2]],
+['B_T_MRAP_01_hmg_F',[40000,0,25,1]],
+['B_T_MRAP_01_gmg_F',[50000,0,25,1]],
+['B_T_LSV_01_armed_F',[20000,0,10,1]],
 //Tanks
 ['B_APC_Tracked_01_rcws_F',[650000,0,300,10]],
 ['B_APC_Tracked_01_CRV_F',[600000,0,300,10]],
