@@ -118,7 +118,7 @@ publicVariable "OT_nextNATOTurn";
 				//Limit towns checked to those within range of players
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					//Send QRF to Town with >100 population
-					if({(_garrison isEqualTo 0)} && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
+					if((_garrison isEqualTo 0) && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						_strength = _population * 3;
@@ -132,7 +132,7 @@ publicVariable "OT_nextNATOTurn";
 					};
 				};
 				//Abandon Town with <100 population if it has dropped to 0 stability
-				if({(_garrison isEqualTo 0)} && _population < 100 && {(_stability isEqualTo 0)} && {!(_town in _abandoned)}) then {
+				if((_garrison isEqualTo 0) && _population < 100 && {(_stability isEqualTo 0)} && {!(_town in _abandoned)}) then {
 					_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
 					if(_nummil < 3) then {
 						_abandoned pushback _town;

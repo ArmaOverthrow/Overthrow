@@ -2,6 +2,11 @@ GUER_faction_loop_data params ["_lastmin","_lasthr","_currentProduction","_stabc
 _trackcounter = _trackcounter + 1;
 if(_trackcounter > 5) then {
 	_trackcounter = 0;
+	//save online player data, in case they crash
+	{
+		[_x] call OT_fnc_savePlayerData;
+	}foreach([] call CBA_fnc_players);
+
 	_track = [];
 	{
 		if(_x getVariable ["OT_spawntrack",false]) then {
