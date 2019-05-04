@@ -544,6 +544,7 @@ class CfgFunctions
 			class jobSystem {};
 			class assignJob {};
 			class jobLoop {};
+			class GUERLoop {};
 		};
 
 		class Buildings

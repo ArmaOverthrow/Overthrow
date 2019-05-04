@@ -8,7 +8,6 @@ private _pic = "";
 private _txt = "";
 private _desc = "";
 if(_price > -1) then {
-    _price = "$" + ([_ctrl lbValue _index, 1, 0, true] call CBA_fnc_formatNumber);
     ctrlEnable [1600,true];
     private _res = [_cls] call {
 		params ["_cls"];
@@ -43,7 +42,7 @@ if(_price > -1) then {
 				_cls call OT_fnc_vehicleGetName
 			]
     	};
-    	if(_cls isKindOf "Bag_Base") exitWith {
+    	if(_cls isKindOf "Bag_Base" || isClass (configFile >> "CfgVehicles" >> _cls)) exitWith {
     		[
 				_cls call OT_fnc_vehicleGetPic,
 				_cls call OT_fnc_vehicleGetDescription,
@@ -115,6 +114,8 @@ if(_cls in OT_allExplosives) then {
 };
 
 _textctrl = (findDisplay 8000) displayCtrl 1100;
+
+_price = "$" + ([_ctrl lbValue _index, 1, 0, true] call CBA_fnc_formatNumber);
 
 _textctrl ctrlSetStructuredText parseText format["
 	<t align='center' size='1.5'>%1</t><br/>
