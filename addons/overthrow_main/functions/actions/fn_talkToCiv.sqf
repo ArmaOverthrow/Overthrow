@@ -3,7 +3,7 @@ private _civ = _this;
 OT_interactingWith = _civ;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
-private _standing = [_town] call OT_fnc_standing;
+private _standing = [_town] call OT_fnc_support;
 private _civprice = [_town,"CIV",_standing] call OT_fnc_getPrice;
 private _influence = player getvariable "influence";
 private _money = player getVariable ["money",0];
@@ -34,6 +34,7 @@ if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecrui
 if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
+if (_civ getvariable ["crimleader",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=false};
 
 if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false};
 
@@ -93,7 +94,7 @@ if (_canMission) then {
 			};
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
-		[OT_nation,_standing,_s,10] call OT_fnc_buyDialog;
+		[OT_nation,_standing,_s,5] call OT_fnc_buyDialog;
 	}];
 };
 
@@ -102,7 +103,7 @@ if (_canBuy) then {
 		"Buy",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = [_town] call OT_fnc_standing;
+			private _standing = [_town] call OT_fnc_support;
 
 			_cat = _civ getVariable "OT_shopCategory";
 			player setVariable ["OT_shopTarget","Self",false];
@@ -214,7 +215,7 @@ if (_canBuyBoats) then {
 				private _civ = OT_interactingWith;
 				_cls = _x select 0;
 				private _town = (getpos player) call OT_fnc_nearestTown;
-				private _standing = [_town] call OT_fnc_standing;
+				private _standing = [_town] call OT_fnc_support;
 
 				_price = [_town,_cls,_standing] call OT_fnc_getPrice;
 				if("fuel depot" in (server getVariable "OT_NATOabandoned")) then {
@@ -349,7 +350,7 @@ if (_canSell) then {
 		"Sell",{
 			private _civ = OT_interactingWith;
 			private _town = (getpos player) call OT_fnc_nearestTown;
-			private _standing = [_town] call OT_fnc_standing;
+			private _standing = [_town] call OT_fnc_support;
 
 			_cat = _civ getVariable "OT_shopCategory";
 			_categorystock = [player,_cat] call OT_fnc_unitStock;

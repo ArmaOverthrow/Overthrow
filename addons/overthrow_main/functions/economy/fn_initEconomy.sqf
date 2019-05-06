@@ -47,6 +47,7 @@ OT_allShops = [];
     private _hugepop = round(count(_huge) * (count(_allshops)) * 0.8);
 
     private _pop = round((_lopop + _medpop + _highpop + _hugepop) * OT_populationMultiplier);
+
     private _base = 60 + count(_allshops);
     if(_base > 80) then {
         _base = 80;
@@ -54,6 +55,9 @@ OT_allShops = [];
     if(_pop > 1200) then {_pop = 1050 + round(random 150)};
     if(_pop < 20) then {_pop = 15 + round(random 10)};
     private _stability = round(_base + random(20));
+
+    //Low stability in small towns
+
     if((_pop < 500) && !(_name in OT_NATO_priority) && !(_name in OT_Capitals) && (_name in OT_spawnTowns)) then {
         _stability = floor(20 + random(20));
     };

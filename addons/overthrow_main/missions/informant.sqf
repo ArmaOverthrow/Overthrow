@@ -110,7 +110,7 @@ private _difficulty = 1.8;
 
         //If mission was a success
         if (_wassuccess) then {
-            [{format ["NATO Informant in %1 has been taken care of",_destinationName] remoteExec ["OT_fnc_notifyMinor",0,false]},0,2] call CBA_fnc_waitAndExecute;
+            [{format ["NATO Informant in %1 has been taken care of",_destination call OT_fnc_nearestTown] remoteExec ["OT_fnc_notifyMinor",0,false]},0,2] call CBA_fnc_waitAndExecute;
         };
         //Clean up
         spawner setVariable [format["informant%1",_jobid],nil,false];

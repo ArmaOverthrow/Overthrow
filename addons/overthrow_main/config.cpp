@@ -21,7 +21,7 @@ class CfgPatches
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;
-		units[] = {"OT_GanjaItem","OT_BlowItem"};
+		units[] = {"OT_GanjaItem","OT_BlowItem","OT_I_Truck_recovery"};
 		weapons[] = {"OT_Ganja","OT_Blow"};
 	};
 };

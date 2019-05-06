@@ -230,6 +230,7 @@ class CfgFunctions
 			class transferLegit {};
 			class takeLegit {};
 			class warehouseTake {};
+			class recover {};
 
 			/* Port */
 			class exportAll {};
@@ -367,7 +368,7 @@ class CfgFunctions
 			class initEconomy {};
 			class initEconomyLoad {};
 			class setupTownEconomy {};
-			class standing {};
+			class support {};
 			class getPrice {};
 			class getSellPrice {};
 			class getDrugPrice {};
@@ -459,6 +460,7 @@ class CfgFunctions
 			class initCivilian {};
 			class initCivilianGroup {};
 			class initCriminal {};
+			class initCriminalGroup {};
 			class initCrimLeader {};
 			class initGendarm {};
 			class initGendarmPatrol {};
@@ -530,7 +532,10 @@ class CfgFunctions
 		class CRIM
 		{
 			file = "\overthrow_main\functions\factions\CRIM";
+			class CRIMLoop {};
 			class formOrJoinGang {};
+			class formGang {};
+			class addToGang {};
 		};
 
 		class GUER
@@ -539,6 +544,7 @@ class CfgFunctions
 			class jobSystem {};
 			class assignJob {};
 			class jobLoop {};
+			class GUERLoop {};
 		};
 
 		class Buildings

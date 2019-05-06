@@ -50,9 +50,7 @@ if(income_system_lasthour in [0,6,12,18]) then {
 		};
 	}foreach([] call CBA_fnc_players);
 
-
-	_funds = server getVariable [""money"",0];
-	server setVariable [""money"",_funds+_totax];
+	[_totax] call OT_fnc_resistanceFunds;
 	_total = _total - _totax;
 
 	_numPlayers = count([] call CBA_fnc_players);

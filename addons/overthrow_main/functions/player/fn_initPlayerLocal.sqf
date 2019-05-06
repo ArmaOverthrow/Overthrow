@@ -53,12 +53,22 @@ _introcam camCommit 0;
 waitUntil {camCommitted _introcam};
 showCinemaBorder false;
 
+if(!isMultiplayer) exitWith {
+	"Overthrow currently does not work very well in Single Player mode. Please host a LAN game for solo play. See the wiki at http://armaoverthrow.com/" call OT_fnc_notifyMinor;
+};
+
 if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["StartupType",""] isEqualTo "")) then {
     waitUntil {!(isnull (findDisplay 46)) && OT_varInitDone};
 
 	if (isServer || count ([] call CBA_fnc_players) == 1) then {
 		sleep 1;
-		createDialog "OT_dialog_start";
+		if ((["ot_start_autoload", 0] call BIS_fnc_getParamValue) == 1) then {
+			server setVariable ["OT_difficulty",["ot_start_difficulty", 1] call BIS_fnc_getParamValue,true];
+			server setVariable ["OT_fastTravelType",["ot_start_fasttravel", 1] call BIS_fnc_getParamValue,true];
+			[] remoteExec ['OT_fnc_loadGame',2,false];
+		} else {
+			createDialog "OT_dialog_start";
+		};
 	};
 }else{
 	"Loading" call OT_fnc_notifyStart;
@@ -157,6 +167,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 				_civ setUnitLoadout _loadout;
 				_civ spawn OT_fnc_wantedSystem;
 				_civ setName _name;
+				_civ setVariable ["OT_spawntrack",true,true];
 
 				[_civ] joinSilent nil;
 				[_civ] joinSilent (group player);
@@ -198,6 +209,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 					_civ setUnitLoadout _loadout;
 					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+					_civ setVariable ["OT_spawntrack",true,true];
 				}foreach(_units);
 			};
 			player hcSetGroup [_group,groupId _group,"teamgreen"];
@@ -230,11 +242,6 @@ if (_newplayer) then {
             };
         } foreach switchableUnits;
     };
-
-    player setVariable ["rep",0,true];
-    {
-        player setVariable [format["rep%1",_x],0,true];
-    }foreach(OT_allTowns);
 
     _town = server getVariable "spawntown";
     if(OT_randomSpawnTown) then {
@@ -313,6 +320,7 @@ player setPos _housepos;
 	} else {
 		player setVariable ["OT_tute_trigger",false,true];
 	};
+	[[[format["%1, %2",(getpos player) call OT_fnc_nearestTown,OT_nation],"align = 'center' size = '0.7' font='PuristaBold'"],["","<br/>"],[format["%1/%2/%3",date#2,date#1,date#0]],["","<br/>"],[format["%1",[daytime,"HH:MM"] call BIS_fnc_timeToString],"align = 'center' size = '0.7'"],["s","<br/>"]]] spawn BIS_fnc_typeText2;
 };
 
 [] spawn {
@@ -359,7 +367,11 @@ player addEventHandler ["GetInMan",{
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
 			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
-				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
+				[(getpos player) call OT_fnc_nearestTown,-5,"Stolen vehicle",player] call OT_fnc_support;
+				if(player call OT_fnc_unitSeenNATO) then {
+					player setCaptive false;
+					[player] call OT_fnc_revealToNATO;
+				};
 			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {

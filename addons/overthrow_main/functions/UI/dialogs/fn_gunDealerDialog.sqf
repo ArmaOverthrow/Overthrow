@@ -4,8 +4,8 @@ private _stock = server getVariable format["gunstock%1",_town];
 if(isNil "_stock") then {
 	private _numguns = round(random 7)+3;
 	private _count = 0;
-	_stock = [[OT_item_BasicGun,150],[OT_item_BasicAmmo,1]];
-	_stock pushback [OT_ammo_50cal,100];
+	_stock = [[OT_item_BasicGun,0],[OT_item_BasicAmmo,0]];
+	_stock pushback [OT_ammo_50cal,0];
 
 	private _p = (cost getVariable "I_HMG_01_high_weapon_F") select 0;
 	_p = _p + ((cost getVariable "I_HMG_01_support_high_F") select 0);
@@ -18,7 +18,7 @@ if(isNil "_stock") then {
 
 	{
 		// name price
-		_stock pushBack [_x,(cost getVariable _x) select 0];
+		_stock pushBack [_x,0];
 	}foreach(OT_allStaticBackpacks);
 
 	private _tostock = [];
@@ -26,48 +26,24 @@ if(isNil "_stock") then {
 		private _type = selectRandom OT_allWeapons;
 		if !(_type in _tostock) then {
 
-			_tostock pushBack _type;
+			_tostock pushBack [_type,0];
 			_count = _count + 1;
 
-			private _cost = cost getVariable _type;
-			private _price = round((_cost select 0) * ((random 2) + 1));
-			_stock pushBack [_type,_price];
+			_stock pushBack [_type,0];
 
 			private _base = [_type] call BIS_fnc_baseWeapon;
 			private _magazines = getArray (configFile >> "CfgWeapons" >> _base >> "magazines");
-			_price = 2;
-			if(_type in OT_allSubMachineGuns) then {
-				_price = 3;
-			};
-			if(_type in OT_allAssaultRifles) then {
-				_price = 5;
-				if((_cost select 0) > 1400) then {
-					_price = 10;
-				};
-			};
-			if(_type in OT_allMachineGuns) then {
-				_price = 12;
-			};
-			if(_type in OT_allSniperRifles) then {
-				_price = 20;
-			};
-			if(_type in OT_allRocketLaunchers) then {
-				_price = 50;
-			};
-			if(_type in OT_allMissileLaunchers) then {
-				_price = 100;
-			};
-			_stock pushBack [selectRandom _magazines,_price];
+
+			_stock pushBack [selectRandom _magazines,0];
 		};
 	};
 
 	{
 		// name, price
-		_stock pushBack [_x, (cost getVariable _x) select 0];
+		_stock pushBack [_x, 0];
 	}foreach(OT_allOptics);
 
 	{
-		private _price = round (([_town,_x] call OT_fnc_getDrugPrice) * 0.9);
 		_stock pushBack [_x,_price];
 	}foreach(OT_allDrugs);
 
@@ -101,6 +77,11 @@ createDialog "OT_dialog_buy";
 			};
 			_txt = _cls call OT_fnc_weaponGetName;
 			_pic = _cls call OT_fnc_weaponGetPic;
+		};
+		if(_cls in OT_allDrugs) then {
+			_price = [_town,_cls] call OT_fnc_getDrugPrice;
+		}else{
+			_price = [OT_nation,_cls] call OT_fnc_getPrice;
 		};
 		private _idx = lbAdd [1500,format["%1",_txt]];
 		lbSetData [1500,_idx,_cls];

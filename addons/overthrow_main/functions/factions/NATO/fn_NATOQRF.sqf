@@ -27,7 +27,7 @@ _abandoned = server getvariable ["NATOabandoned",[]];
 {
 	_x params ["_obpos","_name","_pri"];
 	if !((_name in _abandoned) || (_obpos distance _pos) < 300) then {
-		if([_pos,_obpos] call OT_fnc_regionIsConnected) then {
+		if([_pos,_obpos] call OT_fnc_regionIsConnected && (_obpos distance _pos) < 5000) then {
 			_ground pushback _x;
 		};
 		if(_x in OT_airportData) then {
@@ -76,15 +76,8 @@ if((count _ground > 0) && (_strength > 250)) then {
 if((count _ground > 0) && (_strength > 1500)) then {
 	_obpos = (_ground select 0) select 0;
 	_name = (_ground select 0) select 1;
-	_send = 100;
-	if(_strength > 2000) then {
-		_send = 300;
-	};
-	if(_strength == 2500) then {
-		_send = 500;
-	};
-	[_obpos,_pos,_send,0] spawn OT_fnc_NATOTankSupport;
-	diag_log format["Overthrow: NATO Sent tanks from %1",_name];
+	[_obpos,_pos,100,0] spawn OT_fnc_NATOTankSupport;
+	diag_log format["Overthrow: NATO Sent tank from %1",_name];
 };
 
 {
