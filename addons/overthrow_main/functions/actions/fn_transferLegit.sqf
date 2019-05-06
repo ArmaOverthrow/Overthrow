@@ -68,9 +68,9 @@ _doTransfer = {
 					_veh addItemCargoGlobal [_cls,1];
 					_count = _count + 1;
 				};
-			};
-			if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
-				[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
+				if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
+					[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
+				};
 			};
 			if(_full) exitWith {};
 		}foreach(_target call OT_fnc_unitStock);
@@ -84,7 +84,7 @@ if(count _objects isEqualTo 1) then {
 }else{
 	private _options = [];
 	{
-		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],_doTransfer,_x];
+		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],{spawn _doTransfer},_x];
 	}foreach(_objects);
 	"Transfer legal items from which container?" call OT_fnc_notifyBig;
 	_options call OT_fnc_playerDecision;

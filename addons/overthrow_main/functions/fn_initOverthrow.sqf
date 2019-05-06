@@ -2,6 +2,7 @@ if(!isServer) exitWith {};
 
 if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 	diag_log "Overthrow addon not detected, you must add @Overthrow to your -mod commandline";
+	"Overthrow addon not detected, you must add @Overthrow to your -mod commandline" call OT_fnc_notifyStart;
 };
 
 if (isDedicated) then {

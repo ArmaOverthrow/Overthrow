@@ -17,7 +17,10 @@ if((count _possible) > 0) then {
 
     if(_spawn && _townpos call OT_fnc_inSpawnDistance) then {
         //Spawn the camp
-        _veh = createVehicle ["Campfire_burning_F",_home,[],0,"CAN_COLLIDE"];
+        private _veh = createVehicle ["Campfire_burning_F",_home,[],0,"CAN_COLLIDE"];
+
+        private _spawnid = spawner getvariable [format["townspawnid%1",_town],-1];
+        private _groups = spawner getvariable [_spawnid,[]];
         _groups pushback _veh;
 
         _numtents = 2 + round(random 3);
@@ -48,9 +51,6 @@ if((count _possible) > 0) then {
 
         _wp = _leaderGroup addWaypoint [_home,0];
         _wp setWaypointType "GUARD";
-
-        _spawnid = spawner getvariable [format["townspawnid%1",_town],-1];
-        _groups = spawner getvariable [_spawnid,[]];
 
         private _group = creategroup [opfor,true];
         spawner setVariable [format["gangspawn%1",_gangid],_group];

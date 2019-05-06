@@ -53,6 +53,10 @@ _introcam camCommit 0;
 waitUntil {camCommitted _introcam};
 showCinemaBorder false;
 
+if(!isMultiplayer) exitWith {
+	"Overthrow currently does not work very well in Single Player mode. Please host a LAN game for solo play. See the wiki at http://armaoverthrow.com/" call OT_fnc_notifyMinor;
+};
+
 if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["StartupType",""] isEqualTo "")) then {
     waitUntil {!(isnull (findDisplay 46)) && OT_varInitDone};
 
