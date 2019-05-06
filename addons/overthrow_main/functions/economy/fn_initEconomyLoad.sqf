@@ -17,55 +17,49 @@ private _version = server getVariable ["EconomyVersion",0];
 
 diag_log format["Overthrow: Economy version is %1",_version];
 
+//Generate 10 possible gang camp positions for each town
+
+{
+    private _town = _x;
+    private _posTown = server getVariable _x;
+    private _allpos = [];
+
+    _possible = selectBestPlaces [_posTown, 600,"(1 + forest + trees) * (1 - houses) * (1 - sea)",10,600];
+    {
+        _pos = _x select 0;
+        _pos set [2,0];
+        if !(_pos isFlatEmpty  [-1, -1, 0.5, 10] isEqualTo []) then {
+            _ob = _pos call OT_fnc_nearestObjective;
+            _obpos = _ob select 0;
+    		_obdist = _obpos distance _pos;
+
+            _towndist = (server getVariable _town) distance _pos;
+            _control = _pos call OT_fnc_nearestCheckpoint;
+    		_cdist = (getmarkerpos _control) distance _pos;
+
+    		if(_obdist > 800 and _towndist > 200 and _cdist > 500) then {
+                _allpos pushback _pos;
+            };
+        };
+        if((count _allpos) > 10) exitWith{};
+    }foreach(_possible);
+    spawner setVariable [format["gangpositions%1",_town],_allpos,false];
+
+    if((server getVariable "StartupType") == "NEW") then {
+        //Form gangs on a new game start
+        private _stability = server getVariable [format["stability%1",_town],50];
+        if(_stability < 50 && (selectRandom [1,2,3,4]) isEqualTo 1) then { //Approx 1/4 of all towns < 50% will have a gang at start
+            _gangid = [_town,false] call OT_fnc_formGang;
+            if(_gangid > -1) then {
+                [_gangid,1+floor(random 2),false] call OT_fnc_addToGang;
+            };
+        };
+    };
+}foreach(OT_allTowns);
+
 if(_version < OT_economyVersion) then {
     diag_log "Overthrow: Economy version is old, regenerating towns";
     OT_allShops = [];
-    //Generate civilians
-    private _spawntown = server getVariable ["spawntown",""];
-    _id = 0;
-    {
-        _pop = server getVariable [format["population%1",_x],0];
-        _stability = server getVariable [format["stability%1",_x],0];
-        _num = _pop * 0.1;
-        _count = 0;
-        _thistown = [];
-        _numgangs = 0;
-        _donegang = false;
-        while {_count < _num} do {
-            _hasjob = true;
-            if(_stability < 50) then {
-                if (!_donegang && _x != _spawntown) then {
-                    _hasjob = false;
-                }else{
-                    _hasjob = (random 50) > _stability;
-                };
-            };
-
-            //Generate a civilian [identity, has job, cash, superior]
-            //@todo: generate beliefs && traits
-            _cash = 0;
-            if(_hasjob) then {_cash = round random 200} else {
-                if (_x != _spawntown) then {
-                    if(!_donegang || (random 100) < 50) then {
-                        _donegang = true;
-                        _cash = floor random 50;
-                        [_id,_x] call OT_fnc_formOrJoinGang;
-                        _numgangs = _numgangs + 1;
-                    };
-                }else{
-                    _cash = round random 200;
-                };
-            };
-            OT_civilians setVariable [format["%1",_id],[call OT_fnc_randomLocalIdentity,_hasjob,_cash,-1],true];
-            _thistown pushback _id;
-            _count = _count + 1;
-            _id = _id + 1;
-        };
-        OT_civilians setVariable [format["civs%1",_x],_thistown,true];
-        diag_log format["%1: %2 possible gang members",_x,_numgangs];
-        sleep 0.2;
-    }foreach(OT_allTowns);
-    OT_civilians setVariable ["autocivid",_id,false];
 
     {
         _x params ["_cls","_name","_side"];

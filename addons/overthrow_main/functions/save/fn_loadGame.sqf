@@ -12,6 +12,23 @@ if (_data isEqualType "" && {_data isEqualTo ""}) then {
 
 private _cc = 0;
 
+//make sure server vars are done first
+{
+	_x params ["_key","_val"];
+	if(_key == "server") then {
+		{
+			_x params ["_subkey","_subval"];
+			if(!(toLower (_subkey select [0,4]) in ["cba_","bis_"])) then {
+				server setVariable [_subkey,_subval,true];
+			};
+		}foreach(_val);
+		_set = false;
+	};
+}foreach(_data);
+
+sleep 0.2;
+
+//now do everything else
 {
 	_x params ["_key","_val"];
 
@@ -235,15 +252,6 @@ private _cc = 0;
 			};
 		}foreach(_val);
 	};
-	if(_key == "server") then {
-		{
-			_x params ["_subkey","_subval"];
-			if(!(toLower (_subkey select [0,4]) in ["cba_","bis_"])) then {
-				server setVariable [_subkey,_subval,true];
-			};
-		}foreach(_val);
-		_set = false;
-	};
 	if(_key == "recruits") then {
 		server setVariable [_key,_val,true];
 		_set = false;
@@ -295,6 +303,13 @@ sleep 0.2;
 			};
 		}foreach(_garrison);
 	};
+	private _mrkid = format["%1-base",_pos];
+    createMarker [_mrkid,_pos];
+    _mrkid setMarkerShape "ICON";
+    _mrkid setMarkerType "mil_Flag";
+    _mrkid setMarkerColor "ColorWhite";
+    _mrkid setMarkerAlpha 1;
+    _mrkid setMarkerText (_x select 1);
 }foreach(server getvariable ["bases",[]]);
 
 {

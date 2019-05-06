@@ -48,7 +48,6 @@ if(_skill > 0.8) then {
 if(OT_hasACE) then {
 	_unit addItem "ACE_fieldDressing";
 	_unit addItem "ACE_fieldDressing";
-	_unit addItem "ACE_epinephrine";
 	_unit addItem "ACE_morphine";
 };
 

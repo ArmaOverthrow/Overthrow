@@ -4,7 +4,7 @@ OT_selling = true;
 private _town = (getpos player) call OT_fnc_nearestTown;
 private _s = [];
 
-private _standing = (player getVariable format['rep%1',_town]) * -1;
+private _standing = ([_town] call OT_fnc_support) * -1;
 private _idx = lbCurSel 1500;
 private _sellcls = lbData [1500,_idx];
 
@@ -29,7 +29,7 @@ private _qty = 0;
 
 private _total = (_price*_qty);
 [_total] call OT_fnc_money;
-if(_total > 100) then {[_town,round(_total / 100)] call OT_fnc_standing};
+if(_total > 100) then {[_town,round(_total / 100)] call OT_fnc_support};
 private _ocls = _sellcls;
 
 if((player getVariable ["OT_shopTarget","Self"]) isEqualTo "Vehicle") then {

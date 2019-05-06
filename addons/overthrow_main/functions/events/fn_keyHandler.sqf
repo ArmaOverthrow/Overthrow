@@ -26,8 +26,8 @@ if(!dialog) then {
 					[
 						format [
 							"<t align='center'><t size='0.6' color='#ffffff'>Main Menu</t><br/><br/>
-<t size='0.5' color='#ffffff'>From here you can perform basic actions such as recruiting civilians or fast travelling to buildings you own, friendly bases and camps that you place. As you can see on the bottom right, this shack is owned by you, so you can therefore fast travel back here when you need to, but not while wanted.<br/><br/>
-To continue, close this menu (Esc) and open the map (%1 key)</t>",
+							<t size='0.5' color='#ffffff'>From here you can perform basic actions such as recruiting civilians or fast travelling to buildings you own, friendly bases and camps that you place. As you can see on the bottom right, this shack is owned by you, so you can therefore fast travel back here when you need to, but not while wanted.<br/><br/>
+							To continue, close this menu (Esc) and open the map (%1 key)</t>",
 							"ShowMap" call OT_fnc_getAssignedKey
 						], 0, 0.2, 120, 1, 0, 2] call OT_fnc_dynamicText;
 
@@ -40,8 +40,8 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 					sleep 3;
 					[format [
 						"<t align='left'><t size='0.7' color='#000000'>Stability</t><br/>
-<t size='0.6' color='#000000'>Yellow areas indicate towns where stability is lowest.Blue icons indicate known NATO installations.</t><br/><br/>
-<t size='0.5' color='#101010'>%3</t>",
+						<t size='0.6' color='#000000'>Yellow areas indicate towns where stability is lowest.Blue icons indicate known NATO installations.</t><br/><br/>
+						<t size='0.5' color='#101010'>%3</t>",
 						OT_tutorial_backstoryText
 					], -0.5, 0.5, 240, 1, 0, 2] call OT_fnc_dynamicText;
 
@@ -51,7 +51,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 
 					[format [
 						"<t align='center'><t size='0.6' color='#ffffff'>Interaction</t><br/>
-<t size='0.5' color='#ffffff'>Some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your Interact key (%1). Move the mouse over 'Open' and then release the key to perform that action.</t><br/><br/>",
+						<t size='0.5' color='#ffffff'>Some objects, including most of the ones in your shack, have actions that you can perform on them directly. Try it out by moving towards the ammo crate and using your Interact key (%1). Move the mouse over 'Open' and then release the key to perform that action.</t><br/><br/>",
 						_acekey
 					], 0, 0.2, 20, 1, 0, 2] call OT_fnc_dynamicText;
 
@@ -97,6 +97,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 0);
 												hint "You have completed the tutorial. Good luck on your future journey!";
+												player setVariable ["OT_tute_inProgress", false];
 											},0,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -135,6 +136,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 1);
 												hint "You have completed the tutorial. Good luck on your future journey!";
+												player setVariable ["OT_tute_inProgress", false];
 											},1,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -168,6 +170,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 2);
 												hint "You have completed the tutorial. Good luck on your future journey!";
+												player setVariable ["OT_tute_inProgress", false];
 											},2,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -195,6 +198,7 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 												playSound "3DEN_notificationDefault";
 												[] call (OT_tutorialMissions select 3);
 												hint "You have completed the tutorial. Good luck on your future journey!";
+												player setVariable ["OT_tute_inProgress", false];
 											},3,10] call CBA_fnc_waitAndExecute;
 										}
 									] call OT_fnc_doConversation;
@@ -269,6 +273,13 @@ To continue, close this menu (Esc) and open the map (%1 key)</t>",
 					};
 					createDialog "OT_dialog_vehicle";
 					[] spawn OT_fnc_vehicleDialog;
+				};
+			};
+
+			private _cTarget = cursorTarget;
+			if((_cTarget isKindOf "CAManBase") && (alive _cTarget) && (!isplayer _cTarget) && !(side _cTarget isEqualTo west) && (_cTarget distance player) < 10) exitWith {
+				if((!(player getVariable ["OT_tute",true]) || !(player getVariable ["OT_tute_inProgress", false]))) exitWith {
+					_cTarget call OT_fnc_talkToCiv;
 				};
 			};
 			[] spawn OT_fnc_mainMenu;

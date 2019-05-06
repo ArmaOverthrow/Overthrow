@@ -14,4 +14,8 @@ if !(_veh call OT_fnc_playerIsOwner) then {
     if(_veh getVariable ["OT_locked",false]) then {
         ctrlSetText [1605,"Unlock Vehicle"];
     };
-}
+};
+
+if !(typeOf _veh == "OT_I_Truck_recovery") then {
+	ctrlShow [1614, false];
+};

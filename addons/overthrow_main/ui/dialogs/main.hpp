@@ -151,9 +151,21 @@ class OT_dialog_vehicle
 			w = 0.149531 * safezoneW;
 			h = 0.066 * safezoneH;
 		};
+		class RscButton_1614: RscOverthrowButton
+		{
+			idc = 1614;
+			action = "closeDialog 0;[player] spawn OT_fnc_recover;";
+			tooltip = "Loot bodies within 150m"; //--- ToDo: Localize;
+
+			text = "Loot"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.214 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
 		class RscButton_1613: RscOverthrowButton
 		{
-			idc = 1600;
+			idc = 1613;
 			text = "Jobs"; //--- ToDo: Localize;
 			action = "call OT_fnc_jobsDialog";
 

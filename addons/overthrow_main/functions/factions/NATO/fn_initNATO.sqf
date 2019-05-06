@@ -18,17 +18,9 @@ OT_NATO_Group_Engineers = "";
 	};
 }foreach("true" configClasses (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Support"));
 
-OT_NATO_Unit_TeamLeader = "B_T_Soldier_TL_F";
-OT_NATO_Unit_SquadLeader = "B_T_Soldier_SL_F";
 OT_NATO_Units_LevelOne = [];
 OT_NATO_Units_LevelTwo = [];
 OT_NATO_Units_CTRGSupport = [];
-OT_NATO_Unit_Sniper = "B_T_Sniper_F";
-OT_NATO_Unit_Spotter = "B_T_Spotter_F";
-OT_NATO_Unit_AA_spec = "B_T_Soldier_AA_F";
-OT_NATO_Unit_AA_ass = "B_T_Soldier_AAA_F";
-OT_NATO_Unit_HVT = "B_T_Officer_F";
-
 
 {
 	private _name = configName _x;
@@ -129,7 +121,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 			if(_name isEqualTo OT_NATO_HQ) then {
 				_garrison = 48;
 				server setVariable [format ["vehgarrison%1",_name],["B_T_APC_Tracked_01_AA_F","B_T_APC_Tracked_01_AA_F","B_GMG_01_high_F","B_GMG_01_high_F","B_GMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F","B_HMG_01_high_F"],true];
-				server setVariable [format ["airgarrison%1",_name],[OT_NATO_Vehicle_AirTransport_Large],true];
+				server setVariable [format ["airgarrison%1",_name],OT_NATO_Vehicles_JetGarrison,true];
 			}else{
 				server setVariable [format ["airgarrison%1",_name],[],true];
 			};
@@ -196,7 +188,6 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 			server setVariable [format ["airgarrison%1",_name],_garrison,true];
 		};
 	}foreach(OT_NATO_Vehicles_AirGarrison);
-
 
 	diag_log "Overthrow: Setting up NATO checkpoints";
 	{

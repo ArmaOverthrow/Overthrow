@@ -158,7 +158,7 @@ if(count _cost > 0) then {
         _numtoproduce = round (1 / _plastic);
         _plastic = 1;
     };
-    _recipe = format["<t size='0.65' align='center'>Input: $%1 + ",round((_base * _numtoproduce) * 0.8)];
+    _recipe = format["<t size='0.65' align='center'>Input: $%1 + ",round((_base * _numtoproduce) * 0.6)];
     if(_wood > 0) then {
         _recipe = _recipe + format["%1 x wood ",_wood];
     };

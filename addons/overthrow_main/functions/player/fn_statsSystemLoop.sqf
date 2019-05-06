@@ -10,38 +10,13 @@ if !(captive _player) then {
 		_wanted = "WANTED";
 	};
 };
-private _rep = _player getVariable ["rep",0];
-private _standing = format["%2%1",_rep,["","+"] select (_rep > 0)];
 
 private _seen = "";
 if(_player call OT_fnc_unitSeenNATO) then {
 	_seen = "<t color='#5D8AA8'>o_o</t>";
-
-	private _skill = _player getVariable ["OT_stealth",0];
-	private _replim = _skill call {
-		if(_this isEqualTo 1) exitWith {75};
-		if(_this isEqualTo 2) exitWith {100};
-		if(_this isEqualTo 3) exitWith {150};
-		if(_this isEqualTo 4) exitWith {200};
-		50
-	};
-	if(_skill < 5 && _rep < -_replim) then {
-		_seen = "<t color='#5D8AA8'>O_O</t>";
-	};
 }else{
 	if(_player call OT_fnc_unitSeenCRIM) then {
 		_seen = "<t color='#B2282f'>o_o</t>";
-		private _skill = _player getVariable ["OT_stealth",0];
-		private _replim = _skill call {
-			if(_this isEqualTo 1) exitWith {75};
-			if(_this isEqualTo 2) exitWith {100};
-			if(_this isEqualTo 3) exitWith {150};
-			if(_this isEqualTo 4) exitWith {200};
-			50
-		};
-		if(_skill < 5 && (abs _rep) > _replim) then {
-			_seen = "<t color='#B2282f'>O_O</t>";
-		};
 	};
 };
 private _qrf = "";

@@ -2,7 +2,7 @@ private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 
 private _town = (getPos player) call OT_fnc_nearestTown;
-private _standing = player getVariable format['rep%1',_town];
+private _standing = [_town] call OT_fnc_support;
 
 private _price = lbValue [1500,_idx];
 if(_price isEqualTo -1) exitWith {};

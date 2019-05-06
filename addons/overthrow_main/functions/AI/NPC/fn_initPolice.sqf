@@ -32,7 +32,7 @@ _unit addEventHandler ["HandleDamage", {
 removeAllWeapons _unit;
 
 private _cost = 0;
-private _wpn = ["SubmachineGun"] call OT_fnc_findWeaponInWarehouse;
+private _wpn = ["AssaultRifle"] call OT_fnc_findWeaponInWarehouse;
 if(_wpn isEqualTo "") then {
 	_possible = [];
 	{

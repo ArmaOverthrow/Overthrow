@@ -20,6 +20,9 @@ if(count _sorted isEqualTo 0) exitWith {};
 private _target = _sorted select 0;
 
 {
+    if ((typeOf vehicle _x) == "OT_I_Truck_recovery" && (driver vehicle _x) == _x) exitWith {
+        [_x] spawn OT_fnc_recover;
+    };
 	[_x,_target] spawn {
 		private _active = true;
 		private _wasincar = false;

@@ -6,15 +6,9 @@
 	["B_HMG_01_high_F",[-9,9,-0.0749998],0,1,0,[],"","",true,false],
 	["B_HMG_01_high_F",[9,-9,-0.0749998],180,1,0,[],"","",true,false],
 	["Land_BagBunker_01_small_green_F",[-8.99989,10.5555,0],180,1,0,[],"","",true,false],
-	["Land_BagBunker_01_small_green_F",[8.99989,-10.5555,0],0,1,0,[],"","",true,false], 
+	["Land_BagBunker_01_small_green_F",[8.99989,-10.5555,0],0,1,0,[],"","",true,false],
 	["B_GMG_01_A_F",[-4,13,-0.0749998],40,1,0,[],"","",true,false],
 	["B_GMG_01_A_F",[4,-13,-0.0749998],220,1,0,[],"","",true,false],
-	["Land_Razorwire_F",[15.1629,-4.71896,-2.38419e-006],130,1,0,[],"","",true,false],
-	["Land_Razorwire_F",[-12.8371,7.28104,-2.38419e-006],130,1,0,[],"","",true,false],
-	["Land_Razorwire_F",[12.9404,9.86766,-2.38419e-006],50,1,0,[],"","",true,false],
-	["Land_Razorwire_F",[-15.0596,-7.13234,-2.38419e-006],50,1,0,[],"","",true,false],
-	["Land_Razorwire_F",[-16.4326,0.228816,-2.38419e-006],90,1,0,[],"","",true,false],
-	["Land_Razorwire_F",[16.5674,3.22882,-2.38419e-006],90,1,0,[],"","",true,false],
 	["Site_Minefield",[-50,0,0],0,1,0,[],"","",true,false],
 	["Site_Minefield",[50,0,0],0,1,0,[],"","",true,false]
 ]

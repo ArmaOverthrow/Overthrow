@@ -2,7 +2,7 @@ if (OT_selling) exitWith {};
 OT_selling = true;
 
 private _town = (getpos player) call OT_fnc_nearestTown;
-private _standing = (player getVariable format['rep%1',_town]) * -1;
+private _standing = ([_town] call OT_fnc_support) * -1;
 private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 
@@ -13,8 +13,6 @@ private _price = [_town,_cls,_standing] call OT_fnc_getSellPrice;
 if(isNil "_price") exitWith {OT_selling = false};
 
 [_price] call OT_fnc_money;
-
-if(_price > 100) then {[_town,round(_price / 100)] call OT_fnc_standing};
 
 if(OT_hasTFAR) then {
 	private _c = _cls splitString "_";
