@@ -29,7 +29,25 @@ _this spawn {
                     if(((_x isKindOf "Car") || (_x isKindOf "Air") || (_x isKindOf "Ship")) && !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
                         if !(side _x isEqualTo west) then {
                             if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
-                                _targets pushback ["V",position _x,0,_x];
+                                //determine threat
+                                private _targetType = "V";
+                                private _threat = 0;
+
+                                call {
+                                    if(_ty in OT_allVehicleThreats) exitWith {
+                                        _threat = 150;
+                                    };
+                                    if(_ty in OT_allPlaneThreats) exitWith {
+                                        _targetType = "P";
+                                        _threat = 500;
+                                    };
+                                    if(_ty in OT_allHeliThreats) exitWith {
+                                        _targetType = "H";
+                                        _threat = 300;
+                                    };
+                                };
+
+                                _targets pushback [_targetType,position _x,_threat,_x];
                             };
                         };
                     };

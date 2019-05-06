@@ -21,6 +21,7 @@ OT_nextNATOTurn = time+_nextturn;
 publicVariable "OT_nextNATOTurn";
 
 [{
+
 	params ["_handle","_vars"];
 	_vars params ["_abandoned","_resources","_diff","_nextturn","_count","_lastmin","_lastsched"];
 
@@ -68,8 +69,8 @@ publicVariable "OT_nextNATOTurn";
 					if(_pos call OT_fnc_inSpawnDistance) then {
 						_numgarrison = server getVariable [format["garrison%1"],0];
 						_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",500]);
-						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",500]);
-						if(_numgarrison == 0 && _nummil < _numres) then {
+						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",100]);
+						if(_numgarrison < 4 && _nummil < _numres) then {
 							_countered = true;
 							server setVariable ["NATOattacking",_name,true];
 							server setVariable ["NATOattackstart",time,true];
@@ -190,6 +191,32 @@ publicVariable "OT_nextNATOTurn";
 			_fobs deleteAt (_fobs find _x);
 		}foreach(_clearedFOBs);
 
+		//expire targets
+		private _expired = [];
+		{
+			if((time - (_x select 5)) > 800) then {
+				_expired pushback _x;
+			};
+		}foreach(_knownTargets);
+		{
+			_knownTargets deleteAt (_knownTargets find _x);
+		}foreach(_expired);
+
+		//Scramble jets
+		{
+			_x params ["_ty","_pos","_threat","_target",["_done",false]];
+			if(!_done && (_ty isEqualTo "P" || _ty isEqualTo "H")) then {
+				if(_resources > 500 && (random 100) > 80) then {
+					[_target,_pos] spawn OT_fnc_NATOScrambleJet;
+					_resources = _resources - 500;
+					_x set [4,true];
+					if(([OT_nation] call OT_fnc_support) > (random 250)) then {
+						format["Intel reports that NATO has scrambled a jet to intercept %1",(typeof _target) call OT_fnc_vehicleGetName]
+					};
+				};
+			};
+		}foreach(_knownTargets);
+
 		//NATO gets to play if it hasn't reacted to anything
 		if(time >= OT_nextNATOTurn && {!_countered}) then {
 			OT_lastNATOTurn = time;
@@ -207,17 +234,6 @@ publicVariable "OT_nextNATOTurn";
 			_mul = 25;
 			if(_diff > 1) then {_gain = 75;_mul = 50};
 			if(_diff < 1) then {_gain = 0;_mul = 15};
-
-			//expire targets
-			private _expired = [];
-			{
-				if((_x select 4) || (time - (_x select 5)) > 2400) then {
-					_expired pushback _x;
-				};
-			}foreach(_knownTargets);
-			{
-				_knownTargets deleteAt (_knownTargets find _x);
-			}foreach(_expired);
 
 			//Recover resources
 			_resources = _resources + _gain + _resourceGain + ((count _abandoned) * _mul);

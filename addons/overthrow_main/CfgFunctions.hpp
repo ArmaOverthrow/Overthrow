@@ -381,6 +381,7 @@ class CfgFunctions
 			class incomeSystem {};
 			class propagandaSystem {};
 			class stability {};
+			class getControlledPopulation {};
 		};
 
 		/*
@@ -505,6 +506,7 @@ class CfgFunctions
 			class NATOGroundSupport {};
 			class NATOTankSupport {};
 			class NATOSeaSupport {};
+			class NATOScrambleJet {};
 
 			class NATOResponseObjective {};
 			class NATOResponseTown {};
@@ -520,6 +522,7 @@ class CfgFunctions
 			class NATOSetExplosives {};
 			class NATOupgradeFOB {};
 			class NATOsendGendarmerie {};
+			class NATOreportThreat {};
 		};
 
 		class NATOAI

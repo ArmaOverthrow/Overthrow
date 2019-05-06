@@ -122,7 +122,13 @@ if !(captive _unit) then {
 				if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
 					//Set the whole car wanted
 					_unit setcaptive false;
+					{
+						_x setcaptive false;
+					}forEach(units _vehicle);
 					[vehicle _unit] call OT_fnc_revealToNATO;
+
+					//Record any threats as known targets
+					(vehicle _unit) call OT_fnc_NATOreportThreat;
 				};
 				if(_unit call OT_fnc_hasWeaponEquipped) exitWith {
 					_unit setCaptive false;

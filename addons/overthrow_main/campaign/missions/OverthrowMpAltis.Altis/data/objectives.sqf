@@ -15,3 +15,7 @@ OT_objectiveData = [
 OT_NATO_HQ = "Selakano Airfield";
 OT_NATO_priority = ["Selakano Airfield","Gravia Airport","Comms Alpha","Pyrgos","Kavala","Neochori"];
 OT_NATO_Navy_HQ = "Pyrgos Naval Base";
+
+OT_NATO_JetPos = [20892.6,7268.2,0.800297]; //Where to spawn jets
+OT_NATO_JetDir = 122; //Direction to face jet on spawn
+OT_NATO_JetLandPos = [19991.5,2479.9,106.43]; //Waypoint before landing a jet

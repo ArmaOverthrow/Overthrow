@@ -253,6 +253,9 @@ OT_allBackpacks = [];
 OT_allStaticBackpacks = [];
 OT_vehWeights_civ = [];
 OT_mostExpensiveVehicle = "";
+OT_allHeliThreats = [];
+OT_allPlaneThreats = [];
+OT_allVehicleThreats = [];
 
 OT_spawnHouses = [];
 {
@@ -319,8 +322,22 @@ private _mostExpensive = 0;
 	};
 }foreach(_allVehs);
 
-private _allHelis = "
+//Determine vehicle threats
+_allVehs = "
     ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    &&
+	{ (getArray ( _x >> ""threat"" ) select 0) >= 0.5}
+	&&
+    {(getText ( _x >> ""vehicleClass"" ) isEqualTo ""Land"")})
+
+" configClasses ( configFile >> "cfgVehicles" );
+
+{
+	OT_allVehicleThreats pushback (configName _x);
+}foreach(_allVehs);
+
+private _allHelis = "
+    ( getNumber ( _x >> ""scope"" ) > 0
     &&
 	{ (getArray ( _x >> ""threat"" ) select 0) < 0.5}
 	&&
@@ -352,6 +369,27 @@ private _allHelis = "
 
 	OT_helis pushback [_cls,[_cost,0,_steel,_plastic],true];
 	OT_allVehicles pushback _cls;
+}foreach(_allHelis);
+
+//Determine aircraft threats
+_allHelis = "
+    ( getNumber ( _x >> ""scope"" ) > 0
+    &&
+	{ (getArray ( _x >> ""threat"" ) select 0) >= 0.5}
+	&&
+    { getText ( _x >> ""vehicleClass"" ) isEqualTo ""Air""})
+" configClasses ( configFile >> "cfgVehicles" );
+
+{
+	private _cls = configName _x;
+	private _clsConfig = configFile >> "cfgVehicles" >> _cls;
+	private _numturrets = count("true" configClasses(_clsConfig >> "Turrets"));
+
+	if(_cls isKindOf "Plane") then {
+		OT_allPlaneThreats pushback _cls;
+	}else{
+		OT_allHeliThreats pushback _cls;
+	};
 }foreach(_allHelis);
 
 //Chinook (unarmed) special case for production logistics
