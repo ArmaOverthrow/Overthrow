@@ -14,6 +14,8 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 
 waitUntil {!isNull player && player isEqualTo player};
 
+ace_interaction_EnableTeamManagement = false; //Disable group switching
+
 enableSaving [false,false];
 enableEnvironment [false,true];
 setViewDistance 15;

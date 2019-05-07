@@ -33,6 +33,7 @@ publicVariable "OT_nextNATOTurn";
 		private _countered = (server getVariable ["NATOattacking",""]) != "";
 		_knownTargets = spawner getVariable ["NATOknownTargets",[]];
 		_schedule = server getVariable ["NATOschedule",[]];
+		private _popControl = call OT_fnc_getControlledPopulation;
 
 		//scheduler
 		if(count _schedule > 0) then {
@@ -72,6 +73,10 @@ publicVariable "OT_nextNATOTurn";
 						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",100]);
 						if(_numgarrison < 4 && _nummil < _numres) then {
 							_countered = true;
+							private _m = 1;
+							if(_popControl > 1000) then {_m = 2};
+							if(_popControl > 2000) then {_m = 4};
+							_cost = _cost * _m;
 							server setVariable ["NATOattacking",_name,true];
 							server setVariable ["NATOattackstart",time,true];
 							diag_log format["Overthrow: NATO responding to %1",_name];
@@ -122,7 +127,11 @@ publicVariable "OT_nextNATOTurn";
 					if((_garrison isEqualTo 0) && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
-						_strength = _population * 3;
+						private _m = 3;
+						if(_popControl > 1000) then {_m = 4};
+						if(_popControl > 2000) then {_m = 5};
+
+						_strength = _population * _m;
 						if(_strength > _resources) then {_strength = _resources};
 						if(_town in OT_NATO_priority) then {_strength = _resources};
 						[_town,_strength] spawn OT_fnc_NATOResponseTown;
@@ -236,7 +245,7 @@ publicVariable "OT_nextNATOTurn";
 			if(_diff < 1) then {_gain = 0;_mul = 15};
 
 			//Recover resources
-			_resources = _resources + _gain + _resourceGain + ((count _abandoned) * _mul);
+			_resources = _resources + _gain + _resourceGain + ((round (_popControl * 0.01)) * _mul);
 
 			//Counter Towns
 			_lastcounter = server getVariable ["NATOlastcounter",""];
@@ -252,12 +261,17 @@ publicVariable "OT_nextNATOTurn";
 						if(_nummil < 3 && {_numres > 0}) then {
 							if(_lastAttack > 1200 && {(_town in _abandoned)} && {(_resources > _population)} && {(random 100) > 99}) then {
 								//Counter a town
-								diag_log format ["=====OVERTHROW===== Countering %1",_town];
-								[_town,_population] spawn OT_fnc_NATOCounterTown;
+								diag_log format ["Overthrow: Counter-attacking %1",_town];
+								private _m = 3;
+								if(_popControl > 1000) then {_m = 4};
+								if(_popControl > 2000) then {_m = 5};
+								private _cost = _population * _m;
+								if(_resources < _cost) then {_cost = _resources};
+								[_town,_cost] spawn OT_fnc_NATOCounterTown;
 								server setVariable ["NATOlastcounter",_town,true];
 								server setVariable ["NATOattacking",_town,true];
 								server setVariable ["NATOattackstart",time,true];
-								_resources = _resources - _population;
+								_resources = _resources - _cost;
 								_countered = true;
 							};
 						};
@@ -272,7 +286,13 @@ publicVariable "OT_nextNATOTurn";
 				if(_lastAttack > 1200 && {(_name != _lastcounter)} && {(_name in _abandoned)} && {(_resources > _pri)} && {(random 100) > 99}) exitWith {
 					//Counter an objective
 
+					private _m = 1;
+					if(_popControl > 1000) then {_m = 2};
+					if(_popControl > 2000) then {_m = 4};
+					_pri = _pri * _m;
+					if(_pri > _resources) then {_pri = _resources};
 					[_name,_pri] spawn OT_fnc_NATOCounterObjective;
+					diag_log format ["Overthrow: Counter-attacking %1",_name];
 					server setVariable ["NATOlastcounter",_name,true];
 					server setVariable ["NATOattacking",_name,true];
 					server setVariable ["NATOattackstart",time,true];
@@ -440,8 +460,9 @@ publicVariable "OT_nextNATOTurn";
 			};
 
 			//Schedule some missions
+			private _lastConvoy = spawner getVariable ["NATOlastconvoy",0];
 			if(_spend > 0) then {
-				if(_spend > 500 && {(random 100) > _chance}) then {
+				if((time - _lastConvoy) > 3600 && _spend > 500 && {(random 100) > _chance}) then {
 					_start = selectRandom (OT_objectiveData + OT_airportData);
 					_startName = _start select 1;
 					_startPos = _start select 0;
@@ -457,9 +478,12 @@ publicVariable "OT_nextNATOTurn";
 						//Schedule a convoy
 						private _id = format["CONVOY%1",round(random 99999)];
 						_hour = (date select 3) + 2;
-						_spend = _spend - 500;
-						_resources = _resources - 500;
-						_schedule pushback [_id,"CONVOY",_start,_end,_hour];
+						if(_hour > 5 && _hour < 17) then {
+							spawner setVariable ["NATOlastconvoy",time,false];
+							_spend = _spend - 500;
+							_resources = _resources - 500;
+							_schedule pushback [_id,"CONVOY",_start,_end,_hour];
+						};
 					};
 				};
 			};

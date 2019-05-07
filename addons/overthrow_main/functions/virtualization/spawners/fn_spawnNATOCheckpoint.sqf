@@ -12,7 +12,12 @@ if(isNil "_numNATO") then {
 if(_numNATO <= 0) exitWith {[]};
 
 private _road = [_start] call BIS_fnc_nearestRoad;
-private _start = getPos _road;
+if(isNil "_road") exitWith {diag_log format["Overthrow: WARNING: Couldnt find road for %1 %2",_name,_start];[]};
+
+_start = getPos _road;
+
+if((count _start) isEqualTo 0 || _start#1 isEqualTo 0) exitWith {diag_log format["Overthrow: WARNING: Couldnt find road for %1 %2",_name,_start];[]};
+
 private _vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
 
 private _roadscon = roadsConnectedto _road;

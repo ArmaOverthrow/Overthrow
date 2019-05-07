@@ -10,7 +10,7 @@ OT_startCameraTarget = [1420,535,5.8];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 13;
-OT_NATOversion = 9;
+OT_NATOversion = 10;
 OT_CRIMversion = 1;
 
 OT_faction_NATO = "BLU_T_F";
@@ -142,6 +142,7 @@ OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = ["B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_F"];
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
 OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
+OT_NATO_Vehicles_APC = ["B_T_APC_Wheeled_01_cannon_F"];
 
 OT_NATO_Sandbag_Curved = "Land_BagFence_01_round_green_F";
 OT_NATO_Barrier_Small = "Land_HBarrier_01_line_5_green_F";

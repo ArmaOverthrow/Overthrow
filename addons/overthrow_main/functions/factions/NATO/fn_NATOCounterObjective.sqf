@@ -8,6 +8,8 @@ sleep (200 + (random 300));
 
 private _tskid = [resistance,[format["attack%1",_objective]],[format["NATO is attempting to recapture %1.",_objective],format["Defend %1",_objective],format["attack%1",_objective]],_posObjective,1,2,true,"Defend",true] call BIS_fnc_taskCreate;
 
+format["NATO is counter-attacking %1",_objective] remoteExec ["OT_fnc_notifyMinor",0,false];
+
 _fail = {
 	params ["_tskid","_objective"];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;

@@ -181,7 +181,7 @@ while {_count < _numNATO} do {
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 	};
-	_group call OT_fnc_initMilitaryPatrol;
+	[_group,_posTown,100,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
 	sleep 0.2;
 };
@@ -261,7 +261,7 @@ private _road = objNull;
 			[_x] joinSilent _vgroup;
 			_x setVariable ["garrison","HQ",false];
 		}foreach(crew _veh);
-		_vgroup call OT_fnc_initMilitaryPatrol;
+		[_vgroup,_posTown,100,6] call CBA_fnc_taskPatrol;
 	};
 }foreach(_vehgarrison);
 

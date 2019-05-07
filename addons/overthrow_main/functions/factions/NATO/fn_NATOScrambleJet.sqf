@@ -1,8 +1,10 @@
 //Scramble a jet to take out a target
-params ["_target","_targetpos"];
+params ["_target","_targetpos",["_delay",0]];
+
 private _abandoned = server getVariable ["NATOabandoned",[]];
 if !(OT_NATO_HQ in _abandoned) then {
-    diag_log "NATO Scrambling Jet";
+    if(_delay > 0) then {sleep _delay};
+    diag_log "Overthrow: NATO Scrambling Jet";
 
     private _vehtype = selectRandom OT_NATO_Vehicles_AirWingedSupport;
     private _frompos = OT_NATO_JetPos;

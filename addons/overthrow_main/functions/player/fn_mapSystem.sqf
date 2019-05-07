@@ -330,8 +330,8 @@ _handler = {
 		if(_progress != 0) then {
 			(_this select 0) drawEllipse [
 				_qrf,
-				100,
-				100,
+				200,
+				200,
 				0,
 				_col,
 				"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"

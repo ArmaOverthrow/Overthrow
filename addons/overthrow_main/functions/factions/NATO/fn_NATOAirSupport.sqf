@@ -1,5 +1,5 @@
-params ["_frompos","_attackpos","_delay"];
-sleep _delay;
+params ["_frompos","_attackpos",["_delay",0]];
+if (_delay > 0) then {sleep _delay};
 private _vehtype = OT_NATO_Vehicles_AirSupport call BIS_fnc_SelectRandom;
 
 
@@ -25,6 +25,10 @@ createVehicleCrew _veh;
 }foreach(crew _veh);
 _allunits = (units _group);
 sleep 1;
+
+{
+	_x addCuratorEditableObjects [[_veh]];
+}foreach(allCurators);
 
 _wp = _group addWaypoint [_attackpos,200];
 _wp setWaypointType "SAD";
@@ -53,5 +57,3 @@ _wp setWaypointTimeout [100,150,200];
 _wp = _group addWaypoint [_frompos,2000];
 _wp setWaypointType "SCRIPTED";
 _wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
-
-
