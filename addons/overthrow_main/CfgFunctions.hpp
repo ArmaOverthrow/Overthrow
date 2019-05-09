@@ -31,6 +31,7 @@ class CfgFunctions
 			class unitSeenAny {};
 			class revealToNATO {};
 			class revealToCRIM {};
+			class revealToResistance {};
 		};
 
 		/* Persistent Save */
@@ -322,6 +323,7 @@ class CfgFunctions
 			class getBuildId {};
 			class weatherSystem {};
 			class getRandomRoadPosition {};
+			class isRadarInRange {};
 		};
 
 		/*
@@ -560,6 +562,7 @@ class CfgFunctions
 			class initWorkshop {};
 			class initTrainingCamp {};
 			class initWarehouse {};
+			class initRadar {};
 		};
 
         class Util

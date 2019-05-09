@@ -56,7 +56,15 @@ waitUntil {camCommitted _introcam};
 showCinemaBorder false;
 
 if(!isMultiplayer) exitWith {
-	"Overthrow currently does not work very well in Single Player mode. Please host a LAN game for solo play. See the wiki at http://armaoverthrow.com/" call OT_fnc_notifyMinor;
+	[
+		"<t size='0.5' color='#000000'>Overthrow currently does not work very well in Single Player mode. Please host a LAN game for solo play. See the wiki at http://armaoverthrow.com/</t>",
+		0,
+		0.2,
+		30,
+		0,
+		0,
+		2
+	] call OT_fnc_dynamicText;
 };
 
 if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["StartupType",""] isEqualTo "")) then {

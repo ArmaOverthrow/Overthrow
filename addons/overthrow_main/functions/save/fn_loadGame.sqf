@@ -301,6 +301,7 @@ sleep 0.2;
 			}else{
 				[_pos,_cls,false] spawn OT_fnc_addGarrison;
 			};
+			sleep 0.1;
 		}foreach(_garrison);
 	};
 	private _mrkid = format["%1-base",_pos];

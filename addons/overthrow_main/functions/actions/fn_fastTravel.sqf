@@ -35,7 +35,10 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 
 	private _buildings =  _pos nearObjects [OT_item_Tent,30];
 	if !(_buildings isEqualTo []) then {
-		_handled = true;
+		_bdg = (_buildings select 0);
+		if !(_bdg getVariable ["owner",""] isEqualTo "") then {
+			_handled = true;
+		};
 	};
 
 	private _exit = false;

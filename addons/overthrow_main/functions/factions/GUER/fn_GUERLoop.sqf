@@ -38,6 +38,12 @@ if(_dead > 150) then {
 	};
 }foreach(spawner getVariable ["_noid_",[]]);
 
+{
+	if((_x isKindOf "Air") && {(alive _x)} && ((side _x) isEqualTo west) && (_x call OT_fnc_isRadarInRange) && {(count crew _x > 0)}) then {
+		[_x,2500] call OT_fnc_revealToResistance;
+	};
+}foreach(vehicles);
+
 if ((date select 3) != _lasthr) then {
 	_lasthr = date select 3;
 	private _wages = 0;

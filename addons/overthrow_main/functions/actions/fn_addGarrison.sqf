@@ -124,7 +124,6 @@ if(_create isEqualType 1) then {
         };
 
         if !(_done) then {
-            systemChat str _pos;
             _p = _pos findEmptyPosition [30,80,_class_obj];
         };
 
