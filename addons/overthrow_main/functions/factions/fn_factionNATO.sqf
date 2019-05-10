@@ -9,7 +9,7 @@ private _count = 0;
 
 server setVariable ["NATOattacking","",true];
 server setVariable ["NATOattackstart",0,true];
-server setVariable ["NATOlastattack",-1200,true];
+server setVariable ["NATOlastattack",0,true];
 server setVariable ["QRFpos",nil,true];
 server setVariable ["QRFprogress",nil,true];
 server setVariable ["QRFstart",nil,true];
@@ -251,7 +251,7 @@ publicVariable "OT_nextNATOTurn";
 		if(time >= OT_nextNATOTurn && {!_countered}) then {
 			OT_lastNATOTurn = time;
 			publicVariable "OT_lastNATOTurn";
-			_lastAttack = time - (server getVariable ["NATOlastattack",-1200]);
+			_lastAttack = time - (server getVariable ["NATOlastattack",0]);
 			_resourceGain = server getVariable ["NATOresourceGain",0];
 			//NATO turn
 			_nextturn = OT_NATOwait + random OT_NATOwait;
@@ -262,8 +262,10 @@ publicVariable "OT_nextNATOTurn";
 			_chance = 98;
 			_gain = 25;
 			_mul = 25;
-			if(_diff > 1) then {_gain = 75;_mul = 50};
-			if(_diff < 1) then {_gain = 0;_mul = 15};
+			if(_diff > 1) then {_gain = 75;_mul = 50;_chance = 97};
+			if(_diff < 1) then {_gain = 0;_mul = 15;_chance = 99};
+			if(_popControl > 1000) then {_chance = _chance - 1};
+			if(_popControl > 2000) then {_chance = _chance - 1};
 
 			//Recover resources
 			_resources = _resources + _gain + _resourceGain + ((round (_popControl * 0.01)) * _mul);
@@ -282,7 +284,7 @@ publicVariable "OT_nextNATOTurn";
 						_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
 						_numres = {side _x isEqualTo resistance || captive _x} count (_pos nearObjects ["CAManBase",200]);
 						if(_nummil < 3 && {_numres > 0}) then {
-							if(_lastAttack > 1200 && {(_town in _abandoned)} && {(_resources > _population)} && {(random 100) > 99}) then {
+							if((time - _lastAttack) > 1200 && {(_town in _abandoned)} && {(_resources > _population)} && {(random 100) > _chance}) then {
 								//Counter a town
 								diag_log format ["Overthrow: Counter-attacking %1",_town];
 								private _m = 3;
@@ -294,6 +296,7 @@ publicVariable "OT_nextNATOTurn";
 								server setVariable ["NATOlastcounter",_town,true];
 								server setVariable ["NATOattacking",_town,true];
 								server setVariable ["NATOattackstart",time,true];
+								server setVariable ["NATOlastattack",time,true];
 								_resources = _resources - _cost;
 								_countered = true;
 							};
@@ -308,11 +311,9 @@ publicVariable "OT_nextNATOTurn";
 				_x params ["_pos","_name","_pri"];
 				private _chance = 99;
 				if(_pri > 800) then {_chance = _chance - 1};
-				if(_pri > 500) then {_chance = _chance - 1};
-				if(_pri > 200) then {_chance = _chance - 1};
 				if(_popControl > 1000) then {_chance = _chance - 1};
 				if(_popControl > 2000) then {_chance = _chance - 1};
-				if(_lastAttack > 1200 && {(_name != _lastcounter)} && {(_name in _abandoned)} && {(_resources > _pri)} && {(random 100) > _chance}) exitWith {
+				if((_time - _lastAttack) > 1200 && {(_name != _lastcounter)} && {(_name in _abandoned)} && {(_resources > _pri)} && {(random 100) > _chance}) exitWith {
 					//Counter an objective
 
 					private _m = _diff + 1;
@@ -321,12 +322,12 @@ publicVariable "OT_nextNATOTurn";
 					if(_pri > 800) then {_m = _m + 2};
 					if(_pri > _resources) then {_pri = _resources};
 					_resources = _resources - _pri;
-					_pri = _pri * _m;
-					[_name,_pri] spawn OT_fnc_NATOCounterObjective;
+					[_name,_pri * _m] spawn OT_fnc_NATOCounterObjective;
 					diag_log format ["Overthrow: Counter-attacking %1",_name];
 					server setVariable ["NATOlastcounter",_name,true];
 					server setVariable ["NATOattacking",_name,true];
 					server setVariable ["NATOattackstart",time,true];
+					server setVariable ["NATOlastattack",time,true];
 					_countered = true;
 				};
 

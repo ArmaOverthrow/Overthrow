@@ -23,14 +23,14 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                     private _icons = spawner getVariable ["NATOmortars",[]];
                     _found = false;
                     {
-                        if((_x select 0) isEqualTo _mortar) exitWith {
+                        if((_x select 0) isEqualTo _mortarpos) exitWith {
                             _range = (_x select 1) - round((_x select 1) * 0.25);
                             _x set [1,_range];
                             _x set [2,[_mortarpos,random 360,_range] call SHK_pos_fnc_pos];
                         };
                     }foreach(_icons);
                     if !(_found) then {
-                        _icons pushback [_mortar,1500,[_mortarpos,random 360,1500] call SHK_pos_fnc_pos];
+                        _icons pushback [_mortarpos,1500,[_mortarpos,random 360,1500] call SHK_pos_fnc_pos];
                     };
                     spawner setVariable ["NATOmortars",_icons,true];
                 };
@@ -59,14 +59,14 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                     private _icons = spawner getVariable ["NATOmortars",[]];
                     _found = false;
                     {
-                        if((_x select 0) isEqualTo _mortar) exitWith {
+                        if((_x select 0) isEqualTo _mortarpos) exitWith {
                             _range = (_x select 1) - round((_x select 1) * 0.25);
                             _x set [1,_range];
                             _x set [2,[_mortarpos,random 360,_range] call SHK_pos_fnc_pos];
                         };
                     }foreach(_icons);
                     if !(_found) then {
-                        _icons pushback [_mortar,1500,[_mortarpos,random 360,1500] call SHK_pos_fnc_pos];
+                        _icons pushback [_mortarpos,1500,[_mortarpos,random 360,1500] call SHK_pos_fnc_pos];
                     };
                     spawner setVariable ["NATOmortars",_icons,true];
                 };

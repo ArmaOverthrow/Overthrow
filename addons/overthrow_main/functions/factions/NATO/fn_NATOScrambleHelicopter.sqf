@@ -8,7 +8,7 @@ private _from = nil;
 	if !((_name in _abandoned) || (_obpos distance _targetpos) < 300) exitWith {
 		_from = _x;
 	};
-}foreach([OT_airportData,[],{_targetpos distance (_x select 0)},"DESCEND"] call BIS_fnc_SortBy);
+}foreach([OT_airportData,[],{_targetpos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
 
 if !(isNil "_from") then {
     if(_delay > 0) then {sleep _delay};

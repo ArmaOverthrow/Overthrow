@@ -42,7 +42,7 @@ _abandoned = server getvariable ["NATOabandoned",[]];
 			_air pushback _x;
 		};
 	};
-}foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"DESCEND"] call BIS_fnc_SortBy);
+}foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
 diag_log format["Overthrow: NATO QRF spend is %1",_strength];
 
 if(_strength > 500 && (count _air) > 0) then {
