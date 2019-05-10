@@ -3,6 +3,10 @@ if(!OT_adminMode && _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_not
 
 if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
+
+private _diff = server getVariable ["OT_difficulty",1];
+if(_diff > 0 && !((primaryWeapon player) isEqualTo "") exitWith {"You cannot fast travel holding a weapon" call OT_fnc_notifyMinor}
+
 private _hasdrugs = false;
 {
 	if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
@@ -19,6 +23,7 @@ if((vehicle player) != player) then {
 	if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor;_exit=true};
 	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call OT_fnc_notifyMinor;_exit=true};
 	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call OT_fnc_notifyMinor;_exit=true};
+	if(_diff > 1 && ((vehicle player) in (OT_allVehicleThreats + OT_allHeliThreats + OT_allPlaneThreats)))  exitWith {"You cannot fast travel in an offensive vehicle" call OT_fnc_notifyMinor;_exit=true};
 };
 if(_exit) exitWith {};
 
@@ -78,9 +83,9 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 		if(_handled && _ft isEqualTo 1 && !OT_adminMode) then {
 			private _cost = 0;
 			if((vehicle player) isEqualTo player) then {
-				_cost = ceil((player distance _pos) / 150);
+				_cost = ceil((player distance _pos) / 50);
 			}else{
-				_cost = ceil((player distance _pos) / 300);
+				_cost = ceil((player distance _pos) / 20);
 			};
 			if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;format ["You need $%1 to fast travel that distance",_cost] call OT_fnc_notifyMinor};
 			[-_cost] call OT_fnc_money;
