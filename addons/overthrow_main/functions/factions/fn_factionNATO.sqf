@@ -121,10 +121,12 @@ publicVariable "OT_nextNATOTurn";
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
 				_garrison = server getVariable format ["garrison%1",_town];
+				_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
+				_numres = {(side _x isEqualTo resistance) || captive _x} count (_pos nearObjects ["CAManBase",100]);
 				//Limit towns checked to those within range of players
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					//Send QRF to Town with >100 population
-					if((_garrison isEqualTo 0) && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
+					if((_numres > _nummil) && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						private _m = 3;
@@ -142,17 +144,14 @@ publicVariable "OT_nextNATOTurn";
 					};
 				};
 				//Abandon Town with <100 population if it has dropped to 0 stability
-				if((_garrison isEqualTo 0) && _population < 100 && {(_stability isEqualTo 0)} && {!(_town in _abandoned)}) then {
-					_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
-					if(_nummil < 3) then {
-						_abandoned pushback _town;
-						server setVariable ["NATOabandoned",_abandoned,true];
-						server setVariable [format ["garrison%1",_town],0,true];
-						[_town, 0] call OT_fnc_stability;
-						format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
-						_countered = true;
-						diag_log format["Overthrow: NATO has abandoned %1",_town];
-					};
+				if(_population < 100 && {(_stability isEqualTo 0)} && {!(_town in _abandoned)}) then {
+					_abandoned pushback _town;
+					server setVariable ["NATOabandoned",_abandoned,true];
+					server setVariable [format ["garrison%1",_town],0,true];
+					[_town, 0] call OT_fnc_stability;
+					format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
+					_countered = true;
+					diag_log format["Overthrow: NATO has abandoned %1",_town];
 				};
 				if(_countered) exitWith {};
 			}foreach (_sorted);
@@ -211,19 +210,41 @@ publicVariable "OT_nextNATOTurn";
 			_knownTargets deleteAt (_knownTargets find _x);
 		}foreach(_expired);
 
-		//Scramble jets
+		//Scramble jets and helos
+
 		{
 			_x params ["_ty","_pos","_threat","_target",["_done",false]];
-			if(!_done && (_ty isEqualTo "P" || _ty isEqualTo "H")) then {
-				if(_resources > 500 && (random 100) > 80) then {
-					[_target,_pos] spawn OT_fnc_NATOScrambleJet;
-					_resources = _resources - 500;
-					_x set [4,true];
-					if(([OT_nation] call OT_fnc_support) > (random 250)) then {
-						format["Intel reports that NATO has scrambled a jet to intercept %1",(typeof _target) call OT_fnc_vehicleGetName]
+			if(!_done) then {
+				private _chance = 85;
+				if(_diff > 1) then {_chance = 80};
+				if(_diff < 1) then {_chance = 90};
+				if(_popControl > 1000) then {_chance = _chance - 5};
+				if(_popControl > 2000) then {_chance = _chance - 10};
+
+				if(_ty isEqualTo "P" || _ty isEqualTo "H") then {
+					if(_resources > 500 && ((random 100) > _chance)) then {
+						[_target,_pos] spawn OT_fnc_NATOScrambleJet;
+						_resources = _resources - 500;
+						_x set [4,true];
+						if(([OT_nation] call OT_fnc_support) > (random 250)) then {
+							format["Intel reports that NATO has scrambled a jet to intercept %1",(typeof _target) call OT_fnc_vehicleGetName]
+						};
+						_countered = true;
+					};
+				};
+				if(_ty isEqualTo "V" && _threat > 100) then {
+					if(_resources > 500 && ((random 100) > _chance)) then {
+						[_target,_pos] spawn OT_fnc_NATOScrambleHelicopter;
+						_resources = _resources - 350;
+						_x set [4,true];
+						if(([OT_nation] call OT_fnc_support) > (random 250)) then {
+							format["Intel reports that NATO has scrambled a helicopter to intercept %1",(typeof _target) call OT_fnc_vehicleGetName]
+						};
+						_countered = true;
 					};
 				};
 			};
+			if(_countered) exitWith {};
 		}foreach(_knownTargets);
 
 		//NATO gets to play if it hasn't reacted to anything
@@ -433,6 +454,7 @@ publicVariable "OT_nextNATOTurn";
 				};
 			};
 
+			//Reinforce gendarm
 			if(_spend >= 20) then {
 				{
 					_town = _x;
@@ -456,6 +478,25 @@ publicVariable "OT_nextNATOTurn";
 						};
 					};
 					if(_spend < 20) exitWith {};
+				}foreach ([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
+			};
+
+			if(_spend > 150 && _popControl > 200) then {
+				{
+					_town = _x;
+					_stability = server getVariable format ["stability%1",_town];
+					_townPos = server getVariable _town;
+					_base = _townPos call OT_fnc_nearestObjective;
+					_basename = _base select 1;
+					_basepos = _base select 0;
+					_baseregion = _basepos call OT_fnc_getRegion;
+					_townregion = _townPos call OT_fnc_getRegion;
+					_dist = _basepos distance _townPos;
+					if(!(_basename in _abandoned) && _baseregion isEqualTo _townregion && _dist < 5000 && _stability < 50 && (random 100) > 80) exitWith {
+						_spend = _spend - 150;
+						_resources = _resources - 150;
+						[_basename,_townPos] spawn OT_fnc_NATOGroundPatrol;
+					};
 				}foreach ([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
 			};
 
@@ -556,7 +597,12 @@ publicVariable "OT_nextNATOTurn";
 			}foreach(_fobs);
 		};
 		//Finish
-		if(_resources > 2500) then {_resources = 2500};
+		_limit = 2500;
+		if(_diff > 0 && _popControl > 1000) then {_limit = _limit + 500};
+		if(_diff > 1 && _popControl > 1000) then {_limit = _limit + 500};
+		if(_popControl > 2000) then {_limit = _limit + 500};
+		if(_diff > 1 && _popControl > 2000) then {_limit = _limit + 500};
+		if(_resources > _limit) then {_resources = _limit};
 		server setVariable ["NATOresources",_resources,true];
 		server setVariable ["NATOabandoned",_abandoned,true];
 		spawner setVariable ["NATOknownTargets",_knownTargets,true];

@@ -324,11 +324,12 @@ private _mostExpensive = 0;
 
 //Determine vehicle threats
 _allVehs = "
-    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
-    &&
-	{ (getArray ( _x >> ""threat"" ) select 0) >= 0.5}
+	( getNumber ( _x >> ""scope"" ) > 0
 	&&
-    {(getText ( _x >> ""vehicleClass"" ) isEqualTo ""Land"")})
+	{ (getArray ( _x >> ""threat"" ) select 0) > 0}
+	&&
+	{ (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") or
+	 (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Armored"")})
 
 " configClasses ( configFile >> "cfgVehicles" );
 
@@ -891,7 +892,7 @@ OT_Buildables = [
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Informs helicopter pilots of where might be a nice place to land"],
 	["Observation Post",800,["Land_Cargo_Patrol_V4_F","Land_Cargo_Patrol_V3_F","Land_Cargo_Patrol_V2_F","Land_Cargo_Patrol_V1_F"],"",false,"A small tower, can garrison a static HMG/GMG in it"],
-	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
+	["Barracks",10000,[OT_barracks],"",false,"Allows recruiting of squads"],
 	["Guard Tower",5000,["Land_Cargo_Tower_V4_F","Land_Cargo_Tower_V3_F","Land_Cargo_Tower_V2_F","Land_Cargo_Tower_V1_F"],"",false,"It's a huge tower, what else do you need?."],
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
 	["Workshop",1000,[
@@ -904,8 +905,8 @@ OT_Buildables = [
 	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
 	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town && keep the peace. Comes with 2 units."],
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
-	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"],
-	["Radar",10000,[OT_radarBuilding],"OT_fnc_initRadar",false,"Attracts scared civilians that are more likely to join your cause"]
+	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Can recruit civilians here without needing to chase them down"],
+	["Radar",25000,[OT_radarBuilding],"OT_fnc_initRadar",false,"Reveals enemy drones, helicopters and planes within 2.5km"]
 ];
 
 {

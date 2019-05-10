@@ -174,6 +174,25 @@ if ((date select 4) != _lastmin) then {
 		call OT_fnc_cleanDead;
 	};
 
+	//chance to reveal an FOB
+	_revealed = server getVariable ["revealedFOBs",[]];
+	{
+		_x params ["_pos"];
+		private _id = str _pos;
+		private _town = _pos call OT_fnc_nearestTown;
+		_support = [_town] call OT_fnc_support;
+		if (!(_id in _revealed) && (_support > (random 2000))) then {
+			_revealed pushback _id;
+			_mrk = createMarker [format["natofob%1",_id],_pos];
+			_mrkid setMarkerShape "ICON";
+		    _mrkid setMarkerType "mil_Flag";
+		    _mrkid setMarkerColor "ColorBLUFOR";
+		    _mrkid setMarkerAlpha 1;
+			format["Citizens of %1 have revealed intelligence of a nearby NATO FOB",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
+		};
+	}foreach(server getVariable ["NATOfobs",[]]);
+	server setVariable ["revealedFOBs",_revealed,false];
+
 	_stabcounter = _stabcounter + 1;
 	private _abandoned = server getVariable ["NATOabandoned",[]];
 

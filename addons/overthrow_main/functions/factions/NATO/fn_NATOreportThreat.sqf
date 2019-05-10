@@ -2,14 +2,23 @@ private _veh = _this;
 
 private _added = false;
 private _targets = spawner getVariable ["NATOknownTargets",[]];
+private _target = nil;
 {
     _o = _x select 3;
     if (_o isEqualTo _veh) then {
         _added = true;
+        _target = _x;
     };
 }foreach(_targets);
 
-if(_added) exitWith {};//Already know this threat
+if(_added) exitWith {
+    //Already know this threat, update it's position if it's old
+    if((time - (_target select 5)) > 30) then {
+        _target set [1,position _veh];
+        _target set [5, time]; //reset timeout counter
+        spawner setVariable ["NATOknownTargets",_targets,true];
+    };
+};
 
 //determine threat
 private _targetType = "V";

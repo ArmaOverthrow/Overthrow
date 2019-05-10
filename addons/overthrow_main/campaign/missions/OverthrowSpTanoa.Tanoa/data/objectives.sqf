@@ -1,6 +1,6 @@
 OT_objectiveData = [
     [[10098.7,11818.1,0],"Comms Alpha",400],
-    [[2271.72,6331.39,0],"fuel depot",250],
+    [[2261.28,6331.25,0],"fuel depot",250],
     [[4166.48,11723.6,0],"The Harbor Remnants",250],
     [[3432.65,12893.3,0],"The Firing Range",250],
     [[3870.23,13412.4,0],"The Vehicle Range",300],

@@ -333,6 +333,19 @@ sleep 0.2;
 	};
 }foreach(OT_objectiveData + OT_airportData);
 
+//reveal gang camps
+private _revealed = server getVariable ["revealedGangs",[]];
+{
+	private _gang = OT_civilians getVariable [format["gang%1",_x],[]];
+
+	if((count _gang) > 0) then {
+		_mrkid = format["gang%1",_gang select 2];
+		_mrk = createMarker [_mrkid, _gang select 4];
+		_mrkid setMarkerType "ot_Camp";
+		_mrkid setMarkerColor "colorOPFOR";
+	};
+}foreach(_revealed);
+
 private _built = (allMissionObjects "Static");
 {
 	private _uid = _x;

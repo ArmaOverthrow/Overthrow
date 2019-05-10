@@ -256,6 +256,7 @@ publicVariable "OT_allObjectives";
 	OT_allObjectives pushback _name;
 }foreach(OT_NATOcomms);
 sleep 0.2;
+private _revealed = server getVariable ["revealedFOBs",[]];
 {
 	_x params ["_pos","_garrison","_upgrades"];
 	OT_flag_NATO createVehicle _pos;
@@ -275,6 +276,16 @@ sleep 0.2;
 	_group call OT_fnc_initMilitaryPatrol;
 
 	[_pos,_upgrades] call OT_fnc_NATOupgradeFOB;
+
+	private _id = str _pos;
+	if(_id in _revealed) then {
+		//create marker
+		_mrk = createMarker [format["natofob%1",_id],_pos];
+		_mrkid setMarkerShape "ICON";
+		_mrkid setMarkerType "mil_Flag";
+		_mrkid setMarkerColor "ColorBLUFOR";
+		_mrkid setMarkerAlpha 1;
+	};
 }foreach(server getVariable ["NATOfobs",[]]);
 
 

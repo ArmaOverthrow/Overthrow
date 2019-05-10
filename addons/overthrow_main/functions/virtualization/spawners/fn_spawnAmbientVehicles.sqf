@@ -41,7 +41,7 @@ while {(_count < _numVeh)} do {
 			if (count _roadscon isEqualTo 2) then {
 				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 				if(isNil "_dirveh") then {_dirveh = random 359};
-				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,15,_vehtype];
+				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,25,_vehtype];
 
 				if(count _posVeh > 0) then {
 					_veh = _vehtype createVehicle _posVeh;
