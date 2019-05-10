@@ -152,28 +152,26 @@ if !(captive _unit) then {
 				private _base = _unitpos call OT_fnc_nearestObjective;
 				if !(isNil "_base") then {
 					_base params ["_obpos","_obname"];
-					if !(_obname in (server getVariable ["NATOabandoned",[]])) then {
-						private _dist = _obname call {
-							if (_this in OT_allComms) exitWith {60};
-							if(_this in OT_NATO_priority) exitWith {500};
-							200
+					private _dist = _obname call {
+						if (_this in OT_allComms) exitWith {40};
+						if(_this in OT_NATO_priority) exitWith {500};
+						200
+					};
+					/*
+					if (isNil format["%1_%2",_obname,_dist]) then {
+						private _markerstr = createMarker [format["%1_%2",_obname,_dist], _obpos];
+						_markerstr setMarkerShape "ELLIPSE";
+						_markerstr setMarkerSize [_dist, _dist];
+						_markerstr setMarkerColor [1,0,0,1];
+						_markerstr setMarkerAlpha 0.2;
+					};
+					*/
+					if(_obpos distance _unitpos < _dist) exitWith {
+						if(isPlayer _unit) then {
+							"You are in a restricted area" call OT_fnc_notifyMinor;
 						};
-						/*
-						if (isNil format["%1_%2",_obname,_dist]) then {
-							private _markerstr = createMarker [format["%1_%2",_obname,_dist], _obpos];
-							_markerstr setMarkerShape "ELLIPSE";
-							_markerstr setMarkerSize [_dist, _dist];
-							_markerstr setMarkerColor [1,0,0,1];
-							_markerstr setMarkerAlpha 0.2;
-						};
-						*/
-						if(_obpos distance _unitpos < _dist) exitWith {
-							if(isPlayer _unit) then {
-								"You are in a restricted area" call OT_fnc_notifyMinor;
-							};
-							_unit setCaptive false;
-							[_unit] call OT_fnc_revealToNATO;
-						};
+						_unit setCaptive false;
+						[_unit] call OT_fnc_revealToNATO;
 					};
 				};
 			};
@@ -188,7 +186,7 @@ if!(_attack isEqualTo "") then {
 	private _playerpos = getPosATL _unit;
 	if(_pos distance2D _playerpos < 1000) then {
 		//Radar is active here
-		if((_playerpos select 2) > 15) then {
+		if((_playerpos select 2) > 30) then {
 			_unit setCaptive false;
 			_hiding = 30;
 			_timer = 0;

@@ -512,6 +512,7 @@ class CfgFunctions
 			class NATOAPCInsertion {};
 			class NATOScrambleHelicopter {};
 			class NATOGroundPatrol {};
+			class NATOAirPatrol {};
 
 			class NATOResponseObjective {};
 			class NATOResponseTown {};

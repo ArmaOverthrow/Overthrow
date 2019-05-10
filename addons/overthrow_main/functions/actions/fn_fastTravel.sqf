@@ -5,7 +5,7 @@ if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc
 if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
 
 private _diff = server getVariable ["OT_difficulty",1];
-if(_diff > 0 && !((primaryWeapon player) isEqualTo "") exitWith {"You cannot fast travel holding a weapon" call OT_fnc_notifyMinor}
+if(_diff > 0 && !((primaryWeapon player) isEqualTo "" && (secondaryWeapon player) isEqualTo "" && (handgunWeapon player) isEqualTo "")) exitWith {"You cannot fast travel holding a weapon" call OT_fnc_notifyMinor};
 
 private _hasdrugs = false;
 {

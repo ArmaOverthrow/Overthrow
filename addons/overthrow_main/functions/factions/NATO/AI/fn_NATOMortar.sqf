@@ -24,7 +24,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
                     _found = false;
                     {
                         if((_x select 0) isEqualTo _mortar) exitWith {
-                            _range = (_x select 1) - round((_x select 0) * 0.25);
+                            _range = (_x select 1) - round((_x select 1) * 0.25);
                             _x set [1,_range];
                             _x set [2,[_mortarpos,random 360,_range] call SHK_pos_fnc_pos];
                         };
@@ -43,7 +43,7 @@ while {sleep 5+(random 5); ("8Rnd_82mm_Mo_shells" in getArtilleryAmmo[_mortar]) 
             _distance = (_pos distance _mortar);
             _town = _pos call OT_fnc_nearestTown;
             _towndist = _pos distance (server getvariable [_town,_pos]); //make sure we dont shell towns
-            if (!(_ty == "H" || _ty == "P") && _pri > 100 && _towndist > 600 && _distance < 4000 && _distance > 250 && !_done) exitWith {
+            if (!(_ty == "H" || _ty == "P" || _ty == "V") && _pri > 80 && _towndist > 600 && _distance < 4000 && _distance > 250 && !_done) exitWith {
                 _x set [4,true];
                 _mortargroup setCombatMode "RED";
 

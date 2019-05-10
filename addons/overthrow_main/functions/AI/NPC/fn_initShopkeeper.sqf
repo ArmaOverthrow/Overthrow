@@ -1,8 +1,8 @@
 private ["_unit"];
 
-(group _unit) setVariable ["VCM_Disable",true];
-
 _unit = _this select 0;
+
+(group _unit) setVariable ["VCM_Disable",true];
 
 private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
 private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;

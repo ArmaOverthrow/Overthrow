@@ -58,6 +58,7 @@ if(_create isEqualType 1) then {
     	{
     		private _res = (_x call {
                 params ["_building"];
+                _positionsCovered = _building getVariable ["____positionsGarrisoned",[]];
                 private _type = typeof _building;
     			if((damage _building) > 0.95) exitWith { []; };
     			if(
@@ -67,8 +68,8 @@ if(_create isEqualType 1) then {
                     || (_type == "Land_Cargo_HQ_V4_F")
                 ) exitWith {
                     private _p = (_building buildingPos 8);
-                    private _guns = ({alive _x} count (nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]));
-                    if(_guns == 0) then {
+                    if !(8 in _positionsCovered) then {
+                        _positionsCovered pushback 8;
                         [getDir _building, _p];
                     } else {
                         [];
@@ -84,8 +85,8 @@ if(_create isEqualType 1) then {
     				private _p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				private _dir = (getDir _building) - 180;
 
-                    private _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                    if(_guns == 0) then {
+                    if !(1 in _positionsCovered) then {
+                        _positionsCovered pushback 1;
                         [ getDir _building, _p ];
                     } else {
                         [];
@@ -93,19 +94,20 @@ if(_create isEqualType 1) then {
                 };
 
                 private _p = _building buildingPos 11;
-                private _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                if(_guns isEqualTo 0) exitWith {
+                if !(11 in _positionsCovered) then {
+                    _positionsCovered pushback 11;
                     [getDir _building, _p];
                 };
 
                 _p = _building buildingPos 13;
-                _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
-                if(_guns isEqualTo 0) exitWith {
+                if !(13 in _positionsCovered) then {
+                    _positionsCovered pushback 13;
                     [getDir _building, _p];
                 };
 
                 []
             });
+            _building setVariable ["____positionsGarrisoned",_positionsCovered,true];
             if!(_res isEqualTo []) exitWith{
                 _done = true;
                 _dir = _res select 0;

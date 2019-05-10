@@ -70,7 +70,7 @@ if !(_quiet) then {
 	"Step 2/11 - Saving buildings" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_"]) };
+private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_","____"]) };
 
 private _poses = (allVariables buildingpositions select _prefixFilter) apply {
 	[_x,buildingpositions getVariable _x]

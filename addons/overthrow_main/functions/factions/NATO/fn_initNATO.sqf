@@ -191,14 +191,16 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 
 	diag_log "Overthrow: Setting up NATO checkpoints";
 	{
-		private _garrison = floor(8 + random(6));
-		if(_x in OT_NATO_priority) then {
-			_garrison = floor(12 + random(6));
-		};
+		if((server getVariable [format ["garrison%1",_x],-1]) isEqualTo -1) then {
+			private _garrison = floor(8 + random(6));
+			if(_x in OT_NATO_priority) then {
+				_garrison = floor(12 + random(6));
+			};
 
-		//_x setMarkerText format ["%1",_garrison];
-		_x setMarkerAlpha 0;
-		server setVariable [format ["garrison%1",_x],_garrison,true];
+			//_x setMarkerText format ["%1",_garrison];
+			_x setMarkerAlpha 0;
+			server setVariable [format ["garrison%1",_x],_garrison,true];
+		};
 	}foreach (OT_NATO_control);
 
 	diag_log "Overthrow: Garrisoning towns";

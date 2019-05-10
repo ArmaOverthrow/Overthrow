@@ -38,7 +38,7 @@ if(!isNil "_qrfstart" && (time - _qrfstart) > 600) then {
 	if(_progress > 0) then {
 		_qrf = format["<t size='0.7'>Battle of %1</t><br/><t color='#5D8AA8'>(%2%3)</t>",_attacking,round (_progress * 100),'%'];
 	}else{
-		_qrf = format["<t size='0.7'>Battle of %1</t><br/><t color='#008000'>(%2%3)</t>",_attacking,round (_progress * 100),'%'];
+		_qrf = format["<t size='0.7'>Battle of %1</t><br/><t color='#008000'>(%2%3)</t>",_attacking,round abs (_progress * 100),'%'];
 	}
 };
 
