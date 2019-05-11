@@ -131,14 +131,15 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 					};
 				}foreach(OT_NATO_Vehicles_JetGarrison);
 				server setVariable [format ["airgarrison%1",_name],_garr,true];
+				OT_NATO_HQPos = _pos;
+				if((count OT_NATO_HQ_garrisonPos) isEqualTo 0) then {
+					OT_NATO_HQ_garrisonPos = _pos;
+				};
 			}else{
 				server setVariable [format ["airgarrison%1",_name],[],true];
 			};
 			server setVariable [format ["garrison%1",_name],_garrison,true];
 
-			if(_name isEqualTo OT_NATO_HQ) then {
-				OT_NATO_HQPos = _pos;
-			};
 		}else{
 			OT_NATOobjectives pushBack _x;
 		};
@@ -199,6 +200,14 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 			server setVariable [format ["airgarrison%1",_name],_garrison,true];
 		};
 	}foreach(OT_NATO_Vehicles_AirGarrison);
+
+	//Distribute static AA to airfields
+	{
+		_x params ["_pos","_name"];
+		_vehs = server getVariable [format ["vehgarrison%1",_name],[]];
+		_vehs = _vehs + OT_NATO_Vehicles_StaticAAGarrison;
+		server setVariable [format ["vehgarrison%1",_name],_vehs,true];
+	}foreach(OT_airportData);
 
 	diag_log "Overthrow: Setting up NATO checkpoints";
 	{

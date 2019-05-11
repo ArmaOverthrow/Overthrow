@@ -201,9 +201,8 @@ if(count _terminal > 0) then {
 	_pos = [_tp,_dist,_dir] call BIS_fnc_relPos;
 	_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
 }else{
-	_dir = 80;
-	_pos = [_posTown,20,_dir] call BIS_fnc_relPos;
-	_pos = [_pos,130,_dir-90] call BIS_fnc_relPos;
+	_pos = OT_NATO_HQ_garrisonPos;
+	_dir = OT_NATO_HQ_garrisonDir;
 };
 private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 {

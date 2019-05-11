@@ -101,12 +101,19 @@ OT_NATO_Vehicles_JetGarrison = [
 	["B_Plane_CAS_01_F",1]
 ];
 
+OT_NATO_Vehicles_StaticAAGarrison = [
+	"B_T_static_AA_F",
+	"B_T_static_AA_F"
+]; //Added to every airfield
+
 //Check for jets dlc
 OT_hasJetsDLC = false;
 if("B_Plane_Fighter_01_F" isKindOf "Air") then {
 	OT_hasJetsDLC = true;
 	OT_NATO_Vehicles_JetGarrison pushback ["B_Plane_Fighter_01_F",1];
 	OT_NATO_Vehicles_JetGarrison pushback ["B_Plane_Fighter_01_Stealth_F",1];
+	OT_NATO_Vehicles_StaticAAGarrison pushback "B_Radar_System_01_F";
+	OT_NATO_Vehicles_StaticAAGarrison pushback "B_SAM_System_03_F";
 };
 
 OT_NATO_StaticGarrison_LevelOne = ["B_HMG_01_high_F"];
