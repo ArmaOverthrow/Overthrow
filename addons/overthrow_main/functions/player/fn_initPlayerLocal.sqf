@@ -376,11 +376,11 @@ player addEventHandler ["GetInMan",{
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
-			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
+			if((_veh getVariable ["ambient",false]) && (random 100) > 30) then {
 				["play", _veh] call BIS_fnc_carAlarm;
 				[(getpos player) call OT_fnc_nearestTown,-5,"Stolen vehicle",player] call OT_fnc_support;
 				//does anyone hear the alarm?
-				_nummil = {side _x isEqualTo west} count (_veh nearObjects ["CAManBase",200]);				
+				_nummil = {side _x isEqualTo west} count (_veh nearObjects ["CAManBase",200]);
 				if(_nummil > 0) then {
 					player setCaptive false;
 					[player] call OT_fnc_revealToNATO;

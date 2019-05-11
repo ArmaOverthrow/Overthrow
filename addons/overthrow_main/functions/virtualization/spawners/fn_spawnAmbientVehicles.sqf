@@ -14,16 +14,17 @@ if(_town in OT_capitals + OT_sprawling) then {//larger search radius
 private _count = 0;
 private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
-private _numVeh = 4;
+private _numVeh = 6;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
 if(_town isEqualTo (server getVariable "spawntown")) then {
-	_numVeh = 12;
+	_numVeh = 20;
 };
-if(_numVeh > 12) then {_numVeh = 12};
+if(_numVeh > 20) then {_numVeh = 20};
 if(count(vehicles) > 200) then {_numVeh = 3};
-while {(_count < _numVeh)} do {
+private _loops = 0;
+while {(_count < _numVeh) && (_loops < 50)} do {
 	private _start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;
 	_roads = _start nearRoads 75;
 	if(count _roads > 0) then {
@@ -41,7 +42,7 @@ while {(_count < _numVeh)} do {
 			if (count _roadscon isEqualTo 2) then {
 				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 				if(isNil "_dirveh") then {_dirveh = random 359};
-				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [0,25,_vehtype];
+				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [5,15,_vehtype];
 
 				if(count _posVeh > 0) then {
 					_veh = _vehtype createVehicle _posVeh;
@@ -50,8 +51,9 @@ while {(_count < _numVeh)} do {
 					_veh setFuel (0.2 + (random 0.5));
 
 					_veh setDir _dirveh;
+					_count = _count + 1;
 
-					if((random 100) > 90 && (count allunits < 300)) then {
+					if((random 100) > 85 && (count allunits < 300)) then {
 						_group = createGroup CIVILIAN;
 						_groups pushback _group;
 						_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
@@ -81,11 +83,11 @@ while {(_count < _numVeh)} do {
 						};
 					};
 					_groups pushBack _veh;
+					sleep 0.2;
 				};
 			};
 		};
 	};
-	sleep 0.2;
-	_count = _count + 1;
+	_loops = _loops + 1;
 };
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

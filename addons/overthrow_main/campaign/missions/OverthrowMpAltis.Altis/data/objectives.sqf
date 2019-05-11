@@ -20,5 +20,5 @@ OT_NATO_JetPos = [20892.6,7268.2,0.800297]; //Where to spawn jets
 OT_NATO_JetDir = 122; //Direction to face jet on spawn
 OT_NATO_JetLandPos = [19991.5,2479.9,106.43]; //Waypoint before landing a jet
 
-OT_NATO_HQ_garrisonPos = [20895.7,7294.18,0];
-OT_NATO_HQ_garrisonDir = 315;
+OT_NATO_HQ_garrisonPos = [20896.4,7297.95,0];
+OT_NATO_HQ_garrisonDir = 325;

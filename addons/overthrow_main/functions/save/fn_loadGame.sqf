@@ -114,7 +114,12 @@ sleep 0.2;
 				if(count _x > 5) then {
 					_name = _x select 5;
 				};
-				_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
+				private _p = _pos;
+				if !(_type isKindOf "Building") then {
+					//try not to blow up vehicles
+					_p = _pos findEmptyPosition [5,50,_type];
+				};
+				_veh = createVehicle [_type, _p, [], 0, "CAN_COLLIDE"];
 				_veh enableDynamicSimulation true;
 				/*
 				if !(_simulation) then {
@@ -159,8 +164,7 @@ sleep 0.2;
 						};
 					};
 				};
-
-				_veh setPosATL _pos;
+				_veh setPosATL _p;
 				if(_type isKindOf "Building") then {
 					_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 					_clu enableDynamicSimulation true;

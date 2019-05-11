@@ -151,7 +151,7 @@ sleep 0.2;
 private _range = 100;
 private _groupcount = 0;
 while {_count < _numNATO} do {
-	private _start = _posTown findEmptyPosition [0,100];
+	private _start = _posTown findEmptyPosition [5,200];
 	private _group = createGroup blufor;
 	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
@@ -169,7 +169,7 @@ while {_count < _numNATO} do {
 
 	_count = _count + 1;
 	while {(_count < _numNATO) && (_groupcount < 8)} do {
-		_start = _start findEmptyPosition [0,50];
+		_start = _start findEmptyPosition [5,50];
 
 		_civ = _group createUnit [selectRandom OT_NATO_Units_LevelOne, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
@@ -181,7 +181,7 @@ while {_count < _numNATO} do {
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 	};
-	[_group,_posTown,100,6] call CBA_fnc_taskPatrol;
+	[_group,_posTown,300,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
 	sleep 0.2;
 };
@@ -224,12 +224,21 @@ private _road = objNull;
 	private _vgroup = creategroup blufor;
 	_groups pushback _vgroup;
 	private _vehtype = _x;
-	_dir = 0;
 	private _got = false;
-	if(_vehtype in OT_staticWeapons) then {
-		private _pos = _posTown findEmptyPosition [10,100,_vehtype];
-		if!(_pos isEqualTo []) then {
-			_dir = [_posTown,_pos] call BIS_fnc_dirTo;
+	private _pos = _posTown findEmptyPosition [10,100,_vehtype];
+	private _dir = random 360;
+
+	_roads = _pos nearRoads 15;
+	private _loops = 0;
+	while {((count _roads) > 0) && (_loops < 50)} do {
+		_pos = _posTown findEmptyPosition [10,150,_vehtype];
+		_roads = _pos nearRoads 15;
+		_loops = _loops + 1;
+	};
+
+	if(count _pos > 0) then {
+		if(_vehtype in OT_staticWeapons) then {
+			//put sandbags
 			private _p = [_pos,1.5,_dir] call BIS_fnc_relPos;
 			_veh =  OT_NATO_Sandbag_Curved createVehicle _p;
 			_veh setpos _p;
@@ -241,17 +250,13 @@ private _road = objNull;
 			_veh setDir (_dir);
 			_groups pushback _veh;
 		};
-	}else{
-		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
-		_dir = random 360;
-	};
-	if(count _pos > 0) then {
+
 		private _veh =  _vehtype createVehicle _pos;
-		_veh setpos _pos;
+		_veh setPosATL _pos;
 		_veh setVariable ["vehgarrison",_name,false];
 
 		_veh setDir _dir;
-		if(random 100 < 99) then {
+		if(random 100 < 99) then { //small chance its not crewed
 			createVehicleCrew _veh;
 		};
 		sleep 0.2;
@@ -260,7 +265,7 @@ private _road = objNull;
 			[_x] joinSilent _vgroup;
 			_x setVariable ["garrison","HQ",false];
 		}foreach(crew _veh);
-		[_vgroup,_posTown,100,6] call CBA_fnc_taskPatrol;
+		_vgroup setVariable ["Vcm_Disable",true,false];
 	};
 }foreach(_vehgarrison);
 
