@@ -39,8 +39,10 @@ if !(captive _unit) then {
 	private _playerpos = getPosATL _unit;
 	private _vehicle = vehicle _unit;
 
-	//flying
-	if((typeOf _vehicle isKindOf ["Air",configFile>>"CfgVehicles"]) && (_playerpos select 2) > 5) then {
+	private _gottem = false;
+
+	//Enemy radar detection/No-fly zones
+	if((typeOf _vehicle isKindOf ["Air",configFile>>"CfgVehicles"]) && (_playerpos select 2) > 30) then {
 		private _base = _playerpos call OT_fnc_nearestObjective;
 		if !(isNil "_base") then {
 			_base params ["_obpos","_obname"];
@@ -54,125 +56,108 @@ if !(captive _unit) then {
 				};
 				_unit setCaptive false;
 				[vehicle _unit] call OT_fnc_revealToNATO;
+				_gottem = true;
 			};
 		};
-	}else{
+	};
 
-		if(_unit call OT_fnc_unitSeenCRIM) then {
-			// carrying a static weapon .. illegal
-			if (_unit call OT_fnc_carriesStaticWeapon) exitWith {
+	if(_unit call OT_fnc_unitSeenCRIM && !_gottem) then {
+		// carrying a static weapon .. illegal
+		if (_unit call OT_fnc_carriesStaticWeapon) exitWith {
+			_unit setCaptive false;
+			[_unit] call OT_fnc_revealToNATO;
+			if(isPlayer _unit) then {
+				"A gang has seen the static weapon" call OT_fnc_notifyMinor;
+			};
+		};
+
+		// driving with weapons, illegal clothing/gear, in illegal vehicles
+		if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
+			//Set the whole car wanted
+			{
+				_x setCaptive false;
+			}foreach(crew vehicle _unit);
+			[vehicle _unit] call OT_fnc_revealToCRIM;
+		};
+
+		// carrying a weapon .. illegal
+		if (_unit call OT_fnc_hasWeaponEquipped) exitWith {
+			if(isPlayer _unit) then {
+				"A gang has seen your weapon" call OT_fnc_notifyMinor;
+			};
+			_unit setCaptive false;
+			[_unit] call OT_fnc_revealToNATO;
+		};
+
+		// detected because fame
+		if(_unit call OT_fnc_detectedByReputation) exitWith {
+			_unit setCaptive false;
+			if(isPlayer _unit) then {
+				"A gang has recognized you" call OT_fnc_notifyMinor;
+			};
+			[_unit] call OT_fnc_revealToCRIM;
+		};
+	}else{
+		if(_unit call OT_fnc_unitSeenNATO && !_gottem) then {
+			// smoking
+			if(_unit getvariable ["ot_isSmoking",false]) exitWith {
 				_unit setCaptive false;
 				[_unit] call OT_fnc_revealToNATO;
 				if(isPlayer _unit) then {
-					"A gang has seen the static weapon" call OT_fnc_notifyMinor;
+					"NATO has seen your spliff!" call OT_fnc_notifyMinor;
 				};
 			};
-
-			// driving with weapons, illegal clothing/gear, in illegal vehicles
+			if(_unit call OT_fnc_carriesStaticWeapon) exitWith {
+				_unit setCaptive false;
+				[_unit] call OT_fnc_revealToNATO;
+				if(isPlayer _unit) then {
+					"NATO has seen the static weapon" call OT_fnc_notifyMinor;
+				};
+			};
 			if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
 				//Set the whole car wanted
+				_unit setcaptive false;
 				{
-					_x setCaptive false;
-				}foreach(crew vehicle _unit);
-				[vehicle _unit] call OT_fnc_revealToCRIM;
-			};
+					_x setcaptive false;
+				}forEach(units _vehicle);
+				[vehicle _unit] call OT_fnc_revealToNATO;
 
-			// carrying a weapon .. illegal
-			if (_unit call OT_fnc_hasWeaponEquipped) exitWith {
+				//Record any threats as known targets
+				(vehicle _unit) call OT_fnc_NATOreportThreat;
+			};
+			if(_unit call OT_fnc_hasWeaponEquipped) exitWith {
+				_unit setCaptive false;
+				[_unit] call OT_fnc_revealToNATO;
+			};
+			if ((headgear _unit in OT_illegalHeadgear) || { (vest _unit in OT_illegalVests) }) exitWith {
 				if(isPlayer _unit) then {
-					"A gang has seen your weapon" call OT_fnc_notifyMinor;
+					"You are wearing Gendarmerie gear" call OT_fnc_notifyMinor;
 				};
 				_unit setCaptive false;
 				[_unit] call OT_fnc_revealToNATO;
 			};
-
-			// detected because fame
-			if(_unit call OT_fnc_detectedByReputation) exitWith {
-				_unit setCaptive false;
+			if !(hmd _unit isEqualTo "") exitWith {
 				if(isPlayer _unit) then {
-					"A gang has recognized you" call OT_fnc_notifyMinor;
+					"NATO has spotted your NV Goggles" call OT_fnc_notifyMinor;
 				};
-				[_unit] call OT_fnc_revealToCRIM;
+				_unit setCaptive false;
+				[_unit] call OT_fnc_revealToNATO;
 			};
-		}else{
-			if(_unit call OT_fnc_unitSeenNATO) then {
-				// fame
-				if(_unit call OT_fnc_detectedByReputationNATO) exitWith {
-					_unit setCaptive false;
+			private _unitpos = getPosATL _unit;
+			private _base = _unitpos call OT_fnc_nearestObjective;
+			if !(isNil "_base") then {
+				_base params ["_obpos","_obname"];
+				private _dist = _obname call {
+					if (_this in OT_allComms) exitWith {40};
+					if(_this in OT_NATO_priority) exitWith {500};
+					200
+				};
+				if(_obpos distance _unitpos < _dist) exitWith {
 					if(isPlayer _unit) then {
-						"NATO has recognized you" call OT_fnc_notifyMinor;
-					};
-					[_unit] call OT_fnc_revealToNATO;
-				};
-				// smoking
-				if(_unit getvariable ["ot_isSmoking",false]) exitWith {
-					_unit setCaptive false;
-					[_unit] call OT_fnc_revealToNATO;
-					if(isPlayer _unit) then {
-						"NATO has seen your spliff!" call OT_fnc_notifyMinor;
-					};
-				};
-				if(_unit call OT_fnc_carriesStaticWeapon) exitWith {
-					_unit setCaptive false;
-					[_unit] call OT_fnc_revealToNATO;
-					if(isPlayer _unit) then {
-						"NATO has seen the static weapon" call OT_fnc_notifyMinor;
-					};
-				};
-				if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
-					//Set the whole car wanted
-					_unit setcaptive false;
-					{
-						_x setcaptive false;
-					}forEach(units _vehicle);
-					[vehicle _unit] call OT_fnc_revealToNATO;
-
-					//Record any threats as known targets
-					(vehicle _unit) call OT_fnc_NATOreportThreat;
-				};
-				if(_unit call OT_fnc_hasWeaponEquipped) exitWith {
-					_unit setCaptive false;
-					[_unit] call OT_fnc_revealToNATO;
-				};
-				if ((headgear _unit in OT_illegalHeadgear) || { (vest _unit in OT_illegalVests) }) exitWith {
-					if(isPlayer _unit) then {
-						"You are wearing Gendarmerie gear" call OT_fnc_notifyMinor;
+						"You are in a restricted area" call OT_fnc_notifyMinor;
 					};
 					_unit setCaptive false;
 					[_unit] call OT_fnc_revealToNATO;
-				};
-				if !(hmd _unit isEqualTo "") exitWith {
-					if(isPlayer _unit) then {
-						"NATO has spotted your NV Goggles" call OT_fnc_notifyMinor;
-					};
-					_unit setCaptive false;
-					[_unit] call OT_fnc_revealToNATO;
-				};
-				private _unitpos = getPosATL _unit;
-				private _base = _unitpos call OT_fnc_nearestObjective;
-				if !(isNil "_base") then {
-					_base params ["_obpos","_obname"];
-					private _dist = _obname call {
-						if (_this in OT_allComms) exitWith {40};
-						if(_this in OT_NATO_priority) exitWith {500};
-						200
-					};
-					/*
-					if (isNil format["%1_%2",_obname,_dist]) then {
-						private _markerstr = createMarker [format["%1_%2",_obname,_dist], _obpos];
-						_markerstr setMarkerShape "ELLIPSE";
-						_markerstr setMarkerSize [_dist, _dist];
-						_markerstr setMarkerColor [1,0,0,1];
-						_markerstr setMarkerAlpha 0.2;
-					};
-					*/
-					if(_obpos distance _unitpos < _dist) exitWith {
-						if(isPlayer _unit) then {
-							"You are in a restricted area" call OT_fnc_notifyMinor;
-						};
-						_unit setCaptive false;
-						[_unit] call OT_fnc_revealToNATO;
-					};
 				};
 			};
 		};

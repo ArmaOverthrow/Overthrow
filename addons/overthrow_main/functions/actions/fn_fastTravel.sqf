@@ -151,5 +151,5 @@ OT_FastTravel_MapEHId = addMissionEventHandler ["Map", {
 	};
 }];
 
-hint "Click near a friendly base/camp or a building you own";
+"Click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
 openMap true;
