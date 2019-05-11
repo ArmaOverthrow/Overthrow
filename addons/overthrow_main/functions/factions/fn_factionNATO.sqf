@@ -39,15 +39,14 @@ publicVariable "OT_nextNATOTurn";
 		if(count _schedule > 0) then {
 			private _item = [];
 			private _idx = -1;
+			private _remove = [];
 			{
 				_x params ["_id","_ty","_p1","_p2","_hour"];
-				if(!isNil "_hour" && _hour == (date select 3)) exitWith {_idx = _forEachIndex; _item = _x};
+				if(!isNil "_hour" && _hour < 23 && _hour == (date select 3)) exitWith {_remove pushback _forEachIndex;_idx = _forEachIndex; _item = _x};
+				if(!isNil "_hour" && _hour > 23) then {_remove pushback _forEachIndex}; //remove old bugged schedules from v0.7.7.3
 			}forEach(_schedule);
 			if(_idx > -1) then {
 				_item params ["_id","_mission","_p1","_p2"];
-				_schedule deleteAt _idx;
-				server setVariable ["NATOschedule",_schedule];
-
 				if(_mission isEqualTo "CONVOY") then {
 					_vehtypes = [];
 					_numveh = round(random 2) + 2;
@@ -56,9 +55,13 @@ publicVariable "OT_nextNATOTurn";
 						_count = _count + 1;
 						_vehtypes pushback (selectRandom OT_NATO_Vehicles_Convoy);
 					};
-					[_vehtypes,[],_p1 select 1,_p2 select 1] spawn OT_fnc_NATOConvoy;
+					[_vehtypes,[],_p1 select 1,_p2 select 1,_id] spawn OT_fnc_NATOConvoy;
 				};
 			};
+			{
+				_schedule deleteAt _x;
+			}foreach(_remove);
+			server setVariable ["NATOschedule",_schedule];
 		};
 
 
