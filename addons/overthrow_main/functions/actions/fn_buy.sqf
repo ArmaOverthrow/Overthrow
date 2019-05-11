@@ -119,12 +119,17 @@ if(_cls isKindOf "Ship") exitWith {
 if(_cls in OT_allClothing) exitWith {
 	[-_price] call OT_fnc_money;
 
-	if((backpack player != "") && (player canAdd _cls)) then {
-		player addItemToBackpack _cls;
-		"Clothing added to your backpack" call OT_fnc_notifyMinor;
+	if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
+		(vehicle player) addItemCargoGlobal [_cls,1];
 	}else{
-		player forceAddUniform _cls;
+		if((backpack player != "") && (player canAdd _cls)) then {
+			player addItemToBackpack _cls;
+			"Clothing added to your backpack" call OT_fnc_notifyMinor;
+		}else{
+			player forceAddUniform _cls;
+		};
 	};
+
 	playSound "3DEN_notificationDefault";
 };
 if(_cls == "V_RebreatherIA") exitWith {
