@@ -148,7 +148,7 @@ if(_numNATO > 0) then {
 };
 
 sleep 0.2;
-private _range = 100;
+private _range = 150;
 private _groupcount = 0;
 while {_count < _numNATO} do {
 	private _start = _posTown findEmptyPosition [5,200];
@@ -160,12 +160,10 @@ while {_count < _numNATO} do {
 	private _civ = _group createUnit [OT_NATO_Unit_TeamLeader, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
+	[_civ] joinSilent _group;
 	_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
-	{
-		_x addCuratorEditableObjects[[_civ],false];
-	}foreach(allcurators);
 
 	_count = _count + 1;
 	while {(_count < _numNATO) && (_groupcount < 8)} do {
@@ -174,6 +172,7 @@ while {_count < _numNATO} do {
 		_civ = _group createUnit [selectRandom OT_NATO_Units_LevelOne, _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "LIEUTENANT";
+		[_civ] joinSilent _group;
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
@@ -181,7 +180,11 @@ while {_count < _numNATO} do {
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
 	};
-	[_group,_posTown,300,6] call CBA_fnc_taskPatrol;
+	{
+		_x addCuratorEditableObjects[units _group,false];
+	}foreach(allcurators);
+
+	[_group,_posTown,_range,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
 	sleep 0.2;
 };
@@ -236,7 +239,7 @@ private _road = objNull;
 	_roads = _pos nearRoads 15;
 	private _loops = 0;
 	while {((count _roads) > 0) && (_loops < 50)} do {
-		_pos = _posTown findEmptyPosition [10,150,_vehtype];
+		_pos = _posTown findEmptyPosition [15,150,_vehtype];
 		_roads = _pos nearRoads 15;
 		_loops = _loops + 1;
 	};
@@ -280,6 +283,7 @@ private _road = objNull;
 	if(_loc == _name && _status == "") then {
 		private _group = createGroup blufor;
 		_groups pushBack _group;
+		_group setVariable ["Vcm_Disable",true,false]; //stop him from running off
 		private _pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
