@@ -5,6 +5,7 @@ player setVariable ["OT_shopTarget","Vehicle",false];
 private _town = (getpos player) call OT_fnc_nearestTown;
 private _standing = [_town] call OT_fnc_support;
 if(_category isEqualTo "Clothing") exitWith {
+    createDialog "OT_dialog_buy";
     [_town,_standing] call OT_fnc_buyClothesDialog;
 };
 
