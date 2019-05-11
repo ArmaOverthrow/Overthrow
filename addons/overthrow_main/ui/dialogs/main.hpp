@@ -697,7 +697,7 @@ class OT_dialog_squad
 			tooltip = "Orders squad to disembark vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] call OT_fnc_squadGetOut;";
 		};
-		class RscButton_1603: RscOverthrowButton
+		class RscButton_1604: RscOverthrowButton
 		{
 			idc = 1604;
 			text = "Get In My Vehicle"; //--- ToDo: Localize;
