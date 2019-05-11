@@ -53,32 +53,32 @@ Vcm_DrivingActivated = false; //Set this to false to disable VcomAI driving from
 VCM_DrivingDist = 15; // Distance from predicted path to search for objects. High numbers may cause instability.
 VCM_DrivingDelay = 0.75; // How often the script should look for obstacles
 VCM_DRIVERLIMIT = 4; // How many drivers should be calculated at each cycle
-	
+
 //AI SKILL SETTINGS HERE!!!!!!!!!!!!
 //LOW DIFFICULTY
 //VCM_AIDIFA = [['aimingAccuracy',0.15],['aimingShake',0.20],['aimingSpeed',0.25],['commanding',1],['courage',1],['endurance',1],['general',1],['reloadSpeed',1],['spotDistance',0.85],['spotTime',0.85]];
 
 //MEDIUM DIFFICULTY
-VCM_AIDIFA = [['aimingAccuracy',0.20],['aimingShake',0.15],['aimingSpeed',0.30],['commanding',1],['courage',1],['endurance',1],['general',1],['reloadSpeed',1],['spotDistance',0.85],['spotTime',0.85]];
+VCM_AIDIFA = [['aimingAccuracy',0.15],['aimingShake',0.2],['aimingSpeed',0.2],['commanding',1],['courage',1],['endurance',1],['general',1],['reloadSpeed',0.5],['spotDistance',0.85],['spotTime',0.6]];
 
 //HIGH DIFFICULTY
-//VCM_AIDIFA = [['aimingAccuracy',0.25],['aimingShake',0.10],['aimingSpeed',0.35],['commanding',1],['courage',1],['endurance',1],['general',1],['reloadSpeed',1],['spotDistance',0.85],['spotTime',0.85]];
+//VCM_AIDIFA = [['aimingAccuracy',0.35],['aimingShake',0.4],['aimingSpeed',0.45],['commanding',1],['courage',1],['endurance',1],['general',1],['reloadSpeed',1],['spotDistance',0.85],['spotTime',0.85]];
 
 //VCOM AI Skill Variables. Default values set to medium difficulty (old default)
 //AIMING ACCURACY
-VCM_AISKILL_AIMINGACCURACY_W = 0.25;
-VCM_AISKILL_AIMINGACCURACY_E = 0.25;
+VCM_AISKILL_AIMINGACCURACY_W = 0.15;
+VCM_AISKILL_AIMINGACCURACY_E = 0.15;
 VCM_AISKILL_AIMINGACCURACY_R = 0.25;
 
 //AIMING SHAKE
-VCM_AISKILL_AIMINGSHAKE_W = 0.15;
-VCM_AISKILL_AIMINGSHAKE_E = 0.15;
-VCM_AISKILL_AIMINGSHAKE_R = 0.15;
+VCM_AISKILL_AIMINGSHAKE_W = 0.2;
+VCM_AISKILL_AIMINGSHAKE_E = 0.2;
+VCM_AISKILL_AIMINGSHAKE_R = 0.1;
 
 //AIMING SPEED
-VCM_AISKILL_AIMINGSPEED_W = 0.35;
-VCM_AISKILL_AIMINGSPEED_E = 0.35;
-VCM_AISKILL_AIMINGSPEED_R = 0.35;
+VCM_AISKILL_AIMINGSPEED_W = 0.2;
+VCM_AISKILL_AIMINGSPEED_E = 0.2;
+VCM_AISKILL_AIMINGSPEED_R = 0.3;
 
 VCM_CLASSNAMESPECIFIC = false; //Do you want the AI to have classname specific skill settings?
 VCM_SIDESPECIFICSKILL = true; //Do you want the AI to have side specific skill settings? This overrides classname specific skills.
