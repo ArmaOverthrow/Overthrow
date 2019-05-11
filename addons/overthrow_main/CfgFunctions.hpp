@@ -451,6 +451,7 @@ class CfgFunctions
 			class squadAssignVehicle {};
 			class squadGetIn {};
 			class squadGetOut {};
+			class squadGetInMyVehicle {};
 			class orderStopAndFace {};
 		};
 

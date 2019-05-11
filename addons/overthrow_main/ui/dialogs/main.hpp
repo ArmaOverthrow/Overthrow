@@ -694,8 +694,19 @@ class OT_dialog_squad
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Orders squad to disembark assigned vehicle"; //--- ToDo: Localize;
+			tooltip = "Orders squad to disembark vehicle"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] call OT_fnc_squadGetOut;";
+		};
+		class RscButton_1603: RscOverthrowButton
+		{
+			idc = 1604;
+			text = "Get In My Vehicle"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.588 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Orders squad to board your vehicle"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] call OT_fnc_squadGetInMyVehicle;";
 		};
 		class RscButton_1612: RscOverthrowButton
 		{
