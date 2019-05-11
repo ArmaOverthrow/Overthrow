@@ -377,6 +377,7 @@ player addEventHandler ["GetInMan",{
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
 			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
+				["play", _veh] call BIS_fnc_carAlarm;
 				[(getpos player) call OT_fnc_nearestTown,-5,"Stolen vehicle",player] call OT_fnc_support;
 				if(player call OT_fnc_unitSeenNATO) then {
 					player setCaptive false;
