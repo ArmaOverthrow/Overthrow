@@ -316,6 +316,8 @@ sleep 0.2;
     _mrkid setMarkerColor "ColorWhite";
     _mrkid setMarkerAlpha 1;
     _mrkid setMarkerText (_x select 1);
+	_veh = OT_flag_IND createVehicle _pos;
+	[_veh,(server getVariable ["generals",[getPlayerUID player]]) select 0] call OT_fnc_setOwner;
 }foreach(server getvariable ["bases",[]]);
 
 {
