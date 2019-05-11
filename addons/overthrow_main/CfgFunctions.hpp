@@ -87,6 +87,7 @@ class CfgFunctions
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
 			class playerIsAtHardwareStore {};
+			class playerIsAtStore {};
 			class tutorial {};
 			class influence {};
 			class influenceSilent {};
@@ -155,6 +156,8 @@ class CfgFunctions
 			class mainMenu {};
 			class buyDialog {};
 			class sellDialog {};
+			class buyDialogVehicle {};
+			class sellDialogVehicle {};
 			class workshopDialog {};
 			class policeDialog {};
 			class warehouseDialog {};

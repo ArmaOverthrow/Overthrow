@@ -174,11 +174,11 @@ OT_item_UAVterminal = "I_UavTerminal";
 OT_item_DefaultBlueprints = [];
 
 OT_itemCategoryDefinitions = [
-    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass","paint"]],
-    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
-    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
-    ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],
-    ["Surplus",["Rangefinder","Binocular","Compass"]]
+    ["General",["ACE_fieldDressing","Banana","Map","ToolKit","Compass","ACE_EarPlugs","Watch","Radio","Compass","ACE_Spraypaint","Altimiter","MapTools","Binocular"]],
+    ["Pharmacy",["Dressing","Bandage","morphine","adenosine","atropine","ACE_EarPlugs","epinephrine","bodyBag","quikclot","salineIV","bloodIV","plasmaIV","personalAidKit","surgicalKit","tourniquet"]],
+    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","_dagr","Battery","ATragMX","ACE_Flashlight","I_UavTerminal"]],
+    ["Hardware",["Tool","CableTie","ACE_Spraypaint","wirecutter","ACE_rope"]],
+    ["Surplus",["Rangefinder","Binocular","Compass","RangeCard","RangeTable","defusalKit","SpottingScope"]]
 ];
 
 OT_items = [];
