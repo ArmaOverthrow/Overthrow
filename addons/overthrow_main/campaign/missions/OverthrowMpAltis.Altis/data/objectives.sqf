@@ -10,7 +10,8 @@ OT_objectiveData = [
     [[19322,16545.2,0],"Chemical Plant",600],
     [[12285.5,8891.48,0],"Vikos Base",250],
     [[17407.2,13204,0],"Pyrgos Base",500],
-    [[9967.93,19355.9,0],"Galati Base",250]
+    [[9967.93,19355.9,0],"Galati Base",250],
+    [[8746.56,17465.5,0],"Syrta Base",250]
 ];
 OT_NATO_HQ = "Selakano Airfield";
 OT_NATO_priority = ["Selakano Airfield","Gravia Airport","Comms Alpha","Pyrgos","Kavala","Neochori"];

@@ -80,7 +80,7 @@ if(_name in OT_allComms) then {
 if(_numNATO > 0) then {
 	private _garrisongroup = creategroup [blufor,true];
 	_groups pushback _garrisongroup;
-	private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 250];
+	private _buildings = nearestObjects [_posTown, OT_garrisonBuildings, 350];
 	{
 		private _addedVehicles = _x call {
 			private _building = _this;
@@ -201,8 +201,13 @@ if(count _terminal > 0) then {
 	_pos = [_tp,_dist,_dir] call BIS_fnc_relPos;
 	_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
 }else{
-	_pos = OT_NATO_HQ_garrisonPos;
-	_dir = OT_NATO_HQ_garrisonDir;
+	if(_name isEqualTo OT_NATO_HQ) then {
+		_pos = OT_NATO_HQ_garrisonPos;
+		_dir = OT_NATO_HQ_garrisonDir;
+	}else{
+		_pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+		_dir = random 360;
+	};
 };
 private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 {
