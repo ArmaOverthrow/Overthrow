@@ -10,7 +10,7 @@ if(_diff > 0 && !((primaryWeapon player) isEqualTo "" && (secondaryWeapon player
 _foundweapon = false;
 {
 	if(_diff > 0 && !((primaryWeapon _x) isEqualTo "" && (secondaryWeapon _x) isEqualTo "" && (handgunWeapon _x) isEqualTo "")) exitWith {_foundweapon = true};
-}foreach(units vehicle player);
+}foreach(crew vehicle player);
 if(_foundweapon) exitWith {hint "A passenger is holding a weapon"};
 
 private _hasdrugs = false;
