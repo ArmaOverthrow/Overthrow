@@ -56,10 +56,8 @@ if(_create isEqualType 1) then {
         private _dir = 0;
         private _p = [];
     	{
-            private _positionsCovered = _x getVariable ["____positionsGarrisoned",[]];
     		private _res = (_x call {
                 params ["_building"];
-
                 private _type = typeof _building;
     			if((damage _building) > 0.95) exitWith { []; };
     			if(
@@ -69,8 +67,8 @@ if(_create isEqualType 1) then {
                     || (_type == "Land_Cargo_HQ_V4_F")
                 ) exitWith {
                     private _p = (_building buildingPos 8);
-                    if !(8 in _positionsCovered) then {
-                        _positionsCovered pushback 8;
+                    private _guns = ({alive _x} count (nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]));
+                    if(_guns == 0) then {
                         [getDir _building, _p];
                     } else {
                         [];
@@ -86,8 +84,8 @@ if(_create isEqualType 1) then {
     				private _p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
     				private _dir = (getDir _building) - 180;
 
-                    if !(1 in _positionsCovered) then {
-                        _positionsCovered pushback 1;
+                    private _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
+                    if(_guns == 0) then {
                         [ getDir _building, _p ];
                     } else {
                         [];
@@ -95,20 +93,19 @@ if(_create isEqualType 1) then {
                 };
 
                 private _p = _building buildingPos 11;
-                if !(11 in _positionsCovered) then {
-                    _positionsCovered pushback 11;
+                private _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
+                if(_guns isEqualTo 0) exitWith {
                     [getDir _building, _p];
                 };
 
                 _p = _building buildingPos 13;
-                if !(13 in _positionsCovered) then {
-                    _positionsCovered pushback 13;
+                _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
+                if(_guns isEqualTo 0) exitWith {
                     [getDir _building, _p];
                 };
 
                 []
             });
-            _x setVariable ["____positionsGarrisoned",_positionsCovered,true];
             if!(_res isEqualTo []) exitWith{
                 _done = true;
                 _dir = _res select 0;
@@ -127,7 +124,17 @@ if(_create isEqualType 1) then {
         };
 
         if !(_done) then {
-            _p = _pos findEmptyPosition [30,80,_class_obj];
+            _p = _pos findEmptyPosition [20,120,_class_obj];
+            _dir = random 360;
+            //put sandbags
+			private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
+			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
+			_veh setpos _sp;
+			_veh setDir (_dir-180);
+			_sp = [_p,-1.5,_dir] call BIS_fnc_relPos;
+			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
+			_veh setpos _sp;
+			_veh setDir (_dir);
         };
 
         private _cost = [OT_nation,_class_price,0] call OT_fnc_getPrice;

@@ -1108,7 +1108,7 @@ class OT_dialog_main
 		class RscButton_1621: RscOverthrowButton
 		{
 			idc = 1621;
-			action = "closeDialog 0;[] spawn OT_fnc_garrisonDialog";
+			action = "closeDialog 0;[] call OT_fnc_garrisonDialog";
 
 			text = "Garrison"; //--- ToDo: Localize;
 			x = 0.943438 * safezoneW + safezoneX;

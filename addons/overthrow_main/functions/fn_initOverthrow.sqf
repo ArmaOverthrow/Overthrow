@@ -108,7 +108,6 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	["OT_autosave_loop"] call OT_fnc_addActionLoop;
 	["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
 		OT_cleanup_civilian_loop = time + (5*60);
-		//Dont cleanup unless there are more than 50 civs total
 		private _totalcivs = {(side _x isEqualTo civilian) && !captive _x} count (allUnits);
 		if(_totalcivs < 50) exitWith {};
 		{

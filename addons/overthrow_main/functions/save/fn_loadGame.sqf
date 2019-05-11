@@ -304,7 +304,7 @@ sleep 0.2;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
 			}else{
-				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+				[_pos,_cls,false] call OT_fnc_addGarrison;
 			};
 			sleep 0.1;
 		}foreach(_garrison);
@@ -332,8 +332,9 @@ sleep 0.2;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
 			}else{
-				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+				[_pos,_cls,false] call OT_fnc_addGarrison;
 			};
+			sleep 0.1;
 		}foreach(_garrison);
 	};
 }foreach(OT_objectiveData + OT_airportData);
