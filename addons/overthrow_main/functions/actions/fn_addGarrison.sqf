@@ -56,9 +56,10 @@ if(_create isEqualType 1) then {
         private _dir = 0;
         private _p = [];
     	{
+            private _positionsCovered = _x getVariable ["____positionsGarrisoned",[]];
     		private _res = (_x call {
                 params ["_building"];
-                _positionsCovered = _building getVariable ["____positionsGarrisoned",[]];
+
                 private _type = typeof _building;
     			if((damage _building) > 0.95) exitWith { []; };
     			if(
@@ -107,7 +108,7 @@ if(_create isEqualType 1) then {
 
                 []
             });
-            _building setVariable ["____positionsGarrisoned",_positionsCovered,true];
+            _x setVariable ["____positionsGarrisoned",_positionsCovered,true];
             if!(_res isEqualTo []) exitWith{
                 _done = true;
                 _dir = _res select 0;

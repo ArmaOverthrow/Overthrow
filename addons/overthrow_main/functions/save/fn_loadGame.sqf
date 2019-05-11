@@ -119,6 +119,7 @@ sleep 0.2;
 					//try not to blow up vehicles
 					_p = _pos findEmptyPosition [5,50,_type];
 				};
+				if((count _p) == 0) then {_p = _pos};
 				_veh = createVehicle [_type, _p, [], 0, "CAN_COLLIDE"];
 				_veh enableDynamicSimulation true;
 				/*
