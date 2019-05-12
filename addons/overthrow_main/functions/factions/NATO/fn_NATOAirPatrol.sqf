@@ -45,13 +45,15 @@ if !(_frombase in _abandoned) then {
 
     _timeout = time + ((count _waypoints) * 300);
 
-    waitUntil {sleep 10;alive _veh && time > _timeout};
+    waitUntil {sleep 10;!isNil "_veh" && alive _veh && time > _timeout};
 
     while {(count (waypoints _group)) > 0} do {
         deleteWaypoint ((waypoints _group) select 0);
     };
 
     sleep 1;
+
+    if(isNil "_veh" || !alive _veh) exitWith {};
 
     _wp = _group addWaypoint [_frompos,50];
     _wp setWaypointType "MOVE";
