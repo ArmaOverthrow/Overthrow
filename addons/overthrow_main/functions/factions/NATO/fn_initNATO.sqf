@@ -254,7 +254,6 @@ publicVariable "OT_allComms";
 	}else{
 		if(_name isEqualTo OT_NATO_HQ) then {
 			_mrk setMarkerType "ot_HQ";
-			_mrk setMarkerColor "ColorBLUFOR";
 		}else{
 			_mrk setMarkerType "flag_NATO";
 		};

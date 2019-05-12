@@ -25,7 +25,6 @@ _success = {
 	server setVariable [format["garrison%1",_objective],_count,true];
 	if(_objective isEqualTo OT_NATO_HQ) then {
 		_objective setMarkerType "ot_HQ";
-		_objective setMarkerColor "ColorBLUFOR";
 	}else{
 		_objective setMarkerType "flag_NATO";
 	};
