@@ -75,7 +75,7 @@ class CfgMarkers
 	class ot_HQ
 	{
 		name = "HQ";
-		icon = "\overthrow_main\markers\hq.paa";
+		icon = "\overthrow_main\ui\markers\hq.paa";
 		color[] = {1, 1, 1, 1};
 		size = 32;
 		shadow = true;
