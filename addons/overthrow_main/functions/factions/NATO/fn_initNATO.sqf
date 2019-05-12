@@ -252,7 +252,12 @@ publicVariable "OT_allComms";
 	if(_name in (server getVariable "NATOabandoned")) then {
 		_mrk setMarkerType OT_flagMarker;
 	}else{
-		_mrk setMarkerType "flag_NATO";
+		if(_name isEqualTo OT_NATO_HQ) then {
+			_mrk setMarkerType "ot_HQ";
+			_mrk setMarkerColor "ColorBLUFOR";
+		}else{
+			_mrk setMarkerType "flag_NATO";
+		};
 	};
 
 	server setVariable [_name,_pos,true];

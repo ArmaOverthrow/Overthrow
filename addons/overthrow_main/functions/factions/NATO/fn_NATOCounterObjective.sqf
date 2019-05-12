@@ -23,7 +23,12 @@ _success = {
 	_abandoned deleteAt (_abandoned find _objective);
 	_count = {(_x getVariable ["garrison",""]) isEqualTo _objective} count (allunits);
 	server setVariable [format["garrison%1",_objective],_count,true];
-	_objective setMarkerType "flag_NATO";
+	if(_objective isEqualTo OT_NATO_HQ) then {
+		_objective setMarkerType "ot_HQ";
+		_objective setMarkerColor "ColorBLUFOR";
+	}else{
+		_objective setMarkerType "flag_NATO";
+	};
 	if(_objective isEqualTo "Chemical Plant") then {
 		server setVariable ["reschems",0,true];
 	};
