@@ -98,6 +98,7 @@ OT_NATO_Vehicles_JetGarrison = [
 	["B_Plane_CAS_01_F",1]
 ];
 
+<<<<<<< HEAD
 OT_NATO_Vehicles_StaticAAGarrison = [
 	"B_static_AA_F",
 	"B_static_AA_F"
@@ -107,6 +108,9 @@ OT_NATO_Vehicles_StaticAAGarrison = [
 OT_hasJetsDLC = false;
 if("B_Plane_Fighter_01_F" isKindOf "Air") then {
 	OT_hasJetsDLC = true;
+=======
+if(OT_hasJetsDLC) then {
+>>>>>>> 9d5070b028ce718bcaa5f2e2c7cda60f558e9e5e
 	OT_NATO_Vehicles_JetGarrison pushback ["B_Plane_Fighter_01_F",1];
 	OT_NATO_Vehicles_JetGarrison pushback ["B_Plane_Fighter_01_Stealth_F",1];
 	OT_NATO_Vehicles_StaticAAGarrison pushback "B_Radar_System_01_F";
