@@ -28,6 +28,7 @@ if((typeof _building) in OT_allRepairableRuins) exitWith {
 			_veh = createVehicle [_buildClass, _pos, [], 0, "CAN_COLLIDE"];
 			_veh enableDynamicSimulation true;
 			_veh setVectorDirAndUp _dir;
+			_veh setPosATL _pos;
 			[_veh,getPlayerUID player] call OT_fnc_setOwner;
 		}else{
 			format["You need $%1 to repair this building",[_price, 1, 0, true] call CBA_fnc_formatNumber];
