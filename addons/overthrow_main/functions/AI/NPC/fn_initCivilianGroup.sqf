@@ -4,6 +4,8 @@ private _start = getPosATL ((units _g) select 0);
 if(isNil "_start") exitWith {};
 if(typename _start isEqualTo "BOOL") exitWith {};
 
+_g setVariable ["VCM_Disable",true];
+
 _g setBehaviour "SAFE";
 
 private _start = getPosATL ((units _g) select 0);

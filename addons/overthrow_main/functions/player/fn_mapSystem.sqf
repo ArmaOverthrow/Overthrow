@@ -321,6 +321,7 @@ _handler = {
 			};
 		}foreach(vehicles);
 	};
+
 	private _qrf = server getVariable "QRFpos";
 	if(!isNil "_qrf") then {
 		private _progress = server getVariable ["QRFprogress",0];
@@ -330,8 +331,8 @@ _handler = {
 		if(_progress != 0) then {
 			(_this select 0) drawEllipse [
 				_qrf,
-				100,
-				100,
+				200,
+				200,
 				0,
 				_col,
 				"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
@@ -339,8 +340,62 @@ _handler = {
 		};
 	};
 
+	//Radar
+	{
+		if((_x isKindOf "Air") && !(_x isKindOf "Parachute") && {(alive _x)} && ((side _x) isEqualTo west) && (_x call OT_fnc_isRadarInRange) && {(count crew _x > 0)}) then {
+			private _i = "\A3\ui_f\data\map\markers\nato\b_air.paa";
+			if(_x isKindOf "Plane") then {_i = "\A3\ui_f\data\map\markers\nato\b_plane.paa"};
+			if((_x isKindOf "UAV") || (typeof _x isEqualTo OT_NATO_Vehicles_ReconDrone)) then {_i = "\A3\ui_f\data\map\markers\nato\b_uav.paa"};
+			(_this select 0) drawIcon [
+				_i,
+				[0,0.3,0.59,1],
+				position _x,
+				30,
+				30,
+				0
+			];
+		};
+	}foreach(vehicles);
+
+	//Draw resistance radar coverage
+	if(_scale > 0.16) then {
+		{
+			(_this select 0) drawEllipse [
+				_x,
+				2500,
+				2500,
+				0,
+				[0,0.7,0,0.4],
+				"\A3\ui_f\data\map\markerbrushes\fdiagonal_ca.paa"
+			];
+		}foreach(spawner getVariable ["GUERradarPositions",[]]);
+	};
+
+	//Draw restricted areas
+	private _abandoned = server getVariable ["NATOabandoned",[]];
+	private _attack = server getVariable ["NATOattacking",""];
+	if(_scale < 0.2) then {
+		{
+			_x params ["_obpos","_obname"];
+			if !(_obname in _abandoned || _obname isEqualTo _attack) then {
+				private _dist = _obname call {
+					if (_this in OT_allComms) exitWith {40};
+					if(_this in OT_NATO_priority) exitWith {500};
+					200
+				};
+				(_this select 0) drawEllipse [
+					_obpos,
+					_dist,
+					_dist,
+					0,
+					[0.7,0,0,0.6],
+					"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
+				];
+			};
+		}foreach(OT_objectiveData + OT_airportData + OT_commsData);
+	};
+
 	if((vehicle player) isKindOf "Air") then {
-		_abandoned = server getVariable ["NATOabandoned",[]];
 		{
 			if !(_x in _abandoned) then {
 				(_this select 0) drawEllipse [
@@ -353,7 +408,6 @@ _handler = {
 				];
 			};
 		}foreach(OT_allAirports);
-		private _attack = server getVariable ["NATOattacking",""];
 		if(_attack != "") then {
 			(_this select 0) drawEllipse [
 				server getvariable _attack,

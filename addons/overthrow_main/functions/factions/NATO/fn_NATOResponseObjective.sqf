@@ -5,6 +5,8 @@ private _posTown = getMarkerPos _objective;
 
 private _tskid = [resistance,[format["counter%1",_objective]],[format["NATO is sending forces to %1. This is our chance to capture it if we can hold the field.",_objective],format["Capture %1",_objective],format["counter%1",_objective]],_posTown,1,2,true,"Target",true] call BIS_fnc_taskCreate;
 
+format["NATO is attacking %1",_objective] remoteExec ["OT_fnc_notifyMinor",0,false];
+
 _fail = {
 	params ["_tskid","_objective"];
 	[_tskid, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;

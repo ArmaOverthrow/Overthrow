@@ -84,7 +84,7 @@ if(count _objects isEqualTo 1) then {
 }else{
 	private _options = [];
 	{
-		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],{spawn _doTransfer},_x];
+		_options pushback [format["%1 (%2m)",(typeof _x) call OT_fnc_vehicleGetName,round (_x distance player)],{[] spawn _doTransfer;},_x];
 	}foreach(_objects);
 	"Transfer legal items from which container?" call OT_fnc_notifyBig;
 	_options call OT_fnc_playerDecision;

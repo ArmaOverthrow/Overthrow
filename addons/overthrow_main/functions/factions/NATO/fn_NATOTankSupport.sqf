@@ -11,7 +11,10 @@ while {_count < _num} do {
 	private _vehtype = OT_NATO_Vehicles_TankSupport call BIS_fnc_SelectRandom;
 
 	private _dir = [_frompos,_attackpos] call BIS_fnc_dirTo;
-	_pos = [_frompos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos_fnc_pos;
+	private _pos = _frompos findEmptyPosition [15,100,_vehtype];
+	if(count _pos == 0) then {
+		_pos = [_frompos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos_fnc_pos;
+	};
 
 
 	_veh = createVehicle [_vehtype, _pos, [], 0,""];
@@ -32,17 +35,17 @@ while {_count < _num} do {
 	}foreach(crew _veh);
 	_count = _count + 1;
 	sleep 0.2;
+
+	{
+        _x addCuratorEditableObjects [[_veh]];
+    }foreach(allCurators);
 };
 
-_wp = _group addWaypoint [_attackpos,20];
-_wp setWaypointType "MOVE";
-_wp setWaypointBehaviour "CARELESS";
-
-_wp = _group addWaypoint [_attackpos,20];
+_wp = _group addWaypoint [_attackpos,100];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointTimeout [600,600,600];
 
-_wp = _group addWaypoint [_frompos,500];
+_wp = _group addWaypoint [_frompos,100];
 _wp setWaypointType "SCRIPTED";
 _wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];

@@ -58,6 +58,8 @@ if((count _possible) > 0) then {
         _groups pushback _leaderGroup;
         spawner setvariable [_spawnid,_groups,false];
 
+        _group call OT_fnc_initCriminalGroup;
+
         {
             _x addCuratorEditableObjects [[_civ]];
         }foreach(allCurators);

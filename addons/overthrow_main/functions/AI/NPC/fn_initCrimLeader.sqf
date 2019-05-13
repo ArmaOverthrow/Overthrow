@@ -2,6 +2,9 @@ private ["_unit","_numslots","_weapon","_magazine","_base","_config"];
 _unit = _this select 0;
 _town = _this select 1;
 
+(group _unit) setVariable ["VCM_NORESCUE",true];
+(group _unit) setVariable ["VCM_TOUGHSQUAD",true];
+
 _unit setVariable ["crimleader",true,false];
 _unit setVariable ["hometown",_town,false];
 

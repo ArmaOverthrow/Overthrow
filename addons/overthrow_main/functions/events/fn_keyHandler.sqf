@@ -271,6 +271,9 @@ if(!dialog) then {
 					if(call OT_fnc_playerIsAtHardwareStore) exitWith {
 						createDialog "OT_dialog_vehiclehardware";
 					};
+					if(call OT_fnc_playerIsAtStore) exitWith {
+						createDialog "OT_dialog_vehiclestore";
+					};
 					createDialog "OT_dialog_vehicle";
 					[] spawn OT_fnc_vehicleDialog;
 				};

@@ -22,7 +22,7 @@ missionNameSpace setVariable ["OT_saving",true,true];
 
 {
 	_x setVariable ["OT_newplayer",false,true];
-} forEach (allPlayers);
+} forEach ([] call CBA_fnc_players);
 
 OT_autoSave_last_time = time + (OT_autoSave_time*60);
 
@@ -70,7 +70,7 @@ if !(_quiet) then {
 	"Step 2/11 - Saving buildings" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_"]) };
+private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_","____"]) };
 
 private _poses = (allVariables buildingpositions select _prefixFilter) apply {
 	[_x,buildingpositions getVariable _x]

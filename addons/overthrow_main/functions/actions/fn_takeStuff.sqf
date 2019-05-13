@@ -12,6 +12,9 @@ if(headgear _unit != "") then {
 if(backpack _unit != "") then {
 	_t addBackpack (backpack _unit) call BIS_fnc_basicBackpack;
 };
+if(hmd _unit != "") then {
+	_t linkItem hmd _unit;
+};
 
 {
 	_count = 0;
@@ -37,7 +40,9 @@ if(headgear _unit != "") then {
 if(backpack _unit != "") then {
 	removeBackpackGlobal _unit;
 };
-
+if(hmd _unit != "") then {
+	_t unlinkItem hmd _unit;
+};
 if(goggles _unit != "") then {
 	_t addGoggles goggles _unit;
 	removeGoggles _unit;

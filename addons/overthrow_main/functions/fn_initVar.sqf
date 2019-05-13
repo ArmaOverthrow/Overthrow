@@ -49,6 +49,9 @@ OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow
 OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Drugs.sqf");
 OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow_main\missions\tutorial\tut_Economy.sqf");
 
+OT_NATO_HQ_garrisonPos = [];
+OT_NATO_HQ_garrisonDir = 0;
+
 // Load mission data
 call compile preprocessFileLineNumbers "data\names.sqf";
 call compile preprocessFileLineNumbers "data\towns.sqf";
@@ -169,11 +172,11 @@ OT_item_UAVterminal = "I_UavTerminal";
 OT_item_DefaultBlueprints = [];
 
 OT_itemCategoryDefinitions = [
-    ["General",["Bandage (Basic)","Banana","Map","Toolkit","Compass","Earplugs","Watch","Radio","Compass","paint"]],
-    ["Pharmacy",["Bandage","autoinjector","IV","Bodybag","Dressing","Earplugs"]],
-    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","Battery"]],
-    ["Hardware",["Tool","Cable Tie","paint","Wirecutter"]],
-    ["Surplus",["Rangefinder","Binocular","Compass"]]
+    ["General",["ACE_fieldDressing","Banana","Map","ToolKit","Compass","ACE_EarPlugs","Watch","Radio","Compass","ACE_Spraypaint","Altimiter","MapTools","Binocular"]],
+    ["Pharmacy",["Dressing","Bandage","morphine","adenosine","atropine","ACE_EarPlugs","epinephrine","bodyBag","quikclot","salineIV","bloodIV","plasmaIV","personalAidKit","surgicalKit","tourniquet"]],
+    ["Electronics",["Rangefinder","Cellphone","Radio","Watch","GPS","monitor","DAGR","_dagr","Battery","ATragMX","ACE_Flashlight","I_UavTerminal"]],
+    ["Hardware",["Tool","CableTie","ACE_Spraypaint","wirecutter","ACE_rope"]],
+    ["Surplus",["Rangefinder","Binocular","Compass","RangeCard","RangeTable","defusalKit","SpottingScope","ACE_Vector","ACE_Yardage"]]
 ];
 
 OT_items = [];
@@ -251,6 +254,9 @@ OT_allBackpacks = [];
 OT_allStaticBackpacks = [];
 OT_vehWeights_civ = [];
 OT_mostExpensiveVehicle = "";
+OT_allHeliThreats = [];
+OT_allPlaneThreats = [];
+OT_allVehicleThreats = [];
 
 OT_spawnHouses = [];
 {
@@ -317,8 +323,23 @@ private _mostExpensive = 0;
 	};
 }foreach(_allVehs);
 
+//Determine vehicle threats
+_allVehs = "
+	( getNumber ( _x >> ""scope"" ) > 0
+	&&
+	{ (getArray ( _x >> ""threat"" ) select 0) > 0}
+	&&
+	{ (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") or
+	 (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Armored"")})
+
+" configClasses ( configFile >> "cfgVehicles" );
+
+{
+	OT_allVehicleThreats pushback (configName _x);
+}foreach(_allVehs);
+
 private _allHelis = "
-    ( getNumber ( _x >> ""scope"" ) isEqualTo 2
+    ( getNumber ( _x >> ""scope"" ) > 1
     &&
 	{ (getArray ( _x >> ""threat"" ) select 0) < 0.5}
 	&&
@@ -350,6 +371,27 @@ private _allHelis = "
 
 	OT_helis pushback [_cls,[_cost,0,_steel,_plastic],true];
 	OT_allVehicles pushback _cls;
+}foreach(_allHelis);
+
+//Determine aircraft threats
+_allHelis = "
+    ( getNumber ( _x >> ""scope"" ) > 0
+    &&
+	{ (getArray ( _x >> ""threat"" ) select 0) >= 0.5}
+	&&
+    { getText ( _x >> ""vehicleClass"" ) isEqualTo ""Air""})
+" configClasses ( configFile >> "cfgVehicles" );
+
+{
+	private _cls = configName _x;
+	private _clsConfig = configFile >> "cfgVehicles" >> _cls;
+	private _numturrets = count("true" configClasses(_clsConfig >> "Turrets"));
+
+	if(_cls isKindOf "Plane") then {
+		OT_allPlaneThreats pushback _cls;
+	}else{
+		OT_allHeliThreats pushback _cls;
+	};
 }foreach(_allHelis);
 
 //Chinook (unarmed) special case for production logistics
@@ -838,7 +880,7 @@ OT_miscables = ["ACE_Wheel","ACE_Track","Land_PortableLight_double_F","Land_Port
 "ArrowDesk_R_F","ArrowMarker_L_F","ArrowMarker_R_F","Pole_F","Land_RedWhitePole_F","RoadBarrier_F","RoadBarrier_small_F","RoadCone_F","RoadCone_L_F","Land_VergePost_01_F",
 "TapeSign_F","Land_LampDecor_F","Land_WheelChock_01_F","Land_Sleeping_bag_F","Land_Sleeping_bag_blue_F","Land_WoodenLog_F","FlagChecked_F","FlagSmall_F","Land_LandMark_F","Land_Bollard_01_F"];
 
-//Stuff you can build
+//Stuff you can build: [name,price,array of possible classnames,init function,??,description]
 OT_Buildables = [
 	["Training Camp",1500,[
 		["Land_IRMaskingCover_02_F",[-0.039865,0.14918,0],0,1,0,[],"","",true,false],
@@ -851,7 +893,7 @@ OT_Buildables = [
 	["Walls",200,["Land_ConcreteWall_01_l_8m_F","Land_ConcreteWall_01_l_gate_F","Land_HBarrier_01_wall_6_green_F","Land_HBarrier_01_wall_4_green_F","Land_HBarrier_01_wall_corner_green_F"],"",false,"Stop people (or tanks) from getting in. Press space to change type."],
 	["Helipad",50,["Land_HelipadCircle_F","Land_HelipadCivil_F","Land_HelipadRescue_F","Land_HelipadSquare_F"],"",false,"Informs helicopter pilots of where might be a nice place to land"],
 	["Observation Post",800,["Land_Cargo_Patrol_V4_F","Land_Cargo_Patrol_V3_F","Land_Cargo_Patrol_V2_F","Land_Cargo_Patrol_V1_F"],"",false,"A small tower, can garrison a static HMG/GMG in it"],
-	["Barracks",5000,[OT_barracks],"",false,"Allows recruiting of squads"],
+	["Barracks",10000,[OT_barracks],"",false,"Allows recruiting of squads"],
 	["Guard Tower",5000,["Land_Cargo_Tower_V4_F","Land_Cargo_Tower_V3_F","Land_Cargo_Tower_V2_F","Land_Cargo_Tower_V1_F"],"",false,"It's a huge tower, what else do you need?."],
 	["Hangar",1200,["Land_Airport_01_hangar_F"],"",false,"A big empty building, could probably fit a plane inside it."],
 	["Workshop",1000,[
@@ -864,7 +906,8 @@ OT_Buildables = [
 	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
 	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town && keep the peace. Comes with 2 units."],
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
-	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Attracts scared civilians that are more likely to join your cause"]
+	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Can recruit civilians here without needing to chase them down"],
+	["Radar",25000,[OT_radarBuilding],"OT_fnc_initRadar",false,"Reveals enemy drones, helicopters and planes within 2.5km"]
 ];
 
 {
@@ -921,6 +964,26 @@ OT_workshop = [
 	["Static AT","C_Offroad_01_F",2600,"I_AT_01_weapon_F","I_static_AT_F",[[0,-1.5,0.25],180]],
 	["Static AA","C_Offroad_01_F",2600,"I_AA_01_weapon_F","I_static_AA_F",[[0,-1.5,0.25],180]]
 ];
+
+OT_repairableRuins = [
+	["Land_Cargo_Tower_V4_ruins_F","Land_Cargo_Tower_V4_F",2000],
+	["Land_Cargo_Tower_V1_ruins_F","Land_Cargo_Tower_V1_F",2000],
+	["Land_Cargo_Tower_V2_ruins_F","Land_Cargo_Tower_V2_F",2000],
+	["Land_Cargo_Tower_V3_ruins_F","Land_Cargo_Tower_V3_F",2000],
+	["Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_Patrol_V1_F",500],
+	["Land_Cargo_Patrol_V2_ruins_F","Land_Cargo_Patrol_V2_F",500],
+	["Land_Cargo_Patrol_V3_ruins_F","Land_Cargo_Patrol_V3_F",500],
+	["Land_Cargo_Patrol_V4_ruins_F","Land_Cargo_Patrol_V4_F",500],
+	["Land_Cargo_HQ_V1_ruins_F","Land_Cargo_HQ_V1_F",2500],
+	["Land_Cargo_HQ_V2_ruins_F","Land_Cargo_HQ_V2_F",2500],
+	["Land_Cargo_HQ_V3_ruins_F","Land_Cargo_HQ_V3_F",2500],
+	["Land_Cargo_HQ_V4_ruins_F","Land_Cargo_HQ_V4_F",2500]
+];
+OT_allRepairableRuins = [];
+{
+	_x params ["_ruin"];
+	OT_allRepairableRuins pushback _ruin;
+}foreach(OT_repairableRuins);
 
 OT_loadingMessages = ["Adding Hidden Agendas","Adjusting Bell Curves","Aesthesizing Industrial Areas","Aligning Covariance Matrices","Applying Feng Shui Shaders","Applying Theatre Soda Layer","Asserting Packed Exemplars","Attempting to Lock Back-Buffer","Binding Sapling Root System","Breeding Fauna","Building Data Trees","Bureacritizing Bureaucracies","Calculating Inverse Probability Matrices","Calculating Llama Expectoration Trajectory","Calibrating Blue Skies","Charging Ozone Layer","Coalescing Cloud Formations","Cohorting Exemplars","Collecting Meteor Particles","Compounding Inert Tessellations","Compressing Fish Files","Computing Optimal Bin Packing","Concatenating Sub-Contractors","Containing Existential Buffer","Debarking Ark Ramp","Debunching Unionized Commercial Services","Deciding What Message to Display Next","Decomposing Singular Values","Decrementing Tectonic Plates","Deleting Ferry Routes","Depixelating Inner Mountain Surface Back Faces","Depositing Slush Funds","Destabilizing Economic Indicators","Determining Width of Blast Fronts","Deunionizing Bulldozers","Dicing Models","Diluting Livestock Nutrition Variables","Downloading Satellite Terrain Data","Exposing Flash Variables to Streak System","Extracting Resources","Factoring Pay Scale","Fixing Election Outcome Matrix","Flood-Filling Ground Water","Flushing Pipe Network","Gathering Particle Sources","Generating Jobs","Gesticulating Mimes","Graphing Whale Migration","Hiding Willio Webnet Mask","Implementing Impeachment Routine","Increasing Accuracy of RCI Simulators","Increasing Magmafacation","Initializing Rhinoceros Breeding Timetable","Initializing Robotic Click-Path AI","Inserting Sublimated Messages","Integrating Curves","Integrating Illumination Form Factors","Integrating Population Graphs","Iterating Cellular Automata","Lecturing Errant Subsystems","Mixing Genetic Pool","Modeling Object Components","Mopping Occupant Leaks","Normalizing Power","Obfuscating Quigley Matrix","Overconstraining Dirty Industry Calculations","Partitioning City Grid Singularities","Perturbing Matrices","Pixellating Nude Patch","Polishing Water Highlights","Populating Lot Templates","Preparing Sprites for Random Walks","Prioritizing Landmarks","Projecting Law Enforcement Pastry Intake","Realigning Alternate Time Frames","Reconfiguring User Mental Processes","Relaxing Splines","Removing Road Network Speed Bumps","Removing Texture Gradients","Removing Vehicle Avoidance Behavior","Resolving GUID Conflict","Reticulating Splines","Retracting Phong Shader","Retrieving from Back Store","Reverse Engineering Image Consultant","Routing Neural Network Infanstructure","Scattering Rhino Food Sources","Scrubbing Terrain","Searching for Llamas","Seeding Architecture Simulation Parameters","Sequencing Particles","Setting Advisor ","Setting Inner Deity ","Setting Universal Physical Constants","Sonically Enhancing Occupant-Free Timber","Speculating Stock Market Indices","Splatting Transforms","Stratifying Ground Layers","Sub-Sampling Water Data","Synthesizing Gravity","Synthesizing Wavelets","Time-Compressing Simulator Clock","Unable to Reveal Current Activity","Weathering Buildings","Zeroing Crime Network"];
 

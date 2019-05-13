@@ -1,5 +1,8 @@
 private _group = _this;
 
+_group setVariable ["VCM_NORESCUE",true];
+_group setVariable ["VCM_TOUGHSQUAD",true];
+
 private _town = server getVariable ((leader _group) getVariable "hometown");
 if(isNil "_town") then {_town = position(leader _group)};
 private _start = position(leader _group);
