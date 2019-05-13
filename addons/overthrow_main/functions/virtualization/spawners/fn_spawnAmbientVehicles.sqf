@@ -14,14 +14,14 @@ if(_town in OT_capitals + OT_sprawling) then {//larger search radius
 private _count = 0;
 private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
-private _numVeh = 6;
+private _numVeh = 4;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
 if(_town isEqualTo (server getVariable "spawntown")) then {
-	_numVeh = 20;
+	_numVeh = 12;
 };
-if(_numVeh > 20) then {_numVeh = 20};
+if(_numVeh > 12) then {_numVeh = 12};
 if(count(vehicles) > 200) then {_numVeh = 3};
 private _loops = 0;
 while {(_count < _numVeh) && (_loops < 50)} do {
