@@ -1165,7 +1165,7 @@ class OT_dialog_main
 		class RscButton_1610: RscOverthrowButton
 		{
 			idc = 1610;
-			action = "closeDialog 0;[] spawn OT_fnc_setHome";
+			action = "closeDialog 0;[] call OT_fnc_setHome";
 
 			text = "Set Home"; //--- ToDo: Localize;
 			x = 0.943438 * safezoneW + safezoneX;

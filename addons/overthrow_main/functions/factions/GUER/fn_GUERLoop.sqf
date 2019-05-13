@@ -4,6 +4,9 @@ if(_trackcounter > 5) then {
 	_trackcounter = 0;
 	//save online player data, in case they crash
 	{
+		if(_x getVariable ["OT_newplayer",false]) then {
+			_x setVariable ["OT_newplayer",false,true];
+		};
 		[_x] call OT_fnc_savePlayerData;
 	}foreach([] call CBA_fnc_players);
 

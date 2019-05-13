@@ -371,8 +371,31 @@ _handler = {
 		}foreach(spawner getVariable ["GUERradarPositions",[]]);
 	};
 
+	//Draw restricted areas
+	private _abandoned = server getVariable ["NATOabandoned",[]];
+	private _attack = server getVariable ["NATOattacking",""];
+	if(_scale < 0.2) then {
+		{
+			_x params ["_obpos","_obname"];
+			if !(_obname in _abandoned || _obname isEqualTo _attack) then {
+				private _dist = _obname call {
+					if (_this in OT_allComms) exitWith {40};
+					if(_this in OT_NATO_priority) exitWith {500};
+					200
+				};
+				(_this select 0) drawEllipse [
+					_obpos,
+					_dist,
+					_dist,
+					0,
+					[0.7,0,0,0.6],
+					"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
+				];
+			};
+		}foreach(OT_objectiveData + OT_airportData + OT_commsData);
+	};
+
 	if((vehicle player) isKindOf "Air") then {
-		_abandoned = server getVariable ["NATOabandoned",[]];
 		{
 			if !(_x in _abandoned) then {
 				(_this select 0) drawEllipse [
@@ -385,7 +408,6 @@ _handler = {
 				];
 			};
 		}foreach(OT_allAirports);
-		private _attack = server getVariable ["NATOattacking",""];
 		if(_attack != "") then {
 			(_this select 0) drawEllipse [
 				server getvariable _attack,
