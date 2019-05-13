@@ -7,6 +7,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions";
 			class initVar {};
 			class initOverthrow {};
+			class initBaseVar {};
 		};
 
         class Cleanup
@@ -578,7 +579,6 @@ class CfgFunctions
 		class Integration
 		{
 			file = "\overthrow_main\functions\integration";
-			class initTFAR {};
 			class advancedTowingInit {};
 			class detectItems {};
 		};
