@@ -92,7 +92,7 @@ canBuildHere = false;
 modeCenter = _center;
 
 buildOnMouseMove = {
-	params ["_relX","_relY"];
+	params ["_control","_relX","_relY"];
 	modeValue = screenToWorld getMousePosition;
 	modeValue = [modeValue select 0,modeValue select 1,0];
 	if(!isNull modeTarget) then {

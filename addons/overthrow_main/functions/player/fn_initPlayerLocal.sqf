@@ -31,10 +31,8 @@ if(isNil {server getVariable "generals"}) then {
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 if(isMultiplayer && (!isServer)) then {
-	//TFAR Support, thanks to Dedmen for the help
-	[] call OT_fnc_initTFAR;
-
 	// both done on server too, no need to execute them again
+	call OT_fnc_initBaseVar;
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 }else{
