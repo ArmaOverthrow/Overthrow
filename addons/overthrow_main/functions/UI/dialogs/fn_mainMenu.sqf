@@ -90,15 +90,6 @@ if(typename _b isEqualTo "ARRAY") then {
 		_ownername = players_NS getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
 
-		if((typeof _building) in OT_allRepairableRuins) exitWith {
-			ctrlEnable [1608,false];
-			ctrlEnable [1609,false];
-			ctrlSetText [1610,"Repair"];
-			ctrlEnable [1610,true];
-
-			_buildingTxt = "<t align='left' size='0.8'>Ruins</t><br/>";
-		};
-
 		if(typeof _building isEqualTo OT_warehouse) exitWith {
 			ctrlEnable [1609,true];
 			ctrlSetText [1609,"Procurement"];
@@ -110,9 +101,12 @@ if(typename _b isEqualTo "ARRAY") then {
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
 			};
-
 			ctrlSetText [1610,"Repair"];
-			ctrlEnable [1610,true];
+			if((damage _building) isEqualTo 1) then {
+				ctrlEnable [1610,true];
+			}else{
+				ctrlEnable [1610,false];
+			};
 
 			_buildingTxt = format["
 				<t align='left' size='0.8'>Warehouse</t><br/>
@@ -250,6 +244,15 @@ if(typename _b isEqualTo "ARRAY") then {
 			};
 		};
 	}else{
+		if((typeof _building) in OT_allRepairableRuins) exitWith {
+			ctrlEnable [1608,false];
+			ctrlEnable [1609,false];
+			ctrlSetText [1610,"Repair"];
+			ctrlEnable [1610,true];
+
+			_buildingTxt = "<t align='left' size='0.8'>Ruins</t><br/>";
+		};
+
 		if(isNil "_price") then {
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
