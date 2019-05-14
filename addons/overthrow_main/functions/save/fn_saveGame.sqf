@@ -171,9 +171,10 @@ if !(_quiet) then {
 	"Step 6/11 - Saving warehouse" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-private _warehouse = (allvariables warehouse select _prefixFilter) apply {
-	[ _x, warehouse getVariable _x]
-};
+private _warehouse = [2]; //First element is save version
+_warehouse append ((allVariables warehouse) select {((toLower _x select [0,5]) isEqualTo "item_")} apply {
+	[_x select [5], (warehouse getVariable _x) param [1,0,[0]]]
+});
 _data pushback ["warehouse",_warehouse];
 
 if !(_quiet) then {

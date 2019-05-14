@@ -1,12 +1,13 @@
 private _cursel = lbCurSel 1500;
 lbClear 1500;
-private _sorted = [allVariables warehouse,[],{_x},"ASCEND"] call BIS_fnc_SortBy;
+private _itemVars = (allVariables warehouse) select {((toLower _x select [0,5]) isEqualTo "item_")};
+_itemVars sort true;
 private _numitems = 0;
 {
-	private _d = warehouse getVariable [_x,[_x,0]];
+	private _d = warehouse getVariable [_x,false];
 	if(_d isEqualType []) then {
-		_d params ["_cls", "_num"];
-		if (!(_cls isEqualType {}) && {_num > 0}) then {
+		_d params ["_cls", ["_num",0,[0]]];
+		if (!(_cls isEqualType {}) && _num > 0) then {
 			_numitems = _numitems + 1;
 			([_cls] call {
 				params ["_cls"];
@@ -41,7 +42,7 @@ private _numitems = 0;
 			lbSetData [1500,_idx,_cls];
 		};
 	};
-}foreach(_sorted);
+}foreach(_itemVars);
 
 if(_cursel >= _numitems) then {_cursel = 0};
 lbSetCurSel [1500, _cursel];

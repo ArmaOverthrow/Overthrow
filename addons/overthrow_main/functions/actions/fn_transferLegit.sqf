@@ -38,38 +38,44 @@ _doTransfer = {
 	_full = false;
 	if(_iswarehouse) then {
 		{
-			_count = 0;
-			_d = warehouse getVariable [_x,[_x,0]];
-			if(typename _d isEqualTo "ARRAY") then {
-				_cls = _d select 0;
-				_num = _d select 1;
+			private _count = 0;
+			_d = warehouse getVariable [_x,false];
+			if(_d isEqualType []) then {
+				params ["_cls",["_num",0,[0]]];
 				if(_num > 0) then {
 					if(_cls in OT_allItems) then {
 						while {_count < _num} do {
-							if !(_veh canAdd _cls) exitWith {_full = true;warehouse setVariable [_cls,_num - _count,true]};
-							_veh addItemCargoGlobal [_cls,1];
+							if(!(_veh canAdd [_cls,_count+1])) exitWith {_full = true};
 							_count = _count + 1;
 						};
-						if !(_full) then {
-							warehouse setVariable [_cls,nil,true];
+						if (_count > 0) then {
+							_veh addItemCargoGlobal [_cls,_count];
+							if (_count isEqualTo _num) then {
+								warehouse setVariable [_x,nil,true];
+							} else {
+								warehouse setVariable [_x,[_cls,_num - _count],true];
+							};
 						};
 					};
 				};
 			};
 			if(_full) exitWith {};
-		}foreach(allvariables warehouse);
+		}foreach((allVariables warehouse) select {((toLower _x select [0,5]) isEqualTo "item_")});
 	}else{
 		{
-			_count = 0;
-			_cls = _x select 0;
+			private _count = 0;
+			params ["_cls","_num"];
 			if(_cls in OT_allItems) then {
-				while {_count < (_x select 1)} do {
-					if !(_veh canAdd _cls) exitWith {_full = true};
-					_veh addItemCargoGlobal [_cls,1];
+				while {_count < _num} do {
+					if(!(_veh canAdd [_cls,_count+1])) exitWith {_full = true;};
 					_count = _count + 1;
 				};
-				if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
-					[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
+
+				if (_count > 0) then {
+					_veh addItemCargoGlobal [_cls,_count];
+					if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
+						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
+					};
 				};
 			};
 			if(_full) exitWith {};
