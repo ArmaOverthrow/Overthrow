@@ -44,11 +44,8 @@ _hour = date select 3;
 if(_hour < 8 || _hour > 15) then {
 	_unit linkItem "O_NVGoggles_ghex_F";
 };
-if(OT_hasACE) then {
-	_unit linkItem "ACE_Altimeter";
-}else{
-	_unit linkItem "ItemWatch";
-};
+
+_unit linkItem "ACE_Altimeter";
 _unit linkItem "ACE_Cellphone";
 
 _weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;

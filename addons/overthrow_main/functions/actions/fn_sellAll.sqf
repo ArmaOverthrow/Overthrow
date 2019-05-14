@@ -33,7 +33,50 @@ if(_total > 100) then {[_town,round(_total / 100)] call OT_fnc_support};
 private _ocls = _sellcls;
 
 if((player getVariable ["OT_shopTarget","Self"]) isEqualTo "Vehicle") then {
-	[_target, _sellcls, _qty] call CBA_fnc_removeItemCargo;
+	private _noncontaineritems = ((itemCargo _target) + (magazineCargo _target) + (backpackCargo _target)) call BIS_fnc_consolidateArray;
+	private _ncqty = 0;
+	{
+		_x params ["_thiscls","_thisqty"];
+		if(_thiscls isEqualTo _sellcls) exitWith {
+			_ncqty = _thisqty;
+		};
+	}foreach(_noncontaineritems);
+	if(_ncqty > 0) then {
+		[_target, _sellcls, _ncqty] call CBA_fnc_removeItemCargo;
+	};
+	_qty = _qty - _ncqty;
+	if(_qty > 0) then {
+		//still need to find more items in backpacks, uniforms etc
+		{
+			_x params ["_itemcls","_item"];
+			{
+				_x params ["_c","_q"];
+				if(_c isEqualTo _sellcls) exitWith {
+					[_item, _sellcls, _q] call CBA_fnc_removeItemCargo;
+					_qty = _qty - _q;
+				};
+			}foreach((itemCargo _item) call BIS_fnc_consolidateArray);
+			if(_qty > 0) then {
+
+				{
+					_x params ["_c","_q"];
+					if(_c isEqualTo _sellcls) exitWith {
+						[_item, _sellcls, _q] call CBA_fnc_removeWeaponCargo;
+						_qty = _qty - _q;
+					};
+				}foreach((weaponCargo _item) call BIS_fnc_consolidateArray);
+			};
+			if(_qty > 0) then {
+				{
+					_x params ["_c","_q"];
+					if(_c isEqualTo _sellcls) exitWith {
+						[_item, _sellcls, _q] call CBA_fnc_removeMagazineCargo;
+						_qty = _qty - _q;
+					};
+				}foreach((magazineCargo _item) call BIS_fnc_consolidateArray);
+			};
+		}foreach(everyContainer _target);
+	};
 }else{
 	for "_i" from 0 to _qty do {
 		if(OT_hasTFAR) then {

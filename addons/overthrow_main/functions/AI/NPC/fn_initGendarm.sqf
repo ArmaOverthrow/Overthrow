@@ -45,13 +45,12 @@ if(_skill > 0.8) then {
 	_unit addGoggles "G_Bandanna_aviator";
 };
 
-if(OT_hasACE) then {
-	_unit addItem "ACE_fieldDressing";
-	_unit addItem "ACE_fieldDressing";
-	_unit addItem "ACE_morphine";
-	if((random 100) > 90) exitWith {
+
+_unit addItem "ACE_fieldDressing";
+_unit addItem "ACE_fieldDressing";
+_unit addItem "ACE_morphine";
+if((random 100) > 90) exitWith {
 	_unit addItem "ACE_epinephrine";
-	}
 };
 
 private _weapons = OT_allSubMachineGuns;

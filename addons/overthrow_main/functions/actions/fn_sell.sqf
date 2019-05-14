@@ -25,7 +25,21 @@ if(OT_hasTFAR) then {
 private _target = player;
 if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
 	_target = vehicle player;
-	[_target, _cls, 1] call CBA_fnc_removeItemCargo;
+	if !([_target, _cls, 1] call CBA_fnc_removeItemCargo) then {
+		if !([_target, _cls, 1] call CBA_fnc_removeWeaponCargo) then {
+			if !([_target, _cls, 1] call CBA_fnc_removeMagazineCargo) then {
+				if !([_target, _cls, 1] call CBA_fnc_removeBackpackCargo) then {
+					//item must be in a backpack/uniform etc
+					{
+						_x params ["_itemcls","_item"];
+						if(_cls in (itemCargo _item)) exitWith {[_item, _cls, 1] call CBA_fnc_removeItemCargo};
+						if(_cls in (weaponCargo _item)) exitWith {[_item, _cls, 1] call CBA_fnc_removeWeaponCargo};
+						if(_cls in (magazineCargo _item)) exitWith {[_item, _cls, 1] call CBA_fnc_removeMagazineCargo};
+					}foreach(everyContainer _target);
+				};
+			};
+		};
+	};
 }else{
 	_target removeItem _cls;
 };

@@ -56,11 +56,10 @@ if !(crim_counter < 12) then {
                         };
                         if((random 60) < (_garrison - _numingang)) exitWith {
                             //Police have killed the leader
-
                             OT_civilians setVariable [format["gang%1",_gangid],nil,true];
-            				_gangs = OT_civilians getVariable [format["gangs%1",_hometown],[]];
+            				_gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
             				_gangs deleteAt (_gangs find _gangid);
-            				OT_civilians setVariable [format["gangs%1",_hometown],_gangs,true];
+            				OT_civilians setVariable [format["gangs%1",_town],_gangs,true];
             				format["The gang leader in %1 has been eliminated by police",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
             				spawner setVariable [format["nogang%1",_town],time+3600,false]; //No gangs in this town for 1 hr real-time
                             _mrkid = format["gang%1",_town];
