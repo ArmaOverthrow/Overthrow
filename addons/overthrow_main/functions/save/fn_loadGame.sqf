@@ -107,7 +107,7 @@ sleep 0.2;
 							};
 						};
 					};
-				}foreach(_val select {!(((toLower (_val#0)) select [0,4]) in ["cba_","bis_"])});
+				}foreach(_val select {!(((toLower (_x#0)) select [0,4]) in ["cba_","bis_"])});
 			};
 		};
 		_set = false;

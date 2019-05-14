@@ -15,6 +15,9 @@ if (side _civ isEqualTo west || side _civ isEqualTo east) exitWith {
 	_options call OT_fnc_playerDecision;
 };
 
+//make sure any purchases come to me, not my vehicle
+player setVariable ["OT_shopTarget","Self",false];
+
 private _canRecruit = true;
 
 private _canBuy = false;
@@ -36,9 +39,10 @@ if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit =
 if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
 if (_civ getvariable ["crimleader",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=false};
 
-if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false};
+if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false;_canSellDrugs=false};
 
-if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false};
+if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false;_canSellDrugs=false};
+if !((_civ getvariable ["polgarrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false;_canSellDrugs=false};
 
 if (_canRecruit) then {
 	_options pushBack [

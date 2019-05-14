@@ -4,7 +4,25 @@ private _uid = getPlayerUid _player;
 private _data = [];
 
 {
-	_data pushback [_x,_player getVariable _x];
+	private _v = _player getVariable [_x,""];
+	if(_x isEqualTo "home" && !(_v isEqualType [])) then {
+		_owned = (_player getVariable "owned");
+		if(count _owned isEqualTo 0) then {
+			diag_log format["Warning: Player %1 owns no buildings to be set as home",name _player];
+			//fallback to current pos
+			_v = getpos _player;
+		}else{
+			_buildid = _owned select 0;
+			_pos = buildingpositions getVariable [_buildid,[]];
+			if(count _pos isEqualTo 0) then {
+				//fallback to current pos
+				_v = getpos player;
+			}else{
+				_v = _pos;
+			};
+		};
+	};
+	_data pushback [_x,_v];
 }foreach(allVariables _player select {
 	_x = toLower _x;
 	!(_x in ["ot_loaded", "morale", "player_uid", "sa_tow_actions_loaded", "hiding", "randomValue", "saved3deninventory", "babe_em_vars"])

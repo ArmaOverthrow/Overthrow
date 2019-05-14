@@ -82,15 +82,11 @@ if(_tertiary != "") then {
 
 if(_cls isEqualTo "I_Medic_F") then {
 	clearBackpackCargoGlobal _civ;
-	if(OT_hasACE) then {
-		for "_i" from 1 to 10 do {_civ addItemToBackpack "ACE_fieldDressing";};
-		for "_i" from 1 to 3 do {_civ addItemToBackpack "ACE_morphine";};
-		_civ addItemToBackpack "ACE_bloodIV";
-		_civ addItemToBackpack "ACE_epinephrine";
-		_civ addItemToBackpack "ACE_epinephrine";
-	}else{
-		_civ addItemToBackpack "Medikit";
-	};
+	for "_i" from 1 to 10 do {_civ addItemToBackpack "ACE_fieldDressing";};
+	for "_i" from 1 to 3 do {_civ addItemToBackpack "ACE_morphine";};
+	_civ addItemToBackpack "ACE_bloodIV";
+	_civ addItemToBackpack "ACE_epinephrine";
+	_civ addItemToBackpack "ACE_epinephrine";	
 };
 
 if((_cls find "_AA_") > -1 || (_cls find "_AAA_") > -1) then {

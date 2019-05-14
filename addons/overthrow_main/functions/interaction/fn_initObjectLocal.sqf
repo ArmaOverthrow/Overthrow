@@ -72,20 +72,17 @@ if(typeof _this isEqualTo OT_item_Safe) then {
 };
 
 if(typeof _this isEqualTo "Land_Cargo_House_V4_F") then {
-	if(OT_hasACE) then {
-		[_this] call ace_repair_fnc_moduleAssignRepairFacility;
-	};
+	[_this] call ace_repair_fnc_moduleAssignRepairFacility;
 };
 
 if(_this isKindOf "Building" || _this isKindOf "Man" || _this isKindOf "LandVehicle") exitWith{};
 
-if(OT_hasACE) then {
-	_dir = 0;
-	if(typeof _this isEqualTo "C_Rubberboat") then {
-		_dir = 90;
-	};
-	[_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
 
-	[_this, 0, ["ACE_MainActions"], OT_ACEremoveAction] call ace_interact_menu_fnc_addActionToObject;
-	[_this, 0, ["ACE_MainActions","OT_Remove"], OT_ACEremoveActionConfirm] call ace_interact_menu_fnc_addActionToObject;
+_dir = 0;
+if(typeof _this isEqualTo "C_Rubberboat") then {
+	_dir = 90;
 };
+[_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
+
+[_this, 0, ["ACE_MainActions"], OT_ACEremoveAction] call ace_interact_menu_fnc_addActionToObject;
+[_this, 0, ["ACE_MainActions","OT_Remove"], OT_ACEremoveActionConfirm] call ace_interact_menu_fnc_addActionToObject;

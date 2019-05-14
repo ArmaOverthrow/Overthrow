@@ -58,8 +58,8 @@ sleep 2;
 if(_popControl > 500 && _strength > 1500 && (count _air) > 0) then {
 	//Send more CAS
 	private _from = _air call BIS_fnc_selectRandom;
-	_obpos = (_air select _from) select 0;
-	_name = (_air select _from) select 1;
+	_obpos = _from select 0;
+	_name = _from select 1;
 	[_obpos,_pos,120] spawn OT_fnc_NATOAirSupport;
 	_strength = _strength - 300;
 	diag_log format["Overthrow: NATO Sent extra CAS from %1 %2",_name,str _obpos];

@@ -135,7 +135,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 
 	if(!_newplayer) then {
 		_housepos = player getVariable "home";
-		if(isNil "_housepos") exitWith {_newplayer = true};
+		if(isNil "_housepos" || (count _housepos) isEqualTo 0) exitWith {_newplayer = true};
 		_town = _housepos call OT_fnc_nearestTown;
 		_pos = server getVariable _town;
 		{

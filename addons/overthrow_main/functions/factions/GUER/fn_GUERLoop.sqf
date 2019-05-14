@@ -186,7 +186,7 @@ if ((date select 4) != _lastmin) then {
 		_support = [_town] call OT_fnc_support;
 		if (!(_id in _revealed) && (_support > (random 2000))) then {
 			_revealed pushback _id;
-			_mrk = createMarker [format["natofob%1",_id],_pos];
+			_mrkid = createMarker [format["natofob%1",_id],_pos];
 			_mrkid setMarkerShape "ICON";
 		    _mrkid setMarkerType "mil_Flag";
 		    _mrkid setMarkerColor "ColorBLUFOR";

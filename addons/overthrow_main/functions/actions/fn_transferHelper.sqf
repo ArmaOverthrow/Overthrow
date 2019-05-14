@@ -86,10 +86,6 @@ _this spawn {
 						_veh addWeaponCargoGlobal [_cls,_count];
 						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 					};
-					if(_cls isKindOf ["Binocular",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,_count];
-						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
-					};
 					if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
 						_veh addMagazineCargoGlobal [_cls,_count];
 						[_target, _cls, _count] call CBA_fnc_removeMagazineCargo;
