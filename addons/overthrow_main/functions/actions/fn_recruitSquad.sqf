@@ -37,6 +37,7 @@ private _group = creategroup resistance;
 private _leader = false;
 {
 	_civ = [_x,_pos,_group] call OT_fnc_createSoldier;
+	_civ setVariable ["OT_spawntrack",true,true];
 	player reveal [_civ,4];
 	if(!_leader) then {
 		_group selectLeader _civ;

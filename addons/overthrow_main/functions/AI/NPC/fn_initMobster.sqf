@@ -13,9 +13,9 @@ _unit addEventHandler ["HandleDamage", {
 	_src = _this select 3;
 	if(captive _src) then {
 		if((vehicle _src) != _src || (_src call OT_fnc_unitSeenCRIM)) then {
-			_src setCaptive false;				
-		};		
-	};	
+			_src setCaptive false;
+		};
+	};
 }];
 
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
@@ -44,11 +44,9 @@ _hour = date select 3;
 if(_hour < 8 || _hour > 15) then {
 	_unit linkItem "O_NVGoggles_ghex_F";
 };
-if(OT_hasACE) then {
-	_unit linkItem "ACE_Altimeter";
-}else{
-	_unit linkItem "ItemWatch";
-};
+
+_unit linkItem "ACE_Altimeter";
+
 
 if((random 100) < 15) then {
 	_unit addItem "OT_Ganja";
@@ -63,46 +61,42 @@ _unit addWeapon _weapon;
 	params ["_unit"];
 	if((random 100) > 98) exitWith {
 		//This guy has a launcher
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		_launcher = OT_CRIM_Launchers select 0;
 		_base = [_launcher] call BIS_fnc_baseWeapon;
 		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
 		_unit addMagazineGlobal _magazine;
 		_unit addMagazineGlobal _magazine;
-		_unit addMagazineGlobal _magazine;	
+		_unit addMagazineGlobal _magazine;
 		_unit addWeapon _launcher;
 	};
 	if((random 100) > 85) exitWith {
 		//This is a medic
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
-		if(OT_hasACE) then {
-			for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
-			for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
-			_unit addItemToBackpack "ACE_bloodIV";
-			_unit addItemToBackpack "ACE_epinephrine";
-		}else{
-			_unit addItemToBackpack "Medikit";
-		};
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
+
+		for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
+		for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
+		_unit addItemToBackpack "ACE_bloodIV";
+		_unit addItemToBackpack "ACE_epinephrine";
 	};
 	if((random 100) > 95) exitWith {
 		//This is an engineer
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
 		_unit addItemToBackpack "APERSBoundingMine_Range_Mag";
 		_unit addItemToBackpack "ClaymoreDirectionalMine_Remote_Mag";
 		_unit addItemToBackpack "IEDUrbanSmall_Remote_Mag";
-		
-		if(OT_hasACE) then {
-			_unit addItemToBackpack "ACE_DefusalKit";
-			_unit addItemToBackpack "ACE_M26_Clacker";
-			_unit addItemToBackpack "ACE_Clacker";
-			_unit addItemToBackpack "ACE_DeadManSwitch";
-		};
+
+		_unit addItemToBackpack "ACE_DefusalKit";
+		_unit addItemToBackpack "ACE_M26_Clacker";
+		_unit addItemToBackpack "ACE_Clacker";
+		_unit addItemToBackpack "ACE_DeadManSwitch";
+
 		_unit addItemToBackpack "Toolkit";
 	};
 	if((random 100) > 97) exitWith {
 		//This guy just has a shitload of weed
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);	
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to round(random 30) do {_unit addItemToBackpack "OT_Ganja";};
 	};
 };
@@ -125,14 +119,14 @@ if((random 100) > 50) then {
 	_unit addItem "MiniGrenade";
 };
 
-if(OT_hasACE && ((random 100) > 90)) then {
+if((random 100) > 90) then {
 	_unit addItem "ACE_M84";
 };
 
 _config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";
 _numslots = count(_config);
 for "_i" from 0 to (_numslots-1) do {
-	if (isClass (_config select _i)) then {		
+	if (isClass (_config select _i)) then {
 		_slot = configName(_config select _i);
 		_com = _config >> _slot >> "compatibleItems";
 		_items = [];
@@ -142,9 +136,9 @@ for "_i" from 0 to (_numslots-1) do {
 			};
 		}else{
 			_items = getArray(_com);
-		};		
-		if(count _items > 0) then {			
-			_cls = _items call BIS_fnc_selectRandom;			
+		};
+		if(count _items > 0) then {
+			_cls = _items call BIS_fnc_selectRandom;
 			_unit addPrimaryWeaponItem _cls;
 		};
 	};

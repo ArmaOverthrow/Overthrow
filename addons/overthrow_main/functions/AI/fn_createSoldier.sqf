@@ -25,7 +25,7 @@ private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_civ,_fullname] remoteExec ["setCivName",0,false];
 _civ setRank "LIEUTENANT";
-_civ setSkill 0.5 + (random 0.4);
+_civ setSkill 0.5 + (random 0.5); //Soldiers in squads do not level up, so give them a chance to have higher skill
 
 [_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 
@@ -82,15 +82,11 @@ if(_tertiary != "") then {
 
 if(_cls isEqualTo "I_Medic_F") then {
 	clearBackpackCargoGlobal _civ;
-	if(OT_hasACE) then {
-		for "_i" from 1 to 10 do {_civ addItemToBackpack "ACE_fieldDressing";};
-		for "_i" from 1 to 3 do {_civ addItemToBackpack "ACE_morphine";};
-		_civ addItemToBackpack "ACE_bloodIV";
-		_civ addItemToBackpack "ACE_epinephrine";
-		_civ addItemToBackpack "ACE_epinephrine";
-	}else{
-		_civ addItemToBackpack "Medikit";
-	};
+	for "_i" from 1 to 10 do {_civ addItemToBackpack "ACE_fieldDressing";};
+	for "_i" from 1 to 3 do {_civ addItemToBackpack "ACE_morphine";};
+	_civ addItemToBackpack "ACE_bloodIV";
+	_civ addItemToBackpack "ACE_epinephrine";
+	_civ addItemToBackpack "ACE_epinephrine";	
 };
 
 if((_cls find "_AA_") > -1 || (_cls find "_AAA_") > -1) then {

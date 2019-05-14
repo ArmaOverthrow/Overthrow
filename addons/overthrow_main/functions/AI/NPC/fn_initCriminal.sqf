@@ -8,6 +8,7 @@ _unit setVariable ["civ",nil,false];
 _unit setVariable ["NOAI",false,false];
 _unit setVariable ["VCOM_NOPATHING_Unit",true,false];
 _unit setRank "SERGEANT";
+_unit setSkill 0.4 + (random 0.4);
 
 _unit removeAllEventHandlers "FiredNear";
 
@@ -36,9 +37,6 @@ if(OT_hasTFAR) then {
 	_unit linkItem "ItemRadio";
 };
 _hour = date select 3;
-if(_hour < 8 || _hour > 15) then {
-	_unit linkItem "NVGoggles_OPFOR";
-};
 _unit linkItem "ItemWatch";
 
 _weapon = "";
@@ -71,14 +69,10 @@ if((random 100) < 15) then {
 	if((random 100) > 80) exitWith {
 		//This is a medic
 		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
-		if(OT_hasACE) then {
-			for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
-			for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
-			_unit addItemToBackpack "ACE_bloodIV";
-			_unit addItemToBackpack "ACE_epinephrine";
-		}else{
-			_unit addItemToBackpack "Medikit";
-		};
+		for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
+		for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
+		_unit addItemToBackpack "ACE_bloodIV";
+		_unit addItemToBackpack "ACE_epinephrine";
 	};
 	if((random 100) > 90) exitWith {
 		//This is an engineer
@@ -88,12 +82,11 @@ if((random 100) < 15) then {
 		_unit addItemToBackpack "ClaymoreDirectionalMine_Remote_Mag";
 		_unit addItemToBackpack "IEDUrbanSmall_Remote_Mag";
 
-		if(OT_hasACE) then {
-			_unit addItemToBackpack "ACE_DefusalKit";
-			_unit addItemToBackpack "ACE_M26_Clacker";
-			_unit addItemToBackpack "ACE_Clacker";
-			_unit addItemToBackpack "ACE_DeadManSwitch";
-		};
+		_unit addItemToBackpack "ACE_DefusalKit";
+		_unit addItemToBackpack "ACE_M26_Clacker";
+		_unit addItemToBackpack "ACE_Clacker";
+		_unit addItemToBackpack "ACE_DeadManSwitch";
+
 		_unit addItemToBackpack "Toolkit";
 	};
 	if((random 100) > 97) exitWith {
@@ -115,7 +108,7 @@ if((random 100) > 50) then {
 	_unit addItem "MiniGrenade";
 };
 
-if(OT_hasACE && ((random 100) > 90)) then {
+if((random 100) > 90) then {
 	_unit addItem "ACE_M84";
 };
 

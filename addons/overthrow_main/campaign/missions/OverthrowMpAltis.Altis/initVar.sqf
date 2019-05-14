@@ -2,7 +2,7 @@
 OT_nation = "Altis";
 OT_saveName = "Overthrow.altis.001";
 
-OT_tutorial_backstoryText = "Welcome to Altis, the jewel of the Mediterranean. The year is 2040, it has been five years since NATO pushed the AAF forces out of the nation and no efforts have been made to re-establish local leadership and restore the once great economy of Altis. A protest in the capital city Pyrgos turned sour last night when the leader of the 'Free Altis' movement was gunned down by an unknown assailant.";
+OT_tutorial_backstoryText = "Altis, the main island of the Republic of Altis and Stratis, is located in the Mediterranean Sea to the east of Malta. As of 2040, Altis is currently under occupation by NATO forces following a brutal civil war a half decade prior, and the nation is still recovering. NATO originally occupied the country under the promise of a complete withdrawal of forces and return to local democratic rule; despite this, NATO soldiers still occupy the island's military installations. The economy continues to stagnate and citizens are becoming increasingly angry at the lack of local autonomy.";
 OT_startDate = [2040,7,14,8,00];
 
 OT_startCameraPos = [11646.6,6406.52,2];
@@ -10,7 +10,7 @@ OT_startCameraTarget = [13808.2,6387.16,0];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
 OT_economyVersion = 2;
-OT_NATOversion = 1;
+OT_NATOversion = 2;
 OT_CRIMversion = 1;
 
 OT_faction_NATO = "BLU_F";
@@ -85,56 +85,72 @@ OT_clothes_mob = "U_I_C_Soldier_Camo_F";
 //NATO stuff
 OT_NATO_HMG = "B_HMG_01_high_F";
 OT_NATO_Vehicles_AirGarrison = [
-	["B_T_VTOL_01_vehicle_F",1],
-	["B_T_VTOL_01_infantry_F",1],
+	["B_VTOL_01_vehicle_F",1],
+	["B_VTOL_01_infantry_F",1],
 	["B_Heli_Light_01_armed_F",1],
 	["B_Heli_Transport_03_unarmed_F",2],
 	["B_Heli_Light_01_F",3],
 	["B_Heli_Attack_01_F",1],
-	["B_Heli_Transport_01_F",2],
+	["B_Heli_Transport_01_F",2]
+];
+
+OT_NATO_Vehicles_JetGarrison = [
 	["B_Plane_CAS_01_F",1]
 ];
 
-//Check for jets dlc
-OT_hasJetsDLC = false;
-if("B_Plane_Fighter_01_F" isKindOf "Air") then {
-	OT_hasJetsDLC = true;
-	OT_NATO_Vehicles_AirGarrison pushback ["B_Plane_Fighter_01_F",1];
-	OT_NATO_Vehicles_AirGarrison pushback ["B_Plane_Fighter_01_Stealth_F",1];
+OT_NATO_Vehicles_StaticAAGarrison = [
+	"B_static_AA_F",
+	"B_static_AA_F"
+]; //Added to every airfield
+
+if(OT_hasJetsDLC) then {
+	OT_NATO_Vehicles_JetGarrison pushback ["B_Plane_Fighter_01_F",1];
+	OT_NATO_Vehicles_JetGarrison pushback ["B_Plane_Fighter_01_Stealth_F",1];
+	OT_NATO_Vehicles_StaticAAGarrison pushback "B_Radar_System_01_F";
+	OT_NATO_Vehicles_StaticAAGarrison pushback "B_SAM_System_03_F";
 };
 
 OT_NATO_StaticGarrison_LevelOne = ["B_HMG_01_high_F"];
-OT_NATO_StaticGarrison_LevelTwo = ["B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F","B_T_MRAP_01_hmg_F"];
-OT_NATO_StaticGarrison_LevelThree = ["B_T_Static_AT_F","B_T_Static_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F","B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F"];
+OT_NATO_StaticGarrison_LevelTwo = ["B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F","B_MRAP_01_hmg_F"];
+OT_NATO_StaticGarrison_LevelThree = ["B_Static_AT_F","B_Static_AA_F","B_HMG_01_high_F","B_HMG_01_high_F","B_GMG_01_high_F","B_MRAP_01_hmg_F","B_MRAP_01_gmg_F"];
 
 OT_NATO_CommTowers = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F"];
+
+OT_NATO_Unit_Sniper = "B_Sniper_F";
+OT_NATO_Unit_Spotter = "B_Spotter_F";
+OT_NATO_Unit_AA_spec = "B_Soldier_AA_F";
+OT_NATO_Unit_AA_ass = "B_Soldier_AAA_F";
+OT_NATO_Unit_HVT = "B_Officer_F";
+OT_NATO_Unit_TeamLeader = "B_Soldier_TL_F";
+OT_NATO_Unit_SquadLeader = "B_Soldier_SL_F";
 
 OT_NATO_Unit_PoliceCommander = "B_Gen_Commander_F";
 OT_NATO_Unit_Police = "B_Gen_Soldier_F";
 OT_NATO_Vehicle_PoliceHeli = "B_Heli_Light_01_F";
 OT_NATO_Vehicle_Quad = "B_Quadbike_01_F";
 OT_NATO_Vehicle_Police = "B_GEN_Offroad_01_gen_F";
-OT_NATO_Vehicle_Transport = ["B_T_Truck_01_transport_F","B_T_Truck_01_covered_F"];
+OT_NATO_Vehicle_Transport = ["B_Truck_01_transport_F","B_Truck_01_covered_F"];
 OT_NATO_Vehicle_Transport_Light = "B_CTRG_LSV_01_light_F";
-OT_NATO_Vehicles_PoliceSupport = ["B_T_MRAP_01_hmg_F","B_T_MRAP_01_gmg_F","B_T_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
+OT_NATO_Vehicles_PoliceSupport = ["B_MRAP_01_hmg_F","B_MRAP_01_gmg_F","B_LSV_01_armed_F","B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_ReconDrone = "B_UAV_01_F";
 OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
 OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F"];
 OT_NATO_Vehicles_AirSupport_Small = ["B_Heli_Light_01_armed_F"];
-OT_NATO_Vehicles_GroundSupport = ["B_T_MRAP_01_gmg_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F"];
+OT_NATO_Vehicles_GroundSupport = ["B_MRAP_01_gmg_F","B_MRAP_01_hmg_F","B_LSV_01_armed_F"];
 OT_NATO_Vehicles_TankSupport = ["B_MBT_01_TUSK_F","B_MBT_01_cannon_F"];
-OT_NATO_Vehicles_Convoy = ["B_UGV_01_rcws_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F"];
+OT_NATO_Vehicles_Convoy = ["B_UGV_01_rcws_F","B_MRAP_01_hmg_F","B_LSV_01_armed_F","B_LSV_01_armed_F","B_LSV_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = ["B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_F"];
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
 OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
+OT_NATO_Vehicles_APC = ["B_APC_Wheeled_01_cannon_F"];
 
 OT_NATO_Sandbag_Curved = "Land_BagFence_01_round_green_F";
 OT_NATO_Barrier_Small = "Land_HBarrier_01_line_5_green_F";
 OT_NATO_Barrier_Large = "Land_HBarrier_01_wall_6_green_F";
 
-OT_NATO_Mortar = "B_T_Mortar_01_F";
+OT_NATO_Mortar = "B_Mortar_01_F";
 
 OT_NATO_Vehicle_HVT = "B_MRAP_01_F";
 
@@ -154,7 +170,7 @@ OT_CRIM_Launchers = ["launch_RPG32_F","launch_RPG7_F","launch_RPG7_F","launch_RP
 OT_piers = ["Land_PierConcrete_01_4m_ladders_F","Land_PierWooden_01_platform_F","Land_PierWooden_01_hut_F","Land_PierWooden_02_hut_F"]; //spawns dudes that sell boats n stuff
 OT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 OT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
-OT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F"];
+OT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F","Land_TentHangar_V1_F"];
 OT_portBuilding = "Land_WarehouseShelter_01_F";
 OT_policeStation = "Land_Cargo_House_V3_F";
 OT_warehouse = "Land_Warehouse_03_F";
@@ -164,3 +180,4 @@ OT_workshopBuilding = "Land_Cargo_House_V4_F";
 OT_refugeeCamp = "Land_Medevac_house_V1_F";
 OT_trainingCamp = "Land_IRMaskingCover_02_F";
 OT_hardwareStore = "Land_dp_smallFactory_F";
+OT_radarBuilding = "Land_Radar_Small_F";

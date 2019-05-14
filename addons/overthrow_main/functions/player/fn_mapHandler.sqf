@@ -91,7 +91,8 @@ if (!visibleGPS) then {
 			""
 		];
 	}foreach(_mortars);
-	if((vehicle player) isKindOf ["Air",_cfgVeh]) then {
+	if(((getposatl player) select 2) > 30) then {
+		//Show no-fly zones
 		private _abandoned = server getVariable ["NATOabandoned",[]];
 		{
 			if !(_x in _abandoned) then {

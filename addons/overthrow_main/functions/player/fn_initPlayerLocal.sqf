@@ -14,6 +14,8 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 
 waitUntil {!isNull player && player isEqualTo player};
 
+ace_interaction_EnableTeamManagement = false; //Disable group switching
+
 enableSaving [false,false];
 enableEnvironment [false,true];
 setViewDistance 15;
@@ -29,10 +31,8 @@ if(isNil {server getVariable "generals"}) then {
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 if(isMultiplayer && (!isServer)) then {
-	//TFAR Support, thanks to Dedmen for the help
-	[] call OT_fnc_initTFAR;
-
 	// both done on server too, no need to execute them again
+	call OT_fnc_initBaseVar;
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 }else{
@@ -53,12 +53,30 @@ _introcam camCommit 0;
 waitUntil {camCommitted _introcam};
 showCinemaBorder false;
 
+if(!isMultiplayer) exitWith {
+	[
+		"<t size='0.5' color='#000000'>Overthrow currently does not work very well in Single Player mode. Please host a LAN game for solo play. See the wiki at http://armaoverthrow.com/</t>",
+		0,
+		0.2,
+		30,
+		0,
+		0,
+		2
+	] call OT_fnc_dynamicText;
+};
+
 if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["StartupType",""] isEqualTo "")) then {
     waitUntil {!(isnull (findDisplay 46)) && OT_varInitDone};
 
 	if (isServer || count ([] call CBA_fnc_players) == 1) then {
 		sleep 1;
-		createDialog "OT_dialog_start";
+		if ((["ot_start_autoload", 0] call BIS_fnc_getParamValue) == 1) then {
+			server setVariable ["OT_difficulty",["ot_start_difficulty", 1] call BIS_fnc_getParamValue,true];
+			server setVariable ["OT_fastTravelType",["ot_start_fasttravel", 1] call BIS_fnc_getParamValue,true];
+			[] remoteExec ['OT_fnc_loadGame',2,false];
+		} else {
+			createDialog "OT_dialog_start";
+		};
 	};
 }else{
 	"Loading" call OT_fnc_notifyStart;
@@ -117,7 +135,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 
 	if(!_newplayer) then {
 		_housepos = player getVariable "home";
-		if(isNil "_housepos") exitWith {_newplayer = true};
+		if(isNil "_housepos" || (count _housepos) isEqualTo 0) exitWith {_newplayer = true};
 		_town = _housepos call OT_fnc_nearestTown;
 		_pos = server getVariable _town;
 		{
@@ -146,17 +164,18 @@ if(isMultiplayer || _startup == "LOAD") then {
 				_civ setVariable ["OT_xp",_xp,true];
 				_civ setVariable ["NOAI",true,true];
 				_civ setRank _rank;
-				if(_rank isEqualTo "PRIVATE") then {_civ setSkill 0.1 + (random 0.3)};
-				if(_rank isEqualTo "CORPORAL") then {_civ setSkill 0.2 + (random 0.3)};
-				if(_rank isEqualTo "SERGEANT") then {_civ setSkill 0.3 + (random 0.3)};
-				if(_rank isEqualTo "LIEUTENANT") then {_civ setSkill 0.5 + (random 0.3)};
-				if(_rank isEqualTo "CAPTAIN") then {_civ setSkill 0.6 + (random 0.3)};
+				if(_rank isEqualTo "PRIVATE") then {_civ setSkill 0.2 + (random 0.3)};
+				if(_rank isEqualTo "CORPORAL") then {_civ setSkill 0.3 + (random 0.3)};
+				if(_rank isEqualTo "SERGEANT") then {_civ setSkill 0.4 + (random 0.3)};
+				if(_rank isEqualTo "LIEUTENANT") then {_civ setSkill 0.6 + (random 0.3)};
+				if(_rank isEqualTo "CAPTAIN") then {_civ setSkill 0.7 + (random 0.3)};
 				if(_rank isEqualTo "MAJOR") then {_civ setSkill 0.8 + (random 0.2)};
 				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
 				_civ spawn OT_fnc_wantedSystem;
 				_civ setName _name;
+				_civ setVariable ["OT_spawntrack",true,true];
 
 				[_civ] joinSilent nil;
 				[_civ] joinSilent (group player);
@@ -198,6 +217,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 					_civ setUnitLoadout _loadout;
 					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+					_civ setVariable ["OT_spawntrack",true,true];
 				}foreach(_units);
 			};
 			player hcSetGroup [_group,groupId _group,"teamgreen"];
@@ -230,11 +250,6 @@ if (_newplayer) then {
             };
         } foreach switchableUnits;
     };
-
-    player setVariable ["rep",0,true];
-    {
-        player setVariable [format["rep%1",_x],0,true];
-    }foreach(OT_allTowns);
 
     _town = server getVariable "spawntown";
     if(OT_randomSpawnTown) then {
@@ -313,6 +328,7 @@ player setPos _housepos;
 	} else {
 		player setVariable ["OT_tute_trigger",false,true];
 	};
+	[[[format["%1, %2",(getpos player) call OT_fnc_nearestTown,OT_nation],"align = 'center' size = '0.7' font='PuristaBold'"],["","<br/>"],[format["%1/%2/%3",date#2,date#1,date#0]],["","<br/>"],[format["%1",[daytime,"HH:MM"] call BIS_fnc_timeToString],"align = 'center' size = '0.7'"],["s","<br/>"]]] spawn BIS_fnc_typeText2;
 };
 
 [] spawn {
@@ -358,8 +374,15 @@ player addEventHandler ["GetInMan",{
 		if !(_veh call OT_fnc_hasOwner) then {
 			[_veh,getplayeruid player] call OT_fnc_setOwner;
 			_veh setVariable ["stolen",true,true];
-			if((_veh getVariable ["ambient",false]) && (player call OT_fnc_unitSeenAny)) then {
-				[(getpos player) call OT_fnc_nearestTown,-1,"Stolen vehicle"] call OT_fnc_standing;
+			if((_veh getVariable ["ambient",false]) && (random 100) > 30) then {
+				["play", _veh] call BIS_fnc_carAlarm;
+				[(getpos player) call OT_fnc_nearestTown,-5,"Stolen vehicle",player] call OT_fnc_support;
+				//does anyone hear the alarm?
+				_nummil = {side _x isEqualTo west} count (_veh nearObjects ["CAManBase",200]);
+				if(_nummil > 0) then {
+					player setCaptive false;
+					[player] call OT_fnc_revealToNATO;
+				};
 			};
 		}else{
 			if !(_veh call OT_fnc_playerIsOwner) then {

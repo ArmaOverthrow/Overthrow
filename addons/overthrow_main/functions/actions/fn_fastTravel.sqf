@@ -1,8 +1,18 @@
 private _ft = server getVariable ["OT_fastTravelType",1];
-if(!OT_adminMode && _ft > 1) exitWith {"Fast Travel is disabled" call OT_fnc_notifyMinor};
+if(!OT_adminMode && _ft > 1) exitWith {hint "Fast Travel is disabled"};
 
-if !(captive player) exitWith {"You cannot fast travel while wanted" call OT_fnc_notifyMinor};
-if !("ItemMap" in assignedItems player) exitWith {"You need a map to fast travel" call OT_fnc_notifyMinor};
+if !(captive player) exitWith {hint "You cannot fast travel while wanted"};
+if !("ItemMap" in assignedItems player) exitWith {hint "You need a map to fast travel"};
+
+private _diff = server getVariable ["OT_difficulty",1];
+if(_diff > 0 && !((primaryWeapon player) isEqualTo "" && (secondaryWeapon player) isEqualTo "" && (handgunWeapon player) isEqualTo "")) exitWith {hint "You cannot fast travel holding a weapon"};
+
+_foundweapon = false;
+{
+	if(_diff > 0 && !((primaryWeapon _x) isEqualTo "" && (secondaryWeapon _x) isEqualTo "" && (handgunWeapon _x) isEqualTo "")) exitWith {_foundweapon = true};
+}foreach(crew vehicle player);
+if(_foundweapon) exitWith {hint "A passenger is holding a weapon"};
+
 private _hasdrugs = false;
 {
 	if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
@@ -16,15 +26,16 @@ if((vehicle player) != player) then {
 		if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
 	}foreach(itemCargo vehicle player);
 
-	if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor;_exit=true};
-	if (driver (vehicle player) != player)  exitWith {"You are not the driver of this vehicle" call OT_fnc_notifyMinor;_exit=true};
-	if({!captive _x} count (crew vehicle player) != 0)  exitWith {"There are wanted people in this vehicle" call OT_fnc_notifyMinor;_exit=true};
+	if(_hasdrugs) exitWith {hint "You cannot fast travel while carrying drugs";_exit=true};
+	if (driver (vehicle player) != player)  exitWith {hint "You are not the driver of this vehicle";_exit=true};
+	if({!captive _x} count (crew vehicle player) != 0)  exitWith {hint "There are wanted people in this vehicle";_exit=true};
+	if(_diff > 1 && ((vehicle player) in (OT_allVehicleThreats + OT_allHeliThreats + OT_allPlaneThreats)))  exitWith {hint "You cannot fast travel in an offensive vehicle";_exit=true};
 };
 if(_exit) exitWith {};
 
-if(((vehicle player) != player) && (vehicle player) isKindOf "Ship") exitWith {"You cannot fast travel in a boat" call OT_fnc_notifyMinor};
+if(((vehicle player) != player) && (vehicle player) isKindOf "Ship") exitWith {hint "You cannot fast travel in a boat"};
 
-if !((vehicle player) call OT_fnc_vehicleCanMove)  exitWith {"This vehicle is unable to move" call OT_fnc_notifyMinor};
+if !((vehicle player) call OT_fnc_vehicleCanMove)  exitWith {hint "This vehicle is unable to move"};
 
 OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 	params ["", "_pos"];
@@ -35,7 +46,10 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 
 	private _buildings =  _pos nearObjects [OT_item_Tent,30];
 	if !(_buildings isEqualTo []) then {
-		_handled = true;
+		_bdg = (_buildings select 0);
+		if !(_bdg getVariable ["owner",""] isEqualTo "") then {
+			_handled = true;
+		};
 	};
 
 	private _exit = false;
@@ -54,32 +68,32 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 		if (!OT_adminMode && !(_pos inArea _region)) then {
 			if !([_region,_pos] call OT_fnc_regionIsConnected) then {
 				_valid = false;
-				"You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield" call OT_fnc_notifyMinor;
+				hint "You cannot fast travel between islands unless there is a bridge or your destination is a controlled airfield";
 				openMap false;
 			};
 		};
 	};
 	if(!_valid) exitWith {};
 	if(_pos distance player < 150) exitWith {
-		"You cannot fast travel less than 150m. Just walk!" call OT_fnc_notifyMinor;
+		hint "You cannot fast travel less than 150m. Just walk!";
 		openMap false;
 	};
 
 	if(OT_adminMode) then {_handled = true};
 
 	if !(_handled) then {
-		"You must click near a friendly base/camp or a building you own" call OT_fnc_notifyMinor;
+		hint "You must click near a friendly base/camp or a building you own";
 		openMap false;
 	}else{
 		private _ft = server getVariable ["OT_fastTravelType",1];
 		if(_handled && _ft isEqualTo 1 && !OT_adminMode) then {
 			private _cost = 0;
 			if((vehicle player) isEqualTo player) then {
-				_cost = ceil((player distance _pos) / 150);
+				_cost = ceil((player distance _pos) / 50);
 			}else{
-				_cost = ceil((player distance _pos) / 300);
+				_cost = ceil((player distance _pos) / 20);
 			};
-			if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;format ["You need $%1 to fast travel that distance",_cost] call OT_fnc_notifyMinor};
+			if((player getVariable ["money",0]) < _cost) exitWith {_exit = true;hint format ["You need $%1 to fast travel that distance",_cost]};
 			[-_cost] call OT_fnc_money;
 		};
 

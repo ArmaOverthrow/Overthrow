@@ -1,5 +1,8 @@
 private _group = _this;
 
+_group setVariable ["VCM_NORESCUE",true];
+_group setVariable ["VCM_TOUGHSQUAD",true];
+
 private _start = getPosATL ((units _group) select 0);
 
 if(isNil "_start") exitWith {};

@@ -2,7 +2,11 @@ private ["_unit","_numslots","_weapon","_magazine","_base","_config"];
 _unit = _this select 0;
 _town = _this select 1;
 
+(group _unit) setVariable ["VCM_NORESCUE",true];
+(group _unit) setVariable ["VCM_TOUGHSQUAD",true];
+
 _unit setVariable ["crimleader",true,false];
+_unit setVariable ["hometown",_town,false];
 
 _unit addEventHandler ["HandleDamage", {
 	_me = _this select 0;
@@ -24,8 +28,11 @@ removeAllWeapons _unit;
 removeVest _unit;
 removeAllAssignedItems _unit;
 
-if((random 100) < 15) then {
+if((random 100) < 50) then {
 	_unit addItem "OT_Ganja";
+};
+if((random 100) < 50) then {
+	_unit addItem "OT_Blow";
 };
 
 _unit addHeadgear "H_Bandanna_khk_hs";

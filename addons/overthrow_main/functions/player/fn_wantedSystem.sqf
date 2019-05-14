@@ -40,7 +40,7 @@ _unit addEventHandler ["Fired", {
 }];
 
 
-if(isPlayer _unit) then {
+if((isPlayer _unit) && isNil "OT_ACEunconsciousChangedEHId") then {
 	OT_ACEunconsciousChangedEHId = ["ace_unconscious", {
 		params["_unit","_state"];
 

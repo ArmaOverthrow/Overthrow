@@ -32,7 +32,9 @@ action_loop = [];
           };
         }else{
           if (call _condition) then {
+            //private _start = time;
             call _code;
+            //systemChat format["looping %1 took %2 secs",_id,time - _start];
           };
         };
     } forEach action_loop;

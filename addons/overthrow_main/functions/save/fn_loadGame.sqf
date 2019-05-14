@@ -12,6 +12,23 @@ if (_data isEqualType "" && {_data isEqualTo ""}) then {
 
 private _cc = 0;
 
+//make sure server vars are done first
+{
+	_x params ["_key","_val"];
+	if(_key == "server") then {
+		{
+			_x params ["_subkey","_subval"];
+			if(!(toLower (_subkey select [0,4]) in ["cba_","bis_"])) then {
+				server setVariable [_subkey,_subval,true];
+			};
+		}foreach(_val);
+		_set = false;
+	};
+}foreach(_data);
+
+sleep 0.2;
+
+//now do everything else
 {
 	_x params ["_key","_val"];
 
@@ -68,14 +85,31 @@ private _cc = 0;
 		// todo _set = false?
 	};
 	if(_key == "warehouse") then {
-		{
-			_x params ["_subkey","_subval"];
-			if !(isNil {_subval}) then {
-				if!(toLower (_subkey select [0,4]) in ["cba_","bis_"] ) then {
-					warehouse setVariable [_subkey,_subval,true];
-				};
+		private _version = _val param [0,1,[0]];
+		switch (_version) do {
+			case 2: {
+				_val deleteAt 0;
+				{
+					_x params ["_itemClass",["_itemCount",0,[0]]];
+					if (_itemCount > 0) then {
+						warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+					};
+				}foreach(_val);
 			};
-		}foreach(_val);
+			default {
+				{
+					_x params ["_itemClassL","_itemData"];
+					if !(isNil "_itemData") then {
+						if (_itemData isEqualType []) then {
+							_itemData params ["_cls",["_num",0,[0]]];
+							if (_num > 0) then {
+								warehouse setVariable [format["item_%1",_itemClassL],_itemData,true];
+							};
+						};
+					};
+				}foreach(_val select {!(((toLower (_x#0)) select [0,4]) in ["cba_","bis_"])});
+			};
+		};
 		_set = false;
 	};
 	if(_key == "vehicles") then {
@@ -97,7 +131,8 @@ private _cc = 0;
 				if(count _x > 5) then {
 					_name = _x select 5;
 				};
-				_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
+				private _p = _pos;
+				_veh = createVehicle [_type, _p, [], 0, "CAN_COLLIDE"];
 				_veh enableDynamicSimulation true;
 				/*
 				if !(_simulation) then {
@@ -142,8 +177,7 @@ private _cc = 0;
 						};
 					};
 				};
-
-				_veh setPosATL _pos;
+				_veh setPosATL _p;
 				if(_type isKindOf "Building") then {
 					_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 					_clu enableDynamicSimulation true;
@@ -235,15 +269,6 @@ private _cc = 0;
 			};
 		}foreach(_val);
 	};
-	if(_key == "server") then {
-		{
-			_x params ["_subkey","_subval"];
-			if(!(toLower (_subkey select [0,4]) in ["cba_","bis_"])) then {
-				server setVariable [_subkey,_subval,true];
-			};
-		}foreach(_val);
-		_set = false;
-	};
 	if(_key == "recruits") then {
 		server setVariable [_key,_val,true];
 		_set = false;
@@ -291,10 +316,20 @@ sleep 0.2;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
 			}else{
-				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+				[_pos,_cls,false] call OT_fnc_addGarrison;
 			};
+			sleep 0.1;
 		}foreach(_garrison);
 	};
+	private _mrkid = format["%1-base",_pos];
+    createMarker [_mrkid,_pos];
+    _mrkid setMarkerShape "ICON";
+    _mrkid setMarkerType "mil_Flag";
+    _mrkid setMarkerColor "ColorWhite";
+    _mrkid setMarkerAlpha 1;
+    _mrkid setMarkerText (_x select 1);
+	_veh = OT_flag_IND createVehicle _pos;
+	[_veh,(server getVariable ["generals",[getPlayerUID player]]) select 0] call OT_fnc_setOwner;
 }foreach(server getvariable ["bases",[]]);
 
 {
@@ -311,11 +346,25 @@ sleep 0.2;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
 			}else{
-				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+				[_pos,_cls,false] call OT_fnc_addGarrison;
 			};
+			sleep 0.1;
 		}foreach(_garrison);
 	};
 }foreach(OT_objectiveData + OT_airportData);
+
+//reveal gang camps
+private _revealed = server getVariable ["revealedGangs",[]];
+{
+	private _gang = OT_civilians getVariable [format["gang%1",_x],[]];
+
+	if((count _gang) > 0) then {
+		_mrkid = format["gang%1",_gang select 2];
+		_mrk = createMarker [_mrkid, _gang select 4];
+		_mrkid setMarkerType "ot_Camp";
+		_mrkid setMarkerColor "colorOPFOR";
+	};
+}foreach(_revealed);
 
 private _built = (allMissionObjects "Static");
 {

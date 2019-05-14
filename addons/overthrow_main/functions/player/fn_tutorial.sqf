@@ -1,3 +1,5 @@
+player setVariable ["OT_tute_inProgress",true];
+
 hint "Get familiar with the basic controls, then press Y (or Z for QWERTZ-Layouts) to continue";
 sleep 0.2;
 

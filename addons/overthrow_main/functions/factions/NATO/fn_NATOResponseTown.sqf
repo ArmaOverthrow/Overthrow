@@ -4,6 +4,8 @@ _town setMarkerAlpha 0;
 
 private _tskid = [resistance,[format["assault%1",_town]],[format["NATO is assaulting %1.",_town],format["Battle for %1",_town],format["assault%1",_town]],_posTown,1,2,true,"Defend",true] call BIS_fnc_taskCreate;
 
+format["NATO is attacking %1",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
+
 private _success = {
 	params ["_tskid","_town"];
 	[_tskid, "FAILED",true] spawn BIS_fnc_taskSetState;

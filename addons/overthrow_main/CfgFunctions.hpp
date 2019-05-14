@@ -7,6 +7,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions";
 			class initVar {};
 			class initOverthrow {};
+			class initBaseVar {};
 		};
 
         class Cleanup
@@ -31,6 +32,7 @@ class CfgFunctions
 			class unitSeenAny {};
 			class revealToNATO {};
 			class revealToCRIM {};
+			class revealToResistance {};
 		};
 
 		/* Persistent Save */
@@ -86,6 +88,7 @@ class CfgFunctions
 			class playerIsGeneral {};
 			class playerIsAtWarehouse {};
 			class playerIsAtHardwareStore {};
+			class playerIsAtStore {};
 			class tutorial {};
 			class influence {};
 			class influenceSilent {};
@@ -125,6 +128,7 @@ class CfgFunctions
 			class refuelHandler {};
 			class respawnHandler {};
 			class keyHandler {};
+			class taggedHandler {};
 		};
 
 		class UI
@@ -153,6 +157,8 @@ class CfgFunctions
 			class mainMenu {};
 			class buyDialog {};
 			class sellDialog {};
+			class buyDialogVehicle {};
+			class sellDialogVehicle {};
 			class workshopDialog {};
 			class policeDialog {};
 			class warehouseDialog {};
@@ -229,6 +235,7 @@ class CfgFunctions
 			class transferLegit {};
 			class takeLegit {};
 			class warehouseTake {};
+			class recover {};
 
 			/* Port */
 			class exportAll {};
@@ -320,6 +327,7 @@ class CfgFunctions
 			class getBuildId {};
 			class weatherSystem {};
 			class getRandomRoadPosition {};
+			class isRadarInRange {};
 		};
 
 		/*
@@ -366,7 +374,7 @@ class CfgFunctions
 			class initEconomy {};
 			class initEconomyLoad {};
 			class setupTownEconomy {};
-			class standing {};
+			class support {};
 			class getPrice {};
 			class getSellPrice {};
 			class getDrugPrice {};
@@ -379,6 +387,7 @@ class CfgFunctions
 			class incomeSystem {};
 			class propagandaSystem {};
 			class stability {};
+			class getControlledPopulation {};
 		};
 
 		/*
@@ -443,6 +452,7 @@ class CfgFunctions
 			class squadAssignVehicle {};
 			class squadGetIn {};
 			class squadGetOut {};
+			class squadGetInMyVehicle {};
 			class orderStopAndFace {};
 		};
 
@@ -458,6 +468,7 @@ class CfgFunctions
 			class initCivilian {};
 			class initCivilianGroup {};
 			class initCriminal {};
+			class initCriminalGroup {};
 			class initCrimLeader {};
 			class initGendarm {};
 			class initGendarmPatrol {};
@@ -502,6 +513,11 @@ class CfgFunctions
 			class NATOGroundSupport {};
 			class NATOTankSupport {};
 			class NATOSeaSupport {};
+			class NATOScrambleJet {};
+			class NATOAPCInsertion {};
+			class NATOScrambleHelicopter {};
+			class NATOGroundPatrol {};
+			class NATOAirPatrol {};
 
 			class NATOResponseObjective {};
 			class NATOResponseTown {};
@@ -517,6 +533,7 @@ class CfgFunctions
 			class NATOSetExplosives {};
 			class NATOupgradeFOB {};
 			class NATOsendGendarmerie {};
+			class NATOreportThreat {};
 		};
 
 		class NATOAI
@@ -529,7 +546,10 @@ class CfgFunctions
 		class CRIM
 		{
 			file = "\overthrow_main\functions\factions\CRIM";
+			class CRIMLoop {};
 			class formOrJoinGang {};
+			class formGang {};
+			class addToGang {};
 		};
 
 		class GUER
@@ -537,6 +557,8 @@ class CfgFunctions
 			file = "\overthrow_main\functions\factions\GUER";
 			class jobSystem {};
 			class assignJob {};
+			class jobLoop {};
+			class GUERLoop {};
 		};
 
 		class Buildings
@@ -548,6 +570,7 @@ class CfgFunctions
 			class initWorkshop {};
 			class initTrainingCamp {};
 			class initWarehouse {};
+			class initRadar {};
 		};
 
         class Util
@@ -570,7 +593,6 @@ class CfgFunctions
 		class Integration
 		{
 			file = "\overthrow_main\functions\integration";
-			class initTFAR {};
 			class advancedTowingInit {};
 			class detectItems {};
 		};

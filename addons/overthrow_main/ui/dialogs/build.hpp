@@ -165,7 +165,7 @@ class OT_dialog_buildobjective
 			y = 0.412 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Provides intel about the area"; //--- ToDo: Localize;
+			tooltip = "A small tower that will garrison static weapons"; //--- ToDo: Localize;
 		};
 		class RscButton_1603: RscOverthrowButton
 		{
@@ -193,7 +193,7 @@ class OT_dialog_buildobjective
 		};
 		class RscButton_1605: RscOverthrowButton
 		{
-			idc = 1600;
+			idc = 1605;
 			action = "'Barracks' call build";
 
 			text = "Barracks"; //--- ToDo: Localize;
@@ -204,7 +204,7 @@ class OT_dialog_buildobjective
 		};
 		class RscButton_1606: RscOverthrowButton
 		{
-			idc = 1602;
+			idc = 1606;
 			action = "'Workshop' call build";
 
 			text = "Workshop"; //--- ToDo: Localize;
@@ -216,7 +216,7 @@ class OT_dialog_buildobjective
 		};
 		class RscButton_1607: RscOverthrowButton
 		{
-			idc = 1603;
+			idc = 1607;
 			action = "'Helipad' call build";
 
 			text = "Helipad"; //--- ToDo: Localize;
@@ -228,7 +228,7 @@ class OT_dialog_buildobjective
 		};
 		class RscButton_1608: RscOverthrowButton
 		{
-			idc = 1603;
+			idc = 1608;
 			action = "'Guard Tower' call build";
 
 			text = "Guard Tower"; //--- ToDo: Localize;
@@ -236,7 +236,19 @@ class OT_dialog_buildobjective
 			y = 0.588 * safezoneH + safezoneY;
 			w = 0.0876563 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Sometimes you need to get above the trees to see what's happening."; //--- ToDo: Localize;
+			tooltip = "A huge tower. Will garrison static weapons"; //--- ToDo: Localize;
+		};
+		class RscButton_1609: RscOverthrowButton
+		{
+			idc = 1609;
+			action = "'Radar' call build";
+
+			text = "Radar"; //--- ToDo: Localize;
+			x = 0.891875 * safezoneW + safezoneX;
+			y = 0.676 * safezoneH + safezoneY;
+			w = 0.0876563 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Reveals all drones, helicopters and planes within a 2.5km radius."; //--- ToDo: Localize;
 		};
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END

@@ -21,7 +21,7 @@ class CfgPatches
 		};
 		requiredVersion=REQUIRED_VERSION;
         VERSION_CONFIG;
-		units[] = {"OT_GanjaItem","OT_BlowItem"};
+		units[] = {"OT_GanjaItem","OT_BlowItem","OT_I_Truck_recovery"};
 		weapons[] = {"OT_Ganja","OT_Blow"};
 	};
 };
@@ -137,6 +137,34 @@ class CfgWorlds
 				name = "factory";
 			};
 		};
+	};
+};
+
+
+class ACE_Tags {
+	class OT_goHome {
+		displayName = "NATO Go Home";
+		requiredItem = "ACE_SpraypaintBlack";
+		textures[] = {"\overthrow_main\ui\tags\gohome.paa"};
+		icon = "\z\ace\addons\tagging\UI\icons\iconTaggingBlack.paa";
+	};
+	class OT_overthrow {
+		displayName = "Overthrow";
+		requiredItem = "ACE_SpraypaintBlack";
+		textures[] = {"\overthrow_main\ui\tags\overthrow.paa"};
+		icon = "\z\ace\addons\tagging\UI\icons\iconTaggingBlack.paa";
+	};
+	class OT_fuckNATO {
+		displayName = "Fuck NATO";
+		requiredItem = "ACE_SpraypaintBlack";
+		textures[] = {"\overthrow_main\ui\tags\fucknato.paa"};
+		icon = "\z\ace\addons\tagging\UI\icons\iconTaggingBlack.paa";
+	};
+	class OT_join {
+		displayName = "Join";
+		requiredItem = "ACE_SpraypaintBlack";
+		textures[] = {"\overthrow_main\ui\tags\join.paa"};
+		icon = "\z\ace\addons\tagging\UI\icons\iconTaggingBlack.paa";
 	};
 };
 

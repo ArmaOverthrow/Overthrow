@@ -2,6 +2,7 @@ if(!isServer) exitWith {};
 
 if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 	diag_log "Overthrow addon not detected, you must add @Overthrow to your -mod commandline";
+	"Overthrow addon not detected, you must add @Overthrow to your -mod commandline" call OT_fnc_notifyStart;
 };
 
 if (isDedicated) then {
@@ -34,8 +35,7 @@ publicVariable "OT_civilians";
 
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
-[] call OT_fnc_initTFAR;
-
+call OT_fnc_initBaseVar;
 call compile preprocessFileLineNumbers "initVar.sqf";
 call OT_fnc_initVar;
 
@@ -60,7 +60,6 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	};
 
 	waitUntil {sleep 1;server getVariable ["StartupType",""] != ""};
-	[] spawn OT_fnc_initEconomyLoad;
 
 	if(OT_fastTime) then {
 	    setTimeMultiplier 4;
@@ -73,6 +72,8 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	[] spawn OT_fnc_factionCIV;
 	[] spawn OT_fnc_factionCRIM;
 	waitUntil {!isNil "OT_NATOInitDone"};
+
+	[] spawn OT_fnc_initEconomyLoad;
 
 	//Game systems
 	[] spawn OT_fnc_propagandaSystem;
@@ -96,6 +97,7 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
 	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 	["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
+	["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
 
 	//Setup fuel pumps for interaction
 	{
@@ -105,6 +107,8 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	["OT_autosave_loop"] call OT_fnc_addActionLoop;
 	["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
 		OT_cleanup_civilian_loop = time + (5*60);
+		private _totalcivs = {(side _x isEqualTo civilian) && !captive _x} count (allUnits);
+		if(_totalcivs < 50) exitWith {};
 		{
 			if (side group _x isEqualTo civilian && {!(isPlayer _x)} && {!(_x getVariable [""shopcheck"",false])} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {
 				private _group = group _x;

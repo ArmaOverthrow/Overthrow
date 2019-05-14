@@ -30,6 +30,7 @@ while {_count < _numNATO} do {
 		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
 		sleep 0.2;
 		_civ setVariable ["polgarrison",_town,false];
+		_civ setVariable ["OT_nospawntrack",true,false];
 		[_civ] joinSilent _group;
 		_civ setRank "SERGEANT";
 		[_civ,_town] spawn OT_fnc_initPolice;
@@ -38,7 +39,7 @@ while {_count < _numNATO} do {
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
 	};
-	_group spawn OT_fnc_initPolicePatrol;
+	[_group,_posTown,100,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
 };
 

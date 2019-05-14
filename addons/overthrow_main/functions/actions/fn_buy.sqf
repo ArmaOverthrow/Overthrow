@@ -2,7 +2,7 @@ private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 
 private _town = (getPos player) call OT_fnc_nearestTown;
-private _standing = player getVariable format['rep%1',_town];
+private _standing = [_town] call OT_fnc_support;
 
 private _price = lbValue [1500,_idx];
 if(_price isEqualTo -1) exitWith {};
@@ -119,12 +119,17 @@ if(_cls isKindOf "Ship") exitWith {
 if(_cls in OT_allClothing) exitWith {
 	[-_price] call OT_fnc_money;
 
-	if((backpack player != "") && (player canAdd _cls)) then {
-		player addItemToBackpack _cls;
-		"Clothing added to your backpack" call OT_fnc_notifyMinor;
+	if((player getVariable ["OT_shopTarget","Self"]) == "Vehicle") then {
+		(vehicle player) addItemCargoGlobal [_cls,1];
 	}else{
-		player forceAddUniform _cls;
+		if((backpack player != "") && (player canAdd _cls)) then {
+			player addItemToBackpack _cls;
+			"Clothing added to your backpack" call OT_fnc_notifyMinor;
+		}else{
+			player forceAddUniform _cls;
+		};
 	};
+
 	playSound "3DEN_notificationDefault";
 };
 if(_cls == "V_RebreatherIA") exitWith {

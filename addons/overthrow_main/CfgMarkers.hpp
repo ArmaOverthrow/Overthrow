@@ -72,4 +72,13 @@ class CfgMarkers
 		shadow = true;
 		scope = 1;
 	};
+	class ot_HQ
+	{
+		name = "HQ";
+		icon = "\overthrow_main\ui\markers\hq.paa";
+		color[] = {1, 1, 1, 1};
+		size = 32;
+		shadow = true;
+		scope = 1;
+	};
 };

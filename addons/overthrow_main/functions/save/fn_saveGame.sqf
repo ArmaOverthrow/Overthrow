@@ -22,7 +22,7 @@ missionNameSpace setVariable ["OT_saving",true,true];
 
 {
 	_x setVariable ["OT_newplayer",false,true];
-} forEach (allPlayers);
+} forEach ([] call CBA_fnc_players);
 
 OT_autoSave_last_time = time + (OT_autoSave_time*60);
 
@@ -70,7 +70,7 @@ if !(_quiet) then {
 	"Step 2/11 - Saving buildings" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_"]) };
+private _prefixFilter = { !((toLower _x select [0,4]) in ["ace_","cba_","bis_","____"]) };
 
 private _poses = (allVariables buildingpositions select _prefixFilter) apply {
 	[_x,buildingpositions getVariable _x]
@@ -171,9 +171,10 @@ if !(_quiet) then {
 	"Step 6/11 - Saving warehouse" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
 };
 
-private _warehouse = (allvariables warehouse select _prefixFilter) apply {
-	[ _x, warehouse getVariable _x]
-};
+private _warehouse = [2]; //First element is save version
+_warehouse append ((allVariables warehouse) select {((toLower _x select [0,5]) isEqualTo "item_")} apply {
+	[_x select [5], (warehouse getVariable _x) param [1,0,[0]]]
+});
 _data pushback ["warehouse",_warehouse];
 
 if !(_quiet) then {

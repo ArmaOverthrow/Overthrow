@@ -17,6 +17,14 @@ if(binocular _unit != "") then {
 	_unit removeWeapon binocular _unit;
 };
 
+if(hmd _unit != "") then {
+	if (!(_t canAdd hmd _unit) && !_isTruck) exitWith {
+		_full = true;
+	};
+	_t addItemCargoGlobal [hmd _unit,1];
+	_unit unlinkItem hmd _unit;
+};
+
 if(_full) exitWith {false};
 
 {

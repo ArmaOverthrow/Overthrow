@@ -15,10 +15,14 @@ if(_town in _abandoned) then {
 };
 
 _garrison = server getVariable [format['police%1',_town],0];
-if(_garrison > 0) then {
-    _townmrk setMarkerType "OT_Police";
+if(_stability < 50) then {
+    if(_garrison > 0) then {
+        _townmrk setMarkerType "OT_Police";
+    }else{
+        _townmrk setMarkerType "OT_Anarchy";
+    };
 }else{
-    _townmrk setMarkerType "OT_Anarchy";
+    _townmrk setMarkerType "Empty";
 };
 
 //update the markers

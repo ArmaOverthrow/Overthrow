@@ -10,42 +10,18 @@ if !(captive _player) then {
 		_wanted = "WANTED";
 	};
 };
-private _rep = _player getVariable ["rep",0];
-private _standing = format["%2%1",_rep,["","+"] select (_rep > 0)];
 
 private _seen = "";
 if(_player call OT_fnc_unitSeenNATO) then {
 	_seen = "<t color='#5D8AA8'>o_o</t>";
-
-	private _skill = _player getVariable ["OT_stealth",0];
-	private _replim = _skill call {
-		if(_this isEqualTo 1) exitWith {75};
-		if(_this isEqualTo 2) exitWith {100};
-		if(_this isEqualTo 3) exitWith {150};
-		if(_this isEqualTo 4) exitWith {200};
-		50
-	};
-	if(_skill < 5 && _rep < -_replim) then {
-		_seen = "<t color='#5D8AA8'>O_O</t>";
-	};
 }else{
 	if(_player call OT_fnc_unitSeenCRIM) then {
 		_seen = "<t color='#B2282f'>o_o</t>";
-		private _skill = _player getVariable ["OT_stealth",0];
-		private _replim = _skill call {
-			if(_this isEqualTo 1) exitWith {75};
-			if(_this isEqualTo 2) exitWith {100};
-			if(_this isEqualTo 3) exitWith {150};
-			if(_this isEqualTo 4) exitWith {200};
-			50
-		};
-		if(_skill < 5 && (abs _rep) > _replim) then {
-			_seen = "<t color='#B2282f'>O_O</t>";
-		};
 	};
 };
 private _qrf = "";
 private _qrfstart = server getVariable "QRFstart";
+private _attacking = server getVariable ["NATOattacking",OT_nation];
 if(!isNil "_qrfstart" && (time - _qrfstart) < 600) then {
 	private _secs = 600 - round(time - _qrfstart);
 	private _mins = 0;
@@ -54,7 +30,16 @@ if(!isNil "_qrfstart" && (time - _qrfstart) < 600) then {
 		_secs = round(_secs % 60);
 	};
 	if(_secs < 10) then {_secs = format["0%1",_secs]};
-	_qrf = format["Battle start in 0%1:%2",_mins,_secs];
+	_qrf = format["<t size='0.7'>Battle of %1</t><br/>Starting (0%2:%3)",_attacking,_mins,_secs];
+};
+
+if(!isNil "_qrfstart" && (time - _qrfstart) > 600) then {
+	private _progress = server getVariable ["QRFprogress",0];
+	if(_progress > 0) then {
+		_qrf = format["<t size='0.7'>Battle of %1</t><br/><t color='#5D8AA8'>(%2%3)</t>",_attacking,round (_progress * 100),'%'];
+	}else{
+		_qrf = format["<t size='0.7'>Battle of %1</t><br/><t color='#008000'>(%2%3)</t>",_attacking,round abs (_progress * 100),'%'];
+	}
 };
 
 private _txt = format [

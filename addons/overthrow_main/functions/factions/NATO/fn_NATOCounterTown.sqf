@@ -9,6 +9,8 @@ sleep (200 + (random 300));
 
 private _tskid = [resistance,[format["attack%1",_town]],[format["NATO is attempting to recapture %1.",_town],format["Defend %1",_town],format["attack%1",_town]],_posTown,1,2,true,"Defend",true] call BIS_fnc_taskCreate;
 
+format["NATO is counter-attacking %1",_town] remoteExec ["OT_fnc_notifyMinor",0,false];
+
 _fail = {
 	params ["_tskid","_town"];
 	[_town,15] call OT_fnc_stability;

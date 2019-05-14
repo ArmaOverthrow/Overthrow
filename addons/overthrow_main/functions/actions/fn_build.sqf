@@ -92,7 +92,7 @@ canBuildHere = false;
 modeCenter = _center;
 
 buildOnMouseMove = {
-	params ["_relX","_relY"];
+	params ["_control","_relX","_relY"];
 	modeValue = screenToWorld getMousePosition;
 	modeValue = [modeValue select 0,modeValue select 1,0];
 	if(!isNull modeTarget) then {
@@ -224,9 +224,6 @@ buildOnKeyDown = {
 			modeTarget setDir _dir;
 		};
 		_amt = 5;
-		if(_this select 2) then {
-			_amt = 1;
-		};
 		if (_key isEqualTo 16) exitWith {
 			//Q
 			_handled = true;

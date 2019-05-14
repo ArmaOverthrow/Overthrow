@@ -27,9 +27,9 @@ if(rain > 0.9) then {
 };
 
 private _ctrl = (findDisplay 8001) displayCtrl 1100;
-private _standing = [_town] call OT_fnc_standing;
+private _standing = [_town] call OT_fnc_support;
 
-private _rep = player getVariable ["rep",0];
+private _rep = server getVariable ["rep",0];
 private _extra = "";
 
 if(isMultiplayer && { ((getplayeruid player) in (server getVariable ["generals",[]])) }) then {
@@ -43,7 +43,7 @@ if(isMultiplayer && { ((getplayeruid player) in (server getVariable ["generals",
 
 _ctrl ctrlSetStructuredText parseText format[
 	"
-		<t align='left' size='0.65'>Standing: %1 (%2%3) %4 (%5%6)</t><br/>
+		<t align='left' size='0.65'>Resistance Support: %1 (%2%3) %4 (%5%6)</t><br/>
 		<t align='left' size='0.65'>Influence: %7</t><br/>
 		<t align='left' size='0.65'>Weather: %8 (Forecast: %9)</t><br/>
 		<t align='left' size='0.65'>Fuel Price: $%10/L</t><br/>
@@ -100,6 +100,12 @@ if(typename _b isEqualTo "ARRAY") then {
 			}else{
 				ctrlSetText [1608,"Sell"];
 				ctrlEnable [1608,false];
+			};
+			ctrlSetText [1610,"Repair"];
+			if((damage _building) isEqualTo 1) then {
+				ctrlEnable [1610,true];
+			}else{
+				ctrlEnable [1610,false];
 			};
 
 			_buildingTxt = format["
@@ -238,29 +244,38 @@ if(typename _b isEqualTo "ARRAY") then {
 			};
 		};
 	}else{
-		if(isNil "_price") then {
+		if((typeof _building) in OT_allRepairableRuins) then {
 			ctrlEnable [1608,false];
 			ctrlEnable [1609,false];
-			ctrlEnable [1610,false];
+			ctrlSetText [1610,"Repair"];
+			ctrlEnable [1610,true];
+
+			_buildingTxt = "<t align='left' size='0.8'>Ruins</t><br/>";
 		}else{
-			ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
-			ctrlEnable [1609,false];
-			ctrlEnable [1610,false];
-
-			_buildingTxt = format["
-				<t align='left' size='0.8'>%1</t><br/>
-				<t align='left' size='0.65'>Lease Value: $%2/6hrs</t>
-			",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
-
-			if(typeof _building isEqualTo OT_barracks) then {
-				ctrlSetText [1608,"Sell"];
+			if(isNil "_price") then {
 				ctrlEnable [1608,false];
+				ctrlEnable [1609,false];
+				ctrlEnable [1610,false];
+			}else{
+				ctrlSetText [1608,format["Buy ($%1)",[_price, 1, 0, true] call CBA_fnc_formatNumber]];
 				ctrlEnable [1609,false];
 				ctrlEnable [1610,false];
 
 				_buildingTxt = format["
-					<t align='left' size='0.8'>Barracks</t><br/>
-				",_ownername];
+					<t align='left' size='0.8'>%1</t><br/>
+					<t align='left' size='0.65'>Lease Value: $%2/6hrs</t>
+				",_name,[_lease, 1, 0, true] call CBA_fnc_formatNumber];
+
+				if(typeof _building isEqualTo OT_barracks) then {
+					ctrlSetText [1608,"Sell"];
+					ctrlEnable [1608,false];
+					ctrlEnable [1609,false];
+					ctrlEnable [1610,false];
+
+					_buildingTxt = format["
+						<t align='left' size='0.8'>Barracks</t><br/>
+					",_ownername];
+				};
 			};
 		};
 	};

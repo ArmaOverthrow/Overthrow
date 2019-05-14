@@ -5,7 +5,7 @@ briefingName = "Overthrow: Altis";
 OnLoadName = "Overthrow: Altis";
 loadScreen = "\overthrow_main\campaign\missions\pic.jpg";
 
-overviewText = "@todo";
+overviewText = "Altis, the main island of the Republic of Altis and Stratis, is located in the Mediterranean Sea to the east of Malta. As of 2040, Altis is currently under occupation by NATO forces following a brutal civil war a half decade prior, and the nation is still recovering. NATO originally occupied the country under the promise of a complete withdrawal of forces and return to local democratic rule; despite this, NATO soldiers still occupy the island's military installations. The economy continues to stagnate and citizens are becoming increasingly angry at the lack of local autonomy.";
 
 class CfgRemoteExec
 {
