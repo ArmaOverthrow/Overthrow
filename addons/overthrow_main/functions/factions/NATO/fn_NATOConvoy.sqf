@@ -1,4 +1,4 @@
-params ["_vehtypes","_hvts","_from","_to"];
+params ["_vehtypes","_hvts","_from","_to",["_missionid","CONVOY"]];
 
 private _abandoned = server getvariable ["NATOabandoned",[]];
 if(_from in _abandoned) exitWith {};
@@ -10,6 +10,7 @@ private _topos = server getvariable _to;
 private _dir = [_frompos,_topos] call BIS_fnc_dirTo;
 
 private _group = creategroup blufor;
+spawner setVariable [format["spawn%1",_missionid],_group,false];
 _group setFormation "COLUMN";
 private _track = objNull;
 

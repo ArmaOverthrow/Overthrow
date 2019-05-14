@@ -4,6 +4,9 @@ private _town = server getVariable ((leader _group) getVariable "polgarrison");
 if(isNil "_town") then {_town = position(leader _group)};
 private _start = position(leader _group);
 
+_group setVariable ["VCM_NORESCUE",true];
+_group setVariable ["VCM_TOUGHSQUAD",true];
+
 _dest = _town call OT_fnc_getRandomRoadPosition;
 
 _wp = _group addWaypoint [_dest,5];

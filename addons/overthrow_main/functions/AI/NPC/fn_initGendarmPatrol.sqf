@@ -4,6 +4,8 @@ private _town = (leader _group) getVariable "garrison";
 private _start = position(leader _group);
 if(isNil "_town") then {_town = _start};
 
+_group setVariable ["VCM_NORESCUE",true];
+_group setVariable ["VCM_TOUGHSQUAD",true];
 
 private _dest = _town call OT_fnc_getRandomRoadPosition;
 

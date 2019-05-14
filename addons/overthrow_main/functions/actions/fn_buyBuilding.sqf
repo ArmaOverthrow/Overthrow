@@ -18,6 +18,11 @@ if(typename _b isEqualTo "ARRAY") then {
 };
 if(_handled) then {
 	_b params ["_building","_price","_sell","_lease","_totaloccupants"];
+
+	if(typeof _building isEqualTo OT_flag_IND) exitWith {
+		[] call OT_fnc_garrisonDialog;
+	};
+
 	private _town = (getpos _building) call OT_fnc_nearestTown;
 
 	private _money = player getVariable ["money",0];
@@ -35,7 +40,7 @@ if(_handled) then {
 
 		buildingpositions setVariable [_id,position _building,true];
 		_owned pushback _id;
-		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;		
+		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		_building addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {

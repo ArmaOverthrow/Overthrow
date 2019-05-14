@@ -39,7 +39,7 @@ while {_count < _numNATO} do {
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
 	};
-	_group spawn OT_fnc_initPolicePatrol;
+	[_group,_posTown,100,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
 };
 

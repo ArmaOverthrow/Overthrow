@@ -114,7 +114,8 @@ sleep 0.2;
 				if(count _x > 5) then {
 					_name = _x select 5;
 				};
-				_veh = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
+				private _p = _pos;
+				_veh = createVehicle [_type, _p, [], 0, "CAN_COLLIDE"];
 				_veh enableDynamicSimulation true;
 				/*
 				if !(_simulation) then {
@@ -159,8 +160,7 @@ sleep 0.2;
 						};
 					};
 				};
-
-				_veh setPosATL _pos;
+				_veh setPosATL _p;
 				if(_type isKindOf "Building") then {
 					_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 					_clu enableDynamicSimulation true;
@@ -299,8 +299,9 @@ sleep 0.2;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
 			}else{
-				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+				[_pos,_cls,false] call OT_fnc_addGarrison;
 			};
+			sleep 0.1;
 		}foreach(_garrison);
 	};
 	private _mrkid = format["%1-base",_pos];
@@ -310,6 +311,8 @@ sleep 0.2;
     _mrkid setMarkerColor "ColorWhite";
     _mrkid setMarkerAlpha 1;
     _mrkid setMarkerText (_x select 1);
+	_veh = OT_flag_IND createVehicle _pos;
+	[_veh,(server getVariable ["generals",[getPlayerUID player]]) select 0] call OT_fnc_setOwner;
 }foreach(server getvariable ["bases",[]]);
 
 {
@@ -326,11 +329,25 @@ sleep 0.2;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 				_civ setUnitLoadout [_loadout,true];
 			}else{
-				[_pos,_cls,false] spawn OT_fnc_addGarrison;
+				[_pos,_cls,false] call OT_fnc_addGarrison;
 			};
+			sleep 0.1;
 		}foreach(_garrison);
 	};
 }foreach(OT_objectiveData + OT_airportData);
+
+//reveal gang camps
+private _revealed = server getVariable ["revealedGangs",[]];
+{
+	private _gang = OT_civilians getVariable [format["gang%1",_x],[]];
+
+	if((count _gang) > 0) then {
+		_mrkid = format["gang%1",_gang select 2];
+		_mrk = createMarker [_mrkid, _gang select 4];
+		_mrkid setMarkerType "ot_Camp";
+		_mrkid setMarkerColor "colorOPFOR";
+	};
+}foreach(_revealed);
 
 private _built = (allMissionObjects "Static");
 {

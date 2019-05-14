@@ -1,5 +1,5 @@
 //They are driving or in a non-civilian vehicle including statics
-if !(typeof (vehicle _this) in (OT_allVehicles+OT_allBoats)) exitWith {
+if !((typeof (vehicle _this)) in (OT_allVehicles+OT_allBoats)) exitWith {	
 	true;
 };
 //They are driving or in a car with a weapon attached

@@ -1,6 +1,7 @@
 crim_counter = crim_counter + 1;
 if !(crim_counter < 12) then {
     crim_counter = 0;
+    private _revealed = server getVariable ["revealedGangs",[]];
     {
         _nogang = spawner getVariable [format["nogang%1",_x],0];
         _pop = server getVariable [format["population%1",_x],0];
@@ -78,16 +79,21 @@ if !(crim_counter < 12) then {
                 };
 
                 //Chance to reveal gang camp if support is high
-                private _support = [_town] call OT_fnc_support;
-                if((random 200) < _support) then {
-                    format["Citizens in %1 have notified us of a gang nearby with %2 members",_town,_numingang + 1] remoteExec ["OT_fnc_notifyMinor",0,false];
-                    _mrkid = format["gang%1",_town];
-                    _mrk = createMarker [_mrkid, _gang select 4];
-                    _mrkid setMarkerType "ot_Camp";
-                    _mrkid setMarkerColor "colorOPFOR";
+
+                if !(_gangid in _revealed) then {
+                    private _support = [_town] call OT_fnc_support;
+                    if((random 300) < _support) then {
+                        format["Citizens in %1 have notified us of a gang nearby with %2 members",_town,_numingang + 1] remoteExec ["OT_fnc_notifyMinor",0,false];
+                        _mrkid = format["gang%1",_town];
+                        _mrk = createMarker [_mrkid, _gang select 4];
+                        _mrkid setMarkerType "ot_Camp";
+                        _mrkid setMarkerColor "colorOPFOR";
+                        _revealed pushback _gangid;
+                    };
                 };
             };
         };
 
     }foreach(OT_allTowns);
+    server setVariable ["revealedGangs",_revealed,false];
 };

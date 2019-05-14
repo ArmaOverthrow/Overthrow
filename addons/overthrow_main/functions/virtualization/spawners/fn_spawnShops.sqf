@@ -33,6 +33,7 @@ if(count _activeshops > 0) exitWith {
 		_shopkeeper setVariable ["shopcheck",true,true];
 		_shopkeeper setVariable ["shop",format["%1",_pos],true];
 		_shopkeeper setVariable ["OT_shopCategory",_category,true];
+		_building setVariable ["OT_shopCategory",_category,true];
 		[_shopkeeper] call OT_fnc_initShopkeeper;
 
 		//Put a light on

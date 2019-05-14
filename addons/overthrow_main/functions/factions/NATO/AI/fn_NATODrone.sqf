@@ -13,23 +13,38 @@ _this spawn {
                         };
                     };
                     if(_ty isEqualTo OT_flag_IND) exitWith {
-                        _targets pushback ["FOB",position _x,0,_x];
+                        _targets pushback ["FOB",position _x,50,_x];
                     };
                     if(_ty isEqualTo OT_warehouse) exitWith {
                         if(_x call OT_fnc_hasOwner) then {
                             _targets pushback ["WH",position _x,80,_x];
                         };
                     };
-                    if(_ty isEqualTo OT_policeStation) exitWith {
-                        _targets pushback ["PS",position _x,90,_x];
-                    };
-                    if(_ty isEqualTo OT_workshopBuilding) exitWith {
-                        _targets pushback ["WS",position _x,50,_x];
-                    };
-                    if(((_x isKindOf "Car") || (_x isKindOf "Air") || (_x isKindOf "Ship")) && !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
+                    if((count crew _x) > 0 && ((_x isKindOf "Car") || (_x isKindOf "Air") || (_x isKindOf "Ship")) && !(_ty in (OT_allVehicles+OT_allBoats+OT_helis))) exitWith {
                         if !(side _x isEqualTo west) then {
                             if(([_drone, "VIEW"] checkVisibility [position _drone,position _x]) > 0) then {
-                                _targets pushback ["V",position _x,0,_x];
+                                //determine threat
+                                private _targetType = "V";
+                                private _threat = 0;
+
+                                call {
+                                    if(_ty in OT_allVehicleThreats) exitWith {
+                                        _threat = 150;
+                                    };
+                                    if !(_x getVariable ["OT_attachedClass",""] isEqualTo "") exitWith {
+                                        _threat = 100;
+                                    };
+                                    if(_ty in OT_allPlaneThreats) exitWith {
+                                        _targetType = "P";
+                                        _threat = 500;
+                                    };
+                                    if(_ty in OT_allHeliThreats) exitWith {
+                                        _targetType = "H";
+                                        _threat = 300;
+                                    };
+                                };
+
+                                _targets pushback [_targetType,position _x,_threat,_x];
                             };
                         };
                     };
@@ -40,7 +55,15 @@ _this spawn {
                     };
                 };
             };
-        }foreach((_drone nearObjects ["Static",500]) + (_drone nearObjects ["AllVehicles",500]));
+        }foreach((_drone nearObjects ["Static",500]) + (_drone nearObjects ["AllVehicles",500]));\
+
+        //look for concentrations of troops
+        _nummil = {side _x isEqualTo west} count (_drone nearObjects ["CAManBase",200]);
+        _numres = {side _x isEqualTo resistance} count (_drone nearObjects ["CAManBase",200]);
+        if(_nummil isEqualTo 0 && _numres > 7) then {
+            _targets pushback ["INF",position _drone,100,_drone];
+        };
+
         _drone setVariable ["OT_seenTargets",_targets,false];
     };
 };

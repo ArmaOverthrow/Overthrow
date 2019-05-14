@@ -13,7 +13,10 @@ private _vehs = [];
 
 private _bargates = _start nearobjects ["Land_BarGate_F",50];
 
-while {!(isNil "_group") && count (units _group) > 0} do {
+while {!(isNil "_group") && count (units _group) > 0} do {\
+	_group setVariable ["VCM_NORESCUE",true];
+	_group setVariable ["VCM_TOUGHSQUAD",true];
+	
 	_vehs = [];
 	_friendly = [];
 
