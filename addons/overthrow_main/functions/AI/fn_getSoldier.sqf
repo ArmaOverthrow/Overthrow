@@ -66,8 +66,8 @@ if(_scope isEqualTo "") then {
 if(count _tertiary > 0) then {
 	private _got = false;
 	{
-		private _d = warehouse getvariable [_x,[_x,0]];
-		private _num = _d select 1;
+		private _d = warehouse getvariable [format["item_%1",_x],[_x,0]];
+		_d params ["_cls",["_num",0,[0]]];
 		if(_num > 0) then {
 			_tertiary = _x;
 			_got = true;

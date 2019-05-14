@@ -4,8 +4,8 @@ OT_taking = true;
 private _idx = lbCurSel 1500;
 private _cls = lbData [1500,_idx];
 private _num = _this select 0;
-private _d = warehouse getVariable [_cls,[_cls,0]];
-private _in = _d select 1;
+private _d = warehouse getVariable [format["item_%1",_cls],[_cls,0]];
+_d params ["_wCls", ["_in",0,[0]]];
 
 if(_num > _in || _num isEqualTo -1) then {
 	_num = _in;
@@ -55,9 +55,9 @@ while {_count < _num} do {
 
 private _newnum = _in - _num;
 if(_newnum > 0) then {
-	warehouse setVariable [_cls,[_cls,_newnum],true];
+	warehouse setVariable [format["item_%1",_cls],[_cls,_newnum],true];
 }else{
-	warehouse setVariable [_cls,nil,true];
+	warehouse setVariable [format["item_%1",_cls],nil,true];
 };
 
 [] call OT_fnc_warehouseDialog;
