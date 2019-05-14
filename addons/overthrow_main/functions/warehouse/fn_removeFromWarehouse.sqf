@@ -1,7 +1,7 @@
 
 params ["_cls","_num"];
-private _d = warehouse getVariable [_cls,[_cls,0]];
-if(typename _d isEqualTo "ARRAY") then {
+private _d = warehouse getVariable [format["item_%1",_cls],[_cls,0,[0]]];
+if(_d isEqualType "ARRAY") then {
 	_d params ["","_in"];
 
 	if(_num > _in || _num isEqualTo -1) then {
@@ -10,10 +10,10 @@ if(typename _d isEqualTo "ARRAY") then {
 
 	private _newnum = _in - _num;
 	if(_newnum > 0) then {
-		warehouse setVariable [_cls,[_cls,_newnum],true];
+		warehouse setVariable [format["item_%1",_cls],[_cls,_newnum],true];
 	}else{
-		warehouse setVariable [_cls,nil,true];
+		warehouse setVariable [format["item_%1",_cls],nil,true];
 	};
 }else{
-	warehouse setVariable [_cls,nil,true];
+	warehouse setVariable [format["item_%1",_cls],nil,true];
 };

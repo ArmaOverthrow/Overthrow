@@ -85,14 +85,31 @@ sleep 0.2;
 		// todo _set = false?
 	};
 	if(_key == "warehouse") then {
-		{
-			_x params ["_subkey","_subval"];
-			if !(isNil {_subval}) then {
-				if!(toLower (_subkey select [0,4]) in ["cba_","bis_"] ) then {
-					warehouse setVariable [_subkey,_subval,true];
-				};
+		private _version = _val param [0,1,[0]];
+		switch (_version) do {
+			case 2: {
+				_val deleteAt 0;
+				{
+					_x params ["_itemClass",["_itemCount",0,[0]]];
+					if (_itemCount > 0) then {
+						warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+					};
+				}foreach(_val);
 			};
-		}foreach(_val);
+			default {
+				{
+					_x params ["_itemClassL","_itemData"];
+					if !(isNil "_itemData") then {
+						if (_itemData isEqualType []) then {
+							_itemData params ["_cls",["_num",0,[0]]];
+							if (_num > 0) then {
+								warehouse setVariable [format["item_%1",_itemClassL],_itemData,true];
+							};
+						};
+					};
+				}foreach(_val select {!(((toLower (_val#0)) select [0,4]) in ["cba_","bis_"])});
+			};
+		};
 		_set = false;
 	};
 	if(_key == "vehicles") then {
