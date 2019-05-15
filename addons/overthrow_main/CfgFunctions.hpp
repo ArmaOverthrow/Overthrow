@@ -279,7 +279,9 @@ class CfgFunctions
 			class restoreLoadout {};
 			class saveLoadout {};
 			class dumpStuff {};
+			class dumpIntoWarehouse {};
 			class takeStuff {};
+			class openArsenal {};
 
 			/* Other */
 			class craft {};
@@ -418,6 +420,7 @@ class CfgFunctions
 		class Warehouse
 		{
 			file = "\overthrow_main\functions\warehouse";
+			class addToWarehouse {};
 			class removeFromWarehouse {};
 			class findHelmetInWarehouse {};
 			class findScopeInWarehouse {};

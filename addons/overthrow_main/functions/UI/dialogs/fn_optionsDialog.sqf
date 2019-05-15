@@ -10,8 +10,11 @@ if(!isMultiplayer) then {
 if (!server_dedi) then {
   ctrlEnable [1608,false];
 };
-if (isDedicated && {!(call BIS_fnc_admin isEqualTo 2)}) then {
-  ctrlEnable [1609,false];
+ctrlEnable [1609,false];
+if (call BIS_fnc_admin isEqualTo 2) then {
+    ctrlEnable [1609,true];
+}else{
+    ctrlShow [1609,false];
 };
 
 if(!_amgen) then {
