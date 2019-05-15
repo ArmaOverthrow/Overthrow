@@ -173,7 +173,7 @@ if !(_quiet) then {
 
 private _warehouse = [2]; //First element is save version
 _warehouse append ((allVariables warehouse) select {((toLower _x select [0,5]) isEqualTo "item_")} apply {
-	[_x select [5], (warehouse getVariable _x) param [1,0,[0]]]
+	warehouse getVariable _x
 });
 _data pushback ["warehouse",_warehouse];
 
