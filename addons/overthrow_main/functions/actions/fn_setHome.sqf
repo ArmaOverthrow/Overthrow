@@ -58,7 +58,7 @@ private _owner = _building call OT_fnc_getOwner;
 if(!isNil "_owner") then {
 	if ((typeof _building) in OT_allBuyableBuildings && _owner isEqualTo getplayerUID player) exitWith {
 		_handled = true;
-		player setVariable ["home",getpos _x,true];
+		player setVariable ["home",getpos _building,true];
 		"This is now your home" call OT_fnc_notifyMinor;
 	};
 };

@@ -1,6 +1,8 @@
 //Scramble a helicopter to take out a target
 params ["_frombase","_waypoints",["_delay",0]];
 
+if((count _waypoints) < 2) exitWith {};
+
 private _abandoned = server getVariable ["NATOabandoned",[]];
 if !(_frombase in _abandoned) then {
     if(_delay > 0) then {sleep _delay};
@@ -11,6 +13,7 @@ if !(_frombase in _abandoned) then {
 
     private _frompos = server getVariable _frombase;
     private _pos = _frompos findEmptyPosition [2,100,_vehtype];
+    if(isNil "_pos") exitWith {};
 
     private _group = creategroup blufor;
     private _veh = _vehtype createVehicle _pos;
