@@ -16,7 +16,7 @@ private _bargates = _start nearobjects ["Land_BarGate_F",50];
 while {!(isNil "_group") && count (units _group) > 0} do {\
 	_group setVariable ["VCM_NORESCUE",true];
 	_group setVariable ["VCM_TOUGHSQUAD",true];
-	
+
 	_vehs = [];
 	_friendly = [];
 
@@ -130,7 +130,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {\
 								{
 									_x setCaptive false;
 									[_x] call OT_fnc_revealToNATO;
-								}foreach(units _v);
+								}foreach(units vehicle _unit);
 							}else{
 								_msg = "We found some illegal items and confiscated them, be on your way";
 							};
@@ -140,7 +140,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {\
 								{
 									_x setCaptive false;
 									[_x] call OT_fnc_revealToNATO;
-								}foreach(units _v);
+								}foreach(units vehicle _unit);
 							};
 						};
 						[[_leader,_msg], {(_this select 0) globalchat (_this select 1)}] remoteExec ["call", _x, false];
