@@ -429,6 +429,8 @@ class CfgFunctions
 			class findVestInWarehouse {};
 			class verifyLoadoutFromWarehouse {};
 			class applyLoadoutFromWarehouse {};
+			class qtyInWarehouse {};
+			class isInWarehouse {};
 		};
 
 		/*
@@ -439,6 +441,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions\AI";
 			class createSoldier {};
 			class getSoldier {};
+			class getSquad {};
 			class parachuteAll {};
 			class NATOsearch {};
 			class createSquad {};

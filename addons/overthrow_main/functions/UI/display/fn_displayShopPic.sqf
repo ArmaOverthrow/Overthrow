@@ -32,6 +32,17 @@ if(_price > -1) then {
     			gettext(configFile >> "CfgGlasses" >> _cls >> "displayName")
 			]
     	};
+        if(_cls isKindOf "Man") exitWith {
+            private _soldier = _cls call OT_fnc_getSoldier;
+    		private _price = _soldier select 0;
+
+    		[
+				nil,
+    			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
+				_cls call OT_fnc_vehicleGetName,
+				_price
+			]
+    	};
     	if(isClass (configFile >> "CfgVehicles" >> _cls)) exitWith {
     		[
 				getText(configFile >> "cfgVehicles" >> _cls >> "editorPreview"),
@@ -56,34 +67,9 @@ if(_price > -1) then {
     			_cls call OT_fnc_weaponGetName
 			]
     	};
-
-    	if(_cls isKindOf "Man") exitWith {
-            private _soldier = _cls call OT_fnc_getSoldier;
-    		private _price = _soldier select 0;
-
-            _price = format["$%1",_price];
-    		[
-				nil,
-    			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
-				_cls call OT_fnc_vehicleGetName,
-				_price
-			]
-    	};
     	if(_cls in OT_allSquads) exitWith {
-            private _d = [];
-            {
-            	if((_x select 0) isEqualTo _cls) exitWith {_d = _x};
-            }foreach(OT_squadables);
-
-            private _comp = _d select 1;
-            private _p = 0;
-            {
-            	private _s = OT_recruitables select _x;
-            	private _soldier = (_s select 0) call OT_fnc_getSoldier;
-            	_p = _p + (_soldier select 0);
-            }foreach(_comp);
-
-            _price = format["$%1",_p];
+            private _squad = _cls call OT_fnc_getSquad;
+            _squad params ["_p"];
 
 			[
 				nil,
@@ -115,7 +101,7 @@ if(_cls in OT_allExplosives) then {
 
 _textctrl = (findDisplay 8000) displayCtrl 1100;
 
-_price = "$" + ([_ctrl lbValue _index, 1, 0, true] call CBA_fnc_formatNumber);
+_price = "$" + ([_price, 1, 0, true] call CBA_fnc_formatNumber);
 
 _textctrl ctrlSetStructuredText parseText format["
 	<t align='center' size='1.5'>%1</t><br/>

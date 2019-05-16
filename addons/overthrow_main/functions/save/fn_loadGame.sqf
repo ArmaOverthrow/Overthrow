@@ -286,6 +286,19 @@ sleep 0.2;
 		OT_autoSave_last_time = (_val#1);
 		_set = false;
 	};
+	if(_key == "recruitables") then {
+		{
+			_x params ["_cls","_loadout"];
+			private _done = false;
+			{
+				_x params ["_c","_l"];
+				if(_c == _cls) exitWith {_done = true;_x set [1,_loadout]};
+			}foreach(OT_Recruitables);
+		}foreach(_val);
+		if !(_done) then {OT_Recruitables pushback [_cls,_loadout]};
+		publicVariable "OT_Recruitables";
+		_set = false;
+	};
 
 	if(_set && !(isNil "_val")) then {
 		if!(toLower (_key select [0,4]) in ["ace_","cba_","bis_"]) then {

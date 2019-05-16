@@ -268,6 +268,7 @@ if !(_quiet) then {
 _data pushBack ["server",_server];
 _data pushback ["timedate",date];
 _data pushback ["autosave",[OT_autoSave_time,OT_autoSave_last_time]];
+_data pushBack ["recruitables",OT_Recruitables];
 
 if !(_quiet) then {
 	"Step 11/11 - Exporting" remoteExecCall ["OT_fnc_notifyAndLog",0,false];

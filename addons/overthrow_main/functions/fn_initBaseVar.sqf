@@ -23,7 +23,7 @@ OT_Recruitables = [
         ["ItemMap","","","","","NVGoggles_tna_F"]]
     ],
     //Autorifleman
-	["I_soldier_AR_F",[
+	["I_Soldier_AR_F",[
         ["arifle_MX_SW_khk_F","","","optic_Aco",["100Rnd_65x39_caseless_khaki_mag",100],[],"bipod_01_F_khk"],
         [],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
@@ -37,7 +37,7 @@ OT_Recruitables = [
     ],
     //Rifleman (AT)
 	["I_Soldier_LAT_F",[
-        [["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
+        ["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
         ["launch_RPG7_F","","","",["RPG7_F",1],[],""],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
         ["U_I_C_Soldier_Para_4_F",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2],["ACE_EarPlugs",1]]],
@@ -45,11 +45,11 @@ OT_Recruitables = [
         ["B_FieldPack_oli",[["RPG7_F",4,1]]],
         "H_HelmetB_Light_tna_F","",
         [],
-        ["ItemMap","","","","","NVGoggles_tnaF"]]
+        ["ItemMap","","","","","NVGoggles_tna_F"]]
     ],
     //Marksman
 	["I_Soldier_M_F",[
-        [["arifle_MXM_khk_F","","","optic_sos_khk_f",["30Rnd_65x39_caseless_khaki_mag",30],[],"bipod_01_F_khk"],
+        ["arifle_MXM_khk_F","","","optic_sos_khk_f",["30Rnd_65x39_caseless_khaki_mag",30],[],"bipod_01_F_khk"],
         [],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
         ["U_I_C_Soldier_Para_4_F",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2]]],
@@ -57,11 +57,11 @@ OT_Recruitables = [
         [],
         "H_HelmetB_tna_F","",
         [],
-        ["ItemMap","","","","","NVGoggles_tnaF"]]
+        ["ItemMap","","","","","NVGoggles_tna_F"]]
     ],
     //Sniper
 	["I_Sniper_F",[
-        [["srifle_LRR_tna_F","","","optic_LRPS_tna_f",["7Rnd_408_Mag",7],[],""],
+        ["srifle_LRR_tna_F","","","optic_LRPS_tna_f",["7Rnd_408_Mag",7],[],""],
         [],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
         ["U_I_C_Soldier_Para_4_F",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2]]],
@@ -69,7 +69,7 @@ OT_Recruitables = [
         [],
         "H_HelmetB_tna_F","",
         [],
-        ["ItemMap","","","","","NVGoggles_tnaF"]]
+        ["ItemMap","","","","","NVGoggles_tna_F"]]
     ],
     //Spotter
 	["I_Spotter_F",[
@@ -112,7 +112,7 @@ OT_Recruitables = [
     ],
     //AT
 	["I_Soldier_AT_F",[
-        [["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
+        ["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
         ["launch_B_Titan_short_tna_F","","","",["Titan_AT",1],[],""],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
         ["U_I_C_Soldier_Para_4_F",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2],["ACE_EarPlugs",1]]],
@@ -124,7 +124,7 @@ OT_Recruitables = [
     ],
     //AA
 	["I_Soldier_AA_F",[
-        [["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
+        ["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
         ["launch_B_Titan_tna_F","","","",["Titan_AA",1],[],""],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
         ["U_I_C_Soldier_Para_4_F",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2],["ACE_EarPlugs",1]]],
@@ -161,7 +161,7 @@ OT_Recruitables = [
         ["ItemMap","","","","","NVGoggles_tna_F"]]
     ],
     //Grenadier
-	["I_soldier_GL_F",[
+	["I_Soldier_GL_F",[
         ["arifle_MX_GL_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],["1Rnd_HE_Grenade_shell",1],""],
         [],
         ["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
@@ -175,10 +175,11 @@ OT_Recruitables = [
 ];
 
 OT_Squadables = [
-	["Sentry",[6,0],"SEN"],
-	["Sniper Squad",[4,5],"SNI"],
-	["AT Squad",[6,9,11,8],"AT"],
-	["AA Squad",[6,10,12,8],"AA"],
-	["Fire Team",[7,0,1,2,3,8],"FIR"],
-	["Infantry Team",[7,0,1,2,3,8,9,10],"INF"]
+	["Sentry",["I_Soldier_SL_F","I_soldier_F"],"SEN"],
+	["Sniper Squad",["I_Sniper_F","I_Spotter_F"],"SNI"],
+	["Light AT Squad",["I_Soldier_SL_F","I_Soldier_LAT_F","I_Soldier_GL_F","I_Medic_F"],"LAT"],
+	["AT Squad",["I_Soldier_SL_F","I_Soldier_AT_F","I_Soldier_AAT_F","I_Medic_F"],"AT"],
+	["AA Squad",["I_Soldier_SL_F","I_Soldier_AA_F","I_Soldier_AAA_F","I_Medic_F"],"AA"],
+	["Fire Team",["I_Soldier_SL_F","I_soldier_F","I_Soldier_AR_F","I_Soldier_LAT_F","I_Soldier_M_F","I_Medic_F"],"FIR"],
+	["Infantry Team",["I_Soldier_SL_F","I_soldier_F","I_Soldier_AR_F","I_Soldier_LAT_F","I_Soldier_M_F","I_Medic_F","I_Soldier_AT_F","I_Soldier_AA_F"],"INF"]
 ];
