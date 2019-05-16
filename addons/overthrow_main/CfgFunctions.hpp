@@ -287,6 +287,7 @@ class CfgFunctions
 			class craft {};
 			class recruitSoldier {};
 			class recruitSquad {};
+			class editLoadout {};
 			class addGarrison {};
 			class addPolice {};
 			class lockVehicle {};

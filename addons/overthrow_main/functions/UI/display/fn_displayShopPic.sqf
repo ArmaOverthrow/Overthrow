@@ -35,7 +35,11 @@ if(_price > -1) then {
         if(_cls isKindOf "Man") exitWith {
             private _soldier = _cls call OT_fnc_getSoldier;
     		private _price = _soldier select 0;
-
+            if(call OT_fnc_playerIsGeneral) then {
+                ctrlEnable [1601,true];
+            }else{
+                ctrlEnable [1601,false];
+            };
     		[
 				nil,
     			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
@@ -69,7 +73,8 @@ if(_price > -1) then {
     	};
     	if(_cls in OT_allSquads) exitWith {
             private _squad = _cls call OT_fnc_getSquad;
-            _squad params ["_p"];
+            _price = _squad param [0,0];
+            ctrlEnable [1601,false];
 
 			[
 				nil,
