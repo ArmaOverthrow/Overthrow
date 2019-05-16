@@ -85,6 +85,12 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	waitUntil {!isNil "OT_economyLoadDone"};
 	[] spawn OT_fnc_runVirtualization;
 
+	//ACE3 Arsenal default loadouts
+	{
+		_x params ["_cls","_loadout"];
+		[_cls call OT_fnc_vehicleGetName, _loadout] call ace_arsenal_fnc_addDefaultLoadout;
+	}foreach(OT_Recruitables);
+
 	//Subscribe to events
 	if(isMultiplayer) then {
 	    addMissionEventHandler ["PlayerConnected",OT_fnc_playerConnectHandler];

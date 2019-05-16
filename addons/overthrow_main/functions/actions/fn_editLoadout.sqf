@@ -82,6 +82,8 @@ private _items = [];
     }foreach(OT_Recruitables);
     publicVariable "OT_Recruitables";
 
+    [_cls call OT_fnc_vehicleGetName, _loadout] call ace_arsenal_fnc_addDefaultLoadout;
+
     playSound "3DEN_notificationDefault";
     "Saved loadout" call OT_fnc_notifyMinor;
 
