@@ -930,32 +930,6 @@ OT_Placeables = [
 	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels && lights"]
 ];
 
-//People you can recruit, && squads are composed of
-OT_Recruitables = [
-	["I_soldier_F","AssaultRifle",[],200,"",""], //0
-	["I_soldier_AR_F","MachineGun",[],200,"",""], //1
-	["I_Soldier_LAT_F","AssaultRifle",["launch_RPG7_F"],200,"",""], //2
-	["I_Soldier_M_F","AssaultRifle",[],500,"",""], //3
-	["I_Sniper_F","SniperRifle",[],1800,"U_B_T_FullGhillie_tna_F","Binocular"], //4
-	["I_Spotter_F","AssaultRifle",[],500,"U_B_T_FullGhillie_tna_F","Binocular"], //5
-	["I_Soldier_SL_F","AssaultRifle",[],200,"","Binocular"], //6
-	["I_Soldier_TL_F","AssaultRifle",[],200,"U_I_C_Soldier_Para_2_F","Binocular"], //7
-	["I_Medic_F","AssaultRifle",[],200,"",""], //8
-	["I_Soldier_AT_F","AssaultRifle",["launch_I_Titan_short_F","launch_B_Titan_short_F","launch_B_Titan_short_tna_F"],200,"",""], //9
-	["I_Soldier_AA_F","AssaultRifle",["launch_I_Titan_F","launch_B_Titan_F","launch_B_Titan_tna_F"],200,"",""], //10
-	["I_Soldier_AAT_F","AssaultRifle",[],200,"",""], //11
-	["I_Soldier_AAA_F","AssaultRifle",[],200,"",""], //12
-	["I_soldier_GL_F","GrenadeLauncher",[],200,"",""] //13
-];
-
-OT_Squadables = [
-	["Sentry",[6,0],"SEN"],
-	["Sniper Squad",[4,5],"SNI"],
-	["AT Squad",[6,9,11,8],"AT"],
-	["AA Squad",[6,10,12,8],"AA"],
-	["Fire Team",[7,0,1,2,3,8],"FIR"],
-	["Infantry Team",[7,0,1,2,3,8,9,10],"INF"]
-];
 OT_allSquads = OT_Squadables apply { _x params ["_name"]; _name };
 
 OT_workshop = [

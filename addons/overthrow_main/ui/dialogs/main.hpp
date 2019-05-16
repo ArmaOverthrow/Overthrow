@@ -587,7 +587,17 @@ class OT_dialog_command
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT START (by ARMAzac, v1.063, #Xeqozy)
 		////////////////////////////////////////////////////////
-
+		class RscButton_1604: RscOverthrowButton
+		{
+			idc = 1604;
+			text = "Open Arsenal"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW + safezoneX;
+			y = 0.236 * safezoneH + safezoneY;
+			w = 0.149531 * safezoneW;
+			h = 0.077 * safezoneH;
+			tooltip = "Commands first unit selected to walk to and open the closest ammobox arsenal, uses warehouse if ammobox is at a warehouse"; //--- ToDo: Localize;
+			action = "closeDialog 0;[] call OT_fnc_orderOpenArsenal;";
+		};
 		class RscButton_1601: RscOverthrowButton
 		{
 			idc = 1601;

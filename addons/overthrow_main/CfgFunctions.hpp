@@ -330,6 +330,7 @@ class CfgFunctions
 			class weatherSystem {};
 			class getRandomRoadPosition {};
 			class isRadarInRange {};
+			class positionIsAtWarehouse {};
 		};
 
 		/*
@@ -426,6 +427,8 @@ class CfgFunctions
 			class findScopeInWarehouse {};
 			class findWeaponInWarehouse {};
 			class findVestInWarehouse {};
+			class verifyLoadoutFromWarehouse {};
+			class applyLoadoutFromWarehouse {};
 		};
 
 		/*
@@ -451,6 +454,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions\AI\orders";
 			class orderLoot {};
 			class orderOpenInventory {};
+			class orderOpenArsenal {};
 			class orderRevivePlayer {};
 			class squadAssignVehicle {};
 			class squadGetIn {};

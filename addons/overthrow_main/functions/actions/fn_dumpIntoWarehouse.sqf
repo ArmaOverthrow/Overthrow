@@ -27,7 +27,7 @@ if(_full) exitWith {false};
 			if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 				_unit removeWeapon _cls;
 			};
-			if(_cls isKindOf ["Binocular",configFile >> "CfgWeapons"]) exitWith {				_
+			if(_cls isKindOf ["Binocular",configFile >> "CfgWeapons"]) exitWith {
 				_unit removeItem _cls;
 			};
 			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
