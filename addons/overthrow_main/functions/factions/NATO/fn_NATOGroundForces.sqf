@@ -136,17 +136,6 @@ if(_byair && _tgroup isEqualType grpNull) then {
 	_wp setWaypointBehaviour "CARELESS";
 	_wp setWaypointStatements ["true","(vehicle this) AnimateDoor ['Door_rear_source', 0, false];"];
 	_wp setWaypointTimeout [20,20,20];
-
-
-	_wp = _tgroup addWaypoint [_frompos,2000];
-	_wp setWaypointType "MOVE";
-	_wp setWaypointBehaviour "COMBAT";
-	_wp setWaypointSpeed "FULL";
-	_wp setWaypointCompletionRadius 2000;
-
-	_wp = _tgroup addWaypoint [_frompos,2000];
-	_wp setWaypointType "SCRIPTED";
-	_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 }else{
 	if(typename _tgroup isEqualTo "GROUP") then {
 		_veh setdamage 0;
@@ -187,9 +176,9 @@ _wp setWaypointSpeed "FULL";
 
 if(typename _tgroup isEqualTo "GROUP") then {
 
-	[_veh,_tgroup,_frompos] spawn {
+	[_veh,_tgroup,_frompos,_byair] spawn {
 		//Ejects crew from vehicles when they take damage or stay relatively still for too long (you know, like when they ram a tree for 4 hours)
-		params ["_veh","_tgroup","_frompos"];
+		params ["_veh","_tgroup","_frompos","_byair"];
 		private _done = false;
 		private _stillfor = 0;
 		private _lastpos = getpos _veh;
@@ -198,7 +187,7 @@ if(typename _tgroup isEqualTo "GROUP") then {
 			if(isNull _tgroup) exitWith {};
 			if(!alive _veh) exitWith {};
 			private _eject = false;
-			if((damage _veh) > 0 && ((getpos _veh) select 2) < 2) then {
+			if((damage _veh) > 0.5 && ((getpos _veh) select 2) < 2) then {
 				//Vehicle damaged (and on the ground)
 				_eject = true;
 			};
@@ -211,7 +200,7 @@ if(typename _tgroup isEqualTo "GROUP") then {
 			}else{
 				_stillfor = 0;
 			};
-			if(_eject) then {
+			if(_eject) exitWith {
 				while {(count (waypoints _tgroup)) > 0} do {
 				 	deleteWaypoint ((waypoints _tgroup) select 0);
 				};
@@ -219,7 +208,7 @@ if(typename _tgroup isEqualTo "GROUP") then {
 				{
 					unassignVehicle _x;
 					commandGetOut _x;
-				}foreach((crew _veh) - (units _tgroup));
+				}foreach(crew _veh);
 				_done = true;
 
 				_wp = _tgroup addWaypoint [_frompos,0];
@@ -230,8 +219,34 @@ if(typename _tgroup isEqualTo "GROUP") then {
 				_wp = _tgroup addWaypoint [_frompos,0];
 				_wp setWaypointType "SCRIPTED";
 				_wp setWaypointCompletionRadius 50;
-				_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
+				_wp setWaypointStatements ["true","this call OT_fnc_cleanup"];
 			};
+			if(_byair && (_veh getVariable ["OT_deployedTroops",false])) exitWith {
+				while {(count (waypoints _tgroup)) > 0} do {
+					deleteWaypoint ((waypoints _tgroup) select 0);
+				};
+
+				sleep 5;
+
+				_wp = _tgroup addWaypoint [_frompos,50];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointBehaviour "SAFE";
+				_wp setWaypointSpeed "FULL";
+
+				waitUntil{sleep 10;(alive _veh && (_veh distance _frompos) < 150) || !alive _veh};
+
+				if(alive _veh) then {
+					while {(count (waypoints _tgroup)) > 0} do {
+						deleteWaypoint ((waypoints _tgroup) select 0);
+					};
+					_veh land "LAND";
+					waitUntil{sleep 10;(getpos _veh)#2 < 2};
+				};
+				_veh call OT_fnc_cleanup;
+				_tgroup call OT_fnc_cleanup;
+			};
+
+
 		};
 	};
 };

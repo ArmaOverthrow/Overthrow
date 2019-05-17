@@ -69,8 +69,8 @@ if !(_frombase in _abandoned) then {
         while {(count (waypoints _group)) > 0} do {
             deleteWaypoint ((waypoints _group) select 0);
         };
-        _veh action ["LAND", _veh];
-        waitUntil{sleep 10;(speed _veh) isEqualTo 0};
+        _veh land "LAND";
+        waitUntil{sleep 10;(getpos _veh)#2 < 2};
     };
     _veh call OT_fnc_cleanup;
     _group call OT_fnc_cleanup;

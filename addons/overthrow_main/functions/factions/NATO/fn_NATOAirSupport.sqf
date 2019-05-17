@@ -6,8 +6,8 @@ private _vehtype = OT_NATO_Vehicles_AirSupport call BIS_fnc_SelectRandom;
 private _dir = [_frompos,_attackpos] call BIS_fnc_dirTo;
 _pos = [_frompos,0,120,false,[0,0],[250,_vehtype]] call SHK_pos_fnc_pos;
 
-_group = creategroup blufor;
-_veh = createVehicle [_vehtype, _pos, [], 0,""];
+private _group = creategroup blufor;
+private _veh = createVehicle [_vehtype, _pos, [], 0,""];
 _veh setVariable ["garrison","HQ",false];
 
 clearWeaponCargoGlobal _veh;
@@ -32,53 +32,50 @@ sleep 1;
 
 _topos = [_attackpos,[0,200]] call SHK_pos_fnc_pos;
 
-_wp = _group addWaypoint [_topos,50];
+_wp = _group addWaypoint [_topos,600];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [300,300,300];
+_wp setWaypointTimeout [30,30,30];
 
 _topos = [_attackpos,[0,200]] call SHK_pos_fnc_pos;
 
-_wp = _group addWaypoint [_topos,50];
+_wp = _group addWaypoint [_topos,600];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [300,300,300];
+_wp setWaypointTimeout [30,30,30];
 
 _topos = [_attackpos,[0,200]] call SHK_pos_fnc_pos;
 
-_wp = _group addWaypoint [_topos,50];
+_wp = _group addWaypoint [_topos,600];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [300,300,300];
+_wp setWaypointTimeout [30,30,30];
 
 _topos = [_attackpos,[0,200]] call SHK_pos_fnc_pos;
 
-_wp = _group addWaypoint [_topos,50];
+_wp = _group addWaypoint [_topos,600];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [300,300,300];
+_wp setWaypointTimeout [30,30,30];
 
 _topos = [_attackpos,[0,200]] call SHK_pos_fnc_pos;
 
-_wp = _group addWaypoint [_topos,50];
+_wp = _group addWaypoint [_topos,600];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [300,300,300];
+_wp setWaypointTimeout [30,30,30];
 
 _topos = [_attackpos,[0,200]] call SHK_pos_fnc_pos;
 
-_wp = _group addWaypoint [_topos,50];
-_wp setWaypointType "SAD";
-_wp setWaypointBehaviour "COMBAT";
-_wp setWaypointSpeed "FULL";
-_wp setWaypointTimeout [300,300,300];
+_wp = _group addWaypoint [_topos,0];
+_wp setWaypointType "CYCLE";
 
-_timeout = time + 1800;
+private _timeout = time + 1800;
 
 waitUntil {sleep 10;alive _veh && time > _timeout};
 
@@ -99,8 +96,8 @@ if(alive _veh) then {
 	while {(count (waypoints _group)) > 0} do {
 		deleteWaypoint ((waypoints _group) select 0);
 	};
-	_veh action ["LAND", _veh];
-	waitUntil{sleep 10;(speed _veh) isEqualTo 0};
+	_veh land "LAND";
+	waitUntil{sleep 10;(getpos _veh)#2 < 2};
 };
 _veh call OT_fnc_cleanup;
 _group call OT_fnc_cleanup;
