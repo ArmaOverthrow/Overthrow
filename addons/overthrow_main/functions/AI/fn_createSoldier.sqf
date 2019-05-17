@@ -1,12 +1,12 @@
 params ["_soldier","_pos","_group",["_takeFromWarehouse",true]];
 _soldier params ["_cost","_cls","_loadout","_clothes","_allitems"];
-
+if(_cls == "Police") then {_cls = OT_Unit_Police};
 //Take from warehouse
 if(_takeFromWarehouse) then {
 	{
 		_x params ["_cls","_num"];
 		[_cls,_num] call OT_fnc_removeFromWarehouse;
-	}foreach(_allitems);
+	}foreach(_allitems call BIS_fnc_consolidateArray);
 };
 
 private _start = [[[_pos,30]]] call BIS_fnc_randomPos;

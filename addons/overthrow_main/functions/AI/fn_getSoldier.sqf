@@ -1,11 +1,15 @@
 private _cls = _this;
+private _loadout = [];
 
-private _data = [];
-{
-	if((_x select 0) isEqualTo _cls) exitWith {_data = _x};
-}foreach(OT_recruitables);
-
-_data params ["_className","_loadout"];
+if(_cls == "Police") then {
+	_loadout = OT_Loadout_Police;
+}else{
+	private _data = [];
+	{
+		if((_x select 0) isEqualTo _cls) exitWith {_data = _x};
+	}foreach(OT_recruitables);
+	_loadout = _data select 1;
+};
 
 //calculate cost
 private _cost = floor(([OT_nation,"CIV",0] call OT_fnc_getPrice) * 1.5);

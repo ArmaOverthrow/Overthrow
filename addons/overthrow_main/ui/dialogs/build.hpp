@@ -373,7 +373,7 @@ class OT_dialog_police
 			y = 0.28 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
 			h = 0.033 * safezoneH;
-			colorBackground[] = {0,0,0,1};
+			colorBackground[] = {0,0,0,0.1};
 			colorActive[] = {0,0,0,1};
 		};
 		/*
@@ -415,13 +415,24 @@ class OT_dialog_police
 		{
 			idc = 1104;
 
-			text = "<t size=""1.2"" align=""center"">Effects</t><br/><br/><t size=""0.8"" align=""center"">+1 Stability/hr</t>"; //--- ToDo: Localize;
+			text = "<t size=""1.2"" align=""center"">Effects</t><br/><br/><t size=""0.8"" align=""center"">+1 Stability/10 mins</t>"; //--- ToDo: Localize;
 			x = 0.4175 * safezoneW + safezoneX;
 			y = 0.632 * safezoneH + safezoneY;
 			w = 0.170156 * safezoneW;
 			h = 0.088 * safezoneH;
-			colorBackground[] = {0,0,0,1};
+			colorBackground[] = {0,0,0,0.1};
 			colorActive[] = {0,0,0,1};
+		};
+		class RscButton_1608: RscOverthrowButton
+		{
+			idc = 1608;
+
+			text = "Edit Loadout"; //--- ToDo: Localize;
+			x = 0.4175 * safezoneW + safezoneX;
+			y = 0.73 * safezoneH + safezoneY;
+			w = 0.170156 * safezoneW;
+			h = 0.033 * safezoneH;
+			action = "[] call OT_fnc_editPoliceLoadout";
 		};
 		/*
 		class RscButton_1601: RscOverthrowButton

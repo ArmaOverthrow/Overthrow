@@ -90,6 +90,7 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 		_x params ["_cls","_loadout"];
 		[_cls call OT_fnc_vehicleGetName, _loadout] call ace_arsenal_fnc_addDefaultLoadout;
 	}foreach(OT_Recruitables);
+	["Police", OT_Loadout_Police] call ace_arsenal_fnc_addDefaultLoadout;
 
 	//Subscribe to events
 	if(isMultiplayer) then {

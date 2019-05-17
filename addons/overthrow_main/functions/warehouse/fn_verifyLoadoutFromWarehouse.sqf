@@ -15,7 +15,7 @@ private _ignore = [];
                 };
                 if(primaryWeapon _unit isEqualTo _cls) exitWith {
                     if(_correct) then {
-                        _ignore append primaryWeaponItems _unit
+                        _ignore append primaryWeaponItems _unit;
                         _unit removeWeapon _cls;_unit removeWeapon _cls;
                     };
                     _count = 0;
