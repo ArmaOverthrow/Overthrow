@@ -216,7 +216,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 {
 	private _vehtype = _x;
 
-	_pos = [_pos,42,_dir+90] call BIS_fnc_relPos;
+	_pos = [_pos,20,_dir+90] call BIS_fnc_relPos;
 
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];
@@ -233,14 +233,12 @@ private _road = objNull;
 	_groups pushback _vgroup;
 	private _vehtype = _x;
 	private _got = false;
-	private _pos = _posTown findEmptyPosition [10,100,_vehtype];
+	private _pos = _posTown findEmptyPosition [25,250,_vehtype];
 	private _dir = random 360;
 
-	_roads = _pos nearRoads 15;
 	private _loops = 0;
-	while {((count _roads) > 0) && (_loops < 50)} do {
-		_pos = _posTown findEmptyPosition [15,150,_vehtype];
-		_roads = _pos nearRoads 15;
+	while {(isOnRoad _pos) && (_loops < 50)} do {
+		_pos = _posTown findEmptyPosition [25,250,_vehtype];
 		_loops = _loops + 1;
 	};
 

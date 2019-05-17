@@ -99,6 +99,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 	if(_diff == 2) then {_numHVTs = 8};
 
 	//Find military objectives
+	_groundvehs = OT_allBLUOffensiveVehicles select {!((_x isKindOf "Air") || (_x isKindOf "Tank") || (_x isKindOf "Ship"))};
 	{
 		_x params ["_pos","_name","_worth"];
 		if !(_name in _abandoned) then {
@@ -115,8 +116,10 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
                 _base = 24;
                 _statics = OT_NATO_StaticGarrison_LevelThree;
             };
+			if((random 100) < ((count _groundvehs)+_base)) then {
+				_statics pushbackUnique (selectRandom _groundvehs);
+			};
 			private _garrison = floor(_base + random(8));
-			server setVariable [format ["vehgarrison%1",_name],+_statics,true];
 
 			if(_name isEqualTo OT_NATO_HQ) then {
 				_garrison = 48;
@@ -137,6 +140,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 				};
 			}else{
 				server setVariable [format ["airgarrison%1",_name],[],true];
+				server setVariable [format ["vehgarrison%1",_name],_statics,true];
 			};
 			server setVariable [format ["garrison%1",_name],_garrison,true];
 
@@ -177,13 +181,13 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
         _x params ["_pos","_name","_worth"];
 		if(_name != OT_NATO_HQ) then {
 	        _prilist pushback _name;
-	        if(_worth > 500) then {
+			if(_worth > 900) then {
 	            _prilist pushback _name;
 	        };
-	        if(_worth > 800) then {
+	        if(_worth > 1200) then {
 	            _prilist pushback _name;
 	        };
-	        if(_worth > 1000) then {
+	        if(_worth > 2500) then {
 	            _prilist pushback _name;
 	        };
 		};
@@ -201,13 +205,25 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
 	}foreach(OT_NATO_Vehicles_AirGarrison);
 
+	//Distribute some random Air vehicles
+	_airvehs = OT_allBLUOffensiveVehicles select {_x isKindOf "Air"};
+	{
+		_name = _x;
+		if((random 100) < (count _airvehs)) then {
+			_type = selectRandom _airvehs;
+			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
+			_garrison pushback _type;
+			server setVariable [format ["airgarrison%1",_name],_garrison,true];
+		};
+	}foreach(_prilist);
+
 	//Distribute static AA to airfields
 	{
-		_x params ["_pos","_name"];
+		_name = _x;
 		_vehs = server getVariable [format ["vehgarrison%1",_name],[]];
 		_vehs = _vehs + OT_NATO_Vehicles_StaticAAGarrison;
 		server setVariable [format ["vehgarrison%1",_name],_vehs,true];
-	}foreach(OT_airportData);
+	}foreach(_prilist);
 
 	diag_log "Overthrow: Setting up NATO checkpoints";
 	{
