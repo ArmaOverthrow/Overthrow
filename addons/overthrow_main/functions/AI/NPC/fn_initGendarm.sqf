@@ -53,12 +53,7 @@ if((random 100) > 90) exitWith {
 	_unit addItem "ACE_epinephrine";
 };
 
-private _weapons = OT_allSubMachineGuns;
-if(count OT_NATO_weapons_Police > 0) then {
-	_weapons = OT_NATO_weapons_Police;
-};
-
-_weapon = selectRandom _weapons;
+_weapon = selectRandom OT_allBLUSMG;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazineGlobal _magazine;

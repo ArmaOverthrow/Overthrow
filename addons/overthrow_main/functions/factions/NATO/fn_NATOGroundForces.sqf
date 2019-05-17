@@ -64,17 +64,8 @@ _tgroup deleteGroupWhenEmpty true;
 	_x setVariable ["garrison","HQ",false];
 	_x setVariable ["VCOM_NOPATHING_Unit",true,false];
 
-	//NATO would not use titans when they arent going up against armor
-	if(secondaryWeapon _x isEqualTo "launch_B_Titan_short_F") then {
-		_x removeWeapon "launch_B_Titan_short_F";
-		_x addWeapon "launch_NLAW_F";
-	};
-	if(((typeof _x) find "_AAT_") > -1) then {
-		_x addWeapon "launch_NLAW_F";
-	};
-	if(secondaryWeapon _x isEqualTo "launch_NLAW_F") then {
-		removeBackpack _x;
-	};
+	[_x] call OT_fnc_initMilitary;
+
 }foreach(units _group1);
 
 {
@@ -92,17 +83,8 @@ if !(_byair) then {
 		_x setVariable ["VCOM_NOPATHING_Unit",true,false];
 		_allunits pushback _x;
 		_x setVariable ["garrison","HQ",false];
-
-		if(secondaryWeapon _x isEqualTo "launch_B_Titan_short_F") then {
-			_x removeWeapon "launch_B_Titan_short_F";
-			_x addWeapon "launch_NLAW_F";
-		};
-		if(((typeof _x) find "_AAT_") > -1) then {
-			_x addWeapon "launch_NLAW_F";
-		};
-		if(secondaryWeapon _x isEqualTo "launch_NLAW_F") then {
-			removeBackpack _x;
-		};
+		[_x] call OT_fnc_initMilitary;
+		
 	}foreach(units _group2);
 	{
 		_x addCuratorEditableObjects [units _group2,true];
@@ -142,9 +124,13 @@ if(_byair && _tgroup isEqualType grpNull) then {
 		_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
 		_roads = _ao nearRoads 150;
 		private _dropos = _ao;
-		if(count _roads > 0) then {
-			_dropos = getpos(_roads select (count _roads - 1));
-		};
+
+		//Try to make sure drop position is on a bigger road
+		{
+			private _pos = getpos _c;
+			if(isOnRoad _pos) exitWith {_dropos = _pos};
+		}foreach(_roads);
+
 		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointBehaviour "CARELESS";
 		_move setWaypointType "MOVE";
@@ -163,8 +149,6 @@ if(_byair && _tgroup isEqualType grpNull) then {
 		_wp setWaypointType "SCRIPTED";
 		_wp setWaypointCompletionRadius 25;
 		_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
-
-
 	};
 };
 sleep 10;

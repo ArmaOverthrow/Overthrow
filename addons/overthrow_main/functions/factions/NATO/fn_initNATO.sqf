@@ -50,7 +50,7 @@ OT_NATO_Units_CTRGSupport = [];
 
 			private _role = getText (_x >> "role");
 			if(_role in ["MachineGunner","Rifleman","CombatLifeSaver"]) then {OT_NATO_Units_LevelOne pushback _name};
-			if(_role in ["MissileSpecialist","Assistant","Grenadier","Marksman"]) then {OT_NATO_Units_LevelTwo pushback _name};
+			if(_role in ["Grenadier","MissileSpecialist","Marksman"]) then {OT_NATO_Units_LevelTwo pushback _name};
 			if(_role == "Marksman" && (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
 			if(_role == "Marksman" && (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
 			if(_role == "MissileSpecialist" && (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
@@ -247,7 +247,7 @@ publicVariable "OT_allComms";
 
 {
 	_x params ["_pos","_name"];
-	private _mrk = createMarker [_name,[_pos,25,270] call BIS_fnc_relPos];
+	private _mrk = createMarker [_name,_pos];
 	_mrk setMarkerShape "ICON";
 	if(_name in (server getVariable "NATOabandoned")) then {
 		_mrk setMarkerType OT_flagMarker;
@@ -257,6 +257,19 @@ publicVariable "OT_allComms";
 		}else{
 			_mrk setMarkerType "flag_NATO";
 		};
+	};
+
+	_mrk = createMarker [_name+"_restrict",_pos];
+	_mrk setMarkerShape "ELLIPSE";
+	_mrk setMarkerBrush "BDIAGONAL";
+	private _dist = 200;
+	if(_name in OT_NATO_priority) then {_dist = 500};
+	_mrk setMarkerSize [_dist, _dist];
+	_mrk setMarkerColor "ColorRed";
+	if(_name in (server getVariable "NATOabandoned")) then {
+		_mrk setMarkerAlpha 0;
+	}else{
+		_mrk setMarkerAlpha 0.4;
 	};
 
 	server setVariable [_name,_pos,true];
@@ -280,6 +293,19 @@ publicVariable "OT_allObjectives";
 	server setVariable [_name,_pos,true];
 	OT_allComms pushback _name;
 	OT_allObjectives pushback _name;
+
+	_mrk = createMarker [_name+"_restrict",_pos];
+	_mrk setMarkerShape "ELLIPSE";
+	_mrk setMarkerBrush "BDIAGONAL";
+	private _dist = 40;
+	if(_name in OT_NATO_priority) then {_dist = 500};
+	_mrk setMarkerSize [_dist, _dist];
+	_mrk setMarkerColor "ColorRed";
+	if(_name in (server getVariable "NATOabandoned")) then {
+		_mrk setMarkerAlpha 0;
+	}else{
+		_mrk setMarkerAlpha 0.4;
+	};
 }foreach(OT_NATOcomms);
 sleep 0.2;
 private _revealed = server getVariable ["revealedFOBs",[]];

@@ -10,8 +10,6 @@ if(hmd _unit != "") then {
 	_unit unlinkItem hmd _unit;
 };
 
-if(_full) exitWith {false};
-
 {
 	_count = 0;
 	_cls = _x select 0;

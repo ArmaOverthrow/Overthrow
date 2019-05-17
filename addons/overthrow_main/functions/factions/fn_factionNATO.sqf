@@ -176,6 +176,7 @@ publicVariable "OT_nextNATOTurn";
 						format["Resistance has captured the %1 tower",_name] remoteExec ["OT_fnc_notifyGood",0,false];
 						_resources = _resources - 100;
 						_countered = true;
+						format["%1_restrict",_name] setMarkerAlpha 0;
 					};
 				};
 			};

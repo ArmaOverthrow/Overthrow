@@ -490,6 +490,15 @@ OT_allDetonators = [];
 OT_allGlasses = [];
 OT_allFacewear = [];
 OT_allGoggles = [];
+OT_allBLURifles = [];
+OT_allBLUSMG = [];
+OT_allBLUMachineGuns = [];
+OT_allBLUSniperRifles = [];
+OT_allBLUGLRifles = [];
+OT_allBLULaunchers = [];
+OT_allBLUPistols = [];
+OT_allBLUVehicles = [];
+OT_allBLUOffensiveVehicles = [];
 
 {
 	private _name = configName _x;
@@ -545,6 +554,20 @@ OT_allGoggles = [];
 				private _base = [_x] call BIS_fnc_baseWeapon;
 				if !(_base in _blacklist) then {
 					if !(_x in _weapons) then {_weapons pushback _base};
+					if(_side isEqualTo 1) then {
+						if(_base isKindOf ["Rifle", configFile >> "CfgWeapons"]) then {
+							_base call {
+								_itemType = ([_cls] call BIS_fnc_itemType) select 1;
+								if(_itemType isEqualTo "MachineGun") exitWith {OT_allBLUMachineGuns pushBackUnique _base};
+								if((_this select [0,7]) == "srifle_") exitWith {OT_allBLUSniperRifles pushBackUnique _base};
+								if((_this find "_GL_") > -1) exitWith {OT_allBLUGLRifles pushBackUnique _base};
+								if((_this find "SMG") > -1) exitWith {OT_allBLUSMG pushBackUnique _base};
+								OT_allBLURifles pushBackUnique _base
+							};
+						};
+						if(_base isKindOf ["Launcher", configFile >> "CfgWeapons"]) then {OT_allBLULaunchers pushBackUnique _base};
+						if(_base isKindOf ["Pistol", configFile >> "CfgWeapons"]) then {OT_allBLUPistols pushBackUnique _base};
+					};
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
 			//Get ammo
@@ -559,6 +582,14 @@ OT_allGoggles = [];
 				if(_cls isKindOf "LandVehicle" || _cls isKindOf "Air" || _cls isKindOf "Ship") then {
 					_vehicles pushback _cls;
 					_numblueprints = _numblueprints + 1;
+					if(_side isEqualTo 1) then {
+						private _threat = getArray (_x >> "threat");
+						if(_threat#0 > 0.5) then {
+							OT_allBLUOffensiveVehicles pushBackUnique _cls;
+						}else{
+							OT_allBLUVehicles pushBackUnique _cls;
+						};
+					};
 				};
 			};
 		};

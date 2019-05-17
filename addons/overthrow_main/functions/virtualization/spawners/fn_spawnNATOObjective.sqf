@@ -23,7 +23,7 @@ if(_name in OT_allComms) then {
 	private _civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [], 0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
-	[_civ,_name] call OT_fnc_initSniper;
+	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	_count = _count + 1;
 	sleep 0.2;
@@ -34,7 +34,7 @@ if(_name in OT_allComms) then {
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		[_civ,_name] call OT_fnc_initSniper;
+		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
 		sleep 0.2;
@@ -169,7 +169,7 @@ while {_count < _numNATO} do {
 	while {(_count < _numNATO) && (_groupcount < 8)} do {
 		_start = _start findEmptyPosition [5,50];
 
-		_civ = _group createUnit [selectRandom OT_NATO_Units_LevelOne, _start, [],0, "NONE"];
+		_civ = _group createUnit [selectRandom (OT_NATO_Units_LevelOne + OT_NATO_Units_LevelOne + OT_NATO_Units_LevelOne + OT_NATO_Units_LevelTwo), _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "LIEUTENANT";
 		[_civ] joinSilent _group;

@@ -31,5 +31,6 @@ _success = {
 	if(_objective isEqualTo "Chemical Plant") then {
 		server setVariable ["reschems",0,true];
 	};
+	format["%1_restrict",_objective] setMarkerAlpha 0.4;
 };
 [_posObjective,_strength,_success,_fail,[_tskid,_objective],_objective] spawn OT_fnc_NATOQRF;
