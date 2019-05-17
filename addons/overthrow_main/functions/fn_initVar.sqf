@@ -559,7 +559,7 @@ OT_allBLUOffensiveVehicles = [];
 							_base call {
 								_itemType = ([_cls] call BIS_fnc_itemType) select 1;
 								if(_itemType isEqualTo "MachineGun") exitWith {OT_allBLUMachineGuns pushBackUnique _base};
-								if((_this select [0,7]) == "srifle_") exitWith {OT_allBLUSniperRifles pushBackUnique _base};
+								if((_this select [0,7]) == "srifle_" || (_this_this isKindOf ["Rifle_Long_Base_F", configFile >> "CfgWeapons"])) exitWith {OT_allBLUSniperRifles pushBackUnique _base};
 								if((_this find "_GL_") > -1) exitWith {OT_allBLUGLRifles pushBackUnique _base};
 								if((_this find "SMG") > -1) exitWith {OT_allBLUSMG pushBackUnique _base};
 								OT_allBLURifles pushBackUnique _base

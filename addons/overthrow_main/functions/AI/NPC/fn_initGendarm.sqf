@@ -54,6 +54,9 @@ if((random 100) > 90) exitWith {
 };
 
 _weapon = selectRandom OT_allBLUSMG;
+if((call OT_fnc_getControlledPopulation) > 1000) then {
+	_weapon = selectRandom OT_allBLURifles;
+};
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazineGlobal _magazine;
@@ -69,7 +72,7 @@ if((random 100) > 80) exitWith {
 	_unit addPrimaryWeaponItem "optic_Aco_smg"
 };
 
-_weapon = OT_NATO_weapons_Pistols call BIS_fnc_selectRandom;
+_weapon = OT_allBLUPistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazineGlobal _magazine;
