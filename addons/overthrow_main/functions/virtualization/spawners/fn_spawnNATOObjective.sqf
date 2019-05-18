@@ -216,7 +216,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 {
 	private _vehtype = _x;
 
-	_pos = [_pos,20,_dir+90] call BIS_fnc_relPos;
+	_pos = [_pos,28,_dir+90] call BIS_fnc_relPos;
 
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];

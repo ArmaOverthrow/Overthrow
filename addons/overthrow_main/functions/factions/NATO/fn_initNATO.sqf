@@ -103,6 +103,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 	{
 		_x params ["_pos","_name","_worth"];
 		if !(_name in _abandoned) then {
+			diag_log format["Overthrow: Initializing %1",_name];
 			OT_NATOobjectives pushBack _x;
 			server setVariable [format ["vehgarrison%1",_name],[],true];
 
@@ -116,8 +117,10 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
                 _base = 24;
                 _statics = OT_NATO_StaticGarrison_LevelThree;
             };
-			if((random 100) < ((count _groundvehs)+_base)) then {
-				_statics pushbackUnique (selectRandom _groundvehs);
+			if((random 300) < ((count _groundvehs)+_base)) then {
+				_veh = (selectRandom _groundvehs);
+				diag_log format["Adding %1 to %2",_veh call OT_fnc_vehicleGetName,_name];
+				_statics pushbackUnique _veh;
 			};
 			private _garrison = floor(_base + random(8));
 
@@ -209,7 +212,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 	_airvehs = OT_allBLUOffensiveVehicles select {_x isKindOf "Air"};
 	{
 		_name = _x;
-		if((random 100) < (count _airvehs)) then {
+		if((random 200) < (count _airvehs)) then {
 			_type = selectRandom _airvehs;
 			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
 			_garrison pushback _type;
@@ -219,11 +222,11 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 
 	//Distribute static AA to airfields
 	{
-		_name = _x;
+		_x params ["","_name"];
 		_vehs = server getVariable [format ["vehgarrison%1",_name],[]];
 		_vehs = _vehs + OT_NATO_Vehicles_StaticAAGarrison;
 		server setVariable [format ["vehgarrison%1",_name],_vehs,true];
-	}foreach(_prilist);
+	}foreach(OT_airportData);
 
 	diag_log "Overthrow: Setting up NATO checkpoints";
 	{
