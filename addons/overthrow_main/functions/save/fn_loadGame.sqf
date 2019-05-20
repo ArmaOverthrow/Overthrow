@@ -40,6 +40,19 @@ sleep 0.2;
 		{
 			_x params ["_subkey","_subval"];
 			if(!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) && {(_subkey select [0,9]) != "seencache"}) then {
+				//v0.7.8.3 : Clears extraneous tutorial done entries
+				if(_subval isEqualType []) then {
+					{
+						if(_x isEqualType []) then {
+							if(count _x == 2) then {
+								_x params ["_k","_v"];
+								if(_k isEqualTo "OT_tutesDone") then {
+									_x set [1,_v arrayIntersect _v];
+								};
+							};
+						};
+					}foreach(_subval);
+				};
 				players_NS setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);

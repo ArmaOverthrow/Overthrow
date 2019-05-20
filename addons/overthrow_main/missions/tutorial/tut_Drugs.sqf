@@ -1,7 +1,8 @@
 //Let's find some civs to sell drugs to
 
 private _done = player getVariable ["OT_tutesDone",[]];
-player setVariable ["OT_tutesDone",_done+["Drugs"],true];
+_done pushBackUnique "Drugs";
+player setVariable ["OT_tutesDone",_done,true];
 
 private _targets = [];
 private _destination = [];
@@ -66,7 +67,7 @@ private _loopCode = {
         and see if they wanna buy your Ganja.
         Not everyone is into the sweet herb,
         but just keep trying until you get lucky." call OT_fnc_notifyMinor;
-        
+
         call OT_fnc_clearPlayerWaypoint;
     } else {
         [_loopCode,_this,0.5] call CBA_fnc_waitAndExecute;
