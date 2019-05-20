@@ -9,9 +9,11 @@ if !("ItemMap" in assignedItems player) exitWith {hint "You need a map to fast t
 if(_ftrules > 0 && !((primaryWeapon player) isEqualTo "" && (secondaryWeapon player) isEqualTo "" && (handgunWeapon player) isEqualTo "")) exitWith {hint "You cannot fast travel holding a weapon"};
 
 _foundweapon = false;
-{
-	if(_diff > 0 && !((primaryWeapon _x) isEqualTo "" && (secondaryWeapon _x) isEqualTo "" && (handgunWeapon _x) isEqualTo "")) exitWith {_foundweapon = true};
-}foreach(crew vehicle player);
+if((vehicle player) != player && _ftrules > 0) then {
+	{
+		if(!((primaryWeapon _x) isEqualTo "" && (secondaryWeapon _x) isEqualTo "" && (handgunWeapon _x) isEqualTo "")) exitWith {_foundweapon = true};
+	}foreach(crew vehicle player);
+};
 if(_foundweapon) exitWith {hint "A passenger is holding a weapon"};
 
 private _hasdrugs = false;

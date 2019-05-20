@@ -1627,9 +1627,9 @@ class OT_dialog_newgame
             idc = 1606;
             text = "Start Game"; //--- ToDo: Localize;
             x = 0.577344 * safezoneW + safezoneX;
-            y = 0.676 * safezoneH + safezoneY;
+            y = 0.708 * safezoneH + safezoneY;
             w = 0.0876563 * safezoneW;
-            h = 0.077 * safezoneH;
+            h = 0.045 * safezoneH;
 			action = "closeDialog 0;[] remoteExec [""OT_fnc_newGame"",2,false]";
         };
         ////////////////////////////////////////////////////////
