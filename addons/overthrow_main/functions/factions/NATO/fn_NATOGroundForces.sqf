@@ -84,7 +84,7 @@ if !(_byair) then {
 		_allunits pushback _x;
 		_x setVariable ["garrison","HQ",false];
 		[_x] call OT_fnc_initMilitary;
-		
+
 	}foreach(units _group2);
 	{
 		_x addCuratorEditableObjects [units _group2,true];
@@ -127,7 +127,7 @@ if(_byair && _tgroup isEqualType grpNull) then {
 
 		//Try to make sure drop position is on a bigger road
 		{
-			private _pos = getpos _c;
+			private _pos = getpos _x;
 			if(isOnRoad _pos) exitWith {_dropos = _pos};
 		}foreach(_roads);
 
