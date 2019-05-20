@@ -7,7 +7,7 @@ if(({side _x isEqualTo west || side _x isEqualTo east} count ((getpos player) ne
 private _price = [OT_nation,"CIV",100] call OT_fnc_getPrice;
 private _money = player getVariable ["money",0];
 
-if(_money < _price) exitWith {format ["You need $%1",_cost] call OT_fnc_notifyMinor};
+if(_money < _price) exitWith {format ["You need $%1",_price] call OT_fnc_notifyMinor};
 playSound "3DEN_notificationDefault";
 [-_price] call OT_fnc_money;
 
