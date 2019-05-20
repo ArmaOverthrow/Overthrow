@@ -29,8 +29,9 @@ if(!isNil "_qrfstart" && (time - _qrfstart) < 600) then {
 		_mins = floor(_secs / 60);
 		_secs = round(_secs % 60);
 	};
+	if(_mins < 10) then {_mins = format["0%1",_mins]};
 	if(_secs < 10) then {_secs = format["0%1",_secs]};
-	_qrf = format["<t size='0.7'>Battle of %1</t><br/>Starting (0%2:%3)",_attacking,_mins,_secs];
+	_qrf = format["<t size='0.7'>Battle of %1</t><br/>Starting (%2:%3)",_attacking,_mins,_secs];
 };
 
 if(!isNil "_qrfstart" && (time - _qrfstart) > 600) then {
