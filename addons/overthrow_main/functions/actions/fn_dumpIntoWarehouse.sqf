@@ -84,13 +84,15 @@ if(handgunWeapon _unit != "") then {
 
 if((!isplayer _unit) || _linkedItems) then {
 	{
-		if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
-			_unit unassignItem _x;
-			_unit removeWeapon _x;
-		}else{
-			_unit unlinkItem _x;
+		if !(_x isEqualTo "ItemMap") then {
+			if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
+				_unit unassignItem _x;
+				_unit removeWeapon _x;
+			}else{
+				_unit unlinkItem _x;
+			};
+			[_x,1] call OT_fnc_addToWarehouse;
 		};
-		[_x,1] call OT_fnc_addToWarehouse;
 	}foreach(assignedItems _unit);
 };
 

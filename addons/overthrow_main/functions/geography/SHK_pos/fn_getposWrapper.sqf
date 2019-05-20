@@ -26,12 +26,12 @@ if (typename _dir isEqualTo "ARRAY") then {
   private ["_min","_max","_ang"];
   _min = _dir select 0;
   _max = _dir select 1;
-  
+
   _ang = _max - _min;
-  
+
   // Min bigger than max, can happen with directions around north
   if (_ang < 0) then { _ang = _ang + 360 };
-  
+
   _dir = (_min + random _ang);
 };
 
@@ -44,7 +44,7 @@ if (typeName _water isEqualTo "SCALAR") then {
       if (surfaceIsWater _pos) then {
         private ["_p","_d","_l"];
         _d = 0; _l = true;
-        
+
         // Search for a land position starting from the randomly picked position and
         // then going outwards from it in full circles in 20m steps.
         while {_d = _d + 20; _l && _d < 5000} do {
@@ -57,13 +57,13 @@ if (typeName _water isEqualTo "SCALAR") then {
       };
     };
     case 1: { // Water allowed
-      
+
     };
     case 2: { // Only water allowed
       if !(surfaceIsWater _pos) then {
         private ["_p","_d","_l"];
         _d = 0; _l = true;
-        
+
         // Search for a water position starting from the randomly picked position and
         // then going outwards from it in full circles in 20m steps.
         while {_d = _d + 20; _l && _d < 5000} do {
@@ -82,7 +82,7 @@ if (typeName _water isEqualTo "SCALAR") then {
     if (surfaceIsWater _pos) then {
       private ["_p","_d","_l"];
       _d = 0; _l = true;
-      
+
       // Search for a land position starting from the randomly picked position and
       // then going outwards from it in full circles in 20m steps.
       while {_d = _d + 20; _l && _d < 5000} do {
@@ -109,7 +109,7 @@ if (count _road > 0) then {
     // Road position(s) found.
     if (_cnt > 0) then {
       _p = getpos (_roads select 0);
-      
+
       // Found more than one road position, return closest.
       if (_cnt > 1) then {
         for "_i" from 1 to (_cnt - 1) do {
@@ -120,7 +120,7 @@ if (count _road > 0) then {
         };
       };
     };
-    
+
     switch _mode do {
       // Road position preferred but not forced.
       case 1: {
@@ -140,31 +140,31 @@ if (count _road > 0) then {
   };
 };
 
-// Find empty position 
-private ["_dst","_veh","_p"]; 
+// Find empty position
+private ["_dst","_veh","_p"];
 
-_dst = 200; 
-_veh = ""; 
-switch (typename _empty) do { 
-  case "OBJECT": { _veh = typeof _empty }; // Only vehicle given, use default distance 
-  case "SCALAR": {_dst = _empty;}; 
-  case "ARRAY": { 
-    if (count _empty > 0) then { 
-      _dst = _empty select 0; 
-      _veh = _empty select 1; 
-      if (typename _veh isEqualTo typename objNull) then { _veh = typeof _veh }; 
-    }; 
-  }; 
+_dst = 200;
+_veh = "";
+switch (typename _empty) do {
+  case "OBJECT": { _veh = typeof _empty }; // Only vehicle given, use default distance
+  case "SCALAR": {_dst = _empty;};
+  case "ARRAY": {
+    if (count _empty > 0) then {
+      _dst = _empty select 0;
+      _veh = _empty select 1;
+      if (typename _veh isEqualTo typename objNull) then { _veh = typeof _veh };
+    };
+  };
 }; 
 
-_p = []; 
-if (count _pos > 0) then {_p = _pos findEmptyPosition [0,_dst,_veh];}; 
+_p = [];
+if (count _pos > 0) then {_p = _pos findEmptyPosition [0,_dst,_veh];};
 
 
-// If an empty position is found, use it. Otherwise, return the original position. 
-if (count _p > 0) then { 
-  _pos = _p; 
-}; 
+// If an empty position is found, use it. Otherwise, return the original position.
+if (count _p > 0) then {
+  _pos = _p;
+};
 
-// Return position 
+// Return position
 _pos

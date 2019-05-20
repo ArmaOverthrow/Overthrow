@@ -1,11 +1,12 @@
 private _ft = server getVariable ["OT_fastTravelType",1];
+private _diff = server getVariable ["OT_difficulty",1];
+private _ftrules = server getVariable ["OT_fastTravelRules",_diff];
 if(!OT_adminMode && _ft > 1) exitWith {hint "Fast Travel is disabled"};
 
 if !(captive player) exitWith {hint "You cannot fast travel while wanted"};
 if !("ItemMap" in assignedItems player) exitWith {hint "You need a map to fast travel"};
 
-private _diff = server getVariable ["OT_difficulty",1];
-if(_diff > 0 && !((primaryWeapon player) isEqualTo "" && (secondaryWeapon player) isEqualTo "" && (handgunWeapon player) isEqualTo "")) exitWith {hint "You cannot fast travel holding a weapon"};
+if(_ftrules > 0 && !((primaryWeapon player) isEqualTo "" && (secondaryWeapon player) isEqualTo "" && (handgunWeapon player) isEqualTo "")) exitWith {hint "You cannot fast travel holding a weapon"};
 
 _foundweapon = false;
 {
@@ -26,10 +27,10 @@ if((vehicle player) != player) then {
 		if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
 	}foreach(itemCargo vehicle player);
 
-	if(_hasdrugs) exitWith {hint "You cannot fast travel while carrying drugs";_exit=true};
+	if(_hasdrugs && _ftrules > 0) exitWith {hint "You cannot fast travel while carrying drugs";_exit=true};
 	if (driver (vehicle player) != player)  exitWith {hint "You are not the driver of this vehicle";_exit=true};
-	if({!captive _x} count (crew vehicle player) != 0)  exitWith {hint "There are wanted people in this vehicle";_exit=true};
-	if(_diff > 1 && ((vehicle player) in (OT_allVehicleThreats + OT_allHeliThreats + OT_allPlaneThreats)))  exitWith {hint "You cannot fast travel in an offensive vehicle";_exit=true};
+	if({!captive _x && alive _x} count (crew vehicle player) != 0)  exitWith {hint "There are wanted people in this vehicle";_exit=true};
+	if(_ftrules > 1 && ((vehicle player) in (OT_allVehicleThreats + OT_allHeliThreats + OT_allPlaneThreats)))  exitWith {hint "You cannot fast travel in an offensive vehicle";_exit=true};
 };
 if(_exit) exitWith {};
 
@@ -118,11 +119,11 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 						};
 						{_x allowDamage false} foreach(crew vehicle player);
 						private _road = _roads select 0;
-						_pos = position _road findEmptyPosition [1,120,typeOf (vehicle player)];
+						_pos = position _road findEmptyPosition [10,120,typeOf (vehicle player)];
 						vehicle player setPos _pos;
 					};
 				}else{
-					player setpos _pos;
+					player setpos (_pos findEmptyPosition [2,50]);
 				};
 
 				disableUserInput false;

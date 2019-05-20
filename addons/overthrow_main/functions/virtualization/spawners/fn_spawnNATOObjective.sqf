@@ -19,7 +19,7 @@ if(_name in OT_allComms) then {
 	private _group = createGroup [blufor,true];
 	_groups pushBack _group;
 
-	private _start = _posTown findEmptyPosition [0,50];
+	private _start = _posTown findEmptyPosition [2,50];
 	private _civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [], 0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
@@ -29,7 +29,7 @@ if(_name in OT_allComms) then {
 	sleep 0.2;
 
 	if(_count < _numNATO) then {
-		_start = _posTown findEmptyPosition [0,50];
+		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_Spotter, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -43,7 +43,7 @@ if(_name in OT_allComms) then {
 	if(_count < _numNATO) then {
 		_group = createGroup blufor;
 		_groups pushBack _group;
-		_start = _posTown findEmptyPosition [0,50];
+		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -59,7 +59,7 @@ if(_name in OT_allComms) then {
 	_wp setWaypointSpeed "LIMITED";
 
 	if(_count < _numNATO) then {
-		_start = _posTown findEmptyPosition [0,50];
+		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";

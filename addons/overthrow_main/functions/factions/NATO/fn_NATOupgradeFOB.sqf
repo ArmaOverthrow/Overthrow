@@ -72,7 +72,7 @@ params ["_pos","_upgrades"];
         _v setDir 135;
     };
     if(_x isEqualTo "Mortar") then {
-        _p = _pos findEmptyPosition [0,50,OT_NATO_Mortar];
+        _p = _pos findEmptyPosition [5,50,OT_NATO_Mortar];
         _v = OT_NATO_Mortar createVehicle _p;
         createVehicleCrew _v;
 

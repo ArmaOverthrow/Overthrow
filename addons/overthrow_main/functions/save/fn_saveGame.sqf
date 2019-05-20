@@ -50,7 +50,7 @@ private _server = (allVariables server select {
 		&& {(_x select [0,11]) != "resgarrison"}
 		&& {(_x select [0,9]) != "seencache"}
 		&& {!((_x select [0,4]) in ["ace_","cba_","bis_"])}
-
+		&& {!((_x select [0,7]) in ["@attack","@counte","@assaul"])}
 	};
 }) apply {
 	private _val = server getVariable _x;

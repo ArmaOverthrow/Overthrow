@@ -80,7 +80,7 @@ if ((date select 3) != _lasthr) then {
 						_sellprice = round(([OT_nation,_input,0] call OT_fnc_getSellPrice) * 1.2);
 						_container = _pos nearestObject OT_item_CargoContainer;
 						if(_container isEqualTo objNull) then {
-							_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
+							_p = _pos findEmptyPosition [5,100,OT_item_CargoContainer];
 							_container = OT_item_CargoContainer createVehicle _p;
 							[_container,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 							clearWeaponCargoGlobal _container;
@@ -112,7 +112,7 @@ if ((date select 3) != _lasthr) then {
 						_output = _data select 3;
 						_container = _pos nearestObject OT_item_CargoContainer;
 						if(_container isEqualTo objNull) then {
-							_p = _pos findEmptyPosition [0,100,OT_item_CargoContainer];
+							_p = _pos findEmptyPosition [5,100,OT_item_CargoContainer];
 							_container = OT_item_CargoContainer createVehicle _p;
 							[_container,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 							clearWeaponCargoGlobal _container;
@@ -293,7 +293,7 @@ if ((date select 4) != _lastmin) then {
 				if(_timespent isEqualTo 0) then {
 					private _veh = OT_factoryPos nearestObject OT_item_CargoContainer;
 					if(_veh isEqualTo objNull) then {
-						_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
+						_p = OT_factoryPos findEmptyPosition [5,100,OT_item_CargoContainer];
 						if(count _p > 0) then {
 							_veh = OT_item_CargoContainer createVehicle _p;
 							[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
@@ -345,7 +345,7 @@ if ((date select 4) != _lastmin) then {
 					server setVariable ["GEURproducing",""];
 
 					if(!(_currentCls isKindOf "Bag_Base") && _currentCls isKindOf "AllVehicles") then {
-						_p = OT_factoryVehicleSpawn findEmptyPosition [0,100,_currentCls];
+						_p = OT_factoryVehicleSpawn findEmptyPosition [5,100,_currentCls];
 						if(count _p > 0) then {
 							_veh = _currentCls createVehicle _p;
 							[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
@@ -362,7 +362,7 @@ if ((date select 4) != _lastmin) then {
 					}else{
 						private _veh = OT_factoryPos nearestObject OT_item_CargoContainer;
 						if(_veh isEqualTo objNull) then {
-							_p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
+							_p = OT_factoryPos findEmptyPosition [5,100,OT_item_CargoContainer];
 							_veh = OT_item_CargoContainer createVehicle _p;
 							[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
 							clearWeaponCargoGlobal _veh;

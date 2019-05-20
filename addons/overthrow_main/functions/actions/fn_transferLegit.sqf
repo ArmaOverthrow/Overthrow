@@ -64,7 +64,7 @@ _doTransfer = {
 	}else{
 		{
 			private _count = 0;
-			params ["_cls","_num"];
+			_x params ["_cls","_num"];
 			if(_cls in OT_allItems) then {
 				while {_count < _num} do {
 					if(!(_veh canAdd [_cls,_count+1])) exitWith {_full = true;};

@@ -540,6 +540,8 @@ OT_allBLUOffensiveVehicles = [];
 	private _flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
 	private _numblueprints = 0;
 
+	//736
+
 	//Get vehicles && weapons
 	private _vehicles = [];
 	private _weapons = [];
@@ -553,29 +555,31 @@ OT_allBLUOffensiveVehicles = [];
 			{
 				private _base = [_x] call BIS_fnc_baseWeapon;
 				if !(_base in _blacklist) then {
+					private _muzzleEffect = getText (configFile >> "CfgWeapons" >> _base >> "muzzleEffect");
 					if !(_x in _weapons) then {_weapons pushback _base};
-					if(_side isEqualTo 1) then {
+					if(_side isEqualTo 1 && !(_muzzleEffect isEqualTo "BIS_fnc_effectFiredFlares")) then {
 						if(_base isKindOf ["Rifle", configFile >> "CfgWeapons"]) then {
+							private _mass = getNumber (configFile >> "CfgWeapons" >> _base >> "WeaponSlotsInfo" >> "mass");
 							_base call {
 								_itemType = ([_cls] call BIS_fnc_itemType) select 1;
 								if(_itemType isEqualTo "MachineGun") exitWith {OT_allBLUMachineGuns pushBackUnique _base};
 								if((_this select [0,7]) == "srifle_" || (_this isKindOf ["Rifle_Long_Base_F", configFile >> "CfgWeapons"])) exitWith {OT_allBLUSniperRifles pushBackUnique _base};
 								if((_this find "_GL_") > -1) exitWith {OT_allBLUGLRifles pushBackUnique _base};
-								if((_this find "SMG") > -1) exitWith {OT_allBLUSMG pushBackUnique _base};
+								if(_mass < 65) exitWith {OT_allBLUSMG pushBackUnique _base};
 								OT_allBLURifles pushBackUnique _base
 							};
 						};
 						if(_base isKindOf ["Launcher", configFile >> "CfgWeapons"]) then {OT_allBLULaunchers pushBackUnique _base};
 						if(_base isKindOf ["Pistol", configFile >> "CfgWeapons"]) then {OT_allBLUPistols pushBackUnique _base};
 					};
+					//Get ammo
+					{
+						if (!(_x in _blacklist) || _x in OT_allExplosives) then {
+							_weapons pushbackUnique _x
+						};
+					}foreach(getArray(configFile >> "CfgWeapons" >> _base >> "magazines"));
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
-			//Get ammo
-			{
-				if !(_x in _blacklist || _x in OT_allExplosives) then {
-					if !(_x in _weapons) then {_weapons pushback _x};
-				};
-			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
 		}else{
 			//It's a vehicle
 			if !(_cls isKindOf "Bag_Base" || _cls isKindOf "StaticWeapon") then {

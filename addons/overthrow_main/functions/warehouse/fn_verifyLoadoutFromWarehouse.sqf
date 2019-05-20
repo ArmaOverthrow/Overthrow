@@ -57,9 +57,11 @@ private _ignore = [];
 }foreach(_unit call OT_fnc_unitStock);
 
 {
-    if !([_x, 1] call OT_fnc_removeFromWarehouse) then {
-        if(_correct) then {_unit unlinkItem _x};
-        _missing pushback _x;
+    if !(_x isEqualTo "ItemMap") then {
+        if !([_x, 1] call OT_fnc_removeFromWarehouse) then {
+            if(_correct) then {_unit unlinkItem _x};
+            _missing pushback _x;
+        };
     };
 }foreach(assignedItems _unit);
 
