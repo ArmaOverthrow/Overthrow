@@ -46,7 +46,7 @@ sleep 0.2;
 						if(_x isEqualType []) then {
 							if(count _x == 2) then {
 								_x params ["_k","_v"];
-								if(_k isEqualTo "OT_tutesDone") then {
+								if(_k isEqualTo "ot_tutesdone") then {
 									_x set [1,_v arrayIntersect _v];
 								};
 							};
@@ -103,9 +103,11 @@ sleep 0.2;
 			case 2: {
 				_val deleteAt 0;
 				{
-					_x params ["_itemClass",["_itemCount",0,[0]]];
-					if (_itemCount > 0) then {
-						warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+					if(!isNil "_x" && _x isEqualType []) then {
+						_x params ["_itemClass",["_itemCount",0,[0]]];
+						if (_itemCount > 0) then {
+							warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+						};
 					};
 				}foreach(_val);
 			};

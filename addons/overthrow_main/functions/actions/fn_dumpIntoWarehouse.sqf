@@ -14,8 +14,8 @@ if(hmd _unit != "") then {
 	_count = 0;
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {
-		[_t, _cls] call {
-			params ["_veh", "_cls"];
+		[_cls] call {
+			params ["_cls"];
 			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
 				_unit removeWeapon _cls;
 			};
