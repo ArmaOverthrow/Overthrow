@@ -100,6 +100,7 @@ buildOnMouseMove = {
 		modeVisual setPos modeValue;
 		modeVisual setVectorDirAndUp [[0,0,-1],[0,1,0]];
 		modeTarget setVectorDirAndUp [[0,1,0],[0,1,0]];
+		modeTarget setDir buildRotation;
 
 		if(modeMode == 0) then {
 			if(surfaceIsWater modeValue || (modeTarget distance modeCenter > modeMax) || ({!(_x isKindOf "Man") && (typeof _x != OT_flag_IND) && !(_x isEqualTo modeTarget) && !(_x isEqualTo modeVisual)} count(nearestObjects [modeTarget,[],10]) > 0)) then {

@@ -26,6 +26,7 @@ _fail = {
 	_abandoned = server getVariable "NATOabandoned";
 	_abandoned pushback _objective;
 	server setVariable ["NATOabandoned",_abandoned,true];
+	format["%1_restrict",_objective] setMarkerAlpha 0;
 };
 
 _success = {

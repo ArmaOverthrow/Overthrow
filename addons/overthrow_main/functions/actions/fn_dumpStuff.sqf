@@ -1,7 +1,4 @@
-private ["_unit","_t"];
-
-_unit = _this select 0;
-_t = _this select 1;
+params ["_unit","_t",["_linkedItems",false]];
 
 _full = false;
 _istruck = true;
@@ -138,7 +135,7 @@ if(handgunWeapon _unit != "") then {
 };
 if(_full) exitWith {false};
 
-if(!isplayer _unit) then {
+if((!isplayer _unit) || _linkedItems) then {
 	{
 		if (!(_t canAdd _x) && !_isTruck) exitWith {
 			_full = true;

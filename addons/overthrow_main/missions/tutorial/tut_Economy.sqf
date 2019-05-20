@@ -1,7 +1,8 @@
 //Let's find some wrecks to salvage
 
 private _done = player getVariable ["OT_tutesDone",[]];
-player setVariable ["OT_tutesDone",_done+["Economy"],true];
+_done pushBackUnique "Economy";
+player setVariable ["OT_tutesDone",_done,true];
 
 private _actualMission = {
     private _targets = [];

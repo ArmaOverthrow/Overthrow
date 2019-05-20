@@ -12,7 +12,7 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
     ] spawn BIS_fnc_dynamicText;
 };
 
-waitUntil {!isNull player && player isEqualTo player};
+waitUntil {!isNull player && player isEqualTo player && !isNull server};
 
 ace_interaction_EnableTeamManagement = false; //Disable group switching
 

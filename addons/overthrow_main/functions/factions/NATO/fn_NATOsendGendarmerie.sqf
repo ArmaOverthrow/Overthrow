@@ -41,7 +41,7 @@ if(!isNil "_close") then {
 	_veh = objNull;
 
 	if(((_close distance _townPos) > 2000) && (random 100) > 50) then {
-		_spawnpos = _start findEmptyPosition [0,100,OT_NATO_Vehicle_Police];
+		_spawnpos = _start findEmptyPosition [5,100,OT_NATO_Vehicle_Police];
 		_veh =  OT_NATO_Vehicle_Police createVehicle _spawnpos;
 		_veh setDir (random 360);
 		_group addVehicle _veh;
@@ -94,7 +94,7 @@ if(!isNil "_close") then {
 	sleep 1;
 
 	_group call OT_fnc_initGendarmPatrol;
-	
+
 };
 
 

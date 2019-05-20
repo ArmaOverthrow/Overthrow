@@ -46,7 +46,7 @@ if(_create isEqualType 1) then {
     if(_charge) then {
         _loadout = getUnitLoadout _civ;
         _garrison = server getVariable [format["resgarrison%1",_code],[]];
-        _garrison pushback [_create,_loadout];
+        _garrison pushback [_cls,_loadout];
         server setVariable [format["resgarrison%1",_code],_garrison,true];
     };
 }else{

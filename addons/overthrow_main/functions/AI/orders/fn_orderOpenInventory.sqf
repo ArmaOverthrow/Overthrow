@@ -8,7 +8,10 @@ private _unit = (groupSelectedUnits player) select 0;
 if((vehicle _unit) != _unit) then {
 	_sorted = [vehicle _unit];
 }else{
-	private _objects = _unit nearEntities [["LandVehicle",OT_item_Storage],20];
+    private _objects = [];
+    {
+    	if!(_x isEqualTo _veh) then {_objects pushback _x};
+    }foreach(_unit nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
 	if(count _objects isEqualTo 0) exitWith {
 		"Cannot find any containers or vehicles within 20m of first selected unit" call OT_fnc_notifyMinor;
 	};

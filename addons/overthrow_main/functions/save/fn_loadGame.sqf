@@ -40,6 +40,19 @@ sleep 0.2;
 		{
 			_x params ["_subkey","_subval"];
 			if(!(toLower (_subkey select [0,4]) in ["ace_","cba_","bis_"]) && {(_subkey select [0,9]) != "seencache"}) then {
+				//v0.7.8.3 : Clears extraneous tutorial done entries
+				if(_subval isEqualType []) then {
+					{
+						if(_x isEqualType []) then {
+							if(count _x == 2) then {
+								_x params ["_k","_v"];
+								if(_k isEqualTo "ot_tutesdone") then {
+									_x set [1,_v arrayIntersect _v];
+								};
+							};
+						};
+					}foreach(_subval);
+				};
 				players_NS setVariable [_subkey,_subval,true];
 			};
 		}foreach(_val);
@@ -90,9 +103,11 @@ sleep 0.2;
 			case 2: {
 				_val deleteAt 0;
 				{
-					_x params ["_itemClass",["_itemCount",0,[0]]];
-					if (_itemCount > 0) then {
-						warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+					if(!isNil "_x" && _x isEqualType []) then {
+						_x params ["_itemClass",["_itemCount",0,[0]]];
+						if (_itemCount > 0) then {
+							warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+						};
 					};
 				}foreach(_val);
 			};
@@ -286,6 +301,24 @@ sleep 0.2;
 		OT_autoSave_last_time = (_val#1);
 		_set = false;
 	};
+	if(_key == "recruitables") then {
+		{
+			_x params ["_cls","_loadout"];
+			private _done = false;
+			{
+				_x params ["_c","_l"];
+				if(_c == _cls) exitWith {_done = true;_x set [1,_loadout]};
+			}foreach(OT_Recruitables);
+		}foreach(_val);
+		if !(_done) then {OT_Recruitables pushback [_cls,_loadout]};
+		publicVariable "OT_Recruitables";
+		_set = false;
+	};
+	if(_key == "policeLoadout") then {
+		OT_Loadout_Police = _val;
+		publicVariable "OT_Loadout_Police";
+		_set = false;
+	};
 
 	if(_set && !(isNil "_val")) then {
 		if!(toLower (_key select [0,4]) in ["ace_","cba_","bis_"]) then {
@@ -310,6 +343,9 @@ sleep 0.2;
 		spawner setVariable [format["resgarrison%1",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
+			if(_cls isEqualType 0) then {
+				_cls = (OT_Recruitables select _cls) select 0;
+			};
 
 			if(_cls != "HMG" && _cls != "GMG") then {
 				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
@@ -341,6 +377,9 @@ sleep 0.2;
 		spawner setVariable [format["resgarrison%1",_code],_group,true];
 		{
 			_x params ["_cls","_loadout"];
+			if(_cls isEqualType 0) then {
+				_cls = (OT_Recruitables select _cls) select 0;
+			};
 			if(_cls != "HMG" && _cls != "GMG") then {
 				private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
 				private _civ = _group createUnit [_cls, _start, [],0, "NONE"];

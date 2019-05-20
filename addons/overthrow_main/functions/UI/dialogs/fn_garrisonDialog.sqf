@@ -19,27 +19,27 @@ _textctrl = (findDisplay 9000) displayCtrl 1100;
 _textctrl ctrlSetStructuredText parseText format["<t size='1.5' align='center'>%1</t>",_name];
 
 _btn = (findDisplay 9000) displayCtrl 1600;
-_soldier = ((OT_recruitables select 0) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 0) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1601;
-_soldier = ((OT_recruitables select 1) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 1) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1602;
-_soldier = ((OT_recruitables select 13) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 13) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1603;
-_soldier = ((OT_recruitables select 8) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 8) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1604;
-_soldier = ((OT_recruitables select 9) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 9) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1605;
-_soldier = ((OT_recruitables select 10) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 10) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1606;

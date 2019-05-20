@@ -54,7 +54,7 @@ if(_isAir) then {
 	_ao = [_posTarget,[350,500],_attackdir + (random 90)] call SHK_pos_fnc_pos;
 	_tgroup = creategroup blufor;
 
-	_spawnpos = _close findEmptyPosition [0,100,OT_NATO_Vehicle_CTRGTransport];
+	_spawnpos = _close findEmptyPosition [5,100,OT_NATO_Vehicle_CTRGTransport];
 	_veh =  OT_NATO_Vehicle_CTRGTransport createVehicle _spawnpos;
 	clearWeaponCargoGlobal _veh;
 	clearMagazineCargoGlobal _veh;
@@ -126,7 +126,7 @@ if(_isAir) then {
     if (!isNull _road) then {
         _convoypos = (getpos _road);
     };
-    _spawnpos = _convoypos findEmptyPosition [0,100,OT_NATO_Vehicle_Transport_Light];
+    _spawnpos = _convoypos findEmptyPosition [5,100,OT_NATO_Vehicle_Transport_Light];
 	_veh =  OT_NATO_Vehicle_Transport_Light createVehicle _spawnpos;
 	_group addVehicle _veh;
 

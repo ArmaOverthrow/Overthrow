@@ -5,7 +5,9 @@ if !(_newplayer) then {
     {
         _x params ["_key","_val"];
         if !(isNil "_val") then {
-            _player setVariable [_key,_val,true];
+            if((_key select [0,3] != "tf_") && {!((_key select [0,7]) in ["@attack","@counte","@assaul"])}) then {
+                _player setVariable [_key,_val,true];
+            };
         };
     }foreach(_data);
 

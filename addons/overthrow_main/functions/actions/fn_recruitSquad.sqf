@@ -8,23 +8,8 @@ if(({side _x isEqualTo west || side _x isEqualTo east} count (_pos nearEntities 
 	"You cannot recruit squads with enemies nearby" call OT_fnc_notifyMinor;
 };
 
-private _d = [];
-{
-	_x params ["_name"];
-	if(_name == _cls) exitWith {
-		_d = _x;
-	};
-}foreach(OT_squadables);
-
-_d params ["_name","_comp","_shortname"];
-private _soldiers = [];
-private _cost = 0;
-{
-	private _s = OT_recruitables select _x;
-	_soldier = (_s select 0) call OT_fnc_getSoldier;
-	_cost = _cost + (_soldier select 0);
-	_soldiers pushback _soldier;
-}foreach(_comp);
+private _squad = _cls call OT_fnc_getSquad;
+_squad params ["_cost","_soldiers","_bought","_shortname"];
 
 private _money = player getVariable ["money",0];
 if(_money < _cost) exitWith {

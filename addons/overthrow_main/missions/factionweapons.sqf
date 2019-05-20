@@ -12,10 +12,10 @@ if(count _roads > 0) then {
 
 private _items = [];
 
-private _itemcls = selectRandom OT_allCheapRifles;
+private _itemcls = selectRandom (OT_allBLURifles + OT_allBLUGLRifles + OT_allBLUMachineGuns);
 private _itemName = _itemcls call OT_fnc_weaponGetName;
 private _cost = (cost getVariable [_itemcls,[1]]) select 0;
-private _numitems = floor(5 + random 5);
+private _numitems = floor(5 + random 15);
 
 private _params = [_destination,_faction,_itemcls,_numitems];
 private _markerPos = _destination;

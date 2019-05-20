@@ -279,12 +279,16 @@ class CfgFunctions
 			class restoreLoadout {};
 			class saveLoadout {};
 			class dumpStuff {};
+			class dumpIntoWarehouse {};
 			class takeStuff {};
+			class openArsenal {};
 
 			/* Other */
 			class craft {};
 			class recruitSoldier {};
 			class recruitSquad {};
+			class editLoadout {};
+			class editPoliceLoadout {};
 			class addGarrison {};
 			class addPolice {};
 			class lockVehicle {};
@@ -328,6 +332,7 @@ class CfgFunctions
 			class weatherSystem {};
 			class getRandomRoadPosition {};
 			class isRadarInRange {};
+			class positionIsAtWarehouse {};
 		};
 
 		/*
@@ -418,11 +423,16 @@ class CfgFunctions
 		class Warehouse
 		{
 			file = "\overthrow_main\functions\warehouse";
+			class addToWarehouse {};
 			class removeFromWarehouse {};
 			class findHelmetInWarehouse {};
 			class findScopeInWarehouse {};
 			class findWeaponInWarehouse {};
 			class findVestInWarehouse {};
+			class verifyLoadoutFromWarehouse {};
+			class applyLoadoutFromWarehouse {};
+			class qtyInWarehouse {};
+			class isInWarehouse {};
 		};
 
 		/*
@@ -433,6 +443,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions\AI";
 			class createSoldier {};
 			class getSoldier {};
+			class getSquad {};
 			class parachuteAll {};
 			class NATOsearch {};
 			class createSquad {};
@@ -448,6 +459,7 @@ class CfgFunctions
 			file = "\overthrow_main\functions\AI\orders";
 			class orderLoot {};
 			class orderOpenInventory {};
+			class orderOpenArsenal {};
 			class orderRevivePlayer {};
 			class squadAssignVehicle {};
 			class squadGetIn {};

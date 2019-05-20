@@ -50,7 +50,7 @@ private _server = (allVariables server select {
 		&& {(_x select [0,11]) != "resgarrison"}
 		&& {(_x select [0,9]) != "seencache"}
 		&& {!((_x select [0,4]) in ["ace_","cba_","bis_"])}
-
+		&& {!((_x select [0,7]) in ["@attack","@counte","@assaul"])}
 	};
 }) apply {
 	private _val = server getVariable _x;
@@ -268,6 +268,8 @@ if !(_quiet) then {
 _data pushBack ["server",_server];
 _data pushback ["timedate",date];
 _data pushback ["autosave",[OT_autoSave_time,OT_autoSave_last_time]];
+_data pushBack ["recruitables",OT_Recruitables];
+_data pushBack ["policeLoadout",OT_Loadout_Police];
 
 if !(_quiet) then {
 	"Step 11/11 - Exporting" remoteExecCall ["OT_fnc_notifyAndLog",0,false];
