@@ -1578,7 +1578,7 @@ class OT_dialog_newgame
 			action = "server setvariable [""OT_fastTravelType"",2,true];call OT_fnc_newGameDialog;";
 			tooltip = "Fast travel will be disabled";
         };
-		class RscStructuredText_1102: RscOverthrowStructuredText
+		class RscStructuredText_1103: RscOverthrowStructuredText
         {
             idc = 1103;
             text = "<t size=""1.5"">Fast Travel Rules</t>"; //--- ToDo: Localize;
