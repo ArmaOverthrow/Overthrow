@@ -37,7 +37,7 @@ _ao = getpos(nearestLocation[_posTown, "Hill"]);
 if(_isHQ) then {
 	_tgroup = creategroup blufor;
 
-	_spawnpos = OT_NATO_HQPos findEmptyPosition [0,100,OT_NATO_Vehicle_AirTransport_Small];
+	_spawnpos = OT_NATO_HQPos findEmptyPosition [5,100,OT_NATO_Vehicle_AirTransport_Small];
 	_veh =  OT_NATO_Vehicle_AirTransport_Small createVehicle _spawnpos;
 	_veh setDir _dir;
 	_tgroup addVehicle _veh;

@@ -16,25 +16,20 @@ if(typeof _building isEqualTo OT_barracks) then {
 if ((typeof _building == OT_barracks) && isNil "_base") exitWith {};
 if ((typeof _building == OT_barracks) && !_good) exitWith {"This barracks is under NATO control" call OT_fnc_notifyMinor};
 
-private _price = floor(([OT_nation,"CIV",0] call OT_fnc_getPrice) * 1.5);
-
-createDialog "OT_dialog_buy";
+createDialog "OT_dialog_recruit";
 ctrlSetText [1600,"Recruit"];
 lbClear 1500;
 if (typeof _building isEqualTo OT_barracks) then {
 	{
 		_x params ["_cls","_comp"];
-		private _cost = (_price * count _comp);
 		private _idx = lbAdd [1500,_cls];
-		lbSetValue [1500,_idx,_cost];
 		lbSetData [1500,_idx,_cls];
-	}foreach(OT_squadables);
+	}foreach(OT_Squadables);
 };
 {
 	_x params ["_cls"];
 	private _name = _cls call OT_fnc_vehicleGetName;
 
 	private _idx = lbAdd [1500,_name];
-	lbSetValue [1500,_idx,_price];
 	lbSetData [1500,_idx,_cls];
-}foreach(OT_recruitables);
+}foreach(OT_Recruitables);

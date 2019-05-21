@@ -32,7 +32,7 @@ private _allCargo = {
 		{
 			{
 				if(typename _x isEqualTo "STRING") then {
-					if !(_x isEqualTo "") then {
+					if (!(_x isEqualTo "") && !(_x isEqualTo (binocular _target))) then {
 						if(_forEachIndex isEqualTo 0) then {
 							_myitems pushback (_x call BIS_fnc_baseWeapon);
 						}else{
@@ -41,7 +41,7 @@ private _allCargo = {
 					};
 				};
 				if(typename _x isEqualTo "ARRAY") then {
-					if !((_x select 0) isEqualTo "") then {
+					if (!(_x#0 isEqualTo "") && !(_x#0 isEqualTo (binocular _target))) then {
 						_myitems pushback (_x select 0);
 					};
 				};

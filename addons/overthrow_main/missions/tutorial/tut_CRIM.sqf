@@ -1,7 +1,8 @@
 //Let's find some bandits to shoot
 
 private _done = player getVariable ["OT_tutesDone",[]];
-player setVariable ["OT_tutesDone",_done+["CRIM"],true];
+_done pushBackUnique "CRIM";
+player setVariable ["OT_tutesDone",_done,true];
 
 private _targets = [];
 private _destination = [];

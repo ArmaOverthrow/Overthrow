@@ -490,6 +490,15 @@ OT_allDetonators = [];
 OT_allGlasses = [];
 OT_allFacewear = [];
 OT_allGoggles = [];
+OT_allBLURifles = [];
+OT_allBLUSMG = [];
+OT_allBLUMachineGuns = [];
+OT_allBLUSniperRifles = [];
+OT_allBLUGLRifles = [];
+OT_allBLULaunchers = [];
+OT_allBLUPistols = [];
+OT_allBLUVehicles = [];
+OT_allBLUOffensiveVehicles = [];
 
 {
 	private _name = configName _x;
@@ -531,6 +540,8 @@ OT_allGoggles = [];
 	private _flag = getText (configFile >> "cfgFactionClasses" >> _name >> "flag");
 	private _numblueprints = 0;
 
+	//736
+
 	//Get vehicles && weapons
 	private _vehicles = [];
 	private _weapons = [];
@@ -544,21 +555,45 @@ OT_allGoggles = [];
 			{
 				private _base = [_x] call BIS_fnc_baseWeapon;
 				if !(_base in _blacklist) then {
+					private _muzzleEffect = getText (configFile >> "CfgWeapons" >> _base >> "muzzleEffect");
 					if !(_x in _weapons) then {_weapons pushback _base};
+					if(_side isEqualTo 1 && !(_muzzleEffect isEqualTo "BIS_fnc_effectFiredFlares")) then {
+						if(_base isKindOf ["Rifle", configFile >> "CfgWeapons"]) then {
+							private _mass = getNumber (configFile >> "CfgWeapons" >> _base >> "WeaponSlotsInfo" >> "mass");
+							_base call {
+								_itemType = ([_cls] call BIS_fnc_itemType) select 1;
+								if(_itemType isEqualTo "MachineGun") exitWith {OT_allBLUMachineGuns pushBackUnique _base};
+								if((_this select [0,7]) == "srifle_" || (_this isKindOf ["Rifle_Long_Base_F", configFile >> "CfgWeapons"])) exitWith {OT_allBLUSniperRifles pushBackUnique _base};
+								if((_this find "_GL_") > -1) exitWith {OT_allBLUGLRifles pushBackUnique _base};
+								if(_mass < 61) exitWith {OT_allBLUSMG pushBackUnique _base};
+								OT_allBLURifles pushBackUnique _base
+							};
+						};
+						if(_base isKindOf ["Launcher", configFile >> "CfgWeapons"]) then {OT_allBLULaunchers pushBackUnique _base};
+						if(_base isKindOf ["Pistol", configFile >> "CfgWeapons"]) then {OT_allBLUPistols pushBackUnique _base};
+					};
+					//Get ammo
+					{
+						if (!(_x in _blacklist) || _x in OT_allExplosives) then {
+							_weapons pushbackUnique _x
+						};
+					}foreach(getArray(configFile >> "CfgWeapons" >> _base >> "magazines"));
 				};
 			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "weapons"));
-			//Get ammo
-			{
-				if !(_x in _blacklist || _x in OT_allExplosives) then {
-					if !(_x in _weapons) then {_weapons pushback _x};
-				};
-			}foreach(getArray(configFile >> "CfgVehicles" >> _cls >> "magazines"));
 		}else{
 			//It's a vehicle
 			if !(_cls isKindOf "Bag_Base" || _cls isKindOf "StaticWeapon") then {
 				if(_cls isKindOf "LandVehicle" || _cls isKindOf "Air" || _cls isKindOf "Ship") then {
 					_vehicles pushback _cls;
 					_numblueprints = _numblueprints + 1;
+					if(_side isEqualTo 1) then {
+						private _threat = getArray (_x >> "threat");
+						if(_threat#0 > 0.5) then {
+							OT_allBLUOffensiveVehicles pushBackUnique _cls;
+						}else{
+							OT_allBLUVehicles pushBackUnique _cls;
+						};
+					};
 				};
 			};
 		};
@@ -930,32 +965,6 @@ OT_Placeables = [
 	["Misc",30,OT_miscables,[0,3,1.2],"Various other items, including spare wheels && lights"]
 ];
 
-//People you can recruit, && squads are composed of
-OT_Recruitables = [
-	["I_soldier_F","AssaultRifle",[],200,"",""], //0
-	["I_soldier_AR_F","MachineGun",[],200,"",""], //1
-	["I_Soldier_LAT_F","AssaultRifle",["launch_RPG7_F"],200,"",""], //2
-	["I_Soldier_M_F","AssaultRifle",[],500,"",""], //3
-	["I_Sniper_F","SniperRifle",[],1800,"U_B_T_FullGhillie_tna_F","Binocular"], //4
-	["I_Spotter_F","AssaultRifle",[],500,"U_B_T_FullGhillie_tna_F","Binocular"], //5
-	["I_Soldier_SL_F","AssaultRifle",[],200,"","Binocular"], //6
-	["I_Soldier_TL_F","AssaultRifle",[],200,"U_I_C_Soldier_Para_2_F","Binocular"], //7
-	["I_Medic_F","AssaultRifle",[],200,"",""], //8
-	["I_Soldier_AT_F","AssaultRifle",["launch_I_Titan_short_F","launch_B_Titan_short_F","launch_B_Titan_short_tna_F"],200,"",""], //9
-	["I_Soldier_AA_F","AssaultRifle",["launch_I_Titan_F","launch_B_Titan_F","launch_B_Titan_tna_F"],200,"",""], //10
-	["I_Soldier_AAT_F","AssaultRifle",[],200,"",""], //11
-	["I_Soldier_AAA_F","AssaultRifle",[],200,"",""], //12
-	["I_soldier_GL_F","GrenadeLauncher",[],200,"",""] //13
-];
-
-OT_Squadables = [
-	["Sentry",[6,0],"SEN"],
-	["Sniper Squad",[4,5],"SNI"],
-	["AT Squad",[6,9,11,8],"AT"],
-	["AA Squad",[6,10,12,8],"AA"],
-	["Fire Team",[7,0,1,2,3,8],"FIR"],
-	["Infantry Team",[7,0,1,2,3,8,9,10],"INF"]
-];
 OT_allSquads = OT_Squadables apply { _x params ["_name"]; _name };
 
 OT_workshop = [

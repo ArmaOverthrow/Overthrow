@@ -31,9 +31,8 @@ if(typeof _this isEqualTo OT_item_Map) then {
 
 };
 if(typeof _this isEqualTo OT_item_Storage) then {
-	_this addAction ["Dump Everything", {[player,_this select 0] call OT_fnc_dumpStuff},nil,0,false,true,"",""];
-	_this addAction ["Save Loadout", OT_fnc_saveLoadout,nil,0,false,true,"",""];
-	_this addAction ["Restore Loadout", OT_fnc_loadoutDialog,nil,0,false,true,"",""];
+	_this addAction ["Open Arsenal (This Ammobox)", {[_this select 0,player] call OT_fnc_openArsenal},nil,0,false,true,"","!(call OT_fnc_playerIsAtWarehouse)"];
+	_this addAction ["Open Arsenal (Warehouse)", {["WAREHOUSE",player,_this select 0] call OT_fnc_openArsenal},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
 	_this addAction ["Take From Warehouse", {
 		private _iswarehouse = call OT_fnc_playerIsAtWarehouse;
 
@@ -54,6 +53,8 @@ if(typeof _this isEqualTo OT_item_Storage) then {
 		OT_warehouseTarget = _this select 0;
 		[] spawn OT_fnc_transferTo;
 	},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
+	_this addAction ["Dump Everything", {[player,_this select 0] call OT_fnc_dumpStuff},nil,0,false,true,"",""];
+	_this addAction ["Dump Everything into Warehouse", {[player] call OT_fnc_dumpIntoWarehouse},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
 	if(_this call OT_fnc_playerIsOwner) then {
 		_this addAction ["Lock", {
 			(_this select 0) setVariable ["OT_locked",true,true];

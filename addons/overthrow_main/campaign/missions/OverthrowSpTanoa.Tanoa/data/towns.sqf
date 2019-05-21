@@ -10,7 +10,7 @@ OT_townData = [
     [[9407.35,4133.13,0],"Moddergat"],
     [[10200.8,4964.28,0],"Lösi"],
     [[9014.23,10214.2,0],"Tanouka"],
-    [[8741.21,3556.31,0],"Tobakoro"],
+    [[8900.22,3612.34,0],"Tobakoro"],
     [[5476.22,10070.7,0],"Georgetown"],
     [[10974.5,6232.58,0],"Kotomo"],
     [[3413.58,6680.26,0],"Rautake"],
@@ -61,6 +61,6 @@ OT_townData = [
     [[12317.8,13929.5,0],"Ipota"]
 ];
 
-OT_spawnTowns = ["Savaka","Namuvaka","Cerebu","Koumac","Laikoro","Tavu","Muaceba","Leqa","La Foa","Tobakoro","Lösi","Lailai"];
+OT_spawnTowns = ["Savaka","Namuvaka","Cerebu","Tavu","Muaceba","Leqa","La Foa","Tobakoro","Lösi","Lailai"];
 OT_capitals = ["Georgetown","Lijnhaven","Katkoula","Balavu","Tuvanaka"]; //region capitals
 OT_sprawling = ["Blue Pearl industrial port"];

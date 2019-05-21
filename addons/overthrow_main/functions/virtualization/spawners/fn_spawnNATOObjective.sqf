@@ -19,22 +19,22 @@ if(_name in OT_allComms) then {
 	private _group = createGroup [blufor,true];
 	_groups pushBack _group;
 
-	private _start = _posTown findEmptyPosition [0,50];
+	private _start = _posTown findEmptyPosition [2,50];
 	private _civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [], 0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_civ setRank "CAPTAIN";
-	[_civ,_name] call OT_fnc_initSniper;
+	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	_count = _count + 1;
 	sleep 0.2;
 
 	if(_count < _numNATO) then {
-		_start = _posTown findEmptyPosition [0,50];
+		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_Spotter, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		[_civ,_name] call OT_fnc_initSniper;
+		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
 		sleep 0.2;
@@ -43,7 +43,7 @@ if(_name in OT_allComms) then {
 	if(_count < _numNATO) then {
 		_group = createGroup blufor;
 		_groups pushBack _group;
-		_start = _posTown findEmptyPosition [0,50];
+		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -59,7 +59,7 @@ if(_name in OT_allComms) then {
 	_wp setWaypointSpeed "LIMITED";
 
 	if(_count < _numNATO) then {
-		_start = _posTown findEmptyPosition [0,50];
+		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
@@ -169,7 +169,7 @@ while {_count < _numNATO} do {
 	while {(_count < _numNATO) && (_groupcount < 8)} do {
 		_start = _start findEmptyPosition [5,50];
 
-		_civ = _group createUnit [selectRandom OT_NATO_Units_LevelOne, _start, [],0, "NONE"];
+		_civ = _group createUnit [selectRandom (OT_NATO_Units_LevelOne + OT_NATO_Units_LevelOne + OT_NATO_Units_LevelOne + OT_NATO_Units_LevelTwo), _start, [],0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "LIEUTENANT";
 		[_civ] joinSilent _group;
@@ -216,7 +216,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 {
 	private _vehtype = _x;
 
-	_pos = [_pos,42,_dir+90] call BIS_fnc_relPos;
+	_pos = [_pos,28,_dir+90] call BIS_fnc_relPos;
 
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];
@@ -233,14 +233,12 @@ private _road = objNull;
 	_groups pushback _vgroup;
 	private _vehtype = _x;
 	private _got = false;
-	private _pos = _posTown findEmptyPosition [10,100,_vehtype];
+	private _pos = _posTown findEmptyPosition [25,250,_vehtype];
 	private _dir = random 360;
 
-	_roads = _pos nearRoads 15;
 	private _loops = 0;
-	while {((count _roads) > 0) && (_loops < 50)} do {
-		_pos = _posTown findEmptyPosition [15,150,_vehtype];
-		_roads = _pos nearRoads 15;
+	while {(isOnRoad _pos) && (_loops < 50)} do {
+		_pos = _posTown findEmptyPosition [25,250,_vehtype];
 		_loops = _loops + 1;
 	};
 

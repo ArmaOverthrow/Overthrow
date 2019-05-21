@@ -1,88 +1,83 @@
 private _cls = _this;
+private _loadout = [];
 
-private _data = [];
-{
-	if((_x select 0) isEqualTo _cls) exitWith {_data = _x};
-}foreach(OT_recruitables);
-
-private _primary = _data select 1;
-private _tertiary = _data select 2;
-private _range = _data select 3;
-private _uniform = _data select 4;
-private _bino = _data select 5;
-
-private _warehouseWpn = false;
-private _warehouseScope = false;
-private _warehouseTertiary = false;
-private _warehousePistol = false;
+if(_cls == "Police") then {
+	_loadout = OT_Loadout_Police;
+}else{
+	private _data = [];
+	{
+		if((_x select 0) isEqualTo _cls) exitWith {_data = _x};
+	}foreach(OT_recruitables);
+	_loadout = _data select 1;
+};
 
 //calculate cost
 private _cost = floor(([OT_nation,"CIV",0] call OT_fnc_getPrice) * 1.5);
 
-private _wpn = [_primary] call OT_fnc_findWeaponInWarehouse;
-if(_wpn isEqualTo "") then {
-	private _possible = [];
+_loadout params ["_primary","_secondary","_handgun","_uniform","_vest","_backpack","_helmet","_goggles","_bino","_assigned"];
+
+private _allitems = [];
+{
+	if(_x isEqualType "") then {_allitems pushback _x} else {_allitems pushback _x#0};
+}foreach(_primary);
+{
+	if(_x isEqualType "") then {_allitems pushback _x} else {_allitems pushback _x#0};
+}foreach(_secondary);
+{
+	if(_x isEqualType "") then {_allitems pushback _x} else {_allitems pushback _x#0};
+}foreach(_handgun);
+private _clothes = "";
+if(count _uniform > 0) then {
+	_uniform params ["_item","_items"];
+	_clothes = _item;
 	{
-		private _weapon = [_x] call BIS_fnc_itemType;
-		private _weaponType = _weapon select 1;
-		if(_weaponType == "AssaultRifle" && (_x find "_GL_") > -1) then {_weaponType = "GrenadeLauncher"};
-		if(_weaponType == "AssaultRifle" && (_x find "srifle_") == 0) then {_weaponType = "SniperRifle"};
-		if(_weaponType == _primary) then {_possible pushback _x};
-	}foreach(OT_allWeapons);
-	private _sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
-	_wpn = _sorted select 0;
-	private _price =((cost getVariable [_wpn,[200]]) select 0);
-	_cost = _cost + _price;
-}else{
-	_warehouseWpn = true;
+		_x params ["_cls","_num"];
+		private _t = 0;
+		while{_t < _num} do {
+			_allitems pushback _cls;
+			_t = _t + 1;
+		}
+	}foreach(_items);
 };
-private _pwpn = ["Pistol"] call OT_fnc_findWeaponInWarehouse;
-if(_pwpn != "") then {
-	_warehousePistol = true;
-};
-
-private _scope = [_range] call OT_fnc_findScopeInWarehouse;
-if(_scope isEqualTo "") then {
-	private _possible = [];
+if(count _vest > 0) then {
+	_vest params ["_item","_items"];
+	_allitems pushback _item;
 	{
-		private _name = _x;
-		private _max = 0;
-		private _allModes = "true" configClasses ( configFile >> "cfgWeapons" >> _name >> "ItemInfo" >> "OpticsModes" );
-		{
-			_max = _max max getNumber (_x >> "distanceZoomMax");
-		}foreach(_allModes);
-		if(_max >= _range) then {_possible pushback _name};
-	}foreach(OT_allOptics);
-	private _sorted = [_possible,[],{(cost getvariable [_x,[200]]) select 0},"ASCEND"] call BIS_fnc_SortBy;
-	_scope = _sorted select 0;
-	if(_scope != "") then {
-		private _price = ((cost getVariable [_scope,[200]]) select 0);
-		_cost = _cost + _price;
-	};
-}else{
-	_warehouseScope = true;
+		_x params ["_cls","_num"];
+		private _t = 0;
+		while{_t < _num} do {
+			_allitems pushback _cls;
+			_t = _t + 1;
+		}
+	}foreach(_items);
 };
-
-if(count _tertiary > 0) then {
-	private _got = false;
+if(count _backpack > 0) then {
+	_backpack params ["_item","_items"];
+	_allitems pushback _item;
 	{
-		private _d = warehouse getvariable [format["item_%1",_x],[_x,0]];
-		_d params ["_cls",["_num",0,[0]]];
-		if(_num > 0) then {
-			_tertiary = _x;
-			_got = true;
-		};
-	}foreach(_tertiary);
-
-	if(_got) then {
-		_warehouseTertiary = true;
-	}else{
-		_tertiary = _tertiary select 0;
-		private _price = ((cost getVariable [_tertiary,[1000]]) select 0);
-		_cost = _cost + _price;
-	};
-}else{
-	_tertiary = "";
+		_x params ["_cls","_num"];
+		private _t = 0;
+		while{_t < _num} do {
+			_allitems pushback _cls;
+			_t = _t + 1;
+		}
+	}foreach(_items);
 };
+_allitems pushback _helmet;
+_allitems pushback _goggles;
+_allitems append _assigned;
+_allitems = _allitems - [""];
 
-[_cost,_cls,_wpn,_warehouseWpn,_pwpn,_warehousePistol,_tertiary,_warehouseTertiary,_scope,_warehouseScope,_uniform,_bino]
+private _itemqty = _allitems call BIS_fnc_consolidateArray;
+private _bought = [];
+{
+	_x params ["_cls","_num"];
+ 	_whqty = _cls call OT_fnc_qtyInWarehouse;
+ 	if(_whqty < _num) then {_num = _num - _whqty} else {_num = 0};
+ 	if(_num > 0) then {
+		_cost = _cost + (([OT_nation,_cls,30] call OT_fnc_getPrice) * _num);
+		_bought pushback [_cls,_num];
+ 	};
+}foreach(_itemqty);
+
+[_cost,_cls,_loadout,_clothes,_allitems]

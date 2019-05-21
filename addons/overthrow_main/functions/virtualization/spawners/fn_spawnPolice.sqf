@@ -12,6 +12,8 @@ _posTown = server getVariable [format["policepos%1",_town],server getVariable _t
 
 _groups = [];
 
+private _soldier = "Police" call OT_fnc_getSoldier;
+
 _numNATO = server getVariable [format["police%1",_town],0];
 _count = 0;
 _range = 15;
@@ -27,7 +29,7 @@ while {_count < _numNATO} do {
 	while {(_groupcount < _pergroup) && (_count < _numNATO)} do {
 		_pos = [[[_start,20]]] call BIS_fnc_randomPos;
 
-		_civ = _group createUnit ["I_G_Soldier_F", _pos, [],0, "NONE"];
+		_civ = [_soldier,_pos,_group,false] call OT_fnc_createSoldier;
 		sleep 0.2;
 		_civ setVariable ["polgarrison",_town,false];
 		_civ setVariable ["OT_nospawntrack",true,false];

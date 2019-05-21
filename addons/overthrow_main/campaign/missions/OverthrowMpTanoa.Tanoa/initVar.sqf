@@ -139,13 +139,13 @@ OT_NATO_Vehicles_CASDrone = "B_UAV_02_CAS_F";
 OT_NATO_Vehicles_AirSupport = ["B_Heli_Attack_01_F"];
 OT_NATO_Vehicles_AirSupport_Small = ["B_Heli_Light_01_armed_F"];
 OT_NATO_Vehicles_GroundSupport = ["B_T_MRAP_01_gmg_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F"];
-OT_NATO_Vehicles_TankSupport = ["B_MBT_01_TUSK_F","B_MBT_01_cannon_F"];
-OT_NATO_Vehicles_Convoy = ["B_UGV_01_rcws_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F"];
+OT_NATO_Vehicles_TankSupport = ["B_T_MBT_01_TUSK_F","B_T_MBT_01_cannon_F"];
+OT_NATO_Vehicles_Convoy = ["B_T_UGV_01_rcws_olive_F","B_T_MRAP_01_hmg_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F","B_T_LSV_01_armed_F"];
 OT_NATO_Vehicles_AirWingedSupport = ["B_Plane_CAS_01_F"];
 OT_NATO_Vehicle_AirTransport_Small = "B_Heli_Transport_01_camo_F";
 OT_NATO_Vehicle_AirTransport = ["B_Heli_Transport_03_F","B_Heli_Transport_01_F","B_Heli_Transport_01_F"];
 OT_NATO_Vehicle_AirTransport_Large = "B_Heli_Transport_03_F";
-OT_NATO_Vehicle_Boat_Small = "B_Boat_Armed_01_minigun_F";
+OT_NATO_Vehicle_Boat_Small = "B_T_Boat_Armed_01_minigun_F";
 OT_NATO_Vehicles_APC = ["B_T_APC_Wheeled_01_cannon_F"];
 
 OT_NATO_Sandbag_Curved = "Land_BagFence_01_round_green_F";

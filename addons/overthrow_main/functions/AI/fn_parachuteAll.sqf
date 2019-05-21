@@ -1,5 +1,7 @@
 params ["_vehicle", ["_chuteheight", 100]];
 
+sleep 5; //Give the helicopter a chance to stop/slow Down
+
 private _paras = assignedcargo _vehicle;
 private _dir = direction _vehicle;
 
@@ -18,7 +20,7 @@ private _dir = direction _vehicle;
 {
 	[_x,_chuteheight] spawn {
 		params ["_unit", "_chuteheight"];
-		
+
 		// land safe if player
 		if (isPlayer _unit) then {
 			[_unit,_chuteheight] spawn {
@@ -42,3 +44,5 @@ private _dir = direction _vehicle;
 		_unit allowDamage true;
 	};
 } forEach _paras;
+
+_vehicle setVariable ["OT_deployedTroops",true,false];

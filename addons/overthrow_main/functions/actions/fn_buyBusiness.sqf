@@ -41,7 +41,7 @@ if((_b select 1) isEqualTo "Business") then {
 
                     private _veh = OT_factoryPos nearestObject OT_item_CargoContainer;
                     if(_veh isEqualTo objNull) then {
-                        private _p = OT_factoryPos findEmptyPosition [0,100,OT_item_CargoContainer];
+                        private _p = OT_factoryPos findEmptyPosition [5,100,OT_item_CargoContainer];
                         private _veh = OT_item_CargoContainer createVehicle _p;
                         [_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
                         clearWeaponCargoGlobal _veh;

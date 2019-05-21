@@ -21,7 +21,7 @@ spawner setVariable [format["spawnid%1",_town],_spawnid];
 while {_count < _numNATO} do {
 
 	private _home = _town call OT_fnc_getRandomRoadPosition;
-	private _pos = _home findEmptyPosition [0,50];
+	private _pos = _home findEmptyPosition [2,50];
 
 	if !(_pos isEqualTo []) then {
 
