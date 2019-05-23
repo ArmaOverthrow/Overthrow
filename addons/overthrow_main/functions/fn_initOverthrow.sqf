@@ -97,36 +97,39 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	    addMissionEventHandler ["PlayerConnected",OT_fnc_playerConnectHandler];
 	    addMissionEventHandler ["HandleDisconnect",OT_fnc_playerDisconnectHandler];
 	};
-	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
-
-	//ACE3 events
-	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
-	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
-	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 	["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
-	["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
 
-	//Setup fuel pumps for interaction
-	{
-	    //[_x,0] call ace_interact_menu_fnc_addMainAction;
-	}foreach(OT_fuelPumps);
+	if(isServer) then {
+		addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];	
 
-	["OT_autosave_loop"] call OT_fnc_addActionLoop;
-	["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
-		OT_cleanup_civilian_loop = time + (5*60);
-		private _totalcivs = {(side _x isEqualTo civilian) && !captive _x} count (allUnits);
-		if(_totalcivs < 50) exitWith {};
+		//ACE3 events
+		["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+		["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+		["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
+		["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
+
+		//Setup fuel pumps for interaction
 		{
-			if (side group _x isEqualTo civilian && {!(isPlayer _x)} && {!(_x getVariable [""shopcheck"",false])} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {
-				private _group = group _x;
-				private _unit = _x;
-				deleteVehicle _unit;
-				if (count units _group < 1) then {
-					deleteGroup _group;
+		    //[_x,0] call ace_interact_menu_fnc_addMainAction;
+		}foreach(OT_fuelPumps);
+
+		["OT_autosave_loop"] call OT_fnc_addActionLoop;
+		["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
+			OT_cleanup_civilian_loop = time + (5*60);
+			private _totalcivs = {(side _x isEqualTo civilian) && !captive _x} count (allUnits);
+			if(_totalcivs < 50) exitWith {};
+			{
+				if (side group _x isEqualTo civilian && {!(isPlayer _x)} && {!(_x getVariable [""shopcheck"",false])} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {
+					private _group = group _x;
+					private _unit = _x;
+					deleteVehicle _unit;
+					if (count units _group < 1) then {
+						deleteGroup _group;
+					};
 				};
-			};
-		}forEach (allUnits);
-	"] call OT_fnc_addActionLoop;
+			}forEach (allUnits);
+		"] call OT_fnc_addActionLoop;
+	};
 
 	OT_serverInitDone = true;
 	publicVariable "OT_serverInitDone";
