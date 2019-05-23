@@ -1,9 +1,11 @@
 params ["_town"];
+
 private _dist = 600;
 if(_town in OT_sprawling || _town in OT_capitals) then {_dist = 1000};
 private _posTown = server getVariable _town;
-private _stability = server getVariable format["stability%1",_town];
-private _population = server getVariable format["population%1",_town];
+private _stability = server getVariable [format["stability%1",_town],100];
+private _population = server getVariable [format["population%1",_town],0];
+diag_log format["Overthrow: Setting up economy in %1 (pop. %2)",_town,_population];
 private _shops   = 0;
 private _activeShops  = [];
 private _activecar  = [];
@@ -77,16 +79,18 @@ server setVariable [format["activeshopsin%1",_town],_activeShops,true];
 }foreach(nearestObjects [_posTown, OT_carShops, _dist,false]);
 server setVariable [format["activecarshopsin%1",_town],_activecar,true];
 
-{
-	private _po = getpos _x;
-	if !(_po in _piers) then {
-		_do = true;
-		{
-			if(_x distance _po < 80) exitWith {_do = false};
-		}foreach(_piers);
-		if(_do) then {
-			_piers pushback _po;
+if((count OT_piers) > 0) then {
+	{
+		private _po = getpos _x;
+		if !(_po in _piers) then {
+			_do = true;
+			{
+				if(_x distance _po < 80) exitWith {_do = false};
+			}foreach(_piers);
+			if(_do) then {
+				_piers pushback _po;
+			};
 		};
-	};
-}foreach(nearestObjects [_posTown,OT_piers, _dist,false]);
+	}foreach(nearestObjects [_posTown,OT_piers, _dist,false]);
+};
 server setVariable [format["activepiersin%1",_town],_piers,true];
