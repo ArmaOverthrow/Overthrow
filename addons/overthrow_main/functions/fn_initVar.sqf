@@ -82,7 +82,7 @@ OT_voices_eastern = [];
 }foreach("getNumber(_x >> 'scope') isEqualTo 2" configClasses (configfile >> "CfgVoice"));
 
 //Find houses
-OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F"]; //buildings with potentially lots of people living in them
+OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F","Land_House_2W04_F","Land_House_2W03_F"]; //buildings with potentially lots of people living in them
 OT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_Hotel_01_F","Land_Hotel_02_F"]; //buildings that rich guys like to live in
 OT_lowPopHouses = [];
 OT_medPopHouses = [];
@@ -266,10 +266,20 @@ OT_spawnHouses = [];
 	OT_allRealEstate pushBackUnique _cls;
 }foreach( "getNumber ( _x >> ""ot_isPlayerHouse"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" ) );
 
+//Mission house overrides
+{
+	_x params ["_cls","_template"];
+	OT_spawnHouses pushBack _cls;
+	OT_allBuyableBuildings pushBackUnique _cls;
+	OT_allRealEstate pushBackUnique _cls;
+	templates setVariable [_cls,_template,true];
+}foreach(OT_spawnHouseBuildings);
+
 OT_gunDealerHouses = OT_spawnHouses;
 
 private _allShops = "getNumber ( _x >> ""ot_isShop"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_shops = _allShops apply {configName _x};
+OT_shops = OT_shops + OT_shopBuildings;
 
 private _allCarShops = "getNumber ( _x >> ""ot_isCarDealer"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_carShops = _allCarShops apply {configName _x};

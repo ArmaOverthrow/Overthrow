@@ -1,19 +1,19 @@
 OT_objectiveData = [
-    [[10098.7,11818.1,0],"Comms Alpha",400],
-    [[2261.28,6331.25,0],"fuel depot",250],
-    [[4166.48,11723.6,0],"The Harbor Remnants",250],
-    [[3432.65,12893.3,0],"The Firing Range",250],
-    [[3870.23,13412.4,0],"The Vehicle Range",300],
-    [[3939.27,13915,0],"The Camp Remnants",250],
-    [[3166.18,11038.8,0],"Belfort Naval Base",500],
-    [[5216.9,3656.3,0],"Chemical Plant",600],
-    [[11581,7342.56,0],"Kotomo Base",200],
-    [[4501.34,8430.07,0],"Regina Base",200]
+    [[8161.8,10793.8,0],"Tarnow Base",700],
+    [[2061.66,11159.9,0],"Lukow Base",800],
+    [[7908.17,9750.6,0],"Zapadlisko Base",500],
+    [[4946.82,2117.13,0],"Swarog Base",400],
+    [[5648.26,3830.65,0],"Nadbor Base",400],
+    [[9903.23,3789.6,0],"Gieraltów Base",400],
+    [[10995.2,9005.87,0],"Chemical Plant",600],
+    [[9823,8133.64,0],"Borek Base",350],
+    [[9093.82,6662.88,0],"Lembork Base",350],
+    [[4399.09,6717.44,0],"fuel depot",500]
 ];
-OT_NATO_HQ = "Tuvanaka Airbase";
-OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","96FM Georgetown","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka","Georgetown","Katkoula","Harcourt"];
-OT_NATO_Navy_HQ = "Belfort Naval Base";
+OT_NATO_HQ = "Lukow Airfield";
+OT_NATO_priority = ["Lukow Airfield","Comms Alpha"];
+OT_NATO_Navy_HQ = "";
 
-OT_NATO_JetPos = [2078.23,13254.2,1.54746]; //Where to spawn jets
-OT_NATO_JetDir = 234; //Direction to face jet on spawn
-OT_NATO_JetLandPos = [-1282.95,10621.2,152.376]; //Waypoint before landing a jet
+OT_NATO_JetPos = [4106.14,10331.4,0]; //Where to spawn jets
+OT_NATO_JetDir = 45; //Direction to face jet on spawn
+OT_NATO_JetLandPos = [4104.29,10329.6,68.6668]; //Waypoint before landing a jet

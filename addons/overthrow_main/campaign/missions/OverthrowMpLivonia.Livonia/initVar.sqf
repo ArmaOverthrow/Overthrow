@@ -5,12 +5,12 @@ OT_saveName = "Overthrow.Livonia.save.001";
 OT_tutorial_backstoryText = "TBC";
 OT_startDate = [2025,7,27,8,00];
 
-OT_startCameraPos = [1385.17,505.453,1.88826];
-OT_startCameraTarget = [1420,535,5.8];
+OT_startCameraPos = [9530.23,1138.76,5];
+OT_startCameraTarget = [9154.2,987.363,50];
 
 //Used to control updates and persistent save compatability. When these numbers go up, that section will be reinitialized on load if required. (ie leave them alone)
-OT_economyVersion = 13;
-OT_NATOversion = 10;
+OT_economyVersion = 1;
+OT_NATOversion = 1;
 OT_CRIMversion = 1;
 
 OT_faction_NATO = "BLU_T_F";
@@ -23,6 +23,12 @@ OT_flagImage = "\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa";
 OT_flagMarker = "flag_Tanoa";
 
 OT_populationMultiplier = 1.2; //Used to tweak populations per map
+
+//Building overrides
+OT_shopBuildings = ["Land_VillageStore_01_F"];
+OT_spawnHouseBuildings = [
+	["Land_House_1W01_F",[["Land_Workbench_01_F", [-1.36485,0.870917,0],90,1,0,[0,-0],"","",true,false],["Land_MetalCase_01_small_F",[1.28859,-1.0394,0.23],92.8353,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[2.5086,-1.0345,0.23],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[2.71048,-0.444679,0.23],7.55273,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.61679,-2.76766,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.48146,2.91809,0.23],41.3345,1,0,[0,0],"","",true,false]]]
+];
 
 //Interactable items that spawn in your house
 OT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
@@ -87,8 +93,6 @@ OT_clothes_mob = "U_I_C_Soldier_Camo_F";
 //NATO stuff
 OT_NATO_HMG = "B_HMG_01_high_F";
 OT_NATO_Vehicles_AirGarrison = [
-	["B_T_VTOL_01_vehicle_F",1],
-	["B_T_VTOL_01_infantry_F",1],
 	["B_Heli_Light_01_armed_F",1],
 	["B_Heli_Transport_03_unarmed_F",2],
 	["B_Heli_Light_01_F",3],
@@ -169,7 +173,7 @@ OT_CRIM_Weapons = ["arifle_AK12_F","arifle_AKM_F","arifle_AKM_F","arifle_AKM_F"]
 OT_CRIM_Pistols = ["hgun_Pistol_heavy_01_F","hgun_ACPC2_F","hgun_P07_F","hgun_Rook40_F"];
 OT_CRIM_Launchers = ["launch_RPG32_F","launch_RPG7_F","launch_RPG7_F","launch_RPG7_F"];
 
-OT_piers = ["Land_PierConcrete_01_4m_ladders_F","Land_PierWooden_01_platform_F","Land_PierWooden_01_hut_F","Land_PierWooden_02_hut_F"]; //spawns dudes that sell boats n stuff
+OT_piers = []; //spawns dudes that sell boats n stuff
 OT_offices = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_04_F"];
 OT_portBuildings = ["Land_Warehouse_01_F","Land_Warehouse_02_F","Land_ContainerLine_01_F","Land_ContainerLine_02_F","Land_ContainerLine_03_F"];
 OT_airportTerminals = ["Land_Airport_01_terminal_F","Land_Airport_02_terminal_F","Land_Hangar_F"];
