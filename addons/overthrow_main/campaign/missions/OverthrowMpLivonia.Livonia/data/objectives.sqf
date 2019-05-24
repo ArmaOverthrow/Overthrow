@@ -11,9 +11,12 @@ OT_objectiveData = [
     [[4399.09,6717.44,0],"fuel depot",500]
 ];
 OT_NATO_HQ = "Lukow Airfield";
-OT_NATO_priority = ["Lukow Airfield","Comms Alpha"];
+OT_NATO_priority = ["Lukow Airfield","Comms Alpha","Zapadlisko Base"];
 OT_NATO_Navy_HQ = "";
 
 OT_NATO_JetPos = [4106.14,10331.4,0]; //Where to spawn jets
 OT_NATO_JetDir = 45; //Direction to face jet on spawn
 OT_NATO_JetLandPos = [4104.29,10329.6,68.6668]; //Waypoint before landing a jet
+
+OT_NATO_HQ_garrisonPos = [3988.27,10158.4,0];
+OT_NATO_HQ_garrisonDir = 312;

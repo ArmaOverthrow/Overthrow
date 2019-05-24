@@ -279,7 +279,13 @@ OT_gunDealerHouses = OT_spawnHouses;
 
 private _allShops = "getNumber ( _x >> ""ot_isShop"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_shops = _allShops apply {configName _x};
-OT_shops = OT_shops + OT_shopBuildings;
+
+//Mission shop overrides
+{
+	_x params ["_cls","_template"];
+	OT_shops pushBack _cls;
+	templates setVariable [_cls,_template,true];
+}foreach(OT_shopBuildings);
 
 private _allCarShops = "getNumber ( _x >> ""ot_isCarDealer"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_carShops = _allCarShops apply {configName _x};

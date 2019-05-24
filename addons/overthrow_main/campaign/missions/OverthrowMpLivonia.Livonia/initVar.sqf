@@ -22,10 +22,12 @@ OT_flag_IND = "Flag_HorizonIslands_F";
 OT_flagImage = "\A3\ui_f\data\map\markers\flags\Tanoa_ca.paa";
 OT_flagMarker = "flag_Tanoa";
 
-OT_populationMultiplier = 1.2; //Used to tweak populations per map
+OT_populationMultiplier = 0.8; //Used to tweak populations per map
 
 //Building overrides
-OT_shopBuildings = ["Land_VillageStore_01_F"];
+OT_shopBuildings = [
+	["Land_VillageStore_01_F",[["Land_CashDesk_F",[1.26089,-3.41939,0.131084],90,1,0,[],"","",true,false]]]
+];
 OT_spawnHouseBuildings = [
 	["Land_House_1W01_F",[["Land_Workbench_01_F", [-1.36485,0.870917,0],90,1,0,[0,-0],"","",true,false],["Land_MetalCase_01_small_F",[1.28859,-1.0394,0.23],92.8353,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[2.5086,-1.0345,0.23],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[2.71048,-0.444679,0.23],7.55273,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.61679,-2.76766,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.48146,2.91809,0.23],41.3345,1,0,[0,0],"","",true,false]]]
 ];
