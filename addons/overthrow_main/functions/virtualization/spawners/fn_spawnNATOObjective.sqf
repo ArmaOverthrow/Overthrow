@@ -18,6 +18,8 @@ private _groups = [];
 if(_name in OT_allComms) then {
 	private _group = createGroup [blufor,true];
 	_groups pushBack _group;
+	_group setVariable ["VCM_TOUGHSQUAD",true,true];
+	_group setVariable ["VCM_NORESCUE",true,true];
 
 	private _start = _posTown findEmptyPosition [2,50];
 	private _civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [], 0, "NONE"];
@@ -154,6 +156,9 @@ private _groupcount = 0;
 while {_count < _numNATO} do {
 	private _start = _posTown findEmptyPosition [5,200];
 	private _group = createGroup blufor;
+	_group setVariable ["VCM_TOUGHSQUAD",true,true];
+	_group setVariable ["VCM_NORESCUE",true,true];
+
 	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
 	_groupcount = 1;

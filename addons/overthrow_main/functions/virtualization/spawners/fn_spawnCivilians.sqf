@@ -93,6 +93,8 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			};
 		};
 		private _group = creategroup [opfor,true];
+		_group setVariable ["VCM_TOUGHSQUAD",true,true];
+		_group setVariable ["VCM_NORESCUE",true,true];
 		_groups pushback _group;
 		spawner setVariable [format["gangspawn%1",_gangid],_group];
 		if(count _gang > 4) then { //Filter out old gangs
@@ -118,6 +120,8 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 
 			//And the gang leader in his own group
 			private _leaderGroup = creategroup [opfor,true];
+			_leaderGroup setVariable ["VCM_TOUGHSQUAD",true,true];
+			_leaderGroup setVariable ["VCM_NORESCUE",true,true];
 			private _pos = [_home,10] call SHK_pos_fnc_pos;
 			_civ = _leaderGroup createUnit [OT_CRIM_Unit, _pos, [],0, "NONE"];
 			_civ setRank "COLONEL";

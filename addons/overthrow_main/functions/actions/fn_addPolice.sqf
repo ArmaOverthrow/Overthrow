@@ -28,6 +28,8 @@ if(_effect isEqualTo 0) then {_effect = "None"} else {_effect = format["+%1 Stab
 _count = 0;
 _range = 15;
 private _group = createGroup resistance;
+_group setVariable ["VCM_TOUGHSQUAD",true,true];
+_group setVariable ["VCM_NORESCUE",true,true];
 
 private _spawnid = spawner getvariable [format["townspawnid%1",_town],-1];
 private _groups = spawner getvariable [_spawnid,[]];
