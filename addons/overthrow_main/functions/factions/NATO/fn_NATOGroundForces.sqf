@@ -19,14 +19,26 @@ if !(_byair) then {
 sleep 0.5;
 private _allunits = [];
 private _veh = false;
-
+private _pos = false;
 
 //Transport
 private _tgroup = creategroup blufor;
 
-private _pos = _frompos findEmptyPosition [15,100,_vehtype];
-if(count _pos == 0) then {
-	_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
+if(_byair) then {
+	//find helipads
+	private _helipads = _frompos nearObjects ["Land_HelipadCircle_F", 400];
+	{
+		//check if theres anything on it
+		private _on = ASLToAGL getPosASL _x nearEntities ["Air",15];
+		if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x};
+	}foreach(_helipads);
+}
+
+if !(_pos isEqualType []) then {
+	_pos = _frompos findEmptyPosition [15,100,_vehtype];
+	if(count _pos == 0) then {
+		_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
+	};
 };
 
 private _dir = [_frompos,_ao] call BIS_fnc_dirTo;
@@ -206,30 +218,9 @@ if(typename _tgroup isEqualTo "GROUP") then {
 				_wp setWaypointStatements ["true","this call OT_fnc_cleanup"];
 			};
 			if(_byair && (_veh getVariable ["OT_deployedTroops",false])) exitWith {
-				while {(count (waypoints _tgroup)) > 0} do {
-					deleteWaypoint ((waypoints _tgroup) select 0);
-				};
-
-				sleep 5;
-
-				_wp = _tgroup addWaypoint [_frompos,50];
-				_wp setWaypointType "MOVE";
-				_wp setWaypointBehaviour "SAFE";
-				_wp setWaypointSpeed "FULL";
-
-				waitUntil{sleep 10;(alive _veh && (_veh distance _frompos) < 150) || !alive _veh};
-
-				if(alive _veh) then {
-					while {(count (waypoints _tgroup)) > 0} do {
-						deleteWaypoint ((waypoints _tgroup) select 0);
-					};
-					_veh land "LAND";
-					waitUntil{sleep 10;(getpos _veh)#2 < 2};
-				};
-				_veh call OT_fnc_cleanup;
-				_tgroup call OT_fnc_cleanup;
+				[_veh,_frompos,_tgroup] spawn OT_fnc_landAndCleanupHelicopter;
+				_done = true;
 			};
-
 
 		};
 	};

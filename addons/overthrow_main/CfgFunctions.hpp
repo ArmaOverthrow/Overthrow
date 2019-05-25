@@ -466,6 +466,7 @@ class CfgFunctions
 			class squadGetOut {};
 			class squadGetInMyVehicle {};
 			class orderStopAndFace {};
+			class landAndCleanupHelicopter {};
 		};
 
 		/*

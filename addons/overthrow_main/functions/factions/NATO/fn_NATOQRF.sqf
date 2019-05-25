@@ -45,6 +45,17 @@ _abandoned = server getvariable ["NATOabandoned",[]];
 }foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
 diag_log format["Overthrow: NATO QRF spend is %1",_strength];
 
+//add helipads to possibles
+{
+	_x params ["","_name"];
+	if !(_name in _abandoned) then {
+		_air pushback _x;
+	};
+}foreach(OT_NATOHelipads);
+
+//sort airfields + helipads by distance
+_air = [_air,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy;
+
 if(_strength > 500 && (count _air) > 0) then {
 	//Send CAS
 	_obpos = (_air select 0) select 0;
