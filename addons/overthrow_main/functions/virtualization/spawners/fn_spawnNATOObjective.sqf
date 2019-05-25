@@ -282,7 +282,7 @@ private _road = objNull;
 	if(_loc == _name && _status == "") then {
 		private _group = createGroup blufor;
 		_groups pushBack _group;
-		_group setVariable ["Vcm_Disable",true,false]; //stop him from running off
+		_group setVariable ["Vcm_Disable",true,true]; //stop him from running off
 		private _pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
