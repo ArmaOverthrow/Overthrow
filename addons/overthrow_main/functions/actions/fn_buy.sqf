@@ -165,7 +165,7 @@ if(
 
 	playSound "3DEN_notificationDefault";
 };
-if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 	if(_cls in OT_allExplosives) then {
 		server setVariable ["reschems",_chems - (_cost select 3),true];
 	};

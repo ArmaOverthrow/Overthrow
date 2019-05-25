@@ -49,7 +49,7 @@ if(_full) exitWith {false};
 				_veh addWeaponCargoGlobal [_cls,1];
 				_unit removeItem _cls;
 			};
-			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+			if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 				_veh addMagazineCargoGlobal [_cls,1];
 				_unit removeMagazine _cls;
 			};

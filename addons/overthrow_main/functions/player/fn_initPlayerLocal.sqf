@@ -311,6 +311,9 @@ waitUntil {!isNil "OT_SystemInitDone"};
 titleText ["Loading Session", "BLACK FADED", 0];
 player setCaptive true;
 player setPos (_housepos findEmptyPosition [1,20,typeof player]);
+if !("ItemMap" in (assignedItems player)) then {
+	player linkItem "ItemMap";
+};
 [_housepos,_newplayer] spawn {
 	params ["_housepos","_newplayer"];
 	setViewDistance -1;

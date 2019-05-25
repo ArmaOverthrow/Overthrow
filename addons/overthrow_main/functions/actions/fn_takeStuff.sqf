@@ -20,7 +20,7 @@ if(hmd _unit != "") then {
 	_count = 0;
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {
-		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
+		if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
 			_unit removeMagazine _cls;
 			_t addMagazineGlobal _cls;
 		}else{

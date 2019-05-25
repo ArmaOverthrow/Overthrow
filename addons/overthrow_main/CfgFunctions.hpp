@@ -236,6 +236,7 @@ class CfgFunctions
 			class takeLegit {};
 			class warehouseTake {};
 			class recover {};
+			class storeAll {};
 
 			/* Port */
 			class exportAll {};

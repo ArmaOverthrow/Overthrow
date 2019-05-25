@@ -773,7 +773,7 @@ OT_allLegalClothing = [];
 {
 	private _name = configName _x;
 	private _m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
+	if(_name isKindOf ["Default",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
 		private _cost = round(_m * 4);
 		private _desc = getText(_x >> "descriptionShort");
 		if((_desc find ".408") > -1) then {

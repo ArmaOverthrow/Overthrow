@@ -385,7 +385,7 @@ if ((date select 4) != _lastmin) then {
 							if(_currentCls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 								_veh addWeaponCargoGlobal [_currentCls,_numtoproduce];
 							};
-							if(_currentCls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+							if(_currentCls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 								_veh addMagazineCargoGlobal [_currentCls,_numtoproduce];
 							};
 							_veh addItemCargoGlobal [_currentCls,_numtoproduce];

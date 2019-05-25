@@ -233,7 +233,7 @@ sleep 0.2;
 						if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 							_veh addWeaponCargoGlobal [_cls,_num];
 						};
-						if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+						if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 							_veh addMagazineCargoGlobal [_cls,_num];
 						};
 						if(_cls isKindOf "Bag_Base") exitWith {
@@ -305,9 +305,9 @@ sleep 0.2;
 		_set = false;
 	};
 	if(_key == "recruitables") then {
+		private _done = false;
 		{
 			_x params ["_cls","_loadout"];
-			private _done = false;
 			{
 				_x params ["_c","_l"];
 				if(_c == _cls) exitWith {_done = true;_x set [1,_loadout]};

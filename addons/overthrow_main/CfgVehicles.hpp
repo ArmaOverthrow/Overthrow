@@ -19,7 +19,7 @@
 			class OT_Unflip { \
 				condition = "!canMove _target && {alive _target && {vehicle _this) isEqualTo _this}"; \
 				displayName = "Unflip"; \
-				statement = "_target spawn OT_fnc_unflipVehicle"; \
+				statement = "[_target] spawn OT_fnc_unflipVehicle"; \
 			}; \
 		}; \
 	};

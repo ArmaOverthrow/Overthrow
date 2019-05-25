@@ -28,7 +28,7 @@ if(hmd _unit != "") then {
 			if(_cls isKindOf ["Binocular",configFile >> "CfgWeapons"]) exitWith {
 				_unit removeItem _cls;
 			};
-			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+			if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 				_unit removeMagazine _cls;
 			};
 			_unit removeItem _cls;
