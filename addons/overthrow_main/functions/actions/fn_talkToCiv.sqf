@@ -99,7 +99,7 @@ if (_canMission) then {
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
 		[OT_nation,_standing,_s,5] call OT_fnc_buyDialog;
-	}];
+	}];	
 };
 
 if (_canBuy) then {

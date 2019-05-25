@@ -11,7 +11,7 @@ lbClear 1500;
 {
 	_x params ["_name","_type","_price","_free","_do"];
 	if(_type == "" || _type == (typeof _veh)) then {
-		_price = [OT_nation,_do] call OT_fnc_getPrice;
+		_price = [OT_nation,_free] call OT_fnc_getPrice;
 		_price = [_price, 0] select ((backpack player) isEqualTo _free);
 		private _pic = _do call OT_fnc_vehicleGetPic;
 		private _idx = lbAdd [1500,format["%1",_name]];

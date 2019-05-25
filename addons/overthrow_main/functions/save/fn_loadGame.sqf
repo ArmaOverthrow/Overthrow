@@ -108,8 +108,8 @@ sleep 0.2;
 				{
 					if(!isNil "_x") then {
 						if(_x isEqualType []) then {
-							_x params ["_itemClass",["_itemCount",0,[0]]];
-							if (_itemCount > 0) then {
+							_x params [["_itemClass","",[""]],["_itemCount",0,[0]]];
+							if (_itemCount > 0 && !(_itemClass isEqualTo "")) then {
 								warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
 							};
 						};

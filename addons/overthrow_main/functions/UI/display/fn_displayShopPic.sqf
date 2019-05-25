@@ -42,12 +42,18 @@ if(_price > -1) then {
                 _x params ["_cls","_qty"];
                 private _name = _cls call OT_fnc_anythingGetName;
                 private _cost = (([OT_nation,_cls,30] call OT_fnc_getPrice) * _qty);
-                _text = format["%1$%4 %2 x %3<br/>",_text,_qty,_name,[_cost, 1, 0, true] call CBA_fnc_formatNumber];
+                _text = format["%1%2 x %3 = $%4<br/>",_text,_qty,_name,[_cost, 1, 0, true] call CBA_fnc_formatNumber];
             }foreach(_bought);
+
+            if(_text isEqualTo "") then {
+                _text = "All items required for this unit are available in the warehouse";
+            }else{
+                _text = format["These items are not in the warehouse and must be purchased:<br/>%1",_text];
+            };
 
     		[
 				nil,
-    			format["These items were not found in the warehouse and must be purchased:<br/>%1",_text],
+    			_text,
 				_cls call OT_fnc_vehicleGetName,
 				_price
 			]

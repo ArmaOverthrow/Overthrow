@@ -51,6 +51,7 @@ private _difficulty = 1.8;
         [_civ] joinSilent nil;
         [_civ] joinSilent _group;
         _civ setVariable ["NOAI",true,false];
+        _group setVariable ["Vcm_Disable",true,true];
 
         //reward to killer
         _civ setVariable ["OT_bounty",1500,true];
@@ -62,6 +63,8 @@ private _difficulty = 1.8;
         private _numGoons = 1+round(random 4);
         private _count = 0;
         private _bgroup = creategroup [blufor, true];
+        _bgroup setVariable ["VCM_TOUGHSQUAD",true,true];
+        _bgroup setVariable ["VCM_NORESCUE",true,true];
         while {(_count < _numGoons)} do {
             private _start = [[[_destination,5]]] call BIS_fnc_randomPos;
 
