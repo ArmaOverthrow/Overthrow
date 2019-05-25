@@ -281,9 +281,7 @@ if(!dialog) then {
 
 			private _cTarget = cursorTarget;
 			if((_cTarget isKindOf "CAManBase") && (alive _cTarget) && (!isplayer _cTarget) && !(side _cTarget isEqualTo west) && (_cTarget distance player) < 10) exitWith {
-				if((!(player getVariable ["OT_tute",true]) || !(player getVariable ["OT_tute_inProgress", false]))) exitWith {
-					_cTarget call OT_fnc_talkToCiv;
-				};
+				_cTarget call OT_fnc_talkToCiv;
 			};
 			[] spawn OT_fnc_mainMenu;
 		};

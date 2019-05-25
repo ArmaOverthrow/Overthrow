@@ -86,7 +86,10 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
 	}foreach (OT_allTowns);
 	server setVariable ["NATOabandoned",_abandoned,true];
-    server setVariable ["NATOresources",2000,true];
+	private _startingResources = 500;
+	if(_diff isEqualTo 1) then {_startingResources = 1500};
+	if(_diff isEqualTo 2) then {_startingResources = 2500};
+    server setVariable ["NATOresources",_startingResources,true];
 	server setVariable ["garrisonHQ",1000,false];
 	OT_NATOobjectives = [];
 	OT_NATOcomms = [];

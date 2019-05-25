@@ -34,15 +34,20 @@ if(_price > -1) then {
     	};
         if(_cls isKindOf "Man") exitWith {
             private _soldier = _cls call OT_fnc_getSoldier;
+            private _bought = _soldier select 5;
     		private _price = _soldier select 0;
-            if(call OT_fnc_playerIsGeneral) then {
-                ctrlEnable [1601,true];
-            }else{
-                ctrlEnable [1601,false];
-            };
+
+            _text = "";
+            {
+                _x params ["_cls","_qty"];
+                private _name = _cls call OT_fnc_anythingGetName;
+                private _cost = (([OT_nation,_cls,30] call OT_fnc_getPrice) * _qty);
+                _text = format["%1$%4 %2 x %3<br/>",_text,_qty,_name,[_cost, 1, 0, true] call CBA_fnc_formatNumber];
+            }foreach(_bought);
+
     		[
 				nil,
-    			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
+    			format["These items were not found in the warehouse and must be purchased:<br/>",_text],
 				_cls call OT_fnc_vehicleGetName,
 				_price
 			]

@@ -5,7 +5,7 @@ private _soldier = "Police" call OT_fnc_getSoldier;
 _soldier params ["","","_loadout","_clothes"];
 
 //spawn a virtual dude
-private _start = [[[getpos player,10]]] call BIS_fnc_randomPos;
+private _start = (getpos player) findEmptyPosition [5,40,OT_Unit_Police];
 private _civ = (group player) createUnit [OT_Unit_Police, _start, [],0, "NONE"];
 _civ disableAI "MOVE";
 _civ disableAI "AUTOTARGET";
@@ -71,19 +71,19 @@ private _items = [];
 },[_civ]] call CBA_fnc_addEventHandlerArgs;
 
 ["ace_arsenal_displayClosed", {
-    _thisArgs params ["_unit","_cls"];
+    _thisArgs params ["_unit"];
     private _loadout = getUnitLoadout _unit;
 
     OT_Loadout_Police = _loadout;
 	publicVariable "OT_Loadout_Police";
 
-    ["Police", _loadout] call ace_arsenal_fnc_addDefaultLoadout;
+    ["Police", _loadout] remoteExec ["ace_arsenal_fnc_addDefaultLoadout",0,false];
 
     playSound "3DEN_notificationDefault";
     "Saved police loadout" call OT_fnc_notifyMinor;
     deleteVehicle _unit;
 
     [_thisType, _thisId] call CBA_fnc_removeEventHandler;
-},[_civ,_cls]] call CBA_fnc_addEventHandlerArgs;
+},[_civ]] call CBA_fnc_addEventHandlerArgs;
 
 [_civ,_civ] call ace_arsenal_fnc_openBox;

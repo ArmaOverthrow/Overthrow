@@ -264,9 +264,9 @@ publicVariable "OT_nextNATOTurn";
 
 			_count = 0;
 			_chance = 98;
-			_gain = 25;
+			_gain = 75;
 			_mul = 25;
-			if(_diff > 1) then {_gain = 75;_mul = 50;_chance = 97};
+			if(_diff > 1) then {_gain = 150;_mul = 50;_chance = 97};
 			if(_diff < 1) then {_gain = 0;_mul = 15;_chance = 99};
 			if(_popControl > 1000) then {_chance = _chance - 1};
 			if(_popControl > 2000) then {_chance = _chance - 1};

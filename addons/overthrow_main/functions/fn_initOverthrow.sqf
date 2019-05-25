@@ -99,19 +99,14 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	};
 	["Building", "Dammaged", OT_fnc_buildingDamagedHandler] call CBA_fnc_addClassEventHandler;
 
+	//ACE3 events
+	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
+	["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
+
 	if(isServer) then {
-		addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];	
-
-		//ACE3 events
-		["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
-		["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
-		["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
-		["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
-
-		//Setup fuel pumps for interaction
-		{
-		    //[_x,0] call ace_interact_menu_fnc_addMainAction;
-		}foreach(OT_fuelPumps);
+		addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 
 		["OT_autosave_loop"] call OT_fnc_addActionLoop;
 		["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","

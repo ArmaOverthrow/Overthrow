@@ -80,4 +80,4 @@ private _bought = [];
  	};
 }foreach(_itemqty);
 
-[_cost,_cls,_loadout,_clothes,_allitems]
+[_cost,_cls,_loadout,_clothes,_allitems,_bought]

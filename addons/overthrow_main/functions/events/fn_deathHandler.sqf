@@ -1,3 +1,5 @@
+if !(isServer) exitWith {};
+	
 _me = _this select 0;
 _killer = _me getVariable "ace_medical_lastDamageSource";
 
@@ -69,6 +71,7 @@ call {
 		[_town,-1] call OT_fnc_stability;
 	};
 	if(!isNil "_hvt") exitWith {
+		private _diff = server getVariable ["OT_difficulty",1];
 		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
 		_idx = 0;
 		{
@@ -77,7 +80,12 @@ call {
 		}foreach(OT_NATOhvts);
 		OT_NATOhvts deleteAt _idx;
 		format["A high-ranking NATO officer has been killed"] remoteExec ["OT_fnc_notifyMinor",0,false];
-		server setvariable ["NATOresources",0,true];
+		private _resources = server getvariable ["NATOresources",0];
+		_resources = _resources - 500;
+		if(_diff isEqualTo 1) then {_resources = _resources - 500};
+		if(_diff isEqualTo 0) then {_resources = _resources - 1000};
+		if(_resources < 250) then {_resources = 250};
+		server setvariable ["NATOresources",_resources,true];
 		[_killer,250] call OT_fnc_experience;
 	};
 	if(!isNil "_employee") exitWith {

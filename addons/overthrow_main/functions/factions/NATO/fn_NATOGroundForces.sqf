@@ -23,6 +23,7 @@ private _pos = false;
 
 //Transport
 private _tgroup = creategroup blufor;
+private _dir = 0;
 
 if(_byair) then {
 	//find helipads
@@ -30,18 +31,17 @@ if(_byair) then {
 	{
 		//check if theres anything on it
 		private _on = ASLToAGL getPosASL _x nearEntities ["Air",15];
-		if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x};
+		if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x;_dir = getDir _x};		
 	}foreach(_helipads);
-}
+};
 
 if !(_pos isEqualType []) then {
 	_pos = _frompos findEmptyPosition [15,100,_vehtype];
 	if(count _pos == 0) then {
 		_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
 	};
+	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
 };
-
-private _dir = [_frompos,_ao] call BIS_fnc_dirTo;
 
 _veh = _vehtype createVehicle _pos;
 _veh setVariable ["garrison","HQ",false];

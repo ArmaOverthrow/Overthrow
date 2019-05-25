@@ -110,7 +110,7 @@ class CfgVehicles {
         class ACE_Actions {
             class ACE_MainActions {
                 class OT_InteractionActions {
-                    condition = "(alive _target) && (!isplayer _target) && !(side _target isEqualTo west) && (!(_player getVariable ['ot_tute',true]) || !(_player getVariable ['OT_tute_inProgress', false]))";
+                    condition = "(alive _target) && (!isplayer _target) && !(side _target isEqualTo west)";
                     selection = "pelvis";
                     distance = 4;
                     displayName = "Talk";

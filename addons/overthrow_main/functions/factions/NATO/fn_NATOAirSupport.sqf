@@ -10,7 +10,7 @@ private _pos = false;
 {
 	//check if theres anything on it
 	private _on = ASLToAGL getPosASL _x nearEntities ["Air",15];
-	if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x};
+	if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x;_dir = getDir _x};
 }foreach(_helipads);
 
 if !(_pos isEqualType []) then {
