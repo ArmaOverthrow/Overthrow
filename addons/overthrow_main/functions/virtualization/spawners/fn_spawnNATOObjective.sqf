@@ -76,7 +76,7 @@ if(_name in OT_allComms) then {
 	//put up a flag
 	private _flag =  OT_flag_NATO createVehicle _posTown;
 	_groups pushback _flag;
-	[_flag,[format["Capture %1",_name], {_name call OT_fnc_triggerBattle},nil,0,false,true]] remoteExec ["addAction",0,_flag];
+	[_flag,[format["Capture %1",_name], {(((getpos player) call OT_fnc_nearestObjective) select 1) call OT_fnc_triggerBattle},nil,0,false,true,"","true",5]] remoteExec ["addAction",0,_flag];
 };
 
 //Garrison any buildings
