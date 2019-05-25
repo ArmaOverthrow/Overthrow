@@ -290,6 +290,13 @@ OT_shops = _allShops apply {configName _x};
 private _allCarShops = "getNumber ( _x >> ""ot_isCarDealer"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_carShops = _allCarShops apply {configName _x};
 
+//Mission car shop overrides
+{
+	_x params ["_cls","_template"];
+	OT_carShops pushBack _cls;
+	templates setVariable [_cls,_template,true];
+}foreach(OT_carShopBuildings);
+
 //Calculate prices
 //First, load the hardcoded prices from data/prices.sqf
 if(isServer) then {

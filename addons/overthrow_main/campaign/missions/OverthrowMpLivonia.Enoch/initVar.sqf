@@ -24,19 +24,56 @@ OT_flagMarker = "flag_Tanoa";
 
 OT_populationMultiplier = 0.8; //Used to tweak populations per map
 
-//Building overrides
+//Building templates
+//To generate these templates:
+//1. Open Arma editor, choose VR map
+//2. Add the building you want to make a template for, set its location and rotation to 0,0,0
+//3. Add furniture objects
+//4. Add a player (any unit), Play the Scenario
+//5. Run this in console: [getPos player, 50, true] call BIS_fnc_ObjectsGrabber
+//6. Copy the results, paste them here and remove any extraneous items (ie the building, Logic, babe_helper, Signs)
+
 OT_shopBuildings = [
-	["Land_VillageStore_01_F",[["Land_CashDesk_F",[1.26089,-3.41939,0.131084],90,1,0,[],"","",true,false]]]
+	["Land_VillageStore_01_F",[]],
+	["Land_Workshop_03_F",[]],
+	["Land_FuelStation_03_shop_F",[]]
+];
+OT_carShopBuildings = [
+	["Land_FuelStation_Build_F",[]],
+	["Land_FuelStation_02_workshop_F",[]]
 ];
 OT_spawnHouseBuildings = [
-	["Land_House_1W01_F",[["Land_Workbench_01_F", [-1.36485,0.870917,0],90,1,0,[0,-0],"","",true,false],["Land_MetalCase_01_small_F",[1.28859,-1.0394,0.23],92.8353,1,0,[0,-0],"","",true,false],["OfficeTable_01_new_F",[2.5086,-1.0345,0.23],180.373,1,0,[0,0],"","",true,false],["Land_CampingChair_V2_F",[2.71048,-0.444679,0.23],7.55273,1,0,[0,0],"","",true,false],["B_CargoNet_01_ammo_F",[1.61679,-2.76766,0],0,1,0,[0,0],"","",true,false],["MapBoard_altis_F",[2.48146,2.91809,0.23],41.3345,1,0,[0,0],"","",true,false]]]
+	["Land_House_1W01_F",[
+		["Land_MetalCase_01_small_F",[-0.0391073,-2.38339,-0.00100088],269.766,1,0,[2.80922e-005,-0.000455107],"","",true,false],
+		["Land_CampingChair_V2_F",[-0.95352,2.19191,-0.000998974],205.312,1,0,[0.000419523,0.00036544],"","",true,false],
+		["OfficeTable_01_new_F",[-0.669114,2.76221,-0.000998974],3.3096e-005,1,0,[-6.48772e-005,0.000181224],"","",true,false],
+		["MapBoard_altis_F",[2.80548,0.361253,-0.00155544],86.6927,1,0,[-0.294008,-0.0546504],"","",true,false],
+		["B_CargoNet_01_ammo_F",[2.65323,-1.62338,-0.00099659],360,1,0,[-0.000187827,0.000360995],"","",true,false],
+		["Land_Workbench_01_F",[2.20189,2.67528,-0.000597],359.805,1,0,[0.103474,-0.00103475],"","",true,false]
+	]],
+	["Land_House_1W10_F",[
+		["Land_CampingChair_V2_F",[0.920077,-0.901972,0.034317],24.7907,1,0,[-0.124043,0.271041],"","",true,false],
+		["OfficeTable_01_new_F",[0.640592,-1.47487,0.0357647],179.487,1,0,[-0.00276878,-0.297944],"","",true,false],
+		["Land_MetalCase_01_small_F",[1.14552,1.94735,0.0331335],92.3128,1,0,[-0.297861,-0.0119579],"","",true,false],
+		["Land_Workbench_01_F",[-2.52448,-1.38322,0.0522304],180.992,1,0,[0.0054578,-0.297945],"","",true,false],
+		["B_CargoNet_01_ammo_F",[-3.02816,1.29547,0.0548558],179.482,1,0,[-0.00272333,-0.298135],"","",true,false],
+		["MapBoard_altis_F",[3.00379,-1.43205,0.061625],134.089,1,0,[0.654025,0.845397],"","",true,false]
+	]],
+	["Land_House_1W02_F",[
+		["Land_MetalCase_01_small_F",[-0.538328,0.901626,-0.0010004],174.741,1,0,[-9.37514e-005,9.29899e-005],"","",true,false],
+		["Land_CampingChair_V2_F",[2.85857,-0.415011,-0.000994682],292.015,1,0,[-0.00038614,-0.00123639],"","",true,false],
+		["OfficeTable_01_new_F",[3.44428,-0.666138,-0.000999928],86.7032,1,0,[0.000145824,6.21702e-005],"","",true,false],
+		["MapBoard_altis_F",[-1.49216,3.31236,0.0428715],355.179,1,0,[-0.360939,0.0461294],"","",true,false],
+		["B_CargoNet_01_ammo_F",[2.64869,3.16984,-0.0010004],179.483,1,0,[-0.000110829,1.88703e-005],"","",true,false],
+		["Land_Workbench_01_F",[-4.55341,1.23832,-0.00100088],269.89,1,0,[0.00126416,2.55769e-005],"","",true,false]
+	]]
 ];
 
 //Interactable items that spawn in your house
 OT_item_Storage = "B_CargoNet_01_ammo_F"; //Your spawn ammobox
 OT_item_Desk = "OfficeTable_01_new_F"; //Your spawn desk
 OT_item_Radio = "Land_PortableLongRangeRadio_F";
-OT_item_Map = "Mapboard_tanoa_F";
+OT_item_Map = "Land_MapBoard_Enoch_F";
 OT_item_Tent = "Land_TentDome_F";
 OT_item_Safe = "Land_MetalCase_01_small_F";
 OT_item_Workbench = "Land_Workbench_01_F";
@@ -48,12 +85,12 @@ OT_allFarmAnimals = ["Hen_random_F","Cock_random_F","Sheep_random_F"];
 OT_allVillageAnimals = ["Hen_random_F","Cock_random_F"];
 OT_allTownAnimals = ["Alsatian_Random_F","Fin_random_F"];
 
-OT_fuelPumps = ["Land_FuelStation_02_pump_F","Land_FuelStation_01_pump_F","Land_fs_feed_F","Land_FuelStation_Feed_F"];
+OT_fuelPumps = ["Land_FuelStation_03_pump_F","Land_FuelStation_Feed_F"];
 
 OT_churches = ["Land_Church_03_F","Land_Church_01_F","Land_Church_02_F","Land_Temple_Native_01_F"];
 
-OT_language_local = "LanguageENGFRE_F";
-OT_identity_local = "Head_Tanoan";
+OT_language_local = "LanguageENG_F";
+OT_identity_local = "Head_Euro";
 
 OT_language_western = "LanguageENG_F";
 OT_identity_western = "Head_Euro";
@@ -78,7 +115,7 @@ OT_vehTypes_civignore = ["C_Hatchback_01_F","C_Hatchback_01_sport_F",OT_vehType_
 OT_illegalHeadgear = ["H_MilCap_gen_F","H_Beret_gen_F","H_HelmetB_TI_tna_F"];
 OT_illegalVests = ["V_TacVest_gen_F"];
 
-OT_clothes_locals = ["U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1"];
+OT_clothes_locals = ["U_I_C_Soldier_Bandit_2_F","U_I_C_Soldier_Bandit_3_F","U_C_Poor_1","U_C_Poor_2","U_C_Poor_shorts_1","U_C_Poor_shorts_2","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_stripped"];
 OT_clothes_expats = ["U_I_C_Soldier_Bandit_5_F","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_redwhite","U_C_Poloshirt_salmon","U_C_Poloshirt_stripped","U_C_Man_casual_6_F","U_C_Man_casual_4_F","U_C_Man_casual_5_F"];
 OT_clothes_tourists = [];
 OT_clothes_priest = "U_C_Man_casual_2_F";
@@ -187,5 +224,5 @@ OT_barracks = "Land_Barracks_01_grey_F";
 OT_workshopBuilding = "Land_Cargo_House_V4_F";
 OT_refugeeCamp = "Land_Medevac_house_V1_F";
 OT_trainingCamp = "Land_IRMaskingCover_02_F";
-OT_hardwareStore = "Land_Shop_Town_02_F";
+OT_hardwareStore = "Land_Workshop_05_F";
 OT_radarBuilding = "Land_Radar_Small_F";

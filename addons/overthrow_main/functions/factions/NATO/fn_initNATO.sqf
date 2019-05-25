@@ -207,29 +207,31 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
     }foreach(OT_airportData);
 
-	{
-		_x params ["_type","_num"];
-		private _count = 0;
-		while {_count < _num} do {
-			private _name = _prilist call BIS_fnc_selectRandom;
-			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
-			_garrison pushback _type;
-			_count = _count + 1;
-			server setVariable [format ["airgarrison%1",_name],_garrison,true];
-		};
-	}foreach(OT_NATO_Vehicles_AirGarrison);
+	if((count _prilist) > 0) then {
+		{
+			_x params ["_type","_num"];
+			private _count = 0;
+			while {_count < _num} do {
+				private _name = _prilist call BIS_fnc_selectRandom;
+				private _garrison = server getVariable [format["airgarrison%1",_name],[]];
+				_garrison pushback _type;
+				_count = _count + 1;
+				server setVariable [format ["airgarrison%1",_name],_garrison,true];
+			};
+		}foreach(OT_NATO_Vehicles_AirGarrison);
 
-	//Distribute some random Air vehicles
-	_airvehs = OT_allBLUOffensiveVehicles select {_x isKindOf "Air"};
-	{
-		_name = _x;
-		if((random 200) < (count _airvehs)) then {
-			_type = selectRandom _airvehs;
-			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
-			_garrison pushback _type;
-			server setVariable [format ["airgarrison%1",_name],_garrison,true];
-		};
-	}foreach(_prilist);
+		//Distribute some random Air vehicles
+		_airvehs = OT_allBLUOffensiveVehicles select {_x isKindOf "Air"};
+		{
+			_name = _x;
+			if((random 200) < (count _airvehs)) then {
+				_type = selectRandom _airvehs;
+				private _garrison = server getVariable [format["airgarrison%1",_name],[]];
+				_garrison pushback _type;
+				server setVariable [format ["airgarrison%1",_name],_garrison,true];
+			};
+		}foreach(_prilist);
+	};
 
 	//Distribute static AA to airfields
 	{
@@ -351,7 +353,7 @@ sleep 0.2;
 private _revealed = server getVariable ["revealedFOBs",[]];
 {
 	_x params ["_pos","_garrison","_upgrades"];
-	OT_flag_NATO createVehicle _pos;	
+	OT_flag_NATO createVehicle _pos;
 
 	private _count = 0;
 	private _group = creategroup blufor;

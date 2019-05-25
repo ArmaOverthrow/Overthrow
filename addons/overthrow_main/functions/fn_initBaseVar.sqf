@@ -7,6 +7,7 @@ OT_hasJetsDLC = ("B_Plane_Fighter_01_F" isKindOf "Air");
 //Buildings (mission override)
 OT_shopBuildings = [];
 OT_spawnHouseBuildings = [];
+OT_carShopBuildings = [];
 
 //Default Loadouts
 OT_Unit_Police = "I_soldier_F";

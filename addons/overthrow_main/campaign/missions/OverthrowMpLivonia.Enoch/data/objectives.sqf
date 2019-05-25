@@ -8,7 +8,8 @@ OT_objectiveData = [
     [[10995.2,9005.87,0],"Chemical Plant",600],
     [[9823,8133.64,0],"Borek Base",350],
     [[9093.82,6662.88,0],"Lembork Base",350],
-    [[4399.09,6717.44,0],"fuel depot",500]
+    [[4399.09,6717.44,0],"fuel depot",500],
+    [[3519.9,5704.66,0],"Topolin Base",400]
 ];
 OT_NATO_HQ = "Lukow Airfield";
 OT_NATO_priority = ["Lukow Airfield","Comms Alpha","Zapadlisko Base"];
