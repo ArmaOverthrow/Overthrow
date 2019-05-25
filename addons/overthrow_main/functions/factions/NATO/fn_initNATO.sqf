@@ -68,6 +68,7 @@ OT_NATOcomms = server getVariable ["NATOcomms",[]];
 OT_NATOhvts = server getVariable ["NATOhvts",[]];
 OT_allObjectives = [];
 OT_allComms = [];
+OT_NATOHelipads = [];
 
 private _diff = server getVariable ["OT_difficulty",1];
 
@@ -149,6 +150,13 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 
 		}else{
 			OT_NATOobjectives pushBack _x;
+		};
+		//Check for helipads
+		if !(_name in OT_allAirports) then {
+			private _helipads = _pos nearObjects ["Land_HelipadCircle_F", 400];
+			if((count _helipads) > 0) then {
+				OT_NATOHelipads pushbackUnique _x;
+			};
 		};
 	}foreach (OT_objectiveData + OT_airportData);
 
@@ -294,6 +302,16 @@ publicVariable "OT_allComms";
 	server setVariable [_name,_pos,true];
 
 	OT_allObjectives pushback _name;
+
+	//Check for helipads
+	if !((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
+		if !(_name in OT_allAirports) then {
+			private _helipads = _pos nearObjects ["Land_HelipadCircle_F", 400];
+			if((count _helipads) > 0) then {
+				OT_NATOHelipads pushbackUnique _x;
+			};
+		};
+	};
 }foreach(OT_NATOobjectives);
 sleep 0.2;
 
