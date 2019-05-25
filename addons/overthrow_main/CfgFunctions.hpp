@@ -297,6 +297,7 @@ class CfgFunctions
             class canPlace {};
 			class vehicleCanMove {};
 			class unflipVehicle {};
+			class triggerBattle {};
 
 		};
 

@@ -351,7 +351,8 @@ sleep 0.2;
 private _revealed = server getVariable ["revealedFOBs",[]];
 {
 	_x params ["_pos","_garrison","_upgrades"];
-	OT_flag_NATO createVehicle _pos;
+	OT_flag_NATO createVehicle _pos;	
+
 	private _count = 0;
 	private _group = creategroup blufor;
 	while {_count < _garrison} do {

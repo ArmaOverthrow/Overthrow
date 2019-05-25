@@ -4,6 +4,8 @@ if(_name != "") then {
 
     private _base = (player nearObjects [OT_flag_IND,50]) select 0;
 
+    [_base, ["Set As Home", {player setVariable ["home",getpos _base,true]},nil,0,false,true,"",""]] remoteExec ["addAction",0,_base];
+
     private _bases = server getVariable ["bases",[]];
     _bases pushback [getpos _base,_name,getplayeruid player];
     server setVariable ["bases",_bases,true];

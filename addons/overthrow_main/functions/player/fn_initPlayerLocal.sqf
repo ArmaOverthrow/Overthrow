@@ -310,7 +310,7 @@ _count = 0;
 waitUntil {!isNil "OT_SystemInitDone"};
 titleText ["Loading Session", "BLACK FADED", 0];
 player setCaptive true;
-player setPos _housepos;
+player setPos (_housepos findEmptyPosition [1,20,typeof player]);
 [_housepos,_newplayer] spawn {
 	params ["_housepos","_newplayer"];
 	setViewDistance -1;
