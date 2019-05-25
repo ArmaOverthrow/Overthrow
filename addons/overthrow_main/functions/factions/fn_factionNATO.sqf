@@ -506,7 +506,7 @@ publicVariable "OT_nextNATOTurn";
 
 			//Send a ground patrol
 			private _last = spawner getVariable ["NATOlastpatrol",0];
-			if((time - _last) > 1200 && _spend > 150 && _popControl > 200) then {
+			if((time - _last) > 1200 && _spend > 150) then {
 
 				{
 					_town = _x;

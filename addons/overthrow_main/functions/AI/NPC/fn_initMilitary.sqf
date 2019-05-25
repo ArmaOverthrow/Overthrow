@@ -45,14 +45,21 @@ if((random 100) > 25) then {
 
 	_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
-	_mag = selectRandom _magazines;
-	_unit addWeaponItem [_wpn, _mag];
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
+	_mag = "";
+	{
+		_scope = getNumber (configFile >> "CfgMagazines" >> _x >> "scope");
+		if(_scope > 1) exitWith {_mag = _x};
+	}foreach([_magazines,[],{random 100},"ASCEND"] call BIS_fnc_sortBy);
+
+	if !(_mag isEqualTo "") then {
+		_unit addWeaponItem [_wpn, _mag];
+		_unit addMagazineGlobal _mag;
+		_unit addMagazineGlobal _mag;
+		_unit addMagazineGlobal _mag;
+		_unit addMagazineGlobal _mag;
+		_unit addMagazineGlobal _mag;
+		_unit addMagazineGlobal _mag;
+	};
 
 	_secondmags = [];
 	{
@@ -62,13 +69,18 @@ if((random 100) > 25) then {
 	}foreach(getArray (configFile / "CfgWeapons" / _wpn / "muzzles"));
 	if((count _secondmags) > 0) then {
 		_mag = _secondmags select 0;
-		_unit addWeaponItem [_wpn, _mag];
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
+
+		_mag = "";
+		_scope = getNumber (configFile >> "CfgMagazines" >> _mag >> "scope");
+		if(_scope > 1) then {
+			_unit addWeaponItem [_wpn, _mag];
+			_unit addMagazineGlobal _mag;
+			_unit addMagazineGlobal _mag;
+			_unit addMagazineGlobal _mag;
+			_unit addMagazineGlobal _mag;
+			_unit addMagazineGlobal _mag;
+			_unit addMagazineGlobal _mag;
+		};
 	};
 
 	//Secondary Weapon
@@ -91,8 +103,13 @@ if((random 100) > 25) then {
 			_unit addWeapon _wpn;
 			_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
-			_mag = selectRandom _magazines;
-			if !(_mag isEqualTo "ACE_PreloadedMissileDummy") then {
+			_mag = "";
+			{
+				_scope = getNumber (configFile >> "CfgMagazines" >> _x >> "scope");
+				if(_scope > 1) exitWith {_mag = _x};
+			}foreach([_magazines,[],{random 100},"ASCEND"] call BIS_fnc_sortBy);
+
+			if !(_mag isEqualTo "") then {
 				_unit addWeaponItem [_wpn, _mag];
 				_unit addMagazineGlobal _mag;
 				_unit addMagazineGlobal _mag;
@@ -121,10 +138,17 @@ if((random 100) > 25) then {
 	_unit addWeapon _wpn;
 	_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
-	_mag = selectRandom _magazines;
-	_unit addWeaponItem [_wpn, _mag];
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
+	_mag = "";
+	{
+		_scope = getNumber (configFile >> "CfgMagazines" >> _x >> "scope");
+		if(_scope > 1) exitWith {_mag = _x};
+	}foreach([_magazines,[],{random 100},"ASCEND"] call BIS_fnc_sortBy);
+
+	if !(_mag isEqualTo "") then {
+		_unit addWeaponItem [_wpn, _mag];
+		_unit addMagazineGlobal _mag;
+		_unit addMagazineGlobal _mag;
+	};
 
 	_unit selectWeapon (primaryWeapon _unit);
 

@@ -47,7 +47,7 @@ if(_price > -1) then {
 
     		[
 				nil,
-    			format["These items were not found in the warehouse and must be purchased:<br/>",_text],
+    			format["These items were not found in the warehouse and must be purchased:<br/>%1",_text],
 				_cls call OT_fnc_vehicleGetName,
 				_price
 			]

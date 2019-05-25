@@ -1,4 +1,4 @@
-//Scramble a helicopter to take out a target
+//Send a patrol vehicle to a town
 params ["_frombase","_topos",["_delay",0]];
 
 private _abandoned = server getVariable ["NATOabandoned",[]];
