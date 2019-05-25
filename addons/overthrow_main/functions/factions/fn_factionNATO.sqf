@@ -507,23 +507,29 @@ publicVariable "OT_nextNATOTurn";
 			//Send a ground patrol
 			private _last = spawner getVariable ["NATOlastpatrol",0];
 			if((time - _last) > 1200 && _spend > 150) then {
-
+				private _done = false;
 				{
 					_town = _x;
 					_stability = server getVariable format ["stability%1",_town];
 					_townPos = server getVariable _town;
-					_base = _townPos call OT_fnc_nearestObjective;
-					_basename = _base select 1;
-					_basepos = _base select 0;
-					_baseregion = _basepos call OT_fnc_getRegion;
-					_townregion = _townPos call OT_fnc_getRegion;
-					_dist = _basepos distance _townPos;
-					if(!(_basename in _abandoned) && _baseregion isEqualTo _townregion && _dist < 5000 && _stability < 50 && (random 100) > _chance) exitWith {
-						_spend = _spend - 150;
-						_resources = _resources - 150;
-						[_basename,_townPos] spawn OT_fnc_NATOGroundPatrol;
-						spawner setVariable ["NATOlastpatrol",time,false];
+					if(_townPos call OT_fnc_inSpawnDistance) then {
+						_base = _townPos call OT_fnc_nearestObjective;
+						_basename = _base select 1;
+						_basepos = _base select 0;
+						if !(_basename in OT_allComms) then {
+							_baseregion = _basepos call OT_fnc_getRegion;
+							_townregion = _townPos call OT_fnc_getRegion;
+							_dist = _basepos distance _townPos;
+							if(!(_basename in _abandoned) && _baseregion isEqualTo _townregion && _dist < 5000 && _stability < 50 && (random 100) > _chance) exitWith {
+								_spend = _spend - 150;
+								_done = true;
+								_resources = _resources - 150;
+								[_basename,_townPos] spawn OT_fnc_NATOGroundPatrol;
+								spawner setVariable ["NATOlastpatrol",time,false];
+							};
+						};
 					};
+					if(_done) exitWith {};
 				}foreach ([OT_allTowns,[],{random 100},"DESCEND"] call BIS_fnc_sortBy);
 			};
 

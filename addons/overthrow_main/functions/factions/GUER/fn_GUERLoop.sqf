@@ -24,6 +24,16 @@ if(_trackcounter > 5) then {
 	spawner setVariable ["track",_track,false];
 };
 
+//Stop civilians from fleeing after 20 seconds
+{
+	if(_x getVariable ["fleeing",false]) then {
+		if((time - (_x getVariable ["fleeingstart",0])) > 20) then {
+			_x setVariable ["fleeing",false];
+			_x setBehaviour "SAFE";
+		};
+	};
+}foreach(allGroups select {(side _x) isEqualTo civilian});
+
 private _dead = count alldeadmen;
 if(_dead > 150) then {
 	format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];

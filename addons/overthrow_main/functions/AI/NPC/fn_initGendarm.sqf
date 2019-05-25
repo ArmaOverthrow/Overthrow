@@ -57,8 +57,7 @@ _weapon = selectRandom OT_allBLUSMG;
 if((call OT_fnc_getControlledPopulation) > 1000) then {
 	_weapon = selectRandom OT_allBLURifles;
 };
-_base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
+_magazine = (getArray (configFile / "CfgWeapons" / _weapon / "magazines")) select 0;
 _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;

@@ -147,6 +147,8 @@ if(isMultiplayer || _startup == "LOAD") then {
 		}foreach(_housepos nearObjects 50);
 	};
 
+	(group player) setVariable ["VCM_Disable",true];
+
 	_recruits = server getVariable ["recruits",[]];
 	_newrecruits = [];
 	{

@@ -101,8 +101,8 @@ private _target = _sorted select 0;
 			_unit doMove getpos _deadguy;
 			[_unit,1] call OT_fnc_experience;
 
-			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance _deadguy < 12) || (_timeOut < time)};
-			if((!alive _unit) || (_timeOut < time)) exitWith {};
+			waitUntil {sleep 1; (!alive _unit) || (isNull _t) || (_unit distance2D _deadguy < 12) || (_timeOut < time)};
+			if((!alive _unit) || (_timeOut < time)) exitWith {_unit globalchat "Cant get to a body, cancelling loot order"};
 
 			[_deadguy,_unit] call OT_fnc_takeStuff;
 			sleep 2;

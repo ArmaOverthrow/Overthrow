@@ -44,7 +44,7 @@ if(headgear _unit != "") then {
 };
 
 if(backpack _unit != "") then {
-	[_cls,1] call OT_fnc_addToWarehouse;
+	[backpack _unit,1] call OT_fnc_addToWarehouse;
 	removeBackpack _unit;
 };
 

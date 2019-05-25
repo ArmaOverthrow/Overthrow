@@ -123,6 +123,10 @@ class CfgMissions
 		{
 			directory="overthrow_main\campaign\missions\OverthrowMpMalden.Malden";
 		};
+		class OverthrowMpLivonia
+		{
+			directory="overthrow_main\campaign\missions\OverthrowMpLivonia.Enoch";
+		};
 	};
 };
 
