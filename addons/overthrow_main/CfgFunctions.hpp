@@ -184,6 +184,7 @@ class CfgFunctions
 			class jobsDialog {};
 			class craftDialog {};
 			class uploadData {};
+			class logisticsDialog {};
 		};
 
 		class Display
@@ -197,6 +198,7 @@ class CfgFunctions
 			class displayJobDetails {};
 			class displayCraftItem {};
 			class factoryRefresh {};
+			class displayLogisticDetails {};
 		};
 
 		/*
@@ -266,6 +268,7 @@ class CfgFunctions
 			class transferFunds {};
 			class hireEmployee {};
 			class fireEmployee {};
+			class setVehicleWaypoint {};
 
 			/* Jobs */
 			class setJobWaypoint {};

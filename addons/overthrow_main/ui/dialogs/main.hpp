@@ -1160,6 +1160,18 @@ class OT_dialog_main
 			h = 0.044 * safezoneH;
 			tooltip = "Purchase this building"; //--- ToDo: Localize;
 		};
+		class RscButton_1630: RscOverthrowButton
+		{
+			idc = 1630;
+			action = "closeDialog 0;[] call OT_fnc_logisticsDialog";
+
+			text = "Vehicles"; //--- ToDo: Localize;
+			x = 0.881562 * safezoneW + safezoneX;
+			y = 0.247 * safezoneH + safezoneY;
+			w = 0.113437 * safezoneW;
+			h = 0.044 * safezoneH;
+			tooltip = "List of all military vehicles and their state"; //--- ToDo: Localize;
+		};
 		class RscButton_1609: RscOverthrowButton
 		{
 			idc = 1609;

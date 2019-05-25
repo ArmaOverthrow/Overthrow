@@ -44,7 +44,12 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 				if(isNil "_dirveh") then {_dirveh = random 359};
 				_posVeh = [_pos, 6, _dirveh + 90] call BIS_Fnc_relPos;
 				_posEmpty = _posVeh findEmptyPosition [4,15,_vehtype];
-				if((_posVeh distance _posEmpty) > 4) then {_posVeh = []}; //dont bother if the position isnt empty for 4m
+				 //dont bother if the position isnt empty for 4m
+				if(count _posEmpty isEqualTo 0) then {
+					_posVeh = [];
+				}else{
+					if((_posVeh distance _posEmpty) > 4) then {_posVeh = []};
+				};
 				if(count _posVeh > 0) then {
 					_veh = _vehtype createVehicle _posEmpty;
 					_veh setVariable ["ambient",true,true];
