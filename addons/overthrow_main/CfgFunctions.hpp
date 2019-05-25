@@ -296,6 +296,7 @@ class CfgFunctions
 			class playSound {};
             class canPlace {};
 			class vehicleCanMove {};
+			class unflipVehicle {};
 
 		};
 
