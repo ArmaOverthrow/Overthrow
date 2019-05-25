@@ -106,10 +106,12 @@ sleep 0.2;
 			case 2: {
 				_val deleteAt 0;
 				{
-					if(!isNil "_x" && _x isEqualType []) then {
-						_x params ["_itemClass",["_itemCount",0,[0]]];
-						if (_itemCount > 0) then {
-							warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+					if(!isNil "_x") then {
+						if(_x isEqualType []) then {
+							_x params ["_itemClass",["_itemCount",0,[0]]];
+							if (_itemCount > 0) then {
+								warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+							};
 						};
 					};
 				}foreach(_val);
@@ -234,7 +236,10 @@ sleep 0.2;
 							_veh addWeaponCargoGlobal [_cls,_num];
 						};
 						if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
-							_veh addMagazineCargoGlobal [_cls,_num];
+							private _scope = getNumber(configFile >> "CfgMagazines" >> _cls >> "scope");
+							if(_scope > 1) then {
+								_veh addMagazineCargoGlobal [_cls,_num];
+							};
 						};
 						if(_cls isKindOf "Bag_Base") exitWith {
 							_cls = _cls call BIS_fnc_basicBackpack;
