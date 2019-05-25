@@ -8,7 +8,7 @@ class EditorData
 	toggles=514;
 	class ItemIDProvider
 	{
-		nextID=2216;
+		nextID=2218;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=474;
+		nextID=479;
 	};
 	class Camera
 	{
-		pos[]={20369.848,120.36857,18730.523};
-		dir[]={-0.5013628,-0.59907788,0.62431037};
-		up[]={-0.37511632,0.80068535,0.46710491};
-		aside[]={0.77970982,3.7107384e-008,0.62616056};
+		pos[]={12436.759,146.09325,15250.127};
+		dir[]={0.65525752,-0.3587569,-0.6647976};
+		up[]={0.25184631,0.93342537,-0.25551504};
+		aside[]={-0.71221143,5.3041731e-008,-0.7019915};
 	};
 };
 binarizationWanted=0;
@@ -61,7 +61,8 @@ addons[]=
 	"A3_Structures_F_Mil_Cargo",
 	"A3_Structures_F_Mil_Fortification",
 	"A3_Structures_F_Argo_Walls_Military",
-	"A3_Structures_F_Mil_TentHangar"
+	"A3_Structures_F_Mil_TentHangar",
+	"A3_Structures_F_Mil_Helipads"
 };
 class AddonsMetaData
 {
@@ -718,7 +719,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=113;
+		items=114;
 		class Item0
 		{
 			dataType="Layer";
@@ -4710,7 +4711,7 @@ class Mission
 			};
 			id=2134;
 			type="Land_WarehouseShelter_01_F";
-			atlOffset=0.17799997;
+			atlOffset=0.17800021;
 		};
 		class Item38
 		{
@@ -5759,6 +5760,7 @@ class Mission
 			};
 			id=2199;
 			type="Land_TentHangar_V1_F";
+			atlOffset=-1.9073486e-006;
 		};
 		class Item97
 		{
@@ -5793,6 +5795,7 @@ class Mission
 			};
 			id=2201;
 			type="Land_Cargo_Patrol_V1_F";
+			atlOffset=-9.5367432e-007;
 		};
 		class Item99
 		{
@@ -5876,6 +5879,7 @@ class Mission
 			};
 			id=2206;
 			type="Land_Cargo_Tower_V1_F";
+			atlOffset=-4.7683716e-007;
 		};
 		class Item104
 		{
@@ -5911,6 +5915,7 @@ class Mission
 			};
 			id=2208;
 			type="Land_Cargo_Tower_V1_F";
+			atlOffset=-1.9073486e-006;
 		};
 		class Item106
 		{
@@ -5928,6 +5933,7 @@ class Mission
 			};
 			id=2209;
 			type="Land_Cargo_Tower_V1_F";
+			atlOffset=1.9073486e-006;
 		};
 		class Item107
 		{
@@ -5945,6 +5951,7 @@ class Mission
 			};
 			id=2210;
 			type="Land_Cargo_Tower_V1_F";
+			atlOffset=-1.9073486e-006;
 		};
 		class Item108
 		{
@@ -5962,6 +5969,7 @@ class Mission
 			};
 			id=2211;
 			type="Land_Cargo_Patrol_V1_F";
+			atlOffset=-1.9073486e-006;
 		};
 		class Item109
 		{
@@ -6030,6 +6038,24 @@ class Mission
 			};
 			id=2215;
 			type="Land_Cargo_Tower_V1_F";
+			atlOffset=-1.9073486e-006;
+		};
+		class Item113
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23503.676,90.520355,21143.838};
+				angles[]={0.015998369,0,6.2818484};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2216;
+			type="Land_HelipadCircle_F";
+			atlOffset=7.6293945e-006;
 		};
 	};
 	class Connections

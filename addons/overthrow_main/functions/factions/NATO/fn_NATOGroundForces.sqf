@@ -27,11 +27,11 @@ private _dir = 0;
 
 if(_byair) then {
 	//find helipads
-	private _helipads = _frompos nearObjects ["Land_HelipadCircle_F", 400];
+	private _helipads = (_frompos nearObjects ["Land_HelipadCircle_F", 400]) + (_frompos nearObjects ["Land_HelipadSquare_F", 400]);
 	{
 		//check if theres anything on it
 		private _on = ASLToAGL getPosASL _x nearEntities ["Air",15];
-		if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x;_dir = getDir _x};		
+		if((count _on) isEqualTo 0) exitWith {_pos = getPosASL _x;_dir = getDir _x};
 	}foreach(_helipads);
 };
 

@@ -156,7 +156,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
 		//Check for helipads
 		if !(_name in OT_allAirports) then {
-			private _helipads = _pos nearObjects ["Land_HelipadCircle_F", 400];
+			private _helipads = (_pos nearObjects ["Land_HelipadCircle_F", 400]) + (_pos nearObjects ["Land_HelipadSquare_F", 400]);
 			if((count _helipads) > 0) then {
 				OT_NATOHelipads pushbackUnique _x;
 			};
@@ -309,7 +309,7 @@ publicVariable "OT_allComms";
 	//Check for helipads
 	if !((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
 		if !(_name in OT_allAirports) then {
-			private _helipads = _pos nearObjects ["Land_HelipadCircle_F", 400];
+			private _helipads = (_pos nearObjects ["Land_HelipadCircle_F", 400]) + (_pos nearObjects ["Land_HelipadSquare_F", 400]);
 			if((count _helipads) > 0) then {
 				OT_NATOHelipads pushbackUnique _x;
 			};
