@@ -155,14 +155,14 @@ if(isMultiplayer || _startup == "LOAD") then {
 	{
 		_owner = _x select 0;
 		_name = _x select 1;
-		_pos = _x select 2;
+		_civ = _x select 2;
 		_rank = _x select 3;
 		_loadout = _x select 4;
 		_type = _x select 5;
 		_xp = _x select 6;
 		if(_owner isEqualTo (getplayeruid player)) then {
-			if(typename _pos isEqualTo "ARRAY") then {
-				_pos = _pos findEmptyPosition [5,20,_type];
+			if(typename _civ isEqualTo "ARRAY") then {
+				_pos = _civ findEmptyPosition [5,20,_type];
 				_civ =  group player createUnit [_type,_pos,[],0,"NONE"];
 				[_civ,getplayeruid player] call OT_fnc_setOwner;
 				_civ setVariable ["OT_xp",_xp,true];

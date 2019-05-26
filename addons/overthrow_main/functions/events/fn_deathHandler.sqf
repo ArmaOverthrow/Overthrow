@@ -2,9 +2,8 @@ params ["_me",["_killer", objNull]];
 
 if ((isNull _killer) || {_killer == _unit}) then {
 	private _aceSource = _me getVariable ["ace_medical_lastDamageSource", objNull];
-		if ((!isNull _aceSource) && {_aceSource != _unit}) then {
-			_killer = _aceSource;
-		};
+	if ((!isNull _aceSource) && {_aceSource != _unit}) then {
+		_killer = _aceSource;
 	};
 };
 
