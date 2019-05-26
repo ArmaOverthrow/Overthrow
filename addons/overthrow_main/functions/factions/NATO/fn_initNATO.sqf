@@ -275,8 +275,6 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 };
 diag_log "Overthrow: NATO Init Done";
 
-publicVariable "OT_allComms";
-
 {
 	_x params ["_pos","_name"];
 	private _mrk = createMarker [_name,_pos];
@@ -383,6 +381,7 @@ private _revealed = server getVariable ["revealedFOBs",[]];
 	};
 }foreach(server getVariable ["NATOfobs",[]]);
 
-
+publicVariable "OT_allObjectives";
+publicVariable "OT_allComms";
 OT_NATOInitDone = true;
 publicVariable "OT_NATOInitDone";

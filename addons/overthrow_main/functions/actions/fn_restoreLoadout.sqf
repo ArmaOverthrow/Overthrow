@@ -12,7 +12,7 @@ if(count _primary > 0) then {
 	private _pAmmo = (_primary select 4) select 0;
 
 	if([_ammobox,_pWpn,1] call CBA_fnc_removeWeaponCargo) then {
-		_unit addWeaponGlobal _pWpn;
+		_unit addWeapon _pWpn;
 		if(!isNil "_pAmmo") then {
 			if([_ammobox,_pAmmo,1] call CBA_fnc_removeMagazineCargo) then {
 				_unit addMagazineGlobal _pAmmo;
@@ -32,7 +32,7 @@ if(count _secondary > 0) then {
 	private _sAmmo = (_secondary select 4) select 0;
 
 	if([_ammobox,_sWpn,1] call CBA_fnc_removeWeaponCargo) then {
-		_unit addWeaponGlobal _sWpn;
+		_unit addWeapon _sWpn;
 		if(!isNil "_sAmmo") then {
 			if([_ammobox,_sAmmo,1] call CBA_fnc_removeMagazineCargo) then {
 				_unit addMagazineGlobal _sAmmo;
@@ -52,7 +52,7 @@ if(count _tertiary > 0) then {
 	private _tAmmo = (_tertiary select 4) select 0;
 
 	if([_ammobox,_tWpn,1] call CBA_fnc_removeWeaponCargo) then {
-		_unit addWeaponGlobal _tWpn;
+		_unit addWeapon _tWpn;
 		if(!isNil "_tAmmo") then {
 			if([_ammobox,_tAmmo,1] call CBA_fnc_removeMagazineCargo) then {
 				_unit addMagazineGlobal _tAmmo;

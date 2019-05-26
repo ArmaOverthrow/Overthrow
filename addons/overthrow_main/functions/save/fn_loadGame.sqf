@@ -82,7 +82,7 @@ sleep 0.2;
 
 			_veh = createVehicle [OT_flag_IND, _pos, [], 0, "CAN_COLLIDE"];
 
-			[_veh, ["Set As Home", {player setVariable ["home",getpos (_this select 0),true]},nil,0,false,true]] remoteExec ["addAction",0,_veh];
+			[_veh, ["Set As Home", {player setVariable ["home",getpos (_this select 0),true];"This FOB is now your home" call OT_fnc_notifyMinor},nil,0,false,true]] remoteExec ["addAction",0,_veh];
 
 			_veh enableDynamicSimulation true;
 			[_veh,_owner] call OT_fnc_setOwner;

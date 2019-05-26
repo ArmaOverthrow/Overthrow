@@ -61,7 +61,7 @@ _magazine = (getArray (configFile / "CfgWeapons" / _weapon / "magazines")) selec
 _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
-_unit addWeaponGlobal _weapon;
+_unit addWeapon _weapon;
 
 if(_hour > 17 || _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
@@ -76,4 +76,4 @@ _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazineGlobal _magazine;
 _unit addMagazineGlobal _magazine;
-_unit addWeaponGlobal _weapon;
+_unit addWeapon _weapon;
