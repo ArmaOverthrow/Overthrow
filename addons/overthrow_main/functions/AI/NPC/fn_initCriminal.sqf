@@ -51,11 +51,11 @@ _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 
 if (isNil "_magazine") then {_weapon = (OT_allHandguns) call BIS_fnc_selectRandom;_base = [_weapon] call BIS_fnc_baseWeapon;_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;};
 
 if !(isNil "_magazine") then {
-	_unit addMagazineGlobal _magazine;
-	_unit addMagazineGlobal _magazine;
-	_unit addMagazineGlobal _magazine;
-	_unit addMagazineGlobal _magazine;
-	_unit addMagazineGlobal _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
+	_unit addMagazine _magazine;
 };
 
 _unit addWeapon _weapon;

@@ -185,7 +185,7 @@ if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 		server setVariable ["reschems",_chems - (_cost select 3),true];
 	};
 	[-_price] call OT_fnc_money;
-	player addMagazineGlobal _cls;
+	player addMagazine _cls;
 	playSound "3DEN_notificationDefault";
 };
 private _handled = true;

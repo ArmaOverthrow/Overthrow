@@ -53,12 +53,12 @@ if((random 100) > 25) then {
 
 	if !(_mag isEqualTo "") then {
 		_unit addWeaponItem [_wpn, _mag];
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
 	};
 
 	_secondmags = [];
@@ -74,12 +74,12 @@ if((random 100) > 25) then {
 		_scope = getNumber (configFile >> "CfgMagazines" >> _mag >> "scope");
 		if(_scope > 1) then {
 			_unit addWeaponItem [_wpn, _mag];
-			_unit addMagazineGlobal _mag;
-			_unit addMagazineGlobal _mag;
-			_unit addMagazineGlobal _mag;
-			_unit addMagazineGlobal _mag;
-			_unit addMagazineGlobal _mag;
-			_unit addMagazineGlobal _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
 		};
 	};
 
@@ -111,8 +111,8 @@ if((random 100) > 25) then {
 
 			if !(_mag isEqualTo "") then {
 				_unit addWeaponItem [_wpn, _mag];
-				_unit addMagazineGlobal _mag;
-				_unit addMagazineGlobal _mag;
+				_unit addMagazine _mag;
+				_unit addMagazine _mag;
 			}else{
 				removeBackpack _unit;
 			};
@@ -146,8 +146,8 @@ if((random 100) > 25) then {
 
 	if !(_mag isEqualTo "") then {
 		_unit addWeaponItem [_wpn, _mag];
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
 	};
 
 	_unit selectWeapon (primaryWeapon _unit);

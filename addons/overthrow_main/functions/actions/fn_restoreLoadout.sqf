@@ -15,7 +15,7 @@ if(count _primary > 0) then {
 		_unit addWeapon _pWpn;
 		if(!isNil "_pAmmo") then {
 			if([_ammobox,_pAmmo,1] call CBA_fnc_removeMagazineCargo) then {
-				_unit addMagazineGlobal _pAmmo;
+				_unit addMagazine _pAmmo;
 			};
 		};
 		{
@@ -35,7 +35,7 @@ if(count _secondary > 0) then {
 		_unit addWeapon _sWpn;
 		if(!isNil "_sAmmo") then {
 			if([_ammobox,_sAmmo,1] call CBA_fnc_removeMagazineCargo) then {
-				_unit addMagazineGlobal _sAmmo;
+				_unit addMagazine _sAmmo;
 			};
 		};
 		{
@@ -55,7 +55,7 @@ if(count _tertiary > 0) then {
 		_unit addWeapon _tWpn;
 		if(!isNil "_tAmmo") then {
 			if([_ammobox,_tAmmo,1] call CBA_fnc_removeMagazineCargo) then {
-				_unit addMagazineGlobal _tAmmo;
+				_unit addMagazine _tAmmo;
 			};
 		};
 	};
