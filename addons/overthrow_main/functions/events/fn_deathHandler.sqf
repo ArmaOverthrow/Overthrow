@@ -1,11 +1,14 @@
 if !(isServer) exitWith {};
-	
-_me = _this select 0;
-_killer = _me getVariable "ace_medical_lastDamageSource";
 
-if(isNil "_killer") then {_killer = _this select 1};
+params ["_me",["_killer", objNull]];
 
-if((vehicle _killer) != _killer) then {_killer = driver _killer};
+if ((isNull _killer) || {_killer == _unit}) then {
+	private _aceSource = _me getVariable ["ace_medical_lastDamageSource", objNull];
+		if ((!isNull _aceSource) && {_aceSource != _unit}) then {
+			_killer = _aceSource;
+		};
+	};
+};
 
 if(_killer call OT_fnc_unitSeen) then {
 	_killer setVariable ["lastkill",time,true];
@@ -13,6 +16,7 @@ if(_killer call OT_fnc_unitSeen) then {
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
+	player setCaptive true;
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
 		if (_unit isEqualTo player) then {
@@ -20,7 +24,6 @@ if(isPlayer _me) exitWith {
 			private _new_unit = (creategroup resistance) createUnit ["I_G_Soldier_F",(player getVariable ["home",[worldSize/2,worldSize/2,0]]),[],0,"NONE"];
 			selectPlayer _new_unit;
 
-			player setCaptive true;
 			player forceAddUniform (player getVariable ["uniform",""]);
 			player setdamage 0;
 			[] spawn {
