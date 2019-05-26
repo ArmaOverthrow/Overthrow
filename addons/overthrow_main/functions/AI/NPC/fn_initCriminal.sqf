@@ -58,7 +58,7 @@ if !(isNil "_magazine") then {
 	_unit addMagazine _magazine;
 };
 
-_unit addWeapon _weapon;
+_unit addWeaponGlobal _weapon;
 
 if((random 100) < 15) then {
 	_unit addItem "OT_Ganja";

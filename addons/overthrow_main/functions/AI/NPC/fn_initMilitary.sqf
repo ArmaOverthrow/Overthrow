@@ -37,7 +37,7 @@ if((random 100) > 25) then {
 		selectRandom OT_allBLURifles;
 	};
 
-	_unit addWeapon _wpn;
+
 	//put accessories back (where possible)
 	{
 		_unit addWeaponItem [_wpn, _x];
@@ -60,6 +60,7 @@ if((random 100) > 25) then {
 		_unit addMagazine _mag;
 		_unit addMagazine _mag;
 	};
+	_unit addWeaponGlobal _wpn;
 
 	_secondmags = [];
 	{
@@ -100,7 +101,7 @@ if((random 100) > 25) then {
 				};
 			}foreach(_stock);
 			_wpn = selectRandom OT_allBLULaunchers;
-			_unit addWeapon _wpn;
+			_unit addWeaponGlobal _wpn;
 			_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
 			_mag = "";
@@ -135,7 +136,7 @@ if((random 100) > 25) then {
 	}foreach(_stock);
 
 	_wpn = selectRandom OT_allBLUPistols;
-	_unit addWeapon _wpn;
+	_unit addWeaponGlobal _wpn;
 	_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
 	_mag = "";
@@ -163,3 +164,5 @@ _unit addEventHandler ["HandleDamage", {
 		};
 	};
 }];
+
+_unit addEventHandler ["Dammaged", OT_fnc_NATODamagedHandler];

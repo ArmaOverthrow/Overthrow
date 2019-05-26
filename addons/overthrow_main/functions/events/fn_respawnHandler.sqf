@@ -43,7 +43,7 @@ removeBackpack player;
 removeVest player;
 
 player setVariable ["ot_isSmoking", false];
-player addWeapon "ItemMap";
+player addWeaponGlobal "ItemMap";
 
 _housepos = _old getVariable "home";
 _town = _housepos call OT_fnc_nearestTown;

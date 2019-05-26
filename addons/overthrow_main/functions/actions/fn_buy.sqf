@@ -176,7 +176,7 @@ if(
 	}foreach(nearestObjects [getpos player, [OT_item_Storage],1200]);
 
 	// @todo probably add to box if possible
-	player addWeapon _cls;
+	player addWeaponGlobal _cls;
 
 	playSound "3DEN_notificationDefault";
 };

@@ -28,7 +28,7 @@ removeAllWeapons _unit;
 removeVest _unit;
 removeAllAssignedItems _unit;
 
-_unit addWeapon "Laserdesignator_02_ghex_F";
+_unit addWeaponGlobal "Laserdesignator_02_ghex_F";
 _unit addGoggles "G_Bandanna_beast";
 _unit addHeadgear "H_Booniehat_khk";
 
@@ -55,7 +55,7 @@ if((random 100) < 15) then {
 
 _weapon = (OT_CRIM_Weapons) call BIS_fnc_selectRandom;
 
-_unit addWeapon _weapon;
+_unit addWeaponGlobal _weapon;
 
 [_unit] call {
 	params ["_unit"];
@@ -68,7 +68,7 @@ _unit addWeapon _weapon;
 		_unit addMagazine _magazine;
 		_unit addMagazine _magazine;
 		_unit addMagazine _magazine;
-		_unit addWeapon _launcher;
+		_unit addWeaponGlobal _launcher;
 	};
 	if((random 100) > 85) exitWith {
 		//This is a medic
@@ -145,7 +145,7 @@ for "_i" from 0 to (_numslots-1) do {
 };
 
 _weapon = OT_allHandguns call BIS_fnc_selectRandom;
-_unit addWeapon _weapon;
+_unit addWeaponGlobal _weapon;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 if !(isNil "_magazine") then {

@@ -58,7 +58,7 @@ _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
-_unit addWeapon _weapon;
+_unit addWeaponGlobal _weapon;
 
 _config = configfile >> "CfgWeapons" >> _weapon >> "WeaponSlotsInfo";
 _numslots = count(_config);
@@ -84,7 +84,7 @@ for "_i" from 0 to (_numslots-1) do {
 };
 
 _weapon = OT_allHandguns call BIS_fnc_selectRandom;
-_unit addWeapon _weapon;
+_unit addWeaponGlobal _weapon;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 if !(isNil "_magazine") then {
