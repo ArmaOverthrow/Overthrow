@@ -1,5 +1,3 @@
-if !(isServer) exitWith {};
-
 params ["_me",["_killer", objNull]];
 
 if ((isNull _killer) || {_killer == _unit}) then {
@@ -10,9 +8,17 @@ if ((isNull _killer) || {_killer == _unit}) then {
 	};
 };
 
+if !((typeOf _killer) isKindOf "CAManBase") then {
+	_killer = driver _killer;
+};
+
 if(_killer call OT_fnc_unitSeen) then {
+	_killer setCaptive false;
 	_killer setVariable ["lastkill",time,true];
 };
+
+if !(isServer) exitWith {};
+
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
