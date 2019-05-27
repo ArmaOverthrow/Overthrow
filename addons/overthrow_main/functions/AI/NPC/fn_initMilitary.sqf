@@ -37,7 +37,7 @@ if((random 100) > 25) then {
 		selectRandom OT_allBLURifles;
 	};
 
-	_unit addWeapon _wpn;
+
 	//put accessories back (where possible)
 	{
 		_unit addWeaponItem [_wpn, _x];
@@ -45,14 +45,22 @@ if((random 100) > 25) then {
 
 	_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
-	_mag = selectRandom _magazines;
-	_unit addWeaponItem [_wpn, _mag];
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
+	_mag = "";
+	{
+		_scope = getNumber (configFile >> "CfgMagazines" >> _x >> "scope");
+		if(_scope > 1) exitWith {_mag = _x};
+	}foreach([_magazines,[],{random 100},"ASCEND"] call BIS_fnc_sortBy);
+
+	if !(_mag isEqualTo "") then {
+		_unit addWeaponItem [_wpn, _mag];
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+	};
+	_unit addWeaponGlobal _wpn;
 
 	_secondmags = [];
 	{
@@ -62,13 +70,18 @@ if((random 100) > 25) then {
 	}foreach(getArray (configFile / "CfgWeapons" / _wpn / "muzzles"));
 	if((count _secondmags) > 0) then {
 		_mag = _secondmags select 0;
-		_unit addWeaponItem [_wpn, _mag];
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
-		_unit addMagazineGlobal _mag;
+
+		_mag = "";
+		_scope = getNumber (configFile >> "CfgMagazines" >> _mag >> "scope");
+		if(_scope > 1) then {
+			_unit addWeaponItem [_wpn, _mag];
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+			_unit addMagazine _mag;
+		};
 	};
 
 	//Secondary Weapon
@@ -88,14 +101,19 @@ if((random 100) > 25) then {
 				};
 			}foreach(_stock);
 			_wpn = selectRandom OT_allBLULaunchers;
-			_unit addWeapon _wpn;
+			_unit addWeaponGlobal _wpn;
 			_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
-			_mag = selectRandom _magazines;
-			if !(_mag isEqualTo "ACE_PreloadedMissileDummy") then {
+			_mag = "";
+			{
+				_scope = getNumber (configFile >> "CfgMagazines" >> _x >> "scope");
+				if(_scope > 1) exitWith {_mag = _x};
+			}foreach([_magazines,[],{random 100},"ASCEND"] call BIS_fnc_sortBy);
+
+			if !(_mag isEqualTo "") then {
 				_unit addWeaponItem [_wpn, _mag];
-				_unit addMagazineGlobal _mag;
-				_unit addMagazineGlobal _mag;
+				_unit addMagazine _mag;
+				_unit addMagazine _mag;
 			}else{
 				removeBackpack _unit;
 			};
@@ -118,13 +136,20 @@ if((random 100) > 25) then {
 	}foreach(_stock);
 
 	_wpn = selectRandom OT_allBLUPistols;
-	_unit addWeapon _wpn;
+	_unit addWeaponGlobal _wpn;
 	_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 
-	_mag = selectRandom _magazines;
-	_unit addWeaponItem [_wpn, _mag];
-	_unit addMagazineGlobal _mag;
-	_unit addMagazineGlobal _mag;
+	_mag = "";
+	{
+		_scope = getNumber (configFile >> "CfgMagazines" >> _x >> "scope");
+		if(_scope > 1) exitWith {_mag = _x};
+	}foreach([_magazines,[],{random 100},"ASCEND"] call BIS_fnc_sortBy);
+
+	if !(_mag isEqualTo "") then {
+		_unit addWeaponItem [_wpn, _mag];
+		_unit addMagazine _mag;
+		_unit addMagazine _mag;
+	};
 
 	_unit selectWeapon (primaryWeapon _unit);
 
@@ -139,3 +164,5 @@ _unit addEventHandler ["HandleDamage", {
 		};
 	};
 }];
+
+_unit addEventHandler ["Dammaged", OT_fnc_UnitDamagedHandler];

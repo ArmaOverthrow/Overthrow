@@ -31,10 +31,14 @@ if(isNil {server getVariable "generals"}) then {
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 if(isMultiplayer && (!isServer)) then {
-	// both done on server too, no need to execute them again
+	// this is all done on server too, no need to execute them again
 	call OT_fnc_initBaseVar;
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
+	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
+	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 }else{
 	OT_varInitDone = true;
 };
@@ -73,6 +77,7 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 		if ((["ot_start_autoload", 0] call BIS_fnc_getParamValue) == 1) then {
 			server setVariable ["OT_difficulty",["ot_start_difficulty", 1] call BIS_fnc_getParamValue,true];
 			server setVariable ["OT_fastTravelType",["ot_start_fasttravel", 1] call BIS_fnc_getParamValue,true];
+			server setVariable ["OT_fastTravelRules",["ot_start_fasttravelrules", 1] call BIS_fnc_getParamValue,true];
 			[] remoteExec ['OT_fnc_loadGame',2,false];
 		} else {
 			createDialog "OT_dialog_start";
@@ -81,6 +86,8 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 }else{
 	"Loading" call OT_fnc_notifyStart;
 };
+OT_showPlayerMarkers = (["ot_showplayermarkers", 1] call BIS_fnc_getParamValue) isEqualTo 1;
+
 waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 
 private _aplayers = players_NS getVariable ["OT_allplayers",[]];
@@ -147,6 +154,8 @@ if(isMultiplayer || _startup == "LOAD") then {
 		}foreach(_housepos nearObjects 50);
 	};
 
+	(group player) setVariable ["VCM_Disable",true];
+
 	_recruits = server getVariable ["recruits",[]];
 	_newrecruits = [];
 	{
@@ -159,7 +168,8 @@ if(isMultiplayer || _startup == "LOAD") then {
 		_xp = _x select 6;
 		if(_owner isEqualTo (getplayeruid player)) then {
 			if(typename _civ isEqualTo "ARRAY") then {
-				_civ =  group player createUnit [_type,_civ,[],0,"NONE"];
+				_pos = _civ findEmptyPosition [5,20,_type];
+				_civ =  group player createUnit [_type,_pos,[],0,"NONE"];
 				[_civ,getplayeruid player] call OT_fnc_setOwner;
 				_civ setVariable ["OT_xp",_xp,true];
 				_civ setVariable ["NOAI",true,true];
@@ -310,7 +320,10 @@ _count = 0;
 waitUntil {!isNil "OT_SystemInitDone"};
 titleText ["Loading Session", "BLACK FADED", 0];
 player setCaptive true;
-player setPos _housepos;
+player setPos (_housepos findEmptyPosition [1,20,typeof player]);
+if !("ItemMap" in (assignedItems player)) then {
+	player linkItem "ItemMap";
+};
 [_housepos,_newplayer] spawn {
 	params ["_housepos","_newplayer"];
 	setViewDistance -1;

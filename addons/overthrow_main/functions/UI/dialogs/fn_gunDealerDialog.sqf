@@ -63,7 +63,7 @@ createDialog "OT_dialog_buy";
 				_txt = "Quadbike w/ HMG Backpacks";
 				_pic = "C_Quadbike_01_F" call OT_fnc_magazineGetPic;
 			};
-			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+			if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 				_txt = format["--- %1",_cls call OT_fnc_magazineGetName];
 				_pic = _cls call OT_fnc_magazineGetPic;
 			};

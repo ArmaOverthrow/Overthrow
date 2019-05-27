@@ -20,9 +20,9 @@ if(hmd _unit != "") then {
 	_count = 0;
 	_cls = _x select 0;
 	while {_count < (_x select 1)} do {
-		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) then {
+		if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) then {
 			_unit removeMagazine _cls;
-			_t addMagazineGlobal _cls;
+			_t addMagazine _cls;
 		}else{
 			_unit removeItem _cls;
 			_t addItem _cls;
@@ -48,7 +48,7 @@ if(goggles _unit != "") then {
 	removeGoggles _unit;
 };
 if(handgunWeapon _unit != "") then {
-	_t addWeapon handgunWeapon _unit;
+	_t addWeaponGlobal handgunWeapon _unit;
 	{
 		_t addItem _x;
 		_unit removeHandgunItem _x;
@@ -60,7 +60,7 @@ if(handgunWeapon _unit != "") then {
 		if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
 			_unit unassignItem _x;
 			_unit removeWeapon _x;
-			_t addWeapon _x;
+			_t addWeaponGlobal _x;
 			_t assignItem _x;
 		}else{
 			_unit unlinkItem _x;

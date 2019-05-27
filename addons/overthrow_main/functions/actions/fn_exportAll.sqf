@@ -42,7 +42,7 @@ private _total = 0;
 			if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
 			};
-			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+			if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 				[_target, _cls, _num] call CBA_fnc_removeMagazineCargo;
 			};
 			if(_cls isKindOf "Bag_Base") exitWith {

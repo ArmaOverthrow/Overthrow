@@ -21,6 +21,8 @@ private _group = spawner getVariable [format["resgarrison%1",_code],grpNull];
 private _doinit = false;
 if(isNull _group) then {
     _group = creategroup resistance;
+    _group setVariable ["VCM_TOUGHSQUAD",true,true];
+	_group setVariable ["VCM_NORESCUE",true,true];
     spawner setVariable [format["resgarrison%1",_code],_group,true];
     _doinit = true;
 };

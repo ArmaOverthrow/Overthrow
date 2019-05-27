@@ -1,4 +1,5 @@
 params ["_player"];
+if !(_player getVariable ["OT_Loaded",false]) exitWith {};
 
 private _uid = getPlayerUid _player;
 private _data = [];

@@ -152,7 +152,7 @@ if !(captive _unit) then {
 					if(_this in OT_NATO_priority) exitWith {500};
 					200
 				};
-				if(_obpos distance _unitpos < _dist) exitWith {
+				if((_obpos distance _unitpos) < _dist) exitWith {
 					if(isPlayer _unit) then {
 						"You are in a restricted area" call OT_fnc_notifyMinor;
 					};

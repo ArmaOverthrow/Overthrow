@@ -81,6 +81,7 @@ sleep 0.2;
 			_x params ["_pos","_name","_owner"];
 
 			_veh = createVehicle [OT_flag_IND, _pos, [], 0, "CAN_COLLIDE"];
+
 			_veh enableDynamicSimulation true;
 			[_veh,_owner] call OT_fnc_setOwner;
 			_veh = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
@@ -103,10 +104,12 @@ sleep 0.2;
 			case 2: {
 				_val deleteAt 0;
 				{
-					if(!isNil "_x" && _x isEqualType []) then {
-						_x params ["_itemClass",["_itemCount",0,[0]]];
-						if (_itemCount > 0) then {
-							warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+					if(!isNil "_x") then {
+						if(_x isEqualType []) then {
+							_x params [["_itemClass","",[""]],["_itemCount",0,[0]]];
+							if (_itemCount > 0 && !(_itemClass isEqualTo "")) then {
+								warehouse setVariable [format["item_%1",_itemClass],[_itemClass,_itemCount],true];
+							};
 						};
 					};
 				}foreach(_val);
@@ -230,8 +233,11 @@ sleep 0.2;
 						if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 							_veh addWeaponCargoGlobal [_cls,_num];
 						};
-						if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
-							_veh addMagazineCargoGlobal [_cls,_num];
+						if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+							private _scope = getNumber(configFile >> "CfgMagazines" >> _cls >> "scope");
+							if(_scope > 1) then {
+								_veh addMagazineCargoGlobal [_cls,_num];
+							};
 						};
 						if(_cls isKindOf "Bag_Base") exitWith {
 							_cls = _cls call BIS_fnc_basicBackpack;
@@ -302,9 +308,9 @@ sleep 0.2;
 		_set = false;
 	};
 	if(_key == "recruitables") then {
+		private _done = false;
 		{
 			_x params ["_cls","_loadout"];
-			private _done = false;
 			{
 				_x params ["_c","_l"];
 				if(_c == _cls) exitWith {_done = true;_x set [1,_loadout]};

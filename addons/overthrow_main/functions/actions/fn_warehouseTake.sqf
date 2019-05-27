@@ -41,7 +41,7 @@ while {_count < _num} do {
 		if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 			_veh addWeaponCargoGlobal [_cls,1];
 		};
-		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+		if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 			_veh addMagazineCargoGlobal [_cls,1];
 		};
 		if(_cls isKindOf "Bag_Base") exitWith {

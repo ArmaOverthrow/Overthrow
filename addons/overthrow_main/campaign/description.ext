@@ -47,5 +47,15 @@ class Campaign
 		{
 			template = "OverthrowSpAltis.Altis";
 		};
+
+		class Malden: MissionDefault
+		{
+			template = "OverthrowSpMalden.Malden";
+		};
+
+		class Livonia: MissionDefault
+		{
+			template = "OverthrowSpLivonia.Enoch";
+		};
 	};
 };

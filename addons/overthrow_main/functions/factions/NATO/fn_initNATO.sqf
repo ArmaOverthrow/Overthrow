@@ -68,6 +68,7 @@ OT_NATOcomms = server getVariable ["NATOcomms",[]];
 OT_NATOhvts = server getVariable ["NATOhvts",[]];
 OT_allObjectives = [];
 OT_allComms = [];
+OT_NATOHelipads = [];
 
 private _diff = server getVariable ["OT_difficulty",1];
 
@@ -85,7 +86,10 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
 	}foreach (OT_allTowns);
 	server setVariable ["NATOabandoned",_abandoned,true];
-    server setVariable ["NATOresources",2000,true];
+	private _startingResources = 500;
+	if(_diff isEqualTo 1) then {_startingResources = 1500};
+	if(_diff isEqualTo 2) then {_startingResources = 2500};
+    server setVariable ["NATOresources",_startingResources,true];
 	server setVariable ["garrisonHQ",1000,false];
 	OT_NATOobjectives = [];
 	OT_NATOcomms = [];
@@ -150,6 +154,13 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		}else{
 			OT_NATOobjectives pushBack _x;
 		};
+		//Check for helipads
+		if !(_name in OT_allAirports) then {
+			private _helipads = (_pos nearObjects ["Land_HelipadCircle_F", 400]) + (_pos nearObjects ["Land_HelipadSquare_F", 400]);
+			if((count _helipads) > 0) then {
+				OT_NATOHelipads pushbackUnique _x;
+			};
+		};
 	}foreach (OT_objectiveData + OT_airportData);
 
 	private _count = 0;
@@ -196,29 +207,31 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
     }foreach(OT_airportData);
 
-	{
-		_x params ["_type","_num"];
-		private _count = 0;
-		while {_count < _num} do {
-			private _name = _prilist call BIS_fnc_selectRandom;
-			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
-			_garrison pushback _type;
-			_count = _count + 1;
-			server setVariable [format ["airgarrison%1",_name],_garrison,true];
-		};
-	}foreach(OT_NATO_Vehicles_AirGarrison);
+	if((count _prilist) > 0) then {
+		{
+			_x params ["_type","_num"];
+			private _count = 0;
+			while {_count < _num} do {
+				private _name = _prilist call BIS_fnc_selectRandom;
+				private _garrison = server getVariable [format["airgarrison%1",_name],[]];
+				_garrison pushback _type;
+				_count = _count + 1;
+				server setVariable [format ["airgarrison%1",_name],_garrison,true];
+			};
+		}foreach(OT_NATO_Vehicles_AirGarrison);
 
-	//Distribute some random Air vehicles
-	_airvehs = OT_allBLUOffensiveVehicles select {_x isKindOf "Air"};
-	{
-		_name = _x;
-		if((random 200) < (count _airvehs)) then {
-			_type = selectRandom _airvehs;
-			private _garrison = server getVariable [format["airgarrison%1",_name],[]];
-			_garrison pushback _type;
-			server setVariable [format ["airgarrison%1",_name],_garrison,true];
-		};
-	}foreach(_prilist);
+		//Distribute some random Air vehicles
+		_airvehs = OT_allBLUOffensiveVehicles select {_x isKindOf "Air"};
+		{
+			_name = _x;
+			if((random 200) < (count _airvehs)) then {
+				_type = selectRandom _airvehs;
+				private _garrison = server getVariable [format["airgarrison%1",_name],[]];
+				_garrison pushback _type;
+				server setVariable [format ["airgarrison%1",_name],_garrison,true];
+			};
+		}foreach(_prilist);
+	};
 
 	//Distribute static AA to airfields
 	{
@@ -262,8 +275,6 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 };
 diag_log "Overthrow: NATO Init Done";
 
-publicVariable "OT_allComms";
-
 {
 	_x params ["_pos","_name"];
 	private _mrk = createMarker [_name,_pos];
@@ -294,6 +305,16 @@ publicVariable "OT_allComms";
 	server setVariable [_name,_pos,true];
 
 	OT_allObjectives pushback _name;
+
+	//Check for helipads
+	if !((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOversion",0]) < OT_NATOversion) then {
+		if !(_name in OT_allAirports) then {
+			private _helipads = (_pos nearObjects ["Land_HelipadCircle_F", 400]) + (_pos nearObjects ["Land_HelipadSquare_F", 400]);
+			if((count _helipads) > 0) then {
+				OT_NATOHelipads pushbackUnique _x;
+			};
+		};
+	};
 }foreach(OT_NATOobjectives);
 sleep 0.2;
 
@@ -331,6 +352,7 @@ private _revealed = server getVariable ["revealedFOBs",[]];
 {
 	_x params ["_pos","_garrison","_upgrades"];
 	OT_flag_NATO createVehicle _pos;
+
 	private _count = 0;
 	private _group = creategroup blufor;
 	while {_count < _garrison} do {
@@ -359,6 +381,7 @@ private _revealed = server getVariable ["revealedFOBs",[]];
 	};
 }foreach(server getVariable ["NATOfobs",[]]);
 
-
+publicVariable "OT_allObjectives";
+publicVariable "OT_allComms";
 OT_NATOInitDone = true;
 publicVariable "OT_NATOInitDone";

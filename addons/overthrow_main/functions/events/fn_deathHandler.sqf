@@ -1,16 +1,27 @@
-_me = _this select 0;
-_killer = _me getVariable "ace_medical_lastDamageSource";
+params ["_me",["_killer", objNull]];
 
-if(isNil "_killer") then {_killer = _this select 1};
+if !(local _me) exitWith {}; //Only run this on the machine where unit is local
 
-if((vehicle _killer) != _killer) then {_killer = driver _killer};
+if ((isNull _killer) || {_killer == _me}) then {
+	private _aceSource = _me getVariable ["ace_medical_lastDamageSource", objNull];
+	if ((!isNull _aceSource) && {_aceSource != _unit}) then {
+		_killer = _aceSource;
+	};
+};
+
+if !((typeOf _killer) isKindOf "CAManBase") then {
+	_killer = driver _killer;
+};
 
 if(_killer call OT_fnc_unitSeen) then {
+	_killer setCaptive false;
 	_killer setVariable ["lastkill",time,true];
 };
+
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
+	[_me,true] remoteExecCall ["setCaptive",_me];
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
 		if (_unit isEqualTo player) then {
@@ -18,7 +29,6 @@ if(isPlayer _me) exitWith {
 			private _new_unit = (creategroup resistance) createUnit ["I_G_Soldier_F",(player getVariable ["home",[worldSize/2,worldSize/2,0]]),[],0,"NONE"];
 			selectPlayer _new_unit;
 
-			player setCaptive true;
 			player forceAddUniform (player getVariable ["uniform",""]);
 			player setdamage 0;
 			[] spawn {
@@ -69,6 +79,7 @@ call {
 		[_town,-1] call OT_fnc_stability;
 	};
 	if(!isNil "_hvt") exitWith {
+		private _diff = server getVariable ["OT_difficulty",1];
 		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
 		_idx = 0;
 		{
@@ -77,7 +88,12 @@ call {
 		}foreach(OT_NATOhvts);
 		OT_NATOhvts deleteAt _idx;
 		format["A high-ranking NATO officer has been killed"] remoteExec ["OT_fnc_notifyMinor",0,false];
-		server setvariable ["NATOresources",0,true];
+		private _resources = server getvariable ["NATOresources",0];
+		_resources = _resources - 500;
+		if(_diff isEqualTo 1) then {_resources = _resources - 500};
+		if(_diff isEqualTo 0) then {_resources = _resources - 1000};
+		if(_resources < 250) then {_resources = 250};
+		server setvariable ["NATOresources",_resources,true];
 		[_killer,250] call OT_fnc_experience;
 	};
 	if(!isNil "_employee") exitWith {
@@ -145,10 +161,13 @@ call {
 	if(!isNil "_polgarrison") exitWith {
 		_pop = server getVariable format["police%1",_polgarrison];
 		if(_pop > 0) then {
-			server setVariable [format["police%1",_polgarrison],_pop - 1,true];
+			_pop = _pop - 1;
+			server setVariable [format["police%1",_polgarrison],_pop,true];
 			format["A police officer has been killed in %1",_polgarrison] remoteExec ["OT_fnc_notifyMinor",0,false];
 		};
 		[_town,-2] call OT_fnc_stability;
+		_mrkid = format["%1-police",_polgarrison];
+		_mrkid setMarkerText format["%1",_pop];
 	};
 	if(!isNil "_garrison" || !isNil "_vehgarrison" || !isNil "_airgarrison") then {
 		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
@@ -200,10 +219,10 @@ call {
 	};
 };
 if((_killer call OT_fnc_unitSeen) || (_standingChange < -9)) then {
-	_killer setCaptive false;
+	[_killer,false] remoteExecCall ["setCaptive",_killer];
 	if(vehicle _killer != _killer) then {
 		{
-			_x setCaptive false;
+			[_x,false] remoteExecCall ["setCaptive",_x];
 		}foreach(units vehicle _killer);
 	};
 };

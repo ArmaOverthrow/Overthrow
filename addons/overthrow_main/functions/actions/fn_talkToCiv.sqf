@@ -157,7 +157,7 @@ if (_canTute) then {
 			}
 		];
 	};
-	if !("CRIM" in _done) then {
+	/*if !("CRIM" in _done) then {
 		_options pushBack [
 			"So, about those gangs...",{
 				private _civ = OT_interactingWith;
@@ -173,7 +173,7 @@ if (_canTute) then {
 				] call OT_fnc_doConversation;
 			}
 		];
-	};
+	};*/
 	if !("Drugs" in _done) then {
 		_options pushBack [
 			"You sell Ganja right?",{

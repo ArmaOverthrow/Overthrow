@@ -14,6 +14,21 @@ if(_cls in OT_allExplosives && _chems < (_cost select 3)) exitWith {format["You 
 private _money = player getVariable "money";
 if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor};
 
+//If faction dealer, increase standing
+private _civ = OT_interactingWith;
+if(!isNil "_civ") then {
+	if(_civ getVariable ["factionrep",false]) then {
+		_faction = _civ getVariable ["faction",""];
+		if !(_faction isEqualTo "") then {
+			_increase = floor (_price / 1000);
+			if(_increase > 0) then {
+				private _factionName = server getvariable format["factionname%1",_faction];
+				server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + _increase,true];
+				format["+%1 %2",_increase,_factionName] call OT_fnc_notifyMinor;
+			};
+		};
+	};
+};
 
 if(_cls == "Set_HMG") exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,"C_Quadbike_01_F"];
@@ -161,16 +176,16 @@ if(
 	}foreach(nearestObjects [getpos player, [OT_item_Storage],1200]);
 
 	// @todo probably add to box if possible
-	player addWeapon _cls;
+	player addWeaponGlobal _cls;
 
 	playSound "3DEN_notificationDefault";
 };
-if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 	if(_cls in OT_allExplosives) then {
 		server setVariable ["reschems",_chems - (_cost select 3),true];
 	};
 	[-_price] call OT_fnc_money;
-	player addMagazineGlobal _cls;
+	player addMagazine _cls;
 	playSound "3DEN_notificationDefault";
 };
 private _handled = true;

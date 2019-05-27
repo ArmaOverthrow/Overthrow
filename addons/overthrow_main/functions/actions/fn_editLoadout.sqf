@@ -7,7 +7,7 @@ private _soldier = _cls call OT_fnc_getSoldier;
 _soldier params ["","","_loadout","_clothes"];
 
 //spawn a virtual dude
-private _start = [[[getpos player,10]]] call BIS_fnc_randomPos;
+private _start = (getpos player) findEmptyPosition [5,40,_cls];
 private _civ = (group player) createUnit [_cls, _start, [],0, "NONE"];
 _civ disableAI "MOVE";
 _civ disableAI "AUTOTARGET";
@@ -82,7 +82,7 @@ private _items = [];
     }foreach(OT_Recruitables);
     publicVariable "OT_Recruitables";
 
-    [_cls call OT_fnc_vehicleGetName, _loadout] call ace_arsenal_fnc_addDefaultLoadout;
+    [_cls call OT_fnc_vehicleGetName, _loadout] remoteExec ["ace_arsenal_fnc_addDefaultLoadout",0,false];
 
     playSound "3DEN_notificationDefault";
     "Saved loadout" call OT_fnc_notifyMinor;

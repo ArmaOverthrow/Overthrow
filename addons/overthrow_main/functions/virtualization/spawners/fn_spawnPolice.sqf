@@ -22,6 +22,8 @@ _pergroup = 4;
 while {_count < _numNATO} do {
 	_groupcount = 0;
 	_group = createGroup resistance;
+	_group setVariable ["VCM_TOUGHSQUAD",true,true];
+	_group setVariable ["VCM_NORESCUE",true,true];
 	_groups pushBack _group;
 
 	_start = [[[_posTown,_range]]] call BIS_fnc_randomPos;

@@ -57,12 +57,13 @@ _weapon = selectRandom OT_allBLUSMG;
 if((call OT_fnc_getControlledPopulation) > 1000) then {
 	_weapon = selectRandom OT_allBLURifles;
 };
-_base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazineGlobal _magazine;
-_unit addMagazineGlobal _magazine;
-_unit addMagazineGlobal _magazine;
+_magazine = (getArray (configFile / "CfgWeapons" / _weapon / "magazines")) select 0;
 _unit addWeaponGlobal _weapon;
+_unit addWeaponItem [_weapon, _magazine];
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
+_unit selectWeapon _weapon;
 
 if(_hour > 17 || _hour < 6) then {
 	_unit addPrimaryWeaponItem "acc_flashlight";
@@ -75,6 +76,8 @@ if((random 100) > 80) exitWith {
 _weapon = OT_allBLUPistols call BIS_fnc_selectRandom;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
-_unit addMagazineGlobal _magazine;
-_unit addMagazineGlobal _magazine;
+_unit addMagazine _magazine;
+_unit addMagazine _magazine;
 _unit addWeaponGlobal _weapon;
+
+_unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];
