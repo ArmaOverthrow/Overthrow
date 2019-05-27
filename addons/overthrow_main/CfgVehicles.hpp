@@ -17,7 +17,7 @@
 				statement = "_target spawn OT_fnc_salvageWreck"; \
 			}; \
 			class OT_Unflip { \
-				condition = "!(canMove _target) && (alive _target) && ((vehicle _this) isEqualTo _this)"; \
+				condition = "!(canMove _target) && (alive _target) && ((vehicle player) isEqualTo player)"; \
 				displayName = "Unflip"; \
 				statement = "_target call OT_fnc_unflipVehicle"; \
 			}; \

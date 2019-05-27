@@ -644,13 +644,13 @@ OT_priceData = [
 ['C_Boat_Civil_01_rescue_F',[4800,0,30,2]],
 ['C_Boat_Transport_02_F',[4000,0,25,2]],
 //Static Weapon Backpacks
-['I_HMG_01_high_weapon_F',[1500,1,0,1]],
-['I_GMG_01_high_weapon_F',[3500,1,0,1]],
+['I_HMG_01_high_weapon_F',[2000,1,0,1]],
+['I_GMG_01_high_weapon_F',[4000,1,0,1]],
 ['I_HMG_01_support_high_F',[50,1,0,0]],
-['I_Mortar_01_weapon_F',[6000,1,0,1]],
+['I_Mortar_01_weapon_F',[9000,1,0,1]],
 ['I_Mortar_01_support_F',[100,1,0,0]],
-['I_AT_01_weapon_F',[2500,1,0,1]],
-['I_AA_01_weapon_F',[2500,1,0,1]],
+['I_AT_01_weapon_F',[10000,1,0,1]],
+['I_AA_01_weapon_F',[10000,1,0,1]],
 ['I_HMG_01_support_F',[50,1,0,0]],
 //Vests
 ['V_BandollierB_khk',[40,0,2,0]],

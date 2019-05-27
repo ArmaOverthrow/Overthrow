@@ -60,6 +60,18 @@ class Params {
 		texts[] = {"Free", "Costs", "Disabled"};
 		default = 1;
 	};
+	class ot_start_fasttravelrules {
+		title = "Fast Travel Rules (Only with autoload)";
+		values[] = {0, 1, 2};
+		texts[] = {"Open", "No Weapons", "Restricted"};
+		default = 1;
+	};
+	class ot_showplayermarkers {
+		title = "Show Player Markers on HUD";
+		values[] = {true,false};
+		texts[] = {"True", "False"};
+		default = true;
+	};
 	class ace_medical_level {
         title = "ACE Medical Level";
         ACE_setting = 1;
