@@ -17,6 +17,9 @@ private _garrison = server getVariable [format['police%1',_town],0];
 _garrison = _garrison + _amt;
 server setVariable [format["police%1",_town],_garrison,true];
 
+_mrkid = format["%1-police",_town];
+_mrkid setMarkerText format["%1",_garrison];
+
 [-(_amt*_price)] call OT_fnc_money;
 
 _effect = floor(_garrison / 2);

@@ -41,6 +41,8 @@ if !(crim_counter < 12) then {
                             server setVariable [format["police%1",_town],_garrison,true];
                             [_town,-2] call OT_fnc_stability;
                             [_town,-2] call OT_fnc_support;
+                            _mrkid = format["%1-police",_town];
+                    		_mrkid setMarkerText format["%1",_garrison];
                         };
                     };
                     if(_numingang < _garrison) then {

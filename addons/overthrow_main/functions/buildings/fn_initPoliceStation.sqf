@@ -45,6 +45,7 @@ if(_garrison == -1) then {
 _mrkid = format["%1-police",_town];
 createMarker [_mrkid,_pos];
 _mrkid setMarkerShape "ICON";
+_mrkid setMarkerText "2";
 _mrkid setMarkerType "o_installation";
 _mrkid setMarkerColor "ColorGUER";
 _mrkid setMarkerAlpha 1;

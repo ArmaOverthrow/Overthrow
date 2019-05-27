@@ -161,10 +161,13 @@ call {
 	if(!isNil "_polgarrison") exitWith {
 		_pop = server getVariable format["police%1",_polgarrison];
 		if(_pop > 0) then {
-			server setVariable [format["police%1",_polgarrison],_pop - 1,true];
+			_pop = _pop - 1;
+			server setVariable [format["police%1",_polgarrison],_pop,true];
 			format["A police officer has been killed in %1",_polgarrison] remoteExec ["OT_fnc_notifyMinor",0,false];
 		};
 		[_town,-2] call OT_fnc_stability;
+		_mrkid = format["%1-police",_polgarrison];
+		_mrkid setMarkerText format["%1",_pop];
 	};
 	if(!isNil "_garrison" || !isNil "_vehgarrison" || !isNil "_airgarrison") then {
 		_killer setVariable ["BLUkills",(_killer getVariable ["BLUkills",0])+1,true];
