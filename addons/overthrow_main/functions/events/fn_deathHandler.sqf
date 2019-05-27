@@ -1,5 +1,7 @@
 params ["_me",["_killer", objNull]];
 
+if !(local _me) exitWith {}; //Only run this on the machine where unit is local
+
 if ((isNull _killer) || {_killer == _unit}) then {
 	private _aceSource = _me getVariable ["ace_medical_lastDamageSource", objNull];
 	if ((!isNull _aceSource) && {_aceSource != _unit}) then {
@@ -16,7 +18,7 @@ if(_killer call OT_fnc_unitSeen) then {
 	_killer setVariable ["lastkill",time,true];
 };
 
-if !(isServer) exitWith {};
+diag_log format["Death: %1 by %2",typeof _me,name _killer];
 
 _town = (getpos _me) call OT_fnc_nearestTown;
 
