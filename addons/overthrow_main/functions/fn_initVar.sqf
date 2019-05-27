@@ -846,7 +846,7 @@ if(isServer) then {
 			private _clsCfg = _cfgVeh >> _name;
 			private _cost = getNumber (_clsCfg >> "armor") * _multiply;
 			private _steel = round(getNumber (_clsCfg >> "armor") * 0.5);
-			private _numturrets = count("!((configName _x) select [0,5] == ""Cargo"")" configClasses(_clsCfg >> "Turrets"));
+			private _numturrets = count("!((configName _x) select [0,5] == ""Cargo"") && !((count getArray (_x >> ""magazines"")) isEqualTo 0)" configClasses(_clsCfg >> "Turrets"));
 			private _plastic = 2;
 			if(_numturrets > 0) then {
 				_cost = _cost + (_numturrets * _cost * 10);

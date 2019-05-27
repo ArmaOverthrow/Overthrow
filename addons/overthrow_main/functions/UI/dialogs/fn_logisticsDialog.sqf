@@ -20,7 +20,7 @@ lbClear 1500;
         private _color = [0.9,0.9,0.9,1];
 
         private _totalAmmo = 0;
-        private _turrets = "true" configClasses (configfile >> "CfgVehicles" >> _cls >> "Turrets");
+        private _turrets = "!((configName _x) select [0,5] == ""Cargo"") && !((count getArray (_x >> ""magazines"")) isEqualTo 0)" configClasses (configfile >> "CfgVehicles" >> _cls >> "Turrets");
         private _hasAmmo = (count _turrets) > 0;
         {
             _x params ["_ammocls","_num"];

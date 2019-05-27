@@ -18,5 +18,5 @@ if(alive _veh) then {
 	_veh land "LAND";
 	waitUntil{sleep 10;(getpos _veh)#2 < 2};
 };
-_veh call OT_fnc_cleanup;
-_group call OT_fnc_cleanup;
+[_veh,true] call OT_fnc_cleanup;
+[_group,true] call OT_fnc_cleanup;

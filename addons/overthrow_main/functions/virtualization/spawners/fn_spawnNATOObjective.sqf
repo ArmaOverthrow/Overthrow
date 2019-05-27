@@ -60,9 +60,7 @@ if(_name in OT_allComms) then {
 	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointSpeed "LIMITED";
 	_wp = _group addWaypoint [_posTown,0];
-	_wp setWaypointType "GUARD";
-	_wp setWaypointBehaviour "SAFE";
-	_wp setWaypointSpeed "LIMITED";
+	_wp setWaypointType "CYCLE";
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -314,7 +312,7 @@ private _road = objNull;
 		private _wp = _group addWaypoint [_pos, 50];
 		_wp setWaypointType "GUARD";
 		_wp = _group addWaypoint [_pos, 50];
-		_wp setWaypointType "GUARD";
+		_wp setWaypointType "CYCLE";
 	};
 }foreach(OT_NATOhvts);
 

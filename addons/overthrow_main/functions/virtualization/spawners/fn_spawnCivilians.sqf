@@ -131,11 +131,12 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			[_civ] joinSilent _leaderGroup;
 			_civ setVariable ["OT_gangid",_gangid,true];
 			[_civ,_town] call OT_fnc_initCrimLeader;
+			_civ setVariable ["hometown",_town,true];
 
 			_wp = _leaderGroup addWaypoint [_home,0];
 			_wp setWaypointType "GUARD";
 			_wp = _leaderGroup addWaypoint [_home,0];
-	        _wp setWaypointType "GUARD";
+	        _wp setWaypointType "CYCLE";
 
 			_groups pushback _leaderGroup;
 
@@ -164,7 +165,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 				_civ setVariable ["OT_gangid",_gangid,true];
 				_civ setVariable ["OT_civid",_civid,true];
 				_civ setBehaviour "SAFE";
-				_civ setVariable ["hometown",_hometown,true];
+				_civ setVariable ["hometown",_town,true];
 
 				{
 					_x addCuratorEditableObjects [[_civ]];

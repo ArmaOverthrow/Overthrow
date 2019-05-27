@@ -129,7 +129,7 @@ class CfgFunctions
 			class respawnHandler {};
 			class keyHandler {};
 			class taggedHandler {};
-			class NATODamagedHandler {};
+			class EnemyDamagedHandler {};
 		};
 
 		class UI

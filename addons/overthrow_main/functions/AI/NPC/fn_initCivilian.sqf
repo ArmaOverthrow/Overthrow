@@ -23,3 +23,5 @@ _unit addEventHandler ["FiredNear", {
 		_by = _this select 1;
 	};
 }];
+
+_unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];

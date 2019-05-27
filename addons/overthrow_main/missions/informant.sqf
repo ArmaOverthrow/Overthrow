@@ -83,7 +83,7 @@ private _difficulty = 1.8;
         _wp = _bgroup addWaypoint [_destination,0];
         _wp setWaypointType "GUARD";
         _wp = _bgroup addWaypoint [_destination,0];
-        _wp setWaypointType "GUARD";
+        _wp setWaypointType "CYCLE";
     },
     {
         //Fail check...

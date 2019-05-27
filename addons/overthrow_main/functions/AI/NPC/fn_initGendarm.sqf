@@ -80,4 +80,4 @@ _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addWeaponGlobal _weapon;
 
-_unit addEventHandler ["Dammaged", OT_fnc_NATODamagedHandler];
+_unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];

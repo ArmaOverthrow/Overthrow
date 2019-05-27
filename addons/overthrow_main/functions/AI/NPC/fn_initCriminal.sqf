@@ -113,3 +113,5 @@ if((random 100) > 90) then {
 };
 
 _unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);
+
+_unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];
