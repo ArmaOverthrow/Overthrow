@@ -165,4 +165,4 @@ _unit addEventHandler ["HandleDamage", {
 	};
 }];
 
-_unit addEventHandler ["Dammaged", OT_fnc_UnitDamagedHandler];
+_unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];
