@@ -86,7 +86,7 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 }else{
 	"Loading" call OT_fnc_notifyStart;
 };
-OT_showPlayerMarkers = ["ot_showplayermarkers", true] call BIS_fnc_getParamValue;
+OT_showPlayerMarkers = (["ot_showplayermarkers", 1] call BIS_fnc_getParamValue) isEqualTo 1;
 
 waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 

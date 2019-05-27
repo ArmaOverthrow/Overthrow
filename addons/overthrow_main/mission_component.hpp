@@ -68,9 +68,9 @@ class Params {
 	};
 	class ot_showplayermarkers {
 		title = "Show Player Markers on HUD";
-		values[] = {true,false};
+		values[] = {1,0};
 		texts[] = {"True", "False"};
-		default = true;
+		default = 1;
 	};
 	class ace_medical_level {
         title = "ACE Medical Level";
