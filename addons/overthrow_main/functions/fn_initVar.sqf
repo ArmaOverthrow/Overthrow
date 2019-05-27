@@ -82,7 +82,7 @@ OT_voices_eastern = [];
 }foreach("getNumber(_x >> 'scope') isEqualTo 2" configClasses (configfile >> "CfgVoice"));
 
 //Find houses
-OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F"]; //buildings with potentially lots of people living in them
+OT_hugePopHouses = ["Land_MultistoryBuilding_01_F","Land_MultistoryBuilding_03_F","Land_MultistoryBuilding_04_F","Land_House_2W04_F","Land_House_2W03_F"]; //buildings with potentially lots of people living in them
 OT_mansions = ["Land_House_Big_02_F","Land_House_Big_03_F","Land_Hotel_01_F","Land_Hotel_02_F"]; //buildings that rich guys like to live in
 OT_lowPopHouses = [];
 OT_medPopHouses = [];
@@ -266,13 +266,36 @@ OT_spawnHouses = [];
 	OT_allRealEstate pushBackUnique _cls;
 }foreach( "getNumber ( _x >> ""ot_isPlayerHouse"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" ) );
 
+//Mission house overrides
+{
+	_x params ["_cls","_template"];
+	OT_spawnHouses pushBack _cls;
+	OT_allBuyableBuildings pushBackUnique _cls;
+	OT_allRealEstate pushBackUnique _cls;
+	templates setVariable [_cls,_template,true];
+}foreach(OT_spawnHouseBuildings);
+
 OT_gunDealerHouses = OT_spawnHouses;
 
 private _allShops = "getNumber ( _x >> ""ot_isShop"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_shops = _allShops apply {configName _x};
 
+//Mission shop overrides
+{
+	_x params ["_cls","_template"];
+	OT_shops pushBack _cls;
+	templates setVariable [_cls,_template,true];
+}foreach(OT_shopBuildings);
+
 private _allCarShops = "getNumber ( _x >> ""ot_isCarDealer"" ) isEqualTo 1" configClasses ( configFile >> "CfgVehicles" );
 OT_carShops = _allCarShops apply {configName _x};
+
+//Mission car shop overrides
+{
+	_x params ["_cls","_template"];
+	OT_carShops pushBack _cls;
+	templates setVariable [_cls,_template,true];
+}foreach(OT_carShopBuildings);
 
 //Calculate prices
 //First, load the hardcoded prices from data/prices.sqf
@@ -757,7 +780,7 @@ OT_allLegalClothing = [];
 {
 	private _name = configName _x;
 	private _m = getNumber(_x >> "mass");
-	if(_name isKindOf ["CA_Magazine",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
+	if(_name isKindOf ["Default",configFile >> "CfgMagazines"] && (_name != "NLAW_F") && !(_name isKindOf ["VehicleMagazine",configFile >> "CfgMagazines"])) then {
 		private _cost = round(_m * 4);
 		private _desc = getText(_x >> "descriptionShort");
 		if((_desc find ".408") > -1) then {
@@ -823,7 +846,7 @@ if(isServer) then {
 			private _clsCfg = _cfgVeh >> _name;
 			private _cost = getNumber (_clsCfg >> "armor") * _multiply;
 			private _steel = round(getNumber (_clsCfg >> "armor") * 0.5);
-			private _numturrets = count("!((configName _x) select [0,5] == ""Cargo"")" configClasses(_clsCfg >> "Turrets"));
+			private _numturrets = count("!((configName _x) select [0,5] == ""Cargo"") && !((count getArray (_x >> ""magazines"")) isEqualTo 0)" configClasses(_clsCfg >> "Turrets"));
 			private _plastic = 2;
 			if(_numturrets > 0) then {
 				_cost = _cost + (_numturrets * _cost * 10);
@@ -910,7 +933,7 @@ if(isServer) then {
 OT_staticMachineGuns = ["I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
 OT_staticWeapons = ["I_Mortar_01_F","I_static_AA_F","I_static_AT_F","I_GMG_01_F","I_GMG_01_high_F","I_GMG_01_A_F","I_HMG_01_F","I_HMG_01_high_F","I_HMG_01_A_F","O_static_AA_F","O_static_AT_F","O_Mortar_01_F","O_GMG_01_F","O_GMG_01_high_F","O_GMG_01_A_F","O_HMG_01_F","O_HMG_01_high_F","O_HMG_01_A_F","B_static_AA_F","B_static_AT_F","B_Mortar_01_F","B_GMG_01_F","B_GMG_01_high_F","B_GMG_01_A_F","B_HMG_01_F","B_HMG_01_high_F","B_HMG_01_A_F"];
 
-OT_miscables = ["ACE_Wheel","ACE_Track","Land_PortableLight_double_F","Land_PortableLight_single_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F",
+OT_miscables = ["ACE_Wheel","ACE_Track",OT_item_Workbench,"Land_PortableLight_double_F","Land_PortableLight_single_F","Land_Camping_Light_F","Land_PortableHelipadLight_01_F","PortableHelipadLight_01_blue_F",
 "PortableHelipadLight_01_green_F","PortableHelipadLight_01_red_F","PortableHelipadLight_01_white_F","PortableHelipadLight_01_yellow_F","Land_Campfire_F","ArrowDesk_L_F",
 "ArrowDesk_R_F","ArrowMarker_L_F","ArrowMarker_R_F","Pole_F","Land_RedWhitePole_F","RoadBarrier_F","RoadBarrier_small_F","RoadCone_F","RoadCone_L_F","Land_VergePost_01_F",
 "TapeSign_F","Land_LampDecor_F","Land_WheelChock_01_F","Land_Sleeping_bag_F","Land_Sleeping_bag_blue_F","Land_WoodenLog_F","FlagChecked_F","FlagSmall_F","Land_LandMark_F","Land_Bollard_01_F"];

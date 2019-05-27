@@ -4,19 +4,24 @@ OT_hasAce = true;
 OT_hasTFAR = (isClass (configFile >> "CfgPatches" >> "task_force_radio"));
 OT_hasJetsDLC = ("B_Plane_Fighter_01_F" isKindOf "Air");
 
+//Buildings (mission override)
+OT_shopBuildings = [];
+OT_spawnHouseBuildings = [];
+OT_carShopBuildings = [];
+
 //Default Loadouts
 OT_Unit_Police = "I_soldier_F";
 OT_Loadout_Police = [
-	["arifle_MX_khk_F","","acc_flashlight","",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
 	[],
-	["hgun_ACPC2_F","","","",["9Rnd_45ACP_Mag",8],[],""],
-	["U_BG_Guerilla2_3",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2],["30Rnd_65x39_caseless_khaki_mag",1,30]]],
-	["V_TacVest_blk_POLICE",[["30Rnd_65x39_caseless_khaki_mag",3,30],["9Rnd_45ACP_Mag",1,8]]],
+	[],
+	["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
+	["U_BG_Guerilla2_3",[]],
+	["V_TacVest_blk_POLICE",[["16Rnd_9x21_Mag",4,17]]],
 	[],
 	"H_Cap_police",
-	"G_Spectacles_Tinted",
+	"",
 	[],
-	["ItemMap","","","","",""]
+	["","","","","",""]
 ];
 
 //Default recruit types and squads

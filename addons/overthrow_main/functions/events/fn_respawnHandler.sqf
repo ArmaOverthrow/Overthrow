@@ -43,11 +43,11 @@ removeBackpack player;
 removeVest player;
 
 player setVariable ["ot_isSmoking", false];
-player addWeapon "ItemMap";
+player addWeaponGlobal "ItemMap";
 
 _housepos = _old getVariable "home";
 _town = _housepos call OT_fnc_nearestTown;
-player setPos _housepos;
+player setPos (_housepos findEmptyPosition [1,20,typeof _new]);
 _clothes = uniform _old;
 player forceAddUniform _clothes;
 [] spawn OT_fnc_setupPlayer;

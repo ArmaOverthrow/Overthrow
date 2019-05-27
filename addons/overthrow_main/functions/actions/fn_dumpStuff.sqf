@@ -49,7 +49,7 @@ if(_full) exitWith {false};
 				_veh addWeaponCargoGlobal [_cls,1];
 				_unit removeItem _cls;
 			};
-			if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+			if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 				_veh addMagazineCargoGlobal [_cls,1];
 				_unit removeMagazine _cls;
 			};
@@ -137,16 +137,18 @@ if(_full) exitWith {false};
 
 if((!isplayer _unit) || _linkedItems) then {
 	{
-		if (!(_t canAdd _x) && !_isTruck) exitWith {
-			_full = true;
+		if !(_x isEqualTo "ItemMap") then {
+			if (!(_t canAdd _x) && !_isTruck) exitWith {
+				_full = true;
+			};
+			if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
+				_unit unassignItem _x;
+				_unit removeWeapon _x;
+			}else{
+				_unit unlinkItem _x;
+			};
+			_t addItemCargoGlobal [_x,1];
 		};
-		if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {
-			_unit unassignItem _x;
-			_unit removeWeapon _x;
-		}else{
-			_unit unlinkItem _x;
-		};
-		_t addItemCargoGlobal [_x,1];
 	}foreach(assignedItems _unit);
 };
 

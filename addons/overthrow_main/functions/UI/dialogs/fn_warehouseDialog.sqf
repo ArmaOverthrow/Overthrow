@@ -6,8 +6,8 @@ private _numitems = 0;
 {
 	private _d = warehouse getVariable [_x,false];
 	if(_d isEqualType []) then {
-		_d params ["_cls", ["_num",0,[0]]];
-		if (!(_cls isEqualType {}) && _num > 0) then {
+		_d params [["_cls","",[""]], ["_num",0,[0]]];
+		if ((_cls isEqualType "") && _num > 0) then {
 			_numitems = _numitems + 1;
 			([_cls] call {
 				params ["_cls"];

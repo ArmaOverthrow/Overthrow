@@ -35,7 +35,7 @@ private _ignore = [];
                     _missing pushback _cls;
                 };
                 _totake = _count - _boxAmount;
-                if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+                if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
                     while{_count > _boxAmount} do {
                         _count = _count - 1;
                         if(_correct) then {_unit removeMagazine _cls};

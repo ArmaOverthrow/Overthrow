@@ -20,7 +20,7 @@ lbClear 1500;
 			_pic = _cls call OT_fnc_glassesGetPic;
 			[_name, _pic]
 		};
-		if(_cls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+		if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 			_name = _cls call OT_fnc_magazineGetName;
 			_pic = _cls call OT_fnc_magazineGetPic;
 			[_name, _pic]

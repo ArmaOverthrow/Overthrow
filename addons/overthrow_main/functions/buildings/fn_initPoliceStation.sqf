@@ -7,6 +7,8 @@ if(_garrison == -1) then {
 	//First time
 	server setVariable [format['policepos%1',_town],_pos,true];
 
+	private _soldier = "Police" call OT_fnc_getSoldier;
+
 	private _spawnid = spawner getvariable [format["townspawnid%1",_town],-1];
 	private _groups = spawner getvariable [_spawnid,[]];
 
@@ -27,7 +29,7 @@ if(_garrison == -1) then {
 
 		_p = [[[_start,20]]] call BIS_fnc_randomPos;
 
-		_civ = _group createUnit ["I_G_Soldier_F", _p, [],0, "NONE"];
+		_civ = [_soldier,_p,_group,false] call OT_fnc_createSoldier;
 		_civ setVariable ["polgarrison",_town,false];
 		[_civ] joinSilent _group;
 		_civ setRank "SERGEANT";
@@ -43,6 +45,7 @@ if(_garrison == -1) then {
 _mrkid = format["%1-police",_town];
 createMarker [_mrkid,_pos];
 _mrkid setMarkerShape "ICON";
+_mrkid setMarkerText "2";
 _mrkid setMarkerType "o_installation";
 _mrkid setMarkerColor "ColorGUER";
 _mrkid setMarkerAlpha 1;

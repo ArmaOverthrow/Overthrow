@@ -6,6 +6,9 @@ _identity params ["_face","_clothes","_name","_glasses"];
 [_unit, _face] remoteExecCall ["setFace", 0, _unit];
 
 //Clothes
+if(isNil "_clothes") then {
+    _clothes = selectRandom OT_clothes_locals;
+};
 _unit forceAddUniform _clothes;
 
 //Name

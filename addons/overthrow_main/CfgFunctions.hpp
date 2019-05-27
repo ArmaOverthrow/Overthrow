@@ -129,6 +129,7 @@ class CfgFunctions
 			class respawnHandler {};
 			class keyHandler {};
 			class taggedHandler {};
+			class EnemyDamagedHandler {};
 		};
 
 		class UI
@@ -184,6 +185,7 @@ class CfgFunctions
 			class jobsDialog {};
 			class craftDialog {};
 			class uploadData {};
+			class logisticsDialog {};
 		};
 
 		class Display
@@ -197,6 +199,7 @@ class CfgFunctions
 			class displayJobDetails {};
 			class displayCraftItem {};
 			class factoryRefresh {};
+			class displayLogisticDetails {};
 		};
 
 		/*
@@ -236,6 +239,7 @@ class CfgFunctions
 			class takeLegit {};
 			class warehouseTake {};
 			class recover {};
+			class storeAll {};
 
 			/* Port */
 			class exportAll {};
@@ -265,6 +269,7 @@ class CfgFunctions
 			class transferFunds {};
 			class hireEmployee {};
 			class fireEmployee {};
+			class setVehicleWaypoint {};
 
 			/* Jobs */
 			class setJobWaypoint {};
@@ -296,6 +301,8 @@ class CfgFunctions
 			class playSound {};
             class canPlace {};
 			class vehicleCanMove {};
+			class unflipVehicle {};
+			class triggerBattle {};
 
 		};
 
@@ -466,6 +473,7 @@ class CfgFunctions
 			class squadGetOut {};
 			class squadGetInMyVehicle {};
 			class orderStopAndFace {};
+			class landAndCleanupHelicopter {};
 		};
 
 		/*

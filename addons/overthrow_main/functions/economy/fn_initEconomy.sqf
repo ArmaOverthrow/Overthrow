@@ -73,8 +73,9 @@ OT_allShops = [];
     }foreach(OT_regions);
     sleep 0.2;
 }foreach (OT_allTowns);
-
-server setVariable ["spawntown",OT_spawnTowns call BIS_fnc_selectrandom,true];
+private _spawn = OT_spawnTowns call BIS_fnc_selectrandom;
+diag_log format["Overthrow: Spawn town is %1",_spawn];
+server setVariable ["spawntown",_spawn,true];
 {
     private _region = _x;
 

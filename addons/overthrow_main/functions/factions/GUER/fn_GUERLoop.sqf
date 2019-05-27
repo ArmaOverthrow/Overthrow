@@ -24,6 +24,16 @@ if(_trackcounter > 5) then {
 	spawner setVariable ["track",_track,false];
 };
 
+//Stop civilians from fleeing after 20 seconds
+{
+	if(_x getVariable ["fleeing",false]) then {
+		if((time - (_x getVariable ["fleeingstart",0])) > 20) then {
+			_x setVariable ["fleeing",false];
+			_x setBehaviour "SAFE";
+		};
+	};
+}foreach(allGroups select {(side _x) isEqualTo civilian});
+
 private _dead = count alldeadmen;
 if(_dead > 150) then {
 	format["There are %1 dead bodies, loot them or clean via options",_dead] remoteExec ["OT_fnc_notifyMinor",0,false];
@@ -385,7 +395,7 @@ if ((date select 4) != _lastmin) then {
 							if(_currentCls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
 								_veh addWeaponCargoGlobal [_currentCls,_numtoproduce];
 							};
-							if(_currentCls isKindOf ["CA_Magazine",configFile >> "CfgMagazines"]) exitWith {
+							if(_currentCls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
 								_veh addMagazineCargoGlobal [_currentCls,_numtoproduce];
 							};
 							_veh addItemCargoGlobal [_currentCls,_numtoproduce];

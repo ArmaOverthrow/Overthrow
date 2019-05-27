@@ -34,6 +34,8 @@ _range = 100;
 _groupcount = 0;
 
 _group = createGroup blufor;
+_group setVariable ["VCM_TOUGHSQUAD",true,true];
+_group setVariable ["VCM_NORESCUE",true,true];
 _groups pushBack _group;
 _groupcount = 1;
 

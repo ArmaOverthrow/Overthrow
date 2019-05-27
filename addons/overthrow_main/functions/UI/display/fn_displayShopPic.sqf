@@ -34,15 +34,26 @@ if(_price > -1) then {
     	};
         if(_cls isKindOf "Man") exitWith {
             private _soldier = _cls call OT_fnc_getSoldier;
+            private _bought = _soldier select 5;
     		private _price = _soldier select 0;
-            if(call OT_fnc_playerIsGeneral) then {
-                ctrlEnable [1601,true];
+
+            _text = "";
+            {
+                _x params ["_cls","_qty"];
+                private _name = _cls call OT_fnc_anythingGetName;
+                private _cost = (([OT_nation,_cls,30] call OT_fnc_getPrice) * _qty);
+                _text = format["%1%2 x %3 = $%4<br/>",_text,_qty,_name,[_cost, 1, 0, true] call CBA_fnc_formatNumber];
+            }foreach(_bought);
+
+            if(_text isEqualTo "") then {
+                _text = "All items required for this unit are available in the warehouse";
             }else{
-                ctrlEnable [1601,false];
+                _text = format["These items are not in the warehouse and must be purchased:<br/>%1",_text];
             };
+
     		[
 				nil,
-    			"Will recruit this soldier into your group fully equipped using the warehouse where possible.",
+    			_text,
 				_cls call OT_fnc_vehicleGetName,
 				_price
 			]
@@ -106,7 +117,11 @@ if(_cls in OT_allExplosives) then {
 
 _textctrl = (findDisplay 8000) displayCtrl 1100;
 
-_price = "$" + ([_price, 1, 0, true] call CBA_fnc_formatNumber);
+if(_price isEqualType 0) then {
+    _price = "$" + ([_price, 1, 0, true] call CBA_fnc_formatNumber);
+}else{
+    _price = "";
+};
 
 _textctrl ctrlSetStructuredText parseText format["
 	<t align='center' size='1.5'>%1</t><br/>

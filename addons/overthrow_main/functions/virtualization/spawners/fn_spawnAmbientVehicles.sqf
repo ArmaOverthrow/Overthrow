@@ -14,14 +14,14 @@ if(_town in OT_capitals + OT_sprawling) then {//larger search radius
 private _count = 0;
 private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
-private _numVeh = 4;
+private _numVeh = 2;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
 if(_town isEqualTo (server getVariable "spawntown")) then {
-	_numVeh = 12;
+	_numVeh = 6;
 };
-if(_numVeh > 12) then {_numVeh = 12};
+if(_numVeh > 6) then {_numVeh = 6};
 if(count(vehicles) > 200) then {_numVeh = 3};
 private _loops = 0;
 while {(_count < _numVeh) && (_loops < 50)} do {
@@ -42,10 +42,16 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 			if (count _roadscon isEqualTo 2) then {
 				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 				if(isNil "_dirveh") then {_dirveh = random 359};
-				_posVeh = ([_pos, 6, _dirveh + 90] call BIS_Fnc_relPos) findEmptyPosition [5,15,_vehtype];
-
+				_posVeh = [_pos, 6, _dirveh + 90] call BIS_Fnc_relPos;
+				_posEmpty = _posVeh findEmptyPosition [4,15,_vehtype];
+				 //dont bother if the position isnt empty for 4m
+				if(count _posEmpty isEqualTo 0) then {
+					_posVeh = [];
+				}else{
+					if((_posVeh distance _posEmpty) > 4) then {_posVeh = []};
+				};
 				if(count _posVeh > 0) then {
-					_veh = _vehtype createVehicle _posVeh;
+					_veh = _vehtype createVehicle _posEmpty;
 					_veh setVariable ["ambient",true,true];
 					clearItemCargoGlobal _veh;
 					_veh setFuel (0.2 + (random 0.5));
@@ -53,7 +59,7 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 					_veh setDir _dirveh;
 					_count = _count + 1;
 
-					if((random 100) > 85 && (count allunits < 300)) then {
+					if((random 100) > 90 && (count allunits < 300)) then {
 						_group = createGroup CIVILIAN;
 						_groups pushback _group;
 						_civ = _group createUnit [OT_civType_local, _pos, [],0, "NONE"];
@@ -78,7 +84,7 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 						_wp setWaypointCompletionRadius 60;
 						_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup;unassignVehicle this;[group this] call OT_fnc_cleanup;"];
 					}else{
-						if(_stability < 50 && (random 100) > 75) then {
+						if(_stability < 50 && (random 100) > 80) then {
 							_veh setDamage [1,false]; //salvage wreck
 						};
 					};

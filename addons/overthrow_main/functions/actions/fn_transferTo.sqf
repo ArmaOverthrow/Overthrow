@@ -10,15 +10,8 @@ if(isNull _target || isNil "_target") exitWith {};
 private _objects = [];
 private _b = player call OT_fnc_nearestRealEstate;
 private _iswarehouse = false;
-if(_b isEqualType []) then {
-	private _building = _b select 0;
-	if((typeof _building) == OT_warehouse && _building call OT_fnc_hasOwner) then {
-		_iswarehouse = true;
-		_objects pushback _building;
-	};
-};
 
-if(!_iswarehouse && !_notvehicle) then {
+if(!_notvehicle) then {
 	{
 		if!(_x isEqualTo _target) then {_objects pushback _x};
 	}foreach(player nearEntities [["Car","ReammoBox_F","Air","Ship"],20]);
@@ -27,10 +20,6 @@ if(!_iswarehouse && !_notvehicle) then {
 
 if(!_notvehicle  && _objects isEqualTo []) exitWith {
 	"Cannot find any containers or other vehicles within 20m of this vehicle" call OT_fnc_notifyMinor;
-};
-
-if(_notvehicle && _objects isEqualTo []) exitWith {
-	"No warehouse within range" call OT_fnc_notifyMinor;
 };
 
 if(count _objects isEqualTo 1) then {

@@ -18,6 +18,8 @@ private _groups = [];
 if(_name in OT_allComms) then {
 	private _group = createGroup [blufor,true];
 	_groups pushBack _group;
+	_group setVariable ["VCM_TOUGHSQUAD",true,true];
+	_group setVariable ["VCM_NORESCUE",true,true];
 
 	private _start = _posTown findEmptyPosition [2,50];
 	private _civ = _group createUnit [OT_NATO_Unit_Sniper, _start, [], 0, "NONE"];
@@ -57,6 +59,8 @@ if(_name in OT_allComms) then {
 	_wp setWaypointType "GUARD";
 	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointSpeed "LIMITED";
+	_wp = _group addWaypoint [_posTown,0];
+	_wp setWaypointType "CYCLE";
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -74,6 +78,7 @@ if(_name in OT_allComms) then {
 	//put up a flag
 	private _flag =  OT_flag_NATO createVehicle _posTown;
 	_groups pushback _flag;
+	[_flag,[format["Capture %1",_name], {(((getpos player) call OT_fnc_nearestObjective) select 1) call OT_fnc_triggerBattle},nil,0,false,true,"","true",5]] remoteExec ["addAction",0,_flag];
 };
 
 //Garrison any buildings
@@ -153,6 +158,9 @@ private _groupcount = 0;
 while {_count < _numNATO} do {
 	private _start = _posTown findEmptyPosition [5,200];
 	private _group = createGroup blufor;
+	_group setVariable ["VCM_TOUGHSQUAD",true,true];
+	_group setVariable ["VCM_NORESCUE",true,true];
+
 	_group deleteGroupWhenEmpty true;
 	_groups pushBack _group;
 	_groupcount = 1;
@@ -281,7 +289,7 @@ private _road = objNull;
 	if(_loc == _name && _status == "") then {
 		private _group = createGroup blufor;
 		_groups pushBack _group;
-		_group setVariable ["Vcm_Disable",true,false]; //stop him from running off
+		_group setVariable ["Vcm_Disable",true,true]; //stop him from running off
 		private _pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
@@ -303,6 +311,8 @@ private _road = objNull;
 
 		private _wp = _group addWaypoint [_pos, 50];
 		_wp setWaypointType "GUARD";
+		_wp = _group addWaypoint [_pos, 50];
+		_wp setWaypointType "CYCLE";
 	};
 }foreach(OT_NATOhvts);
 
