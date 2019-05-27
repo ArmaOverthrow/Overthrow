@@ -47,6 +47,8 @@ private _difficulty = 1.8;
         private _civ = _group createUnit [OT_civType_gunDealer, _destination, [],0, "NONE"];
         _civ setVariable ["notalk",true,true]; //Tells Overthrow this guy cannot be recruited etc
 
+        _civ disableAI "MOVE";
+
         //Set face,voice and uniform
         [_civ, (OT_faces_western call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
         [_civ, (OT_voices_western call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
@@ -83,7 +85,9 @@ private _difficulty = 1.8;
             _count = _count + 1;
         };
 
-        private _wp = _bgroup addWaypoint [_destination,0];
+        _wp = _bgroup addWaypoint [_destination,0];
+        _wp setWaypointType "GUARD";
+        _wp = _bgroup addWaypoint [_destination,0];
         _wp setWaypointType "GUARD";
     },
     {
@@ -102,6 +106,7 @@ private _difficulty = 1.8;
         }foreach(_destination nearEntities ["CAManBase",15]);
 
         if(_alerted and !_alreadyAlerted) then {
+            _civ enableAI "MOVE";
             private _factionName = server getvariable format["factionname%1",_faction];
             format ["Incoming message from %1: Traitor has been alerted.",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
             private _wp = group _civ addWaypoint [[[[_destination,500]]] call BIS_fnc_randomPos,0];

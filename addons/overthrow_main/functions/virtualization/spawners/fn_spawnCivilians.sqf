@@ -134,6 +134,8 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 
 			_wp = _leaderGroup addWaypoint [_home,0];
 			_wp setWaypointType "GUARD";
+			_wp = _leaderGroup addWaypoint [_home,0];
+	        _wp setWaypointType "GUARD";
 
 			_groups pushback _leaderGroup;
 

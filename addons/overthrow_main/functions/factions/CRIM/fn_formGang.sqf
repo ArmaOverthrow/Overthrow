@@ -53,6 +53,8 @@ if((count _possible) > 0) then {
 
         _wp = _leaderGroup addWaypoint [_home,0];
         _wp setWaypointType "GUARD";
+        _wp = _leaderGroup addWaypoint [_home,0];
+        _wp setWaypointType "GUARD";
 
         private _group = creategroup [opfor,true];
         _group setVariable ["VCM_TOUGHSQUAD",true,true];

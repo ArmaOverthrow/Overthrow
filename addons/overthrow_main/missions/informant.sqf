@@ -47,6 +47,8 @@ private _difficulty = 1.8;
         [_civ, (OT_voices_western call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
         _civ forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
 
+        _civ disableAI "MOVE";
+
         //Make sure hes in the group
         [_civ] joinSilent nil;
         [_civ] joinSilent _group;
@@ -78,7 +80,9 @@ private _difficulty = 1.8;
             _count = _count + 1;
         };
 
-        private _wp = _bgroup addWaypoint [_destination,0];
+        _wp = _bgroup addWaypoint [_destination,0];
+        _wp setWaypointType "GUARD";
+        _wp = _bgroup addWaypoint [_destination,0];
         _wp setWaypointType "GUARD";
     },
     {
@@ -97,6 +101,7 @@ private _difficulty = 1.8;
         }foreach(_destination nearEntities ["CAManBase",15]);
 
         if(_alerted && !_alreadyAlerted) then {
+            _civ enableAI "MOVE";
             format ["NATO Informant has been alerted."] remoteExec ["OT_fnc_notifyMinor",0,false];
             private _wp = (group _civ) addWaypoint [[[[_destination,500]]] call BIS_fnc_randomPos,0];
             _wp setWaypointSpeed "FULL";

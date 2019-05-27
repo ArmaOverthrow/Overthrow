@@ -10,14 +10,11 @@ if(isNull _shooter) then {
 		_shooter = _aceSource;
 	};
 };
-if !((typeOf _shooter) isKindOf "CAManBase") then {
-	_shooter = driver _shooter;
-};
-diag_log format["Dammaged: %1 by %2",typeof _unit,name _shooter];
-
-_shooter setCaptive false;
-if !((vehicle _shooter) == _shooter) then {
-    {
-        _x setCaptive false;
-    }foreach(crew vehicle _shooter);
+if ((typeOf _shooter) isKindOf "CAManBase") then {
+    [_shooter,false] remoteExecCall ["setCaptive",_shooter];
+    if !((vehicle _shooter) isEqualTo _shooter) then {
+        {
+            [_x,false] remoteExecCall ["setCaptive",_x];
+        }foreach(crew vehicle _shooter);
+    };
 };

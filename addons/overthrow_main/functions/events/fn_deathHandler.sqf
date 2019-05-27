@@ -23,7 +23,7 @@ diag_log format["Death: %1 by %2",typeof _me,name _killer];
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
-	player setCaptive true;
+	[_me,true] remoteExecCall ["setCaptive",_me];
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
 		if (_unit isEqualTo player) then {
@@ -218,10 +218,10 @@ call {
 	};
 };
 if((_killer call OT_fnc_unitSeen) || (_standingChange < -9)) then {
-	_killer setCaptive false;
+	[_killer,false] remoteExecCall ["setCaptive",_killer];
 	if(vehicle _killer != _killer) then {
 		{
-			_x setCaptive false;
+			[_x,false] remoteExecCall ["setCaptive",_x];
 		}foreach(units vehicle _killer);
 	};
 };
