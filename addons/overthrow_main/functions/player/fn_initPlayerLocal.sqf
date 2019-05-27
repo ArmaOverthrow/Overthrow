@@ -31,11 +31,14 @@ if(isNil {server getVariable "generals"}) then {
 OT_centerPos = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 if(isMultiplayer && (!isServer)) then {
-	// both done on server too, no need to execute them again
+	// this is all done on server too, no need to execute them again
 	call OT_fnc_initBaseVar;
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
+	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
+	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
+	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 }else{
 	OT_varInitDone = true;
 };
