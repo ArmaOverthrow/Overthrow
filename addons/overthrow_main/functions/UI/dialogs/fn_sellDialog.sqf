@@ -14,6 +14,7 @@ private _numitems = 0;
 
 	_name = "";
 	_pic = "";
+	_cansell = true;
 	if(_cls isKindOf ["None",configFile >> "CfgGlasses"]) then {
 		_name = _cls call OT_fnc_glassesGetName;
 		_pic = _cls call OT_fnc_glassesGetPic;
@@ -27,14 +28,18 @@ private _numitems = 0;
 		_pic = _cls call OT_fnc_magazineGetPic;
 	};
 	if(_cls isKindOf "Bag_Base") then {
-		_name = _cls call OT_fnc_vehicleGetName;
-		_pic = _cls call OT_fnc_vehicleGetPic;
+		_cansell = false;
 	};
-	_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
-	lbSetPicture [1500,_idx,_pic];
-	lbSetValue [1500,_idx,_price];
-	lbSetData [1500,_idx,_cls];
-	_numitems = _numitems + 1;
+	if(_cls in OT_allClothing) then {
+		_cansell = false;
+	};
+	if(_cansell) then {
+		_idx = lbAdd [1500,format["%1 x %2 ($%3)",_num,_name,_price]];
+		lbSetPicture [1500,_idx,_pic];
+		lbSetValue [1500,_idx,_price];
+		lbSetData [1500,_idx,_cls];
+		_numitems = _numitems + 1;
+	};
 }foreach(_playerstock);
 if(_cursel >= _numitems) then {_cursel = 0};
 lbSetCurSel [1500, _cursel];

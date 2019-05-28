@@ -76,7 +76,7 @@ private _gunOut = false;
 } forEach ("true" configClasses (configfile >> "CfgVehicles" >> _cls >> "HitPoints"));
 
 if !(_cls isKindOf "StaticWeapon") then {
-    _txt = format["%1Fuel: %1%2<br/>",_txt,_fuel,"%"];
+    _txt = format["%1Fuel: %2%3<br/>",_txt,_fuel,"%"];
     _txt = format["%1Load: %2kg<br/>",_txt,_loadKg];
     if(_hasWheels) then {
         if(_wheelsNeeded isEqualTo 0) then {

@@ -55,6 +55,11 @@ diag_log format["Overthrow: Economy version is %1",_version];
             };
         };
     };
+
+    private _garrison = server getVariable [format['police%1',_town],0];
+    _mrkid = format["%1-police",_town];
+    _mrkid setMarkerText format["%1",_garrison];
+
 }foreach(OT_allTowns);
 
 if(_version < OT_economyVersion) then {

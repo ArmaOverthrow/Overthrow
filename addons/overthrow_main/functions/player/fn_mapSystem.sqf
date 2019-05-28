@@ -62,7 +62,7 @@ _handler = {
 	};
 	_t = 2;
 	{
-		if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x} && !(_x getVariable ["polgarrison",false])) then {
+		if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x} && (_x getVariable ["polgarrison",""]) isEqualTo "") then {
 			_veh = vehicle _x;
 			if(_veh isEqualTo _x) then {
 				_color = [0,0.5,0,1];
