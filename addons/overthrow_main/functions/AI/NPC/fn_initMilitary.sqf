@@ -4,10 +4,12 @@ _type = typeof _unit;
 
 //Make silencers rare
 _items = primaryWeaponItems _unit;
-if !(_items#0 isEqualTo "") then {
-	if((random 100) < 99) then {
-		_unit removePrimaryWeaponItem (_items#0);
-	}
+if(!isNil "_items") then {
+	if !(_items#0 isEqualTo "") then {
+		if((random 100) < 99) then {
+			_unit removePrimaryWeaponItem (_items#0);
+		}
+	};
 };
 
 //Re-Equip this soldier (75% of the time)
@@ -39,9 +41,11 @@ if((random 100) > 25) then {
 
 
 	//put accessories back (where possible)
-	{
-		_unit addWeaponItem [_wpn, _x];
-	}foreach(_accessories);
+	if(!isNil "_accessories") then {
+		{
+			_unit addWeaponItem [_wpn, _x];
+		}foreach(_accessories);
+	};
 
 	_magazines = getArray (configFile / "CfgWeapons" / _wpn / "magazines");
 

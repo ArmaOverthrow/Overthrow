@@ -64,6 +64,9 @@ if(_name in OT_allComms) then {
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
+		if((count _start) isEqualTo 0) then {
+			_start = _posTown findEmptyPosition [2,150];
+		};
 		_civ = _group createUnit [OT_NATO_Unit_AA_ass, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
 		_civ setRank "CAPTAIN";
