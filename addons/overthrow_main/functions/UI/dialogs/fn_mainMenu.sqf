@@ -94,13 +94,9 @@ if(typename _b isEqualTo "ARRAY") then {
 			ctrlEnable [1609,true];
 			ctrlSetText [1609,"Procurement"];
 
-			if(_owner isEqualTo getplayerUID player) then {
-				ctrlSetText [1608,format["Sell ($%1)",[_sell, 1, 0, true] call CBA_fnc_formatNumber]];
-				ctrlEnable [1608,true];
-			}else{
-				ctrlSetText [1608,"Sell"];
-				ctrlEnable [1608,false];
-			};
+			ctrlSetText [1608,"Sell"];
+			ctrlEnable [1608,false];
+
 			ctrlSetText [1610,"Repair"];
 			if((damage _building) isEqualTo 1) then {
 				ctrlEnable [1610,true];

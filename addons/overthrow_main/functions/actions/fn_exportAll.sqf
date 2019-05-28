@@ -15,12 +15,12 @@ if(_town in (server getVariable ["NATOabandoned",[]])) then {
 [5,false] call OT_fnc_progressBar;
 sleep 5;
 
-private _combinedItems = OT_allItems + OT_allBackpacks + OT_Resources + OT_allClothing;
+private _combinedItems = OT_allItems + OT_allBackpacks + OT_Resources;
 private _total = 0;
 {
 	_x params ["_cls", "_num"];
 	private _count = 0;
-	if(_doillegal || _cls in _combinedItems) then {
+	if((_doillegal || _cls in _combinedItems) && !(_cls in OT_allClothing)) then {
 		private _baseprice = [OT_nation,_cls,0] call OT_fnc_getSellPrice;
 		private _costprice = round(_baseprice * 0.6); //The cost of export
 		if(_cls in OT_allDrugs) then {

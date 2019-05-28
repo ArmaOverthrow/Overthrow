@@ -750,17 +750,21 @@ OT_allLegalClothing = [];
 	private _name = configName _x;
 	private _short = getText (configFile >> "CfgWeapons" >> _name >> "descriptionShort");
 	private _supply = getText(configfile >> "CfgWeapons" >> _name >> "ItemInfo" >> "containerClass");
+	private _mass = getNumber(configfile >> "CfgWeapons" >> _name >> "ItemInfo" >> "mass");
 	private _carry = getNumber(configfile >> "CfgVehicles" >> _supply >> "maximumLoad");
-	private _cost = round(_carry * 0.5);
+	private _cost = round(_mass * 4);
 
-	OT_allClothing pushback _name;
 	private _c = _name splitString "_";
-	private _side = _c select 1;
-	if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
-		OT_allLegalClothing pushback _name;
-	};
-	if (isServer && isNil {cost getVariable _name}) then {
-		cost setVariable [_name,[_cost,0,0,1],true];
+	if(_c select (count _c - 1) != "VR") then {
+		OT_allClothing pushback _name;
+
+		private _side = _c select 1;
+		if((_name == "V_RebreatherIA" || _side == "C" || _side == "I") && (_c select (count _c - 1) != "VR")) then {
+			OT_allLegalClothing pushback _name;
+		};
+		if (isServer && isNil {cost getVariable _name}) then {
+			cost setVariable [_name,[_cost,0,0,1],true];
+		};
 	};
 } foreach (_allUniforms);
 
