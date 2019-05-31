@@ -57,42 +57,31 @@ _this spawn {
 			private _count = 0;
 			private _full = false;
 
-			if ((_veh isKindOf "Truck_F" || _veh isKindOf "ReammoBox_F")) then {
-				_count = _max;
-			} else {
-				while {_count < _max} do {
-					if(!(_veh canAdd [_cls,_count+1])) exitWith {_full = true;};
-					_count = _count + 1;
+			while {_count < _max} do {
+				if(!(_veh canAdd [_cls,1]) && !(_veh isKindOf "Truck_F" || _veh isKindOf "ReammoBox_F")) exitWith {_full = true};
+				_count = _count + 1;
+				if(_cls isKindOf "Bag_Base") exitWith {
+					_cls = _cls call BIS_fnc_basicBackpack;
+					_veh addBackpackCargoGlobal [_cls,1];
 				};
+				if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+					_veh addWeaponCargoGlobal [_cls,1];
+				};
+				if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+					_veh addWeaponCargoGlobal [_cls,1];
+				};
+				if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+					_veh addWeaponCargoGlobal [_cls,1];
+				};
+				if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+					_veh addMagazineCargoGlobal [_cls,1];
+				};
+				_veh addItemCargoGlobal [_cls,1];
 			};
-
-			if (_count > 0) then {
-				[_veh, _target, _cls, _count] call {
-					params ["_veh", "_target" ,"_cls", "_count"];
-					if(_cls isKindOf "Bag_Base") exitWith {
-						_cls = _cls call BIS_fnc_basicBackpack;
-						_veh addBackpackCargoGlobal [_cls,_count];
-						[_target, _cls, _count] call CBA_fnc_removeBackpackCargo;
-					};
-					if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,_count];
-						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
-					};
-					if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,_count];
-						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
-					};
-					if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
-						_veh addWeaponCargoGlobal [_cls,_count];
-						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
-					};
-					if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
-						_veh addMagazineCargoGlobal [_cls,_count];
-						[_target, _cls, _count] call CBA_fnc_removeMagazineCargo;
-					};
-					_veh addItemCargoGlobal [_cls,_count];
-					if !([_target, _cls, _count] call CBA_fnc_removeItemCargo) then {
-						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
+			if(!([_target, _cls, _count] call CBA_fnc_removeBackpackCargo)) then {
+				if(!([_target, _cls, _count] call CBA_fnc_removeMagazineCargo)) then {
+					if(!([_target, _cls, _count] call CBA_fnc_removeItemCargo)) then {
+						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo
 					};
 				};
 			};

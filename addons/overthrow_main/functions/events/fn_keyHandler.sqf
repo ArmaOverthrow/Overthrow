@@ -31,7 +31,7 @@ if(!dialog) then {
 							"ShowMap" call OT_fnc_getAssignedKey
 						], 0, 0.2, 120, 1, 0, 2] call OT_fnc_dynamicText;
 
-					waitUntil {uisleep 1; visibleMap};
+					waitUntil {uiSleep 1; visibleMap};
 
 					hint format[
 						"Holding RMB will pan the map, zoom with the scrollwheel. When you are finished exploring the map, close it with the Esc key.",
@@ -45,7 +45,7 @@ if(!dialog) then {
 						OT_tutorial_backstoryText
 					], -0.5, 0.5, 240, 1, 0, 2] call OT_fnc_dynamicText;
 
-					waitUntil {uisleep 1; !visibleMap};
+					waitUntil {uiSleep 1; !visibleMap};
 					hint "";
 					sleep 3;
 
@@ -61,7 +61,7 @@ if(!dialog) then {
 					sleep 3;
 					hint "Go and speak to the local gun dealer. Head towards the marked location, you have nothing to worry about as long as you are not carrying/wearing any illegal items.";
 
-					waitUntil {uisleep 1; (player distance2d getPosASL _gundealer) < 5};
+					waitUntil {uiSleep 1; (player distance2d getPosASL _gundealer) < 5};
 
 
 					_lines = [
