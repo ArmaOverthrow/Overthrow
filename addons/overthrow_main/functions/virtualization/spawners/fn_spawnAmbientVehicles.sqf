@@ -89,7 +89,7 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 						};
 					};
 					_groups pushBack _veh;
-					sleep 0.2;
+					sleep 0.3;
 				};
 			};
 		};

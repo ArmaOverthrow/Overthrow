@@ -28,7 +28,7 @@ if(_name in OT_allComms) then {
 	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	_count = _count + 1;
-	sleep 0.2;
+	sleep 0.3;
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -39,7 +39,7 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.3;
 	};
 
 	if(_count < _numNATO) then {
@@ -53,7 +53,7 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.3;
 	};
 	private _wp = _group addWaypoint [_posTown,0];
 	_wp setWaypointType "GUARD";
@@ -74,7 +74,7 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.3;
 	};
 
 }else{
@@ -133,7 +133,7 @@ if(_numNATO > 0) then {
 			_numNATO = _numNATO - 1;
 			_vehs pushBack _veh;
 
-			sleep 0.2;
+			sleep 0.3;
 
 			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 13), [], 0, "CAN_COLLIDE"];
 			createVehicleCrew _veh;
@@ -155,7 +155,7 @@ if(_numNATO > 0) then {
 	}foreach(_buildings);
 };
 
-sleep 0.2;
+sleep 0.3;
 private _range = 150;
 private _groupcount = 0;
 while {_count < _numNATO} do {
@@ -197,7 +197,7 @@ while {_count < _numNATO} do {
 
 	[_group,_posTown,_range,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
-	sleep 0.2;
+	sleep 0.3;
 };
 
 
@@ -232,7 +232,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];
 	_veh setDir _dir;
-	sleep 0.2;
+	sleep 0.3;
 	_groups pushback _veh;
 }foreach(_airgarrison);
 
@@ -276,7 +276,7 @@ private _road = objNull;
 		if(random 100 < 99) then { //small chance its not crewed
 			createVehicleCrew _veh;
 		};
-		sleep 0.2;
+		sleep 0.3;
 		_groups pushback _veh;
 		{
 			[_x] joinSilent _vgroup;
@@ -302,7 +302,7 @@ private _road = objNull;
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		sleep 0.2;
+		sleep 0.3;
 
 		//His empty APC
 		private _vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];

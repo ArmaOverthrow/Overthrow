@@ -59,7 +59,7 @@ _civ setBehaviour "SAFE";
 }foreach(_vehs);
 
 _count = _count + 1;
-sleep 0.2;
+sleep 0.3;
 while {_count < _numNATO} do {
 	_start = [_start,2,_dir-180] call BIS_fnc_relPos;
 	_civ = _group createUnit [OT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
@@ -68,7 +68,7 @@ while {_count < _numNATO} do {
 	_civ setRank "CAPTAIN";
 	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
-	sleep 0.2;
+	sleep 0.3;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
 	if(_count isEqualTo 2) then {

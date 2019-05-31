@@ -26,7 +26,7 @@ private _cc = 0;
 	};
 }foreach(_data);
 
-sleep 0.2;
+sleep 0.3;
 
 //now do everything else
 {
@@ -286,7 +286,7 @@ sleep 0.2;
 			};
 			if(_ccc isEqualTo 10) then {
 				_ccc = 0;
-				sleep 0.2;
+				sleep 0.3;
 			};
 		}foreach(_val);
 	};
@@ -335,10 +335,10 @@ sleep 0.2;
 	_cc = _cc + 1;
 	if(_cc isEqualTo 100) then {
 		_cc = 0;
-		sleep 0.2;
+		sleep 0.3;
 	};
 }foreach(_data);
-sleep 0.2;
+sleep 0.3;
 
 {
 	_pos = _x select 0;

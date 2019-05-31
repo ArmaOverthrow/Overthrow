@@ -149,7 +149,7 @@ if (_typeListFinal isEqualTo [] && _weakListFinal isEqualTo []) exitWith
 				_unit disableAI "WEAPONAIM";
 				(group _unit) setCombatMode "BLUE";
 				_unit forcespeed 5;
-				sleep 0.2;
+				sleep 0.3;
 				_unit doMove _FPos;
 				sleep 1;
 				//_unit setDestination [_FPos,"LEADER PLANNED", true];								

@@ -32,7 +32,7 @@ while {_count < _numNATO} do {
 		_pos = [[[_start,20]]] call BIS_fnc_randomPos;
 
 		_civ = [_soldier,_pos,_group,false] call OT_fnc_createSoldier;
-		sleep 0.2;
+		sleep 0.3;
 		_civ setVariable ["polgarrison",_town,false];
 		_civ setVariable ["OT_nospawntrack",true,false];
 		[_civ] joinSilent _group;

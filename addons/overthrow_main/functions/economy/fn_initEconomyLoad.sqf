@@ -160,7 +160,7 @@ if(_version < OT_economyVersion) then {
 
 	_piers = server getVariable [format["activepiersin%1",_x],[]];
 	[_allActivePiers,_piers] call BIS_fnc_arrayPushStack;
-    sleep 0.2;
+    sleep 0.3;
 }foreach(OT_allTowns);
 
 OT_allEconomic = [];
@@ -176,7 +176,7 @@ OT_allEconomic = [];
     server setVariable [_name,_pos,true];
     cost setVariable [_name,_x,true];
 }foreach(OT_economicData);
-sleep 0.2;
+sleep 0.3;
 
 _mrk = createMarker ["Factory",OT_factoryPos];
 _mrk setMarkerShape "ICON";

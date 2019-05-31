@@ -37,7 +37,7 @@ if !(_wType isEqualTo "MOVE" || _wType isEqualTo "") exitWith {};
 while {(count (waypoints _grp)) > 1} do
 {
  deleteWaypoint ((waypoints _grp) select 0);
- sleep 0.25;
+ sleep 0.35;
 };
 
 switch (_wayPointType) do {

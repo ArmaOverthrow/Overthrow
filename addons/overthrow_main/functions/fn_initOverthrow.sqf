@@ -66,11 +66,11 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	};
 
 	//Init factions
-	[] call OT_fnc_initNATO;
+	[] spawn OT_fnc_initNATO;
+	waitUntil {!isNil "OT_NATOInitDone"};
 	[] spawn OT_fnc_factionNATO;
 	[] spawn OT_fnc_factionGUER;
-	[] spawn OT_fnc_factionCRIM;
-	waitUntil {!isNil "OT_NATOInitDone"};
+	[] spawn OT_fnc_factionCRIM;	
 
 	[] spawn OT_fnc_initEconomyLoad;
 

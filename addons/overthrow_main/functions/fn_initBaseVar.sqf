@@ -10,6 +10,19 @@ OT_spawnHouseBuildings = [];
 OT_carShopBuildings = [];
 
 //Default Loadouts
+OT_CRIMBaseLoadout = [
+	["arifle_MX_khk_F","","","optic_Aco",["30Rnd_65x39_caseless_khaki_mag",30],[],""],
+	[],
+	["hgun_P07_khk_F","","","",["16Rnd_9x21_Mag",17],[],""],
+	["U_I_C_Soldier_Para_4_F",[["ACE_morphine",1],["ACE_epinephrine",1],["ACE_fieldDressing",2]]],
+	["V_PlateCarrier1_tna_F",[]],
+	[],
+	"",
+	"",
+	[],
+	["ItemMap","","","","",""]
+];
+
 OT_Unit_Police = "I_soldier_F";
 OT_Loadout_Police = [
 	[],

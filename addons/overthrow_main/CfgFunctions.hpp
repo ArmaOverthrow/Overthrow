@@ -456,6 +456,8 @@ class CfgFunctions
 			class createSquad {};
 			class experience {};
 			class dangerCaused {};
+			class randomizeLoadout {};
+			class getRandomLoadout {};
 		};
 
 		/*

@@ -48,7 +48,7 @@ while {_count < _numNATO} do {
 		[_civ,_town] call OT_fnc_initGendarm;
 		_civ setBehaviour "SAFE";
 
-		sleep 0.2;
+		sleep 0.3;
 		_group call OT_fnc_initGendarmPatrol;
 		_range = _range + 50;
 		_count = _count + 2;

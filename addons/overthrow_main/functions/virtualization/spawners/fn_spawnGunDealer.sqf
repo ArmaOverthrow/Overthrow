@@ -31,6 +31,6 @@ _dealer = _group createUnit [OT_civType_gunDealer, _gundealerpos, [],0, "NONE"];
 _dealer setVariable ["shopcheck",true,true];
 _dealer setVariable ["gundealer",true,true];
 spawner setVariable [format ["gundealer%1",_town],_dealer,true];
-sleep 0.2;
+sleep 0.3;
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

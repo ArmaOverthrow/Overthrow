@@ -32,7 +32,7 @@ while {_count < _num} do {
 		_x setVariable ["NOAI",true,false];
 	}foreach(crew _veh);
 	_count = _count + 1;
-	sleep 0.2;
+	sleep 0.3;
 
 	_group deleteGroupWhenEmpty true;
 
