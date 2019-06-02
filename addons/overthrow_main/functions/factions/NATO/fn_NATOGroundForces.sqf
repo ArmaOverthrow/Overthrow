@@ -42,7 +42,7 @@ if !(_pos isEqualType []) then {
 	};
 	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
 };
-
+_pos set [2,0];
 _veh = _vehtype createVehicle [0,0,0];
 _veh setDir (_dir);
 _veh setPosATL _pos;

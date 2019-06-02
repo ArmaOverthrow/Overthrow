@@ -591,7 +591,15 @@ OT_allBLUOffensiveVehicles = [];
 								if((_this select [0,7]) == "srifle_" || (_this isKindOf ["Rifle_Long_Base_F", configFile >> "CfgWeapons"])) exitWith {OT_allBLUSniperRifles pushBackUnique _base};
 								if((_this find "_GL_") > -1) exitWith {OT_allBLUGLRifles pushBackUnique _base};
 								if(_mass < 61) exitWith {OT_allBLUSMG pushBackUnique _base};
-								OT_allBLURifles pushBackUnique _base
+								private _events = "" getClasses (configFile >> "CfgWeapons" >> _base >> "Eventhandlers");
+								_add = true;
+								{
+									private _n = configName _x;
+									if(_n isEqualTo "RHS_BoltAction") exitWith {_add = false}; //ignore RHS bolt-action rifles
+								}foreach(_events);
+								if(_add) then {
+									OT_allBLURifles pushBackUnique _base;
+								};
 							};
 						};
 						if(_base isKindOf ["Launcher", configFile >> "CfgWeapons"]) then {OT_allBLULaunchers pushBackUnique _base};

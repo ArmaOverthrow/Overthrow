@@ -291,7 +291,8 @@ private _road = objNull;
 		private _group = createGroup blufor;
 		_groups pushBack _group;
 		_group setVariable ["Vcm_Disable",true,true]; //stop him from running off
-		private _pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+		private _vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];
+		private _pos = _vpos findEmptyPosition [3,20,OT_NATO_Unit_HVT];
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
 		_civ setVariable ["hvt",true,true];
@@ -306,16 +307,16 @@ private _road = objNull;
 		sleep 0.3;
 
 		//His empty APC
-		private _vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];
+
 		private _veh =  OT_NATO_Vehicle_HVT createVehicle _vpos;
 		_veh setpos _vpos;
 		_veh setVariable ["vehgarrison","HQ",false];
 
 		_groups pushback _veh;
 
-		private _wp = _group addWaypoint [_pos, 50];
+		private _wp = _group addWaypoint [_pos, 0];
 		_wp setWaypointType "GUARD";
-		_wp = _group addWaypoint [_pos, 50];
+		_wp = _group addWaypoint [_pos, 0];
 		_wp setWaypointType "CYCLE";
 		{
 			_x addCuratorEditableObjects[units _group,false];
