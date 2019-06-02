@@ -5,7 +5,7 @@ params ["_mapCtrl"];
 
 private _vehs = [];
 private _cfgVeh = configFile >> "CfgVehicles";
-if(isMultiplayer) then {
+if(isMultiplayer && OT_showPlayerMarkers) then {
 	{
 		private _veh = vehicle _x;
 		if(_veh isEqualTo _x) then {
@@ -78,38 +78,25 @@ private _grpUnits = groupSelectedUnits player;
 	};
 }foreach(allunits);
 
-if (!visibleGPS) then {
-	private _mortars = spawner getVariable ["NATOmortars",[]];
+private _mortars = spawner getVariable ["NATOmortars",[]];
+{
+	_mapCtrl drawIcon [
+		"\A3\ui_f\data\map\markers\nato\b_mortar.paa",
+		[0,0.3,0.59,(2000 - (_x select 1)) / 2000],
+		_x select 2,
+		24,
+		24,
+		0,
+		""
+	];
+}foreach(_mortars);
+if(((getposatl player) select 2) > 30) then {
+	//Show no-fly zones
+	private _abandoned = server getVariable ["NATOabandoned",[]];
 	{
-		_mapCtrl drawIcon [
-			"\A3\ui_f\data\map\markers\nato\b_mortar.paa",
-			[0,0.3,0.59,(2000 - (_x select 1)) / 2000],
-			_x select 2,
-			24,
-			24,
-			0,
-			""
-		];
-	}foreach(_mortars);
-	if(((getposatl player) select 2) > 30) then {
-		//Show no-fly zones
-		private _abandoned = server getVariable ["NATOabandoned",[]];
-		{
-			if !(_x in _abandoned) then {
-				_mapCtrl drawEllipse [
-					server getvariable _x,
-					2000,
-					2000,
-					0,
-					[1, 0, 0, 1],
-					"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
-				];
-			};
-		}foreach(OT_allAirports);
-		private _attack = server getVariable ["NATOattacking",""];
-		if(_attack != "") then {
+		if !(_x in _abandoned) then {
 			_mapCtrl drawEllipse [
-				server getvariable [_attack, [0,0]],
+				server getvariable _x,
 				2000,
 				2000,
 				0,
@@ -117,6 +104,17 @@ if (!visibleGPS) then {
 				"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
 			];
 		};
+	}foreach(OT_allAirports);
+	private _attack = server getVariable ["NATOattacking",""];
+	if(_attack != "") then {
+		_mapCtrl drawEllipse [
+			server getvariable [_attack, [0,0]],
+			2000,
+			2000,
+			0,
+			[1, 0, 0, 1],
+			"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
+		];
 	};
 };
 
@@ -271,58 +269,31 @@ if(_scale <= 0.16) then {
 		};
 	}foreach(_towns);
 
-	if (!visibleGPS) then {
-		{
-			if ((typeof _x != "B_UAV_AI") && !(_x getVariable ["OT_looted",false])) then {
-				_mapCtrl drawIcon [
-					"\overthrow_main\ui\markers\death.paa",
-					[1,1,1,0.5],
-					getPosASL _x,
-					0.2/_scale,
-					0.2/_scale,
-					0
-				];
-			};
-		}foreach(alldeadmen);
-		{
-			private _visPos = getPosASL _x;
-			if(
-				typeOf _x isKindOf ["AllVehicles",_cfgVeh]
-				&& { (crew _x isEqualTo []) }
-				&& { (_x call OT_fnc_hasOwner) }
-			) then {
-				if(typeOf _x isKindOf ["StaticWeapon", _cfgVeh] && {(isNull attachedTo _x) && (alive _x)}) then {
-					if(side _x isEqualTo civilian || side _x isEqualTo resistance || captive _x) then {
-						_mapCtrl drawIcon [
-							[
-								"\A3\ui_f\data\map\markers\nato\o_art.paa",
-								"\A3\ui_f\data\map\markers\nato\o_mortar.paa"
-							] select (typeOf _x isKindOf ["StaticMortar", _cfgVeh]),
-							[
-								[0.5,0] select alive gunner _x,
-								0.5,
-								[0.4,1] select (someAmmo _x),
-								1
-							],
-							_visPos,
-							30,
-							30,
-							0
-						];
-					};
-				} else {
-					_mapCtrl drawIcon [
-						getText(_cfgVeh >> (typeof _x) >> "icon"),
-						[1,1,1,1],
-						_visPos,
-						0.4/_scale,
-						0.4/_scale,
-						getdir _x
-					];
-				};
-			};
-		}foreach(vehicles);
-	};
+
+	{
+		if (typeof _x != "B_UAV_AI") then {
+			_mapCtrl drawIcon [
+				"\overthrow_main\ui\markers\death.paa",
+				[1,1,1,0.5],
+				getPosASL _x,
+				0.2/_scale,
+				0.2/_scale,
+				0
+			];
+		};
+	}foreach(alldeadmen);
+
+	{
+		private _icon = +_x;
+		if((_icon select 3) < 1) then {
+			_icon set [3,(_icon select 3) / _scale];
+			_icon set [4,(_icon select 4) / _scale];
+		};
+		_mapCtrl drawIcon _icon;
+	}foreach(OT_mapcache_vehicles);
+
+
+
 };
 private _qrf = server getVariable "QRFpos";
 if(!isNil "_qrf") then {
@@ -339,7 +310,54 @@ if(!isNil "_qrf") then {
 				1,
 				abs _progress
 			],
+			"\A3\ui_f\data\map\markerbrushes\fdiagonal_ca.paa"
+		];
+	};
+};
+
+private _qrf = server getVariable "QRFpos";
+if(!isNil "_qrf") then {
+	private _progress = server getVariable ["QRFprogress",0];
+	_col = [];
+	if(_progress > 0) then {_col = [0,0,1,_progress]};
+	if(_progress < 0) then {_col = [0,1,0,abs _progress]};
+	if(_progress != 0) then {
+		_mapCtrl drawEllipse [
+			_qrf,
+			200,
+			200,
+			0,
+			_col,
 			"\A3\ui_f\data\map\markerbrushes\bdiagonal_ca.paa"
 		];
 	};
+};
+
+//Radar
+{
+	private _i = "\A3\ui_f\data\map\markers\nato\b_air.paa";
+	if(_x isKindOf "Plane") then {_i = "\A3\ui_f\data\map\markers\nato\b_plane.paa"};
+	if((_x isKindOf "UAV") || (typeof _x isEqualTo OT_NATO_Vehicles_ReconDrone)) then {_i = "\A3\ui_f\data\map\markers\nato\b_uav.paa"};
+	_mapCtrl drawIcon [
+		_i,
+		[0,0.3,0.59,1],
+		position _x,
+		30,
+		30,
+		0
+	];
+}foreach(OT_mapcache_radar);
+
+//Draw resistance radar coverage
+if(_scale > 0.16) then {
+	{
+		_mapCtrl drawEllipse [
+			_x,
+			2500,
+			2500,
+			0,
+			[0,0.7,0,0.4],
+			"\A3\ui_f\data\map\markerbrushes\fdiagonal_ca.paa"
+		];
+	}foreach(spawner getVariable ["GUERradarPositions",[]]);
 };

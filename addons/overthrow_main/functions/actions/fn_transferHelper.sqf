@@ -56,34 +56,48 @@ _this spawn {
 			_x params [["_cls",""], ["_max",0]];
 			private _count = 0;
 			private _full = false;
+			private _istruck = (_veh isKindOf "Truck_F" || _veh isKindOf "ReammoBox_F");
 
 			while {_count < _max} do {
-				if(!(_veh canAdd [_cls,1]) && !(_veh isKindOf "Truck_F" || _veh isKindOf "ReammoBox_F")) exitWith {_full = true};
+				if(!(_veh canAdd [_cls,1]) && !_istruck) exitWith {_full = true};
 				_count = _count + 1;
+				call {
+					if(_cls isKindOf "Bag_Base") exitWith {
+						_cls = _cls call BIS_fnc_basicBackpack;
+						_veh addBackpackCargoGlobal [_cls,1];
+					};
+					if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+						_veh addWeaponCargoGlobal [_cls,1];
+					};
+					if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+						_veh addWeaponCargoGlobal [_cls,1];
+					};
+					if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+						_veh addWeaponCargoGlobal [_cls,1];
+					};
+					if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+						_veh addMagazineCargoGlobal [_cls,1];
+					};
+					_veh addItemCargoGlobal [_cls,1];
+				};
+			};
+			call {
 				if(_cls isKindOf "Bag_Base") exitWith {
-					_cls = _cls call BIS_fnc_basicBackpack;
-					_veh addBackpackCargoGlobal [_cls,1];
+					[_target, _cls, _count] call CBA_fnc_removeBackpackCargo;
 				};
 				if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-					_veh addWeaponCargoGlobal [_cls,1];
+					[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 				};
 				if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-					_veh addWeaponCargoGlobal [_cls,1];
+					[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 				};
 				if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
-					_veh addWeaponCargoGlobal [_cls,1];
+					[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
 				};
 				if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
-					_veh addMagazineCargoGlobal [_cls,1];
+					[_target, _cls, _count] call CBA_fnc_removeMagazineCargo;
 				};
-				_veh addItemCargoGlobal [_cls,1];
-			};
-			if(!([_target, _cls, _count] call CBA_fnc_removeBackpackCargo)) then {
-				if(!([_target, _cls, _count] call CBA_fnc_removeMagazineCargo)) then {
-					if(!([_target, _cls, _count] call CBA_fnc_removeItemCargo)) then {
-						[_target, _cls, _count] call CBA_fnc_removeWeaponCargo
-					};
-				};
+				[_target, _cls, _count] call CBA_fnc_removeItemCargo;
 			};
 			if(_full) exitWith {hint "The vehicle is full, use a truck or ammobox for more storage"};
 		}foreach(_target call OT_fnc_unitStock);

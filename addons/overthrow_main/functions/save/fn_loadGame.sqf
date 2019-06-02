@@ -150,7 +150,7 @@ sleep 0.3;
 					_name = _x select 5;
 				};
 				private _p = _pos;
-				_veh = createVehicle [_type, _p, [], 0, "CAN_COLLIDE"];
+				_veh = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
 				_veh enableDynamicSimulation true;
 				/*
 				if !(_simulation) then {
@@ -195,16 +195,16 @@ sleep 0.3;
 						};
 					};
 				};
-				_veh setPosATL _p;
-				if(_type isKindOf "Building") then {
-					_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
-					_clu enableDynamicSimulation true;
-				};
 				if(typename _dir isEqualTo "SCALAR") then {
 					//Pre 0.6.8 save, scalar direction
 					_veh setDir _dir;
 				}else{
 					_veh setVectorDirAndUp _dir;
+				};
+				_veh setPosATL _p;
+				if(_type isKindOf "Building") then {
+					_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
+					_clu enableDynamicSimulation true;
 				};
 
 				clearWeaponCargoGlobal _veh;

@@ -52,6 +52,10 @@ while {_count < _numNATO} do {
 		_group call OT_fnc_initGendarmPatrol;
 		_range = _range + 50;
 		_count = _count + 2;
+
+		{
+			_x addCuratorEditableObjects[units _group,false];
+		}foreach(allcurators);
 	};
 };
 

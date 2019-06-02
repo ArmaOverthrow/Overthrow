@@ -840,7 +840,7 @@ class OT_dialog_options
 		class RscButton_1606: RscOverthrowButton
 		{
 			idc = 1606;
-			action = "[[0,0],""setFog"",TRUE,FALSE] spawn BIS_fnc_MP";
+			action = "[0,0] remoteExecCall ['setFog',0,false]";
 
 			text = "Clean fog"; //--- ToDo: Localize;
 			x = 0.515469 * safezoneW + safezoneX;

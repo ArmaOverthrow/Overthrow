@@ -47,8 +47,8 @@ diag_log format["Overthrow: NATO QRF spend is %1",_strength];
 
 //add helipads to possibles
 {
-	_x params ["","_name"];
-	if !(_name in _abandoned) then {
+	_x params ["_obpos","_name"];
+	if !((_name in _abandoned) || (_obpos distance _pos) < 300) then {
 		_air pushback _x;
 	};
 }foreach(OT_NATOHelipads);
