@@ -6,6 +6,19 @@ private _soldier = _cls call OT_fnc_getSoldier;
 
 _soldier params ["","","_loadout","_clothes"];
 
+private _items = [];
+//Add warehouse items to arsenal
+{
+    if(_x select [0,5] isEqualTo "item_") then {
+        private _d = warehouse getVariable [_x,[_x select [5],0,[0]]];
+        if(_d isEqualType []) then {
+            _items pushback _d#0;
+        };
+    };
+}foreach(allVariables warehouse);
+
+if((count _items) isEqualTo 0) exitWith {hint "Cannot edit loadout, no items in warehouse"};
+
 //spawn a virtual dude
 private _start = (getpos player) findEmptyPosition [5,40,_cls];
 private _civ = (group player) createUnit [_cls, _start, [],0, "NONE"];
@@ -39,16 +52,6 @@ _civ setFatigue 0;
 if ((_civ getVariable ["cba_projectile_firedEhId", -1]) != -1) then {
     _civ call CBA_fnc_removeUnitTrackProjectiles;
 };
-private _items = [];
-//Add warehouse items to arsenal
-{
-    if(_x select [0,5] isEqualTo "item_") then {
-        private _d = warehouse getVariable [_x,[_x select [5],0,[0]]];
-        if(_d isEqualType []) then {
-            _items pushback _d#0;
-        };
-    };
-}foreach(allVariables warehouse);
 
 [_civ, true, false] call ace_arsenal_fnc_removeVirtualItems;
 [_civ,_items,false] call ace_arsenal_fnc_addVirtualItems;

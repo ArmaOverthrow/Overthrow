@@ -52,6 +52,8 @@ OT_tutorialMissions pushback (compileFinal preprocessFileLineNumbers "\overthrow
 OT_NATO_HQ_garrisonPos = [];
 OT_NATO_HQ_garrisonDir = 0;
 
+OT_QRFstart = nil;
+
 // Load mission data
 call compile preprocessFileLineNumbers "data\names.sqf";
 call compile preprocessFileLineNumbers "data\towns.sqf";

@@ -124,12 +124,10 @@ publicVariable "OT_nextNATOTurn";
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
 				_garrison = server getVariable format ["garrison%1",_town];
-				_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
-				_numres = {(side _x isEqualTo resistance) || captive _x} count (_pos nearObjects ["CAManBase",100]);
 				//Limit towns checked to those within range of players
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					//Send QRF to Town with >100 population
-					if((_numres > _nummil) && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
+					if(_population >= 100 && {_stability isEqualTo 0} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						private _m = 3;
@@ -151,7 +149,6 @@ publicVariable "OT_nextNATOTurn";
 					_abandoned pushback _town;
 					server setVariable ["NATOabandoned",_abandoned,true];
 					server setVariable [format ["garrison%1",_town],0,true];
-					[_town, 0] call OT_fnc_stability;
 					format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
 					_countered = true;
 					diag_log format["Overthrow: NATO has abandoned %1",_town];

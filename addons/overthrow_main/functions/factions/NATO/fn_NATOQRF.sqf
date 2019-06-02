@@ -221,7 +221,7 @@ if(_isCoastal && !(OT_NATO_Navy_HQ in _abandoned) && (random 100) > 70) then {
 };
 private _start = round(time);
 server setVariable ["QRFpos",_pos,true];
-server setVariable ["QRFstart",_start,true];
+["OT_QRFstart", []] call CBA_fnc_globalEvent;
 server setVariable ["QRFprogress",0,true];
 
 waitUntil {(time - _start) > 600};
@@ -311,6 +311,6 @@ if(_progress > 0) then {
 };
 server setVariable ["NATOlastattack",time,true]; //Ensures NATO takes some time after a QRF to recover (even if they win)
 server setVariable ["QRFpos",nil,true];
-server setVariable ["QRFstart",nil,true];
+["OT_QRFend", []] call CBA_fnc_globalEvent;
 server setVariable ["QRFprogress",nil,true];
 server setVariable ["NATOattacking","",true];

@@ -15,6 +15,7 @@ private _missing = [];
 
 if(_target isEqualType "") then {
     [_unit,true] call OT_fnc_dumpIntoWarehouse;
+    _unit linkItem "ItemMap";
     {
         if(_x select [0,5] isEqualTo "item_") then {
             private _d = warehouse getVariable [_x,[_x select [5],0,[0]]];
@@ -32,6 +33,7 @@ if(_target isEqualType "") then {
     },[_unit]] call CBA_fnc_addEventHandlerArgs;
 }else{
     [_unit,_ammobox,true] call OT_fnc_dumpStuff;
+    _unit linkItem "ItemMap";
     _weapons = weaponCargo _ammobox;
     _weapons = _weapons arrayIntersect _weapons;
     _magazines = magazineCargo _ammobox;
@@ -187,7 +189,20 @@ if(_target isEqualType "") then {
                 }foreach(vestItems _unit);
                 removeVest _unit;
             }else{
+                //To account for CBA bug #1153: https://github.com/CBATeam/CBA_A3/issues/1153
+                //Remove when CBA fixes issue
+                private _numvests = 0;
+                {
+                    if(_x isEqualTo _vest) then {
+                        _numvests = _numvests + 1;
+                    };
+                }foreach(itemCargo _ammobox);
                 [_ammobox, _vest, 1] call CBA_fnc_removeItemCargo;
+                _numvests = _numvests - 1;
+                //Put vests back to account for bug
+                if(_numvests > 0) then {
+                    [_ammobox, _vest, _numvests] call CBA_fnc_addItemCargo;
+                };
             };
         };
 

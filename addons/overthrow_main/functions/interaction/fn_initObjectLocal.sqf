@@ -51,7 +51,7 @@ if(typeof _this isEqualTo OT_item_Storage) then {
 			"No warehouse within range or needs repair" call OT_fnc_notifyMinor;
 		};
 		OT_warehouseTarget = _this select 0;
-		[] spawn OT_fnc_transferTo;
+		call OT_fnc_storeAll;
 	},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
 	_this addAction ["Dump Everything", {[player,_this select 0] call OT_fnc_dumpStuff},nil,0,false,true,"",""];
 	_this addAction ["Dump Everything into Warehouse", {[player] call OT_fnc_dumpIntoWarehouse},nil,0,false,true,"","call OT_fnc_playerIsAtWarehouse"];
@@ -76,14 +76,15 @@ if(typeof _this isEqualTo "Land_Cargo_House_V4_F") then {
 	[_this] call ace_repair_fnc_moduleAssignRepairFacility;
 };
 
-if(_this isKindOf "Building" || _this isKindOf "Man" || _this isKindOf "LandVehicle") exitWith{};
+if(_this isKindOf "Building" || _this isKindOf "Man") exitWith {};
 
+[_this, 0, ["ACE_MainActions"], OT_ACEremoveAction] call ace_interact_menu_fnc_addActionToObject;
+[_this, 0, ["ACE_MainActions","OT_Remove"], OT_ACEremoveActionConfirm] call ace_interact_menu_fnc_addActionToObject;
+
+if(_this isKindOf "LandVehicle") exitWith{};
 
 _dir = 0;
 if(typeof _this isEqualTo "C_Rubberboat") then {
 	_dir = 90;
 };
 [_this, true, [0, 2, 0.4],_dir] call ace_dragging_fnc_setCarryable;
-
-[_this, 0, ["ACE_MainActions"], OT_ACEremoveAction] call ace_interact_menu_fnc_addActionToObject;
-[_this, 0, ["ACE_MainActions","OT_Remove"], OT_ACEremoveActionConfirm] call ace_interact_menu_fnc_addActionToObject;

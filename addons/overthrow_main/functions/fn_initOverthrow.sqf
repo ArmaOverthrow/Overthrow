@@ -70,7 +70,7 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	waitUntil {!isNil "OT_NATOInitDone"};
 	[] spawn OT_fnc_factionNATO;
 	[] spawn OT_fnc_factionGUER;
-	[] spawn OT_fnc_factionCRIM;	
+	[] spawn OT_fnc_factionCRIM;
 
 	[] spawn OT_fnc_initEconomyLoad;
 
@@ -103,6 +103,10 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
 	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 	["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
+
+	//Overthrow events
+	["OT_QRFstart", OT_fnc_QRFStartHandler] call CBA_fnc_addEventHandler;
+	["OT_QRFend", OT_fnc_QRFEndHandler] call CBA_fnc_addEventHandler;
 
 	if(isServer) then {
 		addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];

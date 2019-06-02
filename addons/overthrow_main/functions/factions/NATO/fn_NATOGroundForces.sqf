@@ -60,7 +60,7 @@ createVehicleCrew _veh;
 }foreach(crew _veh);
 _allunits = (units _tgroup);
 {
-	_x addCuratorEditableObjects [units _tgroup,true];
+	_x addCuratorEditableObjects [(units _tgroup) + [_veh],true];
 } forEach allCurators;
 sleep 1;
 

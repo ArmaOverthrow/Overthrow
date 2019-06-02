@@ -35,9 +35,14 @@ if(isMultiplayer && (!isServer)) then {
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
+	//ACE3 events
 	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
 	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
 	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
+	//Overthrow events
+	["OT_QRFstart", OT_fnc_QRFStartHandler] call CBA_fnc_addEventHandler;
+	["OT_QRFend", OT_fnc_QRFEndHandler] call CBA_fnc_addEventHandler;
+	OT_QRFstart = spawner getVariable ["QRFstart",nil];//If theres already a QRF going
 }else{
 	OT_varInitDone = true;
 };
@@ -350,9 +355,6 @@ if !("ItemMap" in (assignedItems player)) then {
 player addEventHandler ["WeaponAssembled",{
 	params ["_me","_wpn"];
 	private _pos = getPosATL _wpn;
-	if(typeof _wpn in OT_staticMachineGuns) then {
-		_wpn remoteExec["OT_fnc_initStaticMGLocal",0,_wpn];
-	};
 	if(typeof _wpn in OT_staticWeapons) then {
 		if(_me call OT_fnc_unitSeen) then {
 			_me setCaptive false;
@@ -365,15 +367,15 @@ player addEventHandler ["WeaponAssembled",{
 
 player addEventHandler ["InventoryOpened", {
 	params ["","_veh"];
+	private _locked = false;
 	if !(_veh call OT_fnc_playerIsOwner) then {
 		private _isgen = call OT_fnc_playerIsGeneral;
 		if(!_isgen && (_veh getVariable ["OT_locked",false])) exitWith {
-			moveOut player;
 			hint format["This inventory has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)];
-			true;
+			_locked = true;
 		};
 	};
-	false
+	_locked
 }];
 
 player addEventHandler ["GetInMan",{

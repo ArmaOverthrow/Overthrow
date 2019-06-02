@@ -11,7 +11,7 @@ OT_objectiveData = [
     [[4501.34,8430.07,0],"Regina Base",200]
 ];
 OT_NATO_HQ = "Tuvanaka Airbase";
-OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","96FM Georgetown","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka","Georgetown","Katkoula","Harcourt"];
+OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka","Georgetown","Katkoula","Harcourt"];
 OT_NATO_Navy_HQ = "Belfort Naval Base";
 
 OT_NATO_JetPos = [2078.23,13254.2,1.54746]; //Where to spawn jets

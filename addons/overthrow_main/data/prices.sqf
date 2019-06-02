@@ -647,7 +647,7 @@ OT_priceData = [
 ['I_HMG_01_high_weapon_F',[2000,1,0,1]],
 ['I_GMG_01_high_weapon_F',[4000,1,0,1]],
 ['I_HMG_01_support_high_F',[50,1,0,0]],
-['I_Mortar_01_weapon_F',[9000,1,0,1]],
+['I_Mortar_01_weapon_F',[12000,1,0,1]],
 ['I_Mortar_01_support_F',[100,1,0,0]],
 ['I_AT_01_weapon_F',[10000,1,0,1]],
 ['I_AA_01_weapon_F',[10000,1,0,1]],

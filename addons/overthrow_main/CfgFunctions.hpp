@@ -130,6 +130,8 @@ class CfgFunctions
 			class keyHandler {};
 			class taggedHandler {};
 			class EnemyDamagedHandler {};
+			class QRFStartHandler {};
+			class QRFEndHandler {};
 		};
 
 		class UI

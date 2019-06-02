@@ -110,7 +110,8 @@ if !(job_system_counter < 12) then {
               private _town = _pos call OT_fnc_nearestTown;
               private _id = format["%1-%2",_name,_cls];
               private _stability = server getVariable [format["stability%1",_town],100];
-              if(([_inSpawnDistance, _standing, _town, _stability] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
+              private _population = server getVariable [format["population%1",_town],50];
+              if(([_inSpawnDistance, _standing, _town, _stability, _population] call _condition) && !(_id in _completed) && !(_id in _activeJobs)) then {
                 private _activeJobs = spawner getVariable ["OT_activeJobIds",[]];
                 _activeJobs pushback _id;
                 spawner setVariable ["OT_activeJobIds",_activeJobs,false];
