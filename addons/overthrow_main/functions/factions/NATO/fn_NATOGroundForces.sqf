@@ -43,14 +43,16 @@ if !(_pos isEqualType []) then {
 	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
 };
 
-_veh = _vehtype createVehicle _pos;
+_veh = _vehtype createVehicle [0,0,0];
+_veh setDir (_dir);
+_veh setPosATL _pos;
 _veh setVariable ["garrison","HQ",false];
 clearWeaponCargoGlobal _veh;
 clearMagazineCargoGlobal _veh;
 clearItemCargoGlobal _veh;
 clearBackpackCargoGlobal _veh;
 
-_veh setDir (_dir);
+
 _tgroup addVehicle _veh;
 createVehicleCrew _veh;
 {

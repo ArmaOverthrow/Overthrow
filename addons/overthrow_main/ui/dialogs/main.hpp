@@ -617,7 +617,7 @@ class OT_dialog_command
 			y = 0.324 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
 			h = 0.077 * safezoneH;
-			tooltip = "Commands first unit selected to walk to and open the closest container to them"; //--- ToDo: Localize;
+			tooltip = "Commands first unit selected to open inventory"; //--- ToDo: Localize;
 			action = "closeDialog 0;[] spawn OT_fnc_orderOpenInventory;";
 		};
 		class RscButton_1603: RscOverthrowButton

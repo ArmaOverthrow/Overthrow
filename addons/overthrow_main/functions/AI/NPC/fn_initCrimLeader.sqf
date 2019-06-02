@@ -3,6 +3,8 @@ params ["_unit","_town","_gangid"];
 (group _unit) setVariable ["VCM_NORESCUE",true];
 (group _unit) setVariable ["VCM_TOUGHSQUAD",true];
 
+_unit disableAI "PATH";
+
 _unit setVariable ["crimleader",true,false];
 _unit setVariable ["hometown",_town,false];
 
@@ -24,3 +26,4 @@ if((random 100) < 50) then {
 _unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);
 
 _unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];
+_unit addEventHandler ["FiredNear", {params ["_unit"];_unit enableAI "PATH"}];

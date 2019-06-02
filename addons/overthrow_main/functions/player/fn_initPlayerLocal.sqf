@@ -15,6 +15,7 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 waitUntil {!isNull player && player isEqualTo player && !isNull server};
 
 ace_interaction_EnableTeamManagement = false; //Disable group switching
+ace_interaction_disableNegativeRating = true; //Disable ACE negative ratings
 
 enableSaving [false,false];
 enableEnvironment [false,true];

@@ -42,9 +42,9 @@ if(_name in OT_allComms) then {
 		sleep 0.3;
 	};
 
+	[_group,_posTown,75,6] call CBA_fnc_taskPatrol;
+
 	if(_count < _numNATO) then {
-		_group = createGroup blufor;
-		_groups pushBack _group;
 		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
@@ -55,12 +55,6 @@ if(_name in OT_allComms) then {
 		_count = _count + 1;
 		sleep 0.3;
 	};
-	private _wp = _group addWaypoint [_posTown,0];
-	_wp setWaypointType "GUARD";
-	_wp setWaypointBehaviour "SAFE";
-	_wp setWaypointSpeed "LIMITED";
-	_wp = _group addWaypoint [_posTown,0];
-	_wp setWaypointType "CYCLE";
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -76,6 +70,7 @@ if(_name in OT_allComms) then {
 		_count = _count + 1;
 		sleep 0.3;
 	};
+	[_group,_posTown,75,6] call CBA_fnc_taskPatrol;
 
 }else{
 	//put up a flag
@@ -283,6 +278,9 @@ private _road = objNull;
 			_x setVariable ["garrison","HQ",false];
 		}foreach(crew _veh);
 		_vgroup setVariable ["Vcm_Disable",true,false];
+		{
+			_x addCuratorEditableObjects [[_veh]];
+		}foreach(allcurators);
 	};
 }foreach(_vehgarrison);
 
@@ -302,6 +300,9 @@ private _road = objNull;
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+		_civ disableAI "PATH";
+		[_civ,"HQ"] call OT_fnc_initMilitary;
+		_civ addEventHandler ["FiredNear", {params ["_unit"];_unit enableAI "PATH"}];
 		sleep 0.3;
 
 		//His empty APC
@@ -316,6 +317,9 @@ private _road = objNull;
 		_wp setWaypointType "GUARD";
 		_wp = _group addWaypoint [_pos, 50];
 		_wp setWaypointType "CYCLE";
+		{
+			_x addCuratorEditableObjects[units _group,false];
+		}foreach(allcurators);
 	};
 }foreach(OT_NATOhvts);
 

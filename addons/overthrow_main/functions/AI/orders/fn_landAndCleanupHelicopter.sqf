@@ -1,8 +1,10 @@
 params ["_veh","_pos"];
 
-
-while {(count (waypoints _group)) > 0} do {
-    deleteWaypoint ((waypoints _group) select 0);
+private _group = group(driver _veh);
+if(typename _group isEqualTo "GROUP") then {
+    while {(count (waypoints _group)) > 0} do {
+        deleteWaypoint ((waypoints _group) select 0);
+    };
 };
 
 _veh move _pos;

@@ -22,10 +22,10 @@ if(_popControl > 2000) then {_m = 4};
 _cost = _cost * _m;
 server setVariable ["NATOattacking",_obname,true];
 server setVariable ["NATOattackstart",time,true];
-diag_log format["Overthrow: Manual trigger for QRF at %1",_name];
+diag_log format["Overthrow: Manual trigger for QRF at %1",_obname];
 if(_resources < _cost) then {_cost = _resources};
 [_obname,_cost] remoteExec ["OT_fnc_NATOResponseObjective",2,false];
-_name setMarkerAlpha 1;
+_obname setMarkerAlpha 1;
 _resources = _resources - _cost;
 
 server setVariable ["NATOresources",_resources,true];

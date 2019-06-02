@@ -4,10 +4,13 @@ OT_NATO_Group_Recon = "";
 OT_NATO_Group_Engineers = "";
 {
 	private _name = configName _x;
-	OT_NATO_GroundForces pushback _name;
 	if((_name find "Recon") > -1) then {
 		OT_NATO_Group_Recon = _name;
 		OT_NATO_Group_Engineers = _name;
+	};
+	private _numtroops = count("true" configClasses _x);
+	if(_numtroops > 5) then {
+		OT_NATO_GroundForces pushback _name;
 	};
 }foreach("true" configClasses (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry"));
 

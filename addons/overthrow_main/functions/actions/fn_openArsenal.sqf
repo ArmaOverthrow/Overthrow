@@ -6,7 +6,7 @@ if(_ammobox isEqualTo false) then {
 
 private _weapons = [];
 private _magazines = [];
-private _items = [];
+private _items = ["ItemMap"];
 private _backpacks = [];
 
 private _closed = -1;
@@ -39,6 +39,7 @@ if(_target isEqualType "") then {
     _magazines = magazineCargo _ammobox;
     _magazines = _magazines arrayIntersect _magazines;
     _items = itemCargo _ammobox;
+    _items pushback "ItemMap";
     _items = _items arrayIntersect _items;
     _backpacks = backpackCargo _ammobox;
     _backpacks = _backpacks arrayIntersect _backpacks;
