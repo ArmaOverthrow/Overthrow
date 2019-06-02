@@ -337,12 +337,15 @@ publicVariable "OT_nextNATOTurn";
 
 				if !(_name in _abandoned) then {
 					_drone = spawner getVariable [format["drone%1",_name],objNull];
+					if(!alive _drone) then {
+						deleteVehicle _drone;
+					};
 					if((isNull _drone || !alive _drone) && {_resources > 10}) then {
 						_targets = [];
 						{
 							_town = _x;
 							_p = server getVariable _town;
-							if((_p distance _pos) < 3000) then {
+							if((_p distance _pos) < 3000 && _p call OT_fnc_inSpawnDistance) then {
 								_stability = server getVariable format["stability%1",_town];
 								if((_town in _abandoned) || (_stability < 50)) then {
 									_targets pushback _p;
@@ -353,7 +356,7 @@ publicVariable "OT_nextNATOTurn";
 						{
 							_x params ["_p","_name"];
 							if((_p distance _pos) < 3000) then {
-								if (_name in _abandoned) then {
+								if (_name in _abandoned && _p call OT_fnc_inSpawnDistance) then {
 									_targets pushback _p;
 								};
 							};
@@ -361,7 +364,7 @@ publicVariable "OT_nextNATOTurn";
 
 						{
 							_x params ["_ty","_p"];
-							if(((toUpper _ty) isEqualTo "FOB") && {(_p distance _pos) < 3000}) then {
+							if(((toUpper _ty) isEqualTo "FOB") && {(_p distance _pos) < 3000} && _p call OT_fnc_inSpawnDistance) then {
 								_targets pushback _p;
 							};
 						}foreach(_knownTargets);
@@ -372,6 +375,7 @@ publicVariable "OT_nextNATOTurn";
 							_group deleteGroupWhenEmpty true;
 							_p = [_pos,0,0,false,[0,0],[100,OT_NATO_Vehicles_ReconDrone]] call SHK_pos_fnc_pos;
 							_drone = createVehicle [OT_NATO_Vehicles_ReconDrone, _p, [], 0,""];
+							_drone enableDynamicSimulation false;
 
 							createVehicleCrew _drone;
 							{
@@ -383,18 +387,20 @@ publicVariable "OT_nextNATOTurn";
 							_resources = _resources - 10;
 
 							{
-								_wp = _group addWaypoint [_x,300];
+								_wp = _group addWaypoint [_x,100];
 								_wp setWaypointType "MOVE";
 								_wp setWaypointBehaviour "COMBAT";
 								_wp setWaypointSpeed "FULL";
-								_wp setWaypointTimeout [20,45,60];
+								_wp setWaypointTimeout [5,20,60];
+								_wp setWaypointStatements ["true",format["(vehicle this) flyInHeight %1;",25+random 50]];
 							}foreach(_targets);
 
 							_wp = _group addWaypoint [_pos,300];
 							_wp setWaypointType "MOVE";
 							_wp setWaypointBehaviour "COMBAT";
 							_wp setWaypointSpeed "FULL";
-							_wp setWaypointTimeout [10,20,60];
+							_wp setWaypointTimeout [5,20,60];
+							_wp setWaypointStatements ["true",format["(vehicle this) flyInHeight %1;",25+random 50]];
 
 							_wp = _group addWaypoint [_pos,0];
 							_wp setWaypointType "CYCLE";
@@ -403,7 +409,7 @@ publicVariable "OT_nextNATOTurn";
 								_x addCuratorEditableObjects [[_drone]];
 							}foreach(allCurators);
 
-							_drone spawn OT_fnc_NATODrone;
+							[_drone,_name] spawn OT_fnc_NATODrone;
 						};
 					};
 				};

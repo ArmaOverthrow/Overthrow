@@ -1,4 +1,4 @@
-params ["_veh","_pos","_group"];
+params ["_veh","_pos"];
 
 
 while {(count (waypoints _group)) > 0} do {
@@ -15,7 +15,7 @@ while {((alive _veh) && !(unitReady _veh))} do
 };
 
 if(alive _veh) then {
-	[_veh,true] call OT_fnc_cleanup;
+	_veh land "LAND";
+	waitUntil{sleep 10;unitReady _veh};
+    [_veh,true] call OT_fnc_cleanup;
 };
-
-[_group,true] call OT_fnc_cleanup;

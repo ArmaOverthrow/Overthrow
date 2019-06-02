@@ -172,7 +172,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 				}foreach(allCurators);
 			}foreach(_members);
 			sleep 0.3;
-			_group spawn OT_fnc_initCriminalGroup;
+			[_group,_posTown] call OT_fnc_initCriminalGroup;
 		};
 	};
 }foreach(_gangs);

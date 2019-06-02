@@ -59,11 +59,10 @@ createVehicleCrew _veh;
 	_x setVariable ["NOAI",true,false];
 }foreach(crew _veh);
 _allunits = (units _tgroup);
-sleep 1;
-
 {
-	_x addCuratorEditableObjects [[_veh],true];
+	_x addCuratorEditableObjects [units _tgroup,true];
 } forEach allCurators;
+sleep 1;
 
 _tgroup deleteGroupWhenEmpty true;
 
@@ -170,6 +169,13 @@ _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
 
+if !(_byair) then {
+	_wp = _group2 addWaypoint [_attackpos,100];
+	_wp setWaypointType "SAD";
+	_wp setWaypointBehaviour "COMBAT";
+	_wp setWaypointSpeed "FULL";
+};
+
 if(typename _tgroup isEqualTo "GROUP") then {
 
 	[_veh,_tgroup,_frompos,_byair] spawn {
@@ -215,20 +221,13 @@ if(typename _tgroup isEqualTo "GROUP") then {
 				_wp = _tgroup addWaypoint [_frompos,0];
 				_wp setWaypointType "SCRIPTED";
 				_wp setWaypointCompletionRadius 50;
-				_wp setWaypointStatements ["true","this call OT_fnc_cleanup"];
+				_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
 			};
 			if(_byair && (_veh getVariable ["OT_deployedTroops",false])) exitWith {
-				[_veh,_frompos,_tgroup] spawn OT_fnc_landAndCleanupHelicopter;
+				[_veh,_frompos] spawn OT_fnc_landAndCleanupHelicopter;
 				_done = true;
 			};
 
 		};
 	};
-};
-
-if !(_byair) then {
-	_wp = _group2 addWaypoint [_attackpos,100];
-	_wp setWaypointType "SAD";
-	_wp setWaypointBehaviour "COMBAT";
-	_wp setWaypointSpeed "FULL";
 };

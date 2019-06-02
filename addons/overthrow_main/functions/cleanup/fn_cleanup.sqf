@@ -1,5 +1,16 @@
 params ["_vehicle",["_force",false]];
 
+if(_force) exitWith {
+	{
+		if !(_x call OT_fnc_hasOwner) then {
+			deleteVehicle _x;
+		};
+	}foreach(crew _vehicle);
+	if !(_vehicle call OT_fnc_hasOwner) then {
+		deleteVehicle _vehicle;
+	};
+};
+
 if(typename _vehicle isEqualTo "GROUP") exitWith {
 	if(count (units _vehicle) isEqualTo 0) exitWith {deleteGroup _vehicle};
 	private _l = (units _vehicle) select 0;
@@ -23,7 +34,7 @@ if(_vehicle getVariable ["OT_cleanup",false]) exitWith {};
 
 _vehicle setVariable ["OT_cleanup",true,false];
 
-[{!((_this#0) call OT_fnc_inSpawnDistance) || _force}, {
+[{!(_vehicle call OT_fnc_inSpawnDistance)}, {
 	_this params ["_vehicle"];
 	if(_vehicle isKindOf "CAManBase") then {
 		if(vehicle _vehicle != _vehicle) then {[(vehicle _vehicle)] call OT_fnc_cleanup};
