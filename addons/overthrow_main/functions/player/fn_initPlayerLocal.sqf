@@ -92,6 +92,7 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 	"Loading" call OT_fnc_notifyStart;
 };
 OT_showPlayerMarkers = (["ot_showplayermarkers", 1] call BIS_fnc_getParamValue) isEqualTo 1;
+OT_showTownChange = (["ot_showtownchange", 1] call BIS_fnc_getParamValue) isEqualTo 1;
 
 waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 
@@ -471,5 +472,3 @@ player call OT_fnc_mapSystem;
 [] call OT_fnc_setupPlayer;
 _introcam cameraEffect ["Terminate", "BACK" ];
 camDestroy _introcam;
-
-player call OT_fnc_townCheckLoop;
