@@ -558,6 +558,7 @@ class CfgFunctions
 			class NATOupgradeFOB {};
 			class NATOsendGendarmerie {};
 			class NATOreportThreat {};
+			class NATOGetAttackVectors {};
 		};
 
 		class NATOAI
