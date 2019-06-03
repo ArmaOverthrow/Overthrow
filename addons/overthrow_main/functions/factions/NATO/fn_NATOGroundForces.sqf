@@ -214,16 +214,8 @@ if(typename _tgroup isEqualTo "GROUP") then {
 					commandGetOut _x;
 				}foreach(crew _veh);
 				_done = true;
-
-				_wp = _tgroup addWaypoint [_frompos,0];
-				_wp setWaypointType "MOVE";
-				_wp setWaypointBehaviour "CARELESS";
-				_wp setWaypointCompletionRadius 50;
-
-				_wp = _tgroup addWaypoint [_frompos,0];
-				_wp setWaypointType "SCRIPTED";
-				_wp setWaypointCompletionRadius 50;
-				_wp setWaypointStatements ["true","[vehicle this] call OT_fnc_cleanup"];
+				waitUntil {sleep 2;(count crew _veh) isEqualTo 0};
+				[_veh] call OT_fnc_cleanup;
 			};
 			if(_byair && (_veh getVariable ["OT_deployedTroops",false])) exitWith {
 				[_veh,_frompos] spawn OT_fnc_landAndCleanupHelicopter;

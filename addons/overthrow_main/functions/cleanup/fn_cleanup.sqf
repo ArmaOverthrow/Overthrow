@@ -34,7 +34,7 @@ if(_vehicle getVariable ["OT_cleanup",false]) exitWith {};
 
 _vehicle setVariable ["OT_cleanup",true,false];
 
-[{!(_vehicle call OT_fnc_inSpawnDistance)}, {
+[{sleep 10;!((_this select 0) call OT_fnc_inSpawnDistance)}, {
 	_this params ["_vehicle"];
 	if(_vehicle isKindOf "CAManBase") then {
 		if(vehicle _vehicle != _vehicle) then {[(vehicle _vehicle)] call OT_fnc_cleanup};

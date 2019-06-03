@@ -1,8 +1,7 @@
 GUER_faction_loop_data params ["_lastmin","_lasthr","_currentProduction","_stabcounter","_trackcounter"];
 
-if(fog > 0) then {
-	[0,0] remoteExecCall ['setFog',0,false];
-};
+private _numplayers = count([] call CBA_fnc_players);
+if(_numplayers isEqualTo 0) exitWith {};
 
 _trackcounter = _trackcounter + 1;
 if(_trackcounter > 5) then {

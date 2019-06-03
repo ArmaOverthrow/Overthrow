@@ -59,7 +59,7 @@ OT_allShops = [];
     //Low stability in small towns
 
     if((_pop < 500) && !(_name in OT_NATO_priority) && !(_name in OT_Capitals) && (_name in OT_spawnTowns)) then {
-        _stability = floor(20 + random(20));
+        _stability = floor(30 + random(20));
     };
     server setVariable [format["stability%1",_name],_stability,true];
 
