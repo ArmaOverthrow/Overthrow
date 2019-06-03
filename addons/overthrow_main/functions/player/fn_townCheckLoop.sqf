@@ -26,11 +26,11 @@ if (!isNil "_town" && {OT_Map_EachFrameLastTown != _town}) then {
 			private _plusmin = ["","+"] select (_rep > -1);
 
 			[format [
-				"<t size='1.5' color='#eeeeee'>%1</t><br/>
-				<t size='0.5' color='#bbbbbb'>Status: %7</t><br/>
-				<t size='0.5' color='#bbbbbb'>Population: %2</t><br/>
-				<t size='0.5' color='#bbbbbb'>Stability: %3%4</t><br/>
-				<t size='0.5' color='#bbbbbb'>Resistance Support: %5%6</t>",
+				"<t align='left' size='1.2' color='#eeeeee'>%1</t><br/>
+				<t align='left' size='0.5' color='#bbbbbb'>Status: %7</t><br/>
+				<t align='left' size='0.5' color='#bbbbbb'>Population: %2</t><br/>
+				<t align='left' size='0.5' color='#bbbbbb'>Stability: %3%4</t><br/>
+				<t align='left' size='0.5' color='#bbbbbb'>Resistance Support: %5%6</t>",
 				_town,
 				[_pop, 1, 0, true] call CBA_fnc_formatNumber,
 				_stability,
@@ -38,7 +38,7 @@ if (!isNil "_town" && {OT_Map_EachFrameLastTown != _town}) then {
 				_plusmin,
 				_rep,
 				_abandon
-			], [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 10, 0, 0, 2] call OT_fnc_dynamicText;
+			], -0.5, 1, 5, 1, 0, 5] call OT_fnc_dynamicText;
 		};
 	};
 };

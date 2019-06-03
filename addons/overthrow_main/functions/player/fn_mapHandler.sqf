@@ -199,10 +199,10 @@ if(OT_showEnemyGroups) then {
 };
 
 private _scale = ctrlMapScale _mapCtrl;
-if(_scale <= 0.16) then {
+if(_scale <= 0.1) then {
 	private _mousepos = _mapCtrl ctrlMapScreenToWorld getMousePosition;
 	private _towns = [];
-	if (visibleGPS) then {
+	if (visibleGps) then {
 		_towns = [[OT_Map_EachFrameLastTownCheckPos,OT_Map_EachFrameLastTown]];
 		_mousepos = OT_Map_EachFrameLastTownCheckPos;
 	}else{
@@ -246,9 +246,9 @@ if(_scale <= 0.16) then {
 	}foreach(OT_allFactions);
 
 	{
-		_x params ["_tpos"];
-		if((_tpos distance2D _mousepos) < 3000) then {
-			private _townPos = server getVariable format["gundealer%1",_x];
+		_x params ["_tpos","_tname"];
+		if((_tpos distance2D _mousepos) < 2500) then {
+			private _townPos = server getVariable format["gundealer%1",_tname];
 			if!(isNil "_townPos") then {
 				_mapCtrl drawIcon [
 					OT_flagImage,
@@ -268,7 +268,7 @@ if(_scale <= 0.16) then {
 					0.2/_scale,
 					0
 				];
-			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
+			}foreach(server getVariable [format["activeshopsin%1",_tname],[]]);
 			{
 				_mapCtrl drawIcon [
 					"\overthrow_main\ui\markers\shop-Hardware.paa",
@@ -278,7 +278,7 @@ if(_scale <= 0.16) then {
 					0.3/_scale,
 					0
 				];
-			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
+			}foreach(server getVariable [format["activehardwarein%1",_tname],[]]);
 		};
 	}foreach(_towns);
 

@@ -5,6 +5,7 @@ if(_numplayers isEqualTo 0) exitWith {};
 
 _trackcounter = _trackcounter + 1;
 if(_trackcounter > 5) then {
+	if(fog > 0.001) then {0 setFog 0};
 	_trackcounter = 0;
 	//save online player data, in case they crash
 	{
