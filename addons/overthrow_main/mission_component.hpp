@@ -78,6 +78,12 @@ class Params {
 		texts[] = {"True", "False"};
 		default = 1;
 	};
+	class ot_showenemygroup {
+		title = "Show known enemy groups on map";
+		values[] = {1,0};
+		texts[] = {"True", "False"};
+		default = 1;
+	};
 	class ace_medical_level {
         title = "ACE Medical Level";
         ACE_setting = 1;

@@ -142,59 +142,61 @@ if(((getposatl player) select 2) > 30) then {
 	};
 }foreach(_vehs);
 
-{
-	if(side _x isEqualTo west) then {
-		private _u = leader _x;
-		private _alive = alive _u;
-		if(!_alive) then {
-			{
-				if(alive _x) exitWith {
-					_u = _x;
-					_alive=true;
+if(OT_showEnemyGroups) then {
+	{
+		if(side _x isEqualTo west) then {
+			private _u = leader _x;
+			private _alive = alive _u;
+			if(!_alive) then {
+				{
+					if(alive _x) exitWith {
+						_u = _x;
+						_alive=true;
+					};
+				}foreach(units _x);
+			};
+			if(_alive) then {
+				private _ka = resistance knowsabout _u;
+				if(_ka > 1.4) then {
+					_mapCtrl drawIcon [
+						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
+						[0,0.3,0.59,((_ka-1.4) / 1) min 1],
+						visiblePosition _u,
+						30,
+						30,
+						0
+					];
 				};
-			}foreach(units _x);
-		};
-		if(_alive) then {
-			private _ka = resistance knowsabout _u;
-			if(_ka > 1.4) then {
-				_mapCtrl drawIcon [
-					"\A3\ui_f\data\map\markers\nato\b_inf.paa",
-					[0,0.3,0.59,((_ka-1.4) / 1) min 1],
-					visiblePosition _u,
-					30,
-					30,
-					0
-				];
 			};
 		};
-	};
 
-	if(side _x isEqualTo east) then {
-		private _u = leader _x;
-		private _alive = alive _u;
-		if(!_alive) then {
-			{
-				if(alive _x) exitWith {
-					_u = _x;
-					_alive=true;
-				};
-			}foreach(units _x);
-		};
-		if(_alive) then {
-			private _ka = resistance knowsabout _u;
-			if(_ka > 1.4) then {
-				_mapCtrl drawIcon [
-					"\A3\ui_f\data\map\markers\nato\b_inf.paa",
-					[0.5,0,0,((_ka-1.4) / 1) min 1],
-					visiblePosition _u,
-					30,
-					30,
-					0
-				];
+		if(side _x isEqualTo east) then {
+			private _u = leader _x;
+			private _alive = alive _u;
+			if(!_alive) then {
+				{
+					if(alive _x) exitWith {
+						_u = _x;
+						_alive=true;
+					};
+				}foreach(units _x);
 			};
-		}
-	};
-}foreach(allGroups);
+			if(_alive) then {
+				private _ka = resistance knowsabout _u;
+				if(_ka > 1.4) then {
+					_mapCtrl drawIcon [
+						"\A3\ui_f\data\map\markers\nato\b_inf.paa",
+						[0.5,0,0,((_ka-1.4) / 1) min 1],
+						visiblePosition _u,
+						30,
+						30,
+						0
+					];
+				};
+			}
+		};
+	}foreach(allGroups);
+};
 
 private _scale = ctrlMapScale _mapCtrl;
 if(_scale <= 0.16) then {
