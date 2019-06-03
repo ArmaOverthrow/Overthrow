@@ -5,8 +5,7 @@ if(_town in OT_sprawling || _town in OT_capitals) then {_dist = 1000};
 private _posTown = server getVariable _town;
 private _stability = server getVariable [format["stability%1",_town],100];
 private _population = server getVariable [format["population%1",_town],0];
-diag_log format["Overthrow: Setting up economy in %1 (pop. %2)",_town,_population];
-private _shops   = 0;
+
 private _activeShops  = [];
 private _activecar  = [];
 private _piers  = [];
@@ -27,7 +26,6 @@ if(count _churches > 0) then {
 }foreach(nearestObjects [_posTown, [OT_hardwareStore], _dist,false]);
 server setVariable [format["activehardwarein%1",_town],_activeHardware,true];
 
-private _chance = 100; //Chance that a shop will be a shop
 private _shops = nearestObjects [_posTown, OT_shops, _dist,false];
 if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 	//More shops than there are definitions in this town, so make sure one of each is spawned
@@ -69,6 +67,8 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 };
 
 server setVariable [format["activeshopsin%1",_town],_activeShops,true];
+
+diag_log format["Overthrow: Set up economy in %1 (pop. %2, %3 of %4 shops)",_town,_population,count _activeShops,count _shops];
 
 {
 	private _po = getpos _x;

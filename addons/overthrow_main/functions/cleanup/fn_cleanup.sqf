@@ -1,5 +1,9 @@
 params ["_vehicle",["_force",false]];
 
+if(OT_adminMode) then {
+	diag_log format["Overthrow: cleanup called on %1",typeOf _vehicle];
+};
+
 if(_force) exitWith {
 	{
 		if !(_x call OT_fnc_hasOwner) then {
@@ -34,7 +38,7 @@ if(_vehicle getVariable ["OT_cleanup",false]) exitWith {};
 
 _vehicle setVariable ["OT_cleanup",true,false];
 
-[{sleep 10;!((_this select 0) call OT_fnc_inSpawnDistance)}, {
+[{!((_this select 0) call OT_fnc_inSpawnDistance)}, {
 	_this params ["_vehicle"];
 	if(_vehicle isKindOf "CAManBase") then {
 		if(vehicle _vehicle != _vehicle) then {[(vehicle _vehicle)] call OT_fnc_cleanup};
