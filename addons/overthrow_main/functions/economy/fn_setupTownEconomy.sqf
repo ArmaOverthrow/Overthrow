@@ -50,17 +50,17 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 	}foreach(OT_itemCategoryDefinitions);
 }else{
 	//Find shop buildings && distribute categories to them
+	private _shopsDone = [];
 	{
 		private _pos = getpos _x;
 		//Ensure shops are not found twice (overlapping town search radius)
-		if (!(_pos in OT_allShops) && (random 100 < _chance)) then {
-			private _category =	call {
-				private _rnd = random 100;
-				if(_rnd > 90) exitWith {"Surplus"};
-				if(_rnd > 80) exitWith {"Electronics"};
-				if(_rnd > 60) exitWith {"Pharmacy"};
-				if(_rnd > 40) exitWith {"Clothing"};
-				"General"
+		if !(_pos in OT_allShops) then {
+			private _category = "";
+			if !("General" in _shopsDone) then {
+				_category =	"General";
+			}else{
+				_category =	selectRandom (["General","Surplus","Electronics","Pharmacy","Clothing"] - _shopsDone);
+				_shopsDone pushback _category;
 			};
 			_activeShops pushback [_pos,_category];
 			OT_allShops pushback _pos;

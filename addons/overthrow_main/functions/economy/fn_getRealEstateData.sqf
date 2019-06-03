@@ -29,7 +29,7 @@ _population = (_population / 1000);
 
 private _price = round(_baseprice + ((_baseprice * _stability * _population) * (1+OT_standardMarkup)));
 private _sell = round(_baseprice + (_baseprice * _stability * _population));
-private _lease = round((_stability * _population) * ((_baseprice * _multiplier) * _totaloccupants * 0.1));
+private _lease = round((_stability * _population) * ((_baseprice * _multiplier) * _totaloccupants * 0.3));
 if !(_town in (server getvariable ["NATOabandoned",[]])) then {_lease = round(_lease * 0.2)};
 private _diff = server getVariable ["OT_difficulty",1];
 if(_diff isEqualTo 0) then {_lease = round(_lease * 1.2)};
