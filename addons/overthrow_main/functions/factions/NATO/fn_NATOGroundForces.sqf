@@ -43,9 +43,8 @@ if !(_pos isEqualType []) then {
 	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
 };
 _pos set [2,0];
-_veh = _vehtype createVehicle [0,0,0];
+_veh = _vehtype createVehicle _pos;
 _veh setDir (_dir);
-_veh setPosATL _pos;
 _veh setVariable ["garrison","HQ",false];
 clearWeaponCargoGlobal _veh;
 clearMagazineCargoGlobal _veh;
@@ -105,7 +104,7 @@ if !(_byair) then {
 	spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group2],false];
 };
 
-sleep 15;
+sleep 5;
 if(_byair && _tgroup isEqualType grpNull) then {
 	_wp = _tgroup addWaypoint [_frompos,0];
 	_wp setWaypointType "MOVE";
@@ -146,9 +145,6 @@ if(_byair && _tgroup isEqualType grpNull) then {
 
 		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointBehaviour "CARELESS";
-		_move setWaypointType "MOVE";
-
-		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointTimeout [30,30,30];
 		_move setWaypointType "TR UNLOAD";
 		_move setWaypointCompletionRadius 50;
