@@ -115,6 +115,14 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 		["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
 			OT_cleanup_civilian_loop = time + (5*60);
 			private _totalcivs = {(side _x isEqualTo civilian) && !captive _x} count (allUnits);
+			{
+				if(_x getVariable [""OT_Looted"",false]) then {
+					private _stock = _x call OT_fnc_unitStock;
+					if((count _stock) isEqualTo 0) then {
+						deleteVehicle _x;
+					};
+				};
+			}forEach(alldeadmen);
 			if(_totalcivs < 50) exitWith {};
 			{
 				if (side group _x isEqualTo civilian && {!(isPlayer _x)} && {!(_x getVariable [""shopcheck"",false])} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {

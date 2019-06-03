@@ -63,15 +63,13 @@ OT_allShops = [];
     };
     server setVariable [format["stability%1",_name],_stability,true];
 
-    [_name] call OT_fnc_setupTownEconomy;
-
     private _popVar=format["population%1",_name];
     server setVariable [_popVar,_pop,true];
 
     {
         if(_pos inArea _x) exitWith {server setVariable [format["region_%1",_name],_x,true]};
     }foreach(OT_regions);
-    sleep 0.3;
+    sleep 0.1;
 }foreach (OT_allTowns);
 private _spawn = OT_spawnTowns call BIS_fnc_selectrandom;
 diag_log format["Overthrow: Spawn town is %1",_spawn];

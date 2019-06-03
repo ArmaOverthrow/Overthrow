@@ -85,7 +85,7 @@ private _target = _sorted select 0;
 		while {_active} do {
 			_deadguys = [];
 			{
-				if !((_x distance _t > 100) || (alive _x) || (_x getVariable ["OT_looted",false])) then {
+				if !((_x distance _t > 100) || (alive _x)) then {
 					_deadguys pushback _x;
 				};
 			}foreach(entities "Man");
