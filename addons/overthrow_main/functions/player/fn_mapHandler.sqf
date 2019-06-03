@@ -198,18 +198,29 @@ if(((getposatl player) select 2) > 30) then {
 
 private _scale = ctrlMapScale _mapCtrl;
 if(_scale <= 0.16) then {
+	private _mousepos = _mapCtrl ctrlMapScreenToWorld getMousePosition;
+	private _towns = [];
+	if (visibleGPS) then {
+		_towns = [[OT_Map_EachFrameLastTownCheckPos,OT_Map_EachFrameLastTown]];
+		_mousepos = OT_Map_EachFrameLastTownCheckPos;
+	}else{
+		_towns = OT_townData;
+	};
+
 	private _leased = player getvariable ["leased",[]];
 	{
 		private _buildingPos = buildingpositions getVariable _x;
 		if!(isNil "_buildingPos") then {
-			_mapCtrl drawIcon [
-				"\A3\ui_f\data\map\mapcontrol\Tourism_CA.paa",
-				[1,1,1,[1,0.3] select (_x in _leased)],
-				_buildingPos,
-				0.3/_scale,
-				0.3/_scale,
-				0
-			];
+			if((_buildingPos distance2D _mousepos) < 3000) then {
+				_mapCtrl drawIcon [
+					"\A3\ui_f\data\map\mapcontrol\Tourism_CA.paa",
+					[1,1,1,[1,0.3] select (_x in _leased)],
+					_buildingPos,
+					0.3/_scale,
+					0.3/_scale,
+					0
+				];
+			};
 		};
 	}foreach(player getvariable ["owned",[]]);
 
@@ -218,82 +229,84 @@ if(_scale <= 0.16) then {
 		if!(_side isEqualTo 1) then {
 			private _factionPos = server getVariable format["factionrep%1",_cls];
 			if!(isNil "_factionPos") then {
-				_mapCtrl drawIcon [
-					_flag,
-					[1,1,1,1],
-					_factionPos,
-					0.6/_scale,
-					0.5/_scale,
-					0
-				];
+				if((_factionPos distance2D _mousepos) < 3000) then {
+					_mapCtrl drawIcon [
+						_flag,
+						[1,1,1,1],
+						_factionPos,
+						0.6/_scale,
+						0.5/_scale,
+						0
+					];
+				};
 			};
 		};
 	}foreach(OT_allFactions);
 
-	private _towns = OT_allTowns;
-	if (visibleGPS) then {
-		_towns = [ missionNamespace getVariable ["OT_Map_EachFrameLastTown", ""] ];
-	};
-
 	{
-		private _townPos = server getVariable format["gundealer%1",_x];
-		if!(isNil "_townPos") then {
-			_mapCtrl drawIcon [
-				OT_flagImage,
-				[1,1,1,1],
-				_townPos,
-				0.3/_scale,
-				0.3/_scale,
-				0
-			];
+		_x params ["_tpos"];
+		if((_tpos distance2D _mousepos) < 3000) then {
+			private _townPos = server getVariable format["gundealer%1",_x];
+			if!(isNil "_townPos") then {
+				_mapCtrl drawIcon [
+					OT_flagImage,
+					[1,1,1,1],
+					_townPos,
+					0.3/_scale,
+					0.3/_scale,
+					0
+				];
+			};
+			{
+				_mapCtrl drawIcon [
+					format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1],
+					[1,1,1,1],
+					_x select 0,
+					0.2/_scale,
+					0.2/_scale,
+					0
+				];
+			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
+			{
+				_mapCtrl drawIcon [
+					"\overthrow_main\ui\markers\shop-Hardware.paa",
+					[1,1,1,1],
+					_x select 0,
+					0.3/_scale,
+					0.3/_scale,
+					0
+				];
+			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 		};
-		{
-			_mapCtrl drawIcon [
-				format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1],
-				[1,1,1,1],
-				_x select 0,
-				0.2/_scale,
-				0.2/_scale,
-				0
-			];
-		}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
-		{
-			_mapCtrl drawIcon [
-				"\overthrow_main\ui\markers\shop-Hardware.paa",
-				[1,1,1,1],
-				_x select 0,
-				0.3/_scale,
-				0.3/_scale,
-				0
-			];
-		}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 	}foreach(_towns);
 
 
 	{
 		if (typeof _x != "B_UAV_AI") then {
-			_mapCtrl drawIcon [
-				"\overthrow_main\ui\markers\death.paa",
-				[1,1,1,0.5],
-				getPosASL _x,
-				0.2/_scale,
-				0.2/_scale,
-				0
-			];
+			_p = getPosASL _x;
+			if((_p distance2D _mousepos) < 3000) then {
+				_mapCtrl drawIcon [
+					"\overthrow_main\ui\markers\death.paa",
+					[1,1,1,0.5],
+					_p,
+					0.2/_scale,
+					0.2/_scale,
+					0
+				];
+			};
 		};
 	}foreach(alldeadmen);
 
 	{
-		private _icon = +_x;
-		if((_icon select 3) < 1) then {
-			_icon set [3,(_icon select 3) / _scale];
-			_icon set [4,(_icon select 4) / _scale];
+		if(((_x select 2) distance2D _mousepos) < 3000) then {
+			private _icon = +_x;
+			if((_icon select 3) < 1) then {
+				_icon set [3,(_icon select 3) / _scale];
+				_icon set [4,(_icon select 4) / _scale];
+			};
+			_mapCtrl drawIcon _icon;
 		};
-		_mapCtrl drawIcon _icon;
 	}foreach(OT_mapcache_vehicles);
-
-
-
 };
 private _qrf = server getVariable "QRFpos";
 if(!isNil "_qrf") then {
