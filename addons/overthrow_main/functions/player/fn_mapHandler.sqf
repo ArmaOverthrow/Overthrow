@@ -246,27 +246,27 @@ if(_scale <= 0.16) then {
 				0.3/_scale,
 				0
 			];
-			{
-				_mapCtrl drawIcon [
-					format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1],
-					[1,1,1,1],
-					_x select 0,
-					0.2/_scale,
-					0.2/_scale,
-					0
-				];
-			}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
-			{
-				_mapCtrl drawIcon [
-					"\overthrow_main\ui\markers\shop-Hardware.paa",
-					[1,1,1,1],
-					_x select 0,
-					0.3/_scale,
-					0.3/_scale,
-					0
-				];
-			}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 		};
+		{
+			_mapCtrl drawIcon [
+				format["\overthrow_main\ui\markers\shop-%1.paa",_x select 1],
+				[1,1,1,1],
+				_x select 0,
+				0.2/_scale,
+				0.2/_scale,
+				0
+			];
+		}foreach(server getVariable [format["activeshopsin%1",_x],[]]);
+		{
+			_mapCtrl drawIcon [
+				"\overthrow_main\ui\markers\shop-Hardware.paa",
+				[1,1,1,1],
+				_x select 0,
+				0.3/_scale,
+				0.3/_scale,
+				0
+			];
+		}foreach(server getVariable [format["activehardwarein%1",_x],[]]);
 	}foreach(_towns);
 
 

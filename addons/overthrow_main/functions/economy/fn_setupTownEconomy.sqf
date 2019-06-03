@@ -58,8 +58,8 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 				_category =	"General";
 			}else{
 				_category =	selectRandom (["General","Surplus","Electronics","Pharmacy","Clothing"] - _shopsDone);
-				_shopsDone pushback _category;
 			};
+			_shopsDone pushback _category;
 			_activeShops pushback [_pos,_category];
 			OT_allShops pushback _pos;
 		};
