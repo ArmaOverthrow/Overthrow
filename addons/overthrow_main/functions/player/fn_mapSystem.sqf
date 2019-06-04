@@ -39,6 +39,7 @@ OT_OnDraw = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", OT_fn
 OT_mapcache_vehicles = [];
 OT_mapcache_radar = [];
 [{
+	if (!visibleMap) exitWith {};
 	private _vehs = [];
 	private _radar = [];
 	private _cfgVeh = configFile >> "CfgVehicles";

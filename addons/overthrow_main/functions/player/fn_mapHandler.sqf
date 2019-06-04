@@ -281,33 +281,34 @@ if(_scale <= 0.1) then {
 		};
 	}foreach(_towns);
 
-
-	{
-		if (typeof _x != "B_UAV_AI") then {
-			_p = getPosASL _x;
-			if((_p distance2D _mousepos) < 3000) then {
-				_mapCtrl drawIcon [
-					"\overthrow_main\ui\markers\death.paa",
-					[1,1,1,0.5],
-					_p,
-					0.2/_scale,
-					0.2/_scale,
-					0
-				];
+	if(visibleMap) then {
+		{
+			if (typeof _x != "B_UAV_AI") then {
+				_p = getPosASL _x;
+				if((_p distance2D _mousepos) < 3000) then {
+					_mapCtrl drawIcon [
+						"\overthrow_main\ui\markers\death.paa",
+						[1,1,1,0.5],
+						_p,
+						0.2/_scale,
+						0.2/_scale,
+						0
+					];
+				};
 			};
-		};
-	}foreach(alldeadmen);
+		}foreach(alldeadmen);
 
-	{
-		if(((_x select 2) distance2D _mousepos) < 3000) then {
-			private _icon = +_x;
-			if((_icon select 3) < 1) then {
-				_icon set [3,(_icon select 3) / _scale];
-				_icon set [4,(_icon select 4) / _scale];
+		{
+			if(((_x select 2) distance2D _mousepos) < 3000) then {
+				private _icon = +_x;
+				if((_icon select 3) < 1) then {
+					_icon set [3,(_icon select 3) / _scale];
+					_icon set [4,(_icon select 4) / _scale];
+				};
+				_mapCtrl drawIcon _icon;
 			};
-			_mapCtrl drawIcon _icon;
-		};
-	}foreach(OT_mapcache_vehicles);
+		}foreach(OT_mapcache_vehicles);
+	};
 };
 private _qrf = server getVariable "QRFpos";
 if(!isNil "_qrf") then {

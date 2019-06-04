@@ -54,7 +54,7 @@ if(_name in OT_allComms) then {
 	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	_count = _count + 1;
-	sleep 0.3;
+	sleep 0.5;
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -65,7 +65,7 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.3;
+		sleep 0.5;
 	};
 
 	[_group,_posTown,75,6] call CBA_fnc_taskPatrol;
@@ -79,7 +79,7 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.3;
+		sleep 0.5;
 	};
 
 	if(_count < _numNATO) then {
@@ -94,7 +94,7 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.3;
+		sleep 0.5;
 	};
 	[_group,_posTown,75,6] call CBA_fnc_taskPatrol;
 
@@ -154,7 +154,7 @@ if(_numNATO > 0) then {
 			_numNATO = _numNATO - 1;
 			_vehs pushBack _veh;
 
-			sleep 0.3;
+			sleep 0.5;
 
 			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 13), [], 0, "CAN_COLLIDE"];
 			createVehicleCrew _veh;
@@ -176,7 +176,7 @@ if(_numNATO > 0) then {
 	}foreach(_buildings);
 };
 
-sleep 0.3;
+sleep 0.5;
 private _range = 150;
 private _groupcount = 0;
 while {_count < _numNATO} do {
@@ -211,6 +211,7 @@ while {_count < _numNATO} do {
 
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
+		sleep 0.5;
 	};
 	{
 		_x addCuratorEditableObjects[units _group,false];
@@ -218,7 +219,7 @@ while {_count < _numNATO} do {
 
 	[_group,_posTown,_range,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
-	sleep 0.3;
+	sleep 0.5;
 };
 
 
@@ -253,7 +254,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];
 	_veh setDir _dir;
-	sleep 0.3;
+	sleep 0.5;
 	_groups pushback _veh;
 }foreach(_airgarrison);
 
@@ -297,7 +298,7 @@ private _road = objNull;
 		if(random 100 < 99) then { //small chance its not crewed
 			createVehicleCrew _veh;
 		};
-		sleep 0.3;
+		sleep 0.5;
 		_groups pushback _veh;
 		{
 			[_x] joinSilent _vgroup;
@@ -323,7 +324,7 @@ private _road = objNull;
 		_veh setpos _vpos;
 		_veh setVariable ["vehgarrison","HQ",false];
 		_groups pushback _veh;
-		sleep 0.3;
+		sleep 0.5;
 
 		private _pos = _vpos findEmptyPosition [5,20,OT_NATO_Unit_HVT];
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
@@ -337,7 +338,7 @@ private _road = objNull;
 		_civ disableAI "PATH";
 		[_civ,"HQ"] call OT_fnc_initMilitary;
 		_civ addEventHandler ["FiredNear", {params ["_unit"];_unit enableAI "PATH"}];
-		sleep 0.3;
+		sleep 0.5;
 
 		private _wp = _group addWaypoint [_pos, 0];
 		_wp setWaypointType "GUARD";
