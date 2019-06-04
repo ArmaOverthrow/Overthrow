@@ -1,6 +1,17 @@
 _this spawn {
 	params ["_source", "_dest"];
 
+	private _supplycache = _source getVariable ["NATOsupply",false];
+	if(_supplycache isEqualType "") then {
+		private _me = driver _dest;
+		if (_me call OT_fnc_unitSeenNATO) then {
+			_me setCaptive false;
+			[_me] call OT_fnc_revealToNATO;
+		};
+		//Make sure box doesnt spawn at this base again (this session)
+		spawner setVariable [format["NATOsupply%1",_supplycache],false,true];
+	};
+
 	private _veh = _dest;
 	private _toname = (typeof _veh) call OT_fnc_vehicleGetName;
 	private _iswarehouse = false;

@@ -7,6 +7,8 @@ if(_stability < 0) then {_stability = 0};
 if(_stability > 100) then {_stability = 100};
 server setVariable [format["stability%1",_town],_stability,true];
 
+format["[%1] Stability %2%4 = %3%4",_town,(_this select 1),_stability,"%"] remoteExec ["OT_fnc_notifySilent", 0,false];
+
 _abandoned = server getVariable "NATOabandoned";
 if(_town in _abandoned) then {
     _townmrk setMarkerAlpha 1;

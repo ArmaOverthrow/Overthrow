@@ -524,6 +524,7 @@ OT_allBLULaunchers = [];
 OT_allBLUPistols = [];
 OT_allBLUVehicles = [];
 OT_allBLUOffensiveVehicles = [];
+OT_allBLURifleMagazines = [];
 
 {
 	private _name = configName _x;
@@ -590,15 +591,16 @@ OT_allBLUOffensiveVehicles = [];
 								if(_itemType isEqualTo "MachineGun") exitWith {OT_allBLUMachineGuns pushBackUnique _base};
 								if((_this select [0,7]) == "srifle_" || (_this isKindOf ["Rifle_Long_Base_F", configFile >> "CfgWeapons"])) exitWith {OT_allBLUSniperRifles pushBackUnique _base};
 								if((_this find "_GL_") > -1) exitWith {OT_allBLUGLRifles pushBackUnique _base};
-								if(_mass < 61) exitWith {OT_allBLUSMG pushBackUnique _base};
 								private _events = "" configClasses (configFile >> "CfgWeapons" >> _base >> "Eventhandlers");
 								_add = true;
 								{
 									private _n = configName _x;
 									if(_n isEqualTo "RHS_BoltAction") exitWith {_add = false}; //ignore RHS bolt-action rifles
 								}foreach(_events);
+								if(_add && _mass < 61) exitWith {OT_allBLUSMG pushBackUnique _base};
 								if(_add) then {
 									OT_allBLURifles pushBackUnique _base;
+									OT_allBLURifleMagazines = OT_allBLURifleMagazines + getArray(configFile >> "CfgWeapons" >> _base >> "WeaponSlotsInfo" >> "magazines");
 								};
 							};
 						};

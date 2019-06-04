@@ -140,6 +140,7 @@ class CfgFunctions
 			class notifyMinor {};
 			class notifyBig {};
 			class notifyGood {};
+			class notifySilent {};
 			class notifyVehicle {};
 			class playerDecision {};
 			class choiceMade {};

@@ -1,4 +1,6 @@
 if (!isServer) exitwith {};
+if(count(vehicles) > 200) exitWith {};
+if(OT_spawnVehiclePercentage isEqualTo 0) exitWith {};
 sleep random 0.2;
 private _count = 0;
 
@@ -14,15 +16,14 @@ if(_town in OT_capitals + OT_sprawling) then {//larger search radius
 private _count = 0;
 private _pop = server getVariable format["population%1",_town];
 private _stability = server getVariable format ["stability%1",_town];
-private _numVeh = 2;
+private _numVeh = 1;
 if(_pop > 15) then {
 	_numVeh = 3 + round(_pop * OT_spawnVehiclePercentage);
 };
-if(_town isEqualTo (server getVariable "spawntown")) then {
+if(_town isEqualTo (server getVariable "spawntown") && !(_town in (server getVariable ["NATOabandoned",[]]))) then {
 	_numVeh = 6;
 };
 if(_numVeh > 6) then {_numVeh = 6};
-if(count(vehicles) > 200) then {_numVeh = 3};
 private _loops = 0;
 while {(_count < _numVeh) && (_loops < 50)} do {
 	private _start = [[[_posTown,_mSize]]] call BIS_fnc_randomPos;

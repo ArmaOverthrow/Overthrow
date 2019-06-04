@@ -14,6 +14,28 @@ spawner setVariable [format["spawnid%1",_name],_spawnid];
 private _count = 0;
 private _groups = [];
 
+//Spawn supply cache
+private _supplypos = spawner getVariable [format["NATOsupply%1",_name],false];
+private _diff = server getVariable ["OT_difficulty",1];
+if(_supplypos isEqualType []) then {
+	//Spawn an ammobox
+	private _start = _supplypos findEmptyPosition [2,20,OT_item_Storage];
+	private _box = OT_item_Storage createVehicle _start;
+	_box setVariable ["NATOsupply",true];
+	_groups pushback _box;
+	//put stuff in it
+	(spawner getVariable [format["NATOsupplyitems%1",_name],[[],[],[]]]) params ["_items","_wpns","_mags"];
+	{
+		[_box,_x#0,_x#1] call CBA_fnc_addItemCargo;
+	}foreach(_items);
+	{
+		[_box,_x#0,_x#1] call CBA_fnc_addWeaponCargo;
+	}foreach(_wpns);
+	{
+		[_box,_x#0,_x#1] call CBA_fnc_addMagazineCargo;
+	}foreach(_mags);
+};
+
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 if(_name in OT_allComms) then {
 	private _group = createGroup [blufor,true];

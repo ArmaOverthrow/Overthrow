@@ -315,7 +315,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 diag_log "Overthrow: NATO Init Done";
 
 {
-	_x params ["_pos","_name"];
+	_x params ["_pos","_name","_pri"];
 	private _mrk = createMarker [_name,_pos];
 	_mrk setMarkerShape "ICON";
 	if(_name in (server getVariable "NATOabandoned")) then {
@@ -354,6 +354,61 @@ diag_log "Overthrow: NATO Init Done";
 			};
 		};
 	};
+
+	//Set supply cache locations for this session
+	//first try to find a warehouse to put it at
+	private _warehouses = (_pos nearObjects [OT_warehouse, 400]);
+	private _supplypos = _pos;
+	if((count _warehouses) isEqualTo 0) then {
+		//just pick a random position
+		_supplypos = _pos findEmptyPosition [4,100,OT_item_Storage];
+	}else{
+		//put it at the warehouse
+		_supplypos = (getpos(_warehouses select 0)) findEmptyPosition [4,100,OT_item_Storage];
+	};
+	spawner setVariable [format["NATOsupply%1",_name],_supplypos,false];
+
+	//Now generate whats in it
+	private _items = [];
+	private _wpns = [];
+	private _mags = [];
+
+	private _done = 0;
+	private _supplyamount = (_pri - 100) + (random 200);
+	while {_done < _supplyamount} do {
+		private _rnd = random 100;
+		_rnd call {
+			if(_this > 90) exitWith {
+				//Add some radios (10% chance)
+				_done = _done + 25;
+				_items pushback ["ItemRadio",(2-_diff)+(round(random (5-_diff)))];
+			};
+			if(_this > 89) exitWith {
+				//Add a random launcher (1% chance)
+				_done = _done + 100;
+				_wpns pushback [selectRandom OT_allBLULaunchers,1+(round(random (2-_diff)))];
+			};
+			if(_this > 85) exitWith {
+				//Add a random rifle (4% chance)
+				_done = _done + 50;
+				_wpns pushback [selectRandom OT_allBLURifles,1+(round(random (2-_diff)))];
+			};
+			if(_this > 75) exitWith {
+				//Add a random pistol (10% chance)
+				_done = _done + 25;
+				_wpns pushback [selectRandom OT_allBLUPistols,1+(round(random (3-_diff)))];
+			};
+			if(_this > 50) exitWith {
+				//Add random ammunition (25% chance)
+				_done = _done + 20;
+				_mags pushback [selectRandom OT_allBLURifleMagazines,3+(round(random (4-_diff)) * 2)];
+			};
+			//Add some meds (50% chance)
+			_done = _done + 20;
+			_items pushback [selectRandom ["ACE_fieldDressing","ACE_morphine"],(2-_diff)+(round(random (5-_diff)))];
+		};
+	};
+	spawner setVariable [format["NATOsupplyitems%1",_name],[_items,_wpns,_mags],false];
 }foreach(OT_NATOobjectives);
 sleep 0.3;
 
