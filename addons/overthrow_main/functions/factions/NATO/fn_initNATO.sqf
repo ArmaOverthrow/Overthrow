@@ -404,8 +404,8 @@ diag_log "Overthrow: NATO Init Done";
 				_mags pushback [selectRandom OT_allBLURifleMagazines,3+(round(random (4-_diff)) * 2)];
 			};
 			//Add some meds (50% chance)
-			_done = _done + 20;
-			_items pushback [selectRandom ["ACE_fieldDressing","ACE_morphine"],(2-_diff)+(round(random (5-_diff)))];
+			_done = _done + 40;
+			_items pushback [selectRandom ["ACE_fieldDressing","ACE_fieldDressing","ACE_morphine"],(2-_diff)+(round(random (5-_diff)))];
 		};
 	};
 	spawner setVariable [format["NATOsupplyitems%1",_name],[_items,_wpns,_mags],false];
