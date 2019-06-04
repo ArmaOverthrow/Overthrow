@@ -13,6 +13,8 @@ private _vehs = [];
 
 private _bargates = _start nearobjects ["Land_BarGate_F",50];
 
+[_group,_start,50,4] call CBA_fnc_taskPatrol;
+
 while {!(isNil "_group") && count (units _group) > 0} do {\
 	_group setVariable ["VCM_NORESCUE",true];
 	_group setVariable ["VCM_TOUGHSQUAD",true];

@@ -42,7 +42,7 @@ if !(_pos isEqualType []) then {
 	};
 	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
 };
-_pos set [2,0];
+_pos set [2,1];
 _veh = _vehtype createVehicle _pos;
 _veh setDir (_dir);
 _veh setVariable ["garrison","HQ",false];

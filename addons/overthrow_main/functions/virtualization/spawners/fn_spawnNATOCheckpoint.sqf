@@ -82,7 +82,4 @@ _group spawn OT_fnc_initNATOCheckpoint;
 	_x addCuratorEditableObjects [units _group];
 }foreach(allcurators);
 
-_wp = _group addWaypoint [_start,0];
-_wp setWaypointType "MOVE";
-
 spawner setvariable [_spawnid,_groups,false];

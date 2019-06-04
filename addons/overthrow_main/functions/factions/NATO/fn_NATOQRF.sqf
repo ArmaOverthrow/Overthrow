@@ -43,12 +43,12 @@ private _count = 0;
 	_ao = [_pos,_dir] call OT_fnc_getAO;
 	[_obpos,_ao,_pos,true,300] spawn OT_fnc_NATOGroundForces;
 	diag_log format["Overthrow: NATO Sent ground forces by air from %1 %2",_name,str _obpos];
-	_strength = _strength - 100;
+	_strength = _strength - 150;
 
 	if(_pri > 600 && _strength >= 500) then {
 		_ao = [_pos,_dir] call OT_fnc_getAO;
 		[_obpos,_ao,_pos,true,420] spawn OT_fnc_NATOGroundForces;
-		_strength = _strength - 100;
+		_strength = _strength - 150;
 		diag_log format["Overthrow: NATO Sent extra ground forces by air from %1 %2",_name,str _obpos];
 	};
 	_count = _count + 1;
@@ -72,11 +72,11 @@ if(_strength >= 150) then {
 		};
 
 		diag_log format["Overthrow: NATO Sent ground forces from %1 %2",_name,str _obpos];
-		_strength = _strength - 100;
+		_strength = _strength - 200;
 		if(_strength >= 150) then {
 			_ao = [_pos,_dir] call OT_fnc_getAO;
 			[_obpos,_ao,_pos,false,120] spawn OT_fnc_NATOGroundForces;
-			_strength = _strength - 100;
+			_strength = _strength - 200;
 			diag_log format["Overthrow: NATO Sent extra ground forces from %1 %2",_name,str _obpos];
 		};
 		if(_strength <=0) exitWith {};

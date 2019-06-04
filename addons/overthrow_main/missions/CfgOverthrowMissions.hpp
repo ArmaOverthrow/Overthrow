@@ -49,7 +49,7 @@ class CfgOverthrowMissions
     {
         target = "Faction";
         repeatable = 0;
-        condition = "params['', '', '_town', '', '_population'];(_population > 100) && !(_town in (server getVariable ['NATOabandoned',[]]))";
+        condition = "params['_inSpawnDistance', '', '_town', '', '_population'];_inSpawnDistance && (_population > 100) && !(_town in (server getVariable ['NATOabandoned',[]]))";
         script = "\overthrow_main\missions\captureTown.sqf";
         chance = 50;
     };
