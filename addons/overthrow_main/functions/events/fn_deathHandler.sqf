@@ -21,6 +21,11 @@ if(_killer call OT_fnc_unitSeen) then {
 _town = (getpos _me) call OT_fnc_nearestTown;
 
 if(isPlayer _me) exitWith {
+	if !(_town in (server getVariable ["NATOabandoned",[]])) then {
+		[_town,1] call OT_fnc_stability;
+	}else{
+		[_town,-1] call OT_fnc_stability;
+	};
 	[_me,true] remoteExecCall ["setCaptive",_me];
 	if !(isMultiplayer) then {
 		_this params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -215,6 +220,13 @@ call {
 		};
 		if(side _me isEqualTo east) then {
 			[_town,1] call OT_fnc_stability;
+		};
+		if((side _me isEqualTo resistance) || captive _me) then {
+			if !(_town in (server getVariable ["NATOabandoned",[]])) then {
+				[_town,1] call OT_fnc_stability;
+			}else{
+				[_town,-1] call OT_fnc_stability;
+			};
 		};
 	};
 };

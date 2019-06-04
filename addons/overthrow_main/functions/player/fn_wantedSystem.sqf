@@ -19,6 +19,17 @@ _unit addEventHandler ["Take", {
 			};
 		};
 	};
+
+	//Looting NATO supply cache
+	private _supplycache = _container getVariable ["NATOsupply",false];
+	if(_supplycache isEqualType "") then {
+		if (_me call OT_fnc_unitSeenNATO) then {
+			_me setCaptive false;
+			[_me] call OT_fnc_revealToNATO;
+		};
+		//Make sure box doesnt spawn at this base again (this session)
+		spawner setVariable [format["NATOsupply%1",_supplycache],false,true];
+	};
 }];
 
 _unit addEventHandler ["Fired", {

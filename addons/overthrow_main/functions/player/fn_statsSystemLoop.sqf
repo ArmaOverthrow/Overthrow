@@ -20,10 +20,9 @@ if(_player call OT_fnc_unitSeenNATO) then {
 	};
 };
 private _qrf = "";
-private _qrfstart = server getVariable "QRFstart";
 private _attacking = server getVariable ["NATOattacking",OT_nation];
-if(!isNil "_qrfstart" && (time - _qrfstart) < 600) then {
-	private _secs = 600 - round(time - _qrfstart);
+if(!isNil "OT_QRFstart" && (time - OT_QRFstart) < 600) then {
+	private _secs = 600 - round(time - OT_QRFstart);
 	private _mins = 0;
 	if(_secs > 59) then {
 		_mins = floor(_secs / 60);
@@ -34,7 +33,7 @@ if(!isNil "_qrfstart" && (time - _qrfstart) < 600) then {
 	_qrf = format["<t size='0.7'>Battle of %1</t><br/>Starting (%2:%3)",_attacking,_mins,_secs];
 };
 
-if(!isNil "_qrfstart" && (time - _qrfstart) > 600) then {
+if(!isNil "OT_QRFstart" && (time - OT_QRFstart) > 600) then {
 	private _progress = server getVariable ["QRFprogress",0];
 	if(_progress > 0) then {
 		_qrf = format["<t size='0.7'>Battle of %1</t><br/><t color='#5D8AA8'>(%2%3)</t>",_attacking,round (_progress * 100),'%'];

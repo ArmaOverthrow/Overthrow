@@ -82,7 +82,7 @@ if(handgunWeapon _unit != "") then {
 	_unit removeWeapon handgunWeapon _unit;
 };
 
-if((!isplayer _unit) || _linkedItems) then {
+if(_linkedItems) then {
 	{
 		if !(_x isEqualTo "ItemMap") then {
 			if (([(configFile >> "CfgWeapons" >> _x),"useAsBinocular",0] call BIS_fnc_returnConfigEntry) > 0) then {

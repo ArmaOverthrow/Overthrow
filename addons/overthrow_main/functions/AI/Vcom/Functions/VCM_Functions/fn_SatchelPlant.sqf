@@ -56,7 +56,7 @@ if ((_unit distance _point) < 200) then
 			while {_truth} do 
 			{
 				if ((_unit distance _nBuilding) <= 9) then {_truth = false;};
-				sleep 0.25;
+				sleep 0.35;
 			};
 
 			_unit removeMagazine _satchelMag;

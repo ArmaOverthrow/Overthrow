@@ -6,7 +6,7 @@ if(_ammobox isEqualTo false) then {
 
 private _weapons = [];
 private _magazines = [];
-private _items = [];
+private _items = ["ItemMap"];
 private _backpacks = [];
 
 private _closed = -1;
@@ -15,6 +15,7 @@ private _missing = [];
 
 if(_target isEqualType "") then {
     [_unit,true] call OT_fnc_dumpIntoWarehouse;
+    _unit linkItem "ItemMap";
     {
         if(_x select [0,5] isEqualTo "item_") then {
             private _d = warehouse getVariable [_x,[_x select [5],0,[0]]];
@@ -32,11 +33,13 @@ if(_target isEqualType "") then {
     },[_unit]] call CBA_fnc_addEventHandlerArgs;
 }else{
     [_unit,_ammobox,true] call OT_fnc_dumpStuff;
+    _unit linkItem "ItemMap";
     _weapons = weaponCargo _ammobox;
     _weapons = _weapons arrayIntersect _weapons;
     _magazines = magazineCargo _ammobox;
     _magazines = _magazines arrayIntersect _magazines;
     _items = itemCargo _ammobox;
+    _items pushback "ItemMap";
     _items = _items arrayIntersect _items;
     _backpacks = backpackCargo _ammobox;
     _backpacks = _backpacks arrayIntersect _backpacks;
@@ -98,23 +101,34 @@ if(_target isEqualType "") then {
                 };
 
                 if(_count > 0) then {
-        			if !([_ammobox, _cls, _count] call CBA_fnc_removeItemCargo) then {
-                        if !([_ammobox, _cls, _count] call CBA_fnc_removeWeaponCargo) then {
-                            if !([_ammobox, _cls, _count] call CBA_fnc_removeMagazineCargo) then {
-                                if !([_ammobox, _cls, _count] call CBA_fnc_removeBackpackCargo) then {
-                                    //Item was not found (this shouldnt happen)
-                                };
-                            };
-                        };
+                    call {
+        				if(_cls isKindOf "Bag_Base") exitWith {
+        					[_ammobox, _cls, _count] call CBA_fnc_removeBackpackCargo;
+        				};
+        				if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _cls, _count] call CBA_fnc_removeWeaponCargo;
+        				};
+        				if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _cls, _count] call CBA_fnc_removeWeaponCargo;
+        				};
+        				if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _cls, _count] call CBA_fnc_removeWeaponCargo;
+        				};
+        				if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+        					[_ammobox, _cls, _count] call CBA_fnc_removeMagazineCargo;
+        				};
+        				[_ammobox, _cls, _count] call CBA_fnc_removeItemCargo;
         			};
                 };
             };
 		}foreach(_unit call OT_fnc_unitStock);
 
         {
-            if !([_ammobox, _x, 1] call CBA_fnc_removeItemCargo) then {
-                _unit unlinkItem _x;
-                _missing pushback _x;
+            if !(_x isEqualTo "ItemMap") then {
+                if !([_ammobox, _x, 1] call CBA_fnc_removeItemCargo) then {
+                    _unit unlinkItem _x;
+                    _missing pushback _x;
+                };
             };
         }foreach(assignedItems _unit);
 
@@ -124,9 +138,24 @@ if(_target isEqualType "") then {
                 _missing pushback _backpack;
                 //Put the items from the backpack back in the ammobox
                 {
-                    if !([_ammobox, _x, 1] call CBA_fnc_addItemCargo) then {
-                        [_ammobox, _x, 1] call CBA_fnc_addMagazineCargo;
-                    };
+                    call {
+        				if(_x isKindOf "Bag_Base") exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addBackpackCargo;
+        				};
+        				if(_x isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addWeaponCargo;
+        				};
+        				if(_x isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addWeaponCargo;
+        				};
+        				if(_x isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addWeaponCargo;
+        				};
+        				if(_x isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addMagazineCargo;
+        				};
+        				[_ammobox, _x, 1] call CBA_fnc_removeItemCargo;
+        			};
                 }foreach(backpackItems _unit);
                 removeBackpack _unit;
             }else{
@@ -140,13 +169,41 @@ if(_target isEqualType "") then {
                 _missing pushback _vest;
                 //Put the items from the vest back in the ammobox
                 {
-                    if !([_ammobox, _x, 1] call CBA_fnc_addItemCargo) then {
-                        [_ammobox, _x, 1] call CBA_fnc_addMagazineCargo;
-                    };
+                    call {
+        				if(_x isKindOf "Bag_Base") exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addBackpackCargo;
+        				};
+        				if(_x isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addWeaponCargo;
+        				};
+        				if(_x isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addWeaponCargo;
+        				};
+        				if(_x isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addWeaponCargo;
+        				};
+        				if(_x isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+        					[_ammobox, _x, 1] call CBA_fnc_addMagazineCargo;
+        				};
+        				[_ammobox, _x, 1] call CBA_fnc_removeItemCargo;
+        			};
                 }foreach(vestItems _unit);
                 removeVest _unit;
             }else{
+                //To account for CBA bug #1153: https://github.com/CBATeam/CBA_A3/issues/1153
+                //Remove when CBA fixes issue
+                private _numvests = 0;
+                {
+                    if(_x isEqualTo _vest) then {
+                        _numvests = _numvests + 1;
+                    };
+                }foreach(itemCargo _ammobox);
                 [_ammobox, _vest, 1] call CBA_fnc_removeItemCargo;
+                _numvests = _numvests - 1;
+                //Put vests back to account for bug
+                if(_numvests > 0) then {
+                    [_ammobox, _vest, _numvests] call CBA_fnc_addItemCargo;
+                };
             };
         };
 

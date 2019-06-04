@@ -47,7 +47,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         {
             _x addCuratorEditableObjects [[_veh]];
         }foreach(allCurators);
-    	sleep 0.2;
+    	sleep 0.3;
     }foreach(_vehtypes);
 
     {
@@ -74,7 +74,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
 
         _convoypos = [_convoypos,20,_dir] call BIS_fnc_relPos;
 
-    	sleep 0.2;
+    	sleep 0.3;
         _x set [2,"CONVOY"];
     }foreach(_hvts);
 
@@ -100,7 +100,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
             _driver assignAsCommander _veh;
             _convoypos = [_convoypos,20,-_dir] call BIS_fnc_relPos;
             _count = _count + 1;
-            sleep 0.2;
+            sleep 0.3;
         };
     };
     sleep 5;

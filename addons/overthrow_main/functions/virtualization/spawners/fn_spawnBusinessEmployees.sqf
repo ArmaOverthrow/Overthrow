@@ -16,7 +16,7 @@ while {_count < _numCiv} do {
 	_civ setBehaviour "SAFE";
 	_civ setVariable ["employee",_name];
 	_count = _count + 1;
-	sleep 0.2;
+	sleep 0.3;
 };
 spawner setVariable [format["employees%1",_name],_group,false];
 

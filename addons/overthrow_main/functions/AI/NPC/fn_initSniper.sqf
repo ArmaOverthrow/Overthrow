@@ -4,7 +4,6 @@ params ["_unit"];
 _unit addItemToUniform "ACE_rangeCard";
 
 _unit setVariable ["NOAI",true,false];
-_unit disableAI "MOVE";
 [
 	{
 		private _dir = random 360;

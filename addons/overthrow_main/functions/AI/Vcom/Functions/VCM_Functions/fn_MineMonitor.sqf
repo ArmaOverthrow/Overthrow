@@ -30,7 +30,7 @@
 				[_mine, true] remoteExecCall [""enableSimulationGlobal"",2];
 				[_mine] spawn {
 					_this params [""_mine""];
-					sleep 0.25;
+					sleep 0.35;
 					_mine setdamage 1;
 				};
 			};

@@ -130,6 +130,8 @@ class CfgFunctions
 			class keyHandler {};
 			class taggedHandler {};
 			class EnemyDamagedHandler {};
+			class QRFStartHandler {};
+			class QRFEndHandler {};
 		};
 
 		class UI
@@ -138,6 +140,7 @@ class CfgFunctions
 			class notifyMinor {};
 			class notifyBig {};
 			class notifyGood {};
+			class notifySilent {};
 			class notifyVehicle {};
 			class playerDecision {};
 			class choiceMade {};
@@ -456,6 +459,8 @@ class CfgFunctions
 			class createSquad {};
 			class experience {};
 			class dangerCaused {};
+			class randomizeLoadout {};
+			class getRandomLoadout {};
 		};
 
 		/*
@@ -528,6 +533,7 @@ class CfgFunctions
 
 			class NATOQRF {};
 			class NATOGroundForces {};
+			class NATOGroundReinforcements {};
 			class CTRGSupport {};
 			class NATOAirSupport {};
 			class NATOGroundSupport {};
@@ -554,6 +560,7 @@ class CfgFunctions
 			class NATOupgradeFOB {};
 			class NATOsendGendarmerie {};
 			class NATOreportThreat {};
+			class NATOGetAttackVectors {};
 		};
 
 		class NATOAI

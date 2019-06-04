@@ -2,6 +2,8 @@ private _town = player call OT_fnc_nearestTown;
 private _standing = [_town] call OT_fnc_support;
 private _items = OT_vehicles;
 
+player setVariable ["OT_shopTarget","Self"];
+
 private _ob = (getpos player) call OT_fnc_nearestObjective;
 _ob params ["_obpos","_obname"];
 if((_obpos distance player) < 250) then {

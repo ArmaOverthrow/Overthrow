@@ -14,6 +14,33 @@ spawner setVariable [format["spawnid%1",_name],_spawnid];
 private _count = 0;
 private _groups = [];
 
+//Spawn supply cache
+private _supplypos = spawner getVariable [format["NATOsupply%1",_name],false];
+private _diff = server getVariable ["OT_difficulty",1];
+if(_supplypos isEqualType []) then {
+	//Spawn an ammobox
+	private _start = _supplypos findEmptyPosition [2,20,OT_item_Storage];
+	private _box = OT_item_Storage createVehicle _start;
+	clearItemCargoGlobal _box;
+	clearWeaponCargoGlobal _box;
+	clearMagazineCargoGlobal _box;
+	clearBackpackCargoGlobal _box;
+	_box setVariable ["NATOsupply",_name,true];
+	_groups pushback _box;
+	//put stuff in it
+	(spawner getVariable [format["NATOsupplyitems%1",_name],[[],[],[]]]) params ["_items","_wpns","_mags"];
+	{
+		[_box,_x#0,_x#1] call CBA_fnc_addItemCargo;
+	}foreach(_items);
+	{
+		[_box,_x#0,_x#1] call CBA_fnc_addWeaponCargo;
+	}foreach(_wpns);
+	{
+		[_box,_x#0,_x#1] call CBA_fnc_addMagazineCargo;
+	}foreach(_mags);
+	sleep 0.5;
+};
+
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant
 if(_name in OT_allComms) then {
 	private _group = createGroup [blufor,true];
@@ -28,7 +55,7 @@ if(_name in OT_allComms) then {
 	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
 	_count = _count + 1;
-	sleep 0.2;
+	sleep 0.5;
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -39,12 +66,12 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.5;
 	};
 
+	[_group,_posTown,75,6] call CBA_fnc_taskPatrol;
+
 	if(_count < _numNATO) then {
-		_group = createGroup blufor;
-		_groups pushBack _group;
 		_start = _posTown findEmptyPosition [2,50];
 		_civ = _group createUnit [OT_NATO_Unit_AA_spec, _start, [], 0, "NONE"];
 		_civ setVariable ["garrison",_name,false];
@@ -53,14 +80,8 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.5;
 	};
-	private _wp = _group addWaypoint [_posTown,0];
-	_wp setWaypointType "GUARD";
-	_wp setWaypointBehaviour "SAFE";
-	_wp setWaypointSpeed "LIMITED";
-	_wp = _group addWaypoint [_posTown,0];
-	_wp setWaypointType "CYCLE";
 
 	if(_count < _numNATO) then {
 		_start = _posTown findEmptyPosition [2,50];
@@ -74,14 +95,15 @@ if(_name in OT_allComms) then {
 		[_civ,_name] call OT_fnc_initMilitary;
 		_civ setBehaviour "SAFE";
 		_count = _count + 1;
-		sleep 0.2;
+		sleep 0.5;
 	};
+	[_group,_posTown,75,6] call CBA_fnc_taskPatrol;
 
 }else{
 	//put up a flag
 	private _flag =  OT_flag_NATO createVehicle _posTown;
 	_groups pushback _flag;
-	[_flag,[format["Capture %1",_name], {(((getpos player) call OT_fnc_nearestObjective) select 1) call OT_fnc_triggerBattle},nil,0,false,true,"","true",5]] remoteExec ["addAction",0,_flag];
+	[_flag,[format["Capture %1",_name], {call OT_fnc_triggerBattle},nil,0,false,true,"","true",5]] remoteExec ["addAction",0,_flag];
 };
 
 //Garrison any buildings
@@ -133,7 +155,7 @@ if(_numNATO > 0) then {
 			_numNATO = _numNATO - 1;
 			_vehs pushBack _veh;
 
-			sleep 0.2;
+			sleep 0.5;
 
 			_veh = createVehicle [OT_NATO_HMG, (_building buildingPos 13), [], 0, "CAN_COLLIDE"];
 			createVehicleCrew _veh;
@@ -155,7 +177,7 @@ if(_numNATO > 0) then {
 	}foreach(_buildings);
 };
 
-sleep 0.2;
+sleep 0.5;
 private _range = 150;
 private _groupcount = 0;
 while {_count < _numNATO} do {
@@ -190,6 +212,7 @@ while {_count < _numNATO} do {
 
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
+		sleep 0.5;
 	};
 	{
 		_x addCuratorEditableObjects[units _group,false];
@@ -197,7 +220,7 @@ while {_count < _numNATO} do {
 
 	[_group,_posTown,_range,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;
-	sleep 0.2;
+	sleep 0.5;
 };
 
 
@@ -232,7 +255,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];
 	_veh setDir _dir;
-	sleep 0.2;
+	sleep 0.5;
 	_groups pushback _veh;
 }foreach(_airgarrison);
 
@@ -276,13 +299,16 @@ private _road = objNull;
 		if(random 100 < 99) then { //small chance its not crewed
 			createVehicleCrew _veh;
 		};
-		sleep 0.2;
+		sleep 0.5;
 		_groups pushback _veh;
 		{
 			[_x] joinSilent _vgroup;
 			_x setVariable ["garrison","HQ",false];
 		}foreach(crew _veh);
 		_vgroup setVariable ["Vcm_Disable",true,false];
+		{
+			_x addCuratorEditableObjects [[_veh]];
+		}foreach(allcurators);
 	};
 }foreach(_vehgarrison);
 
@@ -293,7 +319,15 @@ private _road = objNull;
 		private _group = createGroup blufor;
 		_groups pushBack _group;
 		_group setVariable ["Vcm_Disable",true,true]; //stop him from running off
-		private _pos = [_posTown, 10, 100, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+		private _vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];
+		//His empty APC
+		private _veh =  OT_NATO_Vehicle_HVT createVehicle _vpos;
+		_veh setpos _vpos;
+		_veh setVariable ["vehgarrison","HQ",false];
+		_groups pushback _veh;
+		sleep 0.5;
+
+		private _pos = _vpos findEmptyPosition [5,20,OT_NATO_Unit_HVT];
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
 		_civ setVariable ["hvt",true,true];
@@ -302,20 +336,18 @@ private _road = objNull;
 		_civ setRank "COLONEL";
 		_civ setBehaviour "SAFE";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];
-		sleep 0.2;
+		_civ disableAI "PATH";
+		[_civ,"HQ"] call OT_fnc_initMilitary;
+		_civ addEventHandler ["FiredNear", {params ["_unit"];_unit enableAI "PATH"}];
+		sleep 0.5;
 
-		//His empty APC
-		private _vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];
-		private _veh =  OT_NATO_Vehicle_HVT createVehicle _vpos;
-		_veh setpos _vpos;
-		_veh setVariable ["vehgarrison","HQ",false];
-
-		_groups pushback _veh;
-
-		private _wp = _group addWaypoint [_pos, 50];
+		private _wp = _group addWaypoint [_pos, 0];
 		_wp setWaypointType "GUARD";
-		_wp = _group addWaypoint [_pos, 50];
+		_wp = _group addWaypoint [_pos, 0];
 		_wp setWaypointType "CYCLE";
+		{
+			_x addCuratorEditableObjects[units _group,false];
+		}foreach(allcurators);
 	};
 }foreach(OT_NATOhvts);
 

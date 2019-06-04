@@ -1,7 +1,7 @@
 player setVariable ["OT_tute_inProgress",true];
 
 hint "Get familiar with the basic controls, then press Y (or Z for QWERTZ-Layouts) to continue";
-sleep 0.2;
+sleep 0.3;
 
 
 private _acekey = "Left Windows (default)";

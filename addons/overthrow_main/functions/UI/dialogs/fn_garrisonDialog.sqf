@@ -27,7 +27,7 @@ _soldier = ((OT_Recruitables select 1) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1602;
-_soldier = ((OT_Recruitables select 13) select 0) call OT_fnc_getSoldier;
+_soldier = ((OT_Recruitables select 12) select 0) call OT_fnc_getSoldier;
 _btn ctrlSetTooltip format["$%1",[_soldier select 0, 1, 0, true] call CBA_fnc_formatNumber];
 
 _btn = (findDisplay 9000) displayCtrl 1603;

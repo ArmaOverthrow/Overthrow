@@ -4,6 +4,13 @@ _old = _this select 1;
 
 if(isNull(_old)) exitWith {};
 
+//remove last body from spawn distance check
+{
+	if (!(_x isEqualTo _old) && (getplayeruid player) isEqualTo (_x getVariable ["player_uid",false])) then {
+		_x setVariable ["player_uid",false,true];
+	};
+}foreach(alldeadmen);
+
 titleText ["", "BLACK FADED", 0];
 
 waitUntil {alive player};

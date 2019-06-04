@@ -7,6 +7,13 @@ if(_stability < 0) then {_stability = 0};
 if(_stability > 100) then {_stability = 100};
 server setVariable [format["stability%1",_town],_stability,true];
 
+private _pos = getMarkerPos _townmrk;
+if((_pos call OT_fnc_inSpawnDistance) && _stability < 50 && _stability > 0) then {
+    private _a = "+";
+    if((_this select 1) < 0) then {_a = ""};
+    format["[%1] Stability %5%2%4 = %3%4",_town,(_this select 1),_stability,"%",_a] remoteExec ["OT_fnc_notifySilent", 0,false];
+};
+
 _abandoned = server getVariable "NATOabandoned";
 if(_town in _abandoned) then {
     _townmrk setMarkerAlpha 1;

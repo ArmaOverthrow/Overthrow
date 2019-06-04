@@ -12,7 +12,11 @@ if((count _possible) > 0) then {
     _gangid = (OT_civilians getVariable ["autogangid",-1]) + 1;
     OT_civilians setVariable ["autogangid",_gangid];
     _vest = selectRandom OT_allProtectiveVests;
-    OT_civilians setVariable [format["gang%1",_gangid],[[],-1,_town,_vest,_home],true];
+    _weapon = selectRandom (OT_CRIM_Weapons + OT_allCheapRifles);
+    _loadout = [(format["gang%1",_gangid]),OT_CRIMBaseLoadout,[[_weapon]]] call OT_fnc_getRandomLoadout;
+    (_loadout#4) set [0,_vest];
+
+    OT_civilians setVariable [format["gang%1",_gangid],[[],-1,_town,_vest,_home,_loadout],true];
     _gangs pushback _gangid;
 
     if(_spawn && _townpos call OT_fnc_inSpawnDistance) then {
@@ -49,7 +53,7 @@ if((count _possible) > 0) then {
         [_civ] joinSilent nil;
         [_civ] joinSilent _leaderGroup;
         _civ setVariable ["OT_gangid",_gangid,true];
-        [_civ,_town] call OT_fnc_initCrimLeader;
+        [_civ,_town,_gangid] call OT_fnc_initCrimLeader;
 
         _wp = _leaderGroup addWaypoint [_home,0];
         _wp setWaypointType "GUARD";
@@ -64,7 +68,7 @@ if((count _possible) > 0) then {
         _groups pushback _leaderGroup;
         spawner setvariable [_spawnid,_groups,false];
 
-        _group call OT_fnc_initCriminalGroup;
+        [_group,_townpos] call OT_fnc_initCriminalGroup;
 
         {
             _x addCuratorEditableObjects [[_civ]];

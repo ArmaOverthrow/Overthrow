@@ -24,7 +24,7 @@ while {_count < _amt} do {
           [_civ] joinSilent nil;
           [_civ] joinSilent _group;
 
-          [_civ,_town,_vest] call OT_fnc_initCriminal;
+          [_civ,_town,_vest,_gangid] call OT_fnc_initCriminal;
           [_civ,_identity] call OT_fnc_applyIdentity;
           [_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 

@@ -64,7 +64,9 @@ if (_canMission) then {
 		_gear = spawner getvariable[format["facweapons%1",_faction],[]];
 		_s = [];
 		{
-			_s pushback [_x,-1];
+			if !(_x in OT_allExplosives) then {
+				_s pushback [_x,-1];
+			};
 		}foreach(_gear);
 		createDialog "OT_dialog_buy";
 		[OT_nation,_standing,_s,1.2] call OT_fnc_buyDialog;
