@@ -33,7 +33,7 @@ while {_count < _numNATO} do {
 
 		_civ = [_soldier,_pos,_group,false] call OT_fnc_createSoldier;
 		sleep 0.3;
-		
+
 		[_civ] joinSilent _group;
 		_civ setRank "SERGEANT";
 		[_civ,_town] spawn OT_fnc_initPolice;
@@ -41,6 +41,7 @@ while {_count < _numNATO} do {
 
 		_groupcount = _groupcount + 1;
 		_count = _count + 1;
+		sleep 0.5;
 	};
 	[_group,_posTown,100,6] call CBA_fnc_taskPatrol;
 	_range = _range + 50;

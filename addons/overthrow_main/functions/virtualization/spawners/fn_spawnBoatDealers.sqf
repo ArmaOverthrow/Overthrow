@@ -1,7 +1,7 @@
 private ["_town","_id","_pos","_building","_tracked","_civs","_vehs","_group","_groups","_all","_shopkeeper"];
 if (!isServer) exitwith {};
 
-sleep random 0.2;
+sleep random 0.5;
 
 params ["_town","_spawnid"];
 private _activeshops = server getVariable [format["activepiersin%1",_town],[]];
@@ -31,7 +31,7 @@ _groups = [_group];
 
 	[_shopkeeper] call OT_fnc_initHarbor;
 	_shopkeeper setVariable ["harbor",true,true];
-	sleep 0.3;
+	sleep 0.5;
 }foreach(_activeshops);
 
 spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];

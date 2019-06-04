@@ -70,9 +70,9 @@ while {_count < _numCiv} do {
 		[_civ,_identity] call OT_fnc_applyIdentity;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
+		sleep 0.5;
 	};
-	sleep 0.3;
-	_group spawn OT_fnc_initCivilianGroup;
+	_group call OT_fnc_initCivilianGroup;
 };
 sleep 0.3;
 //Do gangs
@@ -170,8 +170,9 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 				{
 					_x addCuratorEditableObjects [[_civ]];
 				}foreach(allCurators);
+
+				sleep 0.3;
 			}foreach(_members);
-			sleep 0.3;
 			[_group,_posTown] call OT_fnc_initCriminalGroup;
 		};
 	};

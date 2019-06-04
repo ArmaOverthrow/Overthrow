@@ -38,7 +38,7 @@ private _groups = [];
 	[_shopkeeper] call OT_fnc_initCarDealer;
 	_shopkeeper setVariable ["carshop",true,true];
 	_shopkeeper setVariable ["shopcheck",true,true];
-	sleep 0.3;
+	sleep 0.5;
 }foreach(_activeshops);
 
 

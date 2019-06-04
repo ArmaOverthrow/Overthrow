@@ -1,7 +1,7 @@
 if (!isServer) exitwith {};
 if(count(vehicles) > 200) exitWith {};
 if(OT_spawnVehiclePercentage isEqualTo 0) exitWith {};
-sleep random 0.2;
+sleep random 1;
 private _count = 0;
 
 params ["_town","_spawnid"];
@@ -90,7 +90,7 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 						};
 					};
 					_groups pushBack _veh;
-					sleep 0.3;
+					sleep 0.5;
 				};
 			};
 		};

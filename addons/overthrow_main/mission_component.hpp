@@ -69,13 +69,13 @@ class Params {
 	class ot_showplayermarkers {
 		title = "Show Player Markers on HUD";
 		values[] = {1,0};
-		texts[] = {"True", "False"};
+		texts[] = {"Yes", "No"};
 		default = 1;
 	};
 	class ot_showenemygroup {
 		title = "Show known enemy groups on map";
 		values[] = {1,0};
-		texts[] = {"True", "False"};
+		texts[] = {"Yes", "No"};
 		default = 1;
 	};
 	class ace_medical_level {

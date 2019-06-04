@@ -38,6 +38,7 @@ if(_supplypos isEqualType []) then {
 	{
 		[_box,_x#0,_x#1] call CBA_fnc_addMagazineCargo;
 	}foreach(_mags);
+	sleep 0.5;
 };
 
 //Make sure the first group spawned in at a comms base are a sniper, spotter, AA specialist and AA assistant

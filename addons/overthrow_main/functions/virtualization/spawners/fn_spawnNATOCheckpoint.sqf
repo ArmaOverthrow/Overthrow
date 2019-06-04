@@ -47,6 +47,7 @@ _civ setRank "MAJOR";
 _soldiers pushBack _civ;
 [_civ,_name] call OT_fnc_initMilitary;
 _civ setBehaviour "SAFE";
+sleep 0.5;
 
 {
 	if(_x isKindOf "StaticWeapon") then {
@@ -54,6 +55,7 @@ _civ setBehaviour "SAFE";
 		createVehicleCrew _x;
 		((units _x) select 0) setVariable ["NOAI",true,false];
 		(units _x) joinSilent _group;
+		sleep 0.5;
 	};
 	_groups pushback _x;
 }foreach(_vehs);
@@ -68,7 +70,7 @@ while {_count < _numNATO} do {
 	_civ setRank "CAPTAIN";
 	[_civ,_name] call OT_fnc_initMilitary;
 	_civ setBehaviour "SAFE";
-	sleep 0.3;
+	sleep 0.5;
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
 	if(_count isEqualTo 2) then {
