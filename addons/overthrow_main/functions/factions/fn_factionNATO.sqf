@@ -169,7 +169,7 @@ publicVariable "OT_nextNATOTurn";
 									[_obpos,_pos,100,0] spawn OT_fnc_NATOGroundSupport;
 								};
 								diag_log format["Overthrow: NATO Sent ground forces to %1 from %2",_town,_obname];
-								[_obpos,_ao,_pos,false,5] spawn OT_fnc_NATOGroundForces;
+								[_obpos,_ao,_pos,false,5] spawn OT_fnc_NATOGroundReinforcements;
 							}else{
 								if(count _air > 0 && _population > 500) then {
 									server setVariable [format["NATOpatrolsent%1",_town],true];
@@ -185,7 +185,7 @@ publicVariable "OT_nextNATOTurn";
 									private _ao = [_pos,_dir] call OT_fnc_getAO;
 									_resources = _resources - 100;
 
-									[_obpos,_ao,_pos,true,15] spawn OT_fnc_NATOGroundForces;
+									[_obpos,_ao,_pos,true,15] spawn OT_fnc_NATOGroundReinforcements;
 									diag_log format["Overthrow: NATO Sent ground forces by air to %1 from %2",_town,_obname];
 								};
 							};

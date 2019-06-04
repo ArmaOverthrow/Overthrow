@@ -533,6 +533,7 @@ class CfgFunctions
 
 			class NATOQRF {};
 			class NATOGroundForces {};
+			class NATOGroundReinforcements {};
 			class CTRGSupport {};
 			class NATOAirSupport {};
 			class NATOGroundSupport {};

@@ -35,8 +35,8 @@ private _dir = direction _vehicle;
 
 		waitUntil { !(alive _unit) || isTouchingGround _unit || (position _unit select 2) < 1 };
 
-		_unit action ["eject",_unit];
-		sleep 1;
+		_unit action ["Eject",vehicle _unit];
+		sleep 2;
 		private _inv = name _unit;
 		private _id = [_unit] call OT_fnc_getBuildID;
 		_unit setUnitLoadout (spawner getvariable [format["eject_%1",_id],[]]);
