@@ -125,7 +125,7 @@ OT_FastTravel_MapSingleClickEHId = addMissionEventHandler ["MapSingleClick", {
 						vehicle player setPos _pos;
 					};
 				}else{
-					player setpos (_pos findEmptyPosition [2,50]);
+					player setpos (_pos findEmptyPosition [2,100]);
 				};
 
 				disableUserInput false;

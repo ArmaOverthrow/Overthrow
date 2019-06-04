@@ -21,7 +21,11 @@ if(_supplypos isEqualType []) then {
 	//Spawn an ammobox
 	private _start = _supplypos findEmptyPosition [2,20,OT_item_Storage];
 	private _box = OT_item_Storage createVehicle _start;
-	_box setVariable ["NATOsupply",true];
+	clearItemCargoGlobal _box;
+	clearWeaponCargoGlobal _box;
+	clearMagazineCargoGlobal _box;
+	clearBackpackCargoGlobal _box;
+	_box setVariable ["NATOsupply",_name,true];
 	_groups pushback _box;
 	//put stuff in it
 	(spawner getVariable [format["NATOsupplyitems%1",_name],[[],[],[]]]) params ["_items","_wpns","_mags"];
@@ -314,7 +318,14 @@ private _road = objNull;
 		_groups pushBack _group;
 		_group setVariable ["Vcm_Disable",true,true]; //stop him from running off
 		private _vpos = _posTown findEmptyPosition [10,100,OT_NATO_Vehicle_HVT];
-		private _pos = _vpos findEmptyPosition [3,20,OT_NATO_Unit_HVT];
+		//His empty APC
+		private _veh =  OT_NATO_Vehicle_HVT createVehicle _vpos;
+		_veh setpos _vpos;
+		_veh setVariable ["vehgarrison","HQ",false];
+		_groups pushback _veh;
+		sleep 0.3;
+
+		private _pos = _vpos findEmptyPosition [5,20,OT_NATO_Unit_HVT];
 		private _civ = _group createUnit [OT_NATO_Unit_HVT, _pos, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
 		_civ setVariable ["hvt",true,true];
@@ -327,14 +338,6 @@ private _road = objNull;
 		[_civ,"HQ"] call OT_fnc_initMilitary;
 		_civ addEventHandler ["FiredNear", {params ["_unit"];_unit enableAI "PATH"}];
 		sleep 0.3;
-
-		//His empty APC
-
-		private _veh =  OT_NATO_Vehicle_HVT createVehicle _vpos;
-		_veh setpos _vpos;
-		_veh setVariable ["vehgarrison","HQ",false];
-
-		_groups pushback _veh;
 
 		private _wp = _group addWaypoint [_pos, 0];
 		_wp setWaypointType "GUARD";

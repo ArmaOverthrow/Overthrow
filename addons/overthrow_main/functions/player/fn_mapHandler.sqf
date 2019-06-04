@@ -200,13 +200,12 @@ if(OT_showEnemyGroups) then {
 
 private _scale = ctrlMapScale _mapCtrl;
 if(_scale <= 0.1) then {
-	private _mousepos = _mapCtrl ctrlMapScreenToWorld getMousePosition;
-	private _towns = [];
+	private _mousepos = [0,0,0];
+	private _towns = OT_townData;
 	if (visibleGps) then {
-		_towns = [[OT_Map_EachFrameLastTownCheckPos,OT_Map_EachFrameLastTown]];
-		_mousepos = OT_Map_EachFrameLastTownCheckPos;
+		_mousepos = getpos player;
 	}else{
-		_towns = OT_townData;
+		_mousepos = _mapCtrl ctrlMapScreenToWorld getMousePosition;
 	};
 
 	private _leased = player getvariable ["leased",[]];
