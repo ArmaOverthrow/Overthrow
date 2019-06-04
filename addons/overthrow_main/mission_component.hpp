@@ -72,12 +72,6 @@ class Params {
 		texts[] = {"True", "False"};
 		default = 1;
 	};
-	class ot_showtownchange {
-		title = "Show Town Change Stats on HUD";
-		values[] = {1,0};
-		texts[] = {"True", "False"};
-		default = 1;
-	};
 	class ot_showenemygroup {
 		title = "Show known enemy groups on map";
 		values[] = {1,0};
