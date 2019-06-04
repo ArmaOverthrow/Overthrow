@@ -45,7 +45,6 @@ while {_count < _amt} do {
 	_pos = [[[_start,20]]] call BIS_fnc_randomPos;
 
 	_civ = [_soldier,_pos,_group] call OT_fnc_createSoldier;
-	_civ setVariable ["polgarrison",_town,false];
 	[_civ] joinSilent _group;
 	_civ setRank "SERGEANT";
 	[_civ,_town] call OT_fnc_initPolice;

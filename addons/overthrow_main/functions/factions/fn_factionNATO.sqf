@@ -124,12 +124,10 @@ publicVariable "OT_nextNATOTurn";
 				_stability = server getVariable format ["stability%1",_town];
 				_population = server getVariable format ["population%1",_town];
 				_garrison = server getVariable format ["garrison%1",_town];
-				_nummil = {side _x isEqualTo west} count (_pos nearObjects ["CAManBase",300]);
-				_numres = {(side _x isEqualTo resistance) || captive _x} count (_pos nearObjects ["CAManBase",100]);
 				//Limit towns checked to those within range of players
 				if(_pos call OT_fnc_inSpawnDistance) then {
 					//Send QRF to Town with >100 population
-					if((_numres > _nummil) && _population >= 100 && {_stability < 10} && {!(_town in _abandoned)}) then {
+					if(_population >= 100 && {_stability isEqualTo 0} && {!(_town in _abandoned)}) then {
 						server setVariable [format ["garrison%1",_town],0,true];
 						diag_log format["Overthrow: NATO responding to %1",_town];
 						private _m = 3;
@@ -144,14 +142,62 @@ publicVariable "OT_nextNATOTurn";
 						server setVariable ["NATOattackstart",time,true];
 						_countered = true;
 						_resources = _resources - _strength;
-					};
+					}else{
+						//Send patrol to towns low in stability (new in v0.7.8.5)
+						if(_resources > 250 && _stability < 30 && {!(_town in _abandoned)} && !(server getVariable [format["NATOpatrolsent%1",_town],false])) then {
+							([_pos] call OT_fnc_NATOGetAttackVectors) params ["_ground","_air"];
+							if(count _ground > 0) then {
+								server setVariable [format["NATOpatrolsent%1",_town],true];
+								(_ground select 0) params ["_obpos","_obname"];
+								private _dir = [_pos,_obpos] call BIS_fnc_dirTo;
+								private _ao = [_pos,_dir] call OT_fnc_getAO;
+								_resources = _resources - 75;
+								call {
+									if(_population < 100) exitWith {
+										//Just send the troops
+									};
+									if(_population < 500) exitWith {
+										if((random 100) < (_diff * 2)) then {
+											//small chance of a support vehicle
+											_resources = _resources - 100;
+											[_obpos,_pos,100,0] spawn OT_fnc_NATOGroundSupport;
+											diag_log format["Overthrow: NATO Sent ground support to %1 from %2",_town,_obname];
+										};
+									};
+									//population > 500, definitely send support
+									_resources = _resources - 100;
+									[_obpos,_pos,100,0] spawn OT_fnc_NATOGroundSupport;
+								};
+								diag_log format["Overthrow: NATO Sent ground forces to %1 from %2",_town,_obname];
+								[_obpos,_ao,_pos,false,5] spawn OT_fnc_NATOGroundReinforcements;
+							}else{
+								if(count _air > 0 && _population > 500) then {
+									server setVariable [format["NATOpatrolsent%1",_town],true];
+									(_air select 0) params ["_obpos","_obname"];
+
+									if((random 100) < (_diff * 2)) then {
+										//small chance of CAS
+										_resources = _resources - 150;
+										[_obpos,_pos,0] spawn OT_fnc_NATOAirSupport;
+										diag_log format["Overthrow: NATO Sent CAS to %1 from %2",_town,_obname];
+									};
+									private _dir = [_pos,_obpos] call BIS_fnc_dirTo;
+									private _ao = [_pos,_dir] call OT_fnc_getAO;
+									_resources = _resources - 100;
+
+									[_obpos,_ao,_pos,true,15] spawn OT_fnc_NATOGroundReinforcements;
+									diag_log format["Overthrow: NATO Sent ground forces by air to %1 from %2",_town,_obname];
+								};
+							};
+						};
+					}
+
 				};
 				//Abandon Town with <100 population if it has dropped to 0 stability
 				if(_population < 100 && {(_stability isEqualTo 0)} && {!(_town in _abandoned)}) then {
 					_abandoned pushback _town;
 					server setVariable ["NATOabandoned",_abandoned,true];
 					server setVariable [format ["garrison%1",_town],0,true];
-					[_town, 0] call OT_fnc_stability;
 					format["NATO has abandoned %1",_town] remoteExec ["OT_fnc_notifyGood",0,false];
 					_countered = true;
 					diag_log format["Overthrow: NATO has abandoned %1",_town];
@@ -337,12 +383,15 @@ publicVariable "OT_nextNATOTurn";
 
 				if !(_name in _abandoned) then {
 					_drone = spawner getVariable [format["drone%1",_name],objNull];
+					if(!alive _drone) then {
+						deleteVehicle _drone;
+					};
 					if((isNull _drone || !alive _drone) && {_resources > 10}) then {
 						_targets = [];
 						{
 							_town = _x;
 							_p = server getVariable _town;
-							if((_p distance _pos) < 3000) then {
+							if((_p distance _pos) < 3000 && _p call OT_fnc_inSpawnDistance) then {
 								_stability = server getVariable format["stability%1",_town];
 								if((_town in _abandoned) || (_stability < 50)) then {
 									_targets pushback _p;
@@ -353,7 +402,7 @@ publicVariable "OT_nextNATOTurn";
 						{
 							_x params ["_p","_name"];
 							if((_p distance _pos) < 3000) then {
-								if (_name in _abandoned) then {
+								if (_name in _abandoned && _p call OT_fnc_inSpawnDistance) then {
 									_targets pushback _p;
 								};
 							};
@@ -361,7 +410,7 @@ publicVariable "OT_nextNATOTurn";
 
 						{
 							_x params ["_ty","_p"];
-							if(((toUpper _ty) isEqualTo "FOB") && {(_p distance _pos) < 3000}) then {
+							if(((toUpper _ty) isEqualTo "FOB") && {(_p distance _pos) < 3000} && _p call OT_fnc_inSpawnDistance) then {
 								_targets pushback _p;
 							};
 						}foreach(_knownTargets);
@@ -372,6 +421,7 @@ publicVariable "OT_nextNATOTurn";
 							_group deleteGroupWhenEmpty true;
 							_p = [_pos,0,0,false,[0,0],[100,OT_NATO_Vehicles_ReconDrone]] call SHK_pos_fnc_pos;
 							_drone = createVehicle [OT_NATO_Vehicles_ReconDrone, _p, [], 0,""];
+							_drone enableDynamicSimulation false;
 
 							createVehicleCrew _drone;
 							{
@@ -383,18 +433,20 @@ publicVariable "OT_nextNATOTurn";
 							_resources = _resources - 10;
 
 							{
-								_wp = _group addWaypoint [_x,300];
+								_wp = _group addWaypoint [_x,100];
 								_wp setWaypointType "MOVE";
 								_wp setWaypointBehaviour "COMBAT";
 								_wp setWaypointSpeed "FULL";
-								_wp setWaypointTimeout [20,45,60];
+								_wp setWaypointTimeout [5,20,60];
+								_wp setWaypointStatements ["true",format["(vehicle this) flyInHeight %1;",25+random 50]];
 							}foreach(_targets);
 
 							_wp = _group addWaypoint [_pos,300];
 							_wp setWaypointType "MOVE";
 							_wp setWaypointBehaviour "COMBAT";
 							_wp setWaypointSpeed "FULL";
-							_wp setWaypointTimeout [10,20,60];
+							_wp setWaypointTimeout [5,20,60];
+							_wp setWaypointStatements ["true",format["(vehicle this) flyInHeight %1;",25+random 50]];
 
 							_wp = _group addWaypoint [_pos,0];
 							_wp setWaypointType "CYCLE";
@@ -403,7 +455,7 @@ publicVariable "OT_nextNATOTurn";
 								_x addCuratorEditableObjects [[_drone]];
 							}foreach(allCurators);
 
-							_drone spawn OT_fnc_NATODrone;
+							[_drone,_name] spawn OT_fnc_NATODrone;
 						};
 					};
 				};

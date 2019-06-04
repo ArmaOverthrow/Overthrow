@@ -452,7 +452,7 @@ _amount2 = _amount - _amount1;
 	}
 	foreach _battery;
 
-	sleep 0.2;
+	sleep 0.3;
 	_posX = 0;
 	_posY = 0;
 	

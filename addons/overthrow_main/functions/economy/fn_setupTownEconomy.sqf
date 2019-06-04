@@ -5,8 +5,7 @@ if(_town in OT_sprawling || _town in OT_capitals) then {_dist = 1000};
 private _posTown = server getVariable _town;
 private _stability = server getVariable [format["stability%1",_town],100];
 private _population = server getVariable [format["population%1",_town],0];
-diag_log format["Overthrow: Setting up economy in %1 (pop. %2)",_town,_population];
-private _shops   = 0;
+
 private _activeShops  = [];
 private _activecar  = [];
 private _piers  = [];
@@ -27,7 +26,6 @@ if(count _churches > 0) then {
 }foreach(nearestObjects [_posTown, [OT_hardwareStore], _dist,false]);
 server setVariable [format["activehardwarein%1",_town],_activeHardware,true];
 
-private _chance = 100; //Chance that a shop will be a shop
 private _shops = nearestObjects [_posTown, OT_shops, _dist,false];
 if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 	//More shops than there are definitions in this town, so make sure one of each is spawned
@@ -50,18 +48,18 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 	}foreach(OT_itemCategoryDefinitions);
 }else{
 	//Find shop buildings && distribute categories to them
+	private _shopsDone = [];
 	{
 		private _pos = getpos _x;
 		//Ensure shops are not found twice (overlapping town search radius)
-		if (!(_pos in OT_allShops) && (random 100 < _chance)) then {
-			private _category =	call {
-				private _rnd = random 100;
-				if(_rnd > 90) exitWith {"Surplus"};
-				if(_rnd > 80) exitWith {"Electronics"};
-				if(_rnd > 60) exitWith {"Pharmacy"};
-				if(_rnd > 40) exitWith {"Clothing"};
-				"General"
+		if !(_pos in OT_allShops) then {
+			private _category = "";
+			if !("General" in _shopsDone) then {
+				_category =	"General";
+			}else{
+				_category =	selectRandom (["General","Surplus","Electronics","Pharmacy","Clothing"] - _shopsDone);
 			};
+			_shopsDone pushback _category;
 			_activeShops pushback [_pos,_category];
 			OT_allShops pushback _pos;
 		};
@@ -69,6 +67,8 @@ if(count _shops > (count OT_itemCategoryDefinitions)-1) then {
 };
 
 server setVariable [format["activeshopsin%1",_town],_activeShops,true];
+
+diag_log format["Overthrow: Set up economy in %1 (pop. %2, %3 of %4 shops)",_town,_population,count _activeShops,count _shops];
 
 {
 	private _po = getpos _x;

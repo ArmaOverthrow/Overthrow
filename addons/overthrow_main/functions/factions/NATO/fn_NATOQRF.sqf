@@ -32,29 +32,7 @@ _ground = [];
 _air = [];
 _abandoned = server getvariable ["NATOabandoned",[]];
 
-{
-	_x params ["_obpos","_name","_pri"];
-	if !((_name in _abandoned) || (_obpos distance _pos) < 300) then {
-		if([_pos,_obpos] call OT_fnc_regionIsConnected && (_obpos distance _pos) < 5000) then {
-			_ground pushback _x;
-		};
-		if(_x in OT_airportData) then {
-			_air pushback _x;
-		};
-	};
-}foreach([OT_objectiveData + OT_airportData,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy);
-diag_log format["Overthrow: NATO QRF spend is %1",_strength];
-
-//add helipads to possibles
-{
-	_x params ["","_name"];
-	if !(_name in _abandoned) then {
-		_air pushback _x;
-	};
-}foreach(OT_NATOHelipads);
-
-//sort airfields + helipads by distance
-_air = [_air,[],{_pos distance (_x select 0)},"ASCEND"] call BIS_fnc_SortBy;
+([_pos] call OT_fnc_NATOGetAttackVectors) params ["_ground","_air"];
 
 //Send ground forces by air
 private _count = 0;
@@ -65,12 +43,12 @@ private _count = 0;
 	_ao = [_pos,_dir] call OT_fnc_getAO;
 	[_obpos,_ao,_pos,true,300] spawn OT_fnc_NATOGroundForces;
 	diag_log format["Overthrow: NATO Sent ground forces by air from %1 %2",_name,str _obpos];
-	_strength = _strength - 100;
+	_strength = _strength - 150;
 
 	if(_pri > 600 && _strength >= 500) then {
 		_ao = [_pos,_dir] call OT_fnc_getAO;
 		[_obpos,_ao,_pos,true,420] spawn OT_fnc_NATOGroundForces;
-		_strength = _strength - 100;
+		_strength = _strength - 150;
 		diag_log format["Overthrow: NATO Sent extra ground forces by air from %1 %2",_name,str _obpos];
 	};
 	_count = _count + 1;
@@ -94,11 +72,11 @@ if(_strength >= 150) then {
 		};
 
 		diag_log format["Overthrow: NATO Sent ground forces from %1 %2",_name,str _obpos];
-		_strength = _strength - 100;
+		_strength = _strength - 200;
 		if(_strength >= 150) then {
 			_ao = [_pos,_dir] call OT_fnc_getAO;
 			[_obpos,_ao,_pos,false,120] spawn OT_fnc_NATOGroundForces;
-			_strength = _strength - 100;
+			_strength = _strength - 200;
 			diag_log format["Overthrow: NATO Sent extra ground forces from %1 %2",_name,str _obpos];
 		};
 		if(_strength <=0) exitWith {};
@@ -221,7 +199,7 @@ if(_isCoastal && !(OT_NATO_Navy_HQ in _abandoned) && (random 100) > 70) then {
 };
 private _start = round(time);
 server setVariable ["QRFpos",_pos,true];
-server setVariable ["QRFstart",_start,true];
+["OT_QRFstart", []] call CBA_fnc_globalEvent;
 server setVariable ["QRFprogress",0,true];
 
 waitUntil {(time - _start) > 600};
@@ -311,6 +289,6 @@ if(_progress > 0) then {
 };
 server setVariable ["NATOlastattack",time,true]; //Ensures NATO takes some time after a QRF to recover (even if they win)
 server setVariable ["QRFpos",nil,true];
-server setVariable ["QRFstart",nil,true];
+["OT_QRFend", []] call CBA_fnc_globalEvent;
 server setVariable ["QRFprogress",nil,true];
 server setVariable ["NATOattacking","",true];

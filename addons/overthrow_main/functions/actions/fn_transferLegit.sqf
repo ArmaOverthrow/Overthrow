@@ -34,7 +34,7 @@ _doTransfer = {
 
 
 	[5,false] call OT_fnc_progressBar;
-	sleep 5;
+
 	_full = false;
 	if(_iswarehouse) then {
 		{

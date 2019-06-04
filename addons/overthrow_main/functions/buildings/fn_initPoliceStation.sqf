@@ -30,7 +30,7 @@ if(_garrison == -1) then {
 		_p = [[[_start,20]]] call BIS_fnc_randomPos;
 
 		_civ = [_soldier,_p,_group,false] call OT_fnc_createSoldier;
-		_civ setVariable ["polgarrison",_town,false];
+		_civ setVariable ["polgarrison",_town,true];
 		[_civ] joinSilent _group;
 		_civ setRank "SERGEANT";
 		[_civ,_town] call OT_fnc_initPolice;

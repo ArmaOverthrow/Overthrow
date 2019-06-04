@@ -42,7 +42,7 @@ if(count _activeshops > 0) exitWith {
 		_light setLightAmbient[.9, .9, .6];
 		_light setLightColor[.5, .5, .4];
 		_groups pushback _light;
-		sleep 0.2;
+		sleep 0.5;
 	}foreach(_activeshops);
 	spawner setvariable [_spawnid,(spawner getvariable [_spawnid,[]]) + _groups,false];
 };

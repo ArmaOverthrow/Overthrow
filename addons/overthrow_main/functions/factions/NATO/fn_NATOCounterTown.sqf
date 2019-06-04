@@ -21,10 +21,11 @@ _success = {
 	params ["_tskid","_town"];
 	//NATO has won
 	[_tskid, "FAILED",true] spawn BIS_fnc_taskSetState;
-	[_town,15] call OT_fnc_stability; //Just to make sure they wont abandon it again right away
+	[_town,35] call OT_fnc_stability;
 	_abandoned = server getVariable "NATOabandoned";
 	_abandoned deleteAt (_abandoned find _town);
 	server setVariable ["NATOabandoned",_abandoned,true];
+	server setVariable [format["NATOpatrolsent%1",_town],false];
 };
 
 [_posTown,_strength,_success,_fail,[_tskid,_town],_town] spawn OT_fnc_NATOQRF;

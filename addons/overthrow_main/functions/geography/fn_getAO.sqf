@@ -1,7 +1,7 @@
 params ["_atpos","_attackdir"];
 _attackdir = (_attackdir-45) + random 90; //randomize direction a little;
 
-private _range = 800;
+private _range = 500;
 private _lowrange = _range - 300;
 private _ao = [_atpos,[_lowrange,_range],_attackdir] call SHK_pos_fnc_pos;
 

@@ -4,10 +4,13 @@ OT_NATO_Group_Recon = "";
 OT_NATO_Group_Engineers = "";
 {
 	private _name = configName _x;
-	OT_NATO_GroundForces pushback _name;
 	if((_name find "Recon") > -1) then {
 		OT_NATO_Group_Recon = _name;
 		OT_NATO_Group_Engineers = _name;
+	};
+	private _numtroops = count("true" configClasses _x);
+	if(_numtroops > 5) then {
+		OT_NATO_GroundForces pushback _name;
 	};
 }foreach("true" configClasses (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry"));
 
@@ -22,9 +25,14 @@ OT_NATO_Units_LevelOne = [];
 OT_NATO_Units_LevelTwo = [];
 OT_NATO_Units_CTRGSupport = [];
 
+(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
+
+private _c = 0;
+
 {
 	private _name = configName _x;
-	if(_name isKindOf "SoldierWB") then {
+	private _unitCfg = _x;
+	if(!(_name isEqualTo OT_NATO_Unit_Police) && !(_name isEqualTo OT_NATO_Unit_PoliceCommander)) then {
 		[_name] call {
 			params ["_name"];
 			if((_name find "_TL_") > -1) exitWith {
@@ -54,9 +62,40 @@ OT_NATO_Units_CTRGSupport = [];
 			if(_role == "Marksman" && (_name find "Sniper") > -1) then {OT_NATO_Unit_Sniper = _name};
 			if(_role == "Marksman" && (_name find "Spotter") > -1) then {OT_NATO_Unit_Spotter = _name};
 			if(_role == "MissileSpecialist" && (_name find "_AA_") > -1) then {OT_NATO_Unit_AA_spec = _name};
+
+			//Generate and cache alternative loadouts for this unit
+			private _loadout = getUnitLoadout _unitCfg;
+			private _loadouts = [];
+			for "_i" from 1 to 5 do {
+				_loadouts pushback ([_loadout] call OT_fnc_randomizeLoadout);
+			};
+			spawner setVariable [format["loadouts_%1",_name],_loadouts,false];
+			_c = _c + 1;
+			if(_c isEqualTo 10) then {
+				sleep 0.1;
+				_c = 0;
+			};
 		};
 	};
-}foreach(format["(getNumber(_x >> 'scope') isEqualTo 2) && (getText(_x >> 'faction') isEqualTo '%1')",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
+}foreach(format["(getNumber(_x >> 'scope') isEqualTo 2) && (getText(_x >> 'faction') isEqualTo '%1') && (configName _x) isKindOf 'SoldierWB'",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
+
+(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
+
+//Generate and cache gendarm loadouts
+private _loadout = getUnitLoadout OT_NATO_Unit_Police;
+private _loadouts = [];
+for "_i" from 1 to 5 do {
+	_loadouts pushback ([_loadout,OT_allBLUSMG] call OT_fnc_randomizeLoadout);
+};
+spawner setVariable [format["loadouts_%1",OT_NATO_Unit_Police],_loadouts,false];
+
+private _loadout = getUnitLoadout OT_NATO_Unit_PoliceCommander;
+private _loadouts = [];
+for "_i" from 1 to 5 do {
+	_loadouts pushback ([_loadout,OT_allBLUSMG] call OT_fnc_randomizeLoadout);
+};
+spawner setVariable [format["loadouts_%1",OT_NATO_Unit_PoliceCommander],_loadouts,false];
+
 
 OT_NATO_Units_LevelTwo = OT_NATO_Units_LevelOne + OT_NATO_Units_LevelTwo;
 
@@ -78,7 +117,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 	private _abandoned = server getVariable ["NATOabandoned",[]];
 
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
-	sleep 0.2;
+	sleep 0.3;
 	{
 		private _stability = server getVariable format ["stability%1",_x];
 		if(_stability < 11 && !(_x in _abandoned)) then {
@@ -175,7 +214,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 	};
 
 	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0];
-	sleep 0.2;
+	sleep 0.3;
 	//Add comms towers
 	{
 		_x params ["_pos","_name"];
@@ -271,12 +310,12 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		};
 		server setVariable [format ["garrison%1",_x],_garrison,true];
 	}foreach (OT_allTowns);
-	sleep 0.2;
+	sleep 0.3;
 };
 diag_log "Overthrow: NATO Init Done";
 
 {
-	_x params ["_pos","_name"];
+	_x params ["_pos","_name","_pri"];
 	private _mrk = createMarker [_name,_pos];
 	_mrk setMarkerShape "ICON";
 	if(_name in (server getVariable "NATOabandoned")) then {
@@ -315,8 +354,63 @@ diag_log "Overthrow: NATO Init Done";
 			};
 		};
 	};
+
+	//Set supply cache locations for this session
+	//first try to find a warehouse to put it at
+	private _warehouses = (_pos nearObjects [OT_warehouse, 400]);
+	private _supplypos = _pos;
+	if((count _warehouses) isEqualTo 0) then {
+		//just pick a random position
+		_supplypos = _pos findEmptyPosition [4,100,OT_item_Storage];
+	}else{
+		//put it at the warehouse
+		_supplypos = (getpos(_warehouses select 0)) findEmptyPosition [4,100,OT_item_Storage];
+	};
+	spawner setVariable [format["NATOsupply%1",_name],_supplypos,false];
+
+	//Now generate whats in it
+	private _items = [];
+	private _wpns = [];
+	private _mags = [];
+
+	private _done = 0;
+	private _supplyamount = (_pri - 100) + (random 200);
+	while {_done < _supplyamount} do {
+		private _rnd = random 100;
+		_rnd call {
+			if(_this > 90) exitWith {
+				//Add some radios (10% chance)
+				_done = _done + 25;
+				_items pushback ["ItemRadio",(2-_diff)+(round(random (5-_diff)))];
+			};
+			if(_this > 89) exitWith {
+				//Add a random launcher (1% chance)
+				_done = _done + 100;
+				_wpns pushback [selectRandom OT_allBLULaunchers,1+(round(random (2-_diff)))];
+			};
+			if(_this > 85) exitWith {
+				//Add a random rifle (4% chance)
+				_done = _done + 50;
+				_wpns pushback [selectRandom OT_allBLURifles,1+(round(random (2-_diff)))];
+			};
+			if(_this > 75) exitWith {
+				//Add a random pistol (10% chance)
+				_done = _done + 25;
+				_wpns pushback [selectRandom OT_allBLUPistols,1+(round(random (3-_diff)))];
+			};
+			if(_this > 50) exitWith {
+				//Add random ammunition (25% chance)
+				_done = _done + 20;
+				_mags pushback [selectRandom OT_allBLURifleMagazines,3+(round(random (4-_diff)) * 2)];
+			};
+			//Add some meds (50% chance)
+			_done = _done + 40;
+			_items pushback [selectRandom ["ACE_fieldDressing","ACE_fieldDressing","ACE_morphine"],(2-_diff)+(round(random (5-_diff)))];
+		};
+	};
+	spawner setVariable [format["NATOsupplyitems%1",_name],[_items,_wpns,_mags],false];
 }foreach(OT_NATOobjectives);
-sleep 0.2;
+sleep 0.3;
 
 publicVariable "OT_allObjectives";
 
@@ -347,7 +441,7 @@ publicVariable "OT_allObjectives";
 		_mrk setMarkerAlpha 0.4;
 	};
 }foreach(OT_NATOcomms);
-sleep 0.2;
+sleep 0.3;
 private _revealed = server getVariable ["revealedFOBs",[]];
 {
 	_x params ["_pos","_garrison","_upgrades"];

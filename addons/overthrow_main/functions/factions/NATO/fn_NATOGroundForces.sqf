@@ -11,7 +11,7 @@ _group1 deleteGroupWhenEmpty true;
 private _group2 = "";
 private _tgroup = false;
 if !(_byair) then {
-	sleep 0.2;
+	sleep 0.3;
 	_squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
 	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 	_group2 deleteGroupWhenEmpty true;
@@ -42,15 +42,16 @@ if !(_pos isEqualType []) then {
 	};
 	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
 };
-
+_pos set [2,1];
 _veh = _vehtype createVehicle _pos;
+_veh setDir (_dir);
 _veh setVariable ["garrison","HQ",false];
 clearWeaponCargoGlobal _veh;
 clearMagazineCargoGlobal _veh;
 clearItemCargoGlobal _veh;
 clearBackpackCargoGlobal _veh;
 
-_veh setDir (_dir);
+
 _tgroup addVehicle _veh;
 createVehicleCrew _veh;
 {
@@ -59,11 +60,10 @@ createVehicleCrew _veh;
 	_x setVariable ["NOAI",true,false];
 }foreach(crew _veh);
 _allunits = (units _tgroup);
-sleep 1;
-
 {
-	_x addCuratorEditableObjects [[_veh],true];
+	_x addCuratorEditableObjects [(units _tgroup) + [_veh],true];
 } forEach allCurators;
+sleep 1;
 
 _tgroup deleteGroupWhenEmpty true;
 
@@ -104,7 +104,7 @@ if !(_byair) then {
 	spawner setVariable ["NATOattackforce",(spawner getVariable ["NATOattackforce",[]])+[_group2],false];
 };
 
-sleep 15;
+sleep 5;
 if(_byair && _tgroup isEqualType grpNull) then {
 	_wp = _tgroup addWaypoint [_frompos,0];
 	_wp setWaypointType "MOVE";
@@ -145,9 +145,6 @@ if(_byair && _tgroup isEqualType grpNull) then {
 
 		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointBehaviour "CARELESS";
-		_move setWaypointType "MOVE";
-
-		_move = _tgroup addWaypoint [_dropos,0];
 		_move setWaypointTimeout [30,30,30];
 		_move setWaypointType "TR UNLOAD";
 		_move setWaypointCompletionRadius 50;
@@ -169,6 +166,13 @@ _wp = _group1 addWaypoint [_attackpos,100];
 _wp setWaypointType "SAD";
 _wp setWaypointBehaviour "COMBAT";
 _wp setWaypointSpeed "FULL";
+
+if !(_byair) then {
+	_wp = _group2 addWaypoint [_attackpos,100];
+	_wp setWaypointType "SAD";
+	_wp setWaypointBehaviour "COMBAT";
+	_wp setWaypointSpeed "FULL";
+};
 
 if(typename _tgroup isEqualTo "GROUP") then {
 
@@ -206,29 +210,14 @@ if(typename _tgroup isEqualTo "GROUP") then {
 					commandGetOut _x;
 				}foreach(crew _veh);
 				_done = true;
-
-				_wp = _tgroup addWaypoint [_frompos,0];
-				_wp setWaypointType "MOVE";
-				_wp setWaypointBehaviour "CARELESS";
-				_wp setWaypointCompletionRadius 50;
-
-				_wp = _tgroup addWaypoint [_frompos,0];
-				_wp setWaypointType "SCRIPTED";
-				_wp setWaypointCompletionRadius 50;
-				_wp setWaypointStatements ["true","this call OT_fnc_cleanup"];
+				waitUntil {sleep 2;(count crew _veh) isEqualTo 0};
+				[_veh] call OT_fnc_cleanup;
 			};
 			if(_byair && (_veh getVariable ["OT_deployedTroops",false])) exitWith {
-				[_veh,_frompos,_tgroup] spawn OT_fnc_landAndCleanupHelicopter;
+				[_veh,_frompos] spawn OT_fnc_landAndCleanupHelicopter;
 				_done = true;
 			};
 
 		};
 	};
-};
-
-if !(_byair) then {
-	_wp = _group2 addWaypoint [_attackpos,100];
-	_wp setWaypointType "SAD";
-	_wp setWaypointBehaviour "COMBAT";
-	_wp setWaypointSpeed "FULL";
 };

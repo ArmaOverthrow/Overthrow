@@ -6,7 +6,7 @@ if(typename _this == "GROUP") exitWith {false};
 		(_this distance _x) < OT_spawnDistance
 	} count (
 		(
-			(alldeadmen + allPlayers) - entities "HeadlessClient_F"
+			alldeadmen + (call CBA_fnc_players)
 		)
 		+
 		(spawner getVariable ["track",[]])

@@ -58,12 +58,10 @@ OT_allShops = [];
 
     //Low stability in small towns
 
-    if((_pop < 500) && !(_name in OT_NATO_priority) && !(_name in OT_Capitals) && (_name in OT_spawnTowns)) then {
-        _stability = floor(20 + random(20));
+    if((_pop < 100) && !(_name in OT_NATO_priority) && !(_name in OT_Capitals) && (_name in OT_spawnTowns)) then {
+        _stability = floor(30 + random(10));
     };
     server setVariable [format["stability%1",_name],_stability,true];
-
-    [_name] call OT_fnc_setupTownEconomy;
 
     private _popVar=format["population%1",_name];
     server setVariable [_popVar,_pop,true];
@@ -71,7 +69,7 @@ OT_allShops = [];
     {
         if(_pos inArea _x) exitWith {server setVariable [format["region_%1",_name],_x,true]};
     }foreach(OT_regions);
-    sleep 0.2;
+    sleep 0.1;
 }foreach (OT_allTowns);
 private _spawn = OT_spawnTowns call BIS_fnc_selectrandom;
 diag_log format["Overthrow: Spawn town is %1",_spawn];

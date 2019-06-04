@@ -15,10 +15,10 @@ if !(isClass (configFile >> "CfgPatches" >> "OT_Overthrow_Main")) exitWith {
 waitUntil {!isNull player && player isEqualTo player && !isNull server};
 
 ace_interaction_EnableTeamManagement = false; //Disable group switching
+ace_interaction_disableNegativeRating = true; //Disable ACE negative ratings
 
 enableSaving [false,false];
 enableEnvironment [false,true];
-setViewDistance 15;
 
 if(isServer) then {
 	missionNameSpace setVariable ["OT_HOST", player, true];
@@ -36,9 +36,14 @@ if(isMultiplayer && (!isServer)) then {
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
 	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
+	//ACE3 events
 	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
 	["ace_common_setFuel",OT_fnc_refuelHandler] call CBA_fnc_addEventHandler;
 	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
+	//Overthrow events
+	["OT_QRFstart", OT_fnc_QRFStartHandler] call CBA_fnc_addEventHandler;
+	["OT_QRFend", OT_fnc_QRFEndHandler] call CBA_fnc_addEventHandler;
+	OT_QRFstart = spawner getVariable ["QRFstart",nil];//If theres already a QRF going
 }else{
 	OT_varInitDone = true;
 };
@@ -87,6 +92,8 @@ if((isServer || count ([] call CBA_fnc_players) == 1) && (server getVariable ["S
 	"Loading" call OT_fnc_notifyStart;
 };
 OT_showPlayerMarkers = (["ot_showplayermarkers", 1] call BIS_fnc_getParamValue) isEqualTo 1;
+OT_showTownChange = (["ot_showtownchange", 1] call BIS_fnc_getParamValue) isEqualTo 1;
+OT_showEnemyGroups = (["ot_showenemygroups", 1] call BIS_fnc_getParamValue) isEqualTo 1;
 
 waitUntil {sleep 1;!isNil "OT_NATOInitDone"};
 
@@ -326,7 +333,6 @@ if !("ItemMap" in (assignedItems player)) then {
 };
 [_housepos,_newplayer] spawn {
 	params ["_housepos","_newplayer"];
-	setViewDistance -1;
 	waitUntil{ preloadCamera _housepos};
 	titleText ["", "BLACK IN", 5];
 	sleep 1;
@@ -352,9 +358,6 @@ if !("ItemMap" in (assignedItems player)) then {
 player addEventHandler ["WeaponAssembled",{
 	params ["_me","_wpn"];
 	private _pos = getPosATL _wpn;
-	if(typeof _wpn in OT_staticMachineGuns) then {
-		_wpn remoteExec["OT_fnc_initStaticMGLocal",0,_wpn];
-	};
 	if(typeof _wpn in OT_staticWeapons) then {
 		if(_me call OT_fnc_unitSeen) then {
 			_me setCaptive false;
@@ -367,15 +370,15 @@ player addEventHandler ["WeaponAssembled",{
 
 player addEventHandler ["InventoryOpened", {
 	params ["","_veh"];
-	if(
-		(_veh getVariable ["OT_locked",false])
-		&&
-		{ !((_veh call OT_fnc_getOwner) isEqualTo getplayeruid player) }
-	) exitWith {
-		format["This inventory has been locked by %1",server getVariable ("name"+(_veh call OT_fnc_getOwner))] call OT_fnc_notifyMinor;
-		true
+	private _locked = false;
+	if !(_veh call OT_fnc_playerIsOwner) then {
+		private _isgen = call OT_fnc_playerIsGeneral;
+		if(!_isgen && (_veh getVariable ["OT_locked",false])) exitWith {
+			hint format["This inventory has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)];
+			_locked = true;
+		};
 	};
-	false
+	_locked
 }];
 
 player addEventHandler ["GetInMan",{
@@ -402,7 +405,17 @@ player addEventHandler ["GetInMan",{
 				private _isgen = call OT_fnc_playerIsGeneral;
 				if(!_isgen && (_veh getVariable ["OT_locked",false])) then {
 					moveOut player;
-					format["This vehicle has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)] call OT_fnc_notifyMinor;
+					hint format["This vehicle has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)];
+				};
+			};
+		};
+	}else{
+		if (isNull (driver _veh)) then {
+			if !(_veh call OT_fnc_playerIsOwner) then {
+				private _isgen = call OT_fnc_playerIsGeneral;
+				if(!_isgen && (_veh getVariable ["OT_locked",false])) then {
+					moveOut player;
+					hint format["This vehicle has been locked by %1",server getVariable "name"+(_veh call OT_fnc_getOwner)];
 				};
 			};
 		};
@@ -445,6 +458,18 @@ if(isMultiplayer) then {
 };
 
 OT_keyHandlerID = [21, [false, false, false], OT_fnc_keyHandler] call CBA_fnc_addKeyHandler;
+
+player call OT_fnc_mapSystem;
+//Scroll actions
+{
+    _x params ["_pos"];
+    private _base = _pos nearObjects [OT_flag_IND,5];
+    if((count _base) > 0) then {
+        _base = _base#0;
+        _base addAction ["Set As Home", {player setVariable ["home",getpos (_this select 0),true];"This FOB is now your home" call OT_fnc_notifyMinor},nil,0,false,true];
+    };
+}foreach(server getVariable ["bases",[]]);
+
 [] call OT_fnc_setupPlayer;
 _introcam cameraEffect ["Terminate", "BACK" ];
 camDestroy _introcam;

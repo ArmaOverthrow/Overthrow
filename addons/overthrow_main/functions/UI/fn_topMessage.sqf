@@ -43,6 +43,6 @@ uiSleep (_time );
 _ctrl ctrlSetPosition [(ctrlPosition _ctrl)#0,(((ctrlPosition _ctrl)#3) * -1) * safezoneH + safezoneY,(ctrlPosition _ctrl)#2,(ctrlPosition _ctrl)#3];
 _ctrl ctrlCommit 0.25;
 
-uiSleep 0.25;
+uiSleep 0.35;
 
 ctrlDelete _ctrl;

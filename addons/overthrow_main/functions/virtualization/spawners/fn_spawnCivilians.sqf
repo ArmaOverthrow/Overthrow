@@ -43,7 +43,7 @@ if !(_church isEqualTo []) then {
 	_pos = [[[_church,20]]] call BIS_fnc_randomPos;
 	_civ = _group createUnit [OT_civType_priest, _pos, [],0, "NONE"];
 	[_civ] call OT_fnc_initPriest;
-	sleep 0.2;
+	sleep 0.3;
 };*/
 
 private _count = 0;
@@ -70,11 +70,11 @@ while {_count < _numCiv} do {
 		[_civ,_identity] call OT_fnc_applyIdentity;
 		_count = _count + 1;
 		_groupcount = _groupcount + 1;
+		sleep 0.5;
 	};
-	sleep 0.2;
-	_group spawn OT_fnc_initCivilianGroup;
+	_group call OT_fnc_initCivilianGroup;
 };
-sleep 0.2;
+sleep 0.3;
 //Do gangs
 private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 {
@@ -130,7 +130,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 			[_civ] joinSilent nil;
 			[_civ] joinSilent _leaderGroup;
 			_civ setVariable ["OT_gangid",_gangid,true];
-			[_civ,_town] call OT_fnc_initCrimLeader;
+			[_civ,_town,_gangid] call OT_fnc_initCrimLeader;
 			_civ setVariable ["hometown",_town,true];
 
 			_wp = _leaderGroup addWaypoint [_home,0];
@@ -158,7 +158,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 					_identity = call OT_fnc_randomLocalIdentity;
 				};
 
-				[_civ,_town,_vest] call OT_fnc_initCriminal;
+				[_civ,_town,_vest,_gangid] call OT_fnc_initCriminal;
 				[_civ,_identity] call OT_fnc_applyIdentity;
 				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 
@@ -170,9 +170,10 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 				{
 					_x addCuratorEditableObjects [[_civ]];
 				}foreach(allCurators);
+
+				sleep 0.3;
 			}foreach(_members);
-			sleep 0.2;
-			_group spawn OT_fnc_initCriminalGroup;
+			[_group,_posTown] call OT_fnc_initCriminalGroup;
 		};
 	};
 }foreach(_gangs);

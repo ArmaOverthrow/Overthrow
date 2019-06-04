@@ -81,6 +81,9 @@ private _difficulty = 1.8;
             _civ setRank "SERGEANT";
             _civ setBehaviour "SAFE";
             _civ setVariable ["VCOM_NOPATHING_Unit",true,false];
+            [_civ,"HQ"] call OT_fnc_initMilitary;
+            _civ disableAI "PATH";
+            _civ addEventHandler ["FiredNear", {params ["_unit"];_unit enableAI "PATH"}];
 
             _count = _count + 1;
         };

@@ -66,11 +66,11 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	};
 
 	//Init factions
-	[] call OT_fnc_initNATO;
+	[] spawn OT_fnc_initNATO;
+	waitUntil {!isNil "OT_NATOInitDone"};
 	[] spawn OT_fnc_factionNATO;
 	[] spawn OT_fnc_factionGUER;
 	[] spawn OT_fnc_factionCRIM;
-	waitUntil {!isNil "OT_NATOInitDone"};
 
 	[] spawn OT_fnc_initEconomyLoad;
 
@@ -104,6 +104,10 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 	["ace_explosives_place",OT_fnc_explosivesPlacedHandler] call CBA_fnc_addEventHandler;
 	["ace_tagCreated", OT_fnc_taggedHandler] call CBA_fnc_addEventHandler;
 
+	//Overthrow events
+	["OT_QRFstart", OT_fnc_QRFStartHandler] call CBA_fnc_addEventHandler;
+	["OT_QRFend", OT_fnc_QRFEndHandler] call CBA_fnc_addEventHandler;
+
 	if(isServer) then {
 		addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 
@@ -111,6 +115,14 @@ OT_tpl_checkpoint = [] call compileFinal preProcessFileLineNumbers "data\templat
 		["OT_civilian_cleanup_crew", "time > OT_cleanup_civilian_loop","
 			OT_cleanup_civilian_loop = time + (5*60);
 			private _totalcivs = {(side _x isEqualTo civilian) && !captive _x} count (allUnits);
+			{
+				if(_x getVariable [""OT_Looted"",false]) then {
+					private _stock = _x call OT_fnc_unitStock;
+					if((count _stock) isEqualTo 0) then {
+						deleteVehicle _x;
+					};
+				};
+			}forEach(alldeadmen);
 			if(_totalcivs < 50) exitWith {};
 			{
 				if (side group _x isEqualTo civilian && {!(isPlayer _x)} && {!(_x getVariable [""shopcheck"",false])} && { ({side _x isEqualTo civilian} count ((getPos _x) nearObjects [""CAManBase"",150])) > round(150*OT_spawnCivPercentage) } ) then {

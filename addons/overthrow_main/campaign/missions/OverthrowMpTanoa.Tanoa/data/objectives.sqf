@@ -7,11 +7,11 @@ OT_objectiveData = [
     [[3939.27,13915,0],"The Camp Remnants",250],
     [[3166.18,11038.8,0],"Belfort Naval Base",500],
     [[5216.9,3656.3,0],"Chemical Plant",600],
-    [[11581,7342.56,0],"Kotomo Base",200],
+    [[11570.3,7345.21,0],"Kotomo Base",200],
     [[4501.34,8430.07,0],"Regina Base",200]
 ];
 OT_NATO_HQ = "Tuvanaka Airbase";
-OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","96FM Georgetown","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka","Georgetown","Katkoula","Harcourt"];
+OT_NATO_priority = ["Tuvanaka Airbase","Comms Alpha","Comms Whiskey","Lijnhaven","Blue Pearl industrial port","Nani","Belfort","Tuvanaka","Georgetown","Katkoula","Harcourt"];
 OT_NATO_Navy_HQ = "Belfort Naval Base";
 
 OT_NATO_JetPos = [2078.23,13254.2,1.54746]; //Where to spawn jets

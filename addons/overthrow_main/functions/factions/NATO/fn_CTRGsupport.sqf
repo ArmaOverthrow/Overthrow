@@ -40,12 +40,12 @@ _group = createGroup blufor;
 	_civ setRank "CAPTAIN";
 }foreach(OT_NATO_Units_CTRGSupport);
 
-sleep 0.2;
+sleep 0.3;
 
 //Transport
 _tgroup = creategroup blufor;
 _pos = [_pos,60,80,false,[0,0],[100,OT_NATO_Vehicle_CTRGTransport]] call SHK_pos_fnc_pos;
-sleep 0.2;
+sleep 0.3;
 _veh = createVehicle [OT_NATO_Vehicle_CTRGTransport, _pos, [], 0,""];
 _vehs pushback _veh;
 

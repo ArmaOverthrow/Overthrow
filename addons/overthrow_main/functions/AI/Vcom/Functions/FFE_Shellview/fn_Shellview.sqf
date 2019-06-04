@@ -116,7 +116,7 @@ while {RydFFE_ShellView} do
 				}
 			}
 		foreach _shellMarks;
-		sleep 0.2;
+		sleep 0.3;
 		missionNameSpace setVariable ["shellVShells",nil];
 		sleep 0.05
 		};

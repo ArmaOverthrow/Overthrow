@@ -6,7 +6,7 @@ spawner setVariable [_i,[],false];
         {
             if !(_x call OT_fnc_hasOwner) then {
                 _x remoteExecCall ["deleteVehicle",_x];
-                sleep 0.2;
+                sleep 0.3;
             };
         }foreach(units _x);
         deleteGroup _x;
@@ -15,5 +15,5 @@ spawner setVariable [_i,[],false];
             _x remoteExecCall ["deleteVehicle",_x];
         };
     };
-    sleep 0.2;
+    sleep 0.3;
 }foreach(_groups);

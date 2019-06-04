@@ -1,5 +1,5 @@
 params ["_unit", "_selection", "_damage", "_hitIndex", "_hitPoint", ["_shooter",objNull], ["_projectile",objNull]];
-
+_unit enableAI "PATH";
 if !(isNull _projectile) then {
     private _shotParents = getShotParents _projectile;
     _shooter = _shotParents select 1;

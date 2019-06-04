@@ -106,6 +106,6 @@ VCOM_mineArray pushBack [_mine,_unitSide];
 		(!(alive _mine) || {!(_NotSafe)})
 	};
 	[_Mine, true] remoteExecCall ["enableSimulationGlobal",2];
-	sleep 0.25;
+	sleep 0.35;
 	_Mine setdamage 1;
 };
