@@ -134,6 +134,7 @@ call {
 		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,10] call OT_fnc_experience;
+		[_killer,_gangid,-10] call OT_fnc_gangRep;
 	};
 	if(!isNil "_crimleader") exitWith {
 		_killer setVariable ["OPFkills",(_killer getVariable ["OPFkills",0])+1,true];
@@ -148,11 +149,12 @@ call {
 		if(_gangid > -1) then {
 			_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
 			if(count _gang > 0) then {
+				private _name = _gang select 8;
 				OT_civilians setVariable [format["gang%1",_gangid],nil,true];
 				_gangs = OT_civilians getVariable [format["gangs%1",_hometown],[]];
 				_gangs deleteAt (_gangs find _gangid);
 				OT_civilians setVariable [format["gangs%1",_hometown],_gangs,true];
-				format["The gang leader in %1 has been eliminated",_hometown] remoteExec ["OT_fnc_notifyMinor",0,false];
+				format["The leader of %2 in %1 has been eliminated",_hometown,_name] remoteExec ["OT_fnc_notifyMinor",0,false];
 				spawner setVariable [format["nogang%1",_hometown],time+3600,false]; //No gangs in this town for 1 hr real-time
 				_mrkid = format["gang%1",_hometown];
 				deleteMarker _mrkid;
@@ -162,6 +164,7 @@ call {
 		[_hometown,_stability] call OT_fnc_stability;
 		[_killer,_reward] call OT_fnc_rewardMoney;
 		[_killer,50] call OT_fnc_experience;
+		[_killer,_gangid,-25] call OT_fnc_gangRep;
 	};
 	if(!isNil "_polgarrison") exitWith {
 		_pop = server getVariable format["police%1",_polgarrison];

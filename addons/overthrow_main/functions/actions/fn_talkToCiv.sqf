@@ -10,7 +10,7 @@ private _money = player getVariable ["money",0];
 
 private _options = [];
 
-if (side _civ isEqualTo west || side _civ isEqualTo east) exitWith {
+if (side _civ isEqualTo west) exitWith {
 	_options pushBack ["Cancel",{}];
 	_options call OT_fnc_playerDecision;
 };
@@ -29,6 +29,7 @@ private _canSellDrugs = true;
 private _canIntel = true;
 private _canMission = false;
 private _canTute = false;
+private _canGangJob = false;
 
 if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true};
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
@@ -37,7 +38,8 @@ if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecrui
 if (_civ getvariable ["employee",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["notalk",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false};
 if (_civ getvariable ["factionrep",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=true};
-if (_civ getvariable ["crimleader",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=false};
+if (_civ getvariable ["crimleader",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=false;_canGangJob=true};
+if (_civ getvariable ["criminal",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyGuns=false;_canIntel=false;_canMission=false};
 
 if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false;_canSellDrugs=false};
 
@@ -48,6 +50,22 @@ if (_canRecruit) then {
 	_options pushBack [
 		format["Recruit Civilian (-$%1)",_civprice],OT_fnc_recruitCiv
 	];
+};
+
+if (_canGangJob) then {
+	private _gangid = _civ getVariable ["OT_gangid",-1];
+	if(_gangid > -1) then {
+		systemChat str _gangid;
+		_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+		if(count _gang > 0) then {
+			private _name = _gang select 8;
+			private _rep = player getVariable [format["gangrep%1",_gangid],0];
+			_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Your Rep: %2",_name,_rep];
+			_options pushBack [format["Do you have any jobs for me?"], {
+
+			}];
+		};
+	};
 };
 
 if (_canMission) then {
@@ -141,6 +159,108 @@ if (_canBuy) then {
 };
 
 if (_canTute) then {
+	//gun dealer
+	_options pushBack [
+		"Do you know any gangs nearby?",{
+			private _civ = OT_interactingWith;
+			private _town = (getpos player) call OT_fnc_nearestTown;
+			private _talk = ["Do you know any gangs nearby?"];
+			//find nearest gang
+			private _gangid = -1;
+			private _gang = [];
+			private _name = "";
+			private _revealed = server getVariable ["revealedGangs",[]];
+			{
+				_x params ["_pos","_name"];
+				private _gangs = OT_civilians getVariable [format["gangs%1",_name],[]];
+				private _found = false;
+		        if(count _gangs > 0) then {
+					if !((_gangs select 0) in _revealed) then {
+						_gangid = _gangs select 0;
+						_found = true
+					};
+				};
+				if(_found) exitWith {};
+			}foreach([OT_townData,[],{(_x select 0) distance2D player},"ASCEND",{((_x select 0) distance2D player) < 3000}] call BIS_fnc_SortBy);
+
+			private _code = {
+
+			};
+
+			if(_gangid > -1) then {
+				_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+				_name = _gang select 8;
+				private _support = [_town] call OT_fnc_support;
+				if(_support > 50) then {
+					_talk pushback format["I know of a gang called %1, I'll mark their camp on your map, maybe they'll have some jobs for you",_name];
+					_talk pushback "Thanks!";
+					_talk pushback "Anything for the resistance";
+					_code = {
+						params ["_town","_gangid","_gang"];
+						private _town = (getpos player) call OT_fnc_nearestTown;
+                        _mrkid = format["gang%1",_town];
+                        _mrk = createMarker [_mrkid, _gang select 4];
+                        _mrkid setMarkerType "ot_Camp";
+                        _mrkid setMarkerColor "colorOPFOR";
+						private _revealed = server getVariable ["revealedGangs",[]];
+                        _revealed pushback _gangid;
+						server setVariable ["revealedGangs",_revealed,true];
+					};
+				}else{
+					_talk pushback format["I do, but I doubt they'd like it if I told you where they were",_name];
+					_code = {
+						params ["_town","_gangid","_gang","_name"];
+						_gangoptions = [];
+						_gangoptions pushBack [
+							"Offer $50",{
+								params ["_town","_gangid","_gang","_name"];
+								private _civ = OT_interactingWith;
+								private _cash = player getVariable ["money",0];
+								if(_cash >= 50) then {
+									[
+										player,
+										_civ,
+										["What if I gave you $50?",format["Yeah, OK. I know of a gang called %1, I'll mark their camp on your map, maybe they'll have some jobs for you",_name]],
+										{
+											params ["_town","_gangid","_gang","_name"];
+											private _town = (getpos player) call OT_fnc_nearestTown;
+											[-50] call OT_fnc_money;
+											_mrkid = format["gang%1",_town];
+					                        _mrk = createMarker [_mrkid, _gang select 4];
+					                        _mrkid setMarkerType "ot_Camp";
+					                        _mrkid setMarkerColor "colorOPFOR";
+											private _revealed = server getVariable ["revealedGangs",[]];
+					                        _revealed pushback _gangid;
+											server setVariable ["revealedGangs",_revealed,true];
+										},
+										[_town,_gangid,_gang,_name]
+									] call OT_fnc_doConversation;
+								}else{
+									"You cannot afford that" call OT_fnc_notifyMinor;
+								};
+							},
+							[_town,_gangid,_gang,_name]
+						];
+
+						_gangoptions pushBack ["Cancel",{}];
+						_gangoptions call OT_fnc_playerDecision;
+					}
+				};
+			}else{
+				_talk pushback "Sorry, but I don't know about any gangs near here";
+				_code = {};
+			};
+
+			[
+				player,
+				_civ,
+				_talk,
+				_code,
+				[_town,_gangid,_gang,_name]
+			] call OT_fnc_doConversation;
+		}
+	];
+
 	_done = player getVariable ["OT_tutesDone",[]];
 	if !("NATO" in _done) then {
 		_options pushBack [
@@ -159,23 +279,6 @@ if (_canTute) then {
 			}
 		];
 	};
-	/*if !("CRIM" in _done) then {
-		_options pushBack [
-			"So, about those gangs...",{
-				private _civ = OT_interactingWith;
-				[
-					player,
-					_civ,
-					[
-						"So, about those gangs...",
-						"Sure, local businessmen usually pay quite well for them.",
-						"Alright I'll see what I can do"
-					],
-					(OT_tutorialMissions select 1)
-				] call OT_fnc_doConversation;
-			}
-		];
-	};*/
 	if !("Drugs" in _done) then {
 		_options pushBack [
 			"You sell Ganja right?",{

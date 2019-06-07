@@ -309,6 +309,8 @@ if(isServer) then {
 		cost setVariable[_x select 0,_x select 1, true];
 	}forEach(OT_priceData);
 	OT_priceData = []; //free memory
+
+	call compile preprocessFileLineNumbers "\overthrow_main\data\gangnames.sqf";
 };
 
 private _allVehs = "

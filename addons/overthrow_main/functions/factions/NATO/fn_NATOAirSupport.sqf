@@ -3,7 +3,7 @@ if (_delay > 0) then {sleep _delay};
 private _vehtype = OT_NATO_Vehicles_AirSupport call BIS_fnc_SelectRandom;
 
 
-private _dir = [_frompos,_attackpos] call BIS_fnc_dirTo;
+private _dir = _frompos getDir _attackpos;
 //look for a helipad
 private _helipads = (_frompos nearObjects ["Land_HelipadCircle_F", 400]) + (_frompos nearObjects ["Land_HelipadSquare_F", 400]);
 private _pos = false;

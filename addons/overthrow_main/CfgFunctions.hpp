@@ -104,6 +104,7 @@ class CfgFunctions
 			class illegalInCar {};
 			class detectedByReputation {};
 			class detectedByReputationNATO {};
+			class gangRep {};
 		};
 
 		class Interaction
@@ -604,6 +605,7 @@ class CfgFunctions
 		{
 			file = "\overthrow_main\functions\util";
 			class getOwner {};
+			class getOwnerUnit {};
       		class hasOwner {};
 			class setOwner {};
 			class unitStock {};

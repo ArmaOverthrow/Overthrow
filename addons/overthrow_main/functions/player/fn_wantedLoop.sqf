@@ -62,40 +62,60 @@ if !(captive _unit) then {
 	};
 
 	if(_unit call OT_fnc_unitSeenCRIM && !_gottem) then {
-		// carrying a static weapon .. illegal
-		if (_unit call OT_fnc_carriesStaticWeapon) exitWith {
-			_unit setCaptive false;
-			[_unit] call OT_fnc_revealToNATO;
-			if(isPlayer _unit) then {
-				"A gang has seen the static weapon" call OT_fnc_notifyMinor;
-			};
-		};
+		//get closest gang member
+		private _ents = _unit nearEntities ["Man",1200];
+		private _i = _ents findIf {side _x isEqualTo east};
+		if !(_i isEqualTo -1) then {
+			private _member = _ents select _i;
+			private _gangid = _member getVariable ["OT_gangid",-1];
+			private _player = _unit;
 
-		// driving with weapons, illegal clothing/gear, in illegal vehicles
-		if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
-			//Set the whole car wanted
-			{
-				_x setCaptive false;
-			}foreach(crew vehicle _unit);
-			[vehicle _unit] call OT_fnc_revealToCRIM;
-		};
+			if(_gangid > -1) then {
+				private _name = "The gang";
+				_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+				if(count _gang > 0) then {
+					_name = _gang select 8;
+				};
+				if(!isPlayer _unit) then {_player = _unit call OT_fnc_getOwnerUnit};
+				private _rep = _player getVariable [format["gangrep%1",_gangid],0];
 
-		// carrying a weapon .. illegal
-		if (_unit call OT_fnc_hasWeaponEquipped) exitWith {
-			if(isPlayer _unit) then {
-				"A gang has seen your weapon" call OT_fnc_notifyMinor;
-			};
-			_unit setCaptive false;
-			[_unit] call OT_fnc_revealToNATO;
-		};
+				if(_rep < -9) exitWith {
+					//Gang hates you, instant wanted no matter what
+					_unit setCaptive false;
+					[_unit] call OT_fnc_revealToCRIM;
+					if(isPlayer _unit) then {
+						format["%1 have recognized you",_name] call OT_fnc_notifyMinor;
+					};
+				};
+				if(_rep < 10) then {
+					// carrying a static weapon
+					if (_unit call OT_fnc_carriesStaticWeapon) exitWith {
+						_unit setCaptive false;
+						[_unit] call OT_fnc_revealToCRIM;
+						if(isPlayer _unit) then {
+							format["%1 have seen the static weapon",_name] call OT_fnc_notifyMinor;
+						};
+					};
 
-		// detected because fame
-		if(_unit call OT_fnc_detectedByReputation) exitWith {
-			_unit setCaptive false;
-			if(isPlayer _unit) then {
-				"A gang has recognized you" call OT_fnc_notifyMinor;
+					// driving with weapons, illegal clothing/gear, in illegal vehicles
+					if(!(_vehicle isEqualTo _unit) && { _unit call OT_fnc_illegalInCar }) exitWith {
+						//Set the whole car wanted
+						{
+							_x setCaptive false;
+						}foreach(crew vehicle _unit);
+						[vehicle _unit] call OT_fnc_revealToCRIM;
+					};
+
+					// carrying a weapon .. illegal
+					if (_unit call OT_fnc_hasWeaponEquipped) exitWith {
+						if(isPlayer _unit) then {
+							format["%1 have seen your weapon",_name] call OT_fnc_notifyMinor;
+						};
+						_unit setCaptive false;
+						[_unit] call OT_fnc_revealToCRIM;
+					};
+				};
 			};
-			[_unit] call OT_fnc_revealToCRIM;
 		};
 	}else{
 		if(_unit call OT_fnc_unitSeenNATO && !_gottem) then {
