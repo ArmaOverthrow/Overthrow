@@ -150,7 +150,7 @@ sleep 0.3;
 					_name = _x select 5;
 				};
 				private _p = _pos;
-				_veh = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+				_veh = createVehicle [_type, [0,0,1000], [], 0, "CAN_COLLIDE"];
 				_veh enableDynamicSimulation true;
 				/*
 				if !(_simulation) then {
