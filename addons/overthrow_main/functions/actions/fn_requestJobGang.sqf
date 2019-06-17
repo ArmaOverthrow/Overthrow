@@ -7,21 +7,20 @@ private _completed = server getVariable ["OT_completedJobIds",[]];
 private _params = [];
 private _id = "";
 private _jobcode = {};
+private _gangid = OT_interactingWith getVariable ["OT_gangid",-1];
+private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+private _expiry = 0;
 {
-    _x params ["_name",["_target",""],"_condition","_code","_repeat"];
+    _x params ["_name",["_target",""],"_condition","_code","_repeat","_chance","_expires"];
     _jobdef = _x;
     _jobcode = _code;
+    _expiry = _expires;
     call {
         if((toLower _target) isEqualTo "gang") exitWith {
-            //get the closest base
-            private _nearest = (getpos player) call OT_fnc_nearestObjective;
-            _nearest params ["_loc","_base"];
-            private _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
-            _id = format["%1-%2",_name,_base];
-            private _stability = server getVariable [format["stability%1",_loc call OT_fnc_nearestTown],100];
-            if(([_inSpawnDistance,_base,_stability] call _condition) && !(_id in _completed) && !(_id in _activeJobs) && !(_id in OT_jobsOffered)) then {
+            _id = format["%1-%2",_name,_gangid];
+            if(([_gang] call _condition) && !(_id in _completed) && !(_id in _activeJobs) && !(_id in OT_jobsOffered)) then {
                 _gotjob = true;
-                _params = [_base,_loc];
+                _params = [_gangid];
             }
         };
     };
@@ -35,6 +34,7 @@ if !(_gotjob) exitWith {
 private _job = [_id,_params] call _jobcode;
 OT_jobShowing = _job;
 OT_jobShowingID = _id;
+OT_jobShowingExpiry = _expiry;
 OT_jobsOffered pushback _id;
 _job params ["_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];
 

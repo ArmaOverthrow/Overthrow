@@ -46,6 +46,61 @@ if (_civ call OT_fnc_hasOwner) then {_canRecruit = false;_canIntel = false;_canS
 if !((_civ getvariable ["garrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false;_canSellDrugs=false};
 if !((_civ getvariable ["polgarrison",""]) isEqualTo "") then {_canRecruit = false;_canIntel = false;_canSellDrugs=false};
 
+private _delivery = _civ getVariable ["OT_delivery",[]];
+if((count _delivery) > 0) then {
+	_delivery params ["_itemcls","_numitems"];
+	_canRecruit = false;
+	_canIntel = false;
+	_canSellDrugs=false;
+	_options pushBack [
+		format["Deliver %1 x %2",_numitems,_itemcls call OT_fnc_weaponGetName],{
+			params ["_civ","_itemcls","_numitems"];
+			_stock = player call OT_fnc_unitStock;
+			_found = false;
+			{
+				_x params ["_cls","_num"];
+				if(_cls isEqualTo _itemcls && _num >= _numitems) exitWith {
+					_found = true;
+				};
+			}foreach(_stock);
+			if(_found) then {
+				[player,_civ,["I have a delivery for you",selectRandom ["About time!","OK, thanks","Sweet, thanks"]],{
+					params ["_civ","_itemcls","_numitems"];
+					_count = 0;
+					while {_count < _numitems} do {
+						[player, _itemcls] call {
+							params ["_unit", "_cls"];
+							if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
+								_unit removeWeapon _cls;
+							};
+							if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
+								_unit removeWeapon _cls;
+							};
+							if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
+								_unit removeWeapon _cls;
+							};
+							if(_cls isKindOf ["Binocular",configFile >> "CfgWeapons"]) exitWith {
+								_unit removeItem _cls;
+							};
+							if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
+								_unit removeMagazine _cls;
+							};
+							_unit removeItem _cls;
+						};
+						_count = _count + 1;
+					};
+					_civ setVariable ["OT_deliveryDone",true,true];
+					_civ setVariable ["OT_deliveredBy",player,true];
+					_civ setVariable ["OT_delivery",[],true];
+				},[_civ,_itemcls,_numitems]] spawn OT_fnc_doConversation;
+			}else{
+				"You do not have the required item/s" call OT_fnc_notifyMinor;
+			};
+		},
+		[_civ,_itemcls,_numitems]
+	];
+};
+
 if (_canRecruit) then {
 	_options pushBack [
 		format["Recruit Civilian (-$%1)",_civprice],OT_fnc_recruitCiv
@@ -61,7 +116,10 @@ if (_canGangJob) then {
 			private _name = _gang select 8;
 			private _rep = player getVariable [format["gangrep%1",_gangid],0];
 			_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Your Rep: %2",_name,_rep];
-			_options pushBack [format["Do you have any jobs for me?"], OT_fnc_requestJobGang];
+			_options pushBack [format["Do you have any jobs for me?"], {
+				OT_jobsOffered = [];
+				call OT_fnc_requestJobGang;
+			}]
 		};
 	};
 };

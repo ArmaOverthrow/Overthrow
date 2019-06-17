@@ -98,4 +98,15 @@ class CfgOverthrowMissions
         expires = 0;
         requestable = 0;
     };
+
+    class GangDrugRun
+    {
+        target = "Gang";
+        repeatable = 1;
+        condition = "true";
+        script = "\overthrow_main\missions\gangdrugrun.sqf";
+        chance = 100;
+        expires = 6;
+        requestable = 1;
+    };
 };

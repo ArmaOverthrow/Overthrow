@@ -29,7 +29,7 @@ private _jobcode = {};
             private _nearest = (getpos player) call OT_fnc_nearestTown;
             private _loc = server getVariable _nearest;
             private _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
-            _id = format["%1-%2",_name,_base];
+            _id = format["%1-%2",_name,_nearest];
             private _stability = server getVariable [format["stability%1",_nearest],100];
             if(([_inSpawnDistance,_stability,_nearest] call _condition) && !(_id in _completed) && !(_id in _activeJobs) && !(_id in OT_jobsOffered)) then {
                 _gotjob = true;
