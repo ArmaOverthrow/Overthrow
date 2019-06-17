@@ -34,7 +34,7 @@ if(_cls == "Set_HMG") exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,"C_Quadbike_01_F"];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 	private _veh = "C_Quadbike_01_F" createVehicle _pos;
 	[_veh,getPlayerUID player] call OT_fnc_setOwner;
 	clearWeaponCargoGlobal _veh;
@@ -52,6 +52,7 @@ if(OT_interactingWith getVariable ["factionrep",false] && ((_cls isKindOf "Land"
 	private _blueprints = server getVariable ["GEURblueprints",[]];
 	if !(_cls in _blueprints) then {
 		_blueprints pushback _cls;
+		[-_price] call OT_fnc_money;
 		server setVariable ["GEURblueprints",_blueprints,true];
 		_factionName = OT_interactingWith getVariable ["factionrepname",""];
 		format["%1 has bought %2 blueprint from %3",name player,_cls call OT_fnc_vehicleGetName,_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
@@ -68,7 +69,7 @@ if(_cls == OT_item_UAV) exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 
 	private _veh = createVehicle [_cls, _pos, [], 0,""];
 	_veh setVariable ["OT_spawntrack",true,true]; //Tells virtualization to track this vehicle like it's a player.
@@ -98,7 +99,7 @@ if(_cls in OT_allVehicles) exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 	private _veh = _cls createVehicle _pos;
 	[_veh,getPlayerUID player] call OT_fnc_setOwner;
 	clearWeaponCargoGlobal _veh;
@@ -119,7 +120,7 @@ if(_cls isKindOf "Ship") exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 	private _veh = _cls createVehicle _pos;
 	[_veh,getPlayerUID player] call OT_fnc_setOwner;
 	clearWeaponCargoGlobal _veh;

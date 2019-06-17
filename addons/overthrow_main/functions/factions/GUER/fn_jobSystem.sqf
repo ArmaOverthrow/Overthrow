@@ -6,8 +6,10 @@ OT_allJobs = [];
     private _script = gettext (_x >> "script");
     private _repeat = getnumber (_x >> "repeatable");
     private _chance = getnumber (_x >> "chance");
+    private _expires = getnumber (_x >> "expires");
+    private _requestable = (getnumber (_x >> "requestable")) isEqualTo 1;
 
-    OT_allJobs pushback [configName _x, _target, compileFinal _code, compileFinal preprocessFileLineNumbers _script, _repeat, _chance];
+    OT_allJobs pushback [configName _x, _target, compileFinal _code, compileFinal preprocessFileLineNumbers _script, _repeat, _chance, _expires, _requestable];
 }foreach("true" configClasses ( configFile >> "CfgOverthrowMissions" ));
 
 job_system_counter = 12;

@@ -141,6 +141,7 @@ class CfgFunctions
 			class notifyMinor {};
 			class notifyBig {};
 			class notifyGood {};
+			class notifyBad {};
 			class notifySilent {};
 			class notifyVehicle {};
 			class playerDecision {};
@@ -257,10 +258,6 @@ class CfgFunctions
 			class sell {};
 			class sellAll {};
 
-			/* Gun Dealer */
-			class getMission {};
-			class assignMission {};
-
 			/* Factory */
 			class factoryQueueAdd {};
 			class factoryQueueRemove {};
@@ -277,6 +274,8 @@ class CfgFunctions
 
 			/* Jobs */
 			class setJobWaypoint {};
+			class requestJobResistance {};
+			class requestJobGang {};
 
 			/* Safe */
 			class safePutMoney {};
@@ -585,6 +584,9 @@ class CfgFunctions
 			file = "\overthrow_main\functions\factions\GUER";
 			class jobSystem {};
 			class assignJob {};
+			class acceptJob {};
+			class denyJob {};
+			class startJob {};
 			class jobLoop {};
 			class GUERLoop {};
 		};
@@ -614,6 +616,7 @@ class CfgFunctions
 			class sortByInplace {};
 			class findReplace {};
 			class exportPrices {};
+			class datestamp {};
 		};
 
 		/*

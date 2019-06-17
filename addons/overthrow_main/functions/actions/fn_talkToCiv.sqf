@@ -61,9 +61,7 @@ if (_canGangJob) then {
 			private _name = _gang select 8;
 			private _rep = player getVariable [format["gangrep%1",_gangid],0];
 			_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Your Rep: %2",_name,_rep];
-			_options pushBack [format["Do you have any jobs for me?"], {
-
-			}];
+			_options pushBack [format["Do you have any jobs for me?"], OT_fnc_requestJobGang];
 		};
 	};
 };
@@ -160,6 +158,10 @@ if (_canBuy) then {
 
 if (_canTute) then {
 	//gun dealer
+	_options pushBack [format["Do you have any jobs for me?"], {
+		OT_jobsOffered = [];
+		call OT_fnc_requestJobResistance;
+	}];
 	_options pushBack [
 		"Do you know any gangs nearby?",{
 			private _civ = OT_interactingWith;
