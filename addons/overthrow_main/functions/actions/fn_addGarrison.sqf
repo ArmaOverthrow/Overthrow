@@ -3,7 +3,7 @@ params ["_p","_create",["_charge",true]];
 private _b = _p call OT_fnc_nearestBase;
 private _pos = _b select 0;
 private _code = format["fob%1",_pos];
-if((_pos distance player) > 30) then {
+if((_pos distance player) > 100) then {
     _b = _p call OT_fnc_nearestObjective;
     _pos = _b select 0;
     _code = _b select 1;

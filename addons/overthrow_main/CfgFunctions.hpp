@@ -332,6 +332,7 @@ class CfgFunctions
 			class nearestLocation {};
 			class nearestMobster {};
 			class nearestObjective {};
+			class nearestObjectiveNoComms {};
 			class nearestPositionRegion {};
 			class nearestTown {};
 			class getRegion {};
@@ -617,6 +618,7 @@ class CfgFunctions
 			class findReplace {};
 			class exportPrices {};
 			class datestamp {};
+			class logVerbose {};
 		};
 
 		/*

@@ -15,10 +15,10 @@ class CfgOverthrowMissions
     {
         target = "Town";
         repeatable = 0;
-        condition = "params['_inSpawnDistance','_stability','_town'];_stability < 50 && !(_town in (server getVariable ['NATOabandoned',[]])) && ((server getVariable [format['tagsin%1',_town],0]) < 6)";
+        condition = "params['','','_town'];!(_town in (server getVariable ['NATOabandoned',[]])) && ((server getVariable [format['tagsin%1',_town],0]) < 6)";
         script = "\overthrow_main\missions\tagging.sqf";
         chance = 25;
-        expires = 48;
+        expires = 6;
         requestable = 1;
     };
 
@@ -105,6 +105,17 @@ class CfgOverthrowMissions
         repeatable = 1;
         condition = "true";
         script = "\overthrow_main\missions\gangdrugrun.sqf";
+        chance = 100;
+        expires = 6;
+        requestable = 1;
+    };
+
+    class GangWeaponRun
+    {
+        target = "Gang";
+        repeatable = 1;
+        condition = "true";
+        script = "\overthrow_main\missions\gangweaponrun.sqf";
         chance = 100;
         expires = 6;
         requestable = 1;

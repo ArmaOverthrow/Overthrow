@@ -16,16 +16,14 @@ if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor}
 
 //If faction dealer, increase standing
 private _civ = OT_interactingWith;
-if(!isNil "_civ") then {
-	if(_civ getVariable ["factionrep",false]) then {
-		_faction = _civ getVariable ["faction",""];
-		if !(_faction isEqualTo "") then {
-			_increase = floor (_price / 1000);
-			if(_increase > 0) then {
-				private _factionName = server getvariable format["factionname%1",_faction];
-				server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + _increase,true];
-				format["+%1 %2",_increase,_factionName] call OT_fnc_notifyMinor;
-			};
+if(!isNil "_civ" && _civ getVariable ["factionrep",false] && !((_cls isKindOf "Land") || (_cls isKindOf "Air"))) then {
+	_faction = _civ getVariable ["faction",""];
+	if !(_faction isEqualTo "") then {
+		_increase = floor (_price / 1000);
+		if(_increase > 0) then {
+			private _factionName = server getvariable format["factionname%1",_faction];
+			server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + _increase,true];
+			format["+%1 %2",_increase,_factionName] call OT_fnc_notifyMinor;
 		};
 	};
 };

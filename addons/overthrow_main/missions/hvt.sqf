@@ -14,6 +14,7 @@ private _markerPos = server getVariable _base;
     _markerPos,
     {
         //No setup required
+        true
     },
     {
         //Fail check...

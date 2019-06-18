@@ -16,7 +16,7 @@ if !(isNil "_base") then {
 };
 
 if(!_isBase) then {
-	_obj = (getpos player) call OT_fnc_nearestObjective;
+	_obj = (getpos player) call OT_fnc_nearestObjectiveNoComms;
 	_objpos = _obj select 0;
 
 	_town = (getpos player) call OT_fnc_nearestTown;

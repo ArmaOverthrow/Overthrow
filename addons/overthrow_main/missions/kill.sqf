@@ -15,6 +15,7 @@ private _params = [0,_numtokill];
     {
         params ["_p","_faction","_factionName"];
         _p set [0,player getVariable ["BLUkills",0]];
+        true
     },
     {
         //Fail check...

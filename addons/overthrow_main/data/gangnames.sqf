@@ -31,5 +31,6 @@ OT_gangNames = [
 "Bad Company",
 "Black Sun Empire",
 "Teddy Killerz",
-"Zombie Cats"
+"Zombie Cats",
+"The Runners" //Patreon: Fital Shell
 ];

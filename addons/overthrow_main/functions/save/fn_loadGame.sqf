@@ -151,7 +151,9 @@ sleep 0.3;
 				};
 				private _p = _pos;
 				_veh = createVehicle [_type, [0,0,1000], [], 0, "CAN_COLLIDE"];
-				_veh enableDynamicSimulation true;
+				if !(_type isKindOf "LandVehicle" || _type isKindOf "Air" || _type isKindOf "Ship") then {
+					_veh enableDynamicSimulation true;
+				};
 				/*
 				if !(_simulation) then {
 					_veh enableSimulationGlobal false;

@@ -82,6 +82,7 @@ private _difficulty = 1.5;
 
         //Save him for access later
         player setVariable [format["vip%1",_faction],_civ,false];
+        true
     },
     {
         //Fail check...

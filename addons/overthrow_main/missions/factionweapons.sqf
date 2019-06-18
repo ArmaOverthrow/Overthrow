@@ -31,6 +31,7 @@ private _title = format["%1 requests %2 x %3",_factionName,_numitems,_itemName];
     _markerPos,
     {
         //No setup required for this mission
+        true
     },
     {
         //Fail check...

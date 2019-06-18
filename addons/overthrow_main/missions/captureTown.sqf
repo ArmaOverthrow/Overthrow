@@ -19,6 +19,7 @@ private _title = format["Capture %1 for %2",_destinationName,_factionName];
     _markerPos,
     {
         //No setup required for this mission
+        true
     },
     {
         //Fail check...

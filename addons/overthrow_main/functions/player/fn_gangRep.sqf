@@ -1,4 +1,4 @@
-params ["_unit","_gangid","_rep"];
+params ["_unit","_gangid","_rep",["_reason",""]];
 if !(isPlayer _unit) then {
     _unit = _unit call OT_fnc_getOwnerUnit;
 };
@@ -15,6 +15,7 @@ if(count _gang > 0) then {
     };
     if(_rep != 0) then {
         private _name = _gang select 8;
-        format["%3: %1%2 Rep",_plusmin,_rep,_name] call OT_fnc_notifyMinor;
+        if !(_reason isEqualTo "") then {_reason = format[" (%1)",_reason]};
+        format["%3: %1%2 Rep%4",_plusmin,_rep,_name,_reason] call OT_fnc_notifyMinor;
     };
 };
