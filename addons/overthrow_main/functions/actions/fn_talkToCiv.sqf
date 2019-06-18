@@ -30,8 +30,9 @@ private _canIntel = true;
 private _canMission = false;
 private _canTute = false;
 private _canGangJob = false;
+private _isShop = false;
 
-if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true};
+if !((_civ getvariable ["shop",[]]) isEqualTo []) then {_canSellDrugs = true;_canRecruit = false;_canBuy=true;_canSell=true;_isShop = true};
 if (_civ getvariable ["carshop",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyVehicles=true};
 if (_civ getvariable ["harbor",false]) then {_canSellDrugs = true;_canRecruit = false;_canBuyBoats=true};
 if (_civ getvariable ["gundealer",false]) then {_canSellDrugs = false;_canRecruit = false;_canBuyGuns=true;_canIntel=false;_canTute =true};
@@ -110,7 +111,6 @@ if (_canRecruit) then {
 if (_canGangJob) then {
 	private _gangid = _civ getVariable ["OT_gangid",-1];
 	if(_gangid > -1) then {
-		systemChat str _gangid;
 		_gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
 		if(count _gang > 0) then {
 			private _name = _gang select 8;
@@ -532,6 +532,19 @@ if (_canSell) then {
 		}
 	];
 };
+
+if (_isShop) then {
+	_options pushBack [format["Do you have any jobs for me?"], {
+		OT_jobsOffered = [];
+		private _support = [_town] call OT_fnc_support;
+		if(_support < 0) then {
+			format["Resistance Support in this town is too low (%1)",_support] call OT_fnc_notifyMinor;
+		}else{
+			call OT_fnc_requestJobShop;
+		};
+	}]
+};
+
 OT_drugSelling = "";
 OT_drugQty = 0;
 

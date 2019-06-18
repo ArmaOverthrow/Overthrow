@@ -88,7 +88,7 @@ private _title = format["Deliver %2 for %1",_gangname,_gunname];
             [
                 _reward,
                 format[
-                    "Delivered %1 (+5 %2)",
+                    "Delivered %1",
                     _guncls call OT_fnc_weaponGetName,
                     _gang select 8
                 ]

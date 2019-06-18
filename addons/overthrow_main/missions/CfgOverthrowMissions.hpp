@@ -22,6 +22,17 @@ class CfgOverthrowMissions
         requestable = 1;
     };
 
+    class KillNATO
+    {
+        target = "Town";
+        repeatable = 0;
+        condition = "params['','','_town'];!(_town in (server getVariable ['NATOabandoned',[]]))";
+        script = "\overthrow_main\missions\kill.sqf";
+        chance = 100;
+        expires = 2;
+        requestable = 1;
+    };
+
     class Informant
     {
         target = "Global";
@@ -116,6 +127,17 @@ class CfgOverthrowMissions
         repeatable = 1;
         condition = "true";
         script = "\overthrow_main\missions\gangweaponrun.sqf";
+        chance = 100;
+        expires = 6;
+        requestable = 1;
+    };
+
+    class ShopDelivery
+    {
+        target = "Shop";
+        repeatable = 1;
+        condition = "true";
+        script = "\overthrow_main\missions\shopdelivery.sqf";
         chance = 100;
         expires = 6;
         requestable = 1;

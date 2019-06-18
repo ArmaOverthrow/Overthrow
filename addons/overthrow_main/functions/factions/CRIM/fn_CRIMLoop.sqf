@@ -97,10 +97,10 @@ if !(crim_counter < 12) then {
                 };
 
                 if(_resources < 0) then {_resources = 0};
-                _gang set [5,_resources];
+                _gang set [6,_resources];
             };
         }else{
-            if(time > _nogang) then {
+            if(time > _nogang && _stability < 50) then {
                 //chance to form a new one
                 _chance = (50 - _stability);
                 if(_garrison < 4) then {_chance = _chance + 25};

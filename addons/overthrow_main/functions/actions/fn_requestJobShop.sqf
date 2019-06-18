@@ -14,26 +14,14 @@ private _expiry = 0;
     _jobcode = _code;
     _expiry = _expires;
     call {
-        if((toLower _target) isEqualTo "base") exitWith {
-            //get the closest base
-            private _nearest = (getpos player) call OT_fnc_nearestObjectiveNoComms;
-            _nearest params ["_loc","_base"];
-            private _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
-            _id = format["%1-%2",_name,_base];
-            private _stability = server getVariable [format["stability%1",_loc call OT_fnc_nearestTown],100];
-            if(([_inSpawnDistance,_base,_stability] call _condition) && !(_id in _completed) && !(_id in _activeJobs) && !(_id in OT_jobsOffered)) then {
-                _gotjob = true;
-                _params = [_base,_loc];
-            }
-        };
-        if((toLower _target) isEqualTo "town") exitWith {
+        if((toLower _target) isEqualTo "shop") exitWith {
             //get the town we're in
             private _nearest = (getpos player) call OT_fnc_nearestTown;
             private _loc = server getVariable _nearest;
-            private _inSpawnDistance = _loc call OT_fnc_inSpawnDistance;
             _id = format["%1-%2",_name,_nearest];
             private _stability = server getVariable [format["stability%1",_nearest],100];
-            if(([_inSpawnDistance,_stability,_nearest] call _condition) && !(_id in _completed) && !(_id in _activeJobs) && !(_id in OT_jobsOffered)) then {
+            private _support = [_nearest] call OT_fnc_support;
+            if(([_stability,_support] call _condition) && !(_id in _completed) && !(_id in _activeJobs) && !(_id in OT_jobsOffered)) then {
                 _gotjob = true;
                 _params = [_nearest];
             }
@@ -51,10 +39,10 @@ OT_jobShowing = _job;
 OT_jobShowingID = _id;
 OT_jobShowingExpiry = _expiry;
 OT_jobsOffered pushback _id;
-if(count _job isEqualTo 0) exitWith {call OT_fnc_requestJobResistance};
+if(count _job isEqualTo 0) exitWith {call OT_fnc_requestJobShop};
 _job params ["_info","_markerPos","_setup","_fail","_success","_end","_jobparams"];
 
-OT_jobShowingType = "resistance";
+OT_jobShowingType = "shop";
 
 createDialog "OT_dialog_joboffer";
 disableSerialization;

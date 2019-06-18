@@ -276,6 +276,7 @@ class CfgFunctions
 			class setJobWaypoint {};
 			class requestJobResistance {};
 			class requestJobGang {};
+			class requestJobShop {};
 
 			/* Safe */
 			class safePutMoney {};

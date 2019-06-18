@@ -1,13 +1,36 @@
 params ["_jobid","_jobparams"];
 _jobparams params ["_gangid"];
 private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+private _civ = OT_interactingWith;
+
+private _cat = _civ getVariable "OT_shopCategory";
 
 private _startpos = getpos player;
+private _starttown = _startpos call OT_fnc_nearestTown;
 private _destination = [];
 private _destinationName = "";
-private _gangname = _gang select 8;
-private _gangtown = _gang select 2;
+private _itemcls = "";
 
+_numitems = floor(1 + random 2);
+
+//Find an item this store sells
+
+if(_cat isEqualTo "Clothing") then {
+    _itemcls = selectRandom OT_clothes_locals;
+    _numitems = 1;
+}else{
+    {
+        if((_x select 0) isEqualTo _cat) exitWith {
+            _itemcls = selectRandom (_x select 1);
+        };
+    }foreach(OT_items);
+};
+private _worth = [_itemcls,OT_Nation,100,100] call OT_fnc_getPrice;
+if(_worth > 20) then {
+    _numitems = 1;
+};
+
+//Find a destination
 {
     private _town = _x;
     private _posTown = server getVariable _town;
@@ -19,33 +42,33 @@ private _gangtown = _gang select 2;
             _destination = _posTown findEmptyPosition [5,100,OT_civType_local];
         };
     };
-}foreach([OT_allTowns,[],{random 100},"ASCEND",{!(_x isEqualTo _gangtown)}] call BIS_fnc_SortBy);
+}foreach([OT_allTowns,[],{random 100},"ASCEND"] call BIS_fnc_SortBy);
 
-_numitems = floor(2 + random 4);
-_reward = floor((_startpos distance2D _destination) * 0.01 * _numitems);
+
+_reward = floor((_startpos distance2D _destination) * 0.005 * _numitems);
 
 _markerPos = _destination;
-_params = [_destination,_gangid,_numitems,_reward];
+_params = [_destination,_itemcls,_numitems,_reward,_starttown];
 
 //Build a mission description and title
-private _description = format["We need someone to deliver %1 x Ganja to a customer in %2. You have 6 hours.</t><br/><br/><t size='0.9' align='center'>Reward: +5 rep (%3), $%4",_numitems,_destinationName,_gangname,_reward];
-private _title = format["Deliver %2 x Ganja for %1",_gangname,_numitems];
+private _description = format["I need someone to deliver %1 x %2 to a customer in %3. You have 6 hours.</t><br/><br/><t size='0.9' align='center'>Reward: $%4, +2 Resistance Support",_numitems,_itemname,_destinationName,_reward];
+private _title = format["Deliver %1 x %2 for %3 store in %4",_numitems,_itemname,_cat,_starttown];
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
 [
     [_title,_description],
     _markerPos,
     {
-        params ["_destination","","_numitems"];
-        if !(player canAdd ["OT_Ganja",_numitems]) exitWith {
-            "You don't have enough room in your inventory for the Ganja" call OT_fnc_notifyMinor;
+        params ["_destination","_itemcls","_numitems"];
+        if !(player canAdd [_itemcls,_numitems]) exitWith {
+            "You don't have enough room in your inventory for the items" call OT_fnc_notifyMinor;
             false;
         };
         _group = createGroup civilian;
         _group setBehaviour "CARELESS";
         _civ = _group createUnit [OT_civType_local, _destination, [],0, "NONE"];
         _civ disableAI "MOVE";
-        _civ setVariable ["OT_delivery",["OT_Ganja",_numitems],true];
+        _civ setVariable ["OT_delivery",[_itemcls,_numitems],true];
 
         //Set face,voice and uniform
         [_civ, selectRandom OT_faces_local] remoteExecCall ["setFace", 0, _civ];
@@ -62,47 +85,42 @@ private _title = format["Deliver %2 x Ganja for %1",_gangname,_numitems];
         //give the items to the player
         _count = 0;
         while {_count < _numitems} do {
-            player addItem "OT_Ganja";
+            player addItem _itemcls;
             _count = _count + 1;
         };
-        format["%1 x Ganja added to inventory",_numitems] call OT_fnc_notifyMinor;
-        true
+        format["%1 x %2 added to inventory",_numitems,_itemcls call OT_fnc_weaponGetName] call OT_fnc_notifyMinor;
+        true;
     },
     {
         //Fail check... is customer ded?
-        params ["","","","","_civ"];
+        params ["","","","","","_civ"];
         !alive _civ
     },
     {
         //Success Check.. items were delivered
-        params ["","","","","_civ"];
+        params ["","","","","","_civ"];
         _civ getVariable ["OT_deliveryDone",false];
     },
     {
-        params ["_destination","_gangid","_numitems","_reward","_civ","_wassuccess"];
+        params ["_destination","_itemcls","_numitems","_reward","_starttown","_civ","_wassuccess"];
         _civ call OT_fnc_cleanup;
 
         //If mission was a success
         if(_wassuccess) then {
             _player = _civ getVariable ["OT_deliveredBy",objNull];
-            private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
-            //apply standing and pay money
+
+            //apply support and pay money
             [
                 _reward,
                 format[
-                    "Delivered %1 x Ganja",
+                    "Delivered %1 x %2",
                     _numitems,
-                    _gang select 8
+                    _itemcls call OT_fnc_weaponGetName
                 ]
             ] remoteExec ["OT_fnc_money",_player,false];
-            [_player,_gangid,5] call OT_fnc_gangRep;
-            //Give resources to the gang
-            private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
-            _gang params ["","","","","","","_resources"];
-            _gang set [6,_resources + 100];
-            OT_civilians setVariable [format["gang%1",_gangid],_gang,true];
+            [_starttown,2] call OT_fnc_support;
         }else{
-            [_player,_gangid,-5,format["Failed delivery of %1 x Ganja",_numitems]] call OT_fnc_gangRep;
+            [_starttown,-10,format["Failed Delivery of %1 x %2",_numitems,_itemcls call OT_fnc_weaponGetName]] call OT_fnc_support;
         };
     },
     _params

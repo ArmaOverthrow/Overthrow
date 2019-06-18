@@ -78,7 +78,7 @@ if !(_jobparams call _setup) exitWith {
                     if !(_remains <= 0) then {
                         format["Job failed: %1",(_job select 0) select 0] remoteExec ["OT_fnc_notifyBad",0,false];
                     }else{
-                        format["Job expired: %1",(_job select 0) select 0] remoteExec ["OT_fnc_notifySilent",0,false];
+                        format["Job expired: %1",(_job select 0) select 0] remoteExec ["OT_fnc_notifyBad",0,false];
                     };
                 };
 

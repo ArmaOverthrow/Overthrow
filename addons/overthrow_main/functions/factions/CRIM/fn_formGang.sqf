@@ -16,7 +16,7 @@ if((count _possible) > 0) then {
     _loadout = [(format["gang%1",_gangid]),OT_CRIMBaseLoadout,[[_weapon]]] call OT_fnc_getRandomLoadout;
     (_loadout#4) set [0,_vest];
 
-    //Gang format [members,town,vest,camp pos,loadout,resources,level,name]
+    //Gang format [members,leader,town,vest,camp pos,loadout,resources,level,name]
 
     private _name = format[selectRandom OT_gangNames,_town,OT_nation];
 
