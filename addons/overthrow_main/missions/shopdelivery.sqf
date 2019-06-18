@@ -30,6 +30,8 @@ if(_worth > 20) then {
     _numitems = 1;
 };
 
+private _itemname = _itemcls call OT_fnc_weaponGetName;
+
 //Find a destination
 {
     private _town = _x;
