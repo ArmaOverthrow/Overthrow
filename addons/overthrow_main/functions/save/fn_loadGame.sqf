@@ -221,7 +221,14 @@ sleep 0.3;
 				clearItemCargoGlobal _veh;
 				_veh setVariable ["name",_name,true];
 
-				[_veh,_owner] call OT_fnc_setOwner;
+				// If this vehicle doesn't have an owner, set the forceSaveunowned flag to true so it gets saved again (until somebody owns it)
+				if (_owner isEqualTo "") then {
+					 _veh setVariable ["OT_forceSaveUnowned", true, false];
+				// Otherwise, set the owner (as per usual)
+				} else {
+					[_veh,_owner] call OT_fnc_setOwner;
+				};
+
 				{
 					[_x,_veh] call {
 						params ["_it", "_veh"];

@@ -105,7 +105,7 @@ private _tocheck = ((allMissionObjects "Static") + vehicles) select {
 	(alive _x)
 	&& {(typeof _x != OT_flag_IND)}
 	&& {!(typeOf _x isKindOf ["Man", _cfgVeh])}
-	&& {(_x call OT_fnc_hasOwner)}
+	&& {(_x call OT_fnc_hasOwner) or (_x getVariable ["OT_forceSaveUnowned", false])}
 	&& {(_x getVariable["OT_garrison",false]) isEqualTo false}
 };
 
@@ -144,7 +144,7 @@ private _vehicles = (_tocheck) apply {
 		[getPosWorld _x,_simCheck, 1],		// 1 stands for the new posWorld format
 		[vectorDir _x,vectorUp _x],
 		_s,
-		_x call OT_fnc_getOwner,
+		["", _x call OT_fnc_getOwner] select (_x call OT_fnc_hasOwner),		// Save an empty string if the object doesn't have an owner (yet)
 		_x getVariable ["name",""],
 		_x getVariable ["OT_init",""]
 	];
