@@ -141,7 +141,7 @@ private _vehicles = (_tocheck) apply {
 	};
 	private _params = [
 		_type,
-		[getposatl _x,_simCheck],
+		[getPosWorld _x,_simCheck, 1],		// 1 stands for the new posWorld format
 		[vectorDir _x,vectorUp _x],
 		_s,
 		_x call OT_fnc_getOwner,

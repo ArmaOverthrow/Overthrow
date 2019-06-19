@@ -142,6 +142,7 @@ sleep 0.3;
 			if !(_type isKindOf "Man") then {
 				_pos = ((_x select 1)#0);
 				_simulation = ((_x select 1)#1);
+				_posFormat = (_x select 1) param [2, 0];		// Assume format 0 by default (posATL)
 				_dir = _x select 2;
 				_stock = _x select 3;
 				_owner = _x select 4;
@@ -149,7 +150,6 @@ sleep 0.3;
 				if(count _x > 5) then {
 					_name = _x select 5;
 				};
-				private _p = _pos;
 				_veh = createVehicle [_type, [0,0,1000], [], 0, "CAN_COLLIDE"];
 				if !(_type isKindOf "LandVehicle" || _type isKindOf "Air" || _type isKindOf "Ship") then {
 					_veh enableDynamicSimulation true;
@@ -197,13 +197,19 @@ sleep 0.3;
 						};
 					};
 				};
-				if(typename _dir isEqualTo "SCALAR") then {
+
+				if (_posFormat == 1) then {
+					_veh setPosWorld _pos;		// format 1 is the new posWorld format
+				} else {
+					_veh setPosATL _pos;		// <= v0.7.8.5 save - use the old posATL format
+				};
+
+				if(_dir isEqualType 0) then {
 					//Pre 0.6.8 save, scalar direction
 					_veh setDir _dir;
 				}else{
 					_veh setVectorDirAndUp _dir;
 				};
-				_veh setPosATL _p;
 				if(_type isKindOf "Building") then {
 					_clu = createVehicle ["Land_ClutterCutter_large_F", _pos, [], 0, "CAN_COLLIDE"];
 					_clu enableDynamicSimulation true;
