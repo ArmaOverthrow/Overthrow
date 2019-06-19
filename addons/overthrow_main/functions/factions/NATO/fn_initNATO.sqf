@@ -386,17 +386,23 @@ diag_log "Overthrow: NATO Init Done";
 			if(_this > 89) exitWith {
 				//Add a random launcher (1% chance)
 				_done = _done + 100;
-				_wpns pushback [selectRandom OT_allBLULaunchers,1+(round(random (2-_diff)))];
+				_wpn = selectRandom OT_allBLULaunchers;
+				_wpns pushback [_wpn,1+(round(random (2-_diff)))];
+				_mags pushback [(getArray (configFile >> "CfgWeapons" >> _wpn >> "magazines")) select 0,5];
 			};
 			if(_this > 85) exitWith {
 				//Add a random rifle (4% chance)
 				_done = _done + 50;
-				_wpns pushback [selectRandom OT_allBLURifles,1+(round(random (2-_diff)))];
+				_wpn = selectRandom OT_allBLURifles;
+				_wpns pushback [_wpn,1+(round(random (2-_diff)))];
+				_mags pushback [(getArray (configFile >> "CfgWeapons" >> _wpn >> "magazines")) select 0,5];
 			};
 			if(_this > 75) exitWith {
 				//Add a random pistol (10% chance)
 				_done = _done + 25;
-				_wpns pushback [selectRandom OT_allBLUPistols,1+(round(random (3-_diff)))];
+				_wpn = selectRandom OT_allBLUPistols;
+				_wpns pushback [_wpn,1+(round(random (3-_diff)))];
+				_mags pushback [(getArray (configFile >> "CfgWeapons" >> _wpn >> "magazines")) select 0,5];
 			};
 			if(_this > 50) exitWith {
 				//Add random ammunition (25% chance)

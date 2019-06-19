@@ -144,7 +144,7 @@ class RscOverthrowText
 		0.5
 	};
 	font = "PuristaMedium";
-	SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	SizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	linespacing = 0.8;
 	tooltipColorText[] =
 	{
@@ -196,7 +196,7 @@ class RscOverthrowStructuredText
 	h = 0.035;
 	w = 0.1;
 	text = "";
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.1)";
+	size = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.1)";
 	shadow = 0;
 	lineSpacing = 0;
 };
@@ -448,7 +448,7 @@ class RscOverthrowCombo
 	};
 	style = "0x10 + 0x200";
 	font = "PuristaMedium";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	shadow = 0;
 	x = 0;
 	y = 0;
@@ -503,7 +503,7 @@ class RscOverthrowListBox
 	fade = 0;
 	access = 0;
 	type = 5;
-	rowHeight = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.6)";
+	rowHeight = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.6)";
 	onLBSelChanged  = "";
 	colorText[] =
 	{
@@ -652,7 +652,7 @@ class RscOverthrowListBox
 	h = 0.3;
 	style = 16;
 	font = "PuristaMedium";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	shadow = 0;
 	colorShadow[] =
 	{
@@ -700,7 +700,7 @@ class RscOverthrowXListBox
 	h = 1 * GUI_GRID_CENTER_H;
 	color[] = {1,1,1,1};
 	colorActive[] = {1,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	font = "PuristaMedium";
 	shadow = 0;
 	colorText[] = {1,1,1,1}; // Text color
@@ -809,7 +809,7 @@ class RscOverthrowButton
 	h = 0.039216;
 	shadow = 2;
 	font = "RobotoCondensed";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 0.8)";
 	offsetX = 0;
 	offsetY = 0;
 	offsetPressedX = 0;
@@ -910,7 +910,7 @@ class RscOverthrowGreenButton
 	h = 0.039216;
 	shadow = 2;
 	font = "RobotoCondensed";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 0.8)";
 	offsetX = 0;
 	offsetY = 0;
 	offsetPressedX = 0;
@@ -934,9 +934,9 @@ class RscOverthrowShortcutButton
 	class ShortcutPos
 	{
 		left = 0;
-		top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 20) - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)) / 2";
-		w = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1) * (3/4)";
-		h = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		top = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 20) - (((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)) / 2";
+		w = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1) * (3/4)";
+		h = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	};
 	class TextPos
 	{
@@ -1034,7 +1034,7 @@ class RscOverthrowShortcutButton
 	default = 0;
 	shadow = 1;
 	w = 0.183825;
-	h = "((((safezoneW / safezoneH) min 1.2) / 1.2) / 20)";
+	h = "((((2560 / safezoneH ) min 1.2) / 1.2) / 20)";
 	textSecondary = "";
 	colorSecondary[] =
 	{
@@ -1064,7 +1064,7 @@ class RscOverthrowShortcutButton
 		1,
 		0.25
 	};
-	sizeExSecondary = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeExSecondary = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	fontSecondary = "PuristaMedium";
 	animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
 	animTextureNormal = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
@@ -1076,8 +1076,8 @@ class RscOverthrowShortcutButton
 	periodOver = 0.8;
 	period = 0.4;
 	font = "PuristaMedium";
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	size = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	text = "";
 	action = "";
 	class AttributesImage
@@ -1118,14 +1118,14 @@ class RscOverthrowShortcutButtonMain
 	class ShortcutPos
 	{
 		left = 0.0145;
-		top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 20) - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)) / 2";
-		w = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2) * (3/4)";
-		h = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
+		top = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 20) - (((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.2)) / 2";
+		w = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.2) * (3/4)";
+		h = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.2)";
 	};
 	class TextPos
 	{
-		left = "(((safezoneW / safezoneH) min 1.2) / 32) * 1.5";
-		top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 20)*2 - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)) / 2";
+		left = "(((2560 / safezoneH ) min 1.2) / 32) * 1.5";
+		top = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 20)*2 - (((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.2)) / 2";
 		right = 0.005;
 		bottom = 0;
 	};
@@ -1137,8 +1137,8 @@ class RscOverthrowShortcutButtonMain
 	animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\normal_ca.paa";
 	period = 0.5;
 	font = "PuristaMedium";
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
+	size = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.2)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1.2)";
 	text = "";
 	action = "";
 	class Attributes
@@ -1456,7 +1456,7 @@ class RscOverthrowTextCheckBox
 		0.65
 	};
 	font = "PuristaMedium";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 0.8)";
 	rows = 1;
 	columns = 1;
 	strings[] =
@@ -1570,13 +1570,13 @@ class RscOverthrowButtonMenu
 		1,
 		0.25
 	};
-	sizeExSecondary = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeExSecondary = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	fontSecondary = "PuristaLight";
 	period = 1.2;
 	periodFocus = 1.2;
 	periodOver = 1.2;
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	size = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)";
 	tooltipColorText[] =
 	{
 		1,
@@ -1600,8 +1600,8 @@ class RscOverthrowButtonMenu
 	};
 	class TextPos
 	{
-		left = "0.25 * (((safezoneW / safezoneH) min 1.2) / 40)";
-		top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)) / 2";
+		left = "0.25 * (((2560 / safezoneH ) min 1.2) / 40)";
+		top = "(((((2560 / safezoneH ) min 1.2) / 1.2) / 25) - (((((2560 / safezoneH ) min 1.2) / 1.2) / 25) * 1)) / 2";
 		right = 0.005;
 		bottom = 0;
 	};
@@ -1614,7 +1614,7 @@ class RscOverthrowButtonMenu
 	};
 	class ShortcutPos
 	{
-		left = "(6.25 * (((safezoneW / safezoneH) min 1.2) / 40)) - 0.0225 - 0.005";
+		left = "(6.25 * (((2560 / safezoneH ) min 1.2) / 40)) - 0.0225 - 0.005";
 		top = 0.005;
 		w = 0.0225;
 		h = 0.03;

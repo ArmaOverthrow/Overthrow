@@ -35,7 +35,7 @@ if(_handled) then {
 
 	if(_type isEqualTo "buy") then {
 		private _id = [_building] call OT_fnc_getBuildID;
-		[_id,getPlayerUID player] call OT_fnc_setOwner;
+		[_building,getPlayerUID player] call OT_fnc_setOwner;
 		[-_price] call OT_fnc_money;
 
 		buildingpositions setVariable [_id,position _building,true];
@@ -45,7 +45,7 @@ if(_handled) then {
 	}else{
 		if ((typeof _building) in OT_allRealEstate) then {
 			private _id = [_building] call OT_fnc_getBuildID;
-			[_id,nil] call OT_fnc_setOwner;
+			[_building,nil] call OT_fnc_setOwner;
 			private _leased = player getVariable ["leased",[]];
 			_leased deleteAt (_leased find _id);
 			player setVariable ["leased",_leased,true];

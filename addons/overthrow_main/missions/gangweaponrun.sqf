@@ -23,8 +23,7 @@ private _gunname = _guncls call OT_fnc_weaponGetName;
     };
 }foreach([OT_allTowns,[],{random 100},"ASCEND",{!(_x isEqualTo _gangtown)}] call BIS_fnc_SortBy);
 
-_numitems = floor(2 + random 4);
-_reward = floor((_startpos distance2D _destination) * 0.04 * _numitems);
+_reward = floor((_startpos distance2D _destination) * 0.04);
 
 _markerPos = _destination;
 _params = [_destination,_gangid,_guncls,_reward];

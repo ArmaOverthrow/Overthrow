@@ -141,6 +141,8 @@ private _difficulty = 1.8;
 
         };
         //Clean up
+        private _civ = spawner getVariable [format["fugitive%1",_jobid],objNull];
+        [group _civ] call OT_fnc_cleanup;
         spawner setVariable [format["fugitive%1",_jobid],nil,false];
     },
     _params

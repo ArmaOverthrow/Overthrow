@@ -16,7 +16,7 @@ if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor}
 
 //If faction dealer, increase standing
 private _civ = OT_interactingWith;
-if(!isNil "_civ" && _civ getVariable ["factionrep",false] && !((_cls isKindOf "Land") || (_cls isKindOf "Air"))) then {
+if(!isNil "_civ" && _civ getVariable ["factionrep",false] && !((_cls isKindOf "Land") || (_cls isKindOf "Air") || (_cls isKindOf "Ship"))) then {
 	_faction = _civ getVariable ["faction",""];
 	if !(_faction isEqualTo "") then {
 		_increase = floor (_price / 1000);
@@ -46,7 +46,7 @@ if(_cls == "Set_HMG") exitWith {
 	format["You bought a Quad Bike w/ HMG for $%1",_price] call OT_fnc_notifyMinor;
 	playSound "3DEN_notificationDefault";
 };
-if(OT_interactingWith getVariable ["factionrep",false] && ((_cls isKindOf "Land") || (_cls isKindOf "Air"))) exitWith {
+if(OT_interactingWith getVariable ["factionrep",false] && ((_cls isKindOf "Land") || (_cls isKindOf "Air") || (_cls isKindOf "Ship"))) exitWith {
 	private _blueprints = server getVariable ["GEURblueprints",[]];
 	if !(_cls in _blueprints) then {
 		_blueprints pushback _cls;

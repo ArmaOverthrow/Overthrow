@@ -26,7 +26,7 @@ if(isMultiplayer && OT_showPlayerMarkers) then {
 
 private _grpUnits = groupSelectedUnits player;
 {
-	if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x} && (_x getVariable ["polgarrison",""]) isEqualTo "") then {
+	if (!(isPlayer _x) && {(side _x isEqualTo resistance) || captive _x} && {(_x getVariable ["polgarrison",""]) isEqualTo ""}) then {
 		private _veh = vehicle _x;
 		if(_veh isEqualTo _x) then {
 			private _color = [[0,0.2,0,1],[0,0.5,0,1]] select captive _x;
@@ -49,6 +49,15 @@ private _grpUnits = groupSelectedUnits player;
 						0
 					];
 				};
+
+				_mapCtrl drawIcon [
+					"iconMan",
+					_color,
+					_visPos,
+					24,
+					24,
+					getDir _x
+				];
 
 				if(_x in _grpUnits) then {
 					_mapCtrl drawIcon [
@@ -120,7 +129,7 @@ if(((getposatl player) select 2) > 30) then {
 
 {
 	private _pos = getPosASL _x;
-	if (!visibleGPS || { _pos distance2D player < 1200 }) then {
+	if (visibleMap || { _pos distance2D player < 1200 }) then {
 		private _passengers = "";
 		private _color = [0,0.5,0,1];
 		{
@@ -202,7 +211,7 @@ private _scale = ctrlMapScale _mapCtrl;
 if(_scale <= 0.1) then {
 	private _mousepos = [0,0,0];
 	private _towns = OT_townData;
-	if (visibleGps) then {
+	if !(visibleMap) then {
 		_mousepos = getpos player;
 	}else{
 		_mousepos = _mapCtrl ctrlMapScreenToWorld getMousePosition;

@@ -1,7 +1,10 @@
 //This code is called by the gun dealer or faction rep to retrieve the description and parameters of the mission
+params ["_jobid","_jobparams"];
+_jobparams params ["_faction"];
 
-
+private _factionName = server getvariable format["factionname%1",_faction];
 private _pickupTown = "";
+private _startpos = getpos player;
 private _pickup = [];
 private _destinationTown = "";
 private _type = "";
@@ -9,57 +12,53 @@ private _destination = [];
 private _abandoned = server getVariable ["NATOabandoned",[]];
 
 //Here is where we might randomize the parameters a bit
-//Is this an insertion or an extraction?
-if((random 100) > 50) then { // 50/50 chance of either
-    //Insertion
-    //Pickup will be a random port, somewhere within 80m that he can stand, hopefully not inside a rock
-    _pickup = [[[getMarkerPos format["port_%1", ceil(random 2)],80]]] call BIS_fnc_randomPos;
-    _pickupTown = _pickup call OT_fnc_nearestTown;
+//Find a pickup town
+{
+    private _town = _x;
+    private _posTown = server getVariable _town;
+    if([_posTown,_startpos] call OT_fnc_regionIsConnected) exitWith {
+        _pickupTown = _town;
+        _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
+        _pickup = selectRandom (_building call BIS_fnc_buildingPositions);
+        if(isNil "_pickup") then {
+            _pickup = _posTown findEmptyPosition [5,100,OT_civType_local];
+        };
+    };
+}foreach([OT_allTowns,[],{random 100},"ASCEND"] call BIS_fnc_SortBy);
 
-    //Destination is a random town
-    _destinationTown = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
-    private _posTown = server getVariable _destinationTown;
+//Find a destination town
+{
+    private _town = _x;
+    private _posTown = server getVariable _town;
+    if([_posTown,_pickup] call OT_fnc_regionIsConnected) exitWith {
+        _destinationTown = _town;
+        _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
+        _destination = getPos _building;
+        if(isNil "_destination") then {
+            _destination = _posTown findEmptyPosition [5,100,OT_civType_local];
+        };
+    };
+}foreach([OT_allTowns,[],{random 100},"ASCEND"] call BIS_fnc_SortBy);
 
-    //Pick a random building as the dropoff
-    private _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
-	_destination = position _building;
-    if((_destination select 0) isEqualTo 0) then {_destination = [_posTown,[random 100,600]] call SHK_pos_fnc_pos};
-    _type = "insertion";
-}else{
-    //Extraction
-    //Pickup will be a random town
-    _pickupTown = selectRandom (OT_allTowns - _abandoned - [player call OT_fnc_nearestTown]);
-    private _posTown = server getVariable _pickupTown;
-    _pickup = [[[_posTown,200]]] call BIS_fnc_randomPos;
-
-    //Destination is a random port
-    _destination = getMarkerPos format["port_%1", ceil(random 2)];
-    _destinationTown = _destination call OT_fnc_nearestTown;
-    _type = "extraction";
-};
 
 //Give our VIP a name
 private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
 private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 
-private _params = [_pickup,_destination,_fullname];
+private _params = [_faction,_pickup,_destination,_fullname];
 private _markerPos = _destination;
 
 //Build a mission description and title
-private _description = format["Our intelligence operative %1 is in need of transport from %2 to %3. He is of local descent so you should have no problems passing through NATO checkpoints unnoticed.",_fullname select 0,_pickupTown,_destinationTown];
-private _title = format["Operative %1",_type];
-
-//This next number multiplies the reward
-private _difficulty = 1.5;
+private _description = format["Our intelligence operative %1 is in need of transport from %2 to %3. He is of local descent so you should have no problems passing through NATO checkpoints unnoticed. Please take care of it within 12 hrs.<br/><br/>Reward: +5 (%4), $250",_fullname select 0,_pickupTown,_destinationTown,_factionName];
+private _title = format["Operative transport for %1",_factionName];
 
 //The data below is what is returned to the gun dealer/faction rep, _markerPos is where to put the mission marker, the code in {} brackets is the actual mission code, only run if the player accepts
 [
     [_title,_description],
     _markerPos,
     {
-        params ["_p","_faction","_factionName"];
-        _p params ["_pickup","_destination","_fullname"];
+        params ["_faction","_pickup","_destination","_fullname"];
 
         //Spawn the dude
         private _civ = (group player) createUnit [OT_civType_gunDealer, _pickup, [],0, "NONE"];
@@ -81,33 +80,47 @@ private _difficulty = 1.5;
         _civ addItem "ItemRadio";
 
         //Save him for access later
-        player setVariable [format["vip%1",_faction],_civ,false];
+        _this pushback _civ;
         true
     },
     {
         //Fail check...
         //If target is dead
-        !alive (player getVariable [format["vip%1",_this select 1],objNull]);
+        params ["","","","","_civ"];
+        !alive _civ;
     },
     {
         //Success Check
-        params ["_p","_faction","_factionName"];
-        _p params ["_pickup","_destination"];
-
-        private _civ = player getVariable [format["vip%1",_faction],objNull];
+        params ["","","_destination","","_civ"];
         //near the destination and not in a vehicle
         ((_civ distance _destination) < 50) && (vehicle _civ) == _civ
     },
     {
         //Cleanup
-        params ["_p","_faction","_factionName"];
-        private _civ = player getVariable [format["vip%1",_this select 1],objNull];
-        player setVariable [format["vip%1",_faction],nil,false];
+        params ["_faction","_pickup","_destination","_fullname","_civ","_wassuccess"];
+
         _group = createGroup civilian;
-        [_group] call OT_fnc_cleanup;
         [_civ] joinSilent nil;
         [_civ] joinSilent _group;
+        [_group] call OT_fnc_cleanup;
+
+        if(_wassuccess) then {
+            [
+                {
+                    params ["_faction"];
+                    private _factionName = server getvariable format["factionname%1",_faction];
+                    format ["Incoming message from %1: Thank you for delivering our operative. (+5 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+                    server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + 5,true];
+                    [250] call OT_fnc_money;
+                },
+                [_faction],
+                2
+            ] call CBA_fnc_waitAndExecute;
+        }else{
+            private _factionName = server getvariable format["factionname%1",_faction];
+            format ["Incoming message from %1: What happened?!? (-10 %1)",_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
+            server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) - 10,true];
+        };
     },
-    _params,
-    _difficulty
+    _params
 ];

@@ -277,6 +277,7 @@ class CfgFunctions
 			class requestJobResistance {};
 			class requestJobGang {};
 			class requestJobShop {};
+			class requestJobFaction {};
 
 			/* Safe */
 			class safePutMoney {};

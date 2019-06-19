@@ -23,7 +23,6 @@ if !(_jobparams call _setup) exitWith {
     private _done = false;
     spawner setVariable [format["OT_jobRemain%1",_id],_expires*60,true];
 
-    format["Job %1: Expiry is %2",_id,_expires] call OT_fnc_logVerbose;
     if(_expires < 1) then {
         spawner setVariable [format["OT_jobNoExpire%1",_id],true,true];
     };
@@ -34,9 +33,6 @@ if !(_jobparams call _setup) exitWith {
         if (!_done) then {
             private _date = call OT_fnc_datestamp;
             _remains = _remains - (_date - _lastdate);
-            if(_expires > 0) then {
-                format["Job %1: %2 mins remaining",_id,_remains] call OT_fnc_logVerbose;
-            };
             (_this select 0) set [12,_date]; //updates _lastdate
             if(_expires < 1) then {_remains = 1};
             private _wassuccess = false;

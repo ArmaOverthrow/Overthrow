@@ -77,6 +77,17 @@ class CfgOverthrowMissions
         requestable = 0;
     };
 
+    class TransportOperative
+    {
+        target = "Faction";
+        repeatable = 1;
+        condition = "true";
+        script = "\overthrow_main\missions\transportvip.sqf";
+        chance = 100;
+        expires = 12;
+        requestable = 1;
+    };
+
     class ReconBase
     {
         target = "Base";

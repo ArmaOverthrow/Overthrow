@@ -318,7 +318,7 @@ private _allVehs = "
     &&
 	{ (getArray ( _x >> ""threat"" ) select 0) < 0.5}
 	&&
-    { (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") || (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Support"")}
+    { (toLower getText ( _x >> ""vehicleClass"" ) isEqualTo ""car"") || (toLower getText ( _x >> ""vehicleClass"" ) isEqualTo ""support"")}
 	&&
     { (getText ( _x >> ""faction"" ) isEqualTo ""CIV_F"") or
      (getText ( _x >> ""faction"" ) isEqualTo ""IND_F"")})
@@ -979,7 +979,7 @@ OT_Buildables = [
 		["Land_WeldingTrolley_01_F",[-3.53163,1.73366,0],87.0816,1,0,[],"","",true,false],
 		["Land_ToolTrolley_02_F",[-3.47775,3.5155,0],331.186,1,0,[],"","",true,false]
 	],"OT_fnc_initWorkshop",true,"Attach weapons to vehicles"],
-	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
+	["House",2000,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
 	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town && keep the peace. Comes with 2 units."],
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
 	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Can recruit civilians here without needing to chase them down"],

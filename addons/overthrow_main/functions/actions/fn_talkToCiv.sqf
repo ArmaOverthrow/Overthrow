@@ -130,6 +130,11 @@ if (_canMission) then {
 	private _standing = server getVariable [format["standing%1",_faction],0];
 	_options pushback format["<t align='center' size='2'>%1</t><br/><br/><t align='center' size='0.8'>Current Standing: +%2",_factionName,_standing];
 
+	_options pushBack [format["Do you have any jobs for me?"], {
+		OT_jobsOffered = [];
+		call OT_fnc_requestJobFaction;
+	}];
+
 	_options pushBack [format["Buy Gear"], {
 		private _civ = OT_interactingWith;
 		_faction = _civ getvariable ["faction",""];
