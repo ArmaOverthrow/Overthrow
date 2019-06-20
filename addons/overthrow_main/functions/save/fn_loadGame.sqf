@@ -28,7 +28,10 @@ private _cc = 0;
 
 sleep 0.3;
 
+
 //now do everything else
+private _buildableHouses = [];
+private _hasList_buildableHouses = false;
 {
 	_x params ["_key","_val"];
 
@@ -198,9 +201,17 @@ sleep 0.3;
 					};
 				};
 
+				// Fetch the list of buildable houses
+				if (!_hasList_buildableHouses) then {
+					if (!isNil "OT_Buildables") then {
+						_buildableHouses = (OT_Buildables param [9, []]) param [2, []];
+						_hasList_buildableHouses = true;
+					};
+				};
+
 				// If the object is a player-built house, fetch its variables
 				private _houseParams = _x param [8, []];
-				if !(_houseParams isEqualTo []) then {
+				if (!(_houseParams isEqualTo []) or {_type in _buildableHouses}) then {
 					_veh setVariable ["OT_house_isPlayerBuilt", true, true];
 
 					private _isLeased = _houseParams param [0, false];
