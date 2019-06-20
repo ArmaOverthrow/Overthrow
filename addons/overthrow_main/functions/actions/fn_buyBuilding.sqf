@@ -43,20 +43,32 @@ if(_handled) then {
 		[player,"Building Purchased",format["Bought: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_price]] call BIS_fnc_createLogRecord;
 		_building addEventHandler ["Dammaged",OT_fnc_buildingDamagedHandler];
 	}else{
-		if ((typeof _building) in OT_allRealEstate) then {
+		// Fetch the list of buildable houses
+		private _buildableHouses = (OT_Buildables param [9, []]) param [2, []];
+		if((typeof _building) in OT_allRealEstate or {((typeOf _building) in _buildableHouses)}) then {
 			private _id = [_building] call OT_fnc_getBuildID;
 			[_building,nil] call OT_fnc_setOwner;
 			private _leased = player getVariable ["leased",[]];
 			_leased deleteAt (_leased find _id);
 			player setVariable ["leased",_leased,true];
+
+			private _leasedata = player getVariable ["leasedata",[]];
+			private _leasedataID = (_leasedata apply {_x select 0}) findIf {_x == _id};
+			_leasedata deleteAt _leasedataID;
+			player setVariable ["leasedata",_leasedata,true];
+
 			deleteMarker _mrkid;
 			_owned deleteAt (_owned find _id);
 			[player,"Building Sold",format["Sold: %1 in %2 for $%3",getText(configFile >> "CfgVehicles" >> (typeof _building) >> "displayName"),(getpos _building) call OT_fnc_nearestTown,_sell]] call BIS_fnc_createLogRecord;
 			[_sell] call OT_fnc_money;
+
+		// Fallback for unknown buildings
 		}else{
-			deleteVehicle _building;
 			_owned deleteAt (_owned find ([_building] call OT_fnc_getBuildID));
 		};
+
+		// Always attempt to remove the building, because it might be played-placed (for map-placed buildings, this won't do anything)
+		deleteVehicle _building;
 	};
 
 	player setVariable ["owned",_owned,true];

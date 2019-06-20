@@ -56,6 +56,12 @@ if(typename _b isEqualTo "ARRAY") then {
 };
 if(_err) exitWith {};
 if(_handled) then {
+
+	// If the house is player-built, we set its lease variable to true
+	if (_building getVariable ["OT_house_isPlayerBuilt", false]) then {
+		_building setVariable ["OT_house_isLeased", true, true];
+	};
+
 	private _id = ([_building] call OT_fnc_getBuildID);
 	_leased = player getvariable ["leased",[]];
 	_leased pushback _id;

@@ -140,13 +140,13 @@ private _vehicles = (_tocheck) apply {
 		};
 	};
 	private _params = [
-		_type,
-		[getPosWorld _x,_simCheck, 1],		// 1 stands for the new posWorld format
-		[vectorDir _x,vectorUp _x],
-		_s,
-		["", _x call OT_fnc_getOwner] select (_x call OT_fnc_hasOwner),		// Save an empty string if the object doesn't have an owner (yet)
-		_x getVariable ["name",""],
-		_x getVariable ["OT_init",""]
+/* 0 */		_type,
+/* 1 */		[getPosWorld _x,_simCheck, 1],		// 1 stands for the new posWorld format
+/* 2 */		[vectorDir _x,vectorUp _x],
+/* 3 */		_s,
+/* 4 */		["", _x call OT_fnc_getOwner] select (_x call OT_fnc_hasOwner),		// Save an empty string if the object doesn't have an owner (yet)
+/* 5 */		_x getVariable ["name",""],
+/* 6 */		_x getVariable ["OT_init",""]
 	];
 	if(_type isKindOf ["AllVehicles", _cfgVeh] && {!(_x getVariable ["OT_garrison",false])}) then {
 		private _veh = _x;
@@ -161,7 +161,12 @@ private _vehicles = (_tocheck) apply {
 		if(!(_attachedClass isEqualTo "") && { alive _attached }) then {
 			_att = [_attachedClass,(_attached weaponsTurret [0]) apply { [_x,_attached ammo _x] }];
 		};
-		_params pushback [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att];
+/* 7 */		_params set [7, [fuel _x,getAllHitPointsDamage _x,_x call ace_refuel_fnc_getFuel,_x getVariable ["OT_locked",false],_ammo,_att]];
+	};
+
+	// If the house is player-built, save some extra variables
+	if (_x getVariable ["OT_house_isPlayerBuilt", false]) then {
+/* 8 */		_params set [8, [_x getVariable ["OT_house_isLeased", false]]];
 	};
 	_params
 };

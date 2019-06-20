@@ -267,6 +267,7 @@ buildOnMouseUp = {
 			if(_money < modePrice) then {
 				"You cannot afford that" call OT_fnc_notifyMinor;
 			}else{
+
 				_created = objNULL;
 				playSound "3DEN_notificationDefault";
 				player setVariable ["money",_money-modePrice,true];
@@ -279,6 +280,7 @@ buildOnMouseUp = {
 						clearItemCargoGlobal _x;
 						[_x,getplayeruid player] call OT_fnc_setOwner;
 						_x call OT_fnc_initObjectLocal;
+
 					}foreach(_objects);
 					_created = _objects select 0;
 					deleteVehicle modeTarget;
@@ -286,6 +288,12 @@ buildOnMouseUp = {
 					_created = modeTarget;
 					[modeTarget,getplayeruid player] call OT_fnc_setOwner;
 					modeTarget = objNull;
+				};
+
+				// If the object is a house, mark it as being player-built (will be used to save the leasing status)
+				private _buildableHouses = (OT_Buildables param [9, []]) param [2, []];
+				if ((typeof _created) in _buildableHouses) then {
+					_created setVariable ["OT_house_isPlayerBuilt", true, true];
 				};
 
 				if(modeCode != "") then {

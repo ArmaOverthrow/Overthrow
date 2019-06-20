@@ -85,7 +85,6 @@ if(typename _b isEqualTo "ARRAY") then {
 	_txt = "";
 
 	if(_building call OT_fnc_hasOwner) then {
-
 		_owner = _building call OT_fnc_getOwner;
 		_ownername = players_NS getVariable format["name%1",_owner];
 		if(isNil "_ownername") then {_ownername = "Someone"};
@@ -309,7 +308,9 @@ if(typename _b isEqualTo "ARRAY") then {
 		};
 	};
 
-	if(!((typeof _building) in OT_allRealEstate + [OT_flag_IND])) then {
+	// Fetch the list of buildable houses
+	private _buildableHouses = (OT_Buildables param [9, []]) param [2, []];
+	if(!((typeof _building) in OT_allRealEstate + [OT_flag_IND]) and {!(typeOf _building in _buildableHouses)}) then {
 		ctrlEnable [1609,false];
 		ctrlEnable [1610,false];
 		ctrlEnable [1608,false];

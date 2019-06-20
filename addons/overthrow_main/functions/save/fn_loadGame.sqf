@@ -162,7 +162,7 @@ sleep 0.3;
 				};
 				*/
 
-				if(count _x > 7) then {
+				if(count _x > 7) then {		// index range 0..6
 					(_x select 7) params ["_fuel","_dmg"];
 					//Fuel in tank
 					_veh setFuel _fuel;
@@ -198,6 +198,21 @@ sleep 0.3;
 					};
 				};
 
+				// If the object is a player-built house, fetch its variables
+				private _houseParams = _x param [8, []];
+				if !(_houseParams isEqualTo []) then {
+					_veh setVariable ["OT_house_isPlayerBuilt", true, true];
+
+					private _isLeased = _houseParams param [0, false];
+					if (_isLeased) then {
+						_veh setVariable ["OT_house_isLeased", true, true];
+
+						private _leasedBuilt = [_owner,"leasedBuilt",[]] call OT_fnc_getOfflinePlayerAttribute;
+						_leasedBuilt pushBack _veh;
+						[_owner,"leasedBuilt",_leasedBuilt] call OT_fnc_setOfflinePlayerAttribute;
+					};
+				};
+
 				if (_posFormat == 1) then {
 					_veh setPosWorld _pos;		// format 1 is the new posWorld format
 				} else {
@@ -223,7 +238,7 @@ sleep 0.3;
 
 				// If this vehicle doesn't have an owner, set the forceSaveunowned flag to true so it gets saved again (until somebody owns it)
 				if (_owner isEqualTo "") then {
-					 _veh setVariable ["OT_forceSaveUnowned", true, false];
+					 _veh setVariable ["OT_forceSaveUnowned", true, true];
 				// Otherwise, set the owner (as per usual)
 				} else {
 					[_veh,_owner] call OT_fnc_setOwner;
@@ -432,6 +447,7 @@ private _built = (allMissionObjects "Static");
 	private _vars = players_NS getVariable [_uid,[]];
 	private _leased = [_uid,"leased",[]] call OT_fnc_getOfflinePlayerAttribute;
 	private _leasedata = [];
+	private _leasedNew = [];
 	{
 		_x params ["_name","_val"];
 		if(_name isEqualTo "owned") then {
@@ -459,12 +475,24 @@ private _built = (allMissionObjects "Static");
 					};
 					if(_x in _leased) then {
 						_leasedata pushback [_x,typeof _bdg,_pos,_pos call OT_fnc_nearestTown];
+						_leasedNew pushBack _x;
 					};
 				};
 			}foreach(_val);
 		};
 	}foreach(_vars);
+
+	// Add the built houses
+	{
+		private _ID = [_x] call OT_fnc_getBuildID;
+		private _pos = position _x;
+		_leasedata pushBack [_ID, typeof _x,_pos,_pos call OT_fnc_nearestTown];
+		_leasedNew pushBack _ID;
+	} forEach ([_uid,"leasedBuilt",[]] call OT_fnc_getOfflinePlayerAttribute);
+
 	[_uid,"leasedata",_leasedata] call OT_fnc_setOfflinePlayerAttribute;
+	[_uid,"leased",_leasedNew] call OT_fnc_setOfflinePlayerAttribute;		// Overwrite the "leased" data to get rid of the IDs that point to buildings which no longer exist (player-built houses)
+	[_uid,"leasedBuilt",[]] call OT_fnc_setOfflinePlayerAttribute;
 }foreach(players_NS getvariable ["OT_allPlayers",[]]);
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
