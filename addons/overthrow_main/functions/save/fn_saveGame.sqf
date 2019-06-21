@@ -148,7 +148,8 @@ private _vehicles = (_tocheck) apply {
 /* 5 */		_x getVariable ["name",""],
 /* 6 */		_x getVariable ["OT_init",""]
 	];
-	if(_type isKindOf ["AllVehicles", _cfgVeh] && {!(_x getVariable ["OT_garrison",false])}) then {
+
+	if ((_type isKindOf ["AllVehicles", _cfgVeh] && !(_x getVariable ["OT_garrison",false])) or {_type isEqualTo OT_item_Storage}) then {
 		private _veh = _x;
 		private _ammo = (_x weaponsTurret [0]) apply {
 			[_x,_veh ammo _x];
