@@ -332,11 +332,11 @@ if ((date select 4) != _lastmin) then {
 						[-_costtoproduce] call OT_fnc_resistanceFunds;
 						_timespent = _timespent + 1;
 					}else{
-                        _need = "";
-                        if !(_dowood) then {_need = _need + format["%1 x wood ",_wood]};
-                        if !(_dosteel) then {_need = _need + format["%1 x steel ",_steel]};
-                        if !(_doplastic) then {_need = _need + format["%1 x plastic ",_plastic]};
-                        if !(_domoney) then {_need = _need + format["$%1 resistance funds",_costtoproduce]};
+                        			_need = "";
+			                        if !(_dowood) then {_need = _need + format["%1 x wood ",_wood]};
+			                        if !(_dosteel) then {_need = _need + format["%1 x steel ",_steel]};
+			                        if !(_doplastic) then {_need = _need + format["%1 x plastic ",_plastic]};
+			                        if !(_domoney) then {_need = _need + format["$%1 resistance funds",_costtoproduce]};
 						format["Factory has insufficient resources to produce item (need: %1)",_need] remoteExec["OT_fnc_notifyMinor",0,false];
 						spawner setVariable ["GEURproduceerror",format["Factory has insufficient resources to produce item (need: %1)",_need],true];
 					};
@@ -363,7 +363,8 @@ if ((date select 4) != _lastmin) then {
 						_p = OT_factoryVehicleSpawn findEmptyPosition [5,100,_currentCls];
 						if(count _p > 0) then {
 							_veh = _currentCls createVehicle _p;
-							[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
+							//[_veh,(server getVariable ["generals",[]]) select 0] call OT_fnc_setOwner;
+							_veh setVariable ["OT_forceSaveUnowned", true, true];		// Save this vehicle even if it is unowned (we know somebody must have requested it at the factory, so they'll come back and claim it... eventually)
 							clearWeaponCargoGlobal _veh;
 							clearMagazineCargoGlobal _veh;
 							clearBackpackCargoGlobal _veh;
