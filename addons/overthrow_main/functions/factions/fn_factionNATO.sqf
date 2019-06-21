@@ -242,6 +242,7 @@ publicVariable "OT_nextNATOTurn";
 				if(count _flag > 0) then{
 					deleteVehicle (_flag select 0);
 				};
+				deleteMarker format["natofob%1",str _pos];
 			};
 		}foreach(_fobs);
 

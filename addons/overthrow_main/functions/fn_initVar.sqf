@@ -156,7 +156,7 @@ OT_NATOwait = 500; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 OT_jobWait = 60;
 
-OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer"];
+OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer","OT_Lumber","OT_Wine","OT_Grapes","OT_Olives"];
 
 OT_item_CargoContainer = "B_Slingload_01_Cargo_F";
 
