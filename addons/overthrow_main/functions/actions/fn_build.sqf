@@ -92,7 +92,7 @@ canBuildHere = false;
 modeCenter = _center;
 
 buildOnMouseMove = {
-	params ["_control","_relX","_relY"];
+	params ["_control","_mouseX","_mouseY"];
 	modeValue = screenToWorld getMousePosition;
 	modeValue = [modeValue select 0,modeValue select 1,0];
 	if(!isNull modeTarget) then {
@@ -129,31 +129,44 @@ buildOnMouseMove = {
 		};
 	};
 	if(buildCamRotating && buildCamMoving) exitWith {
-		_pos = getpos buildcam;
-		buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)+_relY,(_pos select 2)];
-		buildcam camSetTarget buildFocus;
-		buildcam camCommit 0;
+		private _mouseVec = [-_mouseX, _mouseY, 0];
+		private _dist = (vectorMagnitude _mouseVec) * (buildCam distance buildFocus) / 200;
+		private _dir = [0,0,0] getDir _mouseVec;
+		_dir = _dir + getDir buildCam;
+		([sin _dir, cos _dir, 0] vectorMultiply _dist) params ["_relX","_relY"];
+
+		private _camATL = getPosATL buildCam;
+		private _camWaterDepth = (getTerrainHeightASL _camATL) min 0;
+		buildCam camSetPos (_camATL vectorAdd [_relX, _relY, _camWaterDepth]);
+		buildCam camSetTarget buildFocus;
+		buildCam camCommit 0;
 	};
 	if(buildCamMoving) exitWith {
-		_pos = getpos buildcam;
-		buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)];
-		_pos = getpos buildFocus;
-		buildFocus setPos [(_pos select 0)+_relX,(_pos select 1)-_relY,_pos select 2];
-		buildcam camSetTarget buildFocus;
-		buildcam camCommit 0;
+		private _mouseVec = [-_mouseX, _mouseY, 0];
+		private _dist = (vectorMagnitude _mouseVec) * (buildCam distance buildFocus) / 200;
+		private _dir = [0,0,0] getDir _mouseVec;
+		_dir = _dir + getDir buildCam;
+		([sin _dir, cos _dir, 0] vectorMultiply _dist) params ["_relX","_relY"];
+
+		private _camATL = getPosATL buildCam;
+		private _camWaterDepth = (getTerrainHeightASL _camATL) min 0;
+		buildFocus setPosATL ((getPosATL buildFocus) vectorAdd [_relX, _relY, 0]);
+		buildCam camSetPos (_camATL vectorAdd [_relX, _relY, _camWaterDepth]);
+		buildCam camSetTarget buildFocus;
+		buildCam camCommit 0;
 	};
 
 };
-
 buildMoveCam = {
-	params ["_relX","_relY","_relZ"];
+	params ["_dir", "_dist"];
 
-	private _pos = getpos buildcam;
-	buildcam camSetPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)+_relZ];
-	_pos = getpos buildFocus;
-	buildFocus setPos [(_pos select 0)+_relX,(_pos select 1)-_relY,(_pos select 2)+_relZ];
-	buildcam camSetTarget buildFocus;
-	buildcam camCommit 0;
+	_dir = _dir + getDir buildCam;
+	([sin _dir, cos _dir, 0] vectorMultiply _dist) params ["_relX","_relY"];
+
+	buildFocus setPosATL ((getPosATL buildFocus) vectorAdd [_relX, _relY, 0]);
+	buildCam camSetPos ((getPosATL buildCam) vectorAdd [_relX, _relY, 0]);
+	buildCam camSetTarget buildFocus;
+	buildCam camCommit 0;
 };
 
 buildOnKeyUp = {
@@ -186,26 +199,22 @@ buildOnKeyDown = {
 		if (_key isEqualTo 17) exitWith {
 			//W
 			_handled = true;
-			_rel = [[0,0,0],2,(getDir buildCam)+90] call BIS_fnc_relPos;
-			_rel call buildMoveCam;
+			[0, 2] call buildMoveCam;
 		};
 		if (_key isEqualTo 31) exitWith {
 			//S
 			_handled = true;
-			_rel = [[0,0,0],-2,(getDir buildCam)+90] call BIS_fnc_relPos;
-			_rel call buildMoveCam;
+			[180, 2] call buildMoveCam;
 		};
 		if (_key isEqualTo 30) exitWith {
 			//A
 			_handled = true;
-			_rel = [[0,0,0],-2,(getDir buildCam)] call BIS_fnc_relPos;
-			_rel call buildMoveCam;
+			[270, 2] call buildMoveCam;
 		};
 		if (_key isEqualTo 32) exitWith {
 			//D
 			_handled = true;
-			_rel = [[0,0,0],2,(getDir buildCam)] call BIS_fnc_relPos;
-			_rel call buildMoveCam;
+			[90, 2] call buildMoveCam;
 		};
 
 		if(isNull modeTarget) exitWith {};
@@ -317,21 +326,12 @@ buildOnMouseUp = {
 buildOnMouseWheel = {
 	_z = _this select 1;
 	_pos = position buildcam;
+	private _distMul = 0.25 + (buildCam distance buildFocus) / 100;
 
 	if(_z < 0) then {
-		if((_pos select 2) < 30) exitWith {
-			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)+5];
-		};
-		if((_pos select 2) < 200) exitWith {
-			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)+20];
-		};
+		buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2) + 10 * _distMul];
 	}else{
-		if((_pos select 2) > 30) exitWith {
-			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)-20];
-		};
-		if((_pos select 2) > 10) exitWith {
-			buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2)-5];
-		};
+		buildcam camSetPos [(_pos select 0),(_pos select 1),(_pos select 2) - 10 * _distMul];
 	};
 	buildcam camSetTarget buildFocus;
 	buildCam camCommit 0.1;
