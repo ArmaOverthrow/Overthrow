@@ -89,7 +89,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 		_group setVariable ["VCM_TOUGHSQUAD",true,true];
 		_group setVariable ["VCM_NORESCUE",true,true];
 		_groups pushback _group;
-		spawner setVariable [format["gangspawn%1",_gangid],_group];
+		spawner setVariable [format["gangspawn%1",_gangid],_group,true];
 		if(count _gang > 4) then { //Filter out old gangs
 			private _home = _gang select 4; //camp position
 

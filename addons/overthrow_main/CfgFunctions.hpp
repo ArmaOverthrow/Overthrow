@@ -580,6 +580,7 @@ class CfgFunctions
 			class formOrJoinGang {};
 			class formGang {};
 			class addToGang {};
+			class gangJoinResistance {};
 		};
 
 		class GUER

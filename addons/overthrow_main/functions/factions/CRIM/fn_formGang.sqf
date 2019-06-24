@@ -67,7 +67,7 @@ if((count _possible) > 0) then {
         private _group = creategroup [opfor,true];
         _group setVariable ["VCM_TOUGHSQUAD",true,true];
 		_group setVariable ["VCM_NORESCUE",true,true];
-        spawner setVariable [format["gangspawn%1",_gangid],_group];
+        spawner setVariable [format["gangspawn%1",_gangid],_group,true];
         _groups pushback _group;
         _groups pushback _leaderGroup;
         spawner setvariable [_spawnid,_groups,false];

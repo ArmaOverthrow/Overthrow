@@ -227,6 +227,7 @@ if(OT_hasTFAR) then {
 
 if (isServer) then {
 	cost setVariable ["OT_Wood",[5,0,0,0],true];
+	cost setVariable ["OT_Lumber",[8,0,0,0],true];
 	cost setVariable ["OT_Steel",[25,0,0,0],true];
 	cost setVariable ["OT_Plastic",[40,0,0,0],true];
 	cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
