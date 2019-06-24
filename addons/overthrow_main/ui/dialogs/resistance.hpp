@@ -233,7 +233,7 @@ class OT_dialog_garrison
 			y = 0.291 * safezoneH + safezoneY;
 			w = 0.0567187 * safezoneW;
 			h = 0.077 * safezoneH;
-			action = "[getpos player,13] spawn OT_fnc_addGarrison";
+			action = "[getpos player,12] spawn OT_fnc_addGarrison";
 		};
 		class RscButton_1603: RscOverthrowButton
 		{

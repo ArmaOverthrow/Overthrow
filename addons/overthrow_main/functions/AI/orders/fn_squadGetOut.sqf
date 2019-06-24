@@ -16,6 +16,7 @@
         	_x disableCollisionWith _vehicle;// Sometimes units take damage when being ejected.
         	_x addBackpackGlobal "B_parachute";
         	unassignVehicle _x;
+            moveOut _x;
         	_x action ["Eject",_vehicle];
         	_x setDir (_dir + 90);// Exit the chopper at right angles.
         	sleep 1;

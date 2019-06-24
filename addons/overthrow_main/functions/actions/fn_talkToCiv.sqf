@@ -125,10 +125,10 @@ if (_canGangJob) then {
 					params ["_gangid","_gang","_name"];
 					private _talk = ["Do you want to join the resistance?"];
 					private _civ = OT_interactingWith;
-					private _town = (getpos player) call OT_fnc_nearestTown;
+					private _town = _gang select 2;
 					private _support = [_town] call OT_fnc_support;
 					private _code = {};
-					if(_support > 100) then {
+					if(_support >= 100) then {
 						_talk pushback format["We've heard good things about what you've been doing. I guess we're in"];
 						_talk pushback "Good to have you on board";
 						_code = {
@@ -142,8 +142,7 @@ if (_canGangJob) then {
 							_gangoptions = [];
 							_gangoptions pushBack [
 								"Offer $5000",{
-									params ["_town","_gangid","_gang","_name"];
-									private _civ = OT_interactingWith;
+									params ["_civ","_town","_gangid","_gang","_name"];
 									private _cash = player getVariable ["money",0];
 									if(_cash >= 5000) then {
 										[
