@@ -17,8 +17,9 @@ sleep 5;
 
 private _combinedItems = OT_allItems + OT_allBackpacks + OT_Resources;
 private _total = 0;
+
 {
-	_x params ["_cls", "_num"];
+	_x params ["_cls", "_qty"];
 	private _count = 0;
 	if((_doillegal || _cls in _combinedItems) && !(_cls in OT_allClothing)) then {
 		private _baseprice = [OT_nation,_cls,0] call OT_fnc_getSellPrice;
@@ -30,27 +31,57 @@ private _total = 0;
 			_costprice = round(_baseprice * 0.3);
 		};
 
-		_total = _total + (_costprice * _num);
-		[_target, _cls, _num] call {
-			params ["_target", "_cls", "_num"];
-			if(_cls isKindOf ["Rifle",configFile >> "CfgWeapons"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
+		_total = _total + (_costprice * _qty);
+
+		private _noncontaineritems = ((weaponCargo _target) + (itemCargo _target) + (magazineCargo _target) + (backpackCargo _target)) call BIS_fnc_consolidateArray;
+		private _ncqty = 0;
+		{
+			_x params ["_thiscls","_thisqty"];
+			if(_thiscls isEqualTo _cls) exitWith {
+				_ncqty = _thisqty;
 			};
-			if(_cls isKindOf ["Launcher",configFile >> "CfgWeapons"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
+		}foreach(_noncontaineritems);
+		if(_ncqty > 0) then {
+			if !([_target, _cls, _ncqty] call CBA_fnc_removeItemCargo) then {
+				if !([_target, _cls, _ncqty] call CBA_fnc_removeWeaponCargo) then {
+					if !([_target, _cls, _ncqty] call CBA_fnc_removeMagazineCargo) then {
+						if !([_target, _cls, _ncqty] call CBA_fnc_removeBackpackCargo) then {
+						};
+					};
+				};
 			};
-			if(_cls isKindOf ["Pistol",configFile >> "CfgWeapons"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
-			};
-			if(_cls isKindOf ["Default",configFile >> "CfgMagazines"]) exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeMagazineCargo;
-			};
-			if(_cls isKindOf "Bag_Base") exitWith {
-				[_target, _cls, _num] call CBA_fnc_removeBackpackCargo;
-			};
-			if !([_target, _cls, _num] call CBA_fnc_removeItemCargo) then {
-				[_target, _cls, _num] call CBA_fnc_removeWeaponCargo;
-			};
+		};
+		_qty = _qty - _ncqty;
+		if(_qty > 0) then {
+			//still need to find more items in backpacks, uniforms etc
+			{
+				_x params ["_itemcls","_item"];
+				{
+					_x params ["_c","_q"];
+					if(_c isEqualTo _sellcls) exitWith {
+						[_item, _cls, _q] call CBA_fnc_removeItemCargo;
+						_qty = _qty - _q;
+					};
+				}foreach((itemCargo _item) call BIS_fnc_consolidateArray);
+				if(_qty > 0) then {
+					{
+						_x params ["_c","_q"];
+						if(_c isEqualTo _sellcls) exitWith {
+							[_item, _cls, _q] call CBA_fnc_removeWeaponCargo;
+							_qty = _qty - _q;
+						};
+					}foreach((weaponCargo _item) call BIS_fnc_consolidateArray);
+				};
+				if(_qty > 0) then {
+					{
+						_x params ["_c","_q"];
+						if(_c isEqualTo _sellcls) exitWith {
+							[_item, _cls, _q] call CBA_fnc_removeMagazineCargo;
+							_qty = _qty - _q;
+						};
+					}foreach((magazineCargo _item) call BIS_fnc_consolidateArray);
+				};
+			}foreach(everyContainer _target);
 		};
 	};
 }foreach(_target call OT_fnc_unitStock);

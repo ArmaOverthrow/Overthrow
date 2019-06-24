@@ -156,7 +156,7 @@ OT_NATOwait = 500; //Half the Average time between NATO orders
 OT_CRIMwait = 500; //Half the Average time between crim changes
 OT_jobWait = 60;
 
-OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer"];
+OT_Resources = ["OT_Wood","OT_Steel","OT_Plastic","OT_Sugarcane","OT_Sugar","OT_Fertilizer","OT_Lumber","OT_Wine","OT_Grapes","OT_Olives"];
 
 OT_item_CargoContainer = "B_Slingload_01_Cargo_F";
 
@@ -227,6 +227,7 @@ if(OT_hasTFAR) then {
 
 if (isServer) then {
 	cost setVariable ["OT_Wood",[5,0,0,0],true];
+	cost setVariable ["OT_Lumber",[8,0,0,0],true];
 	cost setVariable ["OT_Steel",[25,0,0,0],true];
 	cost setVariable ["OT_Plastic",[40,0,0,0],true];
 	cost setVariable ["OT_Sugarcane",[5,0,0,0],true];
@@ -309,6 +310,8 @@ if(isServer) then {
 		cost setVariable[_x select 0,_x select 1, true];
 	}forEach(OT_priceData);
 	OT_priceData = []; //free memory
+
+	call compile preprocessFileLineNumbers "\overthrow_main\data\gangnames.sqf";
 };
 
 private _allVehs = "
@@ -316,7 +319,7 @@ private _allVehs = "
     &&
 	{ (getArray ( _x >> ""threat"" ) select 0) < 0.5}
 	&&
-    { (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Car"") || (getText ( _x >> ""vehicleClass"" ) isEqualTo ""Support"")}
+    { (toLower getText ( _x >> ""vehicleClass"" ) isEqualTo ""car"") || (toLower getText ( _x >> ""vehicleClass"" ) isEqualTo ""support"")}
 	&&
     { (getText ( _x >> ""faction"" ) isEqualTo ""CIV_F"") or
      (getText ( _x >> ""faction"" ) isEqualTo ""IND_F"")})
@@ -977,7 +980,7 @@ OT_Buildables = [
 		["Land_WeldingTrolley_01_F",[-3.53163,1.73366,0],87.0816,1,0,[],"","",true,false],
 		["Land_ToolTrolley_02_F",[-3.47775,3.5155,0],331.186,1,0,[],"","",true,false]
 	],"OT_fnc_initWorkshop",true,"Attach weapons to vehicles"],
-	["House",1100,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
+	["House",2000,["Land_House_Small_06_F","Land_House_Small_02_F","Land_House_Small_03_F","Land_GarageShelter_01_F","Land_Slum_04_F"],"",false,"4 walls, a roof, && if you're lucky a door that opens."],
 	["Police Station",2500,[OT_policeStation],"OT_fnc_initPoliceStation",false,"Allows hiring of policeman to raise stability in a town && keep the peace. Comes with 2 units."],
 	["Warehouse",4000,[OT_warehouse],"OT_fnc_initWarehouse",false,"A house that you put wares in."],
 	["Refugee Camp",600,[OT_refugeeCamp],"",false,"Can recruit civilians here without needing to chase them down"],

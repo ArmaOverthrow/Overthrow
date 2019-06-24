@@ -77,6 +77,7 @@ OT_mapcache_radar = [];
 		};
 	}foreach(vehicles);
 	OT_mapcache_vehicles = _vehs;
+	OT_mapcache_radar = _radar;
 }, 3, []] call CBA_fnc_addPerFrameHandler;
 
 [{

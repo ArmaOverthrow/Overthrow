@@ -36,6 +36,16 @@ class CfgWeapons {
             mass = 250;
         };
     };
+	class OT_Lumber: OT_ItemCore {
+        scope = 2;
+        picture = "\overthrow_main\ui\items\wood_x_ca.paa";
+        displayName = "Lumber";
+        descriptionShort = "Lumber or timber is a type of wood that has been processed into beams and planks, a stage in the process of wood production.";
+        descriptionUse = "";
+        class ItemInfo: InventoryItem_Base_F {
+            mass = 200;
+        };
+    };
 	class OT_Steel: OT_ItemCore {
         scope = 2;
         picture = "\overthrow_main\ui\items\steel_x_ca.paa";

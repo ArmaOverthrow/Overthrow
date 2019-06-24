@@ -9,7 +9,7 @@ _groups = [];
 _count = 0;
 _pos = OT_NATO_HQPos;
 
-_dir = [_pos,_posTown] call BIS_fnc_dirTo;
+_dir = _pos getDir _posTown;
 
 _attackpos = [_posTown,[0,150]] call SHK_pos_fnc_pos;
 

@@ -149,7 +149,7 @@ publicVariable "OT_nextNATOTurn";
 							if(count _ground > 0) then {
 								server setVariable [format["NATOpatrolsent%1",_town],true];
 								(_ground select 0) params ["_obpos","_obname"];
-								private _dir = [_pos,_obpos] call BIS_fnc_dirTo;
+								private _dir = _pos getDir _obpos;
 								private _ao = [_pos,_dir] call OT_fnc_getAO;
 								_resources = _resources - 75;
 								call {
@@ -181,7 +181,7 @@ publicVariable "OT_nextNATOTurn";
 										[_obpos,_pos,0] spawn OT_fnc_NATOAirSupport;
 										diag_log format["Overthrow: NATO Sent CAS to %1 from %2",_town,_obname];
 									};
-									private _dir = [_pos,_obpos] call BIS_fnc_dirTo;
+									private _dir = _pos getDir _obpos;
 									private _ao = [_pos,_dir] call OT_fnc_getAO;
 									_resources = _resources - 100;
 
@@ -242,6 +242,7 @@ publicVariable "OT_nextNATOTurn";
 				if(count _flag > 0) then{
 					deleteVehicle (_flag select 0);
 				};
+				deleteMarker format["natofob%1",str _pos];
 			};
 		}foreach(_fobs);
 

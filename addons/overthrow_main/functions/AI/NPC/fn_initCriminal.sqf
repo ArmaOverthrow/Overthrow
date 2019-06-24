@@ -8,10 +8,8 @@ _unit setRank "SERGEANT";
 _unit setSkill 0.4 + (random 0.4);
 
 _unit removeAllEventHandlers "FiredNear";
-
-private _loadout = (format["gang%1",_gangid]) call OT_fnc_getRandomLoadout;
-
-_unit setUnitLoadout [_loadout,true];
+private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+_unit setUnitLoadout [_gang select 5,true];
 
 if((random 100) < 15) then {
 	_unit addItem "OT_Ganja";

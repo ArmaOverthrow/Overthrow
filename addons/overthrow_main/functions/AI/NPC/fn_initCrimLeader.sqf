@@ -12,9 +12,8 @@ _unit setVariable ["hometown",_town,false];
 [_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
 _unit forceAddUniform (OT_CRIM_Clothes call BIS_fnc_selectRandom);
 
-private _loadout = (format["gang%1",_gangid]) call OT_fnc_getRandomLoadout;
-
-_unit setUnitLoadout [_loadout,true];
+private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
+_unit setUnitLoadout [_gang select 5,true];
 
 if((random 100) < 50) then {
 	_unit addItem "OT_Ganja";

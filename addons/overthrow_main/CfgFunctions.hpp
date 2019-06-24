@@ -104,6 +104,7 @@ class CfgFunctions
 			class illegalInCar {};
 			class detectedByReputation {};
 			class detectedByReputationNATO {};
+			class gangRep {};
 		};
 
 		class Interaction
@@ -140,6 +141,7 @@ class CfgFunctions
 			class notifyMinor {};
 			class notifyBig {};
 			class notifyGood {};
+			class notifyBad {};
 			class notifySilent {};
 			class notifyVehicle {};
 			class playerDecision {};
@@ -256,10 +258,6 @@ class CfgFunctions
 			class sell {};
 			class sellAll {};
 
-			/* Gun Dealer */
-			class getMission {};
-			class assignMission {};
-
 			/* Factory */
 			class factoryQueueAdd {};
 			class factoryQueueRemove {};
@@ -276,6 +274,10 @@ class CfgFunctions
 
 			/* Jobs */
 			class setJobWaypoint {};
+			class requestJobResistance {};
+			class requestJobGang {};
+			class requestJobShop {};
+			class requestJobFaction {};
 
 			/* Safe */
 			class safePutMoney {};
@@ -332,6 +334,7 @@ class CfgFunctions
 			class nearestLocation {};
 			class nearestMobster {};
 			class nearestObjective {};
+			class nearestObjectiveNoComms {};
 			class nearestPositionRegion {};
 			class nearestTown {};
 			class getRegion {};
@@ -577,6 +580,7 @@ class CfgFunctions
 			class formOrJoinGang {};
 			class formGang {};
 			class addToGang {};
+			class gangJoinResistance {};
 		};
 
 		class GUER
@@ -584,6 +588,9 @@ class CfgFunctions
 			file = "\overthrow_main\functions\factions\GUER";
 			class jobSystem {};
 			class assignJob {};
+			class acceptJob {};
+			class denyJob {};
+			class startJob {};
 			class jobLoop {};
 			class GUERLoop {};
 		};
@@ -604,6 +611,7 @@ class CfgFunctions
 		{
 			file = "\overthrow_main\functions\util";
 			class getOwner {};
+			class getOwnerUnit {};
       		class hasOwner {};
 			class setOwner {};
 			class unitStock {};
@@ -612,6 +620,8 @@ class CfgFunctions
 			class sortByInplace {};
 			class findReplace {};
 			class exportPrices {};
+			class datestamp {};
+			class logVerbose {};
 		};
 
 		/*

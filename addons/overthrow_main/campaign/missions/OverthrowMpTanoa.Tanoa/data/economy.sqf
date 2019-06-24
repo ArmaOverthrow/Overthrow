@@ -4,7 +4,7 @@ OT_economicData = [
     [[9456.82,7552.04,0],"Lami Lumberyard","","OT_Wood"],
     [[8389.24,10229.8,0],"Tanoa Sugar Company","OT_Sugarcane","OT_Sugar"],
     [[10945.1,7860.1,0],"Kotomo Banana Plantation","","ACE_Banana"],
-    [[11761.2,6949.91,0],"Sawmill","OT_Wood"],
+    [[11761.2,6949.91,0],"Sawmill","OT_Wood","OT_Lumber"],
     [[5511.58,11888.2,0],"Saint-Julien Lumberyard","","OT_Wood"],
     [[8878.1,11889.1,0],"Galili Lumberyard","","OT_Wood"],
     [[12507.4,7820.99,0],"Ouméré Banana Plantations","","ACE_Banana"],

@@ -18,7 +18,7 @@ private _veh = false;
 //Transport
 private _tgroup = creategroup blufor;
 
-private _dir = [_frompos,_ao] call BIS_fnc_dirTo;
+private _dir = _frompos getDir _ao;
 private _pos = _frompos findEmptyPosition [15,100,_vehtype];
 if(count _pos == 0) then {
 	_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
@@ -64,7 +64,7 @@ sleep 15;
 
 if((typename _tgroup) isEqualTo "GROUP") then {
 	_veh setdamage 0;
-	_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
+	_dir = _attackpos getDir _frompos;
 	_roads = _ao nearRoads 150;
 	private _dropos = _ao;
 	if(count _roads > 0) then {

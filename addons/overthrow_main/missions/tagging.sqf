@@ -3,7 +3,7 @@ _jobparams params ["_town"];
 
 private _markerPos = server getVariable [_town,[]];
 
-private _effect = "Stability in the town will drop 10%, Reward: $500 Resistance funds";
+private _effect = "Stability in the town will drop 10%, Reward: $200, +5 Resistance Support";
 
 //Build a mission description and title
 private _description = format["It's time to tell NATO what we think of them and get the public behind the resistance in %1. Do 5 tags in the town. Spraypaint can be purchased from General stores marked with a ($) icon and used on walls with the ACE self-interact key (Ctrl + Windows key by default)<br/><br/>%2",_town,_effect];
@@ -17,6 +17,7 @@ private _params = [_town,_startValue];
     _markerPos,
     {
         //No setup required for this mission
+        true
     },
     {
         //Fail check...
@@ -33,7 +34,11 @@ private _params = [_town,_startValue];
 
         //If mission was a success
         if(_wassuccess) then {
-            [500] call OT_fnc_resistanceFunds;
+            private _player = spawner getVariable [format["lasttagin%1",_town],player];
+            [
+                200
+            ] remoteExec ["OT_fnc_money",_player,false];
+            [_town,5] call OT_fnc_support;
         };
     },
     _params

@@ -21,7 +21,7 @@ private _hasdrugs = false;
 	if(_x in OT_allDrugs) exitWith {_hasdrugs = true};
 }foreach(items player);
 
-if(_hasdrugs) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor};
+if(_hasdrugs && _ftrules > 0) exitWith {"You cannot fast travel while carrying drugs" call OT_fnc_notifyMinor};
 
 private _exit = false;
 if((vehicle player) != player) then {

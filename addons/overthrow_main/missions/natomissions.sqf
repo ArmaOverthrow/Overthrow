@@ -23,6 +23,7 @@ private _markerPos = _p2 select 0;
     _markerPos,
     {
         //No setup required
+        true
     },
     {
         //Fail check...

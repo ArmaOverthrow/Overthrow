@@ -15,6 +15,7 @@ private _title = format["Recon of %1",_base];
     _markerPos,
     {
         //No setup required for this mission
+        true
     },
     {
         //Fail check...

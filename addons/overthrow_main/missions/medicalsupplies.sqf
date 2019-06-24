@@ -38,6 +38,7 @@ private _title = format["%1 needs %2 x %3",_destinationName,_numitems,_itemName]
     _markerPos,
     {
         //No setup required for this mission
+        true
     },
     {
         //Fail check...

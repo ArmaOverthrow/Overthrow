@@ -84,19 +84,12 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 
 	if (!isNil "_members" && {_members isEqualType []}) then {
 		private _vest = "";
-		if(count _gang > 3) then {
-			_vest = _gang select 3;
-		}else{
-			_vest = selectRandom OT_allProtectiveVests;
-			if (_gang isEqualType []) then {
-				_gang set [3,_vest];
-			};
-		};
+		_vest = _gang select 3;
 		private _group = creategroup [opfor,true];
 		_group setVariable ["VCM_TOUGHSQUAD",true,true];
 		_group setVariable ["VCM_NORESCUE",true,true];
 		_groups pushback _group;
-		spawner setVariable [format["gangspawn%1",_gangid],_group];
+		spawner setVariable [format["gangspawn%1",_gangid],_group,true];
 		if(count _gang > 4) then { //Filter out old gangs
 			private _home = _gang select 4; //camp position
 

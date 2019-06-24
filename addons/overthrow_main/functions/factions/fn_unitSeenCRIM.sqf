@@ -4,7 +4,7 @@ private _cache = _this getVariable "SeenCacheCRIM";
 if (isNil "_cache" || {time > (_cache select 1)}) then {
     _cache = [
         !(
-            ((_this nearEntities 1200) findIf {
+            ((_this nearEntities ["Man",1200]) findIf {
                 _x = driver _x;
                 side _x isEqualTo east
                 && {

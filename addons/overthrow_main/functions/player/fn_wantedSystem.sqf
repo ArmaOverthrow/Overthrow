@@ -57,6 +57,8 @@ if((isPlayer _unit) && isNil "OT_ACEunconsciousChangedEHId") then {
 
 		if (!local _unit || { !alive _unit } || { !_state } || { !isPlayer _unit }) exitWith {};
 
+		_unit setCaptive false;
+
 		// inform other players
 		if(isMultiplayer && count(call CBA_fnc_players) > 1) then {
 			[
@@ -71,19 +73,19 @@ if((isPlayer _unit) && isNil "OT_ACEunconsciousChangedEHId") then {
 		//Look for a medic
 		private _havepi = "ACE_epinephrine" in (items player);
 		private _nearbyUnits = player nearentities["CAManBase",50];
-		_nearbyUnits apply {
+		{
 			if (
 				!isPlayer _x
+				&& { (vehicle _x isEqualTo _x) }
 				&& { ((side _x isEqualTo resistance) || captive _x) }
 				&& { !(_unit isEqualTo _x) }
 				&& { _havepi || {("ACE_epinephrine" in (items _x))} }
-			) then {
+			) exitWith {
 				systemChat format ["%1: On my way to help you", name _x];
 				_unit setVariable ["OT_informedMedics",(_unit getVariable ["OT_informedMedics",0])+1];
 				[_x,_unit] call OT_fnc_orderRevivePlayer;
 			};
-			0
-		};
+		}forEach(_nearbyUnits);
 
 		if((_unit getVariable ["OT_informedMedics",0]) isEqualTo 0) then {
 			[_unit] call OT_fnc_unconsciousNoHelpPossible;

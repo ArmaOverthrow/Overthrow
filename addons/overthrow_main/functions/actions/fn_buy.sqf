@@ -16,16 +16,14 @@ if(_money < _price) exitWith {"You cannot afford that!" call OT_fnc_notifyMinor}
 
 //If faction dealer, increase standing
 private _civ = OT_interactingWith;
-if(!isNil "_civ") then {
-	if(_civ getVariable ["factionrep",false]) then {
-		_faction = _civ getVariable ["faction",""];
-		if !(_faction isEqualTo "") then {
-			_increase = floor (_price / 1000);
-			if(_increase > 0) then {
-				private _factionName = server getvariable format["factionname%1",_faction];
-				server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + _increase,true];
-				format["+%1 %2",_increase,_factionName] call OT_fnc_notifyMinor;
-			};
+if(!isNil "_civ" && _civ getVariable ["factionrep",false] && !((_cls isKindOf "Land") || (_cls isKindOf "Air") || (_cls isKindOf "Ship"))) then {
+	_faction = _civ getVariable ["faction",""];
+	if !(_faction isEqualTo "") then {
+		_increase = floor (_price / 1000);
+		if(_increase > 0) then {
+			private _factionName = server getvariable format["factionname%1",_faction];
+			server setVariable [format["standing%1",_faction],(server getVariable [format["standing%1",_faction],0]) + _increase,true];
+			format["+%1 %2",_increase,_factionName] call OT_fnc_notifyMinor;
 		};
 	};
 };
@@ -34,7 +32,7 @@ if(_cls == "Set_HMG") exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,"C_Quadbike_01_F"];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 	private _veh = "C_Quadbike_01_F" createVehicle _pos;
 	[_veh,getPlayerUID player] call OT_fnc_setOwner;
 	clearWeaponCargoGlobal _veh;
@@ -48,10 +46,11 @@ if(_cls == "Set_HMG") exitWith {
 	format["You bought a Quad Bike w/ HMG for $%1",_price] call OT_fnc_notifyMinor;
 	playSound "3DEN_notificationDefault";
 };
-if(OT_interactingWith getVariable ["factionrep",false] && ((_cls isKindOf "Land") || (_cls isKindOf "Air"))) exitWith {
+if(OT_interactingWith getVariable ["factionrep",false] && ((_cls isKindOf "Land") || (_cls isKindOf "Air") || (_cls isKindOf "Ship"))) exitWith {
 	private _blueprints = server getVariable ["GEURblueprints",[]];
 	if !(_cls in _blueprints) then {
 		_blueprints pushback _cls;
+		[-_price] call OT_fnc_money;
 		server setVariable ["GEURblueprints",_blueprints,true];
 		_factionName = OT_interactingWith getVariable ["factionrepname",""];
 		format["%1 has bought %2 blueprint from %3",name player,_cls call OT_fnc_vehicleGetName,_factionName] remoteExec ["OT_fnc_notifyMinor",0,false];
@@ -68,7 +67,7 @@ if(_cls == OT_item_UAV) exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 
 	private _veh = createVehicle [_cls, _pos, [], 0,""];
 	_veh setVariable ["OT_spawntrack",true,true]; //Tells virtualization to track this vehicle like it's a player.
@@ -98,7 +97,7 @@ if(_cls in OT_allVehicles) exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 	private _veh = _cls createVehicle _pos;
 	[_veh,getPlayerUID player] call OT_fnc_setOwner;
 	clearWeaponCargoGlobal _veh;
@@ -119,7 +118,7 @@ if(_cls isKindOf "Ship") exitWith {
 	private _pos = (getpos player) findEmptyPosition [5,100,_cls];
 	if (count _pos == 0) exitWith {"Not enough space, please clear an area nearby" call OT_fnc_notifyMinor};
 
-	player setVariable ["money",_money-_price,true];
+	[-_price] call OT_fnc_money;
 	private _veh = _cls createVehicle _pos;
 	[_veh,getPlayerUID player] call OT_fnc_setOwner;
 	clearWeaponCargoGlobal _veh;

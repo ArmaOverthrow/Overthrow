@@ -13,3 +13,4 @@ if !(_town in (server getVariable ["NATOabandoned",[]]) || _numtags > 9) then {
 };
 
 server setVariable [format["tagsin%1",_town],_numtags + 1,true];
+spawner setVariable [format["lasttagin%1",_town],_unit,true];
