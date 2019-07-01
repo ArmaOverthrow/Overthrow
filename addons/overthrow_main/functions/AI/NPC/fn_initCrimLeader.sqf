@@ -5,8 +5,8 @@ params ["_unit","_town","_gangid"];
 
 _unit disableAI "PATH";
 
-_unit setVariable ["crimleader",true,false];
-_unit setVariable ["hometown",_town,false];
+_unit setVariable ["crimleader",true,true];
+_unit setVariable ["hometown",_town,true];
 
 [_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
 [_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
