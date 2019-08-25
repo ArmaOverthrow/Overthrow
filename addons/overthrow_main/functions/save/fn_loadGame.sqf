@@ -505,6 +505,9 @@ private _built = (allMissionObjects "Static");
 	[_uid,"leased",_leasedNew] call OT_fnc_setOfflinePlayerAttribute;		// Overwrite the "leased" data to get rid of the IDs that point to buildings which no longer exist (player-built houses)
 	[_uid,"leasedBuilt",[]] call OT_fnc_setOfflinePlayerAttribute;
 }foreach(players_NS getvariable ["OT_allPlayers",[]]);
+
+OT_autoSave_last_time = (time + (OT_autoSave_time*60)) + 60;
+
 sleep 2; //let the variables propagate
 server setVariable ["StartupType","LOAD",true];
 hint "Persistent Save Loaded";
