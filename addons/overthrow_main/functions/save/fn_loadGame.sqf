@@ -168,35 +168,37 @@ private _hasList_buildableHouses = false;
 				if(count _x > 7) then {		// index range 0..6
 					(_x select 7) params ["_fuel","_dmg"];
 					//Fuel in tank
-					_veh setFuel _fuel;
-					{
-						_d = (_dmg select 2) select _forEachIndex;
-						if(_d > 0) then {
-							_veh setHitPointDamage [_x, _d, false];
-						};
-					}foreach(_dmg select 0);
-					if(count (_x select 7) > 2) then {
-						//ACE refuel (fuel trucks)
-						[_veh, (_x select 7) select 2] call ace_refuel_fnc_setFuel;
-					};
-					if(count (_x select 7) > 3) then {
-						//Lock/unlock
-						_veh setVariable ["OT_locked",(_x select 7) select 3,true];
-					};
-					if(count (_x select 7) > 4) then {
-						//Ammo
-						_ammo = (_x select 7) select 4;
+					if !(_veh isKindOf "Building") then {
+						_veh setFuel _fuel;
 						{
-							_veh setAmmo [_x select 0,_x select 1];
-						}foreach((_x select 7) select 4);
-					};
-					if(count (_x select 7) > 5) then {
-						//Attached
-						_a = (_x select 7) select 5;
-						if(count _a > 0) then {
-							_a params ["_attached","_am"];
-							_veh setVariable ["OT_attachedClass",_attached,true];
-							[_veh,_am] call OT_fnc_initAttached;
+							_d = (_dmg select 2) select _forEachIndex;
+							if(_d > 0) then {
+								_veh setHitPointDamage [_x, _d, false];
+							};
+						}foreach(_dmg select 0);
+						if(count (_x select 7) > 2) then {
+							//ACE refuel (fuel trucks)
+							[_veh, (_x select 7) select 2] call ace_refuel_fnc_setFuel;
+						};
+						if(count (_x select 7) > 3) then {
+							//Lock/unlock
+							_veh setVariable ["OT_locked",(_x select 7) select 3,true];
+						};
+						if(count (_x select 7) > 4) then {
+							//Ammo
+							_ammo = (_x select 7) select 4;
+							{
+								_veh setAmmo [_x select 0,_x select 1];
+							}foreach((_x select 7) select 4);
+						};
+						if(count (_x select 7) > 5) then {
+							//Attached
+							_a = (_x select 7) select 5;
+							if(count _a > 0) then {
+								_a params ["_attached","_am"];
+								_veh setVariable ["OT_attachedClass",_attached,true];
+								[_veh,_am] call OT_fnc_initAttached;
+							};
 						};
 					};
 				};
