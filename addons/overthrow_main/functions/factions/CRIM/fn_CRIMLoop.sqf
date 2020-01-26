@@ -16,7 +16,7 @@ if !(crim_counter < 12) then {
         if(count _gangs > 0) then {
             private _gangid = _gangs select 0;
             private _gang = OT_civilians getVariable [format["gang%1",_gangid],[]];
-            if(count _gang > 4) then { //filter out old gangs
+            if(count _gang == 9) then { //filter out old gangs
                 _gang params ["_members","","","","","","_resources","_level","_name"];
                 private _numingang = count _members;
 
