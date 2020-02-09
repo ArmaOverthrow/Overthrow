@@ -35,6 +35,7 @@ if(isMultiplayer && (!isServer)) then {
 	call OT_fnc_initBaseVar;
 	call compile preprocessFileLineNumbers "initVar.sqf";
 	call OT_fnc_initVar;
+	[] spawn OT_fnc_jobSystem;
 	addMissionEventHandler ["EntityKilled",OT_fnc_deathHandler];
 	//ACE3 events
 	["ace_cargoLoaded",OT_fnc_cargoLoadedHandler] call CBA_fnc_addEventHandler;
@@ -304,6 +305,7 @@ if (_newplayer) then {
             _x addItemCargoGlobal ["ToolKit", 1];
 			_x addBackpackCargoGlobal ["B_AssaultPack_khk", 1];
 			_x addItemCargoGlobal ["NVGoggles_INDEP", 1];
+			_x addItemCargoGlobal ["ACRE_PRC343", 1];
         };
         [_x,getplayeruid player] call OT_fnc_setOwner;
     }foreach(_furniture);
