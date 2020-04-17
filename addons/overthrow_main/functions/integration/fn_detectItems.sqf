@@ -143,3 +143,10 @@ private _getprice = {
     private _qty = getNumber ( _x >> "ot_craftQuantity" );
     OT_craftableItems pushback [_cls,_recipe,_qty];
 }foreach("getNumber (_x >> ""ot_craftable"") isEqualTo 1" configClasses ( configFile >> "CfgMagazines" ));
+//add craftable weapons
+{
+    private _cls = configName _x;
+    private _recipe = call compileFinal getText (_x >> "ot_craftRecipe");
+    private _qty = getNumber ( _x >> "ot_craftQuantity" );
+    OT_craftableItems pushback [_cls,_recipe,_qty];
+}foreach("getNumber (_x >> ""ot_craftable"") isEqualTo 1" configClasses ( configFile >> "CfgWeapons" ));
