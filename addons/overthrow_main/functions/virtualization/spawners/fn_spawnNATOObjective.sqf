@@ -268,6 +268,9 @@ private _road = objNull;
 	private _vehtype = _x;
 	private _got = false;
 	private _pos = _posTown findEmptyPosition [25,250,_vehtype];
+	if ((count _pos)==0) then {//added to correct error
+	    _pos = [0,0,0];
+	};
 	private _dir = random 360;
 
 	private _loops = 0;
