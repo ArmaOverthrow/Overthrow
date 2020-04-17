@@ -23,7 +23,9 @@ if(count _def > 0) then {
         _x params ["_rcls","_rqty"];
         _name = _rcls call {
             params ["_rcls"];
-            if(_rcls isEqualTo "Uniform_Base") exitWith {"Clothing"};
+            if(_rcls isEqualTo "Uniform_Base") exitWith {"Clothing"};// allows hierarchy w/o display name to have display name in recipe menu
+			if(_rcls isEqualTo "CA_LauncherMagazine") exitWith {"Rocket"};
+			if(_rcls isEqualTo "HandGrenade") exitWith {"Grenade"};
             if(_rcls isKindOf ["Default", configFile >> "CfgMagazines"]) exitWith {_rcls call OT_fnc_magazineGetName};
             _rcls call OT_fnc_weaponGetName;
         };
