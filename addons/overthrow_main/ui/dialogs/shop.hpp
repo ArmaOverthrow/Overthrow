@@ -447,6 +447,24 @@ class OT_dialog_warehouse
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
+
+		class RscButton_1604: RscOverthrowButton
+		{
+			idc = 1604;
+			text = "Search";
+			x = 0.65  * safezoneW + safezoneX;
+			y = 0.155 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.05 * safezoneH;
+		};
+		class RscEdit_1700: RscEditOverthrow
+		{
+			idc = 1700;
+			x = 0.247344  * safezoneW + safezoneX;
+			y = 0.155 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.05 * safezoneH;
+		};
 	};
 };
 
@@ -544,6 +562,25 @@ class OT_dialog_import
 		////////////////////////////////////////////////////////
 		// GUI EDITOR OUTPUT END
 		////////////////////////////////////////////////////////
+		
+		class RscButton_1603: RscOverthrowButton
+		{
+			idc = 1603;
+			text = "Search";
+			x = 0.65  * safezoneW + safezoneX;
+			y = 0.155 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.05 * safezoneH;
+		};
+		class RscEdit_1700: RscEditOverthrow
+		{
+			idc = 1700;
+			x = 0.247344  * safezoneW + safezoneX;
+			y = 0.155 * safezoneH + safezoneY;
+			w = 0.402187 * safezoneW;
+			h = 0.05 * safezoneH;
+		};
+
 	};
 };
 
