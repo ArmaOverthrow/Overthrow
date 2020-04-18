@@ -201,6 +201,8 @@ OT_staticBackpacks = [
 ];
 
 OT_backpacks = [
+	['ACE_NVG_Gen4',[10000,0,0,200]],
+	['ACE_NVG_Wide',[10000,0,0,400]],
 	["B_AssaultPack_cbr",20,0,0,1],
 	["B_AssaultPack_blk",20,0,0,1],
 	["B_AssaultPack_khk",20,0,0,1],
