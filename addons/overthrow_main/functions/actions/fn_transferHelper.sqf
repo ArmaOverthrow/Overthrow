@@ -93,6 +93,14 @@ _this spawn {
 				};
 			};
 			call {
+				//NVGoggles are also "Binocular" so check first
+				if(_cls isKindOf ["NVGoggles",configFile >> "CfgWeapons"]) exitWith {
+					[_target, _cls, _count] call CBA_fnc_removeItemCargo;
+				};
+				//removeMagazineCargo does not work on Binocular so add check for binocular
+				if(_cls isKindOf ["Binocular",configFile >> "CfgWeapons"]) exitWith {
+					[_target, _cls, _count] call CBA_fnc_removeWeaponCargo;
+				};
 				if(_cls isKindOf "Bag_Base") exitWith {
 					[_target, _cls, _count] call CBA_fnc_removeBackpackCargo;
 				};
