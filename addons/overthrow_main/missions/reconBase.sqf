@@ -59,11 +59,9 @@ private _title = format["Recon of %1",_base];
 
         if(_oldcount < _count) then {
             format["%2 units spotted at %1",_base,_count] remoteExec ["systemChat",_players select 0,false];
-            format["%2 out off %1",_oldcount,_count] remoteExec ["systemChat",_players select 0,false];
         };
 
         _this set [1,_count];
-        format["%2 out off %1",_oldcount,_count] remoteExec ["systemChat",_players select 0,false];
         !_missedOne
     },
     {
