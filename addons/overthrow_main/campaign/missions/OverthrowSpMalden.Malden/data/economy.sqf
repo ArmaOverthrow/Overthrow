@@ -20,7 +20,7 @@ OT_economicData = [
     [[7044.6,9142.94,0],"Saint Louis Wines","OT_Grapes","OT_Wine"]
 ];
 OT_factoryPos = [7521.23,10586.5,0];
-OT_factoryVehicleSpawn = [6183.15,16269.7,0];
+OT_factoryVehicleSpawn = [7561.96,10496.3,0];
 OT_factoryVehicleDir = 67;
 OT_connectedRegions = [
 
