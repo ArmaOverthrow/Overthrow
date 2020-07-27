@@ -127,16 +127,18 @@ if(_create isEqualType 1) then {
 
         if !(_done) then {
             _p = _pos findEmptyPosition [20,120,_class_obj];
-            _dir = random 360;
-            //put sandbags
-			private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
-			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
-			_veh setpos _sp;
-			_veh setDir (_dir-180);
-			_sp = [_p,-1.5,_dir] call BIS_fnc_relPos;
-			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
-			_veh setpos _sp;
-			_veh setDir (_dir);
+            if (count p != 0) then {
+                _dir = random 360;
+                //put sandbags
+    			private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
+    			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
+    			_veh setpos _sp;
+    			_veh setDir (_dir-180);
+    			_sp = [_p,-1.5,_dir] call BIS_fnc_relPos;
+    			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
+    			_veh setpos _sp;
+    			_veh setDir (_dir);
+            };
         };
 
         private _cost = [OT_nation,_class_price,0] call OT_fnc_getPrice;
