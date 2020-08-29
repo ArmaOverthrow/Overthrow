@@ -190,20 +190,7 @@ if(_target isEqualType "") then {
                 }foreach(vestItems _unit);
                 removeVest _unit;
             }else{
-                //To account for CBA bug #1153: https://github.com/CBATeam/CBA_A3/issues/1153
-                //Remove when CBA fixes issue
-                private _numvests = 0;
-                {
-                    if(_x isEqualTo _vest) then {
-                        _numvests = _numvests + 1;
-                    };
-                }foreach(itemCargo _ammobox);
                 [_ammobox, _vest, 1] call CBA_fnc_removeItemCargo;
-                _numvests = _numvests - 1;
-                //Put vests back to account for bug
-                if(_numvests > 0) then {
-                    [_ammobox, _vest, _numvests] call CBA_fnc_addItemCargo;
-                };
             };
         };
 
