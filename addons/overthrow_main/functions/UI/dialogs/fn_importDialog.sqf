@@ -1,5 +1,5 @@
 buttonSetAction [1603, '[] spawn OT_fnc_importDialog'];
-if(count (player nearObjects [OT_portBuilding,30]) isEqualTo 0) exitWith {};
+if(count (nearestObjects [player,OT_portBuilding,30]) isEqualTo 0) exitWith {};
 private _town = player call OT_fnc_nearestTown;
 _items = OT_Resources + OT_allItems + OT_allBackpacks + ["V_RebreatherIA"];
 if(_town in (server getVariable ["NATOabandoned",[]]) || OT_adminMode) then {
