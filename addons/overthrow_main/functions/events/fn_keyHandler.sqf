@@ -4,7 +4,7 @@ if(!dialog) then {
 	if(count (player nearObjects [OT_workshopBuilding,10]) > 0) then {
 		[] call OT_fnc_workshopDialog;
 	}else{
-		if((vehicle player) != player && count (player nearObjects [OT_portBuilding,30]) > 0) then {
+		if((vehicle player) != player && count (nearestObjects [player,OT_portBuilding,30]) > 0) then {
 			createDialog "OT_dialog_vehicleport";
 			private _ft = server getVariable ["OT_fastTravelType",1];
 			if(!OT_adminMode && _ft > 1) then {
