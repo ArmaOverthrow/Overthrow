@@ -62,6 +62,7 @@ addons[]=
 	"A3_Structures_F_Enoch_Military_Training",
 	"A3_Structures_F_Ind_Transmitter_Tower",
 	"A3_Structures_F_Enoch_Civilian_Sheds",
+	"A3_Structures_F_Enoch_Industrial_Houses",
 	"A3_Structures_F_Exp_Industrial_Port",
 	"A3_Structures_F_Ind_Cargo"
 };
