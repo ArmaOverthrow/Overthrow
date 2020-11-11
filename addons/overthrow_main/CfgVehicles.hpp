@@ -233,6 +233,12 @@ class CfgVehicles {
         ot_template = '[["Land_MetalCase_01_small_F",[-0.507421,-0.278264,0.377357],0,1,0,[],"","",true,false], ["B_CargoNet_01_ammo_F",[-1.09897,-1.48947,0.377357],0,1,0,[],"","",true,false], ["Land_Workbench_01_F",[-4.09043,2.20817,0.324941],270,1,0,[],"","",true,false], ["Land_MapBoard_F",[-4.07916,-4.87537,0.325],210,1,0,[],"","",true,false] ]';
 	};
 
+    //Houses (Livonia)
+    class Land_Workshop_03_grey_F : House_Small_f {
+        ot_isPlayerHouse = 1;
+        ot_template = '[]';
+    };
+
     //Shops (Tanoa)
     class Land_FuelStation_01_shop_F: House_F {
         ot_isShop = 1;
