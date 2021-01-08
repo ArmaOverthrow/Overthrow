@@ -99,7 +99,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         		_x setVariable ["garrison","HQ",false];
         	}foreach(crew _veh);
             _driver assignAsCommander _veh;
-            _convoypos = _convoypos getPos [20, _dir];
+            _convoypos = _convoypos getPos [20, -_dir];
             _count = _count + 1;
             sleep 0.3;
         };

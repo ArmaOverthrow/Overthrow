@@ -166,17 +166,17 @@ _pos call {
 		_isCoastal = true;
 		_seaAO = _p;
 	};
-	 _p = _this getPos [500, 0];
+	 _p = _this getPos [500, 90];
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;
 	};
-	 _p = _this getPos [500, 0];
+	 _p = _this getPos [500, 180];
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;
 	};
-	 _p = _this getPos [500, 0];
+	 _p = _this getPos [500, 270];
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;

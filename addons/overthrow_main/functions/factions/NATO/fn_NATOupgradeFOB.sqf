@@ -8,7 +8,7 @@ params ["_pos","_upgrades"];
 
         sleep 0.3;
 
-        _p = _pos getPos [8, 100];
+        _p = _pos getPos [8, 180];
         _v = OT_NATO_Barrier_Small createVehicle _p;
         _v setDir 0;
 
