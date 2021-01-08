@@ -57,7 +57,7 @@ _campos = [(_playerpos select 0)+35,(_playerpos select 1)+35,(_playerpos select 
 _start = [position player select 0, position player select 1, 2];
 buildcam = "camera" camCreate _start;
 
-buildFocus = createVehicle ["Sign_Sphere10cm_F", [_start,1000,getDir player] call BIS_fnc_relPos, [], 0, "NONE"];
+buildFocus = createVehicle ["Sign_Sphere10cm_F", _start getPos [1000, getDir player], [], 0, "NONE"];
 buildFocus setObjectTexture [0,"\overthrow_main\ui\clear.paa"];
 
 buildcam camSetTarget buildFocus;

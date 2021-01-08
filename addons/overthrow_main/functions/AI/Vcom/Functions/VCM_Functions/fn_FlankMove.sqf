@@ -79,7 +79,7 @@ switch (_wayPointType) do {
 		}; 
     case "Retreat": 
 		{
-			private _MovePosition = [_nearestEnemy,(_nearestEnemy distance2D _leader),([_nearestEnemy, _leader] call BIS_fnc_dirTo)] call BIS_fnc_relPos;
+			private _MovePosition = _nearestEnemy getPos [(_nearestEnemy distance2D _leader), _nearestEnemy getDir _leader];
 			private _finalP = [[[_MovePosition, 50]],["water"]] call BIS_fnc_randomPos;
 			_finalP set [2,0];
 			private _waypoint0 = _grp addwaypoint [_finalP,0];
@@ -98,7 +98,7 @@ switch (_wayPointType) do {
 			private _positions = [(_myEnemyPos select 0) + (sin _dir) * _dist, (_myEnemyPos select 1) + (cos _dir) * _dist, 0];
 			private _myPlaces = selectBestPlaces [_myEnemyPos, 250,"((6*hills + 2*forest + 4*houses + 2*meadow) - sea + (2*trees)) - (1000*deadbody)", 100, 5];
 			if (_myPlaces isEqualTo []) then {_myPlaces = [_positions];};
-			private _RandomArray = _myPlaces call BIS_fnc_selectrandom;
+			private _RandomArray = selectRandom _myPlaces;
 			private _RandomLocation = _RandomArray select 0;
 			_RandomLocation set [2,0];
 			private _finalP = [[[_RandomLocation, 50]],["water"]] call BIS_fnc_randomPos;
@@ -121,8 +121,8 @@ switch (_wayPointType) do {
 			private _myPlacesL = selectBestPlaces [_leaderPos, 250,"((6*hills + 2*forest + 4*houses + 2*meadow) - sea + (2*trees)) - (1000*deadbody)", 100, 5];
 			if (_myPlaces isEqualTo []) then {_myPlaces = [_positions];};
 			if (_myPlacesL isEqualTo []) then {_myPlaces = [_positionsL];};
-			private _RandomArray = _myPlaces call BIS_fnc_selectrandom;
-			private _RandomArray2 = _myPlacesL call BIS_fnc_selectrandom;
+			private _RandomArray = selectRandom _myPlaces;
+			private _RandomArray2 = selectRandom _myPlacesL;
 			private _RandomLocation = _RandomArray select 0;
 			private _RandomLocationL = _RandomArray2 select 0;
 			_RandomLocation set [2,0];

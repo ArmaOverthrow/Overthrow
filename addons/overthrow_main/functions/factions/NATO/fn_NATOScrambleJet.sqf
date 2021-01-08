@@ -35,7 +35,8 @@ if !(OT_NATO_HQ in _abandoned) then {
     }foreach(crew _veh);
     sleep 1;
 
-    private _dir = [_targetpos,OT_NATO_JetPos] call BIS_fnc_dirTo;
+    //private _dir = [_targetpos,OT_NATO_JetPos] call BIS_fnc_dirTo;
+    _dir = _targetPos getDir OT_NATO_JetPos;
     private _attackpos = [_targetpos,[200,500],_dir] call SHK_pos_fnc_pos;
 
     _wp = _group addWaypoint [_attackpos,50];

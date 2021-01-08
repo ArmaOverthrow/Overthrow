@@ -13,7 +13,7 @@ _gundealerpos = server getVariable format["gundealer%1",_town];
 if(isNil "_gundealerpos") then {
 	_building = [_posTown,OT_gunDealerHouses] call OT_fnc_getRandomBuilding;
 	if(typename _building != "BOOL") then {
-		_gundealerpos = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
+		_gundealerpos = selectRandom (_building call BIS_fnc_buildingPositions);
 		[_building,"system"] call OT_fnc_setOwner;
 	}else{
 		_gundealerpos = [[[_posTown,200]]] call BIS_fnc_randomPos;

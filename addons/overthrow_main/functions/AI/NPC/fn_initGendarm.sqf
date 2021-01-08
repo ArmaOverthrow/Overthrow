@@ -1,7 +1,7 @@
 params ["_unit","_town"];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
+[_unit, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _unit];
+[_unit, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _unit];
 
 _unit setVariable ["garrison",_town,false];
 

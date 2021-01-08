@@ -139,7 +139,7 @@ if(_numNATO > 0) then {
 				"Land_Cargo_Patrol_V4_F"
 			] findIf {_x == _type}) != -1) exitWith {
 				private _ang = (getDir _building) - 190;
-				private _p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
+				private _P = _building buildingPos 1 getPos [2.3, _ang];
 				private _veh = createVehicle [OT_NATO_HMG, _p, [], 0, "CAN_COLLIDE"];
 				_veh setPosATL _p;
 				_veh setDir (getDir _building) - 180;
@@ -235,8 +235,8 @@ if(count _terminal > 0) then {
 		_dir = _dir + 180;
 		_dist = 50;
 	};
-	_pos = [_tp,_dist,_dir] call BIS_fnc_relPos;
-	_pos = [_pos,100,_dir-90] call BIS_fnc_relPos;
+	_pos = _tp getPos [_dist, _dir];
+	_pos = _pos getPos [100, _dir-90];
 }else{
 	if(_name isEqualTo OT_NATO_HQ) then {
 		_pos = OT_NATO_HQ_garrisonPos;
@@ -250,7 +250,7 @@ private _airgarrison = server getVariable [format["airgarrison%1",_name],[]];
 {
 	private _vehtype = _x;
 
-	_pos = [_pos,28,_dir+90] call BIS_fnc_relPos;
+	_pos = _pos getPos [28, _dir+90];
 
 	private _veh =  _vehtype createVehicle _pos;
 	_veh setVariable ["airgarrison",_name,false];
@@ -282,12 +282,12 @@ private _road = objNull;
 	if(count _pos > 0) then {
 		if(_vehtype in OT_staticWeapons) then {
 			//put sandbags
-			private _p = [_pos,1.5,_dir] call BIS_fnc_relPos;
+			private _p = _pos getPos [1.5, _dir];
 			_veh =  OT_NATO_Sandbag_Curved createVehicle _p;
 			_veh setpos _p;
 			_veh setDir (_dir-180);
 			_groups pushback _veh;
-			_p = [_pos,-1.5,_dir] call BIS_fnc_relPos;
+			_p = _pos getPos [-1.5, _dir];
 			_veh =  OT_NATO_Sandbag_Curved createVehicle _p;
 			_veh setpos _p;
 			_veh setDir (_dir);

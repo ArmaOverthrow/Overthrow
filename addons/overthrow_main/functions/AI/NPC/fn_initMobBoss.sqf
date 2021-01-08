@@ -3,8 +3,8 @@ _unit = _this;
 
 _unit setVariable ["mobboss",true,false];
 
-private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
-private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
+private _firstname = selectRandom OT_firstNames_local;
+private _lastname = selectRandom OT_lastNames_local;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_unit,_fullname] remoteExecCall ["setName",0,_unit];
 
@@ -19,7 +19,7 @@ _unit addEventHandler ["HandleDamage", {
 }];
 
 [_unit, OT_face_localBoss] remoteExecCall ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
+[_unit, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _unit];
 _unit forceAddUniform OT_clothes_mob;
 
 removeAllItems _unit;
@@ -34,7 +34,7 @@ _unit addHeadgear "H_Booniehat_khk_hs";
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest (OT_allExpensiveVests call BIS_fnc_selectRandom);
+_unit addVest (selectRandom OT_allExpensiveVests);
 if(OT_hasTFAR) then {
 	_unit linkItem "tf_fadak";
 }else{
@@ -48,7 +48,7 @@ if(_hour < 8 || _hour > 15) then {
 _unit linkItem "ACE_Altimeter";
 _unit linkItem "ACE_Cellphone";
 
-_weapon = (OT_CRIM_Weapons + OT_allCheapRifles) call BIS_fnc_selectRandom;
+_weapon = selectRandom (OT_CRIM_Weapons + OT_allCheapRifles);
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;
 _unit addMagazine _magazine;
@@ -75,13 +75,13 @@ for "_i" from 0 to (_numslots-1) do {
 			_items = getArray(_com);
 		};
 		if(count _items > 0) then {
-			_cls = _items call BIS_fnc_selectRandom;
+			_cls = selectRandom _items;
 			_unit addPrimaryWeaponItem _cls;
 		};
 	};
 };
 
-_weapon = OT_allHandguns call BIS_fnc_selectRandom;
+_weapon = selectRandom OT_allHandguns;
 _unit addWeaponGlobal _weapon;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;

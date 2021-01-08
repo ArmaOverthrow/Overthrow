@@ -7,7 +7,7 @@ private _frompos = server getvariable _from;
 private _fromregion = _frompos call OT_fnc_getRegion;
 private _topos = server getvariable _to;
 
-private _dir = [_frompos,_topos] call BIS_fnc_dirTo;
+private _dir = _frompos getDir _topos;
 
 private _group = creategroup blufor;
 spawner setVariable [format["spawn%1",_missionid],_group,false];
@@ -23,7 +23,8 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
             _posVeh = (getpos _road) findEmptyPosition [5,25,_vehtypes select 0];
             if(count _posVeh > 0) then {
                 _convoypos = _posVeh;
-                _dir = [_road, _roadscon select 0] call BIS_fnc_DirTo;
+                //_dir = [_road, _roadscon select 0] call BIS_fnc_DirTo;
+                _dir = _road getDir _roadscon select 0;
             };
         };
     };
@@ -43,7 +44,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
     		_x setVariable ["garrison","HQ",false];
     	}foreach(crew _veh);
         _driver assignAsCommander _veh;
-        _convoypos = [_convoypos,20,_dir+180] call BIS_fnc_relPos;
+        _convoypos = _convoypos getPos [20, _dir+180];
         {
             _x addCuratorEditableObjects [[_veh]];
         }foreach(allCurators);
@@ -72,7 +73,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         _driver setRank "COLONEL";
         if(isNull _track) then {_track = _driver};
 
-        _convoypos = [_convoypos,20,_dir] call BIS_fnc_relPos;
+        _convoypos = _convoypos getPos [20, _dir];
 
     	sleep 0.3;
         _x set [2,"CONVOY"];
@@ -98,7 +99,7 @@ if ([_topos,_fromregion] call OT_fnc_regionIsConnected) then {
         		_x setVariable ["garrison","HQ",false];
         	}foreach(crew _veh);
             _driver assignAsCommander _veh;
-            _convoypos = [_convoypos,20,-_dir] call BIS_fnc_relPos;
+            _convoypos = _convoypos getPos [20, _dir];
             _count = _count + 1;
             sleep 0.3;
         };

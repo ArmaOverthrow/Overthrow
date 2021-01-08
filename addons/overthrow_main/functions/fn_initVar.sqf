@@ -995,7 +995,8 @@ OT_Buildables = [
 		private _tpl = _x select 2;
 		OT_allBuyableBuildings pushback ((_tpl select 0) select 0);
 	}else{
-		[OT_allBuyableBuildings,(_x select 2)] call BIS_fnc_arrayPushStack;
+		//[OT_allBuyableBuildings,(_x select 2)] call BIS_fnc_arrayPushStack;
+		OT_allBuyableBuildings pushBack (_x select 2);
 	}
 }foreach(OT_Buildables);
 

@@ -1,10 +1,10 @@
 params ["_frompos","_ao","_attackpos","_byair",["_delay",0]];
 if (_delay > 0) then {sleep _delay};
-private _vehtype = OT_NATO_Vehicle_Transport call BIS_fnc_selectRandom;
+private _vehtype = selectRandom OT_NATO_Vehicle_Transport;
 if(_byair) then {
-	_vehtype = OT_NATO_Vehicle_AirTransport call BIS_fnc_selectRandom;
+	_vehtype = selectRandom OT_NATO_Vehicle_AirTransport;
 };
-private _squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
+private _squadtype = selectRandom OT_NATO_GroundForces;
 private _spawnpos = _frompos;
 private _group1 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 _group1 deleteGroupWhenEmpty true;
@@ -12,7 +12,7 @@ private _group2 = "";
 private _tgroup = false;
 if !(_byair) then {
 	sleep 0.3;
-	_squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
+	_squadtype = selectRandom OT_NATO_GroundForces;
 	_group2 = [_spawnpos, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO >> "Infantry" >> _squadtype)] call BIS_fnc_spawnGroup;
 	_group2 deleteGroupWhenEmpty true;
 };
@@ -40,7 +40,8 @@ if !(_pos isEqualType []) then {
 	if(count _pos == 0) then {
 		_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
 	};
-	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
+	//_dir = [_frompos,_ao] call BIS_fnc_dirTo;
+	_dir = _fromPos getDir _ao;
 };
 _pos set [2,1];
 _veh = createVehicle [_vehtype, [0,0,1000+random 1000], [], 0, "CAN_COLLIDE"];
@@ -134,7 +135,8 @@ if(_byair && _tgroup isEqualType grpNull) then {
 }else{
 	if(typename _tgroup isEqualTo "GROUP") then {
 		_veh setdamage 0;
-		_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
+		//_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
+		_dir = _attackPos getDir _fromPos;
 		_roads = _ao nearRoads 150;
 		private _dropos = _ao;
 

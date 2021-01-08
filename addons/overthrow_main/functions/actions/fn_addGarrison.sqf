@@ -83,7 +83,7 @@ if(_create isEqualType 1) then {
                     || (_type == "Land_Cargo_Patrol_V4_F")
                 ) exitWith {
                     private _ang = (getDir _building) - 190;
-    				private _p = [_building buildingPos 1, 2.3, _ang] call BIS_Fnc_relPos;
+                    private _p = _building buildingPos 1 getPos [2.3, _ang];
     				private _dir = (getDir _building) - 180;
 
                     private _guns = {alive _x} count(nearestObjects [_p, ["I_HMG_01_high_F","I_GMG_01_high_F"], 5]);
@@ -130,11 +130,11 @@ if(_create isEqualType 1) then {
             if (count p != 0) then {
                 _dir = random 360;
                 //put sandbags
-    			private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
+                private _sp = _p getPos [1.5, _dir];
     			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
     			_veh setpos _sp;
     			_veh setDir (_dir-180);
-    			_sp = [_p,-1.5,_dir] call BIS_fnc_relPos;
+    			_sp = _p getPos [1.5, _dir];
     			_veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
     			_veh setpos _sp;
     			_veh setDir (_dir);

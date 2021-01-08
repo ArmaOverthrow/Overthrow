@@ -4,7 +4,7 @@ private _vehtype = OT_NATO_Vehicle_Transport_Light;
 if(_byair) then {
 	_vehtype = OT_NATO_Vehicle_AirTransport select 0;
 };
-private _squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
+private _squadtype = selectRandom OT_NATO_GroundForces;
 private _spawnpos = _frompos;
 private _group1 = createGroup west;
 _group1 deleteGroupWhenEmpty true;
@@ -38,7 +38,8 @@ if !(_pos isEqualType []) then {
 	if(count _pos == 0) then {
 		_pos = [_frompos,0,75,false,[0,0],[120,_vehtype]] call SHK_pos_fnc_pos;
 	};
-	_dir = [_frompos,_ao] call BIS_fnc_dirTo;
+	//_dir = [_frompos,_ao] call BIS_fnc_dirTo;
+	_dir = _fromPos getDir _ao;
 };
 _pos set [2,0];
 _veh = _vehtype createVehicle _pos;
@@ -113,7 +114,8 @@ if(_byair && _tgroup isEqualType grpNull) then {
 }else{
 	if(typename _tgroup isEqualTo "GROUP") then {
 		_veh setdamage 0;
-		_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
+		//_dir = [_attackpos,_frompos] call BIS_fnc_dirTo;
+		_dir = _attackPos getDir _fromPos;
 		_roads = _ao nearRoads 150;
 		private _dropos = _ao;
 
