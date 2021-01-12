@@ -34,11 +34,9 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 		_vehtype = "";
 
 		if(_pop > 600) then {
-			//BIS_fnc_selectRandom must be used here for some reason.
-			_vehtype = (OT_vehTypes_civ - OT_vehTypes_civignore) call BIS_Fnc_selectRandom;
+			_vehType = selectRandom (OT_vehTypes_civ - OT_vehTypes_civignore);
 		}else{ 
-			//BIS_fnc_selectRandomWeighted must be used here for some reason.
-			_vehtype = [OT_vehTypes_civ,OT_vehWeights_civ] call BIS_Fnc_selectRandomWeighted;
+			_vehType = OT_vehTypes_civ selectRandomWeighted OT_vehWeights_civ;
 		};
 
 		if !(_vehtype in OT_vehTypes_civignore) then {
