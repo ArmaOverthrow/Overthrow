@@ -1,6 +1,6 @@
 
-# Overthrow Plus+
-Reworking a rework. Since the devs are lazy to rewrite a few numbers
+# Overthrow Plus
+Overthrow Plus is a rework of the original Overthrow mission created by armazac @ https://github.com/ArmaOverthrow/Overthrow
 
 ![image](https://cloud.githubusercontent.com/assets/19246239/17642726/b268a4da-6194-11e6-850a-8951aed0f930.png)
 
