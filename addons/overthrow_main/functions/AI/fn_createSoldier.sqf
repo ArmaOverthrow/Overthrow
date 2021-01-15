@@ -12,18 +12,18 @@ if(_takeFromWarehouse) then {
 private _start = [[[_pos,30]]] call BIS_fnc_randomPos;
 private _civ = _group createUnit [_cls, _start, [],0, "NONE"];
 
-private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
-private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
+private _firstname = selectRandom OT_firstNames_local;
+private _lastname = selectRandom OT_lastNames_local;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_civ,_fullname] remoteExec ["setCivName",0,false];
 _civ setRank "LIEUTENANT";
 
-[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+[_civ, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _civ];
 
 if(_clothes != "") then {
 	_civ forceAddUniform _clothes;
 }else{
-	_clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
+	_clothes = (selectRandom OT_clothes_guerilla);
 	_civ forceAddUniform _clothes;
 };
 

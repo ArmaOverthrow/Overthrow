@@ -1,7 +1,7 @@
 params ["_frompos","_ao","_attackpos",["_delay",0]];
 if (_delay > 0) then {sleep _delay};
-private _vehtype = OT_NATO_Vehicles_APC call BIS_fnc_selectRandom;
-private _squadtype = OT_NATO_GroundForces call BIS_fnc_SelectRandom;
+private _vehtype = selectRandom OT_NATO_Vehicles_APC;
+private _squadtype = selectRandom OT_NATO_GroundForces;
 private _spawnpos = _frompos findEmptyPosition [15,100,_vehtype];
 if(count _spawnpos == 0) then {
 	_spawnpos = [_frompos,[5,25]] call SHK_pos_fnc_pos;

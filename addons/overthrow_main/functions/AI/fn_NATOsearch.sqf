@@ -42,7 +42,7 @@ private _wp = _group addWaypoint [position _target,0];
 _wp setWaypointBehaviour "AWARE";
 _group setBehaviour "AWARE";
 if(isplayer _target) then {
-	[_cop,(["Stop right there!","Halt, citizen!","HALT!","Stay right there, citizen"] call BIS_fnc_selectRandom)] remoteExec ["globalchat",_target,false];
+	[_cop,(selectRandom ["Stop right there!","Halt, citizen!","HALT!","Stay right there, citizen"])] remoteExec ["globalchat",_target,false];
 	_wp setWaypointSpeed "FULL";
 	_hdl = _target addEventHandler ["InventoryOpened", {
 		hint "NATO search is in progress, you cannot open your inventory";

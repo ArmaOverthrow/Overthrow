@@ -32,20 +32,21 @@ _group = [_start, WEST, (configFile >> "CfgGroups" >> "West" >> OT_faction_NATO 
 
 sleep 0.5;
 
-_dir = [_start,_posTarget] call BIS_fnc_dirTo;
+//_dir = [_start,_posTarget] call BIS_fnc_dirTo;
+_dir = _start getDir _posTarget;
 
 if(_isAir) then {
 	_attackpos = [_posTarget,[0,150]] call SHK_pos_fnc_pos;
 
 	//Determine direction to attack from (preferrably away from water)
 	_attackdir = random 360;
-	if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
+	if(surfaceIsWater (_posTarget getPos [150, _attackDir])) then {
 		_attackdir = _attackdir + 180;
 		if(_attackdir > 359) then {_attackdir = _attackdir - 359};
-		if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
+		if(surfaceIsWater (_posTarget getPos [150, _attackDir])) then {
 			_attackdir = _attackdir + 90;
 			if(_attackdir > 359) then {_attackdir = _attackdir - 359};
-			if(surfaceIsWater ([_posTarget,150,_attackDir] call BIS_fnc_relPos)) then {
+			if(surfaceIsWater (_posTarget getPos [150, _attackDir])) then {
 				_attackdir = _attackdir + 180;
 				if(_attackdir > 359) then {_attackdir = _attackdir - 359};
 			};

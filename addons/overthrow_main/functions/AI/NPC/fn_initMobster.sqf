@@ -3,8 +3,8 @@ _unit = _this;
 
 _unit setVariable ["mobster",true,false];
 
-private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
-private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
+private _firstname = selectRandom OT_firstNames_local;
+private _lastname = selectRandom OT_lastNames_local;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 [_unit,_fullname] remoteExecCall ["setName",0,_unit];
 
@@ -18,8 +18,8 @@ _unit addEventHandler ["HandleDamage", {
 	};
 }];
 
-[_unit, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _unit];
-[_unit, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _unit];
+[_unit, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _unit];
+[_unit, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _unit];
 _unit forceAddUniform OT_clothes_mob;
 
 removeAllItems _unit;
@@ -34,7 +34,7 @@ _unit addHeadgear "H_Booniehat_khk";
 
 _unit linkItem "ItemMap";
 _unit linkItem "ItemCompass";
-_unit addVest (OT_allProtectiveVests call BIS_fnc_selectRandom);
+_unit addVest (selectRandom OT_allProtectiveVests);
 if(OT_hasTFAR) then {
 	_unit linkItem "tf_fadak";
 }else{
@@ -53,7 +53,7 @@ if((random 100) < 15) then {
 	_unit addItem "OT_Ganja";
 };
 
-_weapon = (OT_CRIM_Weapons) call BIS_fnc_selectRandom;
+_weapon = selectRandom OT_CRIM_Weapons;
 
 _unit addWeaponGlobal _weapon;
 
@@ -61,10 +61,10 @@ _unit addWeaponGlobal _weapon;
 	params ["_unit"];
 	if((random 100) > 98) exitWith {
 		//This guy has a launcher
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
+		_unit addBackpack (selectRandom OT_allBackpacks);
 		_launcher = OT_CRIM_Launchers select 0;
 		_base = [_launcher] call BIS_fnc_baseWeapon;
-		_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
+		_magazine = selectRandom (getArray (configFile / "CfgWeapons" / _base / "magazines"));
 		_unit addMagazine _magazine;
 		_unit addMagazine _magazine;
 		_unit addMagazine _magazine;
@@ -72,7 +72,7 @@ _unit addWeaponGlobal _weapon;
 	};
 	if((random 100) > 85) exitWith {
 		//This is a medic
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
+		_unit addBackpack (selectRandom OT_allBackpacks);
 
 		for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
 		for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
@@ -81,7 +81,7 @@ _unit addWeaponGlobal _weapon;
 	};
 	if((random 100) > 95) exitWith {
 		//This is an engineer
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
+		_unit addBackpack (selectRandom OT_allBackpacks);
 		for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
 		_unit addItemToBackpack "APERSBoundingMine_Range_Mag";
 		_unit addItemToBackpack "ClaymoreDirectionalMine_Remote_Mag";
@@ -96,13 +96,13 @@ _unit addWeaponGlobal _weapon;
 	};
 	if((random 100) > 97) exitWith {
 		//This guy just has a shitload of weed
-		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
+		_unit addBackpack (selectRandom OT_allBackpacks);
 		for "_i" from 1 to round(random 30) do {_unit addItemToBackpack "OT_Ganja";};
 	};
 };
 
 _base = [_weapon] call BIS_fnc_baseWeapon;
-_magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) call BIS_fnc_SelectRandom;
+_magazine = selectRandom (getArray (configFile / "CfgWeapons" / _base / "magazines"));
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
 _unit addMagazine _magazine;
@@ -138,13 +138,13 @@ for "_i" from 0 to (_numslots-1) do {
 			_items = getArray(_com);
 		};
 		if(count _items > 0) then {
-			_cls = _items call BIS_fnc_selectRandom;
+			_cls = selectRandom _items;
 			_unit addPrimaryWeaponItem _cls;
 		};
 	};
 };
 
-_weapon = OT_allHandguns call BIS_fnc_selectRandom;
+_weapon = selectRandom OT_allHandguns;
 _unit addWeaponGlobal _weapon;
 _base = [_weapon] call BIS_fnc_baseWeapon;
 _magazine = (getArray (configFile / "CfgWeapons" / _base / "magazines")) select 0;

@@ -223,7 +223,7 @@ if(!dialog) then {
 				}foreach(groupSelectedUnits player);
 				createDialog "OT_dialog_command";
 			};
-			if(vehicle player != player) exitWith {
+			if(!isNull objectParent player) exitWith {
 				private _ferry = player getVariable ["OT_ferryDestination",[]];
 				if(count _ferry isEqualTo 3) exitWith {
 					_veh = vehicle player;

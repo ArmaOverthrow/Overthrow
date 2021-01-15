@@ -38,7 +38,7 @@ if (_wPos isEqualTo [0,0,0]) then
 
 if !((_wPos distance2D _dir) < _moveDist) then
 {
-	_movePosition = [_leader,_moveDist,([_leader, _dir] call BIS_fnc_dirTo)] call BIS_fnc_relPos;
+	_movePosition = _leader getPos [_moveDist, _leader getDir _dir];
 }
 else
 {

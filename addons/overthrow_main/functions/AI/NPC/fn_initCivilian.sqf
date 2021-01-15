@@ -24,4 +24,5 @@ _unit addEventHandler ["FiredNear", {
 	};
 }];
 
+_unit disableAI "FSM";
 _unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];

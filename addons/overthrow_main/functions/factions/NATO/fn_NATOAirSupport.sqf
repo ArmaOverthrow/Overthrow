@@ -1,6 +1,6 @@
 params ["_frompos","_attackpos",["_delay",0]];
 if (_delay > 0) then {sleep _delay};
-private _vehtype = OT_NATO_Vehicles_AirSupport call BIS_fnc_SelectRandom;
+private _vehtype = selectRandom OT_NATO_Vehicles_AirSupport;
 
 
 private _dir = _frompos getDir _attackpos;

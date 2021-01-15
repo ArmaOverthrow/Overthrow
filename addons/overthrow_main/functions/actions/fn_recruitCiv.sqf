@@ -30,4 +30,5 @@ _civ setVariable ["OT_spawntrack",true,true];
 format["%1 has been recruited",name _civ] call OT_fnc_notifyMinor;
 
 _civ setBehaviour "SAFE";
-[[_civ,""],"switchMove",TRUE,FALSE] call BIS_fnc_MP; // @todo replace with remote exec
+//[[_civ,""],"switchMove",TRUE,FALSE] call BIS_fnc_MP; // @todo replace with remote exec
+[_civ,""] remoteExec ["switchMove", 0, false];

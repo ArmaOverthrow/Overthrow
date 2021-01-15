@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=375;
+		nextID=377;
 	};
 	class Camera
 	{
-		pos[]={8260.8291,19.001881,1106.7407};
-		dir[]={0,-0.70710683,0.70710683};
-		up[]={0,0.70710677,0.70710677};
-		aside[]={0.99999994,0,0};
+		pos[]={8275.1074,180.79962,1498.9545};
+		dir[]={0.47637776,-0.40311021,0.7814858};
+		up[]={0.20984229,0.91512811,0.34424043};
+		aside[]={0.85391915,-6.2584877e-007,-0.52053255};
 	};
 };
 binarizationWanted=0;
@@ -39,6 +39,8 @@ addons[]=
 	"ace_attach",
 	"ace_chemlights",
 	"A3_Weapons_F_Items",
+	"ace_medical_engine",
+	"ace_medical_treatment",
 	"ace_medical",
 	"ace_cargo",
 	"ace_captives",
@@ -72,7 +74,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=32;
+		items=34;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -131,166 +133,180 @@ class AddonsMetaData
 		};
 		class Item8
 		{
-			className="ace_medical";
-			name="ACE3 - Medical";
+			className="ace_medical_engine";
+			name="ACE3 - Medical Engine";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
 		class Item9
+		{
+			className="ace_medical_treatment";
+			name="ACE3 - Medical Treatment";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item10
+		{
+			className="ace_medical";
+			name="ACE3 - Medical Core";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item11
 		{
 			className="ace_cargo";
 			name="ACE3 - Cargo";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item10
+		class Item12
 		{
 			className="ace_captives";
 			name="ACE3 - Captives";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item11
+		class Item13
 		{
 			className="ace_switchunits";
 			name="ACE3 - Switch Units";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item12
+		class Item14
 		{
 			className="ace_weather";
 			name="ACE3 - Weather";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item13
+		class Item15
 		{
 			className="ace_vehiclelock";
 			name="ACE3 - Vehicle Lock";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item14
+		class Item16
 		{
 			className="ace_advanced_fatigue";
 			name="ACE3 - Advanced Fatigue";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item15
+		class Item17
 		{
 			className="ace_map";
 			name="ACE3 - Map";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item16
+		class Item18
 		{
 			className="A3_Modules_F";
 			name="Arma 3 Alpha - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item17
+		class Item19
 		{
 			className="ace_rearm";
 			name="ACE3 - Rearm";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item18
+		class Item20
 		{
 			className="ace_refuel";
 			name="ACE3 - Refuel";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item19
+		class Item21
 		{
 			className="ace_repair";
 			name="ACE3 - Repair";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item20
+		class Item22
 		{
 			className="ace_respawn";
 			name="ACE3 - Respawn";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item21
+		class Item23
 		{
 			className="ace_explosives";
 			name="ACE3 - Explosives";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item22
+		class Item24
 		{
 			className="ace_ui";
 			name="ACE3 - UI";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item23
+		class Item25
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item24
+		class Item26
 		{
 			className="A3_Structures_F_Exp_Industrial";
 			name="Arma 3 Apex - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item25
+		class Item27
 		{
 			className="A3_Structures_F";
 			name="Arma 3 - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item26
+		class Item28
 		{
 			className="A3_Structures_F_Exp";
 			name="Arma 3 Apex - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item27
+		class Item29
 		{
 			className="A3_Structures_F_Orange";
 			name="Arma 3 Orange - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item28
+		class Item30
 		{
 			className="A3_Structures_F_Exp_Infrastructure";
 			name="Arma 3 Apex - Infrastructure Objects";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item29
+		class Item31
 		{
 			className="A3_Props_F_Exp";
 			name="Arma 3 Apex - Decorative and Mission Objects";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item30
+		class Item32
 		{
 			className="A3_Structures_F_Mil";
 			name="Arma 3 - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item31
+		class Item33
 		{
 			className="A3_Structures_F_EPA";
 			name="Arma 3 Survive Episode - Buildings and Structures";
@@ -1482,7 +1498,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -1518,67 +1534,6 @@ class Mission
 			id=1754;
 			type="ACE_moduleReviveSettings";
 			atlOffset=49.264294;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="ACE_moduleReviveSettings_amountOfReviveLives";
-					expression="_this setVariable ['amountOfReviveLives',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=-1;
-						};
-					};
-				};
-				class Attribute1
-				{
-					property="ACE_moduleReviveSettings_enableRevive";
-					expression="_this setVariable ['enableRevive',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=2;
-						};
-					};
-				};
-				class Attribute2
-				{
-					property="ACE_moduleReviveSettings_maxReviveTime";
-					expression="_this setVariable ['maxReviveTime',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=240;
-						};
-					};
-				};
-				nAttributes=3;
-			};
 		};
 		class Item25
 		{
@@ -1590,276 +1545,6 @@ class Mission
 			id=1755;
 			type="ACE_moduleMedicalSettings";
 			atlOffset=48.082451;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="ACE_moduleMedicalSettings_litterCleanUpDelay";
-					expression="_this setVariable ['litterCleanUpDelay',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1800;
-						};
-					};
-				};
-				class Attribute1
-				{
-					property="ACE_moduleMedicalSettings_enableScreams";
-					expression="_this setVariable ['enableScreams',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute2
-				{
-					property="ACE_moduleMedicalSettings_preventInstaDeath";
-					expression="_this setVariable ['preventInstaDeath',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute3
-				{
-					property="ACE_moduleMedicalSettings_bleedingCoefficient";
-					expression="_this setVariable ['bleedingCoefficient',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute4
-				{
-					property="ACE_moduleMedicalSettings_increaseTrainingInLocations";
-					expression="_this setVariable ['increaseTrainingInLocations',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute5
-				{
-					property="ACE_moduleMedicalSettings_enableUnconsciousnessAI";
-					expression="_this setVariable ['enableUnconsciousnessAI',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute6
-				{
-					property="ACE_moduleMedicalSettings_remoteControlledAI";
-					expression="_this setVariable ['remoteControlledAI',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute7
-				{
-					property="ACE_moduleMedicalSettings_painCoefficient";
-					expression="_this setVariable ['painCoefficient',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute8
-				{
-					property="ACE_moduleMedicalSettings_AIDamageThreshold";
-					expression="_this setVariable ['AIDamageThreshold',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute9
-				{
-					property="ACE_moduleMedicalSettings_playerDamageThreshold";
-					expression="_this setVariable ['playerDamageThreshold',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1.2;
-						};
-					};
-				};
-				class Attribute10
-				{
-					property="ACE_moduleMedicalSettings_level";
-					expression="_this setVariable ['level',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute11
-				{
-					property="ACE_moduleMedicalSettings_allowLitterCreation";
-					expression="_this setVariable ['allowLitterCreation',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute12
-				{
-					property="ACE_moduleMedicalSettings_keepLocalSettingsSynced";
-					expression="_this setVariable ['keepLocalSettingsSynced',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute13
-				{
-					property="ACE_moduleMedicalSettings_medicSetting";
-					expression="_this setVariable ['medicSetting',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				nAttributes=14;
-			};
 		};
 		class Item26
 		{
@@ -2692,7 +2377,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -2881,7 +2566,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -3070,7 +2755,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -3259,7 +2944,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -3448,7 +3133,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -3637,7 +3322,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -4754,257 +4439,6 @@ class Mission
 			id=1909;
 			type="ACE_moduleAdvancedMedicalSettings";
 			atlOffset=-0.001999855;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="ACE_moduleAdvancedMedicalSettings_enableVehicleCrashes";
-					expression="_this setVariable ['enableVehicleCrashes',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute1
-				{
-					property="ACE_moduleAdvancedMedicalSettings_consumeItem_SurgicalKit";
-					expression="_this setVariable ['consumeItem_SurgicalKit',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute2
-				{
-					property="ACE_moduleAdvancedMedicalSettings_enableAdvancedWounds";
-					expression="_this setVariable ['enableAdvancedWounds',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute3
-				{
-					property="ACE_moduleAdvancedMedicalSettings_consumeItem_PAK";
-					expression="_this setVariable ['consumeItem_PAK',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute4
-				{
-					property="ACE_moduleAdvancedMedicalSettings_useCondition_PAK";
-					expression="_this setVariable ['useCondition_PAK',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute5
-				{
-					property="ACE_moduleAdvancedMedicalSettings_medicSetting_PAK";
-					expression="_this setVariable ['medicSetting_PAK',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute6
-				{
-					property="ACE_moduleAdvancedMedicalSettings_medicSetting_SurgicalKit";
-					expression="_this setVariable ['medicSetting_SurgicalKit',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				class Attribute7
-				{
-					property="ACE_moduleAdvancedMedicalSettings_healHitPointAfterAdvBandage";
-					expression="_this setVariable ['healHitPointAfterAdvBandage',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute8
-				{
-					property="ACE_moduleAdvancedMedicalSettings_useLocation_SurgicalKit";
-					expression="_this setVariable ['useLocation_SurgicalKit',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=3;
-						};
-					};
-				};
-				class Attribute9
-				{
-					property="ACE_moduleAdvancedMedicalSettings_useCondition_SurgicalKit";
-					expression="_this setVariable ['useCondition_SurgicalKit',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute10
-				{
-					property="ACE_moduleAdvancedMedicalSettings_useLocation_PAK";
-					expression="_this setVariable ['useLocation_PAK',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=3;
-						};
-					};
-				};
-				class Attribute11
-				{
-					property="ACE_moduleAdvancedMedicalSettings_enableFor";
-					expression="_this setVariable ['enableFor',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
-							value=0;
-						};
-					};
-				};
-				class Attribute12
-				{
-					property="ACE_moduleAdvancedMedicalSettings_painIsOnlySuppressed";
-					expression="_this setVariable ['painIsOnlySuppressed',_value,true];";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				nAttributes=13;
-			};
 		};
 		class Item49
 		{
@@ -5169,7 +4603,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -5397,17 +4831,18 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4260.0249,12.894197,8463.6885};
-				angles[]={0,0.05455333,0};
+				position[]={4260.0249,12.893972,8463.6885};
+				angles[]={0,0.054558992,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=1960;
 			type="Land_SCF_01_generalBuilding_F";
-			atlOffset=-1.3087754;
+			atlOffset=-1.3090005;
 		};
 		class Item60
 		{
@@ -5455,17 +4890,18 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4176.8071,8.2978001,8383.7256};
-				angles[]={0,2.8103263,0};
+				position[]={4176.8071,8.297637,8383.7256};
+				angles[]={0,2.8103292,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=1963;
 			type="Land_SCF_01_warehouse_F";
-			atlOffset=0.024163485;
+			atlOffset=0.024000406;
 		};
 		class Item62
 		{
@@ -5635,36 +5071,38 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2090.2102,25.833403,3391.0469};
-				angles[]={0,4.480782,0};
+				position[]={2090.21,25.833431,3391.0471};
+				angles[]={0,4.4807839,0};
 			};
 			side="Empty";
 			flags=1;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=1081719681;
 			};
 			id=2109;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=0.35198593;
+			atlOffset=0.35200119;
 		};
 		class Item67
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11611.42,17.576286,3065.7844};
-				angles[]={0,5.3795266,0};
+				position[]={11611.42,17.57621,3065.7839};
+				angles[]={0,5.3795238,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=1011571308;
 			};
 			id=2111;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=7.6770782e-005;
+			atlOffset=4.7683716e-007;
 		};
 		class Item68
 		{
@@ -5678,6 +5116,7 @@ class Mission
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2112;
 			type="Land_Cargo_Tower_V4_F";
@@ -5695,6 +5134,7 @@ class Mission
 			flags=1;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-2147483457;
 			};
 			id=2113;
@@ -5706,87 +5146,92 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={5171.9634,33.106934,3653.1125};
-				angles[]={0,3.9708266,0};
+				position[]={5171.9629,33.106934,3653.113};
+				angles[]={0,3.9708333,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2114;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=0.040994644;
+			atlOffset=0.041000366;
 		};
 		class Item71
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={10090.385,422.82147,11821.047};
-				angles[]={0,5.7118678,0};
+				position[]={10090.385,422.82181,11821.047};
+				angles[]={0,5.7118692,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2115;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=-0.035308838;
+			atlOffset=-0.034973145;
 		};
 		class Item72
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11925.78,19.836195,13054.678};
-				angles[]={0,0.27213302,0};
+				position[]={11925.78,19.836208,13054.678};
+				angles[]={0,0.27213174,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=523264;
 			};
 			id=2116;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=-1.4305115e-005;
+			atlOffset=-9.5367432e-007;
 		};
 		class Item73
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2370.2708,26.039562,13301.747};
-				angles[]={0,4.0587606,0};
+				position[]={2370.271,26.039537,13301.747};
+				angles[]={0,4.058763,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1054867456;
 			};
 			id=2117;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=0.0020246506;
+			atlOffset=0.001999855;
 		};
 		class Item74
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2141.2786,25.590662,13113.537};
-				angles[]={0,4.0945816,0};
+				position[]={2141.2791,25.590569,13113.537};
+				angles[]={0,4.0945773,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2118;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=8.392334e-005;
+			atlOffset=-9.5367432e-007;
 		};
 		class Item75
 		{
@@ -5811,126 +5256,130 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={1732.505,18.193048,12850.115};
-				angles[]={0,0.019748457,0};
+				position[]={1732.505,18.192986,12850.115};
+				angles[]={0,0.019757126,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1089176317;
 			};
 			id=2120;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=0.093062401;
+			atlOffset=0.092999458;
 		};
 		class Item77
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2372.4001,17.366394,13071.793};
-				angles[]={0,5.7379179,0};
+				position[]={2372.3999,17.366425,13071.793};
+				angles[]={0,5.7379093,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=56;
 			};
 			id=2121;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-3.528595e-005;
+			atlOffset=-9.5367432e-007;
 		};
 		class Item78
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2327.7681,17.853319,6346.8809};
-				angles[]={0,3.6645083,0};
+				position[]={2327.7681,17.853394,6346.8809};
+				angles[]={0,3.6645107,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1054867456;
 			};
 			id=2124;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-7.5340271e-005;
+			atlOffset=-9.5367432e-007;
 		};
 		class Item79
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2234.0952,16.736891,6317.6133};
-				angles[]={0,1.8329573,0};
+				position[]={2234.095,16.736994,6317.6128};
+				angles[]={0,1.8329623,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1054867456;
 			};
 			id=2125;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-0.00010299683;
+			atlOffset=-9.5367432e-007;
 		};
 		class Item80
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11032.859,195.47185,4215.8862};
-				angles[]={0,1.2573732,0};
+				position[]={11032.86,195.47191,4215.8862};
+				angles[]={0,1.2573701,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1054867456;
 			};
 			id=2126;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=-6.1035156e-005;
 		};
 		class Item81
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11768.212,9.5949993,2981.0325};
-				angles[]={0,5.4081845,0};
+				position[]={11768.212,9.5950003,2981.032};
+				angles[]={0,5.4081817,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1054867456;
 			};
 			id=2127;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-9.5367432e-007;
 		};
 		class Item82
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2687.3269,222.3548,2599.1257};
-				angles[]={0,4.026258,0};
+				position[]={2687.3269,222.35481,2599.126};
+				angles[]={0,4.0262651,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 				aiRadarUsage=-1054867456;
 			};
 			id=2128;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-1.5258789e-005;
 		};
 		class Item83
 		{
@@ -5971,51 +5420,51 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11578.469,56.164059,7371.2627};
-				angles[]={6.1401687,5.7970676,0.0079935296};
+				position[]={11578.469,56.164276,7371.2632};
+				angles[]={6.140173,5.7970586,0.0079936078};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2131;
 			type="Land_MedicalTent_01_tropic_closed_F";
-			atlOffset=-0.00014877319;
 		};
 		class Item86
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11563.675,55.40086,7357.9146};
-				angles[]={0,5.7837062,0};
+				position[]={11563.675,55.401043,7357.915};
+				angles[]={0,5.7837067,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2137;
 			type="Land_HBarrier_01_tower_green_F";
-			atlOffset=-7.6293945e-006;
 		};
 		class Item87
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11594.34,54.192623,7345.9971};
-				angles[]={0,1.0849915,0};
+				position[]={11594.34,54.192657,7345.9971};
+				angles[]={0,1.0849839,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2138;
 			type="Land_WaterTank_02_F";
-			atlOffset=-3.4332275e-005;
 		};
 		class Item88
 		{
@@ -6039,51 +5488,51 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4512.4287,6.6649251,8417.582};
-				angles[]={0,1.0444649,0};
+				position[]={4512.4292,6.6648068,8417.582};
+				angles[]={0,1.0444573,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2141;
 			type="Land_Cargo_HQ_V4_F";
-			atlOffset=7.4386597e-005;
 		};
 		class Item90
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4530.897,15.580993,8426.1006};
-				angles[]={0,4.2178812,0};
+				position[]={4530.897,15.580995,8426.1006};
+				angles[]={0,4.217885,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2146;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=-1.9073486e-006;
 		};
 		class Item91
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4483.6826,8.1082211,8431.208};
-				angles[]={0,1.4735627,0};
+				position[]={4483.6831,8.108223,8431.208};
+				angles[]={0,1.473564,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2147;
 			type="Land_Cargo_Patrol_V4_F";
-			atlOffset=-1.9073486e-006;
 		};
 		class Item92
 		{
@@ -6091,16 +5540,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4539.1025,3.0058146,8433.1709};
-				angles[]={0,4.1100688,0};
+				angles[]={0,4.110076,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2145;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=1.0490417e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item93
 		{
@@ -6108,16 +5581,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4536.8071,2.9474492,8436.4287};
-				angles[]={0,4.1100688,0};
+				angles[]={0,4.110076,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2144;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=2.1457672e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item94
 		{
@@ -6125,16 +5622,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4534.5303,2.8999007,8439.6748};
-				angles[]={0,4.1100688,0};
+				angles[]={0,4.110076,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2143;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=2.9087067e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item95
 		{
@@ -6142,16 +5663,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4528.5146,2.8330824,8448.9736};
-				angles[]={0,4.1100688,0};
+				angles[]={0,4.110076,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2148;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=-9.5367432e-007;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item96
 		{
@@ -6159,16 +5704,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4526.2969,2.8418429,8452.2588};
-				angles[]={0,4.1100688,0};
+				angles[]={0,4.110076,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2149;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=-2.3841858e-007;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item97
 		{
@@ -6176,16 +5745,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4524.1382,2.8923299,8455.5107};
-				angles[]={0,4.1100688,0};
+				angles[]={0,4.110076,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2150;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=-1.4305115e-006;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item98
 		{
@@ -6193,16 +5786,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4521.4819,2.9543407,8456.1172};
-				angles[]={0,2.617595,0};
+				angles[]={0,2.6175926,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2151;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=2.3841858e-007;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item99
 		{
@@ -6210,16 +5827,40 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4518.0039,3.1138203,8454.1055};
-				angles[]={0,2.617595,0};
+				angles[]={0,2.6175926,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2152;
 			type="Land_Mil_ConcreteWall_F";
 			atlOffset=-4.0531158e-006;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item100
 		{
@@ -6227,133 +5868,274 @@ class Mission
 			class PositionInfo
 			{
 				position[]={4514.5933,3.3237596,8452.208};
-				angles[]={0,2.617595,0};
+				angles[]={0,2.6175926,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2153;
 			type="Land_Mil_ConcreteWall_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item101
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4516.9302,4.6032009,8446.6445};
-				angles[]={0,2.631089,6.2352223};
+				position[]={4516.9302,4.6031914,8446.6445};
+				angles[]={0,2.6310837,6.2352238};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2154;
 			type="Land_IRMaskingCover_01_F";
-			atlOffset=9.5367432e-006;
 		};
 		class Item102
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4539.7617,2.4800768,8408.9395};
-				angles[]={6.2618566,1.0247688,6.2299027};
+				position[]={4539.7622,2.4800682,8408.9395};
+				angles[]={6.2618575,1.02477,6.2299004};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2156;
 			type="Land_HelipadCircle_F";
-			atlOffset=-1.5735626e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item103
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4505.5928,3.6780353,8443.6836};
-				angles[]={6.2591896,1.1549981,6.2432065};
+				position[]={4505.5928,3.6780469,8443.6836};
+				angles[]={6.2591867,1.1550065,6.2431998};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2157;
 			type="Land_ScrapHeap_1_F";
-			atlOffset=-1.168251e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item104
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4504.2656,3.7844262,8412.2402};
-				angles[]={0.039977662,2.5606291,0.018663859};
+				position[]={4504.2661,3.7844129,8412.2402};
+				angles[]={0.039985489,2.5606248,0.018657569};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2158;
 			type="Land_Scrap_MRAP_01_F";
-			atlOffset=2.1934509e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item105
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={3429.2388,8.9499998,12893.682};
-				angles[]={0,4.8003492,0};
+				position[]={3429.239,8.9499998,12893.682};
+				angles[]={0,4.8003535,0};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2161;
 			type="Land_HelipadCircle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item106
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={3392.9512,21.607758,12896.071};
-				angles[]={0,4.8485866,0};
+				position[]={3392.9509,21.607525,12896.071};
+				angles[]={0,4.8485942,0};
 			};
 			side="Empty";
 			flags=5;
 			class Attributes
 			{
+				dynamicSimulation=1;
 			};
 			id=2162;
 			type="Land_Cargo_Tower_V4_F";
-			atlOffset=0.00024414063;
+			atlOffset=9.5367432e-007;
 		};
 		class Item107
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={3871.2893,10.546876,13415.423};
-				angles[]={0,4.1320949,0.0053265258};
+				position[]={3871.2891,10.546875,13415.423};
+				angles[]={0,4.132102,0.0053232545};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2163;
 			type="Land_HelipadCircle_F";
-			atlOffset=-1.9073486e-006;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item108
 		{
@@ -6367,10 +6149,34 @@ class Mission
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2164;
 			type="Land_HelipadCircle_F";
 			atlOffset=-3.1471252e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item109
 		{
@@ -6384,10 +6190,34 @@ class Mission
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2165;
 			type="Land_HelipadCircle_F";
 			atlOffset=-2.8610229e-006;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item110
 		{
@@ -6401,27 +6231,74 @@ class Mission
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2166;
 			type="Land_HelipadCircle_F";
 			atlOffset=-9.5367432e-007;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item111
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2251.0854,14.103055,6282.2241};
-				angles[]={0.1141679,0.23101319,0.031990308};
+				position[]={2251.085,14.102973,6282.2241};
+				angles[]={0.11416198,0.23101178,0.031991884};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				disableSimulation=1;
 			};
 			id=2167;
 			type="Land_HelipadCircle_F";
-			atlOffset=6.7710876e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item112
 		{
@@ -6586,7 +6463,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -6775,7 +6652,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -6964,7 +6841,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -7153,7 +7030,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -7342,7 +7219,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -7531,7 +7408,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -7720,7 +7597,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -7909,7 +7786,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -8098,7 +7975,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -8287,7 +8164,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -8476,7 +8353,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -8665,7 +8542,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -8854,7 +8731,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -9043,7 +8920,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -9232,7 +9109,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -9421,7 +9298,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -9610,7 +9487,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -9799,7 +9676,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -9988,7 +9865,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -10177,7 +10054,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -10366,7 +10243,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -10555,7 +10432,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -10744,7 +10621,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
@@ -10933,7 +10810,7 @@ class Mission
 						class Attribute6
 						{
 							property="ace_isMedic";
-							expression="if (_value > -1) then {_this setVariable [""ace_medical_medicClass"", _value, true];};";
+							expression="if (_value != -1 && {_value != (parseNumber (_this getUnitTrait 'medic'))}) then {_this setVariable [""ace_medical_medicClass"", _value, true]}";
 							class Value
 							{
 								class data
