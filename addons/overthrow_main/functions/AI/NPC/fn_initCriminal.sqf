@@ -19,7 +19,7 @@ if((random 100) < 15) then {
 	params ["_unit"];
 	if((random 100) > 80) exitWith {
 		//This is a medic
-		_unit addBackpack (selectRandom OT_allBackpacks);
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to 10 do {_unit addItemToBackpack "ACE_fieldDressing";};
 		for "_i" from 1 to 3 do {_unit addItemToBackpack "ACE_morphine";};
 		_unit addItemToBackpack "ACE_bloodIV";
@@ -27,7 +27,7 @@ if((random 100) < 15) then {
 	};
 	if((random 100) > 90) exitWith {
 		//This is an engineer
-		_unit addBackpack (selectRandom OT_allBackpacks);
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
 		_unit addItemToBackpack "APERSBoundingMine_Range_Mag";
 		_unit addItemToBackpack "ClaymoreDirectionalMine_Remote_Mag";
@@ -42,10 +42,10 @@ if((random 100) < 15) then {
 	};
 	if((random 100) > 97) exitWith {
 		//This guy is a drug runner
-		_unit addBackpack (selectRandom OT_allBackpacks);
+		_unit addBackpack (OT_allBackpacks call BIS_fnc_selectRandom);
 		for "_i" from 1 to round(random 15) do {_unit addItemToBackpack "OT_Ganja";};
 	};
 };
-_unit addGoggles (selectRandom OT_CRIM_Goggles);
+_unit addGoggles (OT_CRIM_Goggles call BIS_fnc_selectRandom);
 
 _unit addEventHandler ["Dammaged", OT_fnc_EnemyDamagedHandler];

@@ -21,12 +21,11 @@ private _groups = [];
 
 	_tracked = _building call OT_fnc_spawnTemplate;
 	_vehs = _tracked select 0;
-	//[_groups,_vehs] call BIS_fnc_arrayPushStack;
-	_groups pushBack _vehs;
+	[_groups,_vehs] call BIS_fnc_arrayPushStack;
 
 	_cashdesk = _pos nearestObject OT_item_ShopRegister;
 	_dir = getDir _cashdesk;
-	_cashpos =_cashdesk getPos [1, _dir];
+	_cashpos = [getpos _cashdesk,1,_dir] call BIS_fnc_relPos;
 	private _start = _building buildingPos 0;
 	_shopkeeper = _group createUnit [OT_civType_carDealer, _start, [],0, "NONE"];
 	_shopkeeper allowDamage false;

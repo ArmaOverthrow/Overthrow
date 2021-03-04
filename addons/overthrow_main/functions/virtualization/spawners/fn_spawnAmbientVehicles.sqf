@@ -32,21 +32,18 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 		_road = _roads select 0;
 		_pos = getPos _road;
 		_vehtype = "";
-
 		if(_pop > 600) then {
-			_vehType = selectRandom (OT_vehTypes_civ - OT_vehTypes_civignore);
-		}else{ 
-			_vehType = OT_vehTypes_civ selectRandomWeighted OT_vehWeights_civ;
+			_vehtype = (OT_vehTypes_civ - OT_vehTypes_civignore) call BIS_Fnc_selectRandom;
+		}else{
+			_vehtype = [OT_vehTypes_civ,OT_vehWeights_civ] call BIS_Fnc_selectRandomWeighted;
 		};
-
 		if !(_vehtype in OT_vehTypes_civignore) then {
 			_dirveh = 0;
 			_roadscon = roadsConnectedto _road;
 			if (count _roadscon isEqualTo 2) then {
-				//_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
-				_dirveh = _road getDir (_roadscon select 0);
+				_dirveh = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 				if(isNil "_dirveh") then {_dirveh = random 359};
-				_posVeh = _pos getPos [6, _dirveh + 90];
+				_posVeh = [_pos, 6, _dirveh + 90] call BIS_Fnc_relPos;
 				_posEmpty = _posVeh findEmptyPosition [4,15,_vehtype];
 				 //dont bother if the position isnt empty for 4m
 				if(count _posEmpty isEqualTo 0) then {
@@ -76,7 +73,7 @@ while {(_count < _numVeh) && (_loops < 50)} do {
 						if(isNil "_region") then {
 							_moveto = _posVeh call OT_fnc_getRandomRoadPosition;
 						}else{
-							_dest = selectRandom (server getVariable format["towns_%1",_region]);
+							_dest = (server getVariable format["towns_%1",_region]) call BIS_fnc_selectRandom;
 							_moveto = _dest call OT_fnc_getRandomRoadPosition;
 						};
 

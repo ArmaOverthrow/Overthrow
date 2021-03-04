@@ -1,6 +1,6 @@
 params ["_unit"];
 
-if (!alive _unit || !isNull objectParent _unit) exitWith {};
+if (!alive _unit || vehicle _unit != _unit) exitWith {};
 
 if (_unit getVariable ["ACE_isUnconscious", false]) exitWith {};
 

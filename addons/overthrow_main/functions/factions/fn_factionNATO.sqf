@@ -685,7 +685,7 @@ publicVariable "OT_nextNATOTurn";
 					while {_count < 4} do {
 						_start = [[[_pos,50]]] call BIS_fnc_randomPos;
 
-						_civ = _group createUnit [selectRandom OT_NATO_Units_LevelOne, _start, [],0, "NONE"];
+						_civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 						_civ setVariable ["garrison","HQ",false];
 						_civ setRank "LIEUTENANT";
 						_civ setVariable ["VCOM_NOPATHING_Unit",true,false];

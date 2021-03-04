@@ -61,8 +61,7 @@ if ((_unit distance _point) < 200) then
 
 			_unit removeMagazine _satchelMag;
 			private _mine = _satchelObj createVehicle (getposATL _unit);
-			//_mine setDir ([_mine, _nBuilding] call BIS_fnc_dirTo);
-			_mine setDir (_mine getDir _nBuilding);
+			_mine setDir ([_mine, _nBuilding] call BIS_fnc_dirTo);
 			[_unit,"AinvPknlMstpSnonWnonDnon_Putdown_AmovPknlMstpSnonWnonDnon"] remoteExec ["Vcm_PMN",0];
 			 _unit action ["SetTimer", _unit, _mine];
 			

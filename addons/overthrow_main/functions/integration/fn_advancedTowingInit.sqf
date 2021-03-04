@@ -503,7 +503,7 @@ SA_Attach_Tow_Ropes_Action_Check = {
 SA_Can_Attach_Tow_Ropes = {
 	params ["_vehicle","_cargo"];
 	if(!isNull _vehicle && !isNull _cargo) then {
-		[_vehicle,_cargo] call SA_Is_Supported_Cargo && isNull objectParent player && player distance _cargo < 10 && _vehicle != _cargo;
+		[_vehicle,_cargo] call SA_Is_Supported_Cargo && vehicle player isEqualTo player && player distance _cargo < 10 && _vehicle != _cargo;
 	} else {
 		false;
 	};
@@ -549,7 +549,7 @@ SA_Can_Take_Tow_Ropes = {
 		private ["_existingVehicle","_existingTowRopes"];
 		_existingTowRopes = _vehicle getVariable ["SA_Tow_Ropes",[]];
 		_existingVehicle = player getVariable ["SA_Tow_Ropes_Vehicle", objNull];
-		isNull objectParent player && player distance _vehicle < 10 && (count _existingTowRopes) isEqualTo 0 && isNull _existingVehicle;
+		vehicle player isEqualTo player && player distance _vehicle < 10 && (count _existingTowRopes) isEqualTo 0 && isNull _existingVehicle;
 	} else {
 		false;
 	};
@@ -594,7 +594,7 @@ SA_Can_Put_Away_Tow_Ropes = {
 	private ["_existingTowRopes"];
 	if([_vehicle] call SA_Is_Supported_Vehicle) then {
 		_existingTowRopes = _vehicle getVariable ["SA_Tow_Ropes",[]];
-		isNull objectParent player && player distance _vehicle < 10 && (count _existingTowRopes) > 0;
+		vehicle player isEqualTo player && player distance _vehicle < 10 && (count _existingTowRopes) > 0;
 	} else {
 		false;
 	};
@@ -614,7 +614,7 @@ SA_Drop_Tow_Ropes_Action_Check = {
 };
 
 SA_Can_Drop_Tow_Ropes = {
-	!isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && isNull objectParent player;
+	!isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && vehicle player isEqualTo player;
 };
 
 
@@ -655,7 +655,7 @@ SA_Pickup_Tow_Ropes_Action_Check = {
 };
 
 SA_Can_Pickup_Tow_Ropes = {
-	isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && count (missionNamespace getVariable ["SA_Nearby_Tow_Vehicles",[]]) > 0 && isNull objectParent player;
+	isNull (player getVariable ["SA_Tow_Ropes_Vehicle", objNull]) && count (missionNamespace getVariable ["SA_Nearby_Tow_Vehicles",[]]) > 0 && vehicle player isEqualTo player;
 };
 
 SA_TOW_SUPPORTED_VEHICLES = [

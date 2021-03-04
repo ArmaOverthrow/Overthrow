@@ -50,9 +50,9 @@ private _difficulty = 1.8;
         _civ disableAI "MOVE";
 
         //Set face,voice and uniform
-        [_civ, (selectRandom OT_faces_western)] remoteExecCall ["setFace", 0, _civ];
-        [_civ, (selectRandom OT_voices_western)] remoteExecCall ["setSpeaker", 0, _civ];
-        _civ forceAddUniform (selectRandom OT_clothes_guerilla);
+        [_civ, (OT_faces_western call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+        [_civ, (OT_voices_western call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+        _civ forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
 
         //Make sure hes in the group
         [_civ] joinSilent nil;

@@ -8,8 +8,8 @@ if !(_frombase in _abandoned) then {
     if(_delay > 0) then {sleep _delay};
     diag_log format["Overthrow: NATO Sending air patrol from %1",_frombase];
 
-    private _vehtype = selectRandom OT_NATO_Vehicles_AirSupport_Small;
-    if((call OT_fnc_getControlledPopulation) > 1500) then {_vehtype = selectRandom OT_NATO_Vehicles_AirSupport};
+    private _vehtype = OT_NATO_Vehicles_AirSupport_Small call BIS_fnc_selectRandom;
+    if((call OT_fnc_getControlledPopulation) > 1500) then {_vehtype = OT_NATO_Vehicles_AirSupport call BIS_fnc_selectRandom};
 
     private _frompos = server getVariable _frombase;
     private _pos = _frompos findEmptyPosition [2,100,_vehtype];

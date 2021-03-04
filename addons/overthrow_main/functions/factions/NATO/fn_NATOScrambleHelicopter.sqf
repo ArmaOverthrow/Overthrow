@@ -14,8 +14,8 @@ if !(isNil "_from") then {
     if(_delay > 0) then {sleep _delay};
     diag_log "Overthrow: NATO Scrambling Helicopter";
 
-    private _vehtype = selectRandom OT_NATO_Vehicles_AirSupport_Small;
-    if((typeof _target) isKindOf "Tank") then {_vehtype = selectRandom OT_NATO_Vehicles_AirSupport};
+    private _vehtype = OT_NATO_Vehicles_AirSupport_Small call BIS_fnc_selectRandom;
+    if((typeof _target) isKindOf "Tank") then {_vehtype = OT_NATO_Vehicles_AirSupport call BIS_fnc_selectRandom};
 
     private _frompos = _from select 0;
 
@@ -43,8 +43,7 @@ if !(isNil "_from") then {
     }foreach(crew _veh);
     sleep 1;
 
-    //private _dir = [_targetpos,_frompos] call BIS_fnc_dirTo;
-    private _dir = _targetPos getDir _fromPos;
+    private _dir = [_targetpos,_frompos] call BIS_fnc_dirTo;
     private _attackpos = [_targetpos,[100,400],_dir] call SHK_pos_fnc_pos;
 
     _wp = _group addWaypoint [_attackpos,50];

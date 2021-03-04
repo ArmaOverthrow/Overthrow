@@ -15,7 +15,7 @@ private _destinationName = selectRandom _outofspawndistance;
 private _posTown = server getVariable [_destinationName,[]];
 
 private _building = [_posTown,OT_allHouses] call OT_fnc_getRandomBuilding;
-private _destination = selectRandom (_building call BIS_fnc_buildingPositions);
+private _destination = (_building call BIS_fnc_buildingPositions) call BIS_fnc_selectRandom;
 if(_destination isEqualTo [0,0,0]) then {
     _destination = [_posTown,[random 100,600]] call SHK_pos_fnc_pos;
 };
@@ -43,9 +43,9 @@ private _difficulty = 1.8;
         _civ setVariable ["notalk",true,true]; //Tells Overthrow this guy cannot be recruited etc
 
         //Set face,voice and uniform
-        [_civ, (selectRandom OT_faces_western)] remoteExecCall ["setFace", 0, _civ];
-        [_civ, (selectRandom OT_voices_western)] remoteExecCall ["setSpeaker", 0, _civ];
-        _civ forceAddUniform (selectRandom OT_clothes_guerilla);
+        [_civ, (OT_faces_western call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+        [_civ, (OT_voices_western call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+        _civ forceAddUniform (OT_clothes_guerilla call BIS_fnc_selectRandom);
 
         _civ disableAI "MOVE";
 

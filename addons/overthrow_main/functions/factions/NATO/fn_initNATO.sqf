@@ -25,7 +25,7 @@ OT_NATO_Units_LevelOne = [];
 OT_NATO_Units_LevelTwo = [];
 OT_NATO_Units_CTRGSupport = [];
 
-(selectRandom OT_loadingMessages) remoteExec['OT_fnc_notifyStart',0,false];
+(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
 
 private _c = 0;
 
@@ -79,7 +79,7 @@ private _c = 0;
 	};
 }foreach(format["(getNumber(_x >> 'scope') isEqualTo 2) && (getText(_x >> 'faction') isEqualTo '%1') && (configName _x) isKindOf 'SoldierWB'",OT_faction_NATO] configClasses (configFile >> "CfgVehicles"));
 
-(selectRandom OT_loadingMessages) remoteExec['OT_fnc_notifyStart',0,false];
+(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
 
 //Generate and cache gendarm loadouts
 private _loadout = getUnitLoadout OT_NATO_Unit_Police;
@@ -116,7 +116,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 	server setVariable ["NATOversion",OT_NATOversion,false];
 	private _abandoned = server getVariable ["NATOabandoned",[]];
 
-	(selectRandom OT_loadingMessages) remoteExec['OT_fnc_notifyStart',0,false];
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0,false];
 	sleep 0.3;
 	{
 		private _stability = server getVariable format ["stability%1",_x];
@@ -213,7 +213,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 		_count = _count + 1;
 	};
 
-	(selectRandom OT_loadingMessages) remoteExec['OT_fnc_notifyStart',0];
+	(OT_loadingMessages call BIS_fnc_selectRandom) remoteExec['OT_fnc_notifyStart',0];
 	sleep 0.3;
 	//Add comms towers
 	{
@@ -251,7 +251,7 @@ if((server getVariable "StartupType") == "NEW" || (server getVariable ["NATOvers
 			_x params ["_type","_num"];
 			private _count = 0;
 			while {_count < _num} do {
-				private _name = selectRandom _prilist;
+				private _name = _prilist call BIS_fnc_selectRandom;
 				private _garrison = server getVariable [format["airgarrison%1",_name],[]];
 				_garrison pushback _type;
 				_count = _count + 1;
@@ -458,7 +458,7 @@ private _revealed = server getVariable ["revealedFOBs",[]];
 	while {_count < _garrison} do {
 		private _start = [[[_pos,50]]] call BIS_fnc_randomPos;
 
-		private _civ = _group createUnit [selectRandom OT_NATO_Units_LevelOne, _start, [],0, "NONE"];
+		private _civ = _group createUnit [OT_NATO_Units_LevelOne call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 		_civ setVariable ["garrison","HQ",false];
 		_civ setRank "LIEUTENANT";
 		_civ setVariable ["VCOM_NOPATHING_Unit",true,false];

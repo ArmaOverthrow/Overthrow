@@ -39,8 +39,7 @@ private _count = 0;
 {
 	_x params ["_obpos","_name","_pri"];
 
-	//_dir = [_pos,_obpos] call BIS_fnc_dirTo;
-	_dir = _pos getDir _obpos;
+	_dir = [_pos,_obpos] call BIS_fnc_dirTo;
 	_ao = [_pos,_dir] call OT_fnc_getAO;
 	[_obpos,_ao,_pos,true,300] spawn OT_fnc_NATOGroundForces;
 	diag_log format["Overthrow: NATO Sent ground forces by air from %1 %2",_name,str _obpos];
@@ -63,8 +62,7 @@ if(_strength >= 150) then {
 	{
 		_x params ["_obpos","_name","_pri"];
 
-		//_dir = [_pos,_obpos] call BIS_fnc_dirTo;
-		_dir = _pos getDir _obpos;
+		_dir = [_pos,_obpos] call BIS_fnc_dirTo;
 		_ao = [_pos,_dir] call OT_fnc_getAO;
 
 		if(_pri > 100 && _popControl > 1000 && _popControl > (random 2000)) then {
@@ -98,7 +96,7 @@ sleep 2;
 
 if(_popControl > 1000 && _strength > 1000 && (count _air) > 0) then {
 	//Send more CAS
-	private _from = selectRandom _air;
+	private _from = _air call BIS_fnc_selectRandom;
 	_obpos = _from select 0;
 	_name = _from select 1;
 	[_obpos,_pos,120] spawn OT_fnc_NATOAirSupport;
@@ -144,8 +142,7 @@ if(_popControl > 1000) then {
 	{
 		_x params ["_obpos","_name","_pri"];
 		if(_strength >= 200) then {
-			//_dir = [_pos,_obpos] call BIS_fnc_dirTo;
-			_dir = _pos getDir _obpos;
+			_dir = [_pos,_obpos] call BIS_fnc_dirTo;
 			_ao = [_pos,_dir] call OT_fnc_getAO;
 			[_obpos,_ao,_pos,300] spawn OT_fnc_NATOAPCInsertion;
 			diag_log format["Overthrow: NATO Sent APC reinforcements from %1",_name];
@@ -161,22 +158,22 @@ private _seaAO = [];
 //Sea?
 
 _pos call {
-	private _p = _this getPos [500, 0];
+	private _p = [_this,500,0] call BIS_fnc_relPos;
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;
 	};
-	 _p = _this getPos [500, 90];
+	_p = [_this,500,90] call BIS_fnc_relPos;
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;
 	};
-	 _p = _this getPos [500, 180];
+	_p = [_this,500,180] call BIS_fnc_relPos;
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;
 	};
-	 _p = _this getPos [500, 270];
+	_p = [_this,500,270] call BIS_fnc_relPos;
 	if(surfaceIsWater _p) exitWith {
 		_isCoastal = true;
 		_seaAO = _p;

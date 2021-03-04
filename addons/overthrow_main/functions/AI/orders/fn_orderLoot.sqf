@@ -32,8 +32,7 @@ private _target = _sorted select 0;
 
 		_unit setVariable ["NOAI",true,true];
 		_unit setBehaviour "SAFE";
-		//[[_unit,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP;
-		[_unit,""] remoteExec ["switchMove", 0, false];
+		[[_unit,""],"switchMove",TRUE,FALSE] spawn BIS_fnc_MP;
 
 		if((vehicle _unit) != _unit) then {
 			_car = (vehicle _unit);
