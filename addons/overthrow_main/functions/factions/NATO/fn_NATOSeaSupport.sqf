@@ -1,8 +1,7 @@
 params ["_frompos","_attackpos","_delay"];
 sleep _delay;
 
-//private _dir = [_frompos,_attackpos] call BIS_fnc_dirTo;
-private _dir = _fromPos getDir _attackPos;
+private _dir = [_frompos,_attackpos] call BIS_fnc_dirTo;
 _pos = _frompos findEmptyPosition [50,200,OT_NATO_Vehicle_Boat_Small];
 
 _group = creategroup blufor;

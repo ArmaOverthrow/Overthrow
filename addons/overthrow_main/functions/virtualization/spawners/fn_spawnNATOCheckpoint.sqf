@@ -18,11 +18,10 @@ _start = getPos _road;
 
 if((count _start) isEqualTo 0 || _start#1 isEqualTo 0) exitWith {diag_log format["Overthrow: WARNING: Couldnt find road for %1 %2",_name,_start];[]};
 
-private _vehtype = selectRandom OT_vehTypes_civ;
+private _vehtype = OT_vehTypes_civ call BIS_Fnc_selectRandom;
 
 private _roadscon = roadsConnectedto _road;
-//private _dir = [_road, _roadscon select 0] call BIS_fnc_DirTo;
-_dir = _road getDir _roadscon select 0;
+private _dir = [_road, _roadscon select 0] call BIS_fnc_DirTo;
 if(isNil "_dir") then {_dir = 90};
 
 private _vehs = [_start,_dir,OT_tpl_checkpoint] call BIS_fnc_objectsMapper;
@@ -40,7 +39,7 @@ _group setVariable ["VCM_NORESCUE",true,true];
 _groups pushBack _group;
 _groupcount = 1;
 
-_start = _start getPos [7, _dir-90];
+_start = [_start,7,_dir-90] call BIS_fnc_relPos;
 
 _civ = _group createUnit [OT_NATO_Unit_TeamLeader, _start, [],0, "NONE"];
 _civ setVariable ["garrison",_name,false];
@@ -64,8 +63,8 @@ sleep 0.5;
 _count = _count + 1;
 sleep 0.3;
 while {_count < _numNATO} do {
-	_start = _start getPos [2, _dir-180];
-	_civ = _group createUnit [selectRandom OT_NATO_Units_LevelTwo, _start, [],0, "NONE"];
+	_start = [_start,2,_dir-180] call BIS_fnc_relPos;
+	_civ = _group createUnit [OT_NATO_Units_LevelTwo call BIS_fnc_selectRandom, _start, [],0, "NONE"];
 	_civ setVariable ["garrison",_name,false];
 	_soldiers pushBack _civ;
 	_civ setRank "CAPTAIN";
@@ -75,7 +74,7 @@ while {_count < _numNATO} do {
 	_count = _count + 1;
 	_groupcount = _groupcount + 1;
 	if(_count isEqualTo 2) then {
-		_start = _start getPos [20, _dir+90];
+		_start = [_start,20,_dir+90] call BIS_fnc_relPos;
 	};
 };
 _group spawn OT_fnc_initNATOCheckpoint;

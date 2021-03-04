@@ -45,8 +45,7 @@ if (_nearestEnemy distance2D _unit < 100) then
 	//_mine = createMine [_mineType,getposATL _unit, [], 2];
 	private _mPos = _unit modeltoworld [0,1,0.05];
 	_mine = _mineType createVehicle _mPos;
-	//_mine setDir ([_mine, _nearestEnemy] call BIS_fnc_dirTo);
-	_mine setDir (_mine getDir _nearestEnemy);
+	_mine setDir ([_mine, _nearestEnemy] call BIS_fnc_dirTo);
 	_mine setpos _mPos;
 	_mine setposATL (getposATL _mine);
 	[_unit,"AinvPknlMstpSnonWnonDnon_Putdown_AmovPknlMstpSnonWnonDnon"] remoteExec ["Vcm_PMN",0];
@@ -62,8 +61,7 @@ else
 		waitUntil {!(alive _unit) || _unit distance2D _closestRoad < 7};
 		private _mPos = _unit modeltoworld [0,1,0.05];
 		_mine = _mineType createVehicle _mPos;
-		//_mine setDir ([_mine, _nearestEnemy] call BIS_fnc_dirTo);
-		_mine setDir (_mine getDir _nearestEnemy);
+		_mine setDir ([_mine, _nearestEnemy] call BIS_fnc_dirTo);
 		_mine setpos _mPos;
 		_mine setposATL (getposATL _mine);
 		//_mine = createMine [_mineType,getposATL _closestRoad, [], 3];
@@ -74,8 +72,7 @@ else
 		//_mine = createMine [_mineType,getposATL _unit, [], 3];
 		private _mPos = _unit modeltoworld [0,1,0.05];
 		_mine = _mineType createVehicle _mPos;
-		//_mine setDir ([_mine, _nearestEnemy] call BIS_fnc_dirTo);
-		_mine setDir (_mine getDir _nearestEnemy);
+		_mine setDir ([_mine, _nearestEnemy] call BIS_fnc_dirTo);
 		_mine setpos _mPos;
 		_mine setposATL (getposATL _mine);
 		[_unit,"AinvPknlMstpSnonWnonDnon_Putdown_AmovPknlMstpSnonWnonDnon"] remoteExec ["Vcm_PMN",0];

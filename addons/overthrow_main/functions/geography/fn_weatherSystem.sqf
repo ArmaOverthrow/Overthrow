@@ -60,7 +60,7 @@ ot_weather_change_forecast = "Clear";
 if((server getVariable "StartupType") == "NEW" || (server getVariable ["weatherversion",0]) < 1) then {
 	server setVariable ["weatherversion",1,false];
 
-	_mode = selectRandom ["Clear","Cloudy"];
+	_mode = ["Clear","Cloudy"] call BIS_fnc_selectRandom;
 	_weather = _mode call ot_weather_getWeather;
 	_newOvercast = _weather select 0;
 

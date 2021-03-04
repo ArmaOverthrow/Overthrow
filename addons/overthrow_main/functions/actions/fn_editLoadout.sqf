@@ -28,12 +28,12 @@ _civ disableAI "TARGET";
 _civ disableAI "WEAPONAIM";
 _civ disableAI "FSM";
 
-[_civ, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _civ];
+[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
 
 if(_clothes != "") then {
 	_civ forceAddUniform _clothes;
 }else{
-	_clothes = (selectRandom OT_clothes_guerilla);
+	_clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
 	_civ forceAddUniform _clothes;
 };
 

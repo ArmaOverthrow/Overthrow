@@ -153,7 +153,7 @@ private _gangs = OT_civilians getVariable [format["gangs%1",_town],[]];
 
 				[_civ,_town,_vest,_gangid] call OT_fnc_initCriminal;
 				[_civ,_identity] call OT_fnc_applyIdentity;
-				[_civ, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _civ];
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 
 				_civ setVariable ["OT_gangid",_gangid,true];
 				_civ setVariable ["OT_civid",_civid,true];

@@ -111,7 +111,7 @@ while {!(isNil "_group") && count (units _group) > 0} do {\
 							};
 							if(_cls in OT_illegalItems) then {
 								_count = _x select 1;
-								if(!isNull objectParent _unit) then {
+								if(vehicle _unit != _unit) then {
 									[_unit,_cls,_count] call CBA_fnc_removeItemCargo;
 								}else{
 									for "_i" from 1 to _count do {

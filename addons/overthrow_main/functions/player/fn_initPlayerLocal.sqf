@@ -114,7 +114,7 @@ players_NS setVariable [format["name%1",getplayeruid player],name player,true];
 players_NS setVariable [format["uid%1",name player],getplayeruid player,true];
 spawner setVariable [format["%1",getplayeruid player],player,true];
 
-player forceAddUniform (selectRandom OT_clothes_locals);
+player forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 // clear player
 removeAllWeapons player;
 removeAllAssignedItems player;
@@ -188,8 +188,8 @@ if(isMultiplayer || _startup == "LOAD") then {
 				if(_rank isEqualTo "LIEUTENANT") then {_civ setSkill 0.6 + (random 0.3)};
 				if(_rank isEqualTo "CAPTAIN") then {_civ setSkill 0.7 + (random 0.3)};
 				if(_rank isEqualTo "MAJOR") then {_civ setSkill 0.8 + (random 0.2)};
-				[_civ, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _civ];
-				[_civ, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _civ];
+				[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+				[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 				_civ setUnitLoadout _loadout;
 				_civ spawn OT_fnc_wantedSystem;
 				_civ setName _name;
@@ -233,8 +233,8 @@ if(isMultiplayer || _startup == "LOAD") then {
 					_civ = _group createUnit [_type,_pos,[],0,"NONE"];
 					_civ setSkill 0.5 + (random 0.4);
 					_civ setUnitLoadout _loadout;
-					[_civ, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _civ];
-					[_civ, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _civ];
+					[_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+					[_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
 					_civ setVariable ["OT_spawntrack",true,true];
 				}foreach(_units);
 			};
@@ -248,7 +248,7 @@ if(isMultiplayer || _startup == "LOAD") then {
 };
 
 if (_newplayer) then {
-    _clothes = (selectRandom OT_clothes_guerilla);
+    _clothes = (OT_clothes_guerilla call BIS_fnc_selectRandom);
 	player forceAddUniform _clothes;
     player setVariable ["uniform",_clothes,true];
 	private _money = 100;
@@ -271,7 +271,7 @@ if (_newplayer) then {
 
     _town = server getVariable "spawntown";
     if(OT_randomSpawnTown) then {
-        _town = selectRandom OT_spawnTowns;
+        _town = OT_spawnTowns call BIS_fnc_selectRandom;
     };
 	_house = _town call OT_fnc_getPlayerHome;
     _housepos = getpos _house;

@@ -42,8 +42,8 @@ private _abandoned = server getVariable ["NATOabandoned",[]];
 
 
 //Give our VIP a name
-private _firstname = selectRandom OT_firstNames_local;
-private _lastname = selectRandom OT_lastNames_local;
+private _firstname = OT_firstNames_local call BIS_fnc_selectRandom;
+private _lastname = OT_lastNames_local call BIS_fnc_selectRandom;
 private _fullname = [format["%1 %2",_firstname,_lastname],_firstname,_lastname];
 
 private _params = [_faction,_pickup,_destination,_fullname];
@@ -66,9 +66,9 @@ private _title = format["Operative transport for %1",_factionName];
         _civ setName _fullname;
 
         //Set face,voice and uniform
-        [_civ, (selectRandom OT_faces_local)] remoteExecCall ["setFace", 0, _civ];
-        [_civ, (selectRandom OT_voices_local)] remoteExecCall ["setSpeaker", 0, _civ];
-        _civ forceAddUniform (selectRandom OT_clothes_locals);
+        [_civ, (OT_faces_local call BIS_fnc_selectRandom)] remoteExecCall ["setFace", 0, _civ];
+        [_civ, (OT_voices_local call BIS_fnc_selectRandom)] remoteExecCall ["setSpeaker", 0, _civ];
+        _civ forceAddUniform (OT_clothes_locals call BIS_fnc_selectRandom);
 
         //Make sure hes in our group
         [_civ] joinSilent nil;

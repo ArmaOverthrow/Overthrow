@@ -186,7 +186,7 @@ if(_cost > 0) then {
 		modeFinished
 		|| modeCancelled
 		|| (count attachedObjects player == 0)
-		|| (!isNull objectParent player)
+		|| (vehicle player != player)
 		|| (!alive player)
 		|| (!isPlayer player)
 	};
@@ -197,7 +197,7 @@ if(_cost > 0) then {
 
 	if(
 		modeCancelled
-		|| (!isNull objectParent player)
+		|| (vehicle player != player)
 		|| (!alive player)
 		|| (!isPlayer player)
 	) then {
