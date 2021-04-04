@@ -62,6 +62,7 @@ OT_priceData = [
 ['ACE_VectorDay',[75,0,0,1]],
 ['ACE_Vector',[110,0,0,1]],
 ['ACE_Yardage450',[90,0,0,1]],
+['ACE_Kestrel4500',[2400,0,0,1]],
 ['ACE_HuntIR_monitor',[200,0,0,1]],
 ['Ace_splint',[10,0.1,0.1]],
 ['MineDetector',[100,0,0.5,0.5]],
