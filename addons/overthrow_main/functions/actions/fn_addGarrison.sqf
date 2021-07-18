@@ -3,7 +3,7 @@ params ["_p","_create",["_charge",true]];
 private _b = _p call OT_fnc_nearestBase;
 private _pos = _b select 0;
 private _code = format["fob%1",_pos];
-if((_pos distance player) > 100) then {
+if((_pos distance _p) > 250) then {
     _b = _p call OT_fnc_nearestObjective;
     _pos = _b select 0;
     _code = _b select 1;
@@ -127,7 +127,7 @@ if(_create isEqualType 1) then {
 
         if !(_done) then {
             _p = _pos findEmptyPosition [20,120,_class_obj];
-            if (count p != 0) then {
+            if (count _p != 0) then {
                 _dir = random 360;
                 //put sandbags
     			private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
