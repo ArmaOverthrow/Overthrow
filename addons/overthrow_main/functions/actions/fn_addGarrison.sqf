@@ -130,17 +130,17 @@ if(_create isEqualType 1) then {
         if !(_done) then {
             _p = _pos findEmptyPosition [20,120,_class_obj];
             if (count _p == 0) exitWith {_doit = false;_charge = false;diag_log format ["Overthrow: Unable to find a position for %1 near %2",_create,_pos];format ["Unable to find a position for %1",_create] call OT_fnc_notifyMinor};
-            _dir = random 360;
-            //put sandbags
-            private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
-            _veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
-            _veh setpos _sp;
-            _veh setDir (_dir-180);
-            _sp = [_p,-1.5,_dir] call BIS_fnc_relPos;
-            _veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
-            _veh setpos _sp;
-            _veh setDir (_dir);
-        };
+                _dir = random 360;
+                //put sandbags
+                private _sp = [_p,1.5,_dir] call BIS_fnc_relPos;
+                _veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
+                _veh setpos _sp;
+                _veh setDir (_dir-180);
+                _sp = [_p,-1.5,_dir] call BIS_fnc_relPos;
+                _veh =  OT_NATO_Sandbag_Curved createVehicle _sp;
+                _veh setpos _sp;
+                _veh setDir (_dir);
+            };
 
         private _cost = [OT_nation,_class_price,0] call OT_fnc_getPrice;
         _cost = _cost + ([OT_nation,"CIV",0] call OT_fnc_getPrice);
