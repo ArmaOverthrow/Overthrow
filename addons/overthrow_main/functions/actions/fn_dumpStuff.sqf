@@ -25,8 +25,8 @@ if(hmd _unit != "") then {
 if(_full) exitWith {false};
 
 {
-	_count = 0;
-	_cls = _x select 0;
+	private _count = 0;
+	private _cls = _x select 0;
 	while {_count < (_x select 1)} do {
 		if (!(_t canAdd _cls) && !_isTruck) exitWith {
 			_full = true;
@@ -72,7 +72,7 @@ if(headgear _unit != "") then {
 if(_full) exitWith {false};
 
 if(backpack _unit != "") then {
-	_cls = (backpack _unit) call BIS_fnc_basicBackpack;
+	private _cls = (backpack _unit) call BIS_fnc_basicBackpack;
 	if (!(_t canAdd _cls) && !_isTruck) exitWith {
 		_full = true;
 	};
