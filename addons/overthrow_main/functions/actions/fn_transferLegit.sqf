@@ -41,7 +41,7 @@ _doTransfer = {
 			private _count = 0;
 			_d = warehouse getVariable [_x,false];
 			if(_d isEqualType []) then {
-				params ["_cls",["_num",0,[0]]];
+				_d params ["_cls",["_num",0,[0]]];
 				if(_num > 0) then {
 					if(_cls in OT_allItems) then {
 						while {_count < _num} do {
