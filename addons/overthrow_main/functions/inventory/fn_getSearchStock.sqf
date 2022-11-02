@@ -10,8 +10,10 @@ if(_this isKindOf "Man") then {
 }else{
 	_myitems = (itemCargo _this) + (weaponCargo _this) + (magazineCargo _this) + (backpackCargo _this);
 	{
-		_myitems = [_myitems,(items _this) + (magazines _this)] call BIS_fnc_arrayPushStack;
-	}foreach(units _this);		
+        if ((player distance _x) < 10) then {
+            _myitems = [_myitems,(items _x) + (magazines _x)] call BIS_fnc_arrayPushStack;
+        }
+	}foreach(units _this);
 };
 if !(isNil "_myitems") then {
 	{

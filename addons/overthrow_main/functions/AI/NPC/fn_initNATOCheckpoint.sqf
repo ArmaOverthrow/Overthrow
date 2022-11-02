@@ -88,7 +88,9 @@ while {!(isNil "_group") && count (units _group) > 0} do {\
 							_v = vehicle _x;
 							_v setVelocity [0,0,0];
 							{
-								[_x,_v,true] call OT_fnc_dumpStuff;
+                                if ((player distance _x) < 10) then {
+                                    [_x,_v,true] call OT_fnc_dumpStuff;
+                                }
 							}foreach(units _v);
 						};
 					};
